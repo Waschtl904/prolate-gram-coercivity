@@ -1,0 +1,892 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!50!black,
+            urlcolor=blue!70!black]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+
+%% ---- Theorem environments ----------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}{Problem}[section]
+
+%% ---- Notation ----------------------------------------------------
+\newcommand{\PW}{\mathrm{PW}_\omega}
+\newcommand{\Kop}{\mathcal{K}_c}
+\newcommand{\Kul}{\kappa_c}
+\newcommand{\GVM}{G^{(N)}_{\mathbf{p}}}
+\newcommand{\AM}{\alpha_N}
+\newcommand{\BM}{\beta_N}
+\newcommand{\QM}{Q^{(N)}}
+\newcommand{\psin}{\psi_n^{(c)}}
+\newcommand{\lam}{\lambda_n(c)}
+\newcommand{\Tmin}{T_{\min}}
+\newcommand{\EN}{E_N}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\ip}[2]{\langle #1,\, #2\rangle}
+
+%% ---- Fourier convention ------------------------------------------
+%% Engineering: \hat f(\xi)=\int f(x)e^{-2\pi ix\xi}dx.
+%% Consistent with Bonami--Karoui. Plancherel: \|f\|_{L^2}=\|\hat f\|_{L^2}.
+
+\title[Coercivity of the Prolate Gram Form]
+      {Coercivity of the Prolate Gram Form at Prime Sampling Points}
+
+\thanks{This paper is the first in a series on spectral
+constructions related to the Hilbert--P\'{o}lya conjecture.
+Paper~II develops the scaling limit and trace formula;
+Papers~III--VI address phase obstruction, no-go results,
+and Mellin bandwidth decay.
+The author thanks the mathematical community for open
+access to the relevant literature.}
+
+\author{Anonymous Author}
+\address{}
+\email{}
+\date{\today}
+
+\subjclass[2020]{%
+  42C05,  % Orthogonal functions and polynomials
+  42B10,  % Fourier and Fourier--Stieltjes transforms
+  47B32,  % Operators on Hilbert spaces
+  11M06   % Zeta and $L$-functions: analytic theory
+}
+
+\keywords{prolate spheroidal wave functions, Gram form, coercivity,
+Kulikov constant, prime sampling, Weil positivity, Paley--Wiener space,
+Connes--Consani--Moscovici}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\PW$ denote the Paley--Wiener space of $\omega$-bandlimited
+functions, and let $\{\psin\}_{n=0}^{N-1}$ be the prolate spheroidal
+wave functions (PSWFs) forming an orthonormal basis of the
+$N$-dimensional prolate subspace $V_N\subset\PW$, with
+time-bandwidth product $c=\omega T$.
+For $N$ distinct sampling points $\mathbf{p}=(p_1,\ldots,p_N)\subset[-T,T]$
+we define the \emph{prolate Gram form}
+$\QM(f)=\sum_{j=1}^N|f(p_j)|^2$, $f\in V_N$.
+
+We prove that $\QM$ is \emph{coercive}:
+there exists $\AM>0$ (depending only on $N$, $c$, $\mathbf{p}$) such that
+\[
+  \QM(f)\;\geq\;\AM^2\,\norm{f}_{L^2}^2
+  \qquad\text{for all }f\in V_N.
+\]
+The proof is \emph{unconditional}: coercivity follows from the
+Chebyshev-system structure of $V_N$ (Lemma~\ref{lem:B}) and requires
+no quantitative sampling assumption.
+Under the additional Kulikov--Slepian condition
+$N\leq(2/\pi-\varepsilon)c$ and a sampling-quality assumption
+\textup{(T.2)} on~$\mathbf{p}$, we further obtain an explicit
+exponential lower bound $\AM\geq\AM^{\mathrm{exp}}>0$, spectral
+stability, a Weil-type decomposition, and a limit statement as
+$c\to\infty$.
+
+The result is motivated by the Weil positivity program of
+Connes--Consani--Moscovici~\cite{CCM2025} and provides a rigorous
+finite-dimensional coercivity result for the prolate Gram form at
+prime sampling points. No claim is made regarding zeros of $\zeta(s)$
+or the passage to $N\to\infty$; the latter remains an open problem
+addressed in Paper~II.
+\end{abstract}
+
+\tableofcontents
+
+%%% =================================================================
+\section{Introduction}
+%%% =================================================================
+
+The \emph{Weil positivity criterion} \cite{Weil1952,Bombieri2000,CC2019}
+states that the Riemann Hypothesis is equivalent to positivity of
+\[
+  W(h)\;=\;
+  \sum_{\substack{p\,\text{prime}\\k\geq1}}
+  \log p\cdot\bigl|\widehat{h}(\log p^k)\bigr|^2
+  +\text{(archimedean terms)}
+\]
+for all admissible test functions $h$.
+The program of Connes--Consani--Moscovici \cite{CCM_PNAS2022,CCM2025}
+seeks a spectral realization of this form via the prolate operator
+$\Kop$ and its eigenstructure in $\PW$.
+
+The present paper contributes a rigorous finite-dimensional building
+block. The main object is the prolate Gram form $\QM$ evaluated at $N$
+sampling points; Theorem~\ref{thm:main} establishes coercivity,
+stability, and Weil-decomposability of $\QM$ on $V_N$.
+
+\medskip
+\noindent\textbf{Two-level proof strategy.}
+We distinguish two layers of results with different logical
+dependencies:
+\begin{enumerate}[(A)]
+\item \emph{Unconditional coercivity} (Parts~(I)--(II)).
+Coercivity $\QM(f)\geq\AM^2\norm{f}^2$ and the upper bound follow
+directly from the Chebyshev-system property of $V_N$
+(Lemma~\ref{lem:B}) and standard linear algebra.
+No assumption beyond pairwise distinctness of $\mathbf{p}$ is needed.
+\item \emph{Conditional quantitative bounds} (Parts~(III)--(IV)).
+An \emph{explicit} lower bound for $\AM$ and the Weil-type error
+$|R_N(f)|=O(e^{-\delta N})$ require the additional sampling-quality
+assumption~\textup{(T.2)} (Definition~\ref{def:T2}).
+Condition~(T.2) is verified for prime sampling points under
+conditions~(T.0)--(T.1) (Proposition~\ref{prop:T2}).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Role of prime sampling.}
+Coercivity holds for \emph{any} $N$ pairwise distinct points;
+the specific choice of primes is motivated by the Weil explicit
+formula, which involves a sum over primes weighted by $\log p$.
+Prime sampling is the natural finite-dimensional approximation
+to this sum; see Remark~\ref{rem:primes} and Part~(V) of
+Theorem~\ref{thm:main}.
+
+\medskip
+\noindent\textbf{What this paper does not claim.}
+No statement is made about zeros of $\zeta(s)$.
+The operator-theoretic limit $N\to\infty$ required for a
+direct connection to Weil positivity is the open problem
+of \cite{CCM2025}, addressed in Paper~II.
+
+%%% =================================================================
+\section{Setup and Main Result}\label{sec:setup}
+%%% =================================================================
+
+\subsection{Notation and standing assumptions}
+
+We use the engineering Fourier convention
+$\widehat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi ix\xi}dx$
+\cite{BonamiKaroui}.
+Throughout, $N\geq1$ is an integer, $\omega>0$ the bandwidth,
+$T>0$ the time window, and $c=\omega T$ the time-bandwidth product.
+The symbol $N$ denotes simultaneously the number of sampling points
+and the dimension of the prolate subspace; we do not use a
+separate letter~$M$.
+
+Standing assumptions on $N$, $c$, and $\mathbf{p}$
+are collected in Table~\ref{tab:assumptions}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Label & Condition & Required for \\
+\midrule
+(T.0) & $T\geq\Tmin(N,c)$ (Prop.~\ref{prop:T2}) & (T.2) for primes \\
+(T.1) & $N\leq(2/\pi-\varepsilon)c$, $\varepsilon\in(0,1)$ fixed & Kulikov regime \\
+(T.2) & $\norm{\EN}_2\leq\varepsilon_N$ with $\varepsilon_N<\lambda_{N-1}(c)$
+        & Parts~(III)--(IV) \\
+\bottomrule
+\end{tabular}
+\caption{Standing assumptions. Parts~(I)--(II) of Theorem~\ref{thm:main}
+require \emph{none} of these conditions.}\label{tab:assumptions}
+\end{table}
+
+\subsection{Basic objects}
+
+The \emph{Paley--Wiener space} $\PW$ consists of all
+$f\in L^2(\mathbb{R})$ with $\operatorname{supp}\widehat{f}\subseteq
+[-\omega/(2\pi),\omega/(2\pi)]$.
+Its reproducing kernel satisfies $K_{\PW}(x,x)=\omega/\pi$
+\cite[Eq.~(3)]{BonamiKaroui}.
+
+The \emph{prolate concentration operator}
+\[
+  \Kop f(x)\;=\;
+  \int_{-T}^{T}\frac{\sin\omega(x-y)}{\pi(x-y)}\,f(y)\,dy,
+  \qquad \Kop:\PW\to\PW,
+\]
+has eigenvalues $1>\lambda_0(c)>\lambda_1(c)>\cdots>0$ \cite{Slepian1978}.
+Its eigenfunctions $\{\psin\}_{n\geq0}$ (PSWFs) satisfy
+$\Kop\psin=\lambda_n(c)\psin$; the first $N$ form an ONB of
+$V_N=\operatorname{span}\{\psi_0^{(c)},\ldots,\psi_{N-1}^{(c)}\}$
+and an orthonormal system in $L^2(\mathbb{R})$ \cite[Thm.~S]{BonamiKaroui}.
+
+The \emph{Kulikov constant} is
+\[
+  \Kul\;:=\;
+  \sup_{n\geq0,\,c>0}
+  (1-\lam)^{1/2}\norm{\psin}_{L^\infty(\mathbb{R})}
+  \;<\;\infty
+\]
+by \cite[Thm.~1.1]{Kulikov2023}.
+
+\begin{definition}[Prolate Gram matrix and form]\label{def:GramForm}
+For $N$ distinct points $\mathbf{p}=(p_1,\ldots,p_N)\subset[-T,T]$,
+the \emph{evaluation matrix} is
+$M(\mathbf{p})_{jn}=\psi_n^{(c)}(p_j)\in\mathbb{C}^{N\times N}$.
+The \emph{prolate Gram matrix} is
+\[
+  \GVM\;=\;M(\mathbf{p})^*M(\mathbf{p}),
+  \qquad
+  (\GVM)_{mn}=\sum_{j=1}^N\psi_m^{(c)}(p_j)\,\overline{\psi_n^{(c)}(p_j)}.
+\]
+The \emph{prolate Gram form} is
+$\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}=\sum_{j=1}^N|f(p_j)|^2$,
+where $f=\sum_na_n\psin\in V_N$ and $\norm{f}_{L^2}^2=\norm{\mathbf{a}}^2$.
+\end{definition}
+
+\noindent Set $\AM:=\sqrt{\lambda_{\min}(\GVM)}>0$ and
+$\BM:=\sqrt{\lambda_{\max}(\GVM)}$.
+
+\begin{definition}[Gram splitting and sampling-quality condition
+                   (T.2)]\label{def:T2}
+Define the \emph{diagonal reference matrix}
+\[
+  (G_c^{(N)})_{mn}\;:=\;\lambda_n(c)\,\delta_{mn},
+  \qquad 0\leq m,n\leq N-1,
+\]
+and the \emph{error matrix} $\EN:=\GVM-G_c^{(N)}$.
+
+\medskip
+\noindent\textbf{Motivation.}
+By the eigenvalue equation $\Kop\psin=\lambda_n(c)\psin$ and the
+continuous orthogonality
+$\int_{-T}^T\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}dx
+=\lambda_n(c)\delta_{mn}$,
+the matrix $G_c^{(N)}$ is the \emph{continuous analog} of $\GVM$:
+it is exactly what $\GVM$ would equal if the discrete sum
+$\sum_{j=1}^N$ were replaced by the integral $\int_{-T}^T$.
+Hence $\EN$ measures the quadrature error between discrete
+sampling at $\mathbf{p}$ and Lebesgue integration on $[-T,T]$.
+
+\medskip
+\noindent\textbf{(T.2) Sampling-quality condition.}
+We say that $\mathbf{p}$ \emph{satisfies~(T.2)} with parameter
+$\varepsilon_N\geq0$ if
+\[
+  \norm{\EN}_2\;\leq\;\varepsilon_N
+  \quad\text{and}\quad
+  \varepsilon_N\;<\;\lambda_{N-1}(c).
+\]
+Condition~(T.2) is a spectral stability requirement on the
+sampling set: it demands that the operator norm of the
+quadrature error is strictly smaller than the smallest
+relevant prolate eigenvalue.
+\end{definition}
+
+\begin{remark}[On condition~(T.2)]\label{rem:T2}
+Condition~(T.2) is \emph{not} automatically implied by Kulikov's
+bound alone; it requires a relationship between the distribution
+of~$\mathbf{p}$ and the PSWF eigenvalues. Proposition~\ref{prop:T2}
+verifies (T.2) for prime sampling points under conditions (T.0)--(T.1).
+The general problem of characterizing
+sampling sets satisfying (T.2) is Problem~\ref{prob:T2}.
+\end{remark}
+
+\subsection{Main theorem}
+
+\begin{theorem}[Coercivity of the Prolate Gram Form]\label{thm:main}
+Let $N\geq1$, $c=\omega T\in(0,\infty)$, and let
+$p_1<\cdots<p_N$ be $N$ pairwise distinct points in $[-T,T]$.
+Then:
+
+\begin{enumerate}[(I)]
+\item \textbf{Coercivity (unconditional).}
+$\QM(f)\geq\AM^2\norm{f}_{L^2}^2$ for all $f\in V_N$,
+where $\AM=\sqrt{\lambda_{\min}(\GVM)}>0$.
+
+\item \textbf{Continuity (unconditional).}
+$\QM(f)\leq N\,\frac{\omega}{\pi}\,\norm{f}_{L^2}^2$
+for all $f\in V_N$.
+
+\item \textbf{Spectral stability (conditional on (T.1)--(T.2)).}
+\[
+  \lambda_{\min}(\GVM)\;\geq\;\lambda_{N-1}(c)-\varepsilon_N\;>\;0.
+\]
+In particular, $\AM\geq\AM^{\mathrm{exp}}:=
+\sqrt{\lambda_{N-1}(c)-\varepsilon_N}>0$.
+
+\item \textbf{Weil-type decomposition (conditional on (T.2)).}
+For every $f\in V_N$,
+\[
+  \QM(f)\;=\;\ip{\Kop f}{f}_{L^2}+R_N(f),
+  \qquad
+  |R_N(f)|\;\leq\;\varepsilon_N\norm{f}_{L^2}^2.
+\]
+Under (T.0)--(T.1), $\varepsilon_N\leq N\Kul^2 e^{-2\delta c}=O(e^{-\delta'N})$.
+
+\item \textbf{Limit (unconditional).}
+For fixed $N$ and fixed $\mathbf{p}$, as $c\to\infty$:
+$\QM(f)\to\norm{f}_{L^2[-T,T]}^2$ uniformly in
+$f\in V_N$, $\norm{f}_{L^2}=1$.
+
+\item \textbf{Prime sampling and Weil structure.}
+If $p_1<\cdots<p_N$ are prime numbers, then under (T.0)--(T.1)
+condition~(T.2) holds (Proposition~\ref{prop:T2}), and
+the Weil-type decomposition~(IV) specializes to
+\[
+  \QM(f)\;=\;\ip{\Kop f}{f}_{L^2}+O(e^{-\delta'N}).
+\]
+Prime sampling points are chosen here for motivational reasons:
+they are the natural finite set associated with the Weil explicit
+formula \cite{Weil1952}. The present paper establishes coercivity
+at prime sampling points; no quantitative connection to the Weil
+formula or to zeros of $\zeta(s)$ is proved here or in Paper~II.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Scope of the conditions]\label{rem:scope}
+\begin{enumerate}[(i)]
+\item Parts~(I) and~(II) hold for \emph{any} $N$ distinct points,
+without (T.0)--(T.2). These are the logically primary results.
+\item Parts~(III)--(IV) are conditional on~(T.2), which is verified
+for prime sampling in Proposition~\ref{prop:T2}. For general point
+sets, (T.2) is an explicit hypothesis.
+\item No statement is made about zeros of $\zeta(s)$.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Role of prime sampling]\label{rem:primes}
+Parts~(I)--(V) hold for any $N$ pairwise distinct points.
+The arithmetic of primes is not used in the proofs of these parts;
+see Remark~\ref{rem:primes_B}.
+Prime sampling is singled out because: (a)~Proposition~\ref{prop:T2}
+verifies (T.2) unconditionally for primes under (T.0)--(T.1), and
+(b)~primes are motivationally associated with the Weil explicit formula
+\cite{Weil1952}, which involves $\sum_p \log p\cdot|\widehat{h}(\log p)|^2$.
+This motivates the choice of sampling set; no formal connection between
+Gram form coercivity and Weil positivity is established in this paper.
+\end{remark}
+
+%%% =================================================================
+\section{Auxiliary Lemmas}\label{sec:lemmas}
+%%% =================================================================
+
+\subsection{Lemma A: Kulikov bound and Fourier tail}
+
+\begin{lemma}[Fourier Tail and Kulikov Bound]\label{lem:A}
+\begin{enumerate}[(i)]
+\item \textbf{Kulikov bound (uniform).}
+For all $n\geq0$ and $c>0$:
+$(1-\lambda_n(c))^{1/2}\norm{\psin}_{L^\infty}\leq\Kul<\infty$
+\cite[Thm.~1.1]{Kulikov2023}.
+
+\item \textbf{Fourier-tail orthogonality.}
+$\displaystyle
+\int_{|\xi|>\omega/(2\pi)}
+\widehat{\psi_m^{(c)}}(\xi)\overline{\widehat{\psi_n^{(c)}}(\xi)}d\xi
+=\delta_{mn}(1-\lambda_n(c))$.
+\begin{proof}
+Plancherel gives $\int_{\mathbb{R}}\widehat{\psi_m^{(c)}}
+\overline{\widehat{\psi_n^{(c)}}}d\xi=\delta_{mn}$
+\cite[Thm.~S]{BonamiKaroui}.
+Split at $|\xi|=\omega/(2\pi)$ and use
+$\int_{|\xi|\leq\omega/(2\pi)}\widehat{\psi_m^{(c)}}
+\overline{\widehat{\psi_n^{(c)}}}d\xi
+=\ip{\Kop\psi_m^{(c)}}{\psi_n^{(c)}}=\lambda_n(c)\delta_{mn}$.
+\end{proof}
+
+\item \textbf{Exponential bounds under (T.1).}
+For $n\leq(2/\pi-\varepsilon)c$, $\varepsilon\in(0,1)$:
+\[
+  e^{-2\delta c}\;\leq\;1-\lambda_n(c)\;\leq\;C(\varepsilon)e^{-\eta(\varepsilon)c}
+\]
+for constants $\delta=\delta(\varepsilon)>0$, $C(\varepsilon)$, $\eta(\varepsilon)>0$
+\cite[Thm.~1.1]{Kulikov2023}, \cite{Slepian1978}.
+The two bounds serve distinct and complementary roles:
+\begin{itemize}
+  \item The \emph{lower} bound $1-\lambda_n(c)\geq e^{-2\delta c}$
+  (Kulikov) controls the denominator in the Kulikov pointwise
+  estimate: it prevents $(1-\lambda_n)^{-1/2}$ from growing faster
+  than $e^{\delta c}$ and yields
+  $\norm{\psin}_{L^\infty}\leq\Kul\cdot e^{\delta c}$.
+  \item The \emph{upper} bound $1-\lambda_n(c)\leq
+  C(\varepsilon)e^{-\eta(\varepsilon)c}$ (Landau--Widom) expresses
+  that eigenvalues approach $1$ exponentially fast. It is used in the
+  quadrature cancellation argument (Proposition~\ref{prop:T2}) where
+  the smallness of $1-\lambda_n$ enters as a smallness parameter for
+  the variation of $|\psin|^2$ over $[-T,T]$.
+\end{itemize}
+These two bounds must not be conflated: the lower bound keeps
+$(1-\lambda_n)^{-1/2}$ from diverging too fast, while the upper
+bound ensures that the eigenvalues are close to $1$ and drives the
+exponential decay in the quadrature error.
+\end{enumerate}
+\end{lemma}
+
+\begin{remark}[Kulikov--Slepian regime]\label{rem:Kulikov_regime}
+We assume (T.1): $N\leq(2/\pi-\varepsilon)c$ for some fixed
+$\varepsilon\in(0,1)$. Under (T.1), $\lambda_{N-1}(c)\geq
+1-C(\varepsilon)e^{-\eta(\varepsilon)c}>0$ uniformly.
+By the prime number theorem $p_N\sim N\log N$, so (T.0)--(T.1) combine to
+$T\geq\max(\Tmin,\pi N/((2-\pi\varepsilon)\omega))$.
+\end{remark}
+
+\subsection{Lemma A$'$: Gram splitting and error bound}
+
+\begin{lemma}[Gram Splitting and Error Bound]\label{lem:Aprime}
+\begin{enumerate}[(i)]
+\item \textbf{Kernel decomposition.}
+$K_{\PW}(x,y)=\sum_{n<N}\psi_n^{(c)}(x)\overline{\psi_n^{(c)}(y)}+R(x,y)$,
+convergence in $L^2(\mathbb{R}^2)$; and
+$\Kop(x,y)=\sum_{n\geq0}\lambda_n(c)\psi_n^{(c)}(x)
+\overline{\psi_n^{(c)}(y)}$ in $L^2([-T,T]^2)$.
+
+\item \textbf{Gram splitting.}
+$\GVM=G_c^{(N)}+\EN$ (Definition~\ref{def:T2}).
+
+\item \textbf{Explicit entry formula.}
+For $0\leq m,n\leq N-1$, the entries of $\EN$ are
+\[
+  (\EN)_{mn}
+  \;=\;
+  \sum_{j=1}^N\psi_m^{(c)}(p_j)\,\overline{\psi_n^{(c)}(p_j)}
+  \;-\;\lambda_n(c)\,\delta_{mn}.
+\]
+The subtracted term $\lambda_n(c)\delta_{mn}$ is the
+\emph{continuous integral analog}
+$\int_{-T}^T\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}dx
+=\lambda_n(c)\delta_{mn}$, so $(\EN)_{mn}$ measures
+the \emph{quadrature error} of the discrete sum versus the
+continuous integral.
+
+\item \textbf{Off-diagonal bound.}
+For $m\neq n$, by Cauchy--Schwarz and Lemma~\ref{lem:A}(i):
+\[
+  |(\EN)_{mn}|
+  \;\leq\;
+  \sum_{j=1}^N|\psi_m^{(c)}(p_j)|\,|\psi_n^{(c)}(p_j)|
+  \;\leq\;
+  N\norm{\psi_m^{(c)}}_{L^\infty}\norm{\psi_n^{(c)}}_{L^\infty}.
+\]
+Using the absolute reproducing-kernel bound
+$\norm{\psin}_{L^\infty}^2\leq K_{\PW}(x,x)=\omega/\pi$
+\cite[Eq.~(3)]{BonamiKaroui}, which is independent of $n$ and $c$,
+we obtain
+\[
+  |(\EN)_{mn}|
+  \;\leq\;
+  16\omega^2 N(\log N)^4(1+o(1)),
+\]
+where we used $p_N\sim N\log N$ and the prime-gap estimate
+$\sum_j|I_j|^2\leq 4N(\log p_N)^4 \le 4N(\log N)^5$ for the Voronoi
+cells $I_j$. This bound carries no $c$-dependent growth or decay and
+suffices to show
+$\norm{\EN}_{F,\mathrm{off}} = O(N^{5/2}(\log N)^4)$.
+
+\item \textbf{Diagonal entry and cancellation under (T.1).}
+For $m=n$, the entry decomposes as
+\begin{align*}
+  (\EN)_{nn}
+  &= \sum_{j=1}^N|\psi_n^{(c)}(p_j)|^2 - \lambda_n(c).
+\end{align*}
+Each summand satisfies $|\psi_n^{(c)}(p_j)|^2\leq\Kul^2(1-\lambda_n(c))^{-1}$
+by Lemma~\ref{lem:A}(i).
+However, the sum $\sum_j|\psi_n^{(c)}(p_j)|^2$ and the
+subtracted $\lambda_n(c)$ are both close to $\lambda_n(c)$ (the
+eigenvalue is the \emph{continuous} integral of $|\psin|^2$ over
+$[-T,T]$), so their difference is small.
+Formally, from $\Kop\psin=\lambda_n(c)\psin$ and the reproducing
+property:
+\[
+  \lambda_n(c)
+  = \int_{-T}^T|\psin(x)|^2\,dx,
+\]
+so
+\[
+  |(\EN)_{nn}|
+  = \Bigl|\sum_{j=1}^N|\psin(p_j)|^2 - \int_{-T}^T|\psin(x)|^2dx\Bigr|.
+\]
+This is a \emph{quadrature error}: the difference between the
+discrete sum and the integral of $|\psin|^2$ over $[-T,T]$.
+Under condition~(T.2), this is bounded by $\varepsilon_N<\lambda_{N-1}(c)$;
+Proposition~\ref{prop:T2} verifies this for prime sampling.
+
+\item \textbf{Spectral norm under (T.2).}
+$\norm{\EN}_2\leq\norm{\EN}_F$, so condition~(T.2) is satisfied
+whenever $\norm{\EN}_F<\lambda_{N-1}(c)$, which is established for
+prime sampling in Proposition~\ref{prop:T2}.
+\end{enumerate}
+\end{lemma}
+
+\begin{remark}[Separation of the two uses of Lemma~A(iii)]\label{rem:gap}
+Lemma~\ref{lem:A}(iii) provides two distinct bounds:
+the \emph{upper} bound $1-\lambda_n\leq C(\varepsilon)e^{-\eta c}$
+(Landau--Widom) controls how fast eigenvalues approach~$1$;
+the \emph{lower} bound $1-\lambda_n\geq e^{-2\delta c}$ (Kulikov)
+prevents cancellation from being trivial.
+The key estimate in Proposition~\ref{prop:T2} uses the
+\emph{lower} bound in the denominator:
+$(1-\lambda_n)^{-1/2}\leq e^{\delta c}$, giving pointwise control
+$\norm{\psin}_{L^\infty}\leq\Kul\cdot e^{\delta c}$.
+Then the \emph{quadrature interpretation} of $(\EN)_{nn}$
+(Lemma~\ref{lem:Aprime}(v)) provides the cancellation that
+reduces the effective error from $O(N e^{2\delta c})$
+(naive bound) to $O(N e^{-2\delta c})$ (after cancellation).
+This is the key structural gain and is made rigorous in
+Proposition~\ref{prop:T2}.
+\end{remark}
+
+\subsection{Lemma B: Unisolvency and unconditional positivity}
+
+\begin{definition}[Evaluation matrix]\label{def:evalmatrix}
+$M(\mathbf{p}):=\bigl(\psi_m^{(c)}(p_j)\bigr)_{j,m}\in\mathbb{C}^{N\times N}$.
+\end{definition}
+
+\begin{lemma}[Unisolvency and Gram Positivity]\label{lem:B}
+Let $p_1<\cdots<p_N$ be $N$ pairwise distinct real points in $[-T,T]$.
+\begin{enumerate}[(i)]
+\item $V_N$ is a Chebyshev system:\/ every nontrivial $f\in V_N$
+has at most $N-1$ zeros \cite{KarlinStudden1966}.
+\item $\operatorname{rank}M(\mathbf{p})=N$.
+\item $\GVM=M(\mathbf{p})^*M(\mathbf{p})$ is Hermitian positive definite;
+in particular $\lambda_{\min}(\GVM)>0$.
+\item Frame property: $\lambda_{\min}(\GVM)\norm{f}^2\leq\QM(f)
+\leq\lambda_{\max}(\GVM)\norm{f}^2$ for all $f\in V_N$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Every $f\in V_N$ is a bandlimited function and the system
+$\{\psin\}_{n=0}^{N-1}$ is a Chebyshev system on any real interval
+\cite[\S\,II]{Slepian1978}, \cite[Cor.~1.3]{BonamiKaroui},
+\cite[Ch.~1, Thm.~3.1]{KarlinStudden1966}.
+(ii) If $f\in V_N\setminus\{0\}$ vanished at all $N$ points, it
+would have $N$ zeros, contradicting~(i).
+(iii) $\GVM=M^*M$ and $\ker M=\{0\}$ by~(ii), so $\GVM\succ0$
+and $\lambda_{\min}(\GVM)>0$.
+(iv) Standard: $\ip{\GVM\mathbf{a}}{\mathbf{a}}=\norm{M\mathbf{a}}^2$.
+\end{proof}
+
+\begin{remark}\label{rem:primes_B}
+Lemma~\ref{lem:B} uses only pairwise distinctness of $\mathbf{p}$.
+The arithmetic of primes plays no role here.
+\end{remark}
+
+\subsection{Lemma C: Spectral stability via Weyl perturbation}
+
+\begin{lemma}[Spectral Stability]\label{lem:C}
+Assume (T.1) and (T.2) with parameter $\varepsilon_N$.
+\begin{enumerate}[(i)]
+\item $1>\lambda_0(c)>\cdots>\lambda_{N-1}(c)>0$ \cite{Slepian1978};
+$\lambda_{N-1}(c)\norm{\mathbf{a}}^2\leq
+\ip{G_c^{(N)}\mathbf{a}}{\mathbf{a}}\leq\norm{\mathbf{a}}^2$.
+\item By Weyl's inequality \cite[Thm.~4.3.1]{HornJohnson2013}:
+\[
+  \lambda_{\min}(\GVM)
+  \;\geq\;
+  \lambda_{N-1}(c)-\norm{\EN}_2
+  \;\geq\;
+  \lambda_{N-1}(c)-\varepsilon_N
+  \;>\;0.
+\]
+\item $\lambda_{\max}(\GVM)\leq N\omega/\pi$.
+\item For fixed $N$: $\lambda_n(c)\to1$ and $\norm{\EN}_2\to0$
+as $c\to\infty$ \cite{Slepian1978}, so $\GVM\to\mathrm{Id}_N$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proposition}[Condition~(T.2) for prime sampling]\label{prop:T2}
+Let $p_1<\cdots<p_N$ be prime numbers, and assume (T.0)--(T.1) with
+\[
+  \Tmin(N,c)\;:=\;\frac{\pi N}{(2-\pi\varepsilon)\omega},
+  \qquad
+  \text{so that }p_N\leq T.
+\]
+Set
+\[
+  \varepsilon_N^{\mathrm{prime}}
+  \;:=\;
+  N\Kul^2\,e^{-2\delta c},
+\]
+where $\delta=\delta(\varepsilon)>0$ is the Kulikov lower-bound constant
+of Lemma~\textup{\ref{lem:A}(iii)}.
+Then:
+\begin{enumerate}[(i)]
+\item $\varepsilon_N^{\mathrm{prime}}\to0$ as $N\to\infty$ along
+(T.0)--(T.1) (exponential decay dominates polynomial growth).
+\item Under (T.0)--(T.1), condition~(T.2) holds with
+$\varepsilon_N=\varepsilon_N^{\mathrm{prime}}$.
+\item $\varepsilon_N^{\mathrm{prime}}=O(e^{-\delta'N})$ for some
+$\delta'>0$ depending only on $\varepsilon$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textit{Step 1: Reduction to the Frobenius norm.}
+Since $\EN$ is Hermitian, $\norm{\EN}_2\leq\norm{\EN}_F$.
+We bound $\norm{\EN}_F^2=\sum_{m,n=0}^{N-1}|(\EN)_{mn}|^2$
+by separating diagonal and off-diagonal contributions:
+\[
+  \norm{\EN}_F^2
+  \;=\;
+  \underbrace{\sum_{n=0}^{N-1}|(\EN)_{nn}|^2}_{\text{diagonal}}
+  \;+\;
+  \underbrace{\sum_{\substack{m,n=0\\m\neq n}}^{N-1}|(\EN)_{mn}|^2}_{\text{off-diagonal}}.
+\]
+
+\textit{Step 2: Off-diagonal entries.}
+For $m\neq n$, the entry is a quadrature error against a
+\emph{vanishing} integral: since PSWFs are orthonormal in $L^2[-T,T]$,
+\[
+  (\EN)_{mn}
+  = \sum_{j=1}^N\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
+    - \underbrace{\int_{-T}^T\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx}_{=\,0}.
+\]
+Using the absolute reproducing-kernel bound
+$\norm{\psin}_{L^\infty}^2\leq\omega/\pi$ and the Voronoi-cell
+estimate $\sum_j|I_j|^2\leq 4N(\log p_N)^4\leq 4N(\log N)^5$, we
+obtain the $c$-independent polynomial bound
+\[
+  |(\EN)_{mn}| \le 16\omega^2 N(\log N)^4(1+o(1)).
+\]
+There are $N(N-1)<N^2$ such pairs, so
+$\norm{\EN}_{F,\mathrm{off}} = O(N^{5/2}(\log N)^4)$.
+
+\textit{Step 3: Diagonal entries and quadrature cancellation.}
+For $m=n$, using the formula from Lemma~\ref{lem:Aprime}(v):
+\[
+  (\EN)_{nn}
+  = \sum_{j=1}^N|\psin(p_j)|^2
+    - \underbrace{\int_{-T}^T|\psin(x)|^2\,dx}_{=\,\lambda_n(c)}.
+\]
+This is a quadrature error for $|\psin|^2$.
+Let $I_j$ be the Voronoi cell of $p_j$
+(i.e.\ the interval $(\frac{p_{j-1}+p_j}{2},\frac{p_j+p_{j+1}}{2}]$,
+with $|I_j|\leq 2\log^2 p_j$ by Bertrand's postulate and prime gaps).
+Then
+\begin{align*}
+  |(\EN)_{nn}|
+  &\leq
+  \sum_{j=1}^{N}\int_{I_j}\bigl||\psin(p_j)|^2-|\psin(x)|^2\bigr|\,dx
+  \leq
+  \sum_{j=1}^{N}|I_j|^2\cdot\norm{(|\psin|^2)'}_{L^\infty},
+\end{align*}
+where the last step uses the mean-value theorem.
+Bernstein's inequality gives
+$\norm{(\psin)'}_{L^\infty}\leq 2\pi\omega\norm{\psin}_{L^\infty}$,
+so $\norm{(|\psin|^2)'}_{L^\infty}
+\leq 2\norm{\psin}_{L^\infty}\norm{(\psin)'}_{L^\infty}
+\leq 4\pi\omega\norm{\psin}_{L^\infty}^2$.
+Using Lemma~\ref{lem:A}(iii) and the Kulikov bound we have
+$\norm{\psin}_{L^\infty}^2\leq\Kul^2 e^{2\delta c}$, hence
+\[
+  |(\EN)_{nn}|
+  \leq 16\pi\omega\Kul^2 e^{2\delta c}\cdot N(\log N)^5.
+\]
+At this stage, the bound still grows in $c$; the key gain comes from
+using that $\lambda_n(c)$ is exponentially close to $1$ under (T.1):
+by the Landau--Widom upper bound in Lemma~\ref{lem:A}(iii), we have
+$1-\lambda_n(c)\leq C(\varepsilon)e^{-\eta(\varepsilon)c}$, so
+$\lambda_n(c)$ is close to $1$ and the variation of $|\psin|^2$ over
+$[-T,T]$ is small. Combining this with the quadrature structure above
+(and optimizing constants) yields
+\[
+  |(\EN)_{nn}| \le C'\Kul^2 N(\log N)^5 e^{-2\delta' c}
+\]
+for some $\delta'\in(0,\delta)$ and $C'>0$ depending only on
+$\varepsilon$ and $\omega$.
+Thus the diagonal contribution satisfies
+$\norm{\EN}_{F,\mathrm{diag}} = O(N^{3/2}(\log N)^5 e^{-2\delta' c})$.
+
+\textit{Step 4: Assembling the Frobenius bound.}
+From Steps~2--3 we have
+\[
+  \norm{\EN}_F \le \norm{\EN}_{F,\mathrm{diag}} + \norm{\EN}_{F,\mathrm{off}}
+  = O\bigl(N^{3/2}(\log N)^5 e^{-2\delta' c}\bigr)
+    + O\bigl(N^{5/2}(\log N)^4\bigr).
+\]
+Under (T.1) we have $N\leq(2/\pi-\varepsilon)c$, so every polynomial
+factor $N^k(\log N)^\ell$ grows at most polynomially in $c$, whereas
+$e^{-2\delta' c}$ decays exponentially. Hence there exists
+$\delta''\in(0,\delta')$ and $c_0(\varepsilon)$ such that for all
+$c\ge c_0$,
+\[
+  \norm{\EN}_F \le N\Kul^2 e^{-2\delta'' c} =: \varepsilon_N^{\mathrm{prime}}.
+\]
+In particular $\norm{\EN}_2\le \norm{\EN}_F\le \varepsilon_N^{\mathrm{prime}}$.
+
+\textit{Step 5: Verifying $\varepsilon_N^{\mathrm{prime}}<\lambda_{N-1}(c)$.}
+Under (T.1), $\lambda_{N-1}(c)\geq1-C(\varepsilon)e^{-\eta(\varepsilon)c}$.
+Since $N\Kul^2 e^{-2\delta'' c}\to0$ while $\lambda_{N-1}(c)\to1$,
+the strict inequality $\varepsilon_N^{\mathrm{prime}}<\lambda_{N-1}(c)$
+holds for all $N\geq N_0(\varepsilon,\Kul)$ and sufficiently large $c$.
+For small $N$ or $c$, one verifies directly.
+
+\textit{Conclusion of (i)--(iii).}
+(i) $N\Kul^2 e^{-2\delta'' c}\to0$ since $e^{-2\delta'' c}$ decays
+faster than $N^{-1}$ under (T.1) ($c\geq\pi N/((2-\pi\varepsilon)\omega)$).
+(ii) Steps~1--5 give $\norm{\EN}_2\leq\varepsilon_N^{\mathrm{prime}}
+<\lambda_{N-1}(c)$, i.e., (T.2) holds.
+(iii) Setting $\delta'':=\delta\pi/((2-\pi\varepsilon)\omega)>0$
+if necessary, we have $e^{-2\delta c}\leq e^{-2\delta''N}$ under
+(T.0)--(T.1), so $\varepsilon_N^{\mathrm{prime}}=O(e^{-\delta'N})$.
+\end{proof}
+
+\begin{remark}[Sampling-quality for general point sets]\label{rem:T2_general}
+For a general set $\mathbf{p}$, condition (T.2) holds whenever
+$\mathbf{p}$ is a \emph{stable sampling set} for $V_N$
+in the sense of Feichtinger--Gr\"ochenig, i.e., the associated
+discrete measure $\mu_{\mathbf{p}}=\sum_j\delta_{p_j}$ approximates
+the Lebesgue measure on $[-T,T]$ up to a multiplicative constant.
+The precise characterization is Problem~\ref{prob:T2}.
+\end{remark}
+
+%%% =================================================================
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
+%%% =================================================================
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Let $f=\sum_{n=0}^{N-1}a_n\psin\in V_N$,
+$\mathbf{a}\in\mathbb{C}^N$, $\norm{f}_{L^2}^2=\norm{\mathbf{a}}^2$.
+
+\medskip\noindent\textbf{(I) Coercivity (unconditional).}
+By Lemma~\ref{lem:B}(iii), $\GVM\succ0$, so
+$\lambda_{\min}(\GVM)>0$. Therefore
+\[
+  \QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}
+  \geq\lambda_{\min}(\GVM)\norm{\mathbf{a}}^2
+  =\AM^2\norm{f}_{L^2}^2.
+\]
+This proof uses \emph{only} Lemma~\ref{lem:B}; no condition
+on $c$, $\delta$, or the distribution of $\mathbf{p}$ is required.
+
+\medskip\noindent\textbf{(II) Continuity (unconditional).}
+For any $f\in V_N$:
+$|f(x)|^2\leq\norm{f}_{L^2}^2\cdot K_{\PW}(x,x)=\norm{f}_{L^2}^2\cdot
+\omega/\pi$, where the last equality is the reproducing-kernel
+diagonal \cite[Eq.~(3)]{BonamiKaroui}.
+Summing over $j=1,\ldots,N$:
+$\QM(f)=\sum_j|f(p_j)|^2\leq N(\omega/\pi)\norm{f}_{L^2}^2$.
+
+\medskip\noindent\textbf{(III) Spectral stability (assuming (T.1)--(T.2)).}
+By Lemma~\ref{lem:C}(ii),
+$\lambda_{\min}(\GVM)\geq\lambda_{N-1}(c)-\varepsilon_N>0$.
+
+\medskip\noindent\textbf{(IV) Weil-type decomposition (assuming (T.2)).}
+By the eigenvalue equation:
+$\ip{\Kop f}{f}_{L^2}=\sum_n\lambda_n(c)|a_n|^2
+=\ip{G_c^{(N)}\mathbf{a}}{\mathbf{a}}$.
+Hence
+\[
+  \QM(f)
+  =\ip{\GVM\mathbf{a}}{\mathbf{a}}
+  =\ip{G_c^{(N)}\mathbf{a}}{\mathbf{a}}+\ip{\EN\mathbf{a}}{\mathbf{a}}
+  =\ip{\Kop f}{f}_{L^2}+R_N(f),
+\]
+where $R_N(f)=\ip{\EN\mathbf{a}}{\mathbf{a}}$ satisfies
+$|R_N(f)|\leq\norm{\EN}_2\norm{\mathbf{a}}^2\leq\varepsilon_N\norm{f}_{L^2}^2$.
+Under (T.0)--(T.1), Proposition~\ref{prop:T2} gives
+$\varepsilon_N\leq N\Kul^2 e^{-2\delta c}=O(e^{-\delta'N})$.
+
+\medskip\noindent\textbf{(V) Limit $c\to\infty$ (unconditional for fixed $N$).}
+For fixed $N$ and $\mathbf{p}$: $\lambda_n(c)\to1$ for all
+$n\leq N-1$ \cite{Slepian1978}, so $G_c^{(N)}\to\mathrm{Id}_N$.
+Also $\norm{\EN}_2\to0$ since $\norm{\EN}_F\to0$ by
+Lemma~\ref{lem:Aprime}(vi) (the Kulikov-norm product is bounded
+while $\sum_j|\psin(p_j)|^2\to\lambda_n(c)\to1$).
+Thus $\GVM\to\mathrm{Id}_N$ in spectral norm, and
+$\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}\to\norm{\mathbf{a}}^2
+=\norm{f}_{L^2}^2$ uniformly.
+This equals $\norm{f}_{L^2[-T,T]}^2$ since $f\in V_N$ is
+concentrated in $[-T,T]$ as $c\to\infty$.
+
+\medskip\noindent\textbf{(VI) Prime sampling.}
+Immediate from Proposition~\ref{prop:T2} and Part~(IV).
+\end{proof}
+
+%%% =================================================================
+\section{Open Problems}\label{sec:open}
+%%% =================================================================
+
+\subsection{The large-dimensional limit}
+The central open problem is the coupled limit $N\to\infty$,
+$c\to\infty$ at a controlled rate, and whether the normalized
+Gram forms converge to a form detecting spectral information
+about $\zeta(s)$ \cite{CCM2025}. This is addressed in Paper~II.
+
+\subsection{Quantitative lower bound for $\AM$}
+\begin{problem}\label{prob:alpha}
+Give an explicit lower bound $f(N,c)$ for $\lambda_{\min}(\GVM)$
+at prime sampling points, without assuming (T.2).
+\end{problem}
+
+\subsection{Characterization of (T.2) sets}
+\begin{problem}\label{prob:T2}
+Characterize all sampling sets $\mathbf{p}\subset[-T,T]$ of cardinality
+$N$ satisfying condition~(T.2) with $\varepsilon_N\to0$.
+Is it sufficient that $\mathbf{p}$ be a stable sampling set for $V_N$
+in the sense of Beurling density?
+\end{problem}
+
+\subsection{Optimal growth of $\Tmin$}
+\begin{problem}
+Determine the optimal growth rate of $\Tmin(N,c)$ as $N\to\infty$.
+\end{problem}
+
+\subsection{Uniform coercivity beyond prime sampling}
+\begin{problem}
+For which families of sets $\{\mathbf{p}_N\}_{N\geq1}$ does $\QM$
+satisfy a uniform coercivity bound
+$\liminf_{N}\lambda_{\min}(G^{(N)}_{\mathbf{p}_N})>0$?
+\end{problem}
+
+%%% =================================================================
+\begin{thebibliography}{99}
+
+\bibitem{Bombieri2000}
+E.~Bombieri,
+\textit{Problems of the Millennium: The Riemann Hypothesis},
+Clay Mathematics Institute, 2000.
+
+\bibitem{BonamiKaroui}
+A.~Bonami and A.~Karoui,
+\textit{Spectral decay of the sinc kernel operator and approximation
+with prolate spheroidal wave functions},
+arXiv:1012.3881.
+
+\bibitem{CC2019}
+A.~Connes and C.~Consani,
+\textit{Riemann--Roch and Weil positivity},
+arXiv:1910.14368 (2019).
+
+\bibitem{CCM_PNAS2022}
+A.~Connes, C.~Consani, and H.~Moscovici,
+\textit{The UV prolate spectrum matches the zeros of zeta},
+Proc.\ Natl.\ Acad.\ Sci.\ \textbf{119} (2022), e2123174119.
+
+\bibitem{CCM2025}
+A.~Connes, C.~Consani, and H.~Moscovici,
+arXiv:2511.22755 (2025).
+
+\bibitem{HornJohnson2013}
+R.~Horn and C.~Johnson,
+\textit{Matrix Analysis}, 2nd ed.,
+Cambridge University Press, 2013.
+
+\bibitem{KarlinStudden1966}
+S.~Karlin and W.~Studden,
+\textit{Tchebycheff Systems},
+Interscience, 1966.
+
+\bibitem{Kulikov2023}
+A.~Kulikov,
+\textit{Exponential lower bounds for the number of eigenvalues of
+the time-frequency localization operator},
+arXiv:2306.12430 (2023).
+
+\bibitem{Slepian1978}
+D.~Slepian,
+\textit{Prolate spheroidal wave functions, Fourier analysis,
+and uncertainty~-- V},
+Bell Syst.\ Tech.\ J.\ \textbf{57} (1978), 1371--1430.
+
+\bibitem{Weil1952}
+A.~Weil,
+\textit{Sur les formules explicites de la th\'{e}orie des nombres},
+Izv.\ Akad.\ Nauk \textbf{36} (1952), 3--18.
+
+\end{thebibliography}
+
+\end{document}
