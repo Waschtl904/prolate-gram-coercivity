@@ -89,8 +89,8 @@ Under the additional Kulikov--Slepian condition
 $N\leq(2/\pi-\varepsilon)c$ and a sampling-quality assumption
 \textup{(T.2)} on~$\mathbf{p}$, we further obtain an explicit
 exponential lower bound $\AM\geq\AM^{\mathrm{exp}}>0$, spectral
-stability, a Weil-type decomposition, and a limit statement as
-$c\to\infty$.
+stability, a spectral decomposition with quadrature remainder,
+and a limit statement as $c\to\infty$.
 
 The result is motivated by the Weil positivity program of
 Connes--Consani--Moscovici~\cite{CCM2025} and provides a rigorous
@@ -122,7 +122,7 @@ $\Kop$ and its eigenstructure in $\PW$.
 The present paper contributes a rigorous finite-dimensional building
 block. The main object is the prolate Gram form $\QM$ evaluated at $N$
 sampling points; Theorem~\ref{thm:main} establishes coercivity,
-stability, and Weil-decomposability of $\QM$ on $V_N$.
+stability, and a precise operator-theoretic splitting of $\QM$ on $V_N$.
 
 \medskip
 \noindent\textbf{Two-level proof strategy.}
@@ -135,7 +135,7 @@ directly from the Chebyshev-system property of $V_N$
 (Lemma~\ref{lem:B}) and standard linear algebra.
 No assumption beyond pairwise distinctness of $\mathbf{p}$ is needed.
 \item \emph{Conditional quantitative bounds} (Parts~(III)--(IV)).
-An \emph{explicit} lower bound for $\AM$ and the Weil-type error
+An \emph{explicit} lower bound for $\AM$ and the quadrature error
 $|R_N(f)|=O(e^{-\delta N})$ require the additional sampling-quality
 assumption~\textup{(T.2)} (Definition~\ref{def:T2}).
 Condition~(T.2) is verified for prime sampling points under
@@ -307,7 +307,7 @@ for all $f\in V_N$.
 In particular, $\AM\geq\AM^{\mathrm{exp}}:=
 \sqrt{\lambda_{N-1}(c)-\varepsilon_N}>0$.
 
-\item \textbf{Weil-type decomposition (conditional on (T.2)).}
+\item \textbf{Spectral decomposition with quadrature remainder (conditional on (T.2)).}
 For every $f\in V_N$,
 \[
   \QM(f)\;=\;\ip{\Kop f}{f}_{L^2}+R_N(f),
@@ -318,13 +318,14 @@ Under (T.0)--(T.1), $\varepsilon_N\leq N\Kul^2 e^{-2\delta c}=O(e^{-\delta'N})$.
 
 \item \textbf{Limit (unconditional).}
 For fixed $N$ and fixed $\mathbf{p}$, as $c\to\infty$:
-$\QM(f)\to\norm{f}_{L^2[-T,T]}^2$ uniformly in
+$\QM(f)\to\norm{f}_{L^2}^2$ uniformly in
 $f\in V_N$, $\norm{f}_{L^2}=1$.
 
 \item \textbf{Prime sampling and Weil structure.}
 If $p_1<\cdots<p_N$ are prime numbers, then under (T.0)--(T.1)
 condition~(T.2) holds (Proposition~\ref{prop:T2}), and
-the Weil-type decomposition~(IV) specializes to
+the spectral decomposition with quadrature remainder~\textup{(IV)}
+specializes to
 \[
   \QM(f)\;=\;\ip{\Kop f}{f}_{L^2}+O(e^{-\delta'N}).
 \]
@@ -349,7 +350,7 @@ sets, (T.2) is an explicit hypothesis.
 
 \begin{remark}[Role of prime sampling]\label{rem:primes}
 Parts~(I)--(V) hold for any $N$ pairwise distinct points.
-The arithmetic of primes is not used in the proofs of these parts;
+The arithmetic of primes plays no role in the proofs of these parts;
 see Remark~\ref{rem:primes_B}.
 Prime sampling is singled out because: (a)~Proposition~\ref{prop:T2}
 verifies (T.2) unconditionally for primes under (T.0)--(T.1), and
@@ -404,9 +405,9 @@ The two bounds serve distinct and complementary roles:
   \item The \emph{upper} bound $1-\lambda_n(c)\leq
   C(\varepsilon)e^{-\eta(\varepsilon)c}$ (Landau--Widom) expresses
   that eigenvalues approach $1$ exponentially fast. It is used in the
-  quadrature cancellation argument (Proposition~\ref{prop:T2}) where
-  the smallness of $1-\lambda_n$ enters as a smallness parameter for
-  the variation of $|\psin|^2$ over $[-T,T]$.
+  quadrature cancellation argument (Proposition\textup{\ref{prop:T2}})
+  where the smallness of $1-\lambda_n$ enters as a smallness parameter
+  for the variation of $|\psin|^2$ over $[-T,T]$.
 \end{itemize}
 These two bounds must not be conflated: the lower bound keeps
 $(1-\lambda_n)^{-1/2}$ from diverging too fast, while the upper
@@ -561,7 +562,8 @@ and $\lambda_{\min}(\GVM)>0$.
 
 \begin{remark}\label{rem:primes_B}
 Lemma~\ref{lem:B} uses only pairwise distinctness of $\mathbf{p}$.
-The arithmetic of primes plays no role here.
+The arithmetic of primes plays no role in this operator-theoretic
+argument.
 \end{remark}
 
 \subsection{Lemma C: Spectral stability via Weyl perturbation}
@@ -717,7 +719,7 @@ For small $N$ or $c$, one verifies directly.
 \textit{Conclusion of (i)--(iii).}
 (i) $N\Kul^2 e^{-2\delta'' c}\to0$ since $e^{-2\delta'' c}$ decays
 faster than $N^{-1}$ under (T.1) ($c\geq\pi N/((2-\pi\varepsilon)\omega)$).
-(ii) Steps~1--5 give $\norm{\EN}_2\leq\varepsilon_N^{\mathrm{prime}}
+(ii) Steps\textup{1--5} give $\norm{\EN}_2\leq\varepsilon_N^{\mathrm{prime}}
 <\lambda_{N-1}(c)$, i.e., (T.2) holds.
 (iii) Setting $\delta'':=\delta\pi/((2-\pi\varepsilon)\omega)>0$
 if necessary, we have $e^{-2\delta c}\leq e^{-2\delta''N}$ under
@@ -731,6 +733,10 @@ in the sense of Feichtinger--Gr\"ochenig, i.e., the associated
 discrete measure $\mu_{\mathbf{p}}=\sum_j\delta_{p_j}$ approximates
 the Lebesgue measure on $[-T,T]$ up to a multiplicative constant.
 The precise characterization is Problem~\ref{prob:T2}.
+In this sense, the Voronoi-cell and prime-gap constructions used in
+Proposition~\ref{prop:T2} are merely a technical device to bound this
+quadrature error operator; they do not change its operator-theoretic
+interpretation.
 \end{remark}
 
 %%% =================================================================
@@ -764,7 +770,7 @@ $\QM(f)=\sum_j|f(p_j)|^2\leq N(\omega/\pi)\norm{f}_{L^2}^2$.
 By Lemma~\ref{lem:C}(ii),
 $\lambda_{\min}(\GVM)\geq\lambda_{N-1}(c)-\varepsilon_N>0$.
 
-\medskip\noindent\textbf{(IV) Weil-type decomposition (assuming (T.2)).}
+\medskip\noindent\textbf{(IV) Spectral decomposition with quadrature remainder (assuming (T.2)).}
 By the eigenvalue equation:
 $\ip{\Kop f}{f}_{L^2}=\sum_n\lambda_n(c)|a_n|^2
 =\ip{G_c^{(N)}\mathbf{a}}{\mathbf{a}}$.
@@ -788,9 +794,7 @@ Lemma~\ref{lem:Aprime}(vi) (the Kulikov-norm product is bounded
 while $\sum_j|\psin(p_j)|^2\to\lambda_n(c)\to1$).
 Thus $\GVM\to\mathrm{Id}_N$ in spectral norm, and
 $\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}\to\norm{\mathbf{a}}^2
-=\norm{f}_{L^2}^2$ uniformly.
-This equals $\norm{f}_{L^2[-T,T]}^2$ since $f\in V_N$ is
-concentrated in $[-T,T]$ as $c\to\infty$.
+=\norm{f}_{L^2}^2$ uniformly for $\norm{f}_{L^2}=1$.
 
 \medskip\noindent\textbf{(VI) Prime sampling.}
 Immediate from Proposition~\ref{prop:T2} and Part~(IV).
