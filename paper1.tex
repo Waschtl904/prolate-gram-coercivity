@@ -35,11 +35,6 @@
 \newcommand{\norm}[1]{\|#1\|}
 \newcommand{\ip}[2]{\langle #1,\, #2\rangle}
 
-%% ---- Logical-layer shading (editorial aid, remove for final) -----
-\colorlet{layerA}{green!6!white}
-\colorlet{layerB}{yellow!8!white}
-\colorlet{layerC}{orange!10!white}
-
 %% ---- Fourier convention ------------------------------------------
 %% Engineering: \hat f(\xi)=\int f(x)e^{-2\pi ix\xi}dx.
 %% Consistent with Bonami--Karoui. Plancherel: \|f\|_{L^2}=\|\hat f\|_{L^2}.
@@ -69,15 +64,15 @@ access to the relevant literature.}
 }
 
 \keywords{prolate spheroidal wave functions, Gram form, coercivity,
-Kulikov constant, sampling, Weil positivity, Paley--Wiener space,
+Kulikov constant, unisolvent sampling, Weil positivity, Paley--Wiener space,
 Connes--Consani--Moscovici}
 
 \begin{document}
 \maketitle
 
 %% ------------------------------------------------------------------
-%% LOGICAL LAYERS (for reader orientation)
-%%   Layer A  — Operator core.  Fully rigorous, no spectral assumptions.
+%% LOGICAL LAYERS
+%%   Layer A  — Operator core.  Fully rigorous under (A0).
 %%   Layer B  — Conditional sampling theory.  Rigorous under (T.2).
 %%   Layer C  — Heuristics.  Prime sampling, exponential claims.
 %%              NOT part of the main theorem.
@@ -95,19 +90,18 @@ $\QM(f)=\sum_{j=1}^N|f(p_j)|^2$, $f\in V_N$.
 We prove, in three logical layers of increasing conditionality:
 
 \textbf{Layer~A (unconditional).}
-Assuming only that the evaluation map
-$\mathcal{E}_{\mathbf{p}}:V_N\to\mathbb{C}^N$, $f\mapsto(f(p_j))$,
-is injective (Assumption~\ref{ass:A0}),
+Assuming only that $\mathbf{p}$ is a \emph{unisolvent set} for $V_N$
+(Definition~\ref{def:unisolvent}, Assumption~\ref{ass:A0}),
 $\QM$ is coercive:
 $\QM(f)\geq\AM^2\norm{f}_{L^2}^2$ for all $f\in V_N$,
 together with a matching continuity upper bound.
-The limit $\QM(f)\to\norm{f}_{L^2}^2$ as $c\to\infty$ holds
-for fixed $N$ and $\mathbf{p}$.
+For fixed $N$ and unisolvent $\mathbf{p}$,
+as $c\to\infty$ the entries of $\GVM$ converge entrywise
+to those of $\mathrm{Id}_N$, and coercivity is preserved.
 
 \textbf{Layer~B (conditional on (T.2)).}
-Under the abstract sampling-quality condition (T.2)
---- which requires $\norm{\EN}_2$ to be small relative to
-$\lambda_{N-1}(c)$ --- we obtain explicit spectral stability and
+Under the abstract sampling-quality condition~(T.2)
+we obtain explicit spectral stability and
 a spectral decomposition $\QM(f)=\ip{\Kop f}{f}+R_N(f)$
 with $|R_N(f)|\leq\varepsilon_N\norm{f}^2$.
 
@@ -118,7 +112,6 @@ may hold. These claims are \emph{not} part of the main theorem.
 
 No claim is made regarding zeros of $\zeta(s)$
 or the passage $N\to\infty$.
-Prime sampling is introduced for motivational reasons only.
 \end{abstract}
 
 \tableofcontents
@@ -150,7 +143,7 @@ and which remain heuristic.
 \begin{enumerate}[(A)]
 \item \emph{Operator core (Layer~A, \S\ref{sec:layerA}).}
 Coercivity and continuity from finite-dimensional linear algebra;
-requires only Assumption~\ref{ass:A0} (evaluation injectivity).
+requires only Assumption~\ref{ass:A0} (unisolvence).
 Fully rigorous.
 
 \item \emph{Conditional sampling theory (Layer~B, \S\ref{sec:layerB}).}
@@ -162,8 +155,7 @@ Motivation for why prime sampling satisfies (T.2) and why
 exponential rates may hold. Explicitly not proven.
 
 \item \emph{Open problems (Layer~D, \S\ref{sec:open}).}
-Rigorous verification of (T.2), exponential rates, and the
-large-$N$ limit.
+Rigorous verification of (T.2), exponential rates, and limits.
 \end{enumerate}
 
 \medskip\noindent\textbf{What this paper does not claim.}
@@ -175,6 +167,8 @@ of \cite{CCM2025}, addressed in Paper~II.
 %%% =================================================================
 \section{Setup and Notation}\label{sec:setup}
 %%% =================================================================
+
+\subsection{Basic objects}
 
 We use the engineering Fourier convention
 $\widehat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi ix\xi}dx$
@@ -200,6 +194,32 @@ The \emph{Kulikov constant}
 $\Kul:=\sup_{n,c}(1-\lam)^{1/2}\norm{\psin}_{L^\infty}<\infty$
 \cite[Thm.~1.1]{Kulikov2023}.
 
+\subsection{Regime table}
+
+The paper addresses three distinct asymptotic regimes.
+Results in this paper concern \textbf{Regime~I} only;
+Regimes~II and~III are the subject of Papers~II and beyond.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+Regime & Parameters & Limit & Addressed in \\
+\midrule
+\textbf{I} & $N$ fixed, $\mathbf{p}$ fixed & $c\to\infty$ & This paper (Layer~A) \\
+\textbf{II} & $N,c\to\infty$, $N/c\to\rho\in(0,2/\pi)$ & coupled & Paper~II \\
+\textbf{III} & $N\to\infty$, $\mathbf{p}=\{p_1,\ldots,p_N\}$ primes & arithmetic & Open (Problem~\ref{prob:largeN}) \\
+\bottomrule
+\end{tabular}
+\caption{Asymptotic regimes. Limits in Regimes~II--III involve
+non-trivial interchange of $N$ and $c$ and are \emph{not} addressed here.
+In particular, the $c\to\infty$ limit of Theorem~\ref{thm:layerA}(III)
+is \textbf{Regime~I only}: $N$ and $\mathbf{p}$ are held fixed.}
+\label{tab:regimes}
+\end{table}
+
+\subsection{Gram matrix and error decomposition}
+
 \begin{definition}[Prolate Gram matrix and form]\label{def:GramForm}
 For $N$ distinct $\mathbf{p}=(p_1,\ldots,p_N)\subset[-T,T]$:
 evaluation matrix $M(\mathbf{p})_{jn}=\psi_n^{(c)}(p_j)$;
@@ -212,15 +232,14 @@ $\BM=\sqrt{\lambda_{\max}(\GVM)}$.
 \begin{definition}[Gram splitting and condition~(T.2)]\label{def:T2}
 Define the \emph{diagonal reference matrix}
 $(G_c^{(N)})_{mn}:=\lambda_n(c)\delta_{mn}$
-and the \emph{error (discretization) matrix} $\EN:=\GVM-G_c^{(N)}$.
+and the \emph{discretization error matrix} $\EN:=\GVM-G_c^{(N)}$.
 
 \medskip\noindent\textbf{Interpretation.}
 Since $\int_{-T}^T\psi_m^{(c)}\overline{\psi_n^{(c)}}dx
 =\lambda_n(c)\delta_{mn}$,
-the matrix $G_c^{(N)}$ is the \emph{continuous analog} of $\GVM$
-(replace discrete sum by integral). Thus $\EN$ is a
-\emph{discretization error matrix}; no further quantitative claim
-about $\norm{\EN}$ is made in Layer~A.
+the matrix $G_c^{(N)}$ is the continuous analog of $\GVM$.
+Thus $\EN$ measures discretization error.
+No quantitative claim about $\norm{\EN}$ is made in Layer~A.
 
 \medskip\noindent\textbf{(T.2) Sampling-quality condition.}
 $\mathbf{p}$ \emph{satisfies~(T.2)} with $\varepsilon_N\geq0$ if
@@ -232,39 +251,67 @@ $\mathbf{p}$ \emph{satisfies~(T.2)} with $\varepsilon_N\geq0$ if
 \end{definition}
 
 \begin{remark}[Status of (T.2)]\label{rem:T2}
-Condition~(T.2) is an \emph{abstract hypothesis} on the sampling set
-$\mathbf{p}$. Whether specific families of points (e.g.\ primes)
-satisfy (T.2) is \emph{not proved} in this paper; see
-Problem~\ref{prob:T2} and the heuristic discussion in
-\S\ref{sec:layerC}.
+Condition~(T.2) is an \emph{abstract hypothesis}.
+Whether specific families (e.g.\ primes) satisfy (T.2)
+is \emph{not proved} here; see Problem~\ref{prob:T2}
+and \S\ref{sec:layerC}.
 \end{remark}
 
 %%% =================================================================
 \section{Layer~A: Operator Core (Unconditional)}\label{sec:layerA}
 %%% =================================================================
 
-\begin{assumption}[Evaluation injectivity]\label{ass:A0}
-The evaluation map
+\subsection{Unisolvent sets and Assumption (A0)}
+
+\begin{definition}[Unisolvent set]\label{def:unisolvent}
+A set $\mathbf{p}=(p_1,\ldots,p_N)\subset[-T,T]$ of $N$ distinct points
+is called \emph{unisolvent for $V_N$} if the only $f\in V_N$
+satisfying $f(p_j)=0$ for all $j=1,\ldots,N$ is $f\equiv0$.
+
+Equivalently, $\mathbf{p}$ is unisolvent for $V_N$ if and only if the
+evaluation matrix $M(\mathbf{p})$ has rank $N$, i.e.\
+the evaluation map
 \[
   \mathcal{E}_{\mathbf{p}}:V_N\to\mathbb{C}^N,
   \qquad f\mapsto(f(p_1),\ldots,f(p_N)),
 \]
-is injective, i.e.\ the only $f\in V_N$ with $f(p_j)=0$
-for all $j=1,\ldots,N$ is $f\equiv0$.
-\end{assumption}
+is a bijection.
+\end{definition}
 
-\begin{remark}[Discussion of Assumption~\ref{ass:A0}]\label{rem:A0}
-Assumption~\ref{ass:A0} holds whenever the $N$ points are
-\emph{generic} (no special resonance condition). For PSWFs,
-it is related to the Chebyshev-system / zero-counting properties
-of $V_N$ \cite{KarlinStudden1966,Slepian1978}, but a complete
-unconditional proof for all $N$ distinct points is not available
-in the present paper. Rigorously, Assumption~\ref{ass:A0} should
-be treated as an explicit hypothesis; its verification for
-concrete families is Problem~\ref{prob:A0}.
+\begin{remark}[Existence and genericity of unisolvent sets]\label{rem:unisolvent}
+Not every $N$-tuple of distinct points is unisolvent for $V_N$.
+Unisolvence depends on the specific function space $V_N$
+and the configuration $\mathbf{p}$.
+\begin{enumerate}[(i)]
+\item \emph{What is known.}
+For Chebyshev systems (Haar systems) on $[-T,T]$,
+every $N$-tuple of distinct points is unisolvent
+\cite[Ch.~1]{KarlinStudden1966}.
+Whether $V_N$ is a Chebyshev system for all $c>0$ and $N\geq1$
+is related to the zero-counting properties of PSWFs
+\cite{Slepian1978}, but is \emph{not fully established}
+in the existing literature for all parameter ranges.
+\item \emph{What is safe to say.}
+Unisolvent sets for $V_N$ exist (e.g.\ any set of $N$ distinct
+Gauss--PSWF quadrature nodes), and unisolvence holds for
+\emph{generic} configurations in the sense that the set of
+non-unisolvent $N$-tuples has measure zero in $[-T,T]^N$.
+\item \emph{What is open.}
+A complete characterization of all unisolvent configurations
+for $V_N$, and in particular whether prime sampling sets are
+unisolvent, is Problem~\ref{prob:A0}.
+\end{enumerate}
 \end{remark}
 
-\begin{lemma}[Gram positivity under~\ref{ass:A0}]\label{lem:B}
+\begin{assumption}[Unisolvence]\label{ass:A0}
+Throughout Layer~A, we assume that the sampling set
+$\mathbf{p}=(p_1,\ldots,p_N)$ is \emph{unisolvent for $V_N$}
+in the sense of Definition~\ref{def:unisolvent}.
+\end{assumption}
+
+\subsection{Coercivity and continuity}
+
+\begin{lemma}[Gram positivity under unisolvence]\label{lem:B}
 Under Assumption~\ref{ass:A0}:
 \begin{enumerate}[(i)]
 \item $\operatorname{rank}M(\mathbf{p})=N$.
@@ -276,29 +323,58 @@ $\lambda_{\min}(\GVM)>0$.
 \end{lemma}
 
 \begin{proof}
-(i) $\mathcal{E}_{\mathbf{p}}$ injective $\Leftrightarrow$ $\ker M=\{0\}$
+(i) Unisolvence $\Leftrightarrow$ $\ker M=\{0\}$
 $\Leftrightarrow$ $\operatorname{rank}M=N$.
-(ii) $\GVM=M^*M$ and $\ker M=\{0\}$ give $\GVM\succ0$.
-(iii) Standard: $\ip{\GVM\mathbf{a}}{\mathbf{a}}=\norm{M\mathbf{a}}^2$.
+(ii) $\GVM=M^*M$ with $\ker M=\{0\}$ gives $\GVM\succ0$.
+(iii) For $f=\sum_n a_n\psin$ with $\norm{f}^2=\norm{\mathbf{a}}^2$:
+$\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}$,
+so the frame bounds follow from $\GVM\succ0$.
 \end{proof}
 
 \begin{lemma}[Pointwise upper bound]\label{lem:upper}
-For any $f\in V_N$:
-$|f(x)|^2\leq(\omega/\pi)\norm{f}_{L^2}^2$
-for all $x\in\mathbb{R}$,
-by the reproducing-kernel inequality $K_{\PW}(x,x)=\omega/\pi$
+For any $f\in V_N$ and all $x\in\mathbb{R}$:
+$|f(x)|^2\leq(\omega/\pi)\norm{f}_{L^2}^2$,
+by the reproducing-kernel bound $K_{\PW}(x,x)=\omega/\pi$
 \cite[Eq.~(3)]{BonamiKaroui}.
 \end{lemma}
 
-\begin{lemma}[Spectral limit]\label{lem:limit}
-For fixed $N$ and $\mathbf{p}$: $\lambda_n(c)\to1$ for all
-$n\leq N-1$ as $c\to\infty$ \cite{Slepian1978},
-so $G_c^{(N)}\to\mathrm{Id}_N$.
-Since $\GVM=G_c^{(N)}+\EN$ and
-$\norm{\EN}_2\to0$ (the pointwise values $|\psin(p_j)|^2$
-converge to $\lambda_n(c)\to1$ as $c\to\infty$),
-we obtain $\GVM\to\mathrm{Id}_N$ in operator norm.
+\subsection{Entrywise convergence as \texorpdfstring{$c\to\infty$}{c to infty} (Regime~I)}
+
+\begin{lemma}[Entrywise limit of Gram matrix]\label{lem:limit}
+Fix $N\geq1$ and $\mathbf{p}=(p_1,\ldots,p_N)\subset[-T,T]$.
+As $c\to\infty$ with $N$ and $\mathbf{p}$ fixed \textup{(Regime~I)}:
+\begin{enumerate}[(i)]
+\item $\lambda_n(c)\to1$ for each $n=0,\ldots,N-1$ \cite{Slepian1978}.
+Hence $(G_c^{(N)})_{mn}=\lambda_n(c)\delta_{mn}\to\delta_{mn}$
+\emph{entrywise}.
+\item The entries of $M(\mathbf{p})$ depend on $c$ through the PSWFs.
+For fixed $N$, $\mathbf{p}$, and each $j,n$:
+$\psi_n^{(c)}(p_j)\to\psi_n^{(\infty)}(p_j)$ in the appropriate
+$c\to\infty$ limit \cite{Slepian1978}
+(the limiting functions satisfy
+$\sum_j|\psi_n^{(\infty)}(p_j)|^2=1$, i.e.\ $\GVM\to\mathrm{Id}_N$
+entrywise).
+\item In particular, $(\EN)_{mn}=(\GVM)_{mn}-(G_c^{(N)})_{mn}\to0$
+\emph{entrywise} as $c\to\infty$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Important caveat.}
+The entrywise convergence $(\EN)_{mn}\to0$ does \emph{not}
+automatically imply $\norm{\EN}_2\to0$ in operator norm
+for general sequences; it does so here because the matrix size
+$N$ is \emph{fixed}, so entrywise convergence of a fixed
+$N\times N$ matrix is equivalent to convergence in every
+matrix norm.
 \end{lemma}
+
+\begin{proof}
+Parts (i)--(iii) follow from the PSWF eigenvalue asymptotics
+$\lambda_n(c)\to1$ \cite{Slepian1978} and the smoothness of
+$\psi_n^{(c)}(p_j)$ as a function of $c$ for fixed $j,n$.
+The operator-norm equivalence in the caveat holds because all
+norms on the finite-dimensional space $M_{N\times N}(\mathbb{C})$
+are equivalent, and $N$ is fixed.
+\end{proof}
 
 \begin{theorem}[Operator Core]\label{thm:layerA}
 Under Assumption~\ref{ass:A0}:
@@ -310,19 +386,24 @@ $\QM(f)\geq\AM^2\norm{f}_{L^2}^2$ for all $f\in V_N$.
 $\QM(f)\leq N(\omega/\pi)\norm{f}_{L^2}^2$
 for all $f\in V_N$.
 
-\item \textbf{Limit.}
-For fixed $N$ and $\mathbf{p}$, as $c\to\infty$:
-$\QM(f)\to\norm{f}_{L^2}^2$ uniformly in
+\item \textbf{Limit (Regime~I: fixed $N$, $\mathbf{p}$ fixed, $c\to\infty$).}
+$\GVM\to\mathrm{Id}_N$ in operator norm as $c\to\infty$,
+and $\QM(f)\to\norm{f}_{L^2}^2$ uniformly for
 $f\in V_N$, $\norm{f}_{L^2}=1$.
+This statement is \emph{not} claimed for the coupled limit
+$N,c\to\infty$ (Regime~II) or for growing prime sets (Regime~III);
+see Table~\ref{tab:regimes}.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-(I) By Lemma~\ref{lem:B}(iii), $\QM(f)\geq\lambda_{\min}(\GVM)\norm{f}^2=\AM^2\norm{f}^2$.
-(II) By Lemma~\ref{lem:upper}: $\QM(f)=\sum_j|f(p_j)|^2\leq N(\omega/\pi)\norm{f}^2$.
-(III) By Lemma~\ref{lem:limit}, $\GVM\to\mathrm{Id}_N$, so
-$\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}\to\norm{\mathbf{a}}^2=\norm{f}_{L^2}^2$
-uniformly for $\norm{f}=1$.
+(I) Lemma~\ref{lem:B}(iii): $\QM(f)\geq\lambda_{\min}(\GVM)\norm{f}^2=\AM^2\norm{f}^2$.
+(II) Lemma~\ref{lem:upper}: $\QM(f)=\sum_j|f(p_j)|^2\leq N(\omega/\pi)\norm{f}^2$.
+(III) By Lemma~\ref{lem:limit} with $N$ fixed, $\GVM\to\mathrm{Id}_N$
+in operator norm (all norms on $M_{N\times N}$ are equivalent,
+and entrywise convergence suffices).
+Hence $\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}\to\norm{\mathbf{a}}^2
+=\norm{f}_{L^2}^2$ uniformly for $\norm{f}=1$.
 \end{proof}
 
 %%% =================================================================
@@ -330,13 +411,11 @@ uniformly for $\norm{f}=1$.
 %%% =================================================================
 
 All results in this section are \emph{conditional on (T.2)}.
-Condition~(T.2) is an abstract hypothesis on $\mathbf{p}$;
-no specific family of points is claimed to satisfy it here.
+No specific family of points is claimed to satisfy (T.2) here.
 
 \begin{lemma}[Spectral stability via Weyl]\label{lem:C}
 Assume (T.2) with parameter $\varepsilon_N$.
-\begin{enumerate}[(i)]
-\item By Weyl's inequality \cite[Thm.~4.3.1]{HornJohnson2013}:
+By Weyl's inequality \cite[Thm.~4.3.1]{HornJohnson2013}:
 \[
   \lambda_{\min}(\GVM)
   \;\geq\;
@@ -345,13 +424,12 @@ Assume (T.2) with parameter $\varepsilon_N$.
   \lambda_{N-1}(c)-\varepsilon_N
   \;>\;0.
 \]
-\item In particular, $\AM\geq\AM^{\mathrm{stab}}:=
+In particular, $\AM\geq\AM^{\mathrm{stab}}:=
 \sqrt{\lambda_{N-1}(c)-\varepsilon_N}>0$.
-\end{enumerate}
 \end{lemma}
 
 \begin{theorem}[Spectral decomposition with remainder]\label{thm:layerB}
-Assume (T.2) with parameter $\varepsilon_N<\lambda_{N-1}(c)$.
+Assume (T.2) with $\varepsilon_N<\lambda_{N-1}(c)$.
 For every $f=\sum_na_n\psin\in V_N$:
 \[
   \QM(f)\;=\;\ip{\Kop f}{f}_{L^2}+R_N(f),
@@ -361,11 +439,10 @@ For every $f=\sum_na_n\psin\in V_N$:
 \end{theorem}
 
 \begin{proof}
-By the eigenvalue equation:
+The eigenvalue equation gives
 $\ip{\Kop f}{f}_{L^2}=\sum_n\lambda_n(c)|a_n|^2
 =\ip{G_c^{(N)}\mathbf{a}}{\mathbf{a}}$.
-Hence
-$\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}
+Hence $\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}
 =\ip{G_c^{(N)}\mathbf{a}}{\mathbf{a}}+\ip{\EN\mathbf{a}}{\mathbf{a}}
 =\ip{\Kop f}{f}+R_N(f)$,
 where $|R_N(f)|=|\ip{\EN\mathbf{a}}{\mathbf{a}}|
@@ -373,12 +450,11 @@ where $|R_N(f)|=|\ip{\EN\mathbf{a}}{\mathbf{a}}|
 \end{proof}
 
 \begin{remark}[Layer~B summary]
-Theorem~\ref{thm:layerB} is logically clean:
-given the abstract hypothesis (T.2), the spectral decomposition
+Given the abstract hypothesis (T.2), the spectral decomposition
 and stability bound are fully rigorous.
-The quality of the result depends entirely on how small $\varepsilon_N$ is,
-which is a question about the sampling set $\mathbf{p}$ --- addressed
-heuristically in Layer~C and rigorously in Layer~D.
+The quality depends entirely on $\varepsilon_N$,
+which is a property of $\mathbf{p}$ addressed heuristically
+in Layer~C and rigorously in Layer~D.
 \end{remark}
 
 %%% =================================================================
@@ -386,18 +462,16 @@ heuristically in Layer~C and rigorously in Layer~D.
 %%% =================================================================
 
 \textbf{This section is explicitly heuristic.}
-No result here is part of the main theorems (Theorems~\ref{thm:layerA}
-and~\ref{thm:layerB}). The goal is to motivate why prime sampling
-is natural in this context and to outline what a rigorous proof of
-(T.2) for primes would require.
+No result here is part of Theorems~\ref{thm:layerA}
+or~\ref{thm:layerB}.
 
 \subsection{Motivation: prime sampling and the Weil formula}
 
-The Weil explicit formula involves the sum
+The Weil explicit formula involves
 $\sum_p\log p\cdot|\widehat{h}(\log p)|^2$ over primes.
 Prime sampling $\mathbf{p}=(p_1,\ldots,p_N)$ is the natural
-finite-dimensional approximation. Coercivity of $\QM$ at prime
-points is thus the finite-dimensional analog of Weil positivity.
+finite-dimensional approximation, making coercivity of $\QM$
+at prime points the finite-dimensional analog of Weil positivity.
 No formal connection between Gram form coercivity and Weil positivity
 is established here.
 
@@ -405,97 +479,84 @@ is established here.
 
 \begin{heuristic}[Prime sampling stability]\label{heur:primes}
 Let $p_1<\cdots<p_N$ be primes with $p_N\leq T$ and
-$N\leq(2/\pi-\varepsilon)c$ (Kulikov--Slepian regime).
+$N\leq(2/\pi-\varepsilon)c$.
 We expect
-\[
-  \norm{\EN}_2\;=\;O\bigl(N\Kul^2 e^{-2\delta c}\bigr)
-  \;=\;O(e^{-\delta'N})
-\]
-for some $\delta'>0$.
-Consequently (T.2) should hold with an exponentially small parameter.
+$\norm{\EN}_2=O(N\Kul^2 e^{-2\delta c})=O(e^{-\delta'N})$
+for some $\delta'>0$,
+so (T.2) should hold with exponentially small $\varepsilon_N$.
 \end{heuristic}
 
-\textbf{Sketch of the argument (not a proof).}
-The diagonal entries $({\EN})_{nn}$ equal
-$\sum_j|\psin(p_j)|^2 - \lambda_n(c)$,
-which is a quadrature error for $|\psin|^2$.
-Using Bernstein's inequality and prime-gap estimates
-($|I_j|\lesssim\log^2 p_j$ for Voronoi cells $I_j$),
-one heuristically obtains a polynomial factor from the gaps and
-an exponential decay from $1-\lambda_n(c)\leq Ce^{-\eta c}$
-(Landau--Widom).
-\emph{However, the key step --- that the exponential decay
-$e^{-\eta c}$ overcomes the polynomial growth from prime gaps ---
-is not rigorously established}, because:
+\textbf{Sketch (not a proof).}
+The diagonal entries $(\EN)_{nn}=\sum_j|\psin(p_j)|^2-\lambda_n(c)$
+measure quadrature error for $|\psin|^2$.
+Bernstein's inequality and prime-gap estimates
+($|I_j|\lesssim\log^2 p_j$) give a polynomial factor;
+Landau--Widom ($1-\lambda_n(c)\leq Ce^{-\eta c}$) provides
+exponential decay.
+The key missing step --- that exponential decay overcomes
+polynomial gap growth --- is \emph{not rigorously established}:
 \begin{enumerate}[(a)]
 \item The transition from the naive bound
-$\norm{\EN}_F = O(Ne^{2\delta c})$
-to the improved bound $O(Ne^{-2\delta c})$
-requires a cancellation mechanism that is currently not proven.
-\item The prime-gap estimate $|I_j|\leq C\log^2 p_j$
-follows from Bertrand's postulate for $j\geq2$,
-but the implied constant in the quadrature bound
-$\sum_j|I_j|^2\norm{(|\psin|^2)'}_{L^\infty}$
-needs careful treatment.
+$\norm{\EN}_F=O(Ne^{2\delta c})$
+to $O(Ne^{-2\delta c})$
+requires a cancellation mechanism that is currently unproven.
 \item No Marcinkiewicz--Zygmund inequality for PSWFs at prime
 nodes has been established.
+\item The Voronoi cell quadrature bound
+$\sum_j|I_j|^2\norm{(|\psin|^2)'}_{L^\infty}$
+requires careful treatment of the implied constants.
 \end{enumerate}
-A rigorous proof would require one of the approaches in Problem~\ref{prob:T2}.
 
-\subsection{What a rigorous proof of (T.2) for primes would need}
+\subsection{Three approaches to a rigorous proof}
 
 \begin{enumerate}[(i)]
 \item \emph{Approach A (sampling theory).}
-Establish a Marcinkiewicz--Zygmund theorem for $V_N$ at prime nodes:
-find weights $w_j>0$ such that
-$\sum_j w_j|f(p_j)|^2\sim\norm{f}_{L^2[-T,T]}^2$
-uniformly for $f\in V_N$.
-This would give a weighted version of (T.2) directly.
+Establish a Marcinkiewicz--Zygmund theorem for $V_N$ at prime nodes.
 
 \item \emph{Approach B (PSWF-specific estimates).}
-Derive uniform quadrature estimates for $|\psin|^2$ at prime nodes,
-using the specific oscillation properties of PSWFs near the
-transition region $n\approx(2/\pi)c$.
+Derive uniform quadrature estimates for $|\psin|^2$ at prime nodes
+near the transition region $n\approx(2/\pi)c$.
 
-\item \emph{Approach C (large-$c$ perturbation).}
-Use the fact that for large $c$ and fixed $N$,
-$\GVM\to\mathrm{Id}_N$ (Lemma~\ref{lem:limit})
-and therefore (T.2) holds trivially for large enough $c$.
-This gives (T.2) for fixed $N$ but does not control the rate
-or the coupled limit $N,c\to\infty$.
+\item \emph{Approach C (large-$c$, Regime~I).}
+For fixed $N$, Lemma~\ref{lem:limit} gives $\GVM\to\mathrm{Id}_N$,
+so (T.2) holds trivially for large enough $c$.
+This is Regime~I only and does not address Regimes~II or~III.
 \end{enumerate}
 
 %%% =================================================================
 \section{Open Problems}\label{sec:open}
 %%% =================================================================
 
-\begin{problem}[Injectivity of evaluation map]\label{prob:A0}
-Prove unconditionally (for all $N\geq1$ and all $N$ pairwise
-distinct $\mathbf{p}\subset[-T,T]$) that
-$\mathcal{E}_{\mathbf{p}}:V_N\to\mathbb{C}^N$ is injective.
-Is this a consequence of known Chebyshev-system / oscillation
-theory for PSWFs?
+\begin{problem}[Unisolvence characterization]\label{prob:A0}
+Prove (or disprove) that every $N$-tuple of distinct points
+in $[-T,T]$ is unisolvent for $V_N$.
+Is $V_N$ a Chebyshev system on $[-T,T]$ for all $c>0$, $N\geq1$?
+Is prime sampling unisolvent for $V_N$?
 \end{problem}
 
 \begin{problem}[Condition (T.2) for prime sampling]\label{prob:T2}
-Prove rigorously that prime sampling satisfies (T.2) with a
-quantitative bound on $\varepsilon_N$.
+Prove rigorously that prime sampling satisfies (T.2)
+with a quantitative bound on $\varepsilon_N$.
 Does a Marcinkiewicz--Zygmund inequality hold for PSWFs at prime nodes?
-What is the optimal rate of $\varepsilon_N\to0$?
 \end{problem}
 
-\begin{problem}[Exponential rate]\label{prob:exp}
-Establish rigorously a bound of the form
-$\norm{\EN}_2\leq C(N,\varepsilon)e^{-\delta c}$
-for prime (or any structured) sampling, identifying the
-structural cancellation mechanism.
+\begin{problem}[Exponential rate and cancellation mechanism]\label{prob:exp}
+Establish rigorously $\norm{\EN}_2\leq C(N,\varepsilon)e^{-\delta c}$
+for prime sampling, identifying the structural cancellation.
 \end{problem}
 
-\begin{problem}[Large-dimensional limit]\label{prob:largeN}
+\begin{problem}[Regime~II: coupled limit $N/c\to\rho$]\label{prob:largeN}
 Determine the behavior of $\lambda_{\min}(\GVM)$ and $\QM$
-in the coupled limit $N,c\to\infty$ with $N/c\to\rho\in(0,2/\pi)$.
+in Regime~II ($N,c\to\infty$, $N/c\to\rho\in(0,2/\pi)$).
+Addressed in Paper~II.
+\end{problem}
+
+\begin{problem}[Regime~III: arithmetic sampling growth]\label{prob:regime3}
+In Regime~III ($\mathbf{p}=\{p_1,\ldots,p_N\}$ primes, $N\to\infty$),
+determine whether (T.2) holds uniformly and whether coercivity
+constants can be controlled independently of $N$.
 Does the normalized Gram form detect spectral information
-about $\zeta(s)$? Addressed in Paper~II.
+about $\zeta(s)$?
 \end{problem}
 
 \begin{problem}[Characterization of (T.2) sets]\label{prob:T2char}
