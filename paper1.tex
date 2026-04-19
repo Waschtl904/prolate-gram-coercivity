@@ -492,7 +492,8 @@ In particular,
 \begin{proof}
 Integrate by parts $p$ times on $\Rbulk^{(m,n)}$ using
 Lemmas~\ref{lem:phase_gap_final} and~\ref{lem:ibp_uniform}; boundary terms
-are absorbed into the constant $C_p$. Since
+are uniformly bounded since the bulk region has finitely many endpoints in $[-T,T]$, independent of $m$ and $n$, and are therefore absorbed into the constant $C_p$.
+Since
 \[
   \frac{1+c^{-2/3}|m-n|}{|m-n|}
   \le \frac{2}{1+|m-n|}
@@ -524,15 +525,20 @@ Applying Cauchy--Schwarz on $U_m$ gives
 \[
   \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx
   \le \|\psi_m^{(c)}\|_{L^2(U_m)}\,\|\psi_n^{(c)}\|_{L^2(U_m)}
-  \le C |U_m|.
+  \le C |U_m|^{1/2}\cdot C |U_m|^{1/2}
+  = C |U_m|.
 \]
 Since $|U_m|=O(c^{-1/3})$, the stated bound follows.
 \end{proof}
 
 \begin{theorem}[Verified defect decay]\label{thm:banded_decay}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be any quadrature rule on $[-T,T]$ for which
-Proposition~\ref{prop:xry_split} applies and the associated quadrature remainder
-admits the bulk/turning decomposition above. Then for every $p\ge 1$ there exist
+Assume that $\{(p_j,w_j)\}_{j=1}^N$ is a quadrature rule on $[-T,T]$ such that,
+for each pair $(m,n)$, the quadrature remainder
+\[
+  R_{mn}^{\mathrm{quad}}
+  = \int_{-T}^{T}f_{mn}(x)\,dx - \sum_{j=1}^N w_j f_{mn}(p_j)
+\]
+admits the bulk/turning decomposition used above. Then for every $p\ge 1$ there exist
 $C_p,C>0$, independent of $m,n,N,c$, such that
 \[
   |E_{mn}|\le C_p(1+|m-n|)^{-p}+C c^{-1/3}
