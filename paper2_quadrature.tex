@@ -236,7 +236,8 @@ possibly reducing that rate).
 
 \begin{lemma}[Conditional exponential PSWF coefficient decay]\label{lem:coeff_decay}
 Assume Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}.
-Then there exist constants $C_{m,n},\alpha>0$ such that
+Then there exist constants $C_{m,n}$ and a rate $\alpha=\alpha(N)>0$, bounded
+below by a positive constant in the regime $N\sim c$, such that
 \[
   |\widehat f_{mn}(k)|
   :=|\ip{f_{mn}}{\psi_k^{(c)}}|\le C_{m,n}\,e^{-\alpha k}
@@ -254,8 +255,10 @@ exponentially; this follows from the spectral approximation theory of
 Assumption~\ref{ass:pswf_analyticity}. The controlled-growth hypothesis in
 Assumption~\ref{ass:uniform_bounds} ensures that the prefactors remain
 compatible with an overall exponential decay statement in the regime
-$0\le m,n\le N\sim c$. The tail bound follows by summing the geometric
-series $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
+$0\le m,n\le N\sim c$, possibly after replacing the decay rate by a smaller
+one that remains bounded below by a positive constant in that regime. The
+tail bound follows by summing the geometric series
+$\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
 \begin{remark}[Status of the PSWF step]\label{rem:pswf_status}
