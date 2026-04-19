@@ -164,6 +164,8 @@ $\norm{f}_{L^2}^2=\norm{\mathbf{a}}_2^2$ and
 $\QM(f):=\sum_{j=1}^N|f(p_j)|^2=\ip{\GVM\mathbf{a}}{\mathbf{a}}$.
 Write $\AM:=\sqrt{\lambda_{\min}(\GVM)}$ and
 $\BM:=\sqrt{\lambda_{\max}(\GVM)}$.
+Unweighted sampling corresponds to the special case $w_j\equiv 1$, which in general need not satisfy
+frame bounds that are uniform with respect to the geometry of $\mathbf p$.
 \end{definition}
 
 \begin{definition}[Reference matrix and condition~(T.2)]\label{def:T2}
@@ -179,13 +181,22 @@ for $f=\sum_n a_n\psin$,
   =\ip{G^{\mathrm{ref}}_{N,c}\mathbf{a}}{\mathbf{a}}.
 \]
 Set $\EN:=\GVM-G^{\mathrm{ref}}_{N,c}$.
-We say that $\mathbf{p}$ satisfies~(T.2) if
+We say that $\mathbf{p}$ satisfies
+\begin{enumerate}[(T.2a)]
+\item the approximation condition
 \[
-  \norm{\EN}_2\le\varepsilon_N
-  \qquad\text{and}\qquad
+  \norm{\EN}_2\le\varepsilon_N,
+\]
+\item and the spectral stability condition
+\[
   \varepsilon_N<\lambda_{N-1}(c).
 \]
+\end{enumerate}
 \end{definition}
+
+\begin{remark}[Geometric meaning of $\EN$]\label{rem:EN_meaning}
+Thus $\EN$ measures the deviation between discrete sampling geometry and spectral concentration geometry of $\Kop$.
+\end{remark}
 
 \begin{remark}[Coefficient-space identification]\label{rem:coeff_ident}
 The matrices $\GVM$ and $G^{\mathrm{ref}}_{N,c}$ are both viewed as operators on
@@ -282,15 +293,12 @@ Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
-To see that it is not identically zero, choose any basis $f_1,\dots,f_N$ of $V_{N,c}$
-and construct points inductively as follows. Since $f_1\not\equiv0$, choose $p_1\in[-T,T]$
-with $f_1(p_1)\neq0$. If $p_1,\dots,p_k$ are chosen so that the $k\times k$ evaluation matrix
-$(f_i(p_j))_{1\le j,i\le k}$ is invertible and if every $(k+1)\times(k+1)$ minor obtained by adding a point
-$x\in[-T,T]$ vanished identically in $x$, then every linear combination of $f_1,\dots,f_{k+1}$ vanishing on
-$p_1,\dots,p_k$ would vanish identically, contradicting linear independence. Hence one can choose $p_{k+1}$
-so that the enlarged minor is nonzero. By induction, there exists a configuration with invertible evaluation matrix.
-Therefore $\det M(\mathbf{p},c)$ is a nonzero real-analytic function, whose zero set has Lebesgue measure zero.
-Absolute continuity then implies that non-unisolvence occurs with probability zero.
+The point-evaluation functionals on the finite-dimensional space $V_{N,c}$ are separating,
+so one can choose points $p_1,\dots,p_N\in[-T,T]$ for which the evaluation map
+$\mathcal E_{\mathbf p}:V_{N,c}\to\mathbb C^N$ is bijective. Hence
+$\det M(\mathbf{p},c)$ is not identically zero.
+Therefore its zero set has Lebesgue measure zero, and absolute continuity implies
+that non-unisolvence occurs with probability zero.
 \end{proof}
 
 \begin{lemma}[Pointwise bound via reproducing kernel]\label{lem:upper}
@@ -350,6 +358,12 @@ of the Hermitian matrix $\GVM$.
 The implication with constant $B$ is immediate.
 Applying Theorem~\ref{thm:layerA}(II) gives the final bound.
 \end{proof}
+
+\begin{remark}[Crudeness of the global upper bound]
+The bound $\lambda_{\max}(\GVM)\le N\omega/\pi$ is intentionally crude and independent of $c$.
+Its role is to provide a geometry-free estimate suitable for the fixed-$(N,c)$ framework of this paper.
+Sharper bounds exploiting PSWF concentration are left for later work.
+\end{remark}
 
 \section{Layer~B: Comparison Theorem}\label{sec:layerB}
 
@@ -507,7 +521,7 @@ which motivates considering prime sampling sets.
 To obtain coercivity from prime sampling one would need both
 unisolvence and condition~(T.2), and both problems are open.
 
-\begin{heuristic}[Prime sampling stability]
+\begin{heuristic}[Speculative consistency scenario for prime sampling]
 In the regime $N\le (2/\pi-\varepsilon)c$, one may hope that PSWF
 concentration and prime-gap information combine to yield estimates simultaneously controlling
 weighted-frame stability and the spectral mismatch term.
