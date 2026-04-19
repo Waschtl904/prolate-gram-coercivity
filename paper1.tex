@@ -73,6 +73,9 @@ namely
 $\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
 where the remainder measures how well discrete sampling approximates
 the continuous quadratic form of~$\Kop$.
+For Gauss--PSWF nodes we also record an explicit structural identity for the error matrix,
+showing that the deviation from the reference operator is governed by the deviation of the
+quadrature weights from uniformity.
 
 No claim is made about zeros of $\zeta(s)$, prime sampling, or limits
 in which both $N$ and $c$ vary.
@@ -193,6 +196,8 @@ The matrix $\GVM$ arises from discrete point evaluation, whereas
 $G^{\mathrm{ref}}_{N,c}$ represents the restriction of the continuous
 operator $\Kop$ to $V_{N,c}$ in the PSWF basis.
 Thus $\EN$ is a matrix-valued quadrature error.
+Equivalently, condition~(T.2) may be interpreted as a compatibility condition
+between discrete sampling and the spectral decomposition of the prolate operator.
 \end{remark}
 
 \section{Layer~A: Unisolvence and operator core}\label{sec:layerA}
@@ -234,7 +239,8 @@ Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 
 \begin{proof}
 Non-unisolvence means $\det M(\mathbf{p},c)=0$.
-The map $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
+Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
+$(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
 It is not identically zero since there exists at least one configuration
 (for instance, Gauss--PSWF nodes from Proposition~\ref{prop:gauss})
 for which the matrix has full rank.
@@ -262,6 +268,55 @@ Hence $f=0$ almost everywhere on $[-T,T]$, thus everywhere on that interval
 by continuity, and therefore $f\equiv 0$ on $\mathbb R$
 by Lemma~\ref{lem:identity}.
 \end{proof}
+
+\begin{proposition}[Explicit error representation for Gauss--PSWF nodes]
+\label{prop:gauss_error}
+Let $p_1<\cdots<p_N$ be Gauss--PSWF quadrature nodes with positive weights
+$w_1,\dots,w_N$, and let $D:=\operatorname{diag}(w_1,\dots,w_N)$.
+Assume that the quadrature rule is exact on products $f\overline g$ with
+$f,g\in V_{N,c}$.
+Then, in the PSWF basis,
+\[
+  M(\mathbf p,c)^* D\, M(\mathbf p,c)=G^{\mathrm{ref}}_{N,c}.
+\]
+Consequently,
+\[
+  \EN
+  =\GVM-G^{\mathrm{ref}}_{N,c}
+  =M(\mathbf p,c)^*(I-D)M(\mathbf p,c).
+\]
+In particular,
+\[
+  \norm{\EN}_2\le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2.
+\]
+\end{proposition}
+
+\begin{proof}
+For basis vectors $\psi_m^{(c)},\psi_n^{(c)}\in V_{N,c}$, quadrature exactness gives
+\[
+  \sum_{j=1}^N w_j\,\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
+  =\int_{-T}^{T}\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx.
+\]
+Since the PSWFs diagonalize $\Kop$, the right-hand side equals
+$\lambda_n(c)\,\delta_{mn}$.
+Hence the matrix of the weighted discrete form in the PSWF basis is exactly
+$G^{\mathrm{ref}}_{N,c}$, i.e.
+\[
+  M(\mathbf p,c)^* D\,M(\mathbf p,c)=G^{\mathrm{ref}}_{N,c}.
+\]
+Subtracting this identity from $\GVM=M(\mathbf p,c)^*M(\mathbf p,c)$ yields
+\[
+  \EN=M(\mathbf p,c)^*(I-D)M(\mathbf p,c).
+\]
+Finally, the operator-norm bound follows from submultiplicativity.
+\end{proof}
+
+\begin{remark}[Interpretation of Proposition~\ref{prop:gauss_error}]
+For Gauss--PSWF nodes, the deviation from the reference operator is entirely governed by
+the deviation of the quadrature weights from uniformity.
+Thus the comparison problem is not merely a generic quadrature issue; it can be read as a
+compatibility question between discrete sampling and the spectral decomposition of the prolate operator.
+\end{remark}
 
 \begin{remark}[Uniform grids]
 We do not claim unisolvence for uniform grids.
@@ -356,6 +411,8 @@ The key quantitative issue for any future application is to prove that
 $\norm{\EN}_2$ is small relative to $\lambda_{N-1}(c)$ for structured
 sampling sets.
 Without such control, Layer~B remains a formal comparison principle.
+Proposition~\ref{prop:gauss_error} shows that for Gauss--PSWF nodes this problem reduces to
+controlling the deviation of the quadrature weights from uniformity.
 \end{remark}
 
 \section{Layer~C: Heuristics for prime sampling}\label{sec:layerC}
