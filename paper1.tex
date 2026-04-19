@@ -30,15 +30,17 @@
 \newcommand{\Rbulk}{\mathcal{R}_{\mathrm{bulk}}}
 \newcommand{\Rturning}{\mathcal{R}_{\mathrm{turn}}}
 
-\title[Frame Stability of Discrete Prolate Sampling Operators]
-      {Frame Stability of Discrete Prolate Sampling Operators:\\
-       Coercivity, Defect Decomposition, and a Verified
-       Bulk--Turning Decay Mechanism}
+\title[Frame Coercivity of Discrete Prolate Sampling Operators]
+      {Frame Coercivity of Discrete Prolate Sampling Operators:\\
+       Defect Decomposition and a Bulk--Turning Decay Mechanism\\
+       under Quadrature Compatibility}
 
 \thanks{This version replaces the earlier conditional decay conjecture
 by a proof architecture based on a quadrature--projection decomposition,
 a fully quantified bulk phase-gap lemma, bulk-localised integration-by-parts control,
-and a conservative turning-point estimate via Cauchy--Schwarz and Airy-scale widths.}
+and a conservative turning-point estimate via Cauchy--Schwarz and Airy-scale widths.
+The resulting decay and stability theorems are conditional on an explicit quadrature
+compatibility assumption, which isolates the remaining quadrature-realisation problem.}
 
 \author{Anonymous Author}
 \address{}
@@ -63,19 +65,18 @@ the $N$-dimensional prolate subspace at time-bandwidth product $c=\omega T$.
 We study the stability of the discrete sampling form
 $\QM(f)=\sum_{j=1}^N w_j|f(p_j)|^2$ as a finite frame operator on $V_{N,c}$.
 
-We prove coercivity for random sampling configurations and for weighted
+We establish coercivity for random sampling configurations and for weighted
 sampling models satisfying a Marcinkiewicz--Zygmund lower frame bound.
 Our main structural result is an exact defect decomposition reducing frame
-stability to simultaneous control of a weighted-frame defect and a quadrature
+analysis to simultaneous control of a weighted-frame defect and a quadrature
 defect.
 
-The central new result is a conditional banded decay estimate for the quadrature
-defect matrix in the PSWF eigenbasis:
+We then derive a conditional banded decay estimate for the quadrature
+defect matrix in the PSWF eigenbasis, under an explicit quadrature compatibility assumption:
 \[
   |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,c^{-1/3}
-  \qquad \text{for all } 0\le m,n\le N-1,
+  \qquad \text{for all } 0\le m,n\le N-1.
 \]
-proved under an explicit structural assumption on the quadrature remainder.
 The exact identity
 $E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$ (Proposition~\ref{prop:xry_split})
 clarifies that the first term vanishes by PSWF orthogonality, so the
@@ -84,9 +85,8 @@ phase-gap estimate (Lemma~\ref{lem:phase_gap_final}) and iterated
 integration by parts yield algebraic decay in $|m-n|$; in the turning
 region, a uniform Cauchy--Schwarz argument exploiting Airy-scale widths
 $|U_n|=O(c^{-1/3})$ and uniform sup-norm bounds yields $O(c^{-1/3})$.
-In the regime $N\sim c$ this turning correction remains lower order relative to
-coercive spectral scales, yielding quantitative Marcinkiewicz--Zygmund frame bounds
-under an explicit operator-norm hypothesis.
+The quadrature compatibility assumption isolates the remaining open problem of
+constructing concrete quadrature schemes for which this mechanism is realised.
 All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
 \end{abstract}
 
@@ -487,6 +487,7 @@ By Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
 \]
 Since $\Rbulk^{(m,n)}$ stays a positive distance away from the turning points,
 all derivatives of the PSWF amplitudes entering $a_{mn}$ are uniformly controlled there.
+We do not track these constants explicitly, only the resulting polynomial dependence on the quantified phase gap.
 Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
@@ -544,7 +545,7 @@ Applying Cauchy--Schwarz on $U_m$ gives
 Since $|U_m|=O(c^{-1/3})$, the stated bound follows.
 \end{proof}
 
-\begin{assumption}[Quadrature remainder structure]\label{ass:quad_structure}
+\begin{assumption}[Quadrature compatibility condition]\label{ass:quad_structure}
 Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule on $[-T,T]$.
 We assume that for each pair $(m,n)$ the quadrature remainder
 \[
@@ -560,6 +561,7 @@ R_{mn}^{\mathrm{quad}} = I_{mn}^{\mathrm{bulk}} + I_{mn}^{\mathrm{turn}},
 \]
 where the terms satisfy the bounds established in
 Lemmas~\ref{lem:bulk_decay} and~\ref{lem:turning_revised}.
+We refer to Assumption~\ref{ass:quad_structure} as the quadrature compatibility condition.
 \end{assumption}
 
 \begin{remark}[Heuristic justification]\label{rem:heuristic_quad}
@@ -568,7 +570,7 @@ For quadrature rules that resolve bulk oscillations on the relevant wavelength s
 that localise the turning regions, such a decomposition is expected to hold.
 \end{remark}
 
-\begin{theorem}[Conditional defect decay]\label{thm:banded_decay}
+\begin{theorem}[Conditional defect decay under quadrature compatibility]\label{thm:banded_decay}
 Assume Assumption~\ref{ass:quad_structure}. Then for every $p\ge 1$ there exist
 $C_p,C>0$, independent of $m,n,N,c$, such that
 \[
@@ -593,10 +595,10 @@ $c$-dependent floor, not the $|m-n|$-decay.
 \end{remark}
 
 \begin{remark}[Quadrature models]
-The proof of Theorem~\ref{thm:banded_decay} uses only the existence of a quadrature
-remainder representation for the PSWF product integrals and not any finer structural property
-specific to a single rule. The Xiao--Rokhlin--Yarvin quadrature \cite{Xiao2001} is one natural
-instance of such a scheme.
+Theorem~\ref{thm:banded_decay} is conditional on the quadrature compatibility condition.
+Its role is to isolate the analytic bulk/turning mechanism from the separate problem of
+constructing concrete compatible quadrature rules. The Xiao--Rokhlin--Yarvin quadrature
+\cite{Xiao2001} is one natural model to investigate in this direction.
 \end{remark}
 
 %% ==================================================================
@@ -620,7 +622,7 @@ $\lambda_{\min}(G^{\mathrm{w}}_{N,c})\ge\lambda_{N-1}(c)-\norm{\EN}_2>0$.
 Hermitian perturbation: $\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$.
 \end{proof}
 
-\begin{theorem}[Conditional quantitative frame stability]\label{thm:unconditional_frame}
+\begin{theorem}[Conditional frame stability under quadrature compatibility]\label{thm:unconditional_frame}
 Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_structure},
 with $N\sim c$ and $p\ge 2$. Set
 \[
