@@ -62,21 +62,21 @@ the prolate Gram form $\QM(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_{N,c}$.
 
 The nontrivial content of this paper is two-fold.
 First, we prove unisolvence for two concrete families of sampling sets:
-random configurations and Gauss--PSWF quadrature nodes
-(Propositions~\ref{prop:random}--\ref{prop:gauss}).
+Gauss--PSWF quadrature nodes and random configurations
+(Propositions~\ref{prop:gauss} and~\ref{prop:random}).
 For uniform grids we explain the associated zero-counting problem,
 but we do not claim a theorem because $V_{N,c}$ is not known to be
 a Chebyshev system in general.
 Second, under an abstract sampling-quality condition~(T.2),
-we prove a sharp quantitative comparison between discrete sampling and the prolate operator,
+we prove an explicit quantitative comparison between discrete sampling and the prolate operator,
 namely
 $\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
 where the remainder measures how well discrete sampling approximates
 the continuous quadratic form of~$\Kop$.
 For Gauss--PSWF nodes we also record an explicit structural identity for the error matrix,
 showing that the deviation from the reference operator is governed by the deviation of the
-quadrature weights from uniformity. This yields a complete verification of~(T.2)
-for that family once a quantitative weight-flatness estimate is available.
+quadrature weights from uniformity. This yields a complete reduction of~(T.2)
+for that family to a quantitative weight-flatness estimate.
 
 No claim is made about zeros of $\zeta(s)$, prime sampling, or limits
 in which both $N$ and $c$ vary.
@@ -93,9 +93,7 @@ The prolate program of Connes--Consani--Moscovici
 \cite{CCM_PNAS2022,CCM2025} seeks a spectral realization of this form
 using the prolate concentration operator $\Kop$ on Paley--Wiener space.
 
-The present paper isolates and proves a finite-dimensional coercivity
-statement motivated by that broader program.
-This paper establishes a finite-dimensional coercivity principle that is
+This paper isolates a finite-dimensional coercivity principle that is
 independent of any number-theoretic input.
 The linear-algebraic core is elementary: coercivity is equivalent to
 invertibility of the evaluation matrix $M(\mathbf{p},c)$.
@@ -105,7 +103,7 @@ unisolvence can actually be proved, and
 (ii) quantifying the gap between the discrete sampling form and the
 continuous quadratic form of $\Kop$.
 
-Layer~A proves unisolvence for random sampling and Gauss--PSWF nodes,
+Layer~A proves unisolvence for Gauss--PSWF nodes and random sampling,
 and records the uniform-grid case as an open zero-counting problem.
 Layer~B proves the spectral decomposition under condition~(T.2).
 Layer~C contains heuristic discussion of prime sampling.
@@ -192,13 +190,14 @@ We say that $\mathbf{p}$ satisfies~(T.2) if
 \]
 \end{definition}
 
-\begin{remark}[Discrete versus continuous forms]
+\begin{remark}[Relation to the broader program]
 The matrix $\GVM$ arises from discrete point evaluation, whereas
 $G^{\mathrm{ref}}_{N,c}$ represents the restriction of the continuous
 operator $\Kop$ to $V_{N,c}$ in the PSWF basis.
-Thus $\EN$ is a matrix-valued quadrature error.
-Equivalently, condition~(T.2) may be interpreted as a compatibility condition
-between discrete sampling and the spectral decomposition of the prolate operator.
+Thus $\EN$ measures the discrepancy between discrete sampling and the
+spectral decomposition of the prolate operator.
+The notation \textup{(T.2)} is chosen to remain compatible with the numbering
+used later in the scaling-limit continuation of this project.
 \end{remark}
 
 \section{Layer~A: Unisolvence and operator core}\label{sec:layerA}
@@ -231,24 +230,6 @@ By the identity theorem for holomorphic functions, the entire extension
 must vanish identically, hence $f\equiv 0$ on $\mathbb R$.
 \end{proof}
 
-\begin{proposition}[Random sampling is almost surely unisolvent]
-\label{prop:random}
-Let $p_1,\dots,p_N$ be i.i.d. with a distribution absolutely continuous
-with respect to Lebesgue measure on $[-T,T]$.
-Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
-\end{proposition}
-
-\begin{proof}
-Non-unisolvence means $\det M(\mathbf{p},c)=0$.
-Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
-$(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
-It is not identically zero since there exists at least one configuration
-(for instance, Gauss--PSWF nodes from Proposition~\ref{prop:gauss})
-for which the matrix has full rank.
-The zero set of a nonzero real-analytic function has Lebesgue measure zero,
-so absolute continuity implies that non-unisolvence occurs with probability zero.
-\end{proof}
-
 \begin{proposition}[Gauss--PSWF nodes are unisolvent]\label{prop:gauss}
 Let $p_1<\cdots<p_N$ be Gauss--PSWF quadrature nodes with positive weights
 $w_1,\dots,w_N$, arising from the Gaussian quadrature adapted to the PSWF basis,
@@ -268,6 +249,58 @@ Since $|f|^2=f\overline{f}$ belongs to the exactness class,
 Hence $f=0$ almost everywhere on $[-T,T]$, thus everywhere on that interval
 by continuity, and therefore $f\equiv 0$ on $\mathbb R$
 by Lemma~\ref{lem:identity}.
+\end{proof}
+
+\begin{proposition}[Random sampling is almost surely unisolvent]
+\label{prop:random}
+Let $p_1,\dots,p_N$ be i.i.d. with a distribution absolutely continuous
+with respect to Lebesgue measure on $[-T,T]$.
+Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
+\end{proposition}
+
+\begin{proof}
+Non-unisolvence means $\det M(\mathbf{p},c)=0$.
+Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
+$(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
+It is not identically zero since there exists at least one configuration
+(for instance, the Gauss--PSWF nodes of Proposition~\ref{prop:gauss})
+for which the matrix has full rank.
+The zero set of a nonzero real-analytic function has Lebesgue measure zero,
+so absolute continuity implies that non-unisolvence occurs with probability zero.
+\end{proof}
+
+\begin{lemma}[Pointwise bound via reproducing kernel]\label{lem:upper}
+For every $f\in\PW$ and every $x\in\mathbb R$,
+\[
+  |f(x)|^2
+  =|\ip{f}{K_x}_{L^2}|^2
+  \le \norm{f}_{L^2}^2\,\norm{K_x}_{L^2}^2
+  = K_{\PW}(x,x)\,\norm{f}_{L^2}^2
+  = \frac{\omega}{\pi}\,\norm{f}_{L^2}^2.
+\]
+\end{lemma}
+
+\begin{theorem}[Operator core]\label{thm:layerA}
+Let $(N,c)$ be fixed and let $\mathbf{p}$ be unisolvent for $V_{N,c}$.
+Then:
+\begin{enumerate}[(I)]
+\item $\QM(f)\ge \AM^2\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
+\item $\QM(f)\le N(\omega/\pi)\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
+\end{enumerate}
+In particular, these bounds hold unconditionally for Gauss--PSWF nodes and,
+by Proposition~\ref{prop:random}, for random sampling almost surely.
+\end{theorem}
+
+\begin{proof}
+Unisolvence is equivalent to $\ker M(\mathbf{p},c)=\{0\}$,
+hence to positive definiteness of $\GVM=M(\mathbf{p},c)^*M(\mathbf{p},c)$.
+Therefore
+\[
+  \QM(f)=\ip{\GVM\mathbf a}{\mathbf a}
+  \ge \lambda_{\min}(\GVM)\norm{\mathbf a}_2^2
+  = \AM^2\norm{f}_{L^2}^2.
+\]
+The upper bound follows by summing Lemma~\ref{lem:upper} over the $N$ sample points.
 \end{proof}
 
 \begin{proposition}[Explicit error representation for Gauss--PSWF nodes]
@@ -315,8 +348,7 @@ Finally, the operator-norm bound follows from submultiplicativity.
 \begin{remark}[Interpretation of Proposition~\ref{prop:gauss_error}]
 For Gauss--PSWF nodes, the deviation from the reference operator is entirely governed by
 the deviation of the quadrature weights from uniformity.
-Thus the comparison problem is not merely a generic quadrature issue; it can be read as a
-compatibility question between discrete sampling and the spectral decomposition of the prolate operator.
+Thus, for this family, the comparison problem reduces to quantitative control of the weight matrix.
 \end{remark}
 
 \begin{corollary}[Reduction of \textup{(T.2)} to weight flatness for Gauss--PSWF nodes]
@@ -338,8 +370,10 @@ By Proposition~\ref{prop:gauss_error},
 \[
   \norm{\EN}_2\le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2.
 \]
-Since $\GVM=M(\mathbf p,c)^*M(\mathbf p,c)$, one has
-$\norm{M(\mathbf p,c)}_2^2=\norm{\GVM}_2=\lambda_{\max}(\GVM)$.
+Since $\GVM=M(\mathbf p,c)^*M(\mathbf p,c)$, the identity
+$\norm{M(\mathbf p,c)}_2^2=\norm{M(\mathbf p,c)^*M(\mathbf p,c)}_2
+=\norm{\GVM}_2=\lambda_{\max}(\GVM)$
+holds for the operator norm.
 By Theorem~\ref{thm:layerA}(II),
 $\lambda_{\max}(\GVM)\le N\omega/\pi$.
 Therefore
@@ -368,40 +402,6 @@ for PSWF spans. Establishing or disproving uniform-grid unisolvence is
 therefore left open.
 \end{remark}
 
-\begin{lemma}[Pointwise bound via reproducing kernel]\label{lem:upper}
-For every $f\in\PW$ and every $x\in\mathbb R$,
-\[
-  |f(x)|^2
-  =|\ip{f}{K_x}_{L^2}|^2
-  \le \norm{f}_{L^2}^2\,\norm{K_x}_{L^2}^2
-  = K_{\PW}(x,x)\,\norm{f}_{L^2}^2
-  = \frac{\omega}{\pi}\,\norm{f}_{L^2}^2.
-\]
-\end{lemma}
-
-\begin{theorem}[Operator core]\label{thm:layerA}
-Let $(N,c)$ be fixed and let $\mathbf{p}$ be unisolvent for $V_{N,c}$.
-Then:
-\begin{enumerate}[(I)]
-\item $\QM(f)\ge \AM^2\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
-\item $\QM(f)\le N(\omega/\pi)\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
-\end{enumerate}
-In particular, these bounds hold unconditionally for random sampling
-almost surely and for Gauss--PSWF nodes.
-\end{theorem}
-
-\begin{proof}
-Unisolvence is equivalent to $\ker M(\mathbf{p},c)=\{0\}$,
-hence to positive definiteness of $\GVM=M(\mathbf{p},c)^*M(\mathbf{p},c)$.
-Therefore
-\[
-  \QM(f)=\ip{\GVM\mathbf a}{\mathbf a}
-  \ge \lambda_{\min}(\GVM)\norm{\mathbf a}_2^2
-  = \AM^2\norm{f}_{L^2}^2.
-\]
-The upper bound follows by summing Lemma~\ref{lem:upper} over the $N$ sample points.
-\end{proof}
-
 \section{Layer~B: Comparison Theorem}\label{sec:layerB}
 
 All results here are conditional on~(T.2).
@@ -411,11 +411,13 @@ Assume~(T.2) with parameter $\varepsilon_N$.
 Then
 \[
   \lambda_{\min}(\GVM)
-  \ge \lambda_{N-1}(c)-\norm{\EN}_2
+  \ge \lambda_{\min}(G^{\mathrm{ref}}_{N,c})-\norm{\EN}_2
+  = \lambda_{N-1}(c)-\norm{\EN}_2
   \ge \lambda_{N-1}(c)-\varepsilon_N
   >0,
 \]
-by Weyl's inequality \cite[Thm.~4.3.1]{HornJohnson2013}.
+where the first inequality is the standard Hermitian perturbation bound
+$\lambda_{\min}(A+E)\ge \lambda_{\min}(A)-\norm{E}_2$.
 \end{lemma}
 
 \begin{theorem}[Spectral decomposition with remainder]\label{thm:layerB}
@@ -459,7 +461,8 @@ flatness of the quadrature weights.
 
 \section{Layer~C: Heuristics for prime sampling}\label{sec:layerC}
 
-This section is explicitly heuristic.
+This section is explicitly heuristic: statements in the environment
+below indicate motivation and possible future directions, not proved theorems.
 The Weil explicit formula involves prime sums of the form
 $\sum_p \log p\,|\widehat h(\log p)|^2$,
 which motivates considering prime sampling sets.
