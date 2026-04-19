@@ -76,8 +76,9 @@ by the PSWF spectral truncation error associated with $\PN$, satisfying
   \left| Q_N(f) - \int_{-T}^T f \right|
   \le \CXRY\,\|(I-\PN)f\| + C e^{-\alpha N}\norm{f}_{L^2}
 \]
-for all $f$ in the relevant function class. Combining these two estimates
-yields an exponential defect bound
+for all $f$ in the relevant function class, subject to an explicit XRY
+spectral stability assumption. Combining these two estimates yields an
+exponential defect bound
 \[
   |E_{mn}| \le C e^{-\alpha N} \qquad (0\le m,n\le N-1),
 \]
@@ -125,18 +126,22 @@ The verification rests on a two-step spectral mechanism:
   $Ce^{-\alpha N}\norm{f}$. This is not an algebraic exactness statement
   and does not identify XRY with any projector.
 \end{enumerate}
-We deliberately avoid any claim that PSWF product spaces are closed under
-pointwise multiplication, since this does not hold for non-polynomial
-function systems.
+The second step is isolated as an explicit stability assumption matched
+to the XRY framework, rather than presented as a theorem reconstructed
+from \cite{Xiao2001}. We deliberately avoid any claim that PSWF product
+spaces are closed under pointwise multiplication, since this does not hold
+for non-polynomial function systems.
 
 \subsection*{Main result}
 
 \begin{theorem}[Main theorem, informal]\label{thm:main_informal}
-For PSWF-Gauss quadrature rules \cite{Xiao2001}, the quadrature defect
-satisfies $|E_{mn}|\le Ce^{-\alpha N}$ for all $0\le m,n\le N-1$,
-with constants depending only on the PSWF analyticity regime.
-Assumption~3.10 of \cite{PaperI} is therefore satisfied, and the frame
-stability theorem of \cite{PaperI} applies to PSWF-Gauss sampling.
+Assume the XRY spectral stability condition stated in
+Assumption~\ref{ass:xry_stability}. Then for PSWF-Gauss quadrature rules
+\cite{Xiao2001}, the quadrature defect satisfies $|E_{mn}|\le Ce^{-\alpha N}$
+for all $0\le m,n\le N-1$, with constants depending only on the PSWF
+analyticity regime and the stability constants. Assumption~3.10 of
+\cite{PaperI} is therefore satisfied, and the frame stability theorem of
+\cite{PaperI} applies to PSWF-Gauss sampling.
 \end{theorem}
 
 The formal version is Theorem~\ref{thm:compatibility_verified} together
@@ -147,10 +152,10 @@ with Theorem~\ref{thm:frame_stability}.
 Section~\ref{sec:pswf_gauss} sets up PSWF-Gauss quadrature and the
 spectral projector. Section~\ref{sec:spectral_decay} establishes
 exponential PSWF tail decay for analytic products.
-Section~\ref{sec:xry_accuracy} states and applies the XRY quadrature
-control lemma. Section~\ref{sec:verification} verifies Assumption~3.10.
-Section~\ref{sec:stability} states the frame stability theorem.
-Section~\ref{sec:open} records open problems.
+Section~\ref{sec:xry_accuracy} states the XRY spectral stability assumption
+and derives the quadrature control lemma. Section~\ref{sec:verification}
+verifies Assumption~3.10. Section~\ref{sec:stability} states the frame
+stability theorem. Section~\ref{sec:open} records open problems.
 
 %% ==================================================================
 \section{PSWF-Gauss Quadrature and Spectral Projector}\label{sec:pswf_gauss}
@@ -241,12 +246,34 @@ $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
 %% ==================================================================
-\section{XRY Quadrature Control}\label{sec:xry_accuracy}
+\section{XRY Spectral Stability Assumption and Quadrature Control}\label{sec:xry_accuracy}
 %% ==================================================================
 
-\begin{lemma}[XRY quadrature controlled by PSWF truncation]\label{lem:xry_spectral_accuracy}
-There exist constants $\CXRY,C,\alpha>0$, depending only on the XRY
-construction parameters and on $N$, $c$, such that for every analytic
+\begin{assumption}[XRY spectral stability]\label{ass:xry_stability}
+There exist constants $\CXRY,C,\alpha>0$, depending on the XRY
+construction parameters and on the regime $N\sim c$, such that for every
+analytic $f\in L^2([-T,T])$,
+\[
+  \left|Q_N(f)-\int_{-T}^T f(x)\,dx\right|
+  \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}
+      + C\,e^{-\alpha N}\,\norm{f}_{L^2([-T,T])}.
+\]
+This assumption formalises the stability bridge between the PSWF spectral
+truncation and the XRY quadrature rule. It is consistent with the numerical
+behaviour and structural formulas of \cite{Xiao2001,OsipovRokhlinXiao}, but
+is not claimed here as a theorem extracted verbatim from those sources.
+\end{assumption}
+
+\begin{remark}[Status of the bridge]
+Assumption~\ref{ass:xry_stability} is the only place where the paper uses
+an XRY-specific stability input beyond standard PSWF spectral theory.
+All subsequent arguments are conditional on this bridge and do not require
+any exact projector identity or any identification of XRY with a spectral
+projector.
+\end{remark}
+
+\begin{lemma}[Quadrature defect under XRY stability]\label{lem:xry_spectral_accuracy}
+Assume Assumption~\ref{ass:xry_stability}. Then for every analytic
 $f\in L^2([-T,T])$,
 \[
   \left|Q_N(f)-\int_{-T}^T f(x)\,dx\right|
@@ -255,29 +282,7 @@ $f\in L^2([-T,T])$,
 \]
 \end{lemma}
 \begin{proof}
-Decompose $f=\PN f+(I-\PN)f$. Then
-\[
-  \left|Q_N(f)-\int f\right|
-  \le \left|Q_N(\PN f)-\int \PN f\right|
-     + \left|Q_N((I-\PN)f)\right|
-     + \left|\int (I-\PN)f\right|.
-\]
-The first term is controlled by the stability of the Christoffel-function
-representation underlying the XRY quadrature construction together with
-standard PSWF truncation bounds; no projector identity is assumed.
-This yields an estimate of the form
-\[
-  \left|Q_N(\PN f)-\int \PN f\right|
-  \le C e^{-\alpha N}\norm{\PN f}_{L^2([-T,T])}
-  \le C e^{-\alpha N}\norm{f}_{L^2([-T,T])}.
-\]
-For the tail terms, weight positivity and boundedness
-(Lemma~\ref{lem:weights}) together with Cauchy--Schwarz give
-\[
-  \left|Q_N((I-\PN)f)\right|+\left|\int (I-\PN)f\right|
-  \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}.
-\]
-Combining the two bounds proves the claim.
+This is exactly Assumption~\ref{ass:xry_stability}, restated for later use.
 \end{proof}
 
 \begin{remark}[Two additive error sources]
@@ -287,7 +292,7 @@ explicitly separate:
 \item the \emph{spectral tail} $\CXRY\|(I-\PN)f\|$ arising from the
   PSWF truncation of $f$;
 \item the \emph{quadrature residual} $Ce^{-\alpha N}\norm{f}$ arising
-  from the Christoffel-based stability error of the XRY rule.
+  from the assumed XRY stability bridge.
 \end{itemize}
 Both terms are exponentially small for analytic $f$, so neither dominates.
 No exactness of $Q_N$ on $\operatorname{Ran}(\PN)$ is claimed, and no
@@ -295,12 +300,12 @@ identification of XRY with a spectral projector is used.
 \end{remark}
 
 \begin{proposition}[Exponential quadrature defect bound]\label{prop:defect_bound}
-For all $0\le m,n\le N-1$,
+Assume Assumption~\ref{ass:xry_stability}. Then for all $0\le m,n\le N-1$,
 \[
   |E_{mn}|=|R_{mn}^{\mathrm{quad}}|\le C\,e^{-\alpha N},
 \]
 where $C,\alpha>0$ depend only on the PSWF analyticity regime and the XRY
-construction parameters.
+stability constants.
 \end{proposition}
 \begin{proof}
 Apply Lemma~\ref{lem:xry_spectral_accuracy} to $f=f_{mn}$:
@@ -321,8 +326,9 @@ This yields the stated bound.
 
 \begin{theorem}[PSWF-Gauss satisfies Assumption~3.10 of \cite{PaperI}]
 \label{thm:compatibility_verified}
-Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
-Then for every $p\ge1$ there exist constants $C_p,C>0$ such that
+Assume Assumption~\ref{ass:xry_stability}. Let $(\mathbf{p},\mathbf{w})$
+be the XRY PSWF-Gauss rule of order $N\sim c$. Then for every $p\ge1$
+there exist constants $C_p,C>0$ such that
 \[
   |E_{mn}|\le C_p(1+|m-n|)^{-p}+Cc^{-1/3}
   \qquad(0\le m,n\le N-1).
@@ -341,11 +347,11 @@ $c$ sufficiently large. Thus both terms in Assumption~3.10 are dominated.
 The exponential bound of Proposition~\ref{prop:defect_bound} is strictly
 stronger than the algebraic decay required by Assumption~3.10 of
 \cite{PaperI}: PSWF-Gauss not only satisfies but dominates the abstract
-compatibility condition.
+compatibility condition, conditional on Assumption~\ref{ass:xry_stability}.
 \end{remark}
 
 \begin{corollary}[Defect norm bound]\label{cor:defect_norm}
-There exists $C_*>0$ such that
+Assume Assumption~\ref{ass:xry_stability}. Then there exists $C_*>0$ such that
 \[
   \norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\xrightarrow{N\to\infty}0.
 \]
@@ -360,9 +366,10 @@ Sum Proposition~\ref{prop:defect_bound} over $N^2$ entries.
 
 \begin{theorem}[Frame stability for PSWF-Gauss sampling]
 \label{thm:frame_stability}
-Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
-Once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$,
-$\{(p_j,w_j)\}_{j=1}^N$ is a weighted frame for $V_{N,c}$ with bounds
+Assume Assumption~\ref{ass:xry_stability}. Let $(\mathbf{p},\mathbf{w})$
+be the XRY PSWF-Gauss rule of order $N\sim c$. Once
+$NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
+frame for $V_{N,c}$ with bounds
 \[
   A(N,c)\,\norm{f}_{L^2}^2
   \le \sum_{j=1}^N w_j|f(p_j)|^2
@@ -387,10 +394,9 @@ The upper bound is analogous.
 \begin{remark}[Meaning of the result]
 The defect $\EN$ is not zero but exponentially small, controlled by
 two computable quantities: the PSWF spectral tail of analytic product
-integrands (Lemma~\ref{lem:coeff_decay}) and the Christoffel-stability/
-truncation-control estimate for the XRY quadrature rule
-(Lemma~\ref{lem:xry_spectral_accuracy}). This is the concrete
-realisation of the abstract framework of \cite{PaperI}.
+integrands (Lemma~\ref{lem:coeff_decay}) and the assumed XRY stability
+bridge (Assumption~\ref{ass:xry_stability}, Lemma~\ref{lem:xry_spectral_accuracy}).
+This is the concrete realisation of the abstract framework of \cite{PaperI}.
 \end{remark}
 
 \begin{remark}[Critical density regime]\label{rem:critical}
@@ -405,11 +411,11 @@ stability condition may fail; see Open Problem~\ref{op:critical}.
 \section{Open Problems}\label{sec:open}
 %% ==================================================================
 
-\begin{problem}[XRY spectral accuracy: explicit constants]
-Make the constants $\CXRY$, $C$, $\alpha$ in
-Lemma~\ref{lem:xry_spectral_accuracy} fully explicit in terms of $N$,
-$c$, and the XRY construction parameters, based on the results of
-\cite{Xiao2001,OsipovRokhlinXiao}.
+\begin{problem}[XRY spectral stability: rigorous derivation]
+Derive Assumption~\ref{ass:xry_stability} rigorously from the structural
+formulas and numerical analysis of \cite{Xiao2001,OsipovRokhlinXiao},
+with explicit constants in terms of $N$, $c$, and the XRY construction
+parameters.
 \end{problem}
 
 \begin{problem}[PSWF coefficient decay constants]
