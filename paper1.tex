@@ -75,7 +75,8 @@ where the remainder measures how well discrete sampling approximates
 the continuous quadratic form of~$\Kop$.
 For Gauss--PSWF nodes we also record an explicit structural identity for the error matrix,
 showing that the deviation from the reference operator is governed by the deviation of the
-quadrature weights from uniformity.
+quadrature weights from uniformity. This yields a complete verification of~(T.2)
+for that family once a quantitative weight-flatness estimate is available.
 
 No claim is made about zeros of $\zeta(s)$, prime sampling, or limits
 in which both $N$ and $c$ vary.
@@ -318,6 +319,46 @@ Thus the comparison problem is not merely a generic quadrature issue; it can be 
 compatibility question between discrete sampling and the spectral decomposition of the prolate operator.
 \end{remark}
 
+\begin{corollary}[Reduction of \textup{(T.2)} to weight flatness for Gauss--PSWF nodes]
+\label{cor:gauss_weight_flatness}
+In the setting of Proposition~\ref{prop:gauss_error}, assume in addition that
+\[
+  \delta_N:=\norm{I-D}_2<\frac{\lambda_{N-1}(c)}{N\omega/\pi}.
+\]
+Then condition~\textup{(T.2)} holds with
+\[
+  \varepsilon_N:=\delta_N\,\frac{N\omega}{\pi}.
+\]
+In particular, if $\delta_N\to0$ in a regime where $N\omega/\pi$ remains bounded,
+then $\varepsilon_N\to0$.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:gauss_error},
+\[
+  \norm{\EN}_2\le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2.
+\]
+Since $\GVM=M(\mathbf p,c)^*M(\mathbf p,c)$, one has
+$\norm{M(\mathbf p,c)}_2^2=\norm{\GVM}_2=\lambda_{\max}(\GVM)$.
+By Theorem~\ref{thm:layerA}(II),
+$\lambda_{\max}(\GVM)\le N\omega/\pi$.
+Therefore
+\[
+  \norm{\EN}_2\le \delta_N\,\frac{N\omega}{\pi}=\varepsilon_N.
+\]
+The displayed hypothesis gives
+$\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\ref{def:T2} applies.
+\end{proof}
+
+\begin{remark}[What Corollary~\ref{cor:gauss_weight_flatness} does and does not prove]
+The corollary reduces the verification of~\textup{(T.2)} for Gauss--PSWF nodes to a
+pure weight-flatness estimate.
+It does not by itself prove that $\delta_N\to0$; that is an additional quantitative
+quadrature question.
+Accordingly, the main unresolved issue for this family is no longer the matrix structure
+of the error term, but the asymptotic behavior of the quadrature weights.
+\end{remark}
+
 \begin{remark}[Uniform grids]
 We do not claim unisolvence for uniform grids.
 A natural approach would be to prove that every nonzero element of
@@ -411,8 +452,9 @@ The key quantitative issue for any future application is to prove that
 $\norm{\EN}_2$ is small relative to $\lambda_{N-1}(c)$ for structured
 sampling sets.
 Without such control, Layer~B remains a formal comparison principle.
-Proposition~\ref{prop:gauss_error} shows that for Gauss--PSWF nodes this problem reduces to
-controlling the deviation of the quadrature weights from uniformity.
+For Gauss--PSWF nodes, Proposition~\ref{prop:gauss_error} and
+Corollary~\ref{cor:gauss_weight_flatness} reduce this problem to quantitative
+flatness of the quadrature weights.
 \end{remark}
 
 \section{Layer~C: Heuristics for prime sampling}\label{sec:layerC}
@@ -444,7 +486,8 @@ Is prime sampling unisolvent for $V_{N,c}$?
 \end{problem}
 
 \begin{problem}[Condition~(T.2) for structured point sets]
-Prove~(T.2) for prime sampling or other structured sets.
+Prove~(T.2) for prime sampling or derive quantitative weight-flatness estimates
+for Gauss--PSWF nodes strong enough to trigger Corollary~\ref{cor:gauss_weight_flatness}.
 Does a Marcinkiewicz--Zygmund inequality hold for PSWFs at prime nodes?
 \end{problem}
 
