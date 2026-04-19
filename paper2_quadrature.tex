@@ -73,19 +73,14 @@ XRY spectral stability hypothesis via a two-step spectral mechanism.
 First, analytic product integrands
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ have exponentially decaying
 PSWF expansion tails in the relevant index regime. Second, assuming an
-XRY stability bound of the form
-\[
-  \left| Q_N(f) - \int_{-T}^T f \right|
-  \le \CXRY\,\|(I-\PN)f\| + C e^{-\alpha N}\norm{f}_{L^2},
-\]
-one obtains the conditional defect estimate
+XRY stability bound on the relevant product family, one obtains the
+conditional defect estimate
 \[
   |E_{mn}| \le C e^{-\alpha N} \qquad (0\le m,n\le N-1).
 \]
 Therefore Assumption~3.10 of \cite{PaperI} is verified conditionally on
 this XRY stability hypothesis together with explicit technical hypotheses
-on the PSWF side. No algebraic closure of PSWF product spaces is assumed
-or required.
+on the PSWF side.
 \end{abstract}
 
 \tableofcontents
@@ -132,8 +127,9 @@ The reduction rests on two ingredients:
   PSWF expansion coefficients decay exponentially in the regime
   $0\le m,n\le N\sim c$.
 \item \emph{XRY quadrature stability.} The XRY quadrature functional $Q_N$
-  is assumed to satisfy a stability bound controlled by the PSWF spectral
-  truncation error associated with $\PN$.
+  is assumed to satisfy a stability bound on the relevant PSWF product
+  family, controlled by the PSWF spectral truncation error associated with
+  $\PN$.
 \end{enumerate}
 We deliberately avoid any claim that PSWF product spaces are closed under
 pointwise multiplication, and we do not identify XRY with any spectral
@@ -184,8 +180,8 @@ stability theorem. Section~\ref{sec:open} records open problems.
 %% ==================================================================
 
 \begin{definition}[PSWF spectral projector]\label{def:projector}
-Let $\{\psi_k^{(c)}\}_{k\ge0}$ be the orthonormal PSWF basis on $[-T,T]$.
-For $N\ge1$, define
+Let $\{\psi_k^{(c)}\}_{k\ge0}$ be an orthonormal PSWF basis in
+$L^2([-T,T])$. For $N\ge1$, define
 \[
   \PN f := \sum_{k=0}^{N-1}\ip{f}{\psi_k^{(c)}}\,\psi_k^{(c)}.
 \]
@@ -238,7 +234,8 @@ heuristically behave like a function of effective bandwidth of order $2c$.
 This does not imply finite-dimensional closure in the PSWF basis, but it
 suggests that higher PSWF modes should be increasingly suppressed once one
 combines analyticity with control of the dependence on the indices $m,n$.
-The purpose of Assumptions~\ref{ass:pswf_analyticity} and
+This heuristic is consistent with convolution-type frequency-support
+arguments. The purpose of Assumptions~\ref{ass:pswf_analyticity} and
 \ref{ass:uniform_bounds} is to isolate exactly the quantitative version of
 this heuristic that is needed in the proof.
 \end{remark}
@@ -272,24 +269,32 @@ This is immediate from
 $N^k e^{-(\alpha-\alpha')N}\to0$ as $N\to\infty$.
 \end{proof}
 
+\begin{assumption}[Uniform effective decay rate]\label{ass:uniform_alpha}
+There exists $\alpha_0>0$ such that the effective PSWF tail decay rates for
+the family $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ satisfy
+\[
+  \inf_{0\le m,n\le N} \alpha_{m,n,N} \ge \alpha_0
+\]
+in the regime $N\sim c$, after absorbing polynomial losses into the
+constants as in Assumption~\ref{ass:uniform_bounds} and
+Lemma~\ref{lem:poly_exp}.
+\end{assumption}
+
 \begin{lemma}[Conditional exponential PSWF coefficient decay]\label{lem:coeff_decay}
-Assume Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}.
-Then there exist constants $C_{m,n}$ and rates $\alpha_{m,n,N}>0$, possibly
-deteriorating as $m,n\to N$, such that
+Assume Assumptions~\ref{ass:pswf_analyticity}, \ref{ass:uniform_bounds},
+and~\ref{ass:uniform_alpha}. Then there exist constants $C_{m,n}$ and rates
+$\alpha_{m,n,N}>0$, possibly deteriorating as $m,n\to N$, such that
 \[
   |\widehat f_{mn}(k)|
   :=|\ip{f_{mn}}{\psi_k^{(c)}}|\le C_{m,n}\,e^{-\alpha_{m,n,N} k}
   \qquad(k\ge0).
 \]
-Moreover, after incorporating the growth control from
-Assumption~\ref{ass:uniform_bounds}, the resulting tail estimate can be
-written in the uniform form
+Moreover, the tail estimate can be written in the uniform form
 \[
-  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}\le C' e^{-\alpha N}
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}\le C' e^{-\alpha_0 N}
   \qquad(0\le m,n\le N\sim c)
 \]
-for suitable constants $C',\alpha>0$ independent of $m,n$ in the stated
-index range.
+for a constant $C'>0$ independent of $m,n$ in the stated index range.
 \end{lemma}
 \begin{proof}
 For functions analytic in a strip, the coefficients in the PSWF basis decay
@@ -299,14 +304,30 @@ Assumption~\ref{ass:pswf_analyticity}. To our knowledge, uniform control of
 this type for the product family $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$
 in the full index range $0\le m,n\le N\sim c$ is not explicitly available
 in the literature and is therefore isolated here through
-Assumption~\ref{ass:uniform_bounds}. The individual decay rates
-$\alpha_{m,n,N}$ may deteriorate with the indices, but the polynomial
-control of the prefactors and strip-width losses supplied by
-Assumption~\ref{ass:uniform_bounds}, together with
-Lemma~\ref{lem:poly_exp}, ensures that the net truncation error may still be
-expressed in a uniform exponentially small form over the admissible index
-range. The tail bound follows by summing the geometric series
+Assumptions~\ref{ass:uniform_bounds} and~\ref{ass:uniform_alpha}. The tail
+bound follows by summing the geometric series
 $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
+\end{proof}
+
+\begin{lemma}[Uniform product norm bound]\label{lem:product_norm}
+Assume the regime $0\le m,n\le N\sim c$. Then there exists a constant
+$C>0$ such that
+\[
+  \norm{f_{mn}}_{L^2([-T,T])}
+  = \norm{\psi_m^{(c)}\overline{\psi_n^{(c)}}}_{L^2([-T,T])}
+  \le C
+\]
+uniformly in $m,n$.
+\end{lemma}
+\begin{proof}
+Using standard uniform bounds for PSWFs in the bulk regime, one has
+$\norm{\psi_m^{(c)}}_{L^\infty([-T,T])}\le C$ and
+$\norm{\psi_n^{(c)}}_{L^2([-T,T])}=1$. Hence
+\[
+  \norm{f_{mn}}_{L^2}
+  \le \norm{\psi_m^{(c)}}_{L^\infty}\norm{\psi_n^{(c)}}_{L^2}
+  \le C.
+\]
 \end{proof}
 
 \begin{remark}[Status of the PSWF step]\label{rem:pswf_status}
@@ -335,19 +356,25 @@ represents a natural spectral stability statement rather than an ad hoc
 reformulation of the original compatibility problem.
 \end{remark}
 
-\begin{assumption}[XRY spectral stability]\label{ass:xry_stability}
+\begin{assumption}[XRY spectral stability on the PSWF product family]
+\label{ass:xry_stability}
+Let
+\[
+  \mathcal{F}_N:=\{\psi_m^{(c)}\overline{\psi_n^{(c)}}:0\le m,n\le N\}.
+\]
 There exist constants $\CXRY,C,\alpha>0$, depending on the XRY
 construction parameters and on the regime $N\sim c$, such that for every
-analytic $f\in L^2([-T,T])$,
+$f\in\mathcal{F}_N$,
 \[
   \left|Q_N(f)-\int_{-T}^T f(x)\,dx\right|
   \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}
       + C\,e^{-\alpha N}\,\norm{f}_{L^2([-T,T])}.
 \]
 This hypothesis formalises the stability bridge between the PSWF spectral
-truncation and the XRY quadrature rule. It is consistent with the structural
-formulas and numerical behaviour of \cite{Xiao2001,OsipovRokhlinXiao}, but
-is not claimed here as a theorem extracted verbatim from those sources.
+truncation and the XRY quadrature rule on the specific family relevant to
+the defect matrix. It is consistent with the structural formulas and
+numerical behaviour of \cite{Xiao2001,OsipovRokhlinXiao}, but is not claimed
+here as a theorem extracted verbatim from those sources.
 \end{assumption}
 
 \begin{remark}[Why this is a reduction, not a closure]
@@ -385,12 +412,12 @@ Applying Assumption~\ref{ass:xry_stability} to $f=f_{mn}$ gives
 \[
   |E_{mn}|\le \CXRY\|(I-\PN)f_{mn}\|+Ce^{-\alpha N}\norm{f_{mn}}_{L^2}.
 \]
-By Lemma~\ref{lem:coeff_decay}, $\|(I-\PN)f_{mn}\|\le C' e^{-\alpha N}$
-uniformly over $0\le m,n\le N\sim c$.
-All exponential contributions are therefore absorbed into a single rate
-$\alpha$, possibly reduced, and all multiplicative constants are absorbed
-into $C$.
-This yields the stated bound.
+By Lemma~\ref{lem:coeff_decay}, $\|(I-\PN)f_{mn}\|\le C' e^{-\alpha_0 N}$
+uniformly over $0\le m,n\le N\sim c$, and by
+Lemma~\ref{lem:product_norm}, $\norm{f_{mn}}_{L^2}\le C$ uniformly in the
+same regime. All exponential contributions are therefore absorbed into a
+single rate $\alpha$, possibly reduced, and all multiplicative constants are
+absorbed into $C$. This yields the stated bound.
 \end{proof}
 
 \begin{remark}[Uniform domination over the index range]\label{rem:index_domination}
@@ -467,6 +494,9 @@ where
   \qquad
   B(N,c)=\lambda_0(c)+NC_*e^{-\alpha N}.
 \]
+In the bulk regime, this condition is compatible with the known asymptotic
+behaviour of PSWF eigenvalues; see \cite{Slepian1978} and the classical
+Landau--Widom theory.
 \end{theorem}
 \begin{proof}
 The Weyl perturbation bound applied to
@@ -503,10 +533,11 @@ parameters.
 \end{problem}
 
 \begin{problem}[Quantify PSWF product tails]
-Derive Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}
-from PSWF analyticity theory with explicit dependence on $m$, $n$, $c$, and
-$T$. In particular, clarify the admissible degeneration of strip widths and
-the prefactor growth compatible with the exponential defect estimate.
+Derive Assumptions~\ref{ass:pswf_analyticity}, \ref{ass:uniform_bounds},
+and~\ref{ass:uniform_alpha} from PSWF analyticity theory with explicit
+dependence on $m$, $n$, $c$, and $T$. In particular, clarify the admissible
+degeneration of strip widths and the prefactor growth compatible with the
+exponential defect estimate.
 \end{problem}
 
 \begin{problem}[Node separation and weight bounds]
