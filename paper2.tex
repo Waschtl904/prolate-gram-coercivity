@@ -1,0 +1,608 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,
+citecolor=green!50!black,urlcolor=blue!70!black]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+
+%% ── Theorem environments ─────────────────────────────────────────
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{assumption}[theorem]{Assumption}
+
+%% ── Notation (aligned with Paper I) ──────────────────────────────
+\newcommand{\PW}{\mathrm{PW}_\omega}
+\newcommand{\Kop}{\mathcal{K}_c}
+\newcommand{\GVM}{G^{(N)}_{\mathbf{p}}}
+\newcommand{\GVMk}{G^{(N_k)}_{\mathbf{p}_k}}
+\newcommand{\GVMkw}{\widetilde{G}^{(N_k)}_{\mathbf{p}_k}}
+\newcommand{\psin}{\psi_n^{(c)}}
+\newcommand{\lam}{\lambda_n(c)}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\ip}[2]{\langle #1,\, #2\rangle}
+\newcommand{\EN}{E_N}
+\newcommand{\Lcal}{\mathcal{L}^1_{\mathrm{sa}}}
+\newcommand{\Gcal}{\widehat{\mathcal{G}}}
+
+%% ── Paper metadata ───────────────────────────────────────────────
+\title[Scaling Limits, Uniform Coercivity, and Trace Formula]
+{Scaling Limits of Prolate Gram Forms,\\
+Uniform Coercivity, and a Trace Formula\\
+Toward Weil Positivity\\[4pt]
+\large (Paper~II in the Prolate--Weil Program)}
+
+\author{Anonymous Author}
+\address{}
+\email{}
+\date{\today}
+
+\subjclass[2020]{%
+  42C05,
+  42B10,
+  47B10,
+  47B32,
+  11M06,
+  11N05
+}
+
+\keywords{prolate spheroidal wave functions, Gram form, scaling limit,
+uniform coercivity, trace formula, Weil positivity, prime number theorem,
+Connes--Consani--Moscovici, trace-class operators}
+
+\begin{document}
+
+\begin{abstract}
+This paper continues the program initiated in \cite{PaperI}, where the
+prolate Gram form $Q^{(N)}$ was shown to be unconditionally coercive on
+the $N$-dimensional prolate subspace $V_N$, with explicit spectral
+stability under the sampling-quality condition~(T.2) of \cite{PaperI}.
+In the current Reinschrift of Paper~I, condition~(T.2) is verified
+for random sampling and Gauss--PSWF nodes, while prime sampling is left open.
+
+Here we study the coupled scaling limit
+\[
+  N_k \to \infty,\quad c_k \to \infty,\quad
+  \frac{N_k}{c_k} \to \rho \in \Bigl(0,\,\frac{2}{\pi}\Bigr),
+\]
+for sequences of prime sampling sets, under an explicit conditional
+hypothesis~\textup{(H)} asserting that the prime sets satisfy a quantitative
+version of~\textup{(T.2)} along the sequence.
+
+We establish three main results.
+\begin{enumerate}[(I)]
+\item \textbf{(Scaling limit, \S\ref{sec:scaling}.)} We define a precise notion of
+$\rho$-admissible scaling sequence, isolate the conditional prime-sampling
+input in Assumption~\ref{ass:primeT2}, and identify the natural operator
+space for convergence as $\Lcal(L^2(\mathbb{R}))$ with the weak-$*$ topology.
+\item \textbf{(Compactness and conditional coercivity, \S\ref{sec:coercivity}.)}
+Compactness of normalized Gram operators is unconditional once a
+$\rho$-admissible sequence is given, while the convergence
+$\lambda_{\min}(\GVMk)\to1$ is proved conditionally on~\textup{(H)}.
+\item \textbf{(Trace formula, \S\ref{sec:trace}.)} We establish asymptotic trace
+formulae for the unweighted and weighted Gram matrices, connecting the
+weighted trace to the prime number theorem. Every weak-$*$ accumulation point
+$\Gcal_\infty$ is positive with $\operatorname{tr}(\Gcal_\infty)\leq1$.
+\end{enumerate}
+The characterization of $\Gcal_\infty$ as a Weil operator, the equality
+$\operatorname{tr}(\Gcal_\infty)=1$, and the verification of Assumption~\textup{(H)}
+for prime sampling remain open.
+No claim is made about zeros of~$\zeta(s)$.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{Background and motivation}
+
+The \emph{Weil positivity criterion} \cite{Weil1952,Bombieri2000}
+states that the Riemann Hypothesis is equivalent to positivity of an
+explicit quadratic form built from primes and archimedean terms.
+The program of Connes--Consani--Moscovici \cite{CCM_PNAS2022,CCM2025}
+seeks a spectral realization via the prolate operator $\Kop$.
+
+In \cite{PaperI} the prolate Gram form
+$Q^{(N)}(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_N$ was shown to be:
+\begin{itemize}
+\item \emph{unconditionally coercive} once the sampling set is unisolvent;
+\item \emph{explicitly stable and Weil-decomposable} under the abstract
+sampling-quality condition~(T.2).
+\end{itemize}
+Moreover, the present Reinschrift of Paper~I proves the relevant finite-dimensional
+results for random sampling and Gauss--PSWF nodes, but does \emph{not} prove
+condition~(T.2) for prime sampling; that issue is left open there.
+The purpose of the present paper is therefore to analyze the coupled limit
+\(N_k,c_k\to\infty\) in a way that cleanly separates the unconditional
+operator-theoretic structure from the conditional arithmetic input.
+
+\medskip
+\noindent\textbf{Core outcome.}
+This paper constructs the natural normalized finite-rank Gram operators
+attached to prime sampling in prolate spaces and studies their scaling limits.
+The compactness statement and the existence of positive trace-class
+accumulation points are proved at the operator-theoretic level, while the
+strong coercivity conclusion $\lambda_{\min}(\GVMk)\to1$ is obtained only
+under an explicit prime-sampling hypothesis \textup{(H)}; see
+Assumption~\ref{ass:primeT2}.
+
+\subsection{Two-level structure}
+
+We maintain a strict distinction between unconditional and conditional results:
+
+\begin{enumerate}[(A)]
+\item \emph{Operator-theoretic layer.} Once a sequence of normalized finite-rank
+Gram operators is given with uniformly bounded trace norm, compactness and the
+existence of weak-$*$ accumulation points follow by general functional analysis.
+The prime number theorem also yields the structural constraint $\omega_k\to0$
+in the prime-window regime.
+\item \emph{Arithmetic--sampling layer.} Any quantitative convergence statement for
+$\lambda_{\min}(\GVMk)$ requires a comparison estimate of type~(T.2) along the
+prime sequence. Since this is open in Paper~I, we isolate it here as an explicit
+assumption rather than importing it as a theorem.
+\end{enumerate}
+
+\subsection{What this paper does not claim}
+
+No statement is made about zeros of $\zeta(s)$.
+We do not prove that prime sampling satisfies condition~(T.2).
+We do not prove that the limit operator $\Gcal_\infty$ is uniquely determined,
+nor that $\operatorname{tr}(\Gcal_\infty)=1$.
+We also do not prove a Mellin-isometric embedding identifying
+$\Gcal_\infty$ with a Weil operator.
+
+\subsection{Organization}
+
+Section~\ref{sec:prelim} recalls the relevant inputs from Paper~I.
+Section~\ref{sec:scaling} defines the admissible scaling framework and isolates
+Assumption~\ref{ass:primeT2}.
+Section~\ref{sec:coercivity} proves compactness and conditional uniform coercivity.
+Section~\ref{sec:trace} establishes the trace formulae.
+Section~\ref{sec:open} formulates the remaining open problems.
+
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Notation}
+
+We use the engineering Fourier convention
+$\widehat{f}(\xi)=\int f(x)e^{-2\pi ix\xi}dx$ \cite{BonamiKaroui,PaperI}.
+Bandwidth $\omega>0$, time window $T>0$, and $c=\omega T$.
+The Paley--Wiener space $\PW$, the prolate concentration operator $\Kop$,
+the PSWF basis $\{\psin\}$, the eigenvalues $\lambda_n(c)$, the subspace
+$V_N=\mathrm{span}\{\psi_0^{(c)},\ldots,\psi_{N-1}^{(c)}\}$, and the Gram matrix
+$\GVM$ are used exactly as in \cite{PaperI}.
+
+\subsection{Input from Paper~I}
+
+The following summary is the only part of Paper~I used in this paper.
+It deliberately reflects the Reinschrift status of that paper.
+
+\begin{theorem}[Input from Paper~I]\label{thm:paperI}
+Let $N\geq1$, $c=\omega T$, and let $p_1<\cdots<p_N$ be distinct points in
+$[-T,T]$. Then:
+\begin{enumerate}[(I)]
+\item If the sampling set is unisolvent for $V_N$, then the Gram form is coercive:
+$Q^{(N)}(f)\geq \alpha_N^2\norm{f}_{L^2}^2$ for all $f\in V_N$, where
+$\alpha_N=\sqrt{\lambda_{\min}(\GVM)}>0$.
+\item Unconditionally, one has the continuity bound
+$Q^{(N)}(f)\leq N(\omega/\pi)\norm{f}_{L^2}^2$.
+\item Under condition~\textup{(T.2)} of \cite{PaperI}, one has the spectral stability bound
+$\lambda_{\min}(\GVM)\geq\lambda_{N-1}(c)-\varepsilon_N$.
+\item Under condition~\textup{(T.2)} of \cite{PaperI}, one has the comparison formula
+$Q^{(N)}(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with
+$|R_N(f)|\leq \varepsilon_N\norm{f}_{L^2}^2$.
+\end{enumerate}
+Moreover, in the Reinschrift of Paper~I, condition~\textup{(T.2)} is established for
+random sampling and Gauss--PSWF nodes, while prime sampling is left open.
+\end{theorem}
+
+\begin{remark}[Landau--Widom asymptotic]\label{rem:LW}
+For every fixed $\varepsilon\in(0,2/\pi)$ there exist constants
+$C(\varepsilon),\eta(\varepsilon)>0$ such that
+\[
+  1-C(\varepsilon)e^{-\eta(\varepsilon)c}
+  \le \lambda_{N-1}(c) \le 1
+  \qquad\text{whenever } N\leq \bigl(\tfrac{2}{\pi}-\varepsilon\bigr)c.
+\]
+In particular, along any sequence with $N_k/c_k\to\rho\in(0,2/\pi)$,
+one has $\lambda_{N_k-1}(c_k)\to1$.
+\end{remark}
+
+\section{The Scaling Limit}\label{sec:scaling}
+
+\subsection{Admissible scaling sequences}
+
+\begin{definition}[$\rho$-admissible prime sequence]\label{def:admissible}
+Fix $\rho\in(0,2/\pi)$. A sequence
+$(N_k,c_k,\omega_k,T_k,\mathbf{p}_k)_{k\geq1}$ is called
+\emph{$\rho$-admissible for prime sampling} if:
+\begin{enumerate}[(i)]
+\item $N_k\in\mathbb N$ and $N_k\to\infty$;
+\item $c_k=\omega_kT_k>0$ and $c_k\to\infty$;
+\item $N_k/c_k\to\rho$;
+\item there exists $\varepsilon_0\in(0,1)$ such that
+$N_k\le (2/\pi-\varepsilon_0)c_k$ for all sufficiently large $k$;
+\item $\mathbf p_k=(p_1^{(k)},\ldots,p_{N_k}^{(k)})$ consists of the first
+$N_k$ prime numbers, with $p_{N_k}^{(k)}\le T_k$;
+\item the associated normalized Gram operators satisfy the trace-norm boundedness
+required in Lemma~\ref{lem:embed}.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Structural constraint: $\omega_k\to0$]\label{rem:omega_to_zero}
+Conditions (iii) and (v) force $\omega_k\to0$.
+Indeed, by the prime number theorem one has
+$p_{N_k}\sim N_k\log N_k$, so condition (v) implies
+$T_k\gtrsim N_k\log N_k$.
+Since $c_k=\omega_kT_k\sim N_k/\rho$, we obtain
+\[
+  \omega_k \sim \frac{N_k}{\rho T_k}
+  \lesssim \frac{1}{\rho\log N_k}\to0.
+\]
+Thus the coupled prime-window regime necessarily drives the bandwidth to zero;
+this is a structural feature of the scaling, not a pathology.
+\end{remark}
+
+\begin{assumption}[Prime-sampling comparison hypothesis]\label{ass:primeT2}
+Let $(N_k,c_k,\omega_k,T_k,\mathbf p_k)$ be a $\rho$-admissible prime sequence.
+We say that Assumption~\textup{(H)} holds along the sequence if there exist numbers
+$\varepsilon_{N_k}\downarrow0$ such that the prime sampling sets $\mathbf p_k$
+satisfy condition~\textup{(T.2)} of \cite{PaperI} with parameter $\varepsilon_{N_k}$
+for every $k$.
+When a quantitative rate is needed, we additionally assume that
+$\varepsilon_{N_k}=o(1)$ is sufficiently strong for the specific estimate under discussion.
+\end{assumption}
+
+\begin{remark}[Why Assumption~\textup{(H)} is explicit]
+In the Reinschrift of Paper~I, prime sampling is not proved to satisfy~(T.2);
+this is recorded there as an open problem.
+Accordingly, any use of a prime-sampling comparison estimate in the present paper
+must be conditional.
+Assumption~\textup{(H)} is precisely the missing arithmetic--sampling input.
+\end{remark}
+
+\begin{proposition}[Conditional existence of admissible examples]
+\label{prop:admissible_exist}
+Fix $\rho\in(0,2/\pi)$. Suppose there exists a sequence of prime sampling sets for which
+Assumption~\textup{(H)} holds. Then there exists a $\rho$-admissible prime sequence.
+In particular, one may take $N_k=k$, choose $T_k=p_k$, set $c_k=N_k/\rho$, and define
+$\omega_k=c_k/T_k$.
+\end{proposition}
+
+\begin{proof}
+Set $N_k=k$, $T_k=p_k$, $c_k=N_k/\rho$, and $\omega_k=c_k/T_k$.
+Then conditions (i)--(v) in Definition~\ref{def:admissible} are immediate.
+The remaining trace-norm boundedness in (vi) follows once the normalized Gram operators
+are defined and estimated as in Lemma~\ref{lem:embed}.
+The only genuinely arithmetic comparison input is Assumption~\textup{(H)},
+which is assumed rather than derived.
+\end{proof}
+
+\subsection{The natural operator space}
+
+\begin{definition}[Embedded normalized Gram operator]\label{def:embed}
+For a $\rho$-admissible prime sequence, define
+\[
+  \widetilde{\mathcal G}_k
+  :=
+  \frac{1}{\operatorname{tr}(\GVMk)}
+  \sum_{m,n=0}^{N_k-1}(\GVMk)_{mn}
+  |\psi_m^{(c_k)}\rangle\langle\psi_n^{(c_k)}|.
+\]
+This is a finite-rank positive self-adjoint operator on $L^2(\mathbb R)$
+with trace exactly equal to~$1$.
+\end{definition}
+
+\begin{lemma}[Trace-class embedding]\label{lem:embed}
+For each $k$:
+\begin{enumerate}[(i)]
+\item $\widetilde{\mathcal G}_k\ge0$.
+\item $\widetilde{\mathcal G}_k\in\Lcal(L^2(\mathbb R))$.
+\item $\norm{\widetilde{\mathcal G}_k}_1=1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Since $\GVMk=M_k^*M_k\ge0$, the operator
+$\sum_{m,n}(\GVMk)_{mn}|\psi_m^{(c_k)}\rangle\langle\psi_n^{(c_k)}|$
+is positive, hence so is $\widetilde{\mathcal G}_k$.
+It has rank at most $N_k$, hence it is trace class.
+By construction,
+\[
+  \operatorname{tr}(\widetilde{\mathcal G}_k)
+  =\frac{\operatorname{tr}(\GVMk)}{\operatorname{tr}(\GVMk)}=1.
+\]
+For positive trace-class operators, the trace norm equals the trace.
+\end{proof}
+
+\begin{theorem}[Compactness and accumulation points]\label{thm:compact}
+Let $(N_k,c_k,\omega_k,T_k,\mathbf p_k)$ be a $\rho$-admissible prime sequence.
+Then every subsequence of $(\widetilde{\mathcal G}_k)$ has a further subsequence converging
+in the weak-$*$ topology of $\Lcal$ to some
+$\Gcal_\infty\in\Lcal(L^2(\mathbb R))$ with
+$\Gcal_\infty\ge0$ and $\operatorname{tr}(\Gcal_\infty)\le1$.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:embed}, the sequence lies in the positive part of the unit sphere
+of $\Lcal$.
+The unit ball of $\Lcal$ is weak-$*$ compact by Banach--Alaoglu.
+Hence every subsequence admits a further weak-$*$ convergent subsequence.
+Positivity is preserved under weak-$*$ limits, and the trace is weak-$*$
+lower semicontinuous on positive trace-class operators, giving
+$\operatorname{tr}(\Gcal_\infty)\le1$.
+\end{proof}
+
+\begin{remark}[Why we only obtain $\operatorname{tr}(\Gcal_\infty)\le1$]
+\label{rem:trace_eq}
+Weak-$*$ convergence alone does not prevent loss of trace mass at infinity.
+To prove $\operatorname{tr}(\Gcal_\infty)=1$, one would need an additional tightness or
+equi-integrability statement in trace norm.
+That issue is genuinely open in the present framework and is recorded later as an open problem.
+\end{remark}
+
+\section{Compactness and Conditional Coercivity}\label{sec:coercivity}
+
+\begin{theorem}[Conditional uniform coercivity]\label{thm:coercivity}
+Let $(N_k,c_k,\omega_k,T_k,\mathbf p_k)$ be a $\rho$-admissible prime sequence.
+Then:
+\begin{enumerate}[(I)]
+\item \textbf{Unconditional spectral input:}
+$\lambda_{N_k-1}(c_k)\to1$.
+\item \textbf{Conditional comparison estimate:}
+If Assumption~\textup{(H)} holds, then
+\[
+  \lambda_{\min}(\GVMk)
+  \ge \lambda_{N_k-1}(c_k)-\varepsilon_{N_k}
+  \to1.
+\]
+\item \textbf{Conditional frame asymptotics:}
+Under Assumption~\textup{(H)},
+$\alpha_{N_k}:=\sqrt{\lambda_{\min}(\GVMk)}\to1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part (I) is exactly the Landau--Widom asymptotic from Remark~\ref{rem:LW},
+using only the condition $N_k/c_k\to\rho\in(0,2/\pi)$.
+
+For part (II), Assumption~\textup{(H)} provides condition~(T.2) along the sequence,
+so Theorem~\ref{thm:paperI}(III) applies at each level $k$ and yields
+\[
+  \lambda_{\min}(\GVMk)
+  \ge \lambda_{N_k-1}(c_k)-\varepsilon_{N_k}.
+\]
+Since $\lambda_{N_k-1}(c_k)\to1$ and $\varepsilon_{N_k}\to0$, the conclusion follows.
+
+Part (III) is immediate from part (II).
+\end{proof}
+
+\begin{remark}[What is unconditional and what is not]
+The approach of this paper yields an unconditional compactness theorem for the
+normalized operators once the scaling sequence is fixed, and an unconditional
+asymptotic for the reference PSWF eigenvalues.
+By contrast, any statement about the actual prime-sampled Gram matrices beyond those
+formal operator properties requires Assumption~\textup{(H)}.
+This is exactly where the unresolved content of prime sampling enters.
+\end{remark}
+
+\section{Trace Formula and Prime Number Consistency}\label{sec:trace}
+
+\subsection{Trace identities}
+
+\begin{lemma}[Dual trace identity]\label{lem:dual_trace}
+For every $k$ one has:
+\begin{enumerate}[(i)]
+\item $\operatorname{tr}(\GVMk)=\sum_{j=1}^{N_k}K_{N_k}(p_j^{(k)},p_j^{(k)})$.
+\item If Assumption~\textup{(H)} holds, then
+\[
+  \operatorname{tr}(\GVMk)
+  =\sum_{n=0}^{N_k-1}\lambda_n(c_k)+O(N_k\varepsilon_{N_k}).
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part (i) is the standard diagonal trace computation:
+\[
+  \operatorname{tr}(\GVMk)
+  =\sum_{n=0}^{N_k-1}(\GVMk)_{nn}
+  =\sum_{j=1}^{N_k}\sum_{n=0}^{N_k-1}|\psi_n^{(c_k)}(p_j^{(k)})|^2
+  =\sum_{j=1}^{N_k}K_{N_k}(p_j^{(k)},p_j^{(k)}).
+\]
+Part (ii) follows from writing
+$\GVMk=G^{\mathrm{ref}}_{N_k,c_k}+E_{N_k}$ under condition~(T.2), taking traces,
+and estimating
+$|\operatorname{tr}(E_{N_k})|\le N_k\norm{E_{N_k}}_2\le N_k\varepsilon_{N_k}$.
+\end{proof}
+
+\subsection{Weighted Gram matrix}
+
+\begin{definition}[Weighted Gram matrix]\label{def:weighted}
+For prime sampling, define
+\[
+  \GVMkw:=M_k^*\,\mathrm{diag}(\log p_1^{(k)},\ldots,\log p_{N_k}^{(k)})\,M_k.
+\]
+Its associated quadratic form is
+\[
+  \widetilde Q^{(N_k)}(f)=\sum_{j=1}^{N_k}\log p_j^{(k)}\,|f(p_j^{(k)})|^2.
+\]
+\end{definition}
+
+\begin{lemma}[Weighted trace identity]\label{lem:weighted}
+For every $k$,
+\[
+  \operatorname{tr}(\GVMkw)
+  =\sum_{j=1}^{N_k}\log p_j^{(k)}\,K_{N_k}(p_j^{(k)},p_j^{(k)}).
+\]
+Moreover, if Assumption~\textup{(H)} holds and the weighted analogue of the remainder
+estimate is available along the sequence, then the weighted form admits a comparison
+with the reference operator up to an error term controlled by $\log p_{N_k}\,\varepsilon_{N_k}$.
+\end{lemma}
+
+\begin{proof}
+The trace identity is immediate from the definition of $\GVMkw$.
+The second statement is formal: it is obtained by inserting the logarithmic weights into
+the same matrix comparison scheme as in Paper~I, provided the corresponding weighted
+error control is assumed.
+We do not claim this weighted comparison unconditionally.
+\end{proof}
+
+\subsection{Asymptotic trace formulae}
+
+\begin{theorem}[Trace formula]\label{thm:trace}
+Let $(N_k,c_k,\omega_k,T_k,\mathbf p_k)$ be a $\rho$-admissible prime sequence.
+Assume that the diagonal kernel asymptotic is valid along the sampled prime points in the sense that
+\[
+  K_{N_k}(p_j^{(k)},p_j^{(k)})
+  =\frac{\omega_k N_k}{\pi}\bigl(1+r_{k,j}\bigr)
+\]
+with an averaged error term satisfying
+\[
+  \frac1{N_k}\sum_{j=1}^{N_k}|r_{k,j}|\to0.
+\]
+Then, as $k\to\infty$:
+\begin{enumerate}[(I)]
+\item \textbf{Unweighted trace:}
+\[
+  \frac{\pi}{\omega_kN_k^2}\operatorname{tr}(\GVMk)\to1.
+\]
+\item \textbf{Weighted trace:}
+\[
+  \frac{\pi}{\omega_kN_k^2\log N_k}\operatorname{tr}(\GVMkw)\to1.
+\]
+\item \textbf{Prime-number-theorem consistency:}
+\[
+  \frac{1}{N_k\log N_k}
+  \sum_{j=1}^{N_k}\log p_j^{(k)}\cdot \frac{\pi}{\omega_k}K_{N_k}(p_j^{(k)},p_j^{(k)})
+  \to1.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For part (I), Lemma~\ref{lem:dual_trace}(i) and the averaged kernel asymptotic give
+\[
+  \operatorname{tr}(\GVMk)
+  =\sum_{j=1}^{N_k}\frac{\omega_kN_k}{\pi}(1+r_{k,j})
+  =\frac{\omega_kN_k^2}{\pi}\Bigl(1+\frac1{N_k}\sum_{j=1}^{N_k}r_{k,j}\Bigr),
+\]
+which implies the limit.
+
+For part (II), we similarly obtain
+\[
+  \operatorname{tr}(\GVMkw)
+  =\frac{\omega_kN_k}{\pi}
+  \sum_{j=1}^{N_k}\log p_j^{(k)}\,(1+r_{k,j}).
+\]
+By the prime number theorem in the form
+$\sum_{j=1}^{N_k}\log p_j^{(k)}\sim N_k\log N_k$, the main term is
+$\omega_kN_k^2\log N_k/\pi$.
+The averaged error remains negligible under the stated hypothesis.
+This proves (II).
+
+Part (III) is merely a rewriting of (II).
+\end{proof}
+
+\begin{remark}[Status of the trace input]
+Theorem~\ref{thm:trace} is intentionally formulated so that the analytic input is explicit.
+The arithmetic input is the prime number theorem, while the PSWF input is an averaged diagonal
+kernel asymptotic along the prime sample points.
+This avoids hiding an additional unproved statement inside the normalization.
+\end{remark}
+
+\begin{remark}[Relation to the Weil form]\label{rem:weil_compare}
+The weighted trace is only a trace-level analog of the prime part of Weil's explicit formula.
+To pass from this averaged operator statement to an actual Weil operator, one would need a
+Mellin-side identification of the relevant test-function geometry.
+That structural step is not supplied here.
+\end{remark}
+
+\section{Open Problems}\label{sec:open}
+
+\begin{problem}[Prime sampling and condition~\textup{(T.2)}]\label{prob:primeT2}
+Prove or disprove Assumption~\textup{(H)} for prime sampling.
+More precisely, determine whether the prime sets
+$\mathbf p_k=(2,3,5,\ldots,p_{N_k})$ satisfy the comparison estimate of Paper~I
+with an error $\varepsilon_{N_k}\to0$ in the regime $N_k/c_k\to\rho\in(0,2/\pi)$.
+Any unconditional coercivity theorem for prime sampling in the present scaling limit depends on this.
+\end{problem}
+
+\begin{problem}[Trace preservation and uniqueness]\label{prob:unique}
+Show that the normalized operators $\widetilde{\mathcal G}_k$ have a unique weak-$*$ limit and that
+$\operatorname{tr}(\Gcal_\infty)=1$.
+This requires ruling out escape of trace mass at infinity.
+\end{problem}
+
+\begin{problem}[Mellin-isometric embedding]\label{prob:mellin}
+Construct an isometric embedding from the additive $L^2(\mathbb R)$ framework of the PSWFs
+into the multiplicative space relevant to Weil's explicit formula, in such a way that
+$\Gcal_\infty$ corresponds to a genuine Weil operator.
+\end{problem}
+
+\begin{problem}[Weil positivity and RH]\label{prob:positivity}
+Assuming Problems~\ref{prob:unique} and \ref{prob:mellin}, determine whether the positivity of the
+resulting limit operator is equivalent to the Riemann Hypothesis via Weil's criterion.
+\end{problem}
+
+\begin{problem}[Critical density $\rho=2/\pi$]\label{prob:critical}
+Analyze the critical regime $N_k/c_k\to2/\pi$, where the Landau--Widom bulk estimate degenerates.
+\end{problem}
+
+\section*{Acknowledgements}
+The author thanks [---] for helpful discussions.
+Paper~I of this program is \cite{PaperI}.
+
+\begin{thebibliography}{99}
+
+\bibitem{PaperI}
+Anonymous Author,
+\emph{Coercivity of the Prolate Gram Form at Discrete Sampling Points},
+preprint, 2026.
+
+\bibitem{Bombieri2000}
+E.~Bombieri,
+\textit{Problems of the Millennium: The Riemann Hypothesis},
+Clay Mathematics Institute, 2000.
+
+\bibitem{BonamiKaroui}
+A.~Bonami and A.~Karoui,
+\textit{Spectral decay of the sinc kernel operator and approximation
+with prolate spheroidal wave functions},
+arXiv:1012.3881.
+
+\bibitem{CC2019}
+A.~Connes and C.~Consani,
+\textit{Riemann--Roch and Weil positivity},
+arXiv:1910.14368 (2019).
+
+\bibitem{CCM_PNAS2022}
+A.~Connes, C.~Consani, and H.~Moscovici,
+\textit{The UV prolate spectrum matches the zeros of zeta},
+Proc.\ Natl.\ Acad.\ Sci.\ \textbf{119} (2022), e2123174119.
+
+\bibitem{CCM2025}
+A.~Connes, C.~Consani, and H.~Moscovici,
+arXiv:2511.22755 (2025).
+
+\bibitem{ReedSimon}
+M.~Reed and B.~Simon,
+\textit{Methods of Modern Mathematical Physics~I},
+Academic Press, 1980.
+
+\bibitem{Weil1952}
+A.~Weil,
+\textit{Sur les formules explicites de la th\'{e}orie des nombres},
+Izv.\ Akad.\ Nauk \textbf{36} (1952), 3--18.
+
+\end{thebibliography}
+
+\end{document}
