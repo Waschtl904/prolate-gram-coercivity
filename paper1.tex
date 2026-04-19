@@ -64,7 +64,7 @@ The nontrivial content of this paper is two-fold.
 First, we prove unisolvence for random configurations and for weighted sampling models
 satisfying a Marcinkiewicz--Zygmund-type lower frame bound
 (Propositions~\ref{prop:random} and~\ref{prop:mz_unisolvent}).
-For uniform grids we explain the associated zero-counting problem,
+For uniform grids we explain the associated zero-counting problem and record a natural oscillation question,
 but we do not claim a theorem because $V_{N,c}$ is not known to be
 a Chebyshev system in general.
 Second, under an abstract sampling-quality condition~(T.2),
@@ -75,9 +75,7 @@ where the remainder measures how well discrete sampling approximates
 the continuous quadratic form of~$\Kop$.
 For weighted sampling models we further isolate the discrete operator error into a weighted-frame defect
 and a spectral mismatch term, thereby reducing the comparison problem to two explicit perturbative components.
-
-No claim is made about zeros of $\zeta(s)$, prime sampling, or limits
-in which both $N$ and $c$ vary.
+The paper is restricted throughout to fixed finite-dimensional regimes $(N,c)$.
 \end{abstract}
 
 \tableofcontents
@@ -100,6 +98,7 @@ The real content lies in two issues:
 unisolvence can actually be proved, and
 (ii) quantifying the gap between the discrete sampling form and the
 continuous quadratic form of $\Kop$.
+We restrict attention throughout to fixed finite-dimensional regimes $(N,c)$.
 
 Layer~A proves unisolvence for random sampling and for weighted sampling models
 satisfying a lower frame inequality, and records the uniform-grid case as an open zero-counting problem.
@@ -157,7 +156,7 @@ of $c$.
 \begin{definition}[Prolate Gram matrix and form]\label{def:GramForm}
 For distinct $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$, the
 \emph{evaluation matrix} is $M(\mathbf{p},c)_{jn}:=\psi_n^{(c)}(p_j)$,
-and the \emph{prolate Gram matrix} is
+and the \emph{unweighted empirical Gram matrix} is
 $\GVM:=M(\mathbf{p},c)^*M(\mathbf{p},c)$.
 
 If $f=\sum_{n=0}^{N-1}a_n\psin\in V_{N,c}$, then
@@ -192,7 +191,7 @@ We say that $\mathbf{p}$ satisfies~(T.2) if
 The matrices $\GVM$ and $G^{\mathrm{ref}}_{N,c}$ are both viewed as operators on
 $\mathbb C^N$ through the coefficient map
 $f=\sum_{n=0}^{N-1}a_n\psi_n^{(c)}\longleftrightarrow \mathbf a=(a_0,\dots,a_{N-1})$.
-Under this identification, $\GVM$ encodes the discrete sampling quadratic form
+Under this identification, $\GVM$ encodes the unweighted discrete sampling quadratic form
 and $G^{\mathrm{ref}}_{N,c}$ encodes the restriction of $\Kop$ to $V_{N,c}$.
 The notation \textup{(T.2)} is chosen to remain compatible with the numbering
 used later in the scaling-limit continuation of this project.
@@ -214,20 +213,20 @@ A family of nodes and positive weights
   \{(p_j,w_j)\}_{j=1}^N, \qquad -T\le p_1<\cdots<p_N\le T, \qquad w_j>0,
 \]
 is said to satisfy a \emph{Marcinkiewicz--Zygmund frame condition} on $V_{N,c}$
-with defect $\delta\in[0,1)$ if
+if there exist constants $0<A\le B<\infty$ such that
 \[
-  (1-\delta)\norm{f}_{L^2(-T,T)}^2
+  A\norm{f}_{L^2(-T,T)}^2
   \le \sum_{j=1}^N w_j |f(p_j)|^2
-  \le (1+\delta)\norm{f}_{L^2(-T,T)}^2
+  \le B\norm{f}_{L^2(-T,T)}^2
 \]
 for all $f\in V_{N,c}$.
-The case $\delta=0$ corresponds to exact weighted discretization of the
-$L^2(-T,T)$ geometry of $V_{N,c}$.
+The special case $A=1-\delta$, $B=1+\delta$ with $\delta\in[0,1)$ recovers
+an approximately isometric model.
 \end{definition}
 
-\begin{remark}[Weighted-frame viewpoint]
+\begin{remark}[Weighted-frame viewpoint]\label{rem:weighted_frame}
 Definition~\ref{def:mz_model} treats discrete sampling on $V_{N,c}$ as a weighted frame problem.
-The geometry is therefore encoded not by an exact quadrature oracle but by a stability defect $\delta$.
+The geometry is therefore encoded not by an exact quadrature oracle but by frame bounds $(A,B)$.
 Gauss--PSWF constructions should be regarded as motivation for such models, not as an automatic source of exact identities.
 \end{remark}
 
@@ -258,7 +257,7 @@ Assume that $\{(p_j,w_j)\}_{j=1}^N$ satisfies the lower frame bound
 \]
 for all $f\in V_{N,c}$, with some constant $A>0$.
 Then $\mathbf p=(p_1,\dots,p_N)$ is unisolvent for $V_{N,c}$.
-In particular, every Marcinkiewicz--Zygmund frame condition with defect $\delta<1$
+In particular, every Marcinkiewicz--Zygmund frame condition with $A>0$
 implies unisolvence.
 \end{proposition}
 
@@ -283,10 +282,15 @@ Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
-It is not identically zero because the family of point-evaluation functionals on
-$V_{N,c}$ is separating, hence one can choose $N$ points giving an invertible evaluation map.
-The zero set of a nonzero real-analytic function has Lebesgue measure zero,
-so absolute continuity implies that non-unisolvence occurs with probability zero.
+To see that it is not identically zero, choose any basis $f_1,\dots,f_N$ of $V_{N,c}$
+and construct points inductively as follows. Since $f_1\not\equiv0$, choose $p_1\in[-T,T]$
+with $f_1(p_1)\neq0$. If $p_1,\dots,p_k$ are chosen so that the $k\times k$ evaluation matrix
+$(f_i(p_j))_{1\le j,i\le k}$ is invertible and if every $(k+1)\times(k+1)$ minor obtained by adding a point
+$x\in[-T,T]$ vanished identically in $x$, then every linear combination of $f_1,\dots,f_{k+1}$ vanishing on
+$p_1,\dots,p_k$ would vanish identically, contradicting linear independence. Hence one can choose $p_{k+1}$
+so that the enlarged minor is nonzero. By induction, there exists a configuration with invertible evaluation matrix.
+Therefore $\det M(\mathbf{p},c)$ is a nonzero real-analytic function, whose zero set has Lebesgue measure zero.
+Absolute continuity then implies that non-unisolvence occurs with probability zero.
 \end{proof}
 
 \begin{lemma}[Pointwise bound via reproducing kernel]\label{lem:upper}
@@ -359,6 +363,14 @@ Given positive weights $w_1,\dots,w_N$, let $D:=\operatorname{diag}(w_1,\dots,w_
 This is the weighted discrete Gram matrix associated with the sampling model $(\mathbf p,D)$.
 \end{definition}
 
+\begin{remark}[Two Gram objects]\label{rem:two_grams}
+The matrices $\GVM$ and $G^{\mathrm{w}}_{N,c}(\mathbf p,D)$ are built from the same evaluation matrix
+$M(\mathbf p,c)$ and therefore from the same PSWF samples.
+They differ only in whether one inserts the weight matrix $D$.
+Thus the decomposition in Proposition~\ref{prop:two_step_error} separates two analytically distinct
+contributions, but not two statistically or geometrically independent sources of randomness.
+\end{remark}
+
 \begin{proposition}[Two-step error decomposition]\label{prop:two_step_error}
 Let $(\mathbf p,D)$ be a weighted sampling model with positive diagonal weight matrix $D$.
 Then
@@ -392,11 +404,11 @@ the claimed identity follows. The norm bound is immediate from subadditivity and
 \end{proof}
 
 \begin{remark}[Interpretation of Proposition~\ref{prop:two_step_error}]
-The error now splits into two independent effects: a weighted-frame defect
+The error splits into a weighted-frame defect
 $M^*(I-D)M$ and a spectral mismatch term
 $G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}$.
-Thus condition~\textup{(T.2)} is not reduced to pure weight flatness alone;
-it also requires compatibility between the weighted discrete model and the prolate spectrum.
+These two terms are analytically distinct, but structurally coupled through the same evaluation matrix.
+Condition~\textup{(T.2)} therefore requires simultaneous control of both effects, not independent estimates.
 \end{remark}
 
 \begin{corollary}[Sufficient criterion for \textup{(T.2)} from two defects]\label{cor:two_defects}
@@ -432,7 +444,7 @@ Therefore
 The displayed hypothesis gives $\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\ref{def:T2} applies.
 \end{proof}
 
-\begin{lemma}[Spectral stability via Weyl]\label{lem:C}
+\begin{lemma}[Spectral stability via Weyl]\label{lem:weyl_stability}
 Assume~(T.2) with parameter $\varepsilon_N$.
 Then
 \[
@@ -506,8 +518,8 @@ This is currently speculative.
 
 \begin{problem}[Uniform-grid unisolvence]
 Determine whether uniform grids are unisolvent for $V_{N,c}$.
-More generally, decide whether nontrivial zero-counting bounds hold for
-linear combinations of the first $N$ PSWFs.
+A natural intermediate step would be to establish oscillation bounds or near-Chebyshev properties
+for linear combinations of the first $N$ PSWFs on $[-T,T]$.
 \end{problem}
 
 \begin{problem}[Weighted frame models for PSWF sampling]
