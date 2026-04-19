@@ -35,11 +35,10 @@
       {Coercivity of the Prolate Gram Form
        at Discrete Sampling Points}
 
-\thanks{This paper is the first in a series on spectral
+\thanks{This paper is motivated by a broader program on spectral
 constructions related to the Hilbert--P\'{o}lya conjecture.
-Paper~II develops the scaling limit and trace formula;
-Papers~III--VI address phase obstruction, no-go results,
-and Mellin bandwidth decay.}
+Future work will address scaling limits, trace formulae,
+phase obstruction, and Mellin bandwidth decay.}
 
 \author{Anonymous Author}
 \address{}
@@ -69,7 +68,7 @@ For uniform grids we explain the associated zero-counting problem,
 but we do not claim a theorem because $V_{N,c}$ is not known to be
 a Chebyshev system in general.
 Second, under an abstract sampling-quality condition~(T.2),
-we prove a quantitative comparison between discrete sampling and the prolate operator,
+we prove a sharp quantitative comparison between discrete sampling and the prolate operator,
 namely
 $\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
 where the remainder measures how well discrete sampling approximates
@@ -91,7 +90,7 @@ The prolate program of Connes--Consani--Moscovici
 using the prolate concentration operator $\Kop$ on Paley--Wiener space.
 
 The present paper isolates and proves a finite-dimensional coercivity
-statement that is a prerequisite for this program.
+statement motivated by that broader program.
 The linear-algebraic core is elementary: coercivity is equivalent to
 invertibility of the evaluation matrix $M(\mathbf{p},c)$.
 The real content lies in two issues:
@@ -198,7 +197,7 @@ Thus $\EN$ is a matrix-valued quadrature error.
 
 \begin{definition}[Unisolvent set]\label{def:unisolvent}
 A set $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$ of $N$ distinct points
-is \emph{unisolvent for $V_{N,c}$} (equivalently, interpolation-unique for $V_{N,c}$)
+is \emph{unisolvent for $V_{N,c}$} (equivalently, uniqueness of interpolation in $V_{N,c}$)
 if the only $f\in V_{N,c}$ satisfying $f(p_j)=0$ for all $j$ is $f\equiv 0$.
 Since $\dim V_{N,c}=N$, this is equivalent to bijectivity of the evaluation map
 $\mathcal{E}_{\mathbf{p}}:V_{N,c}\to\mathbb{C}^N$.
@@ -234,10 +233,9 @@ Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 \begin{proof}
 Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 The map $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
-It is not identically zero because Gauss--PSWF nodes give a nonsingular
-matrix by Proposition~\ref{prop:gauss}.
-Alternatively, the same nondegeneracy follows from analyticity together
-with the existence of at least one configuration having full rank.
+It is not identically zero since there exists at least one configuration
+(for instance, Gauss--PSWF nodes from Proposition~\ref{prop:gauss})
+for which the matrix has full rank.
 The zero set of a nonzero real-analytic function has Lebesgue measure zero,
 so absolute continuity implies that non-unisolvence occurs with probability zero.
 \end{proof}
@@ -246,7 +244,7 @@ so absolute continuity implies that non-unisolvence occurs with probability zero
 Let $p_1<\cdots<p_N$ be Gauss--PSWF quadrature nodes with positive weights
 $w_1,\dots,w_N$, arising from the Gaussian quadrature adapted to the PSWF basis,
 and chosen so that the quadrature rule is exact on products
-$f\overline{g}$ with $f,g\in V_{N,c}$.
+$f\overline{g}$ with $f,g\in V_{N,c}$; see \cite{Xiao2001}.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$.
 \end{proposition}
 
