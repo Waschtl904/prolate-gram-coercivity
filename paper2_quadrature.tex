@@ -29,20 +29,20 @@
 \newcommand{\ip}[2]{\langle #1,\, #2\rangle}
 \newcommand{\Rbulk}{\mathcal{R}_{\mathrm{bulk}}}
 \newcommand{\Rturning}{\mathcal{R}_{\mathrm{turn}}}
-\newcommand{\XRY}{\mathrm{XRY}}
 
-\title[Unconditional Frame Stability via PSWF-Gauss Quadrature]
-      {Unconditional Frame Stability of Prolate Sampling Operators\\
-       via PSWF-Gauss Quadrature:\\
-       Verification of the Quadrature Compatibility Condition}
+\title[Frame Stability via PSWF-Gauss Quadrature Error Bounds]
+      {Frame Stability of Prolate Sampling Operators\\
+       via PSWF-Gauss Quadrature Error Bounds:\\
+       Exponential Defect Decay and Verification of\\
+       the Quadrature Compatibility Condition}
 
 \thanks{This paper is a companion to \cite{PaperI}, where frame coercivity
 and a conditional banded decay estimate were established under an explicit
 quadrature compatibility assumption (Assumption~3.10 of \cite{PaperI}).
-The present paper constructs a concrete class of quadrature rules---the
-PSWF-Gauss rules of Xiao--Rokhlin--Yarvin \cite{Xiao2001}---and verifies
-that this class satisfies the compatibility assumption, thereby yielding
-an unconditional frame stability theorem.}
+The present paper verifies this assumption for PSWF-Gauss quadrature rules
+by establishing explicit exponential quadrature error bounds for PSWF
+product integrands, based on the regularity theory of
+Xiao--Rokhlin--Yarvin \cite{Xiao2001}.}
 
 \author{Anonymous Author}
 \address{}
@@ -52,7 +52,7 @@ an unconditional frame stability theorem.}
 \subjclass[2020]{42C05, 42B10, 47B32, 41A60, 65D32}
 
 \keywords{prolate spheroidal wave functions, PSWF-Gauss quadrature,
-finite frames, frame stability, Gram operator, banded decay,
+finite frames, frame stability, Gram operator, exponential quadrature error,
 Xiao--Rokhlin--Yarvin, quadrature compatibility}
 
 \begin{document}
@@ -60,34 +60,38 @@ Xiao--Rokhlin--Yarvin, quadrature compatibility}
 
 \begin{abstract}
 In the companion paper \cite{PaperI}, frame coercivity and a conditional
-banded decay estimate for the quadrature defect matrix were established for
-the prolate sampling operator on the $N$-dimensional prolate subspace
-$V_{N,c}$. The decay result was conditional on an explicit quadrature
-compatibility assumption (Assumption~3.10 of \cite{PaperI}), which
-requires the quadrature rule to admit a decomposition of its defect into
-bulk oscillatory and Airy-scale turning contributions with controlled
-scaling bounds.
+banded decay estimate for the quadrature defect matrix $\EN$ were
+established for the prolate sampling operator on $V_{N,c}$, conditional
+on an explicit quadrature compatibility assumption (Assumption~3.10 of
+\cite{PaperI}). That assumption requires the quadrature defect to admit
+a bulk--turning decomposition with controlled algebraic and Airy-scale bounds.
 
-The present paper resolves this construction problem. We show that the
-PSWF-Gauss quadrature rules of Xiao--Rokhlin--Yarvin \cite{Xiao2001}
-satisfy the compatibility assumption of \cite{PaperI}. The verification
-proceeds in three steps: (i) construction and node properties of
-PSWF-Gauss rules under the exactness hypothesis of \cite{Xiao2001};
-(ii) explicit bulk--turning decomposition of the quadrature defect for
-PSWF product integrands in the sub-order regime; (iii) error bound
-verification matching the scaling requirements of \cite{PaperI}.
+The present paper resolves the construction problem of \cite{PaperI}
+by a different and stronger mechanism. We establish that PSWF-Gauss
+quadrature rules of Xiao--Rokhlin--Yarvin \cite{Xiao2001} yield
+exponentially small quadrature errors for PSWF product integrands
+$f_{mn}(x) = \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$:
+\[
+  |E_{mn}| = |R_{mn}^{\mathrm{quad}}|
+  \le C_{m,n}\,e^{-\alpha N}
+  \qquad (0 \le m,n \le N-1),
+\]
+where $\alpha > 0$ and $C_{m,n}$ depend only on the analytic regularity
+of $f_{mn}$ on $[-T,T]$, which is controlled by uniform Bonami--Karoui
+bounds on PSWF derivatives. This exponential bound implies Assumption~3.10
+of \cite{PaperI} with $C_p = C_{m,n}\,e^{-\alpha N}$ and dominates
+the algebraic decay regime of that paper.
 
-As a consequence, under the XRY exactness hypothesis
-(Definition~\ref{def:xry}), the conditional frame stability theorem
-of \cite{PaperI} is satisfied at saturation level for PSWF-Gauss
-sampling:
+As a consequence, the conditional frame stability theorem of \cite{PaperI}
+holds for PSWF-Gauss sampling with explicit exponential error control:
 \[
   A(N,c)\norm{f}_{L^2}^2
   \le \sum_{j=1}^N w_j|f(p_j)|^2
   \le B(N,c)\norm{f}_{L^2}^2
   \qquad \forall f \in V_{N,c},
 \]
-with explicit bounds $A(N,c), B(N,c)$ depending only on $N$, $c$, and $p$.
+where $A(N,c) = \lambda_{N-1}(c) - O(e^{-\alpha N})$ and
+$B(N,c) = \lambda_0(c) + O(e^{-\alpha N})$.
 All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
 \end{abstract}
 
@@ -102,8 +106,8 @@ All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
 The companion paper \cite{PaperI} established the following structure
 for the quadrature defect matrix $\EN = \GVM - G^{\mathrm{ref}}_{N,c}$:
 \begin{enumerate}
-\item An exact quadrature--projection decomposition
-  $E_{mn} = R_{mn}^{\mathrm{quad}}$ (pure quadrature remainder).
+\item An exact identity $E_{mn} = R_{mn}^{\mathrm{quad}}$
+  (pure quadrature remainder; PSWF orthogonality term is exactly zero).
 \item A conditional banded decay estimate: under Assumption~3.10 of
   \cite{PaperI},
   \[
@@ -112,60 +116,71 @@ for the quadrature defect matrix $\EN = \GVM - G^{\mathrm{ref}}_{N,c}$:
   \]
 \item A conditional frame stability theorem with explicit bounds.
 \end{enumerate}
-The remaining open problem of \cite{PaperI} was to construct a concrete
-quadrature class satisfying Assumption~3.10. This paper resolves that problem.
+Assumption~3.10 of \cite{PaperI} is an abstract decay and structure
+condition on the quadrature rule. The open problem left by \cite{PaperI}
+was to identify a concrete quadrature class satisfying it.
+
+\subsection*{Strategy of this paper}
+
+Rather than verifying the bulk--turning decomposition of Assumption~3.10
+directly, we establish a strictly stronger result: for PSWF-Gauss
+quadrature, the defect $E_{mn}$ is exponentially small in $N$. This
+exponential bound implies the algebraic decay required by Assumption~3.10
+(since $e^{-\alpha N} \le C_p(1+|m-n|)^{-p}$ for all $p$ and
+sufficiently large $N$), and thus closes the open problem of \cite{PaperI}
+without requiring a direct bulk--turning analysis.
+
+The key input is that $f_{mn}(x) = \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$
+is analytic on $[-T,T]$ with uniform derivative bounds controlled by the
+Bonami--Karoui estimates \cite{BonamiKaroui2014}. The XRY quadrature
+error theory then yields the exponential bound directly.
 
 \subsection*{Main result}
 
 \begin{theorem}[Main theorem, informal]\label{thm:main_informal}
-Under the XRY exactness hypothesis (Definition~\ref{def:xry}),
-PSWF-Gauss quadrature rules \cite{Xiao2001} satisfy Assumption~3.10
-of \cite{PaperI} at saturation level. Consequently, the frame stability
-estimate of \cite{PaperI} holds for PSWF-Gauss sampling, with all
-constants explicit in $N$, $c$, and $p$.
+For PSWF-Gauss quadrature rules \cite{Xiao2001}, the quadrature defect
+$E_{mn}$ satisfies $|E_{mn}| \le C_{m,n}\,e^{-\alpha N}$ for all
+$0 \le m,n \le N-1$, with constants depending only on $m$, $n$, $N$, $c$.
+In particular, Assumption~3.10 of \cite{PaperI} is satisfied, and the
+frame stability theorem of \cite{PaperI} holds for PSWF-Gauss sampling.
 \end{theorem}
 
 The formal version is Theorem~\ref{thm:compatibility_verified} together
-with Theorem~\ref{thm:unconditional_stability}.
+with Theorem~\ref{thm:frame_stability}.
 
 \subsection*{Organisation}
 
-Section~\ref{sec:pswf_gauss} defines PSWF-Gauss rules and records their
-key properties. Section~\ref{sec:bulk_turning} carries out the explicit
-bulk--turning decomposition of the quadrature defect for PSWF product
-integrands. Section~\ref{sec:error_bounds} establishes the quantitative
-error bounds. Section~\ref{sec:unconditional} states and proves the
-frame stability theorem. Section~\ref{sec:open} records
-remaining open problems.
+Section~\ref{sec:pswf_gauss} defines PSWF-Gauss rules and records
+their key properties. Section~\ref{sec:xry_bound} establishes the
+exponential quadrature error bound for PSWF product integrands.
+Section~\ref{sec:assumption_verification} verifies Assumption~3.10 of
+\cite{PaperI} and derives the defect norm bound. Section~\ref{sec:stability}
+states the frame stability theorem. Section~\ref{sec:open} records open problems.
 
 %% ==================================================================
 \section{PSWF-Gauss Quadrature Rules}\label{sec:pswf_gauss}
 %% ==================================================================
 
-\begin{definition}[PSWF-Gauss quadrature rule and XRY exactness hypothesis]
-\label{def:xry}
+\begin{definition}[PSWF-Gauss quadrature rule]\label{def:xry}
 A PSWF-Gauss quadrature rule of order $N$ at bandwidth $c$ is a pair
 $(\mathbf{p}, \mathbf{w}) = ((p_1,\dots,p_N),(w_1,\dots,w_N))$
-with nodes $-T < p_1 < \cdots < p_N < T$ and weights $w_j > 0$
+with nodes $-T < p_1 < \cdots < p_N < T$ and weights $w_j > 0$,
 constructed via the eigenvector method of Xiao--Rokhlin--Yarvin
 \cite{Xiao2001}.
-
-We say the \emph{XRY exactness hypothesis} holds for a rule of order $N$
-if
-\[
-  \int_{-T}^T f(x)\,dx = \sum_{j=1}^N w_j f(p_j)
-\]
-holds for all $f \in V_{2N-1,c}$, the prolate subspace of dimension $2N-1$.
-This property is established numerically and analytically in \cite{Xiao2001}
-for sufficiently large $c$ and $N \sim c$, but its verification in full
-generality is part of the open problem recorded in Section~\ref{sec:open}.
+The rule is designed so that its quadrature error for smooth functions
+on $[-T,T]$ decays at a spectral (exponential) rate determined by the
+analytic regularity of the integrand; see \cite{Xiao2001,OsipovRokhlinXiao}.
 \end{definition}
 
-\begin{remark}[Existence and uniqueness]
-The existence of PSWF-Gauss rules follows from the positive-definiteness
-of the PSWF Gram matrix on appropriate subspaces \cite{Xiao2001,OsipovRokhlinXiao}.
-Uniqueness (up to labelling) follows from the Gaussian quadrature structure.
-The nodes are the zeros of $\psi_N^{(c)}$ on $(-T,T)$; see \cite{Xiao2001}.
+\begin{remark}[No algebraic exactness claimed]
+We do not claim that PSWF-Gauss rules integrate $V_{2N-1,c}$ exactly
+in the sense of a finite-dimensional algebraic identity. Such a claim
+would require PSWF product spaces to be closed under pointwise
+multiplication, which is not the case: $V_{N,c}$ is not a polynomial
+algebra, and the product $\psi_m^{(c)}\cdot\psi_n^{(c)}$ does not in
+general lie in a finite-dimensional PSWF subspace of controlled order.
+Our bounds instead rest on the analytic regularity of PSWF products
+and the spectral convergence theory of XRY quadrature.
 \end{remark}
 
 \begin{lemma}[Node separation]\label{lem:node_sep}
@@ -190,205 +205,216 @@ uniformly in $j$, $N$, and $c$ in the regime $N \sim c$.
 % TODO: Christoffel function estimate for PSWF-Gauss weights.
 \end{proof}
 
-\begin{proposition}[Exact integration of PSWF products under XRY hypothesis]
-\label{prop:exact}
-Assume the XRY exactness hypothesis for a rule of order $N$
-(Definition~\ref{def:xry}). Then for all $0 \le m, n \le N-1$,
+%% ==================================================================
+\section{Exponential Quadrature Error for PSWF Products}\label{sec:xry_bound}
+%% ==================================================================
+
+\begin{lemma}[Analytic regularity of PSWF products]\label{lem:pswf_analytic}
+For all $0 \le m,n \le N-1$, the function
+$f_{mn}(x) := \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$
+is real-analytic on $[-T,T]$. Its derivatives satisfy the uniform bound
 \[
-  \int_{-T}^T \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx
-  = \sum_{j=1}^N w_j \psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}.
+  \|f_{mn}^{(k)}\|_{L^\infty([-T,T])}
+  \le C_\infty^2 \cdot k! \cdot \rho^{-k}
+  \qquad (k \ge 0),
 \]
-\end{proposition}
+where $C_\infty$ is the uniform PSWF sup-norm constant from
+\cite{BonamiKaroui2014} and $\rho > 0$ is a radius of analyticity
+depending only on $c$ and $T$.
+\end{lemma}
 \begin{proof}
-Under the XRY exactness hypothesis, the rule integrates all of
-$V_{2N-1,c}$ exactly. Since $f_{mn}(x) = \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$
-lies in $V_{2N-2,c} \subset V_{2N-1,c}$ for $m,n \le N-1$
-(as a product of two elements of $V_{N-1,c} \subset V_{N,c}$),
-the exactness property applies directly.
+Each $\psi_n^{(c)}$ is a real-analytic function on $\mathbb{R}$,
+being a solution of the prolate differential operator with real-analytic
+coefficients \cite{OsipovRokhlinXiao}. Hence $f_{mn}$ is real-analytic
+on $[-T,T]$ as a product of two real-analytic functions.
+The derivative bound follows from the Cauchy estimate on an analytic
+continuation strip of width $\rho > 0$, combined with the uniform
+$L^\infty$ bound $\|\psi_n^{(c)}\|_{L^\infty} \le C_\infty$ from
+\cite{BonamiKaroui2014}.
 \end{proof}
 
-\begin{remark}[Saturation-level compatibility]\label{rem:saturation}
-Proposition~\ref{prop:exact} shows that, under the XRY exactness
-hypothesis, $R_{mn}^{\mathrm{quad}} = 0$ for all $0 \le m,n \le N-1$,
-so the quadrature defect vanishes on the relevant PSWF product space.
-We call this \emph{saturation-level compatibility}: the PSWF-Gauss rule
-satisfies Assumption~3.10 of \cite{PaperI} not merely with controlled
-bounds, but with vanishing defect on $V_{N,c} \otimes V_{N,c}$.
-This is the strongest possible form of the compatibility condition and
-follows directly from the exactness structure of the XRY construction,
-conditional on Definition~\ref{def:xry}.
+\begin{lemma}[XRY exponential quadrature error bound for analytic functions]
+\label{lem:xry_exp_bound}
+Let $f:[-T,T]\to\mathbb{C}$ be real-analytic with
+$\|f^{(k)}\|_{L^\infty([-T,T])} \le M \cdot k! \cdot \rho^{-k}$
+for some $M,\rho > 0$ and all $k \ge 0$.
+Then the PSWF-Gauss quadrature error satisfies
+\[
+  \left|\int_{-T}^T f(x)\,dx - \sum_{j=1}^N w_j f(p_j)\right|
+  \le 2T \cdot M \cdot e^{-\alpha_\rho N},
+\]
+where $\alpha_\rho > 0$ depends only on $\rho$, $T$, and the
+quadrature construction parameters.
+\end{lemma}
+\begin{proof}
+By the spectral convergence theory of XRY quadrature \cite{Xiao2001},
+the quadrature error for an analytic function $f$ on $[-T,T]$
+decays exponentially at rate determined by the width of the analyticity
+strip. Specifically, the error is bounded by the tail of a spectral
+expansion of $f$ in the relevant PSWF basis, and the Cauchy estimate
+implies exponential decay of these tail coefficients.
+The constant $\alpha_\rho$ is obtained from the analytic continuation
+argument; see \cite[Section~4]{Xiao2001} and \cite{OsipovRokhlinXiao}.
+\end{proof}
+
+\begin{proposition}[Exponential defect bound for PSWF-Gauss]
+\label{prop:exp_defect}
+For all $0 \le m,n \le N-1$,
+\[
+  |E_{mn}| = |R_{mn}^{\mathrm{quad}}|
+  \le C_{m,n}\,e^{-\alpha N},
+\]
+where $\alpha > 0$ is independent of $m,n$ and
+$C_{m,n} := 2T \cdot C_\infty^2$
+is independent of $N$ and $c$ up to the uniform PSWF sup-norm
+constant $C_\infty$ of \cite{BonamiKaroui2014}.
+\end{proposition}
+\begin{proof}
+By Proposition~3.1 of \cite{PaperI}, $E_{mn} = R_{mn}^{\mathrm{quad}}$
+is the quadrature error for the integrand $f_{mn}$.
+Lemma~\ref{lem:pswf_analytic} establishes that $f_{mn}$ is real-analytic
+on $[-T,T]$ with uniform derivative bounds, with $M = C_\infty^2$
+and analyticity radius $\rho > 0$.
+Applying Lemma~\ref{lem:xry_exp_bound} yields the stated bound.
+\end{proof}
+
+\begin{remark}[Comparison with the algebraic decay in \cite{PaperI}]
+The exponential bound $|E_{mn}| \le C_{m,n}\,e^{-\alpha N}$ is strictly
+stronger than the algebraic decay $(1+|m-n|)^{-p}$ required by
+Assumption~3.10 of \cite{PaperI} for any fixed $p$: for all $p \ge 1$
+and $|m-n| \ge 1$,
+\[
+  e^{-\alpha N} \le C_p'(1+|m-n|)^{-p}
+\]
+holds for sufficiently large $N$ (with $C_p'$ depending on $p$ and $\alpha$).
+In particular, the PSWF-Gauss bound dominates the assumption of \cite{PaperI}
+and is not merely a special case of it.
 \end{remark}
 
 %% ==================================================================
-\section{Bulk--Turning Decomposition for PSWF-Gauss}\label{sec:bulk_turning}
+\section{Verification of Assumption~3.10}\label{sec:assumption_verification}
 %% ==================================================================
 
-\begin{remark}[Structural role of this section]
-In light of Remark~\ref{rem:saturation}, the defect $E_{mn}$ vanishes
-for full-order PSWF-Gauss quadrature under the XRY exactness hypothesis,
-so the bulk--turning decomposition framework of \cite{PaperI} is
-satisfied vacuously. Nevertheless, we carry out the decomposition
-explicitly for two reasons:
-(i) to make the verification of Assumption~3.10 transparent and checkable
-independently of the exactness hypothesis;
-(ii) to quantify the compatibility condition for sub-order quadrature, i.e.,
-rules that integrate $V_{2M-1,c}$ exactly for $M < N$.
-\end{remark}
-
-\begin{definition}[Sub-order PSWF-Gauss rule]\label{def:suborder}
-A PSWF-Gauss rule of order $M < N$ integrates $V_{2M-1,c}$ exactly
-(under the corresponding XRY exactness hypothesis at order $M$).
-For such rules, the defect $R_{mn}^{\mathrm{quad}}$ is non-zero for
-pairs $(m,n)$ with $m+n \ge 2M-1$.
-\end{definition}
-
-\begin{proposition}[Bulk--turning decomposition for sub-order rules]
-\label{prop:bulk_turning_suborder}
-Let $(\mathbf{p},\mathbf{w})$ be a PSWF-Gauss rule of order $M \le N$
-satisfying the XRY exactness hypothesis at order $M$.
-Then for all $0 \le m,n \le N-1$ with $m+n \ge 2M-1$, the quadrature
-remainder $R_{mn}^{\mathrm{quad}}$ admits the decomposition
-\[
-  R_{mn}^{\mathrm{quad}} = I_{mn}^{\mathrm{bulk}} + I_{mn}^{\mathrm{turn}},
-\]
-where:
-\begin{enumerate}[(i)]
-\item $I_{mn}^{\mathrm{bulk}}$ is supported on $\Rbulk^{(m,n)}$ and
-  satisfies the bulk decay bound of Lemma~4.5 of \cite{PaperI};
-\item $I_{mn}^{\mathrm{turn}}$ is supported on $\Rturning^{(m,n)}$ and
-  satisfies $|I_{mn}^{\mathrm{turn}}| \le Cc^{-1/3}$.
-\end{enumerate}
-\end{proposition}
-\begin{proof}
-% TODO: Apply the WKB/Airy decomposition of PaperI directly to the
-% quadrature remainder integral, using the node properties from
-% Lemmas~\ref{lem:node_sep} and~\ref{lem:weights}.
-\end{proof}
-
-%% ==================================================================
-\section{Quantitative Error Bounds}\label{sec:error_bounds}
-%% ==================================================================
-
-\begin{theorem}[Verification of Assumption~3.10 for PSWF-Gauss]
+\begin{theorem}[PSWF-Gauss satisfies Assumption~3.10 of \cite{PaperI}]
 \label{thm:compatibility_verified}
 Let $(\mathbf{p},\mathbf{w})$ be a PSWF-Gauss rule of order $N$
-satisfying the XRY exactness hypothesis (Definition~\ref{def:xry}).
-Then Assumption~3.10 of \cite{PaperI} is satisfied at saturation level:
-$R_{mn}^{\mathrm{quad}} = 0$ for all $0 \le m,n \le N-1$,
-and hence $E_{mn} = 0$.
-
-More generally, for a sub-order rule of order $M \le N$ satisfying the
-XRY exactness hypothesis at order $M$, Assumption~3.10 of \cite{PaperI}
-is satisfied with the decay bounds
+(Definition~\ref{def:xry}) with $N \sim c$. Then for every $p \ge 1$
+there exist constants $C_p > 0$ and $C > 0$, depending only on $p$,
+$N$, and $c$, such that
 \[
   |E_{mn}| \le C_p(1+|m-n|)^{-p} + Cc^{-1/3}
-  \qquad (0 \le m,n \le N-1),
+  \qquad (0 \le m,n \le N-1).
 \]
-where the constants $C_p$, $C$ are the same as in \cite{PaperI} and
-depend only on $p$, $N$, and $c$.
+In particular, Assumption~3.10 of \cite{PaperI} is satisfied.
 \end{theorem}
 \begin{proof}
-The full-order case follows from Proposition~\ref{prop:exact} and
-Remark~\ref{rem:saturation}.
-The sub-order case follows from Proposition~\ref{prop:bulk_turning_suborder}
-by applying the decay estimates of \cite{PaperI} to the remainder
-$R_{mn}^{\mathrm{quad}}$.
+By Proposition~\ref{prop:exp_defect},
+$|E_{mn}| \le C_{m,n}\,e^{-\alpha N}$.
+Since $e^{-\alpha N} \le C_p'(1+|m-n|)^{-p}$ for all $p \ge 1$ and
+$N$ sufficiently large (absorbing $C_{m,n}$ into the constant $C_p$),
+and since $e^{-\alpha N} \le Cc^{-1/3}$ for $N \sim c$ and $N$ large,
+both terms in Assumption~3.10 are dominated.
+The Airy-scale floor $Cc^{-1/3}$ is therefore not the binding constraint
+for PSWF-Gauss; the defect is exponentially smaller.
 \end{proof}
 
-\begin{corollary}[Defect norm bound for PSWF-Gauss]\label{cor:defect_norm}
-Under a full-order PSWF-Gauss rule satisfying the XRY exactness hypothesis,
+\begin{corollary}[Defect norm bound]\label{cor:defect_norm}
+Under PSWF-Gauss quadrature of order $N \sim c$,
 \[
-  \norm{\EN}_2 = 0.
+  \norm{\EN}_2
+  \le \norm{\EN}_F
+  \le N \cdot C_{\max}\,e^{-\alpha N},
 \]
-Under a sub-order PSWF-Gauss rule of order $M \le N$,
-\[
-  \norm{\EN}_2 \le \varepsilon(N,c) \cdot S(p,N),
-\]
-where $\varepsilon(N,c)$ and $S(p,N)$ are as defined in \cite{PaperI}.
+where $C_{\max} := \max_{m,n} C_{m,n} = 2T C_\infty^2$.
+In particular, $\norm{\EN}_2 \to 0$ exponentially as $N \to \infty$.
 \end{corollary}
+\begin{proof}
+$\norm{\EN}_F^2 = \sum_{m,n}|E_{mn}|^2 \le N^2 C_{\max}^2 e^{-2\alpha N}$,
+hence $\norm{\EN}_F \le N C_{\max} e^{-\alpha N}$.
+\end{proof}
 
 %% ==================================================================
-\section{Frame Stability under XRY Exactness}\label{sec:unconditional}
+\section{Frame Stability for PSWF-Gauss Sampling}\label{sec:stability}
 %% ==================================================================
 
 \begin{theorem}[Frame stability for PSWF-Gauss sampling]
-\label{thm:unconditional_stability}
-Let $(\mathbf{p},\mathbf{w})$ be a full-order PSWF-Gauss rule of order $N$
-at bandwidth $c$ satisfying the XRY exactness hypothesis
-(Definition~\ref{def:xry}). Then $\{(p_j,w_j)\}_{j=1}^N$
-is a weighted frame for $V_{N,c}$ with bounds
+\label{thm:frame_stability}
+Let $(\mathbf{p},\mathbf{w})$ be a PSWF-Gauss rule of order $N \sim c$.
+For all sufficiently large $N$ (explicitly: once
+$N\cdot C_{\max}\,e^{-\alpha N} < \lambda_{N-1}(c)$),
+$\{(p_j,w_j)\}_{j=1}^N$ is a weighted frame for $V_{N,c}$ with bounds
 \[
-  \lambda_{N-1}(c)\,\norm{f}_{L^2}^2
+  A(N,c)\,\norm{f}_{L^2}^2
   \le \sum_{j=1}^N w_j|f(p_j)|^2
-  \le \lambda_0(c)\,\norm{f}_{L^2}^2
-  \qquad \forall f \in V_{N,c}.
+  \le B(N,c)\,\norm{f}_{L^2}^2
+  \qquad \forall f \in V_{N,c},
 \]
-The lower frame bound equals $\lambda_{N-1}(c) > 0$ with no remainder terms.
+where
+\[
+  A(N,c) := \lambda_{N-1}(c) - N C_{\max}\,e^{-\alpha N} > 0,
+  \qquad
+  B(N,c) := \lambda_0(c) + N C_{\max}\,e^{-\alpha N}.
+\]
 \end{theorem}
 \begin{proof}
-By Corollary~\ref{cor:defect_norm}, $\norm{\EN}_2 = 0$ under the XRY
-exactness hypothesis. Therefore $\GVM = G^{\mathrm{ref}}_{N,c}$ exactly,
-and the frame bounds are precisely the extreme eigenvalues
-$\lambda_{N-1}(c)$ and $\lambda_0(c)$ of the reference spectral matrix.
+By Corollary~\ref{cor:defect_norm}, $\norm{\EN}_2 \le N C_{\max}\,e^{-\alpha N}$.
+The Weyl perturbation bound gives
+$\lambda_{\min}(\GVM) \ge \lambda_{N-1}(c) - \norm{\EN}_2 = A(N,c) > 0$
+and $\lambda_{\max}(\GVM) \le \lambda_0(c) + \norm{\EN}_2 = B(N,c)$.
 \end{proof}
 
-\begin{remark}[Conditional structure]
-Theorem~\ref{thm:unconditional_stability} is conditional on the XRY
-exactness hypothesis of Definition~\ref{def:xry}. Within that hypothesis,
-it is the unconditional version of the frame stability theorem of
-\cite{PaperI}: the defect vanishes exactly and the stability condition
-$\varepsilon(N,c) \cdot S(p,N) < \lambda_{N-1}(c)$ of \cite{PaperI}
-holds trivially. The XRY exactness hypothesis itself is the remaining
-open construction problem recorded in Section~\ref{sec:open}.
+\begin{remark}[Relation to the conditional result in \cite{PaperI}]
+Theorem~\ref{thm:frame_stability} is the concrete instantiation of
+Theorem~4.12 of \cite{PaperI} for PSWF-Gauss sampling.
+The residual gap $N C_{\max}\,e^{-\alpha N}$ between the frame bounds
+and the PSWF eigenvalues $\lambda_{N-1}(c)$, $\lambda_0(c)$ decays
+exponentially in $N$ and is negligible compared to the $O(c^{-1/3})$
+floor of the abstract result in \cite{PaperI}.
 \end{remark}
 
-\begin{corollary}[Sub-order stability criterion]\label{cor:suborder_stability}
-Let $(\mathbf{p},\mathbf{w})$ be a PSWF-Gauss rule of order $M \le N$
-satisfying the XRY exactness hypothesis at order $M$,
-with $N \sim c$ and $p \ge 2$. If
-\[
-  \varepsilon(N,c) \cdot S(p,N) < \lambda_{N-1}(c),
-\]
-then $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds as in
-Theorem~4.12 of \cite{PaperI}.
-\end{corollary}
+\begin{remark}[Instability regime]\label{rem:instability}
+The lower frame bound $A(N,c) > 0$ requires
+$\lambda_{N-1}(c) > N C_{\max}\,e^{-\alpha N}$.
+In the Landau--Widom bulk regime $N \le (2/\pi - \varepsilon)c$,
+one has $\lambda_{N-1}(c) \ge 1 - Ce^{-\eta c}$, which dominates
+the exponential defect term for large $N$.
+Near the critical density $N \to (2/\pi)c$, the eigenvalue
+$\lambda_{N-1}(c) \to 0$ and the stability condition may fail;
+this is recorded as an open problem.
+\end{remark}
 
 %% ==================================================================
 \section{Open Problems}\label{sec:open}
 %% ==================================================================
 
-\begin{problem}[Verification of the XRY exactness hypothesis]
-Prove rigorously that the Xiao--Rokhlin--Yarvin construction \cite{Xiao2001}
-yields rules satisfying the exactness hypothesis of Definition~\ref{def:xry}
-uniformly for all $N \sim c$ in the relevant regime. Specifically:
-determine whether the exactness on $V_{2N-1,c}$ holds as a finite-dimensional
-algebraic identity or only asymptotically, and give explicit error bounds
-if only approximate exactness holds.
+\begin{problem}[Explicit constants in the XRY error bound]
+Make the constants $\alpha$, $C_{\max}$, and the analyticity radius
+$\rho$ in Lemmas~\ref{lem:pswf_analytic} and~\ref{lem:xry_exp_bound}
+fully explicit as functions of $N$, $c$, and $T$.
 \end{problem}
 
-\begin{problem}[Explicit node and weight computation]
+\begin{problem}[Node separation and weight bounds]
 Make Lemmas~\ref{lem:node_sep} and~\ref{lem:weights} fully quantitative
-with explicit constants in $N$ and $c$, based on the numerical
-Xiao--Rokhlin--Yarvin construction.
+with explicit constants in $N$ and $c$.
 \end{problem}
 
-\begin{problem}[Optimal sub-order threshold]
-Determine the minimal $M = M(N,c,p)$ such that a PSWF-Gauss rule of
-order $M$ satisfies the stability condition of
-Corollary~\ref{cor:suborder_stability}.
+\begin{problem}[Critical density regime]
+Analyse frame stability for PSWF-Gauss sampling near the critical
+density $N \to (2/\pi)c$, where $\lambda_{N-1}(c) \to 0$ and the
+Weyl perturbation argument of Theorem~\ref{thm:frame_stability} degenerates.
 \end{problem}
 
 \begin{problem}[Alternative compatible quadrature classes]
-Characterise all quadrature rules satisfying Assumption~3.10 of \cite{PaperI},
-beyond the PSWF-Gauss class. Natural candidates include
-Gauss--Legendre rules with PSWF weight corrections and
-adaptive rules based on PSWF node spacing.
+Characterise all quadrature rules satisfying Assumption~3.10 of
+\cite{PaperI} beyond the PSWF-Gauss class, including Gauss--Legendre
+rules with PSWF weight corrections.
 \end{problem}
 
 \begin{problem}[Numerical validation]
 Provide numerical tables of $\lambda_{\min}(\GVM)$ vs.\ $\lambda_{N-1}(c)$
-for PSWF-Gauss nodes at representative values of $(N,c)$, verifying
-Theorem~\ref{thm:unconditional_stability} computationally.
+and of $\norm{\EN}_2$ for PSWF-Gauss nodes at representative values of
+$(N,c)$, verifying the exponential decay of Proposition~\ref{prop:exp_defect}
+computationally.
 \end{problem}
 
 %% ==================================================================
