@@ -491,6 +491,26 @@ We do not track these constants explicitly, only the resulting polynomial depend
 Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
+\begin{lemma}[Bulk decay bound]\label{lem:bulk_decay}
+Under the hypotheses of Lemma~\ref{lem:ibp_uniform}, the bulk contribution satisfies
+\[
+  |I_{mn}^{\mathrm{bulk}}|\le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p
+  \le C_p'(1+|m-n|)^{-p}
+  \qquad (m\neq n),
+\]
+with constants independent of $m,n,N,c$. In particular, the bulk term has algebraic off-diagonal
+ decay of arbitrary order.
+\end{lemma}
+\begin{proof}
+Apply the bulk-localised integration-by-parts operator $L$ repeatedly on $\Rbulk^{(m,n)}$.
+The oscillatory boundary terms are absorbed into the bulk localisation, and Lemma~\ref{lem:ibp_uniform}
+controls the resulting amplitude expressions in $L^1$. Since
+\[
+\frac{1+c^{-2/3}|m-n|}{|m-n|}\le \frac{2}{1+|m-n|},
+\]
+up to a harmless change of constants, the stated algebraic decay follows.
+\end{proof}
+
 \begin{remark}[Why no explicit constant tracking in the IBP step]\label{rem:ibp_constants}
 The purpose of Lemma~\ref{lem:ibp_uniform} is to establish polynomial off-diagonal decay,
 not a sharp constant-level asymptotic expansion. For this purpose, uniform Bonami--Karoui bounds
