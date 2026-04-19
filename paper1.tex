@@ -26,7 +26,6 @@
 \newcommand{\BM}{\beta_N}
 \newcommand{\QM}{Q^{(N)}_{\mathbf{p},c}}
 \newcommand{\psin}{\psi_n^{(c)}}
-\newcommand{\lam}{\lambda_n(c)}
 \newcommand{\EN}{E_{N,c}}
 \newcommand{\norm}[1]{\|#1\|}
 \newcommand{\ip}[2]{\langle #1,\, #2\rangle}
@@ -45,9 +44,10 @@ both $N$ and $c$ vary.}
 
 \subjclass[2020]{42C05, 42B10, 47B32}
 
-\keywords{prolate spheroidal wave functions, Gram form, coercivity,
-unisolvent sampling, Paley--Wiener space, Marcinkiewicz--Zygmund inequalities,
-finite frames, reproducing kernel Hilbert spaces}
+\keywords{prolate spheroidal wave functions, finite frames,
+sampling in reproducing kernel Hilbert spaces,
+Gram operator, Marcinkiewicz--Zygmund inequalities,
+frame perturbation, coercivity}
 
 \begin{document}
 \maketitle
@@ -56,565 +56,361 @@ finite frames, reproducing kernel Hilbert spaces}
 Let $\PW$ be the Paley--Wiener space of $\omega$-bandlimited functions
 and $V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}$
 the $N$-dimensional prolate subspace at time-bandwidth product $c=\omega T$.
-For $N$ distinct sampling points $\mathbf{p}\subset[-T,T]$ we study
-the discrete prolate Gram form $\QM(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_{N,c}$.
+We study the stability of the discrete sampling form
+$\QM(f)=\sum_{j=1}^N|f(p_j)|^2$ as a finite frame operator on $V_{N,c}$.
 
-We prove unisolvence for random configurations and for weighted sampling models
-satisfying a Marcinkiewicz--Zygmund-type lower frame bound.
-We then show that the deviation between discrete sampling and the reference prolate spectral model
-admits an exact structural decomposition into a weighted-frame defect and a spectral mismatch defect.
-As a corollary, any regime in which both defects are simultaneously controlled yields
-an explicit comparison formula
-$\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$.
-We also record a PSWF-adapted quadrature model as a conjectural construction principle
-for such defect control.
-The paper is restricted throughout to fixed finite-dimensional regimes $(N,c)$.
+We prove that random sampling configurations and weighted sampling models
+satisfying a Marcinkiewicz--Zygmund lower bound are unisolvent for $V_{N,c}$,
+hence yield coercive Gram operators.
+Our main structural result shows that the deviation between the discrete sampling Gram matrix
+and the reference spectral matrix decomposes exactly into a weighted-frame defect
+and a spectral mismatch defect.
+Frame stability in the sense of a near-tight perturbation
+$\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$, $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
+follows as a corollary whenever both defects are simultaneously controlled.
+All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
 \end{abstract}
 
 \tableofcontents
 
 \section{Introduction}
 
-Prolate spheroidal wave functions (PSWFs) provide a natural orthonormal basis
-for finite-dimensional spectral truncations of the Paley--Wiener space associated
-with the time--band limiting operator \cite{Slepian1978,BonamiKaroui}.
-The resulting finite-dimensional spaces are classical objects in sampling theory,
-reproducing kernel Hilbert spaces, and finite frame analysis.
+The prolate spheroidal wave functions (PSWFs) provide an orthonormal basis
+for the finite-dimensional subspace $V_{N,c}$ of the Paley--Wiener space $\PW$
+that is optimally concentrated in a time--frequency window \cite{Slepian1978,BonamiKaroui}.
+From the perspective of frame theory and sampling in reproducing kernel Hilbert spaces,
+the evaluation map $f\mapsto(f(p_1),\dots,f(p_N))$ defines a finite frame operator on $V_{N,c}$,
+and its associated Gram matrix encodes the stability of the sampling scheme.
 
-This paper studies the stability of discrete sampling on the PSWF space
-$V_{N,c}=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}$.
-The linear-algebraic core is elementary: coercivity of the discrete sampling form
-is equivalent to invertibility of the evaluation matrix $M(\mathbf{p},c)$.
-The real content lies in two issues:
-(i) identifying concrete families of sampling sets for which unisolvence can be proved,
-and (ii) reducing the deviation between discrete sampling geometry and the reference spectral model
-to explicit defect operators.
-We therefore formulate the paper as an operator-theoretic and frame-theoretic decomposition result,
-with spectral comparison appearing only after the relevant defects are controlled.
-We restrict attention throughout to fixed finite-dimensional regimes $(N,c)$.
+This paper addresses two questions.
+First, which classes of sampling configurations yield coercive (invertible) Gram operators?
+Second, how does the discrete sampling Gram matrix compare to the
+reference spectral matrix $G^{\mathrm{ref}}_{N,c}=\Kop|_{V_{N,c}}$ in the PSWF eigenbasis?
+For the first question we prove coercivity for random sampling and for weighted MZ frames.
+For the second, we establish an exact algebraic decomposition of the deviation
+into a frame defect and a spectral mismatch term,
+which reduces the comparison problem to the simultaneous control of two explicit perturbation components.
 
-Section~\ref{sec:layerA} proves unisolvence for random sampling and for weighted sampling models
-satisfying a lower frame inequality, and records the uniform-grid case as an open zero-counting problem.
-Section~\ref{sec:layerB} proves the exact two-defect decomposition, introduces a quadrature-inspired candidate model,
-and derives the spectral comparison theorem as a corollary under an ideal spectral-approximation regime.
-The final section records several open problems and one heuristic construction principle.
+All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
+The limit $N\to\infty$ and coupled limits in which both $N$ and $c$ vary are outside the scope of this paper.
 
 \section{Setup and notation}\label{sec:setup}
 
-\subsection{Basic objects}
+\subsection{Paley--Wiener space and concentration operator}
 
 We use the engineering Fourier convention
 $\widehat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi ix\xi}\,dx$.
+The \emph{Paley--Wiener space} $\PW$ consists of all
+$f\in L^2(\mathbb{R})$ with Fourier support in $[-\omega/(2\pi),\omega/(2\pi)]$.
+It is a reproducing-kernel Hilbert space (RKHS) with kernel
+$K_{\PW}(x,y)=\tfrac{\omega}{\pi}\operatorname{sinc}(\omega(x-y)/\pi)$
+and on-diagonal value $K_{\PW}(x,x)=\omega/\pi$ \cite[Eq.~(3)]{BonamiKaroui}.
 
-\begin{remark}[Fourier convention and bandwidth]
-Under this convention the Paley--Wiener space of bandwidth $\omega$
-corresponds to Fourier support in
-$[-\omega/(2\pi),\omega/(2\pi)]$.
-Many references use the convention
-$\widehat f(\xi)=\int f(x)e^{-i\xi x}\,dx$,
-for which the same space corresponds to $[-\omega,\omega]$.
+\begin{remark}[Fourier convention]
+Many references use $\widehat f(\xi)=\int f(x)e^{-i\xi x}\,dx$,
+under which the same space has Fourier support in $[-\omega,\omega]$.
 \end{remark}
 
-The \emph{Paley--Wiener space} $\PW$ consists of all
-$f\in L^2(\mathbb{R})$ with Fourier support in
-$[-\omega/(2\pi),\omega/(2\pi)]$.
-It is a reproducing-kernel Hilbert space with kernel
-$K_{\PW}(x,y)=\tfrac{\omega}{\pi}\operatorname{sinc}(\omega(x-y)/\pi)$
-and $K_{\PW}(x,x)=\omega/\pi$ \cite[Eq.~(3)]{BonamiKaroui}.
-Every $f\in\PW$ extends to an entire function of exponential type,
-by the Paley--Wiener theorem.
-
-The \emph{prolate concentration operator} is
+The \emph{prolate concentration operator} is the self-adjoint compact operator
 \[
   \Kop f(x)=\int_{-T}^{T}\frac{\sin\omega(x-y)}{\pi(x-y)}f(y)\,dy,
-  \qquad \Kop:\PW\to\PW.
+  \qquad \Kop:\PW\to\PW,
 \]
-It is self-adjoint and compact on $\PW$, with simple eigenvalues
-$1>\lambda_0(c)>\lambda_1(c)>\cdots>0$ and eigenfunctions
-(PSWFs) $\{\psin\}_{n\ge 0}$ forming an orthonormal basis of $\PW$
+with simple eigenvalues $1>\lambda_0(c)>\lambda_1(c)>\cdots>0$
+and PSWF eigenfunctions $\{\psin\}_{n\ge 0}$ forming an orthonormal basis of $\PW$
 \cite{Slepian1978,BonamiKaroui}.
-Throughout, $c=\omega T$ and
+We set $c=\omega T$ and
 \[
   V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}.
 \]
-This is an $N$-dimensional subspace of $\PW$ for each fixed pair $(N,c)$.
-There is no canonical identification of $V_{N,c}$ across different values
-of $c$.
-All operator comparisons in this paper are ultimately reduced to this finite-dimensional PSWF subspace.
+Since the PSWFs are eigenfunctions of $\Kop$, the space $V_{N,c}$ is invariant under $\Kop$
+for every fixed pair $(N,c)$.
 
-\subsection{Gram matrix and reference matrix}
+\subsection{Frame operator and Gram matrix}
 
-\begin{definition}[Prolate Gram matrix and form]\label{def:GramForm}
-For distinct $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$, the
-\emph{evaluation matrix} is $M(\mathbf{p},c)_{jn}:=\psi_n^{(c)}(p_j)$,
-and the \emph{unweighted empirical Gram matrix} is
-$\GVM:=M(\mathbf{p},c)^*M(\mathbf{p},c)$.
+\begin{definition}[Evaluation frame and Gram matrix]\label{def:GramForm}
+For distinct $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$,
+the \emph{evaluation matrix} is $M(\mathbf{p},c)_{jn}:=\psi_n^{(c)}(p_j)$.
+The associated \emph{frame operator} on $V_{N,c}$ is the synthesis--analysis composition
+$S_{\mathbf p}:=M(\mathbf{p},c)^*M(\mathbf{p},c)$, which we call the \emph{Gram matrix}
+$\GVM:=S_{\mathbf p}$.
 
-If $f=\sum_{n=0}^{N-1}a_n\psin\in V_{N,c}$, then
-$\norm{f}_{L^2}^2=\norm{\mathbf{a}}_2^2$ and
+For $f=\sum_{n=0}^{N-1}a_n\psin\in V_{N,c}$, the identification
+$f\leftrightarrow\mathbf{a}$ is unitary on $(V_{N,c},\norm{\cdot}_{L^2})$,
+so $\norm{f}_{L^2}^2=\norm{\mathbf{a}}_2^2$ and
 $\QM(f):=\sum_{j=1}^N|f(p_j)|^2=\ip{\GVM\mathbf{a}}{\mathbf{a}}$.
-Write $\AM:=\sqrt{\lambda_{\min}(\GVM)}$ and
-$\BM:=\sqrt{\lambda_{\max}(\GVM)}$.
-Unweighted sampling corresponds to the special case $w_j\equiv 1$, which in general need not satisfy
-frame bounds that are uniform with respect to the geometry of $\mathbf p$.
-This unweighted quadratic form is the canonical Parseval-frame form of the evaluation system
-associated with the chosen orthonormal basis.
+Set $\AM:=\sqrt{\lambda_{\min}(\GVM)}$, $\BM:=\sqrt{\lambda_{\max}(\GVM)}$.
 \end{definition}
 
-\begin{remark}[Basis dependence and spectral invariance]\label{rem:basis_invariance}
-The matrix $\GVM$ depends on the chosen orthonormal basis of $V_{N,c}$.
-In this paper we use the PSWF basis, for which the coefficient identification is canonical.
-However, the associated Gram operator on $V_{N,c}$ and its spectral quantities,
-such as $\lambda_{\min}(\GVM)$ and $\lambda_{\max}(\GVM)$, are basis-invariant.
+\begin{remark}[Spectral invariance]
+The spectral quantities $\lambda_{\min}(\GVM)$ and $\lambda_{\max}(\GVM)$ are
+basis-invariant on $V_{N,c}$, even though $\GVM$ itself depends on the chosen
+orthonormal basis.
 \end{remark}
 
-\begin{definition}[Reference matrix]\label{def:ref_matrix}
-Define the diagonal matrix
+\begin{definition}[Reference spectral matrix]\label{def:ref_matrix}
+The \emph{reference spectral matrix} is the diagonal matrix
 \[
-  G^{\mathrm{ref}}_{N,c}:=\operatorname{diag}(\lambda_0(c),\dots,\lambda_{N-1}(c)).
+  G^{\mathrm{ref}}_{N,c}:=\operatorname{diag}(\lambda_0(c),\dots,\lambda_{N-1}(c)),
 \]
-This is the matrix of $\Kop|_{V_{N,c}}$ in the PSWF eigenbasis:
-for $f=\sum_n a_n\psin$,
-\[
-  \ip{\Kop f}{f}_{L^2}
-  =\sum_n\lambda_n(c)|a_n|^2
-  =\ip{G^{\mathrm{ref}}_{N,c}\mathbf{a}}{\mathbf{a}}.
-\]
-Set $\EN:=\GVM-G^{\mathrm{ref}}_{N,c}$.
+which is the matrix of $\Kop|_{V_{N,c}}$ in the PSWF eigenbasis.
+Set $\EN:=\GVM-G^{\mathrm{ref}}_{N,c}$, the \emph{defect operator}.
 \end{definition}
 
-\begin{definition}[Ideal spectral-approximation regime]\label{def:T2}
-We say that $\mathbf{p}$ satisfies the ideal spectral-approximation regime if
-\begin{enumerate}[(T.2a)]
-\item the approximation condition
-\[
-  \norm{\EN}_2\le\varepsilon_N,
-\]
-\item and the spectral stability condition
-\[
-  \varepsilon_N<\lambda_{N-1}(c).
-\]
+\begin{definition}[Frame stability condition]\label{def:T2}
+We say that a sampling configuration $\mathbf{p}$ is in the
+\emph{frame-stable regime} if there exists $\varepsilon_N>0$ such that
+\begin{enumerate}[(S.1)]
+\item $\norm{\EN}_2\le\varepsilon_N$,
+\item $\varepsilon_N<\lambda_{N-1}(c)$.
 \end{enumerate}
-This is a strong spectral matching hypothesis and should not be regarded as generic.
-Typically one should expect such a regime, if at all, only for specially constructed sampling or weighted-frame systems.
+This is a near-tight frame perturbation condition;
+it should not be expected to hold for generic sampling configurations.
 \end{definition}
 
-\begin{remark}[Geometric meaning of $\EN$]\label{rem:EN_meaning}
-Thus $\EN$ measures the deviation between discrete sampling geometry and the reference spectral geometry of $\Kop$.
-\end{remark}
-
-\begin{remark}[Bridge to constructive sampling questions]\label{rem:bridge_sampling}
-The regime $\norm{\EN}_2\ll 1$ should be interpreted as a target condition, not as an a priori generic feature of arbitrary point sets.
-One would expect it, if at all, from structured quadrature-like constructions, weighted Marcinkiewicz--Zygmund systems,
-or other sampling geometries specifically designed to approximate the PSWF spectral projector on the finite-dimensional space $V_{N,c}$.
+\begin{remark}[Defect operator]
+Thus $\EN$ measures the deviation between the discrete sampling frame operator and
+the reference spectral concentration of $\Kop|_{V_{N,c}}$.
+Smallness of $\norm{\EN}_2$ is a design target, not a generic property of point sets;
+one expects it, if at all, from structured quadrature or weighted MZ constructions.
 \end{remark}
 
 \subsection{A conjectural construction principle}
 
-The abstract condition~\textup{(T.2)} is deliberately nonconstructive and should be interpreted as a spectral matching principle rather than a generic property of point sets.
-We now describe a class of sampling configurations that may serve as a concrete candidate mechanism for defect control.
-
 \begin{definition}[PSWF-adapted quadrature model]\label{def:pswf_quad}
 A weighted sampling system $(\mathbf p,D)$, with $D=\operatorname{diag}(w_1,\dots,w_N)$,
-is called \emph{PSWF-adapted of order $N$} if it satisfies the approximate orthogonality relations
+is \emph{PSWF-adapted of order $N$} if
 \[
 \left|
 \sum_{j=1}^N w_j\,\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
 - \lambda_n(c)\delta_{mn}
 \right|
-\le \varepsilon_N,
-\qquad 0\le m,n\le N-1.
+\le \varepsilon_N
+\quad\text{for all }0\le m,n\le N-1.
 \]
+This condition asks for approximate discrete PSWF orthogonality
+with respect to the eigenvalues of $\Kop$.
 \end{definition}
 
-\begin{remark}[Quadrature interpretation]\label{rem:quad_interp}
-Definition~\ref{def:pswf_quad} can be interpreted as a finite-dimensional quadrature rule
-for the spectral projector of the concentration operator $\Kop$ restricted to $V_{N,c}$.
-Equivalently, it asks for approximate discrete PSWF orthogonality with respect to the weighted sampling rule.
-\end{remark}
-
-\begin{remark}[Relation to the ideal regime]\label{rem:quad_to_T2}
-If $(\mathbf p,D)$ is PSWF-adapted in the sense of Definition~\ref{def:pswf_quad},
-then the weighted defect matrix satisfies
-\[
-\norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2 \lesssim \varepsilon_N,
-\]
-so the approximation part of the ideal spectral-approximation regime follows formally once the weighted-frame defect is also controlled.
-The spectral stability condition is then a separation requirement between the PSWF spectral scale and the residual quadrature defect.
-\end{remark}
-
-\begin{heuristic}[Candidate constructions]\label{heur:quad_candidates}
-Known constructions of high-order quadrature rules for oscillatory kernels,
-including PSWF-based Gaussian quadrature and related methods \cite{Xiao2001},
-suggest that PSWF-adapted systems should exist at least in regimes where $N\lesssim c$.
-However, no general existence theorem guaranteeing the ideal spectral-approximation regime is currently known.
+\begin{heuristic}[Existence of PSWF-adapted systems]\label{heur:quad_candidates}
+Known high-order PSWF-based quadrature constructions \cite{Xiao2001}
+indicate that PSWF-adapted systems should exist for $N\lesssim c$.
+However, no general existence theorem is currently available.
 \end{heuristic}
 
-\begin{remark}[Coefficient-space identification]\label{rem:coeff_ident}
-The matrices $\GVM$ and $G^{\mathrm{ref}}_{N,c}$ are both viewed as operators on
-$\mathbb C^N$ through the coefficient map
-$f=\sum_{n=0}^{N-1}a_n\psi_n^{(c)}\longleftrightarrow \mathbf a=(a_0,\dots,a_{N-1})$.
-Under this identification, $\GVM$ encodes the unweighted discrete sampling quadratic form
-and $G^{\mathrm{ref}}_{N,c}$ encodes the restriction of $\Kop$ to $V_{N,c}$.
-This identification is unitary only on the finite-dimensional space $V_{N,c}$ equipped with the PSWF basis,
-not on the whole Paley--Wiener space.
+\begin{remark}[Relation to the frame-stable regime]
+If $(\mathbf p,D)$ is PSWF-adapted, then
+$\norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2 \lesssim \varepsilon_N$,
+so the spectral mismatch component of the defect is controlled;
+the frame-stable regime then reduces to controlling the weighted-frame defect in addition.
 \end{remark}
 
-\begin{remark}[Invariance of $V_{N,c}$ under $\Kop$]\label{rem:K_invariant}
-Because the PSWFs are eigenfunctions of $\Kop$ on the whole space $\PW$,
-the finite-dimensional subspace $V_{N,c}$ is invariant under $\Kop$.
-The matrix $G^{\mathrm{ref}}_{N,c}$ is therefore exactly the matrix of the restricted operator
-$\Kop|_{V_{N,c}}$ in the PSWF basis.
-\end{remark}
+\section{Unisolvence and frame coercivity}\label{sec:layerA}
 
-\section{Unisolvence and operator core}\label{sec:layerA}
+\begin{definition}[Frame condition on $V_{N,c}$]\label{def:frame}
+A sampling system $\{(p_j,w_j)\}_{j=1}^N$ is a \emph{weighted frame for $V_{N,c}$}
+if there exist $0<A\le B<\infty$ such that
+\[
+  A\norm{f}_{L^2}^2
+  \le \sum_{j=1}^N w_j |f(p_j)|^2
+  \le B\norm{f}_{L^2}^2
+  \qquad \text{for all }f\in V_{N,c}.
+\]
+When $A=B$ the frame is \emph{tight}; when $A=B=1$ it is \emph{Parseval}.
+\end{definition}
 
 \begin{definition}[Unisolvent set]\label{def:unisolvent}
-A set $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$ of $N$ distinct points
-is \emph{unisolvent for $V_{N,c}$} if the only $f\in V_{N,c}$ satisfying
-$f(p_j)=0$ for all $j$ is $f\equiv0$.
-Since $\dim V_{N,c}=N$, this is equivalent to bijectivity of the evaluation map
-$\mathcal{E}_{\mathbf{p}}:V_{N,c}\to\mathbb{C}^N$.
+A set $\mathbf{p}=(p_1,\dots,p_N)$ is \emph{unisolvent for $V_{N,c}$} if
+the evaluation map $\mathcal{E}_{\mathbf{p}}:V_{N,c}\to\mathbb{C}^N$,
+$f\mapsto(f(p_1),\dots,f(p_N))$, is bijective.
 \end{definition}
 
-\begin{definition}[Weighted frame model on $V_{N,c}$]\label{def:mz_model}
-A family of nodes and positive weights
-\[
-  \{(p_j,w_j)\}_{j=1}^N, \qquad -T\le p_1<\cdots<p_N\le T, \qquad w_j>0,
-\]
-is said to satisfy a \emph{Marcinkiewicz--Zygmund frame condition} on $V_{N,c}$
-if there exist constants $0<A\le B<\infty$ such that
-\[
-  A\norm{f}_{L^2(-T,T)}^2
-  \le \sum_{j=1}^N w_j |f(p_j)|^2
-  \le B\norm{f}_{L^2(-T,T)}^2
-\]
-for all $f\in V_{N,c}$.
-The special case $A=1-\delta$, $B=1+\delta$ with $\delta\in[0,1)$ recovers
-an approximately isometric model.
-\end{definition}
-
-\begin{remark}[Weighted-frame viewpoint]\label{rem:weighted_frame}
-Definition~\ref{def:mz_model} treats discrete sampling on $V_{N,c}$ as a weighted frame problem.
-The geometry is therefore encoded not by an exact quadrature oracle but by frame bounds $(A,B)$.
-Gauss--PSWF constructions should be regarded as motivation for such models, not as an automatic source of exact identities.
+\begin{remark}[Non-triviality of unisolvence]
+For Chebyshev systems, every $N$-point set is unisolvent \cite[Ch.~1]{KarlinStudden1966}.
+Since $V_{N,c}$ is not known to be a Chebyshev system in general,
+unisolvence must be established separately for each sampling family.
 \end{remark}
 
-\begin{remark}[Why unisolvence is non-trivial for $V_{N,c}$]
-For a Chebyshev system, every $N$-tuple of distinct points is unisolvent
-\cite[Ch.~1]{KarlinStudden1966}.
-The space $V_{N,c}$ is not known to be a Chebyshev system in general.
-Hence unisolvence must be proved separately for specific families.
-In particular, the natural zero-counting route for uniform grids remains open.
-\end{remark}
-
-\begin{lemma}[Identity principle for Paley--Wiener functions]\label{lem:identity}
-If $f\in\PW$ vanishes on a set with a limit point in $\mathbb R$, then $f\equiv 0$
-on $\mathbb R$.
+\begin{lemma}[Identity principle]\label{lem:identity}
+If $f\in\PW$ vanishes on a set with a limit point in $\mathbb R$, then $f\equiv 0$.
 \end{lemma}
-
 \begin{proof}
 Every $f\in\PW$ extends to an entire function of exponential type.
-If it vanishes on a set with a limit point in $\mathbb R$, then the entire extension has a non-discrete zero set.
-By the identity theorem for holomorphic functions, the entire extension
-must vanish identically, hence $f\equiv 0$ on $\mathbb R$.
-Classically, this is a basic uniqueness phenomenon for Paley--Wiener spaces.
+A non-discrete zero set forces vanishing by the identity theorem for holomorphic functions.
 \end{proof}
 
-\begin{proposition}[Weighted MZ lower frame implies unisolvence]\label{prop:mz_unisolvent}
-Assume that $\{(p_j,w_j)\}_{j=1}^N$ satisfies the lower frame bound
-\[
-  A\norm{f}_{L^2(-T,T)}^2\le \sum_{j=1}^N w_j |f(p_j)|^2
-\]
-for all $f\in V_{N,c}$, with some constant $A>0$.
-Then $\mathbf p=(p_1,\dots,p_N)$ is unisolvent for $V_{N,c}$.
-In particular, every Marcinkiewicz--Zygmund frame condition with $A>0$
-implies unisolvence.
+\begin{proposition}[MZ lower bound implies unisolvence]\label{prop:mz_unisolvent}
+If $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with lower bound $A>0$,
+then $\mathbf p$ is unisolvent for $V_{N,c}$.
 \end{proposition}
-
 \begin{proof}
-If $f\in V_{N,c}$ satisfies $f(p_j)=0$ for all $j$, then
-\[
-  0=\sum_{j=1}^N w_j|f(p_j)|^2\ge A\norm{f}_{L^2(-T,T)}^2.
-\]
-Hence $f=0$ almost everywhere on $[-T,T]$, thus everywhere on that interval
-by continuity, and therefore $f\equiv0$ on $\mathbb R$
-by Lemma~\ref{lem:identity}.
+If $f(p_j)=0$ for all $j$, then $A\norm{f}_{L^2}^2\le 0$, so $f\equiv 0$ by continuity
+and Lemma~\ref{lem:identity}.
 \end{proof}
 
-\begin{proposition}[Random sampling is almost surely unisolvent]
-\label{prop:random}
-Let $p_1,\dots,p_N$ be i.i.d. with a distribution absolutely continuous
-with respect to Lebesgue measure on $[-T,T]$.
+\begin{proposition}[Random sampling]\label{prop:random}
+Let $p_1,\dots,p_N$ be i.i.d.\ with an absolutely continuous law on $[-T,T]$.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 \end{proposition}
-
 \begin{proof}
-Non-unisolvence means $\det M(\mathbf{p},c)=0$.
-Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
-$(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
-It therefore suffices to know that this determinant is not identically zero.
-Because the functions $\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}$ are linearly independent,
-and because point-evaluation functionals are separating on $V_{N,c}$,
-a standard finite-dimensional argument yields a choice of $N$ points for which the evaluation matrix is invertible.
-Equivalently, the determinant is analytically non-degenerate and hence not the zero function.
-Its zero set therefore has Lebesgue measure zero, and absolute continuity implies
-that non-unisolvence occurs with probability zero.
+The map $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real-analytic.
+Linear independence of $\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}$ and separation of evaluation
+functionals guarantee the determinant is analytically non-degenerate,
+hence its zero set has Lebesgue measure zero.
+Absolute continuity of the law completes the argument.
 \end{proof}
 
-\begin{lemma}[Pointwise bound via reproducing kernel]\label{lem:upper}
-For every $f\in\PW$ and every $x\in\mathbb R$,
+\begin{lemma}[Pointwise RKHS bound]\label{lem:upper}
+For $f\in\PW$ and $x\in\mathbb R$,
 \[
-  |f(x)|^2
-  =|\ip{f}{K_x}_{L^2}|^2
-  \le \norm{f}_{L^2}^2\,\norm{K_x}_{L^2}^2
-  = K_{\PW}(x,x)\,\norm{f}_{L^2}^2
-  = \frac{\omega}{\pi}\,\norm{f}_{L^2}^2.
+  |f(x)|^2 \le K_{\PW}(x,x)\norm{f}_{L^2}^2 = \frac{\omega}{\pi}\norm{f}_{L^2}^2.
 \]
 \end{lemma}
+\begin{proof}
+Cauchy--Schwarz in the RKHS inner product:
+$|f(x)|^2=|\ip{f}{K_x}|^2\le\norm{f}^2\norm{K_x}^2=K_{\PW}(x,x)\norm{f}^2$.
+\end{proof}
 
-\begin{theorem}[Operator core]\label{thm:layerA}
-Let $(N,c)$ be fixed and let $\mathbf{p}$ be unisolvent for $V_{N,c}$.
-Then:
-\begin{enumerate}[(I)]
-\item $\QM(f)\ge \AM^2\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
-\item $\QM(f)\le N(\omega/\pi)\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
-\end{enumerate}
-In particular, these bounds hold for every weighted frame model satisfying the hypotheses of
-Proposition~\ref{prop:mz_unisolvent}, and by Proposition~\ref{prop:random} for random sampling almost surely.
+\begin{theorem}[Frame coercivity]\label{thm:layerA}
+Let $\mathbf{p}$ be unisolvent for $V_{N,c}$.
+Then $\{f(p_j)\}_{j=1}^N$ is a frame for $V_{N,c}$ with bounds
+\[
+  \AM^2\norm{f}_{L^2}^2\le \QM(f)\le \frac{N\omega}{\pi}\norm{f}_{L^2}^2.
+\]
+In particular, coercivity holds for random sampling (a.s.) and for every MZ lower frame.
 \end{theorem}
-
 \begin{proof}
-Unisolvence is equivalent to $\ker M(\mathbf{p},c)=\{0\}$,
-hence to positive definiteness of $\GVM=M(\mathbf{p},c)^*M(\mathbf{p},c)$.
-Therefore
-\[
-  \QM(f)=\ip{\GVM\mathbf a}{\mathbf a}
-  \ge \lambda_{\min}(\GVM)\norm{\mathbf a}_2^2
-  = \AM^2\norm{f}_{L^2}^2.
-\]
-The upper bound follows by summing Lemma~\ref{lem:upper} over the $N$ sample points.
+Unisolvence is equivalent to $\ker M(\mathbf p,c)=\{0\}$, hence $\GVM\succ 0$.
+The lower bound follows from $\QM(f)=\ip{\GVM\mathbf a}{\mathbf a}\ge\AM^2\norm{\mathbf a}_2^2$.
+The upper bound follows by summing Lemma~\ref{lem:upper} over the $N$ nodes.
 \end{proof}
 
-\begin{lemma}[Rayleigh-quotient form of the upper bound]\label{lem:lambda_max_bound}
-For every set of distinct points $\mathbf p\subset[-T,T]$,
+\begin{lemma}[Operator norm of the frame matrix]\label{lem:lambda_max_bound}
+For any distinct $\mathbf p\subset[-T,T]$,
 \[
-  \lambda_{\max}(\GVM)=\sup_{\norm{\mathbf a}_2=1}\ip{\GVM\mathbf a}{\mathbf a}
-  =\sup_{\substack{f\in V_{N,c}\\ \norm{f}_{L^2}=1}} \QM(f).
-\]
-Consequently, if $\QM(f)\le B\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$,
-then $\lambda_{\max}(\GVM)\le B$.
-In particular,
-\[
-  \lambda_{\max}(\GVM)\le N\omega/\pi.
+  \lambda_{\max}(\GVM)
+  =\sup_{\substack{f\in V_{N,c}\\ \norm{f}_{L^2}=1}} \QM(f)
+  \le \frac{N\omega}{\pi}.
 \]
 \end{lemma}
-
 \begin{proof}
-Using the PSWF isometry between $\mathbb C^N$ and $V_{N,c}$,
-one has $\norm{f}_{L^2}=\norm{\mathbf a}_2$ and
-$\QM(f)=\ip{\GVM\mathbf a}{\mathbf a}$.
-The first identity is therefore just the Rayleigh-quotient characterization of the largest eigenvalue
-of the Hermitian matrix $\GVM$.
-The implication with constant $B$ is immediate.
-Applying Theorem~\ref{thm:layerA}(II) gives the final bound.
+The supremum formula is the Rayleigh quotient characterization of the largest eigenvalue
+of the Hermitian matrix $\GVM$ under the PSWF isometry.
+The upper bound is Theorem~\ref{thm:layerA}(upper).
 \end{proof}
 
-\begin{remark}[Crudeness of the global upper bound]
-The bound $\lambda_{\max}(\GVM)\le N\omega/\pi$ is intentionally crude, dimension-only,
-independent of $c$, non-asymptotic, and not sharp in the PSWF regime.
-Its role is to provide a geometry-free estimate suitable for the fixed-$(N,c)$ framework of this paper.
-Sharper bounds exploiting prolate concentration are left for later work.
+\begin{remark}[Sharpness]
+The bound $N\omega/\pi$ is dimension-only and independent of $c$;
+it is not asymptotically sharp in the PSWF regime.
+Refinements using prolate concentration are left for future work.
 \end{remark}
 
-\section{Structural reduction and comparison}\label{sec:layerB}
+\section{Structural reduction and frame stability}\label{sec:layerB}
 
-All results here take place after restriction to the finite-dimensional PSWF space $V_{N,c}$.
-
-\begin{definition}[Weighted discrete reference matrix]\label{def:weighted_ref}
-Given positive weights $w_1,\dots,w_N$, let $D:=\operatorname{diag}(w_1,\dots,w_N)$ and define
-\[
-  G^{\mathrm{w}}_{N,c}(\mathbf p,D):=M(\mathbf p,c)^* D\,M(\mathbf p,c).
-\]
-This is the weighted discrete Gram matrix associated with the sampling model $(\mathbf p,D)$.
+\begin{definition}[Weighted frame operator]\label{def:weighted_ref}
+For $D=\operatorname{diag}(w_1,\dots,w_N)>0$ set
+$G^{\mathrm{w}}_{N,c}(\mathbf p,D):=M(\mathbf p,c)^* D M(\mathbf p,c)$.
 \end{definition}
 
-\begin{remark}[Two Gram objects]\label{rem:two_grams}
-The matrices $\GVM$ and $G^{\mathrm{w}}_{N,c}(\mathbf p,D)$ are built from the same evaluation matrix
-$M(\mathbf p,c)$ and therefore from the same PSWF samples.
-They differ only in whether one inserts the weight matrix $D$.
-Thus the decomposition in Theorem~\ref{thm:main_reduction} separates two analytically distinct
-contributions, but not two statistically or geometrically independent sources of randomness.
-The splitting is algebraic, but not probabilistically or geometrically decoupled.
-This coupling obstruction prevents a naive decoupling of geometric and spectral sampling errors.
-\end{remark}
-
-\begin{theorem}[Structural reduction theorem]\label{thm:main_reduction}
-Let $(\mathbf p,D)$ be a weighted sampling model with positive diagonal weight matrix $D$.
-Then
+\begin{theorem}[Defect decomposition]\label{thm:main_reduction}
+For any weighted sampling model $(\mathbf p,D)$ with $D>0$,
 \[
   \EN
-  =\GVM-G^{\mathrm{ref}}_{N,c}
-  =M(\mathbf p,c)^*(I-D)M(\mathbf p,c)
-   +\bigl(G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}\bigr).
+  = M(\mathbf p,c)^*(I-D)M(\mathbf p,c)
+   +\bigl(G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}\bigr),
 \]
-Consequently,
+and consequently
 \[
   \norm{\EN}_2
-  \le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2
+  \le \norm{I-D}_2\cdot\norm{M(\mathbf p,c)}_2^2
    + \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2.
 \]
-Thus the entire deviation between discrete sampling and the PSWF reference model is reducible
-to a weighted-frame defect and a spectral mismatch defect.
+The first term is the \emph{weighted-frame defect};
+the second is the \emph{spectral mismatch defect}.
 \end{theorem}
-
 \begin{proof}
-Insert and subtract the weighted discrete Gram matrix:
+Insert and subtract $G^{\mathrm{w}}_{N,c}(\mathbf p,D)$:
 \[
   \EN
-  =\GVM-G^{\mathrm{w}}_{N,c}(\mathbf p,D)
-   +G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}.
+  =\bigl(\GVM-G^{\mathrm{w}}_{N,c}\bigr)
+   +\bigl(G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c}\bigr)
+  = M^*(I-D)M+\bigl(G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c}\bigr).
 \]
-Since
-\[
-  \GVM-G^{\mathrm{w}}_{N,c}(\mathbf p,D)
-  =M(\mathbf p,c)^*(I-D)M(\mathbf p,c),
-\]
-the claimed identity follows. The norm bound is immediate from subadditivity and submultiplicativity.
+The norm bound follows from subadditivity and submultiplicativity of $\norm{\cdot}_2$.
 \end{proof}
 
-\begin{remark}[Interpretation of the reduction theorem]
-The error splits into a weighted-frame defect
-$M^*(I-D)M$ and a spectral mismatch term
-$G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}$.
-These two terms are analytically distinct, but structurally coupled through the same evaluation matrix.
-Any constructive route to spectral comparison must therefore control both mechanisms simultaneously.
+\begin{remark}[Algebraic vs.\ probabilistic coupling]
+Both defect terms share the same evaluation matrix $M(\mathbf p,c)$.
+The decomposition is algebraic, not probabilistically or geometrically decoupled;
+controlling one term does not automatically control the other.
 \end{remark}
 
-\begin{corollary}[Ideal-regime criterion from two defects]\label{cor:two_defects}
-Assume that the weighted sampling model $(\mathbf p,D)$ satisfies
+\begin{corollary}[Frame-stable regime from defect bounds]\label{cor:two_defects}
+Suppose
 \[
   \norm{I-D}_2\le \delta_N,
   \qquad
   \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2\le \eta_N,
+  \qquad
+  \varepsilon_N:=\delta_N\tfrac{N\omega}{\pi}+\eta_N < \lambda_{N-1}(c).
 \]
-with
-\[
-  \delta_N\,\frac{N\omega}{\pi}+\eta_N<\lambda_{N-1}(c).
-\]
-Then the ideal spectral-approximation regime from Definition~\ref{def:T2} holds with
-\[
-  \varepsilon_N:=\delta_N\,\frac{N\omega}{\pi}+\eta_N.
-\]
+Then $\mathbf p$ is in the frame-stable regime with parameter $\varepsilon_N$.
 \end{corollary}
-
 \begin{proof}
-By Theorem~\ref{thm:main_reduction},
-\[
-  \norm{\EN}_2
-  \le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2
-   +\norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2.
-\]
-Using Lemma~\ref{lem:lambda_max_bound},
-$\norm{M(\mathbf p,c)}_2^2=\lambda_{\max}(\GVM)\le N\omega/\pi$.
-Therefore
-\[
-  \norm{\EN}_2\le \delta_N\,\frac{N\omega}{\pi}+\eta_N=\varepsilon_N.
-\]
-The displayed hypothesis gives $\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\ref{def:T2} applies.
+By Theorem~\ref{thm:main_reduction} and Lemma~\ref{lem:lambda_max_bound},
+$\norm{\EN}_2\le\delta_N\cdot N\omega/\pi+\eta_N=\varepsilon_N<\lambda_{N-1}(c)$.
 \end{proof}
 
-\begin{lemma}[Spectral stability via Weyl]\label{lem:weyl_stability}
-Assume the ideal spectral-approximation regime with parameter $\varepsilon_N$.
-Then
+\begin{lemma}[Weyl perturbation bound]\label{lem:weyl_stability}
+In the frame-stable regime,
 \[
-  \lambda_{\min}(\GVM)
-  \ge \lambda_{\min}(G^{\mathrm{ref}}_{N,c})-\norm{\EN}_2
-  = \lambda_{N-1}(c)-\norm{\EN}_2
-  \ge \lambda_{N-1}(c)-\varepsilon_N
-  >0,
+  \lambda_{\min}(\GVM)\ge\lambda_{N-1}(c)-\varepsilon_N>0.
 \]
-where the first inequality is the standard Hermitian perturbation bound
-$\lambda_{\min}(A+E)\ge \lambda_{\min}(A)-\norm{E}_2$ applied on $\mathbb C^N$
-under the coefficient-space identification of Remark~\ref{rem:coeff_ident}.
 \end{lemma}
+\begin{proof}
+Apply the Hermitian perturbation inequality
+$\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$
+with $A=G^{\mathrm{ref}}_{N,c}$ and $E=\EN$.
+\end{proof}
 
-\begin{remark}[Eigenvalue versus eigenvector stability]\label{rem:weyl_scope}
-Lemma~\ref{lem:weyl_stability} only gives eigenvalue stability.
-It does not by itself provide control of eigenvector alignment between the discrete Gram matrix and the reference spectral model.
-\end{remark}
-
-\begin{corollary}[Spectral comparison in the ideal regime]\label{cor:spectral_comparison}
-Assume the ideal spectral-approximation regime with $\varepsilon_N<\lambda_{N-1}(c)$.
-For every $f=\sum_n a_n\psin\in V_{N,c}$,
+\begin{corollary}[Frame stability]\label{cor:spectral_comparison}
+In the frame-stable regime,
 \[
   \QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f),
   \qquad |R_N(f)|\le\varepsilon_N\norm{f}_{L^2}^2.
 \]
+No global analytic continuation or spectral equivalence beyond finite-dimensional
+perturbation theory is claimed.
 \end{corollary}
-
 \begin{proof}
-By Remark~\ref{rem:coeff_ident}, the coefficient identification is unitary on $V_{N,c}$ in the PSWF basis.
-In the PSWF basis,
-\[
-  \ip{\Kop f}{f}_{L^2}
-  =\sum_n \lambda_n(c)|a_n|^2
-  =\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}.
-\]
-Consequently,
-\[
-  \QM(f)=\ip{\GVM\mathbf a}{\mathbf a}
-  =\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}+\ip{\EN\mathbf a}{\mathbf a}.
-\]
-Set $R_N(f):=\ip{\EN\mathbf a}{\mathbf a}$.
-Then
-\[
-  |R_N(f)|\le \norm{\EN}_2\norm{\mathbf a}_2^2
-  \le \varepsilon_N\norm{f}_{L^2}^2.
-\]
-This corollary isolates the spectral comparison as a consequence of the reduction theorem plus defect control.
+In the PSWF eigenbasis,
+$\ip{\Kop f}{f}_{L^2}=\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}$.
+So
+$\QM(f)=\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}+\ip{\EN\mathbf a}{\mathbf a}$.
+Setting $R_N(f):=\ip{\EN\mathbf a}{\mathbf a}$ gives
+$|R_N(f)|\le\norm{\EN}_2\norm{\mathbf a}_2^2\le\varepsilon_N\norm{f}_{L^2}^2$.
 \end{proof}
 
-\begin{remark}[Structural bottleneck]
-The key quantitative issue for any future application is to prove that
-$\norm{\EN}_2$ is small relative to $\lambda_{N-1}(c)$ for structured
-sampling sets.
-By Theorem~\ref{thm:main_reduction}, this requires simultaneous control of a weighted-frame defect
-and a spectral mismatch defect.
-Without such control, the reduction theorem remains structural rather than constructive.
-\end{remark}
+\section{Open problems}\label{sec:open}
 
-\section{Open problems and heuristic directions}\label{sec:layerC}
-
-The results of this paper isolate the finite-dimensional operator structure of discrete PSWF sampling.
-The remaining questions concern constructive sampling models, sharper estimates, and asymptotic regimes.
+\begin{problem}[Explicit PSWF frames]
+Construct sampling sets and positive weights satisfying a Marcinkiewicz--Zygmund frame condition on $V_{N,c}$
+with explicit bounds $(A,B)$.
+\end{problem}
 
 \begin{problem}[Uniform-grid unisolvence]
 Determine whether uniform grids are unisolvent for $V_{N,c}$.
-A natural intermediate step would be to establish oscillation bounds or near-Chebyshev properties
-for linear combinations of the first $N$ PSWFs on $[-T,T]$.
 \end{problem}
 
-\begin{problem}[Weighted frame models for PSWF sampling]
-Construct explicit structured sampling sets and weights satisfying a Marcinkiewicz--Zygmund frame condition on $V_{N,c}$.
-\end{problem}
-
-\begin{problem}[Ideal spectral approximation from two defects]
-Derive quantitative estimates on the weighted-frame defect and the spectral mismatch defect
-strong enough to trigger Corollary~\ref{cor:two_defects}.
+\begin{problem}[Optimal weighting for near-diagonalization]
+Derive quantitative estimates on the weighted-frame defect and spectral mismatch defect
+sufficient to trigger Corollary~\ref{cor:two_defects}.
 \end{problem}
 
 \begin{problem}[Coupled limits]
 Analyze $\lambda_{\min}(\GVM)$ and the competition between
-$\norm{\EN}_2$ and $\lambda_{N-1}(c)$ in regimes where $N$ and $c$
-vary simultaneously.
+$\norm{\EN}_2$ and $\lambda_{N-1}(c)$ in regimes where $N$ and $c$ vary simultaneously.
 \end{problem}
-
-\begin{heuristic}[Quadrature-based construction principle]
-PSWF-adapted quadrature systems should be viewed as a natural candidate mechanism
-for realizing the ideal spectral-approximation regime in a constructive way.
-This remains open at the level of general existence theorems.
-\end{heuristic}
 
 \begin{thebibliography}{99}
 
