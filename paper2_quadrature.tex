@@ -32,18 +32,18 @@
 \newcommand{\PN}{P_{N,c}}
 \newcommand{\CXRY}{C_{\mathrm{XRY}}}
 
-\title[Frame Stability via PSWF Spectral Projection]
-      {Frame Stability of Prolate Sampling Operators\\
+\title[Conditional Frame Stability via PSWF Spectral Projection]
+      {Conditional Frame Stability of Prolate Sampling Operators\\
        via PSWF Spectral Projection and XRY Quadrature:\\
-       Verification of the Quadrature Compatibility Condition}
+       Reduction of Quadrature Compatibility to an XRY Stability Hypothesis}
 
 \thanks{This paper is a companion to \cite{PaperI}, where frame coercivity
 and a conditional banded decay estimate were established under an explicit
 quadrature compatibility assumption (Assumption~3.10 of \cite{PaperI}).
-The present paper verifies this assumption for PSWF-Gauss quadrature rules
-by controlling the XRY quadrature error through the PSWF spectral truncation
-error associated with the projector $\PN$, and by estimating the tail of
-PSWF expansions for analytic product integrands.}
+The present paper does not prove that assumption outright. Instead, it
+reduces its verification for PSWF-Gauss quadrature rules to a separate XRY
+spectral stability hypothesis by combining PSWF spectral tail estimates for
+analytic product integrands with a conditional quadrature stability input.}
 
 \author{Anonymous Author}
 \address{}
@@ -66,25 +66,25 @@ established for the prolate sampling operator on $V_{N,c}$, conditional
 on an explicit quadrature compatibility assumption (Assumption~3.10 of
 \cite{PaperI}).
 
-The present paper verifies this assumption for PSWF-Gauss quadrature rules
-of Xiao--Rokhlin--Yarvin \cite{Xiao2001} via a two-step spectral mechanism.
-First, analytic product integrands $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$
-have exponentially decaying PSWF expansion tails: $\|(I-\PN)f_{mn}\|\le
-C e^{-\alpha N}$. Second, the XRY quadrature functional $Q_N$ is controlled
-by the PSWF spectral truncation error associated with $\PN$, satisfying
+The present paper does not verify that assumption unconditionally.
+Instead, for PSWF-Gauss quadrature rules of Xiao--Rokhlin--Yarvin
+\cite{Xiao2001}, it reduces the compatibility problem to an explicit
+XRY spectral stability hypothesis via a two-step spectral mechanism.
+First, analytic product integrands
+$f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ have exponentially decaying
+PSWF expansion tails: $\|(I-\PN)f_{mn}\|\le C e^{-\alpha N}$. Second,
+assuming an XRY stability bound of the form
 \[
   \left| Q_N(f) - \int_{-T}^T f \right|
-  \le \CXRY\,\|(I-\PN)f\| + C e^{-\alpha N}\norm{f}_{L^2}
+  \le \CXRY\,\|(I-\PN)f\| + C e^{-\alpha N}\norm{f}_{L^2},
 \]
-for all $f$ in the relevant function class, subject to an explicit XRY
-spectral stability assumption. Combining these two estimates yields an
-exponential defect bound
+one obtains the conditional defect estimate
 \[
-  |E_{mn}| \le C e^{-\alpha N} \qquad (0\le m,n\le N-1),
+  |E_{mn}| \le C e^{-\alpha N} \qquad (0\le m,n\le N-1).
 \]
-which implies Assumption~3.10 of \cite{PaperI} and closes the open
-construction problem of \cite{PaperI}. No algebraic closure of PSWF
-product spaces is assumed or required.
+Therefore Assumption~3.10 of \cite{PaperI} is verified conditionally on
+this XRY stability hypothesis. No algebraic closure of PSWF product spaces
+is assumed or required.
 \end{abstract}
 
 \tableofcontents
@@ -111,26 +111,33 @@ for the quadrature defect matrix $\EN = \GVM - G^{\mathrm{ref}}_{N,c}$:
 The open problem left by \cite{PaperI} was to identify a concrete
 quadrature class satisfying Assumption~3.10.
 
+\subsection*{Contribution of this paper}
+
+This paper does not solve the full construction problem unconditionally.
+Its contribution is a reduction result: for XRY PSWF-Gauss quadrature,
+Assumption~3.10 of \cite{PaperI} follows from a separate XRY spectral
+stability hypothesis together with PSWF spectral tail estimates for the
+product functions $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$.
+The argument is therefore a conditional verification framework rather
+than a complete closure theorem.
+
 \subsection*{Strategy of this paper}
 
-The verification rests on a two-step spectral mechanism:
+The reduction rests on two ingredients:
 \begin{enumerate}[(i)]
-\item \emph{Spectral tail decay.} The product integrands
-  $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are analytic on $[-T,T]$,
-  hence their PSWF expansion coefficients decay exponentially, yielding
+\item \emph{PSWF product analysis.} The product integrands
+  $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are analytic on $[-T,T]$.
+  Under the corresponding analyticity and uniform-bound hypotheses, their
+  PSWF expansion coefficients decay exponentially, yielding
   $\|(I-\PN)f_{mn}\|\le Ce^{-\alpha N}$.
-\item \emph{XRY quadrature control.} The XRY quadrature functional $Q_N$
-  is controlled by the PSWF spectral truncation error associated with
-  $\PN$: its error for any function $f$ is bounded by
-  $\CXRY\|(I-\PN)f\|$ plus an additional exponential term
-  $Ce^{-\alpha N}\norm{f}$. This is not an algebraic exactness statement
-  and does not identify XRY with any projector.
+\item \emph{XRY quadrature stability.} The XRY quadrature functional $Q_N$
+  is assumed to satisfy a stability bound controlled by the PSWF spectral
+  truncation error associated with $\PN$.
 \end{enumerate}
-The second step is isolated as an explicit stability assumption matched
-to the XRY framework, rather than presented as a theorem reconstructed
-from \cite{Xiao2001}. We deliberately avoid any claim that PSWF product
-spaces are closed under pointwise multiplication, since this does not hold
-for non-polynomial function systems.
+We deliberately avoid any claim that PSWF product spaces are closed under
+pointwise multiplication, and we do not identify XRY with any spectral
+projector. The substantive output is a clean separation between a PSWF
+spectral tail analysis and an explicit XRY stability bridge.
 
 \subsection*{Main result}
 
@@ -139,9 +146,10 @@ Assume the XRY spectral stability condition stated in
 Assumption~\ref{ass:xry_stability}. Then for PSWF-Gauss quadrature rules
 \cite{Xiao2001}, the quadrature defect satisfies $|E_{mn}|\le Ce^{-\alpha N}$
 for all $0\le m,n\le N-1$, with constants depending only on the PSWF
-analyticity regime and the stability constants. Assumption~3.10 of
-\cite{PaperI} is therefore satisfied, and the frame stability theorem of
-\cite{PaperI} applies to PSWF-Gauss sampling.
+analyticity regime and the stability constants. Consequently,
+Assumption~3.10 of \cite{PaperI} holds conditionally on the same XRY
+stability hypothesis, and the frame stability theorem of \cite{PaperI}
+applies to PSWF-Gauss sampling.
 \end{theorem}
 
 The formal version is Theorem~\ref{thm:compatibility_verified} together
@@ -151,11 +159,12 @@ with Theorem~\ref{thm:frame_stability}.
 
 Section~\ref{sec:pswf_gauss} sets up PSWF-Gauss quadrature and the
 spectral projector. Section~\ref{sec:spectral_decay} establishes
-exponential PSWF tail decay for analytic products.
-Section~\ref{sec:xry_accuracy} states the XRY spectral stability assumption
-and derives the quadrature control lemma. Section~\ref{sec:verification}
-verifies Assumption~3.10. Section~\ref{sec:stability} states the frame
-stability theorem. Section~\ref{sec:open} records open problems.
+exponential PSWF tail decay for analytic products and explains the scope
+of that step. Section~\ref{sec:xry_accuracy} states the XRY spectral
+stability assumption. Section~\ref{sec:verification} derives the conditional
+verification of Assumption~3.10. Section~\ref{sec:stability} states the
+conditional frame stability theorem. Section~\ref{sec:open} records open
+problems.
 
 %% ==================================================================
 \section{PSWF-Gauss Quadrature and Spectral Projector}\label{sec:pswf_gauss}
@@ -240,13 +249,21 @@ Consequently,
 For functions analytic in a strip of width $\rho$, the coefficients in
 the PSWF basis decay exponentially; this follows from the spectral
 approximation theory of \cite{BonamiKaroui2014,BonamiKaroui}
-combined with Lemma~\ref{lem:analytic}.
-The tail bound follows by summing the geometric series
-$\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
+combined with Lemma~\ref{lem:analytic}. The tail bound follows by summing
+the geometric series $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
+\begin{remark}[Status of the PSWF step]\label{rem:pswf_status}
+The PSWF part of the argument is not purely formal. Its force comes from
+analytic continuation of the product functions $f_{mn}$ together with
+uniform control of the relevant PSWF bounds. In a full quantitative
+version, the dependence of the constants on $m$, $n$, $c$, and the strip
+width must be tracked carefully. Thus the PSWF product analysis is itself
+a substantive ingredient of the paper, not a routine closure argument.
+\end{remark}
+
 %% ==================================================================
-\section{XRY Spectral Stability Assumption and Quadrature Control}\label{sec:xry_accuracy}
+\section{XRY Spectral Stability Hypothesis}\label{sec:xry_accuracy}
 %% ==================================================================
 
 \begin{assumption}[XRY spectral stability]\label{ass:xry_stability}
@@ -258,48 +275,34 @@ analytic $f\in L^2([-T,T])$,
   \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}
       + C\,e^{-\alpha N}\,\norm{f}_{L^2([-T,T])}.
 \]
-This assumption formalises the stability bridge between the PSWF spectral
-truncation and the XRY quadrature rule. It is consistent with the numerical
-behaviour and structural formulas of \cite{Xiao2001,OsipovRokhlinXiao}, but
+This hypothesis formalises the stability bridge between the PSWF spectral
+truncation and the XRY quadrature rule. It is consistent with the structural
+formulas and numerical behaviour of \cite{Xiao2001,OsipovRokhlinXiao}, but
 is not claimed here as a theorem extracted verbatim from those sources.
 \end{assumption}
 
-\begin{remark}[Status of the bridge]
-Assumption~\ref{ass:xry_stability} is the only place where the paper uses
-an XRY-specific stability input beyond standard PSWF spectral theory.
-All subsequent arguments are conditional on this bridge and do not require
-any exact projector identity or any identification of XRY with a spectral
-projector.
+\begin{remark}[Why this is a reduction, not a closure]
+Assumption~\ref{ass:xry_stability} isolates the only XRY-specific input
+used in this paper beyond standard PSWF spectral theory. Accordingly, the
+present work should be read as reducing the quadrature compatibility problem
+of \cite{PaperI} to a more explicit XRY stability hypothesis, not as an
+unconditional verification of that compatibility condition.
 \end{remark}
 
-\begin{lemma}[Quadrature defect under XRY stability]\label{lem:xry_spectral_accuracy}
-Assume Assumption~\ref{ass:xry_stability}. Then for every analytic
-$f\in L^2([-T,T])$,
-\[
-  \left|Q_N(f)-\int_{-T}^T f(x)\,dx\right|
-  \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}
-      + C\,e^{-\alpha N}\,\norm{f}_{L^2([-T,T])}.
-\]
-\end{lemma}
-\begin{proof}
-This is exactly Assumption~\ref{ass:xry_stability}, restated for later use.
-\end{proof}
-
-\begin{remark}[Two additive error sources]
-Lemma~\ref{lem:xry_spectral_accuracy} keeps the two sources of error
-explicitly separate:
-\begin{itemize}
-\item the \emph{spectral tail} $\CXRY\|(I-\PN)f\|$ arising from the
-  PSWF truncation of $f$;
-\item the \emph{quadrature residual} $Ce^{-\alpha N}\norm{f}$ arising
-  from the assumed XRY stability bridge.
-\end{itemize}
-Both terms are exponentially small for analytic $f$, so neither dominates.
-No exactness of $Q_N$ on $\operatorname{Ran}(\PN)$ is claimed, and no
-identification of XRY with a spectral projector is used.
+\begin{remark}[Why the new hypothesis is meaningful]
+The XRY stability hypothesis is not introduced merely to rename the original
+problem. It has a more operational form than Assumption~3.10 of \cite{PaperI},
+because it directly compares the quadrature functional $Q_N$ with the PSWF
+spectral truncation error and separates a truncation term from an intrinsic
+quadrature residual. This makes the remaining analytic task more specific,
+even though it is not yet fully resolved here.
 \end{remark}
 
-\begin{proposition}[Exponential quadrature defect bound]\label{prop:defect_bound}
+%% ==================================================================
+\section{Conditional Verification of Assumption~3.10}\label{sec:verification}
+%% ==================================================================
+
+\begin{proposition}[Conditional exponential quadrature defect bound]\label{prop:defect_bound}
 Assume Assumption~\ref{ass:xry_stability}. Then for all $0\le m,n\le N-1$,
 \[
   |E_{mn}|=|R_{mn}^{\mathrm{quad}}|\le C\,e^{-\alpha N},
@@ -308,7 +311,7 @@ where $C,\alpha>0$ depend only on the PSWF analyticity regime and the XRY
 stability constants.
 \end{proposition}
 \begin{proof}
-Apply Lemma~\ref{lem:xry_spectral_accuracy} to $f=f_{mn}$:
+Applying Assumption~\ref{ass:xry_stability} to $f=f_{mn}$ gives
 \[
   |E_{mn}|\le \CXRY\|(I-\PN)f_{mn}\|+Ce^{-\alpha N}\norm{f_{mn}}_{L^2}.
 \]
@@ -320,12 +323,7 @@ possibly reduced, and all multiplicative constants are absorbed into $C$.
 This yields the stated bound.
 \end{proof}
 
-%% ==================================================================
-\section{Verification of Assumption~3.10}\label{sec:verification}
-%% ==================================================================
-
-\begin{theorem}[PSWF-Gauss satisfies Assumption~3.10 of \cite{PaperI}]
-\label{thm:compatibility_verified}
+\begin{theorem}[Conditional verification of Assumption~3.10]\label{thm:compatibility_verified}
 Assume Assumption~\ref{ass:xry_stability}. Let $(\mathbf{p},\mathbf{w})$
 be the XRY PSWF-Gauss rule of order $N\sim c$. Then for every $p\ge1$
 there exist constants $C_p,C>0$ such that
@@ -333,7 +331,8 @@ there exist constants $C_p,C>0$ such that
   |E_{mn}|\le C_p(1+|m-n|)^{-p}+Cc^{-1/3}
   \qquad(0\le m,n\le N-1).
 \]
-Hence Assumption~3.10 of \cite{PaperI} holds for PSWF-Gauss sampling.
+Hence Assumption~3.10 of \cite{PaperI} holds conditionally for PSWF-Gauss
+sampling under the XRY stability hypothesis.
 \end{theorem}
 \begin{proof}
 By Proposition~\ref{prop:defect_bound}, $|E_{mn}|\le Ce^{-\alpha N}$.
@@ -343,14 +342,15 @@ rate. Similarly, $e^{-\alpha N}\le Cc^{-1/3}$ in the regime $N\sim c$ for
 $c$ sufficiently large. Thus both terms in Assumption~3.10 are dominated.
 \end{proof}
 
-\begin{remark}
-The exponential bound of Proposition~\ref{prop:defect_bound} is strictly
-stronger than the algebraic decay required by Assumption~3.10 of
-\cite{PaperI}: PSWF-Gauss not only satisfies but dominates the abstract
-compatibility condition, conditional on Assumption~\ref{ass:xry_stability}.
+\begin{remark}[What has been achieved]
+The preceding theorem does not close the construction problem of
+\cite{PaperI} unconditionally. What it provides is a clean reduction:
+once Assumption~\ref{ass:xry_stability} is established, the compatibility
+assumption of \cite{PaperI} follows automatically for XRY PSWF-Gauss
+quadrature.
 \end{remark}
 
-\begin{corollary}[Defect norm bound]\label{cor:defect_norm}
+\begin{corollary}[Conditional defect norm bound]\label{cor:defect_norm}
 Assume Assumption~\ref{ass:xry_stability}. Then there exists $C_*>0$ such that
 \[
   \norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\xrightarrow{N\to\infty}0.
@@ -361,10 +361,10 @@ Sum Proposition~\ref{prop:defect_bound} over $N^2$ entries.
 \end{proof}
 
 %% ==================================================================
-\section{Frame Stability for PSWF-Gauss Sampling}\label{sec:stability}
+\section{Conditional Frame Stability for PSWF-Gauss Sampling}\label{sec:stability}
 %% ==================================================================
 
-\begin{theorem}[Frame stability for PSWF-Gauss sampling]
+\begin{theorem}[Conditional frame stability for PSWF-Gauss sampling]
 \label{thm:frame_stability}
 Assume Assumption~\ref{ass:xry_stability}. Let $(\mathbf{p},\mathbf{w})$
 be the XRY PSWF-Gauss rule of order $N\sim c$. Once
@@ -392,11 +392,10 @@ The upper bound is analogous.
 \end{proof}
 
 \begin{remark}[Meaning of the result]
-The defect $\EN$ is not zero but exponentially small, controlled by
-two computable quantities: the PSWF spectral tail of analytic product
-integrands (Lemma~\ref{lem:coeff_decay}) and the assumed XRY stability
-bridge (Assumption~\ref{ass:xry_stability}, Lemma~\ref{lem:xry_spectral_accuracy}).
-This is the concrete realisation of the abstract framework of \cite{PaperI}.
+The defect $\EN$ is controlled by two separate ingredients: the PSWF
+spectral tail of analytic product integrands and the assumed XRY stability
+hypothesis. Under these two inputs, the abstract conditional framework of
+\cite{PaperI} becomes effective for XRY PSWF-Gauss quadrature.
 \end{remark}
 
 \begin{remark}[Critical density regime]\label{rem:critical}
@@ -411,17 +410,19 @@ stability condition may fail; see Open Problem~\ref{op:critical}.
 \section{Open Problems}\label{sec:open}
 %% ==================================================================
 
-\begin{problem}[XRY spectral stability: rigorous derivation]
-Derive Assumption~\ref{ass:xry_stability} rigorously from the structural
+\begin{problem}[Derive the XRY stability hypothesis]
+Prove Assumption~\ref{ass:xry_stability} rigorously from the structural
 formulas and numerical analysis of \cite{Xiao2001,OsipovRokhlinXiao},
 with explicit constants in terms of $N$, $c$, and the XRY construction
 parameters.
 \end{problem}
 
-\begin{problem}[PSWF coefficient decay constants]
+\begin{problem}[Quantify PSWF product tails]
 Make the constants $C_{m,n},\alpha$ in Lemma~\ref{lem:coeff_decay}
 explicit as functions of $m$, $n$, $c$, and $T$, using the analyticity
-radius estimates of \cite{BonamiKaroui2014}.
+radius estimates of \cite{BonamiKaroui2014}. In particular, clarify the
+uniform dependence of the tail bound on the mode indices in the regime
+relevant for the defect matrix.
 \end{problem}
 
 \begin{problem}[Node separation and weight bounds]
