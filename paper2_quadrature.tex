@@ -82,7 +82,6 @@ estimate
 \]
 Therefore Assumption~3.10 of \cite{PaperI} is verified conditionally, and
 the frame stability theorem of \cite{PaperI} applies to PSWF-Gauss sampling.
-The paper is thus an implication framework rather than a closure theorem.
 \end{abstract}
 
 \tableofcontents
@@ -117,8 +116,6 @@ Assumption~3.10 of \cite{PaperI} follows from two separate conjectural
 inputs, namely a PSWF product spectral tail conjecture and an XRY spectral
 stability conjecture on the relevant product family
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$.
-The argument is therefore a conditional verification framework rather
-than a complete closure theorem.
 
 \subsection*{Strategy of this paper}
 
@@ -140,15 +137,15 @@ condition of \cite{PaperI}. This decomposition is intended as a structural
 separation between two different mathematical issues --- PSWF spectral
 theory on the function side and quadrature operator stability on the XRY
 side --- rather than as a mere renaming of the original difficulty. We
-deliberately avoid any claim that PSWF product spaces are closed under
-pointwise multiplication, and we do not identify XRY with any spectral
-projector. The substantive output is a clean separation between the PSWF
+do not assume any closure of the PSWF system under pointwise
+multiplication, and we do not identify XRY with any spectral projector.
+The substantive output is a clean separation between the PSWF
 product-tail issue, the XRY stability issue, and the downstream
-frame-theoretic consequences. More precisely, the only genuinely
-non-perturbative part of the present argument is the control of the PSWF
-product family under spectral truncation; once that input is combined with
-the XRY stability statement, the remaining frame-theoretic step is a
-perturbative consequence.
+frame-theoretic consequences. More precisely, the only step in the present
+argument that is not reducible to a perturbation analysis around the
+projector $\PN$ is the spectral control of the nonlinear PSWF product
+family; once that input is combined with the XRY stability statement, the
+frame-theoretic consequences follow from a perturbative analysis.
 
 \subsection*{Main result}
 
@@ -207,11 +204,9 @@ The quadrature functional is $Q_N(f):=\sum_{j=1}^N w_j f(p_j)$.
 \end{definition}
 
 \begin{remark}[No algebraic closure claim]\label{rem:no_algebra}
-We make no claim that $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$
-lies in a finite-dimensional PSWF subspace $V_{K,c}$ for any controlled
-$K$. Such a claim would require algebraic closure of the PSWF system
-under pointwise multiplication, which does not hold. All arguments
-below use only analytic regularity and spectral approximation properties.
+We do not assume any closure of the PSWF system under pointwise
+multiplication. All arguments below use only analytic regularity and
+spectral approximation properties.
 \end{remark}
 
 \begin{assumption}[Node separation]\label{ass:node_sep}
@@ -434,8 +429,8 @@ By Proposition~\ref{prop:defect_bound}, $|E_{mn}|\le Ce^{-\alpha N}$.
 By Remark~\ref{rem:index_domination}, the exponential bound dominates any
 algebraic factor $(1+|m-n|)^{-p}$ uniformly over the index range after
 adjusting constants. By Lemma~\ref{lem:bulk_scale}, one also has
-$e^{-\alpha N}\le Cc^{-1/3}$ for $N=\gamma c$ and sufficiently large $c$.
-Thus both terms in Assumption~3.10 are dominated.
+$e^{-\alpha N}\le Cc^{-1/3}$ for fixed $\gamma>0$, $N=\gamma c$, and
+sufficiently large $c$. Thus both terms in Assumption~3.10 are dominated.
 \end{proof}
 
 \begin{remark}[What has been achieved]
