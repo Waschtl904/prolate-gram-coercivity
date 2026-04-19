@@ -153,6 +153,7 @@ Throughout, $c=\omega T$ and
 This is an $N$-dimensional subspace of $\PW$ for each fixed pair $(N,c)$.
 There is no canonical identification of $V_{N,c}$ across different values
 of $c$.
+All operator comparisons in this paper are ultimately reduced to this finite-dimensional PSWF subspace.
 
 \subsection{Gram matrix and reference matrix}
 
@@ -206,10 +207,17 @@ We say that $\mathbf{p}$ satisfies
 \end{enumerate}
 Condition~\textup{(T.2)} is a strong spectral matching hypothesis, comparable in spirit to a near-diagonalization or near-quadrature condition,
 and should not be regarded as generic.
+Typically one should expect such a condition, if at all, only for specially constructed sampling or weighted-frame systems.
 \end{definition}
 
 \begin{remark}[Geometric meaning of $\EN$]\label{rem:EN_meaning}
 Thus $\EN$ measures the deviation between discrete sampling geometry and spectral concentration geometry of $\Kop$.
+\end{remark}
+
+\begin{remark}[Bridge to constructive sampling questions]\label{rem:bridge_sampling}
+The regime $\norm{\EN}_2\ll 1$ should be interpreted as a target condition, not as an a priori generic feature of arbitrary point sets.
+One would expect it, if at all, from structured quadrature-like constructions, weighted Marcinkiewicz--Zygmund systems,
+or other sampling geometries specifically designed to approximate the PSWF spectral projector on the finite-dimensional space $V_{N,c}$.
 \end{remark}
 
 \begin{remark}[Coefficient-space identification]\label{rem:coeff_ident}
@@ -321,7 +329,7 @@ It therefore suffices to know that this determinant is not identically zero.
 Because the functions $\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}$ are linearly independent,
 and because point-evaluation functionals are separating on $V_{N,c}$,
 a standard finite-dimensional argument yields a choice of $N$ points for which the evaluation matrix is invertible.
-Consequently $\det M(\mathbf{p},c)$ is not identically zero.
+Equivalently, the determinant is analytically non-degenerate and hence not the zero function.
 Its zero set therefore has Lebesgue measure zero, and absolute continuity implies
 that non-unisolvence occurs with probability zero.
 \end{proof}
@@ -386,14 +394,14 @@ Applying Theorem~\ref{thm:layerA}(II) gives the final bound.
 
 \begin{remark}[Crudeness of the global upper bound]
 The bound $\lambda_{\max}(\GVM)\le N\omega/\pi$ is intentionally crude, dimension-only,
-independent of $c$, and chosen to be basis-free rather than asymptotically sharp.
+independent of $c$, non-asymptotic, and not sharp in the PSWF regime.
 Its role is to provide a geometry-free estimate suitable for the fixed-$(N,c)$ framework of this paper.
 Sharper bounds exploiting prolate concentration are left for later work.
 \end{remark}
 
 \section{Layer~B: Comparison Theorem}\label{sec:layerB}
 
-All results here are conditional on~(T.2).
+All results here are conditional on~(T.2) and take place after restriction to the finite-dimensional PSWF space $V_{N,c}$.
 
 \begin{definition}[Weighted discrete reference matrix]\label{def:weighted_ref}
 Given positive weights $w_1,\dots,w_N$, let $D:=\operatorname{diag}(w_1,\dots,w_N)$ and define
@@ -409,6 +417,7 @@ $M(\mathbf p,c)$ and therefore from the same PSWF samples.
 They differ only in whether one inserts the weight matrix $D$.
 Thus the decomposition in Proposition~\ref{prop:two_step_error} separates two analytically distinct
 contributions, but not two statistically or geometrically independent sources of randomness.
+The splitting is algebraic, but not probabilistically or geometrically decoupled.
 This coupling obstruction prevents a naive decoupling of geometric and spectral sampling errors.
 \end{remark}
 
