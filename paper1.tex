@@ -98,6 +98,9 @@ The real content lies in two issues:
 unisolvence can actually be proved, and
 (ii) quantifying the gap between the discrete sampling form and the
 continuous quadratic form of $\Kop$.
+The main difficulty is not the finite-dimensional linear algebra itself,
+but rather how special a sampling configuration must be in order to align discrete evaluation geometry
+with the PSWF eigenstructure of the concentration operator.
 We restrict attention throughout to fixed finite-dimensional regimes $(N,c)$.
 
 Layer~A proves unisolvence for random sampling and for weighted sampling models
@@ -166,6 +169,8 @@ Write $\AM:=\sqrt{\lambda_{\min}(\GVM)}$ and
 $\BM:=\sqrt{\lambda_{\max}(\GVM)}$.
 Unweighted sampling corresponds to the special case $w_j\equiv 1$, which in general need not satisfy
 frame bounds that are uniform with respect to the geometry of $\mathbf p$.
+This unweighted quadratic form is the canonical Parseval-frame form of the evaluation system
+associated with the chosen orthonormal basis.
 \end{definition}
 
 \begin{remark}[Basis dependence and spectral invariance]\label{rem:basis_invariance}
@@ -199,7 +204,8 @@ We say that $\mathbf{p}$ satisfies
   \varepsilon_N<\lambda_{N-1}(c).
 \]
 \end{enumerate}
-Condition~\textup{(T.2)} is a strong spectral matching hypothesis and should not be regarded as generic.
+Condition~\textup{(T.2)} is a strong spectral matching hypothesis, comparable in spirit to a near-diagonalization or near-quadrature condition,
+and should not be regarded as generic.
 \end{definition}
 
 \begin{remark}[Geometric meaning of $\EN$]\label{rem:EN_meaning}
@@ -267,13 +273,13 @@ In particular, the natural zero-counting route for uniform grids remains open.
 \end{remark}
 
 \begin{lemma}[Identity principle for Paley--Wiener functions]\label{lem:identity}
-If $f\in\PW$ vanishes on a set with an accumulation point, then $f\equiv 0$
+If $f\in\PW$ vanishes on a set with a limit point in $\mathbb R$, then $f\equiv 0$
 on $\mathbb R$.
 \end{lemma}
 
 \begin{proof}
 Every $f\in\PW$ extends to an entire function of exponential type.
-If it vanishes on a set with an accumulation point, then the entire extension has a non-discrete zero set.
+If it vanishes on a set with a limit point in $\mathbb R$, then the entire extension has a non-discrete zero set.
 By the identity theorem for holomorphic functions, the entire extension
 must vanish identically, hence $f\equiv 0$ on $\mathbb R$.
 Classically, this is a basic uniqueness phenomenon for Paley--Wiener spaces.
@@ -313,9 +319,8 @@ Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
 It therefore suffices to know that this determinant is not identically zero.
 Because the functions $\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}$ are linearly independent,
-there exists a configuration $\mathbf p\subset[-T,T]$ for which the evaluation matrix is invertible;
-otherwise every $N\times N$ evaluation determinant would vanish and the functions would be pointwise linearly dependent,
-contrary to basis independence.
+and because point-evaluation functionals are separating on $V_{N,c}$,
+a standard finite-dimensional argument yields a choice of $N$ points for which the evaluation matrix is invertible.
 Consequently $\det M(\mathbf{p},c)$ is not identically zero.
 Its zero set therefore has Lebesgue measure zero, and absolute continuity implies
 that non-unisolvence occurs with probability zero.
@@ -381,9 +386,9 @@ Applying Theorem~\ref{thm:layerA}(II) gives the final bound.
 
 \begin{remark}[Crudeness of the global upper bound]
 The bound $\lambda_{\max}(\GVM)\le N\omega/\pi$ is intentionally crude, dimension-only,
-and independent of $c$.
+independent of $c$, and chosen to be basis-free rather than asymptotically sharp.
 Its role is to provide a geometry-free estimate suitable for the fixed-$(N,c)$ framework of this paper.
-Sharper bounds exploiting PSWF concentration are left for later work.
+Sharper bounds exploiting prolate concentration are left for later work.
 \end{remark}
 
 \section{Layer~B: Comparison Theorem}\label{sec:layerB}
@@ -404,7 +409,7 @@ $M(\mathbf p,c)$ and therefore from the same PSWF samples.
 They differ only in whether one inserts the weight matrix $D$.
 Thus the decomposition in Proposition~\ref{prop:two_step_error} separates two analytically distinct
 contributions, but not two statistically or geometrically independent sources of randomness.
-This coupling prevents a naive decoupling of geometric and spectral sampling errors.
+This coupling obstruction prevents a naive decoupling of geometric and spectral sampling errors.
 \end{remark}
 
 \begin{proposition}[Two-step error decomposition]\label{prop:two_step_error}
@@ -528,6 +533,7 @@ Then
   |R_N(f)|\le \norm{\EN}_2\norm{\mathbf a}_2^2
   \le \varepsilon_N\norm{f}_{L^2}^2.
 \]
+This theorem isolates the entire source of deviation between discrete sampling and the PSWF spectral model in the single defect operator $\EN$.
 \end{proof}
 
 \begin{remark}[Structural bottleneck]
