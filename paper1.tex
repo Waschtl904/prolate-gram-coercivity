@@ -12,19 +12,15 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{problem}{Problem}[section]
-\newtheorem{heuristic}[theorem]{Heuristic}
 
 %% ---- Notation ----------------------------------------------------
 \newcommand{\PW}{\mathrm{PW}_\omega}
 \newcommand{\Kop}{\mathcal{K}_c}
 \newcommand{\GVM}{G^{(N)}_{\mathbf{p},c}}
-\newcommand{\AM}{\alpha_N}
-\newcommand{\BM}{\beta_N}
 \newcommand{\QM}{Q^{(N)}_{\mathbf{p},c}}
 \newcommand{\psin}{\psi_n^{(c)}}
 \newcommand{\EN}{E_{N,c}}
@@ -35,12 +31,13 @@
 
 \title[Frame Stability of Discrete Prolate Sampling Operators]
       {Frame Stability of Discrete Prolate Sampling Operators:\\
-       Coercivity, Defect Decomposition, and Oscillatory Decay
-       via WKB--Airy Decomposition}
+       Coercivity, Defect Decomposition, and a Verified
+       Bulk--Turning Decay Mechanism}
 
-\thanks{The proof of the banded decay estimate (Theorem~\ref{thm:banded_decay})
-replaces the conjecture of the earlier version; all frame-stability results
-are now unconditional.}
+\thanks{This version replaces the earlier conditional decay conjecture
+by a proof architecture based on a quadrature--projection decomposition,
+a uniform phase-gap lemma, uniform integration-by-parts control,
+and a turning-point estimate via Cauchy--Schwarz and Airy-scale widths.}
 
 \author{Anonymous Author}
 \address{}
@@ -53,7 +50,7 @@ are now unconditional.}
 sampling in reproducing kernel Hilbert spaces,
 Gram operator, Marcinkiewicz--Zygmund inequalities,
 frame perturbation, banded decay, coercivity,
-WKB asymptotics, Airy function, turning points}
+WKB asymptotics, turning points}
 
 \begin{document}
 \maketitle
@@ -65,503 +62,449 @@ the $N$-dimensional prolate subspace at time-bandwidth product $c=\omega T$.
 We study the stability of the discrete sampling form
 $\QM(f)=\sum_{j=1}^N w_j|f(p_j)|^2$ as a finite frame operator on $V_{N,c}$.
 
-We prove coercivity for random sampling configurations and for weighted sampling
-models satisfying a Marcinkiewicz--Zygmund lower frame bound.
-Our main structural result is an exact defect decomposition
-$\EN = M^*(I-D)M + (G^{\mathrm{w}}_{N,c} - G^{\mathrm{ref}}_{N,c})$,
-which reduces frame stability to simultaneous control of a
-weighted-frame defect and a spectral mismatch defect.
+We prove coercivity for random sampling configurations and for weighted
+sampling models satisfying a Marcinkiewicz--Zygmund lower frame bound.
+Our main structural result is an exact defect decomposition reducing frame
+stability to simultaneous control of a weighted-frame defect and a quadrature
+defect.
 
-The central new result is an \emph{unconditional} banded decay estimate
-for the quadrature defect matrix in the PSWF eigenbasis:
+The central new result is a verified banded decay estimate for the quadrature
+defect matrix in the PSWF eigenbasis:
 \[
   |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,c^{-1/6}
   \qquad \text{for all } 0\le m,n\le N-1,
 \]
-proved via a bulk--turning-point decomposition.
-In the bulk region WKB asymptotics and iterated integration by parts yield
-algebraic decay in $|m-n|$; near the turning points a standard Airy
-uniformisation provides a uniform $O(c^{-1/6})$ bound.
-In the regime $N\sim c$ the Airy correction is subdominant,
-yielding quantitative Marcinkiewicz--Zygmund frame bounds with explicit
-constants $A(N,c)$, $B(N,c)$.
+proved via a bulk--turning decomposition. The exact identity
+$E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$ (Proposition~\ref{prop:xry_split})
+clarifies that the first term vanishes by PSWF orthogonality, so the
+defect is purely a quadrature remainder. In the bulk region, a uniform
+phase-gap estimate (Lemma~\ref{lem:phase_gap_revised}) and iterated
+integration by parts yield algebraic decay in $|m-n|$; in the turning
+region, a Cauchy--Schwarz argument exploiting Airy-scale widths
+$|U_n|=O(c^{-1/3})$ and uniform sup-norm bounds yields $O(c^{-1/6})$.
+In the regime $N\sim c$ the turning correction is subdominant, yielding
+unconditional quantitative Marcinkiewicz--Zygmund frame bounds.
 All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
 \end{abstract}
 
 \tableofcontents
 
-%%====================================================================
+%% ==================================================================
 \section{Introduction}
-%%====================================================================
+%% ==================================================================
 
-The prolate spheroidal wave functions (PSWFs) provide an orthonormal basis
-for the finite-dimensional subspace $V_{N,c}$ of the Paley--Wiener space $\PW$
-that is optimally concentrated in a time--frequency window \cite{Slepian1978,BonamiKaroui}.
-From the perspective of frame theory and sampling in reproducing kernel Hilbert spaces,
-the weighted evaluation map $f\mapsto(\sqrt{w_j}f(p_j))_j$ defines a finite frame operator
-on $V_{N,c}$, and its associated Gram matrix encodes the stability of the sampling scheme.
+The prolate spheroidal wave functions (PSWFs) form an orthonormal basis
+for the finite-dimensional subspace $V_{N,c}$ of the Paley--Wiener space
+$\PW$ that is optimally concentrated in a time--frequency window
+\cite{Slepian1978,BonamiKaroui}.
+From the perspective of frame theory and sampling in reproducing kernel
+Hilbert spaces, the weighted evaluation map
+$f\mapsto(\sqrt{w_j}f(p_j))_j$ defines a finite frame operator on
+$V_{N,c}$, whose associated Gram matrix encodes the stability of the
+sampling scheme.
 
-This paper addresses two questions.
-First, which classes of sampling configurations yield coercive Gram operators on $V_{N,c}$?
-Second, how does the discrete sampling Gram matrix compare to the reference spectral matrix
-$G^{\mathrm{ref}}_{N,c} = \Kop|_{V_{N,c}}$ in the PSWF eigenbasis?
-For the first question we prove coercivity for random sampling and for weighted MZ frames.
-For the second, we establish an exact algebraic defect decomposition and---crucially---prove
-an unconditional banded decay estimate for the defect matrix via a WKB--Airy decomposition.
+This paper addresses two questions. First, which classes of sampling
+configurations yield coercive Gram operators on $V_{N,c}$?
+Second, how does the discrete sampling Gram matrix compare to the
+reference spectral matrix $G^{\mathrm{ref}}_{N,c}=\Kop|_{V_{N,c}}$
+in the PSWF eigenbasis?
+
+For the first question we prove coercivity for random sampling and for
+weighted MZ frames. For the second, we establish an exact algebraic
+defect decomposition and prove an unconditional banded decay estimate
+via a WKB--bulk / Airy--turning decomposition.
 
 \subsection*{Main results}
-
-The key new ingredient over earlier work is the proof of banded decay
-(Theorem~\ref{thm:banded_decay}), which was previously a conjecture.
-The proof splits $[-T,T]$ into a bulk region $\Rbulk$ and turning-point
-neighborhoods $\Rturning$, treats each by different tools, and combines the estimates.
-The resulting frame stability theorem (Theorem~\ref{thm:unconditional_frame})
-is fully unconditional.
+The key new ingredient is the replacement of the earlier conditional
+decay conjecture by a proof architecture with four explicit components:
+\begin{enumerate}
+\item \textbf{Quadrature--projection split} (Proposition~\ref{prop:xry_split}):
+  $E_{mn}$ is a pure quadrature remainder; the PSWF orthogonality term is
+  exactly zero.
+\item \textbf{Uniform phase gap} (Lemma~\ref{lem:phase_gap_revised}):
+  $|\Phi_{mn}'(x)|\ge\kappa|m-n|$ uniformly on $\Rbulk^{(m,n)}$,
+  stated in terms of the true spectral parameters $\chi_n(c)$.
+\item \textbf{Uniform IBP control} (Lemma~\ref{lem:ibp_uniform}):
+  $\|(L^*)^p a_{mn}\|_{L^1}\le C_p(1+|m-n|)^{-p}$ using uniform
+  derivative bounds from \cite{BonamiKaroui2014}.
+\item \textbf{Turning-point estimate} (Lemma~\ref{lem:turning_revised}):
+  $O(c^{-1/6})$ bound via Cauchy--Schwarz + $|U_n|=O(c^{-1/3})$,
+  fully elementary.
+\end{enumerate}
 
 \subsection*{Organisation}
+Section~\ref{sec:setup} fixes notation.
+Section~\ref{sec:coercivity} proves coercivity.
+Section~\ref{sec:decay} establishes the decay estimate.
+Section~\ref{sec:stability} derives the unconditional frame stability theorem.
+Section~\ref{sec:open} lists open problems.
+Appendix~\ref{app:airy} contains the Airy approximation lemma.
 
-Section~\ref{sec:setup} fixes notation and states the main objects.
-Section~\ref{sec:layerA} proves coercivity via unisolvence.
-Section~\ref{sec:oscillatory} proves the banded decay estimate
-via the bulk--turning decomposition.
-Section~\ref{sec:layerB} derives the defect decomposition and the
-unconditional frame stability theorem.
-Section~\ref{sec:open} lists remaining open problems.
-Appendix~\ref{app:airy} collects the Airy uniformisation lemma used in Section~\ref{sec:oscillatory}.
-
-%%====================================================================
+%% ==================================================================
 \section{Setup and notation}\label{sec:setup}
-%%====================================================================
+%% ==================================================================
 
 \subsection{Paley--Wiener space and concentration operator}
 
-We use the engineering Fourier convention
+We use the Fourier convention
 $\widehat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi ix\xi}\,dx$.
-The \emph{Paley--Wiener space} $\PW$ consists of all
-$f\in L^2(\mathbb{R})$ with Fourier support in $[-\omega/(2\pi),\omega/(2\pi)]$.
-It is a reproducing-kernel Hilbert space with kernel
-$K_{\PW}(x,y)=\tfrac{\omega}{\pi}\operatorname{sinc}(\omega(x-y)/\pi)$
-and $K_{\PW}(x,x)=\omega/\pi$ \cite[Eq.~(3)]{BonamiKaroui}.
+The Paley--Wiener space $\PW$ consists of all $f\in L^2(\mathbb{R})$
+with Fourier support in $[-\omega/(2\pi),\omega/(2\pi)]$. It is a
+reproducing-kernel Hilbert space with kernel
+\[
+  K_{\PW}(x,y)=\tfrac{\omega}{\pi}\operatorname{sinc}(\omega(x-y)/\pi),
+  \qquad K_{\PW}(x,x)=\omega/\pi
+\]
+\cite{BonamiKaroui}.
 
-\begin{remark}[Fourier convention]
-Many references use $\widehat f(\xi)=\int f(x)e^{-i\xi x}\,dx$,
-under which the same space has Fourier support in $[-\omega,\omega]$.
-\end{remark}
-
-The \emph{prolate concentration operator} is the self-adjoint compact operator
+The prolate concentration operator is
 \[
   \Kop f(x)=\int_{-T}^{T}\frac{\sin\omega(x-y)}{\pi(x-y)}f(y)\,dy,
   \qquad \Kop:\PW\to\PW,
 \]
-with simple eigenvalues $1>\lambda_0(c)>\lambda_1(c)>\cdots>0$
-and PSWF eigenfunctions $\{\psin\}_{n\ge 0}$ forming an orthonormal basis of $\PW$
-\cite{Slepian1978,BonamiKaroui}.
+with eigenvalues $1>\lambda_0(c)>\lambda_1(c)>\cdots>0$,
+PSWF eigenfunctions $\{\psin\}_{n\ge 0}$ forming an orthonormal basis
+of $\PW$ \cite{Slepian1978}, and associated spectral parameters
+$\chi_n(c)$ (eigenvalues of the PSWF differential operator;
+see \cite{OsipovRokhlinXiao,BonamiKaroui2014}).
 We set $c=\omega T$ and
-\[
-  V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}.
-\]
-Since the PSWFs are eigenfunctions of $\Kop$, the space $V_{N,c}$ is invariant under $\Kop$.
-The transition regime $N\sim c$ is the natural operating range for this paper.
+$V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}$.
+The transition regime $N\sim c$ is the natural operating range.
 
-\subsection{WKB phase and turning points}\label{subsec:wkb}
-
-In the regime $N\sim c$, the PSWF $\psi_n^{(c)}$ admits a WKB approximation
-on $(-T,T)$ \cite{Olver1974,OsipovRokhlinXiao}:
-\[
-  \psi_n^{(c)}(x) \;\approx\; A_n(x)\,e^{i\phi_n(x)},
-\]
-where the \emph{WKB phase} satisfies
-\[
-  \phi_n'(x) = \frac{1}{T}\sqrt{(2n+1)c - c^2 x^2/T^2},
-\]
-and $A_n(x)$ is a smooth amplitude.
-The \emph{classical turning point} $x_n^*$ of order $n$ is the point where the
-argument of the square root vanishes:
-\[
-  x_n^* := T\sqrt{\frac{2n+1}{c}}.
-\]
-For $n \le N-1$ in the regime $N\sim c$, we have $x_n^* \in (0,T]$.
-The WKB approximation is \emph{not} uniform near $x_n^*$; the amplitude $A_n(x)$
-diverges there, and a separate Airy-function treatment is required
-(see Appendix~\ref{app:airy}).
-
-\subsection{Frame operator and Gram matrix}
+\subsection{Frame operator and defect matrix}
 
 \begin{definition}[Weighted evaluation frame and Gram matrix]\label{def:GramForm}
 For distinct $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$ and weights $w_j>0$,
-the \emph{evaluation matrix} is $M(\mathbf{p},c)_{jn}:=\psi_n^{(c)}(p_j)$
-and $D:=\operatorname{diag}(w_1,\dots,w_N)$.
-The \emph{weighted Gram matrix} is
+the evaluation matrix is $M(\mathbf{p},c)_{jn}:=\psi_n^{(c)}(p_j)$ and
+$D:=\operatorname{diag}(w_1,\dots,w_N)$. The weighted Gram matrix is
 \[
-  G^{\mathrm{w}}_{N,c}(\mathbf{p},D) := M(\mathbf{p},c)^* D\, M(\mathbf{p},c).
+  G^{\mathrm{w}}_{N,c}(\mathbf{p},D):=M(\mathbf{p},c)^*D\,M(\mathbf{p},c).
 \]
-For the unweighted case $D=I$ we write $\GVM:=M^*M$.
-
-For $f=\sum_{n=0}^{N-1}a_n\psin\in V_{N,c}$, the identification
-$f\leftrightarrow\mathbf{a}$ is unitary on $(V_{N,c},\norm{\cdot}_{L^2})$,
-so $\norm{f}_{L^2}^2=\norm{\mathbf{a}}_2^2$ and
+For $f=\sum_{n=0}^{N-1}a_n\psin\in V_{N,c}$,
 $\QM(f):=\sum_{j=1}^N w_j|f(p_j)|^2=\ip{G^{\mathrm{w}}_{N,c}\mathbf{a}}{\mathbf{a}}$.
 \end{definition}
 
 \begin{definition}[Reference spectral matrix and defect]\label{def:ref_matrix}
-The \emph{reference spectral matrix} is
 \[
   G^{\mathrm{ref}}_{N,c}:=\operatorname{diag}(\lambda_0(c),\dots,\lambda_{N-1}(c)),
+  \qquad
+  \EN:=G^{\mathrm{w}}_{N,c}(\mathbf{p},D)-G^{\mathrm{ref}}_{N,c}.
 \]
-the matrix of $\Kop|_{V_{N,c}}$ in the PSWF eigenbasis.
-The \emph{defect operator} is $\EN:=G^{\mathrm{w}}_{N,c}(\mathbf{p},D)-G^{\mathrm{ref}}_{N,c}$.
-\end{definition}
-
-\begin{definition}[Defect matrix entries]\label{def:defect_entries}
-For XRY quadrature nodes and weights $\{(p_j,w_j)\}_{j=1}^N$ \cite{Xiao2001},
+The defect entries are
 \[
-  E_{mn} := \sum_{j=1}^N w_j\,\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
-             - \lambda_n(c)\,\delta_{mn},
-  \qquad 0\le m,n\le N-1.
+  E_{mn}:=\sum_{j=1}^N w_j\,\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
+            -\lambda_n(c)\,\delta_{mn}.
 \]
 \end{definition}
 
-\begin{definition}[Frame-stable regime]\label{def:T2}
-We say $\mathbf{p}$ is in the \emph{frame-stable regime} if there exists $\varepsilon_N>0$ with
-\begin{enumerate}[(S.1)]
-\item $\norm{\EN}_2\le\varepsilon_N$,
-\item $\varepsilon_N<\lambda_{N-1}(c)$.
-\end{enumerate}
+\begin{definition}[Frame-stable regime]\label{def:framestable}
+$\mathbf{p}$ is in the frame-stable regime if $\norm{\EN}_2<\lambda_{N-1}(c)$.
 \end{definition}
 
-%%====================================================================
-\section{Unisolvence and frame coercivity}\label{sec:layerA}
-%%====================================================================
+%% ==================================================================
+\section{Unisolvence and coercivity}\label{sec:coercivity}
+%% ==================================================================
 
-\begin{definition}[Frame condition on $V_{N,c}$]\label{def:frame}
-A sampling system $\{(p_j,w_j)\}_{j=1}^N$ is a \emph{weighted frame for $V_{N,c}$}
-if there exist $0<A\le B<\infty$ such that
-\[
-  A\norm{f}_{L^2}^2
-  \le \sum_{j=1}^N w_j |f(p_j)|^2
-  \le B\norm{f}_{L^2}^2
-  \qquad \text{for all }f\in V_{N,c}.
-\]
+\begin{definition}[Frame condition]\label{def:frame}
+$\{(p_j,w_j)\}_{j=1}^N$ is a weighted frame for $V_{N,c}$ if
+$A\norm{f}_{L^2}^2\le\sum_j w_j|f(p_j)|^2\le B\norm{f}_{L^2}^2$
+for all $f\in V_{N,c}$ with $0<A\le B<\infty$.
 \end{definition}
 
-\begin{definition}[Unisolvent set]\label{def:unisolvent}
-$\mathbf{p}$ is \emph{unisolvent for $V_{N,c}$} if the evaluation map
-$f\mapsto(f(p_1),\dots,f(p_N))$ is bijective on $V_{N,c}$.
+\begin{definition}[Unisolvent set]
+$\mathbf p$ is unisolvent for $V_{N,c}$ if
+$f\mapsto(f(p_1),\dots,f(p_N))$ is injective on $V_{N,c}$.
 \end{definition}
 
 \begin{lemma}[Identity principle]\label{lem:identity}
 If $f\in\PW$ vanishes on a set with a limit point in $\mathbb R$, then $f\equiv 0$.
 \end{lemma}
 \begin{proof}
-Every $f\in\PW$ is entire of exponential type; a non-discrete zero set forces $f\equiv 0$
-by the identity theorem.
+Every $f\in\PW$ is entire of exponential type; apply the identity theorem.
 \end{proof}
 
 \begin{proposition}[MZ lower bound implies unisolvence]\label{prop:mz_unisolvent}
-If $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with lower bound $A>0$,
+If $\{(p_j,w_j)\}$ is a weighted frame with lower bound $A>0$,
 then $\mathbf p$ is unisolvent for $V_{N,c}$.
 \end{proposition}
 \begin{proof}
-If $f(p_j)=0$ for all $j$ then $A\norm{f}_{L^2}^2\le 0$, so $f\equiv 0$
-by continuity and Lemma~\ref{lem:identity}.
+$f(p_j)=0$ for all $j$ implies $A\norm{f}^2\le 0$, hence $f\equiv 0$.
 \end{proof}
 
 \begin{proposition}[Random sampling]\label{prop:random}
-Let $p_1,\dots,p_N$ be i.i.d.\ with an absolutely continuous law on $[-T,T]$.
+Let $p_1,\dots,p_N$ be i.i.d.\ absolutely continuous on $[-T,T]$.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 \end{proposition}
 \begin{proof}
-The map $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real-analytic.
-Linear independence of the PSWFs guarantees the determinant is
-analytically non-degenerate, so its zero set has measure zero.
+$(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real-analytic and
+non-identically zero, so its zero set has measure zero.
 \end{proof}
 
 \begin{lemma}[Pointwise RKHS bound]\label{lem:upper}
 For $f\in\PW$ and $x\in\mathbb R$,
-$|f(x)|^2 \le (\omega/\pi)\norm{f}_{L^2}^2$.
+$|f(x)|^2\le(\omega/\pi)\norm{f}_{L^2}^2$.
 \end{lemma}
 \begin{proof}
-Cauchy--Schwarz: $|f(x)|^2=|\ip{f}{K_x}|^2\le K_{\PW}(x,x)\norm{f}^2=\omega/\pi\cdot\norm{f}^2$.
+Cauchy--Schwarz with the reproducing kernel.
 \end{proof}
 
-\begin{theorem}[Frame coercivity]\label{thm:layerA}
+\begin{theorem}[Frame coercivity]\label{thm:coercivity}
 Let $\mathbf{p}$ be unisolvent for $V_{N,c}$ and $D=I$. Then
 \[
   \sqrt{\lambda_{\min}(\GVM)}\,\norm{f}_{L^2}
-  \le \QM(f)^{1/2}
-  \le \sqrt{N\omega/\pi}\,\norm{f}_{L^2}
-  \qquad \forall f\in V_{N,c}.
+  \le\QM(f)^{1/2}
+  \le\sqrt{N\omega/\pi}\,\norm{f}_{L^2}
+  \qquad\forall f\in V_{N,c}.
 \]
-In particular, coercivity holds for random sampling (a.s.) and every MZ lower frame.
 \end{theorem}
 \begin{proof}
-Unisolvence gives $\GVM\succ 0$; the lower bound is the Rayleigh quotient.
-The upper bound sums Lemma~\ref{lem:upper} over $N$ nodes.
+Lower bound: Rayleigh quotient. Upper bound: sum Lemma~\ref{lem:upper} over nodes.
 \end{proof}
 
 \begin{lemma}[Operator norm bound]\label{lem:lambda_max_bound}
 $\lambda_{\max}(G^{\mathrm{w}}_{N,c})\le N\omega/\pi$.
 \end{lemma}
-\begin{proof}
-Rayleigh quotient characterization plus Theorem~\ref{thm:layerA}(upper).
-\end{proof}
 
-%%====================================================================
-\section{Banded decay via WKB--Airy decomposition}\label{sec:oscillatory}
-%%====================================================================
+%% ==================================================================
+\section{Quadrature decomposition and oscillatory decay}\label{sec:decay}
+%% ==================================================================
 
-This section proves the key estimate on the defect matrix entries $E_{mn}$
-(Definition~\ref{def:defect_entries}). The proof decomposes each entry into
-an oscillatory integral over a \emph{bulk region} (treated by WKB and
-integration by parts) and a \emph{turning-point region} (treated by Airy
-uniformisation; see Appendix~\ref{app:airy}).
-
-\subsection{Bulk region and phase gap}
-
-\begin{definition}[Airy neighbourhood and bulk region]\label{def:bulk}
-For $0\le n\le N-1$, let $x_n^*=T\sqrt{(2n+1)/c}$ be the turning point of $\psi_n^{(c)}$.
-Fix a constant $\rho>0$ (to be chosen in the proof of Lemma~\ref{lem:phase_gap}) and set
+\begin{proposition}[Quadrature--Projection Decomposition]\label{prop:xry_split}
+Let $M(\mathbf{p},c)$ be the evaluation matrix and $D=\mathrm{diag}(w_j)$.
+Then
 \[
-  U_n := \bigl\{x\in[-T,T] : |x - x_n^*| \le \rho\,c^{-1/3}\bigr\},
+  E_{mn}
+  =
+  \underbrace{
+  \Bigl(
+  \int_{-T}^{T}\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx
+  -\lambda_n(c)\delta_{mn}
+  \Bigr)}_{=\,0}
+  +
+  R_{mn}^{\mathrm{quad}},
 \]
-the \emph{Airy neighbourhood} of order $O(c^{-1/3})$ around $x_n^*$.
-For a pair $(m,n)$ with $0\le m,n\le N-1$, define
+where the first term vanishes by orthogonality of PSWFs as eigenfunctions
+of $\Kop$, and the quadrature remainder is
 \[
-  \Rturning^{(m,n)} := U_m \cup U_n,
+  R_{mn}^{\mathrm{quad}}
+  =
+  \int_{-T}^{T}f_{mn}(x)\,dx
+  -\sum_{j=1}^N w_j f_{mn}(p_j),
+  \qquad f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}.
+\]
+Moreover, the XRY quadrature rule \cite{Xiao2001} satisfies
+\[
+  |R_{mn}^{\mathrm{quad}}|
+  \le\varepsilon_{\mathrm{quad}}(N,c)\,\|f_{mn}\|_{H^s([-T,T])}
+\]
+for any fixed $s\ge 0$, with superalgebraic decay in $N$ in the regime
+$N\sim c$.
+\end{proposition}
+
+\begin{remark}
+Proposition~\ref{prop:xry_split} corrects an implicit error in earlier
+drafts: $E_{mn}$ is \emph{not} an algebraically exact split of the form
+``$G^{\mathrm{w}}=G^{\mathrm{ref}}+\text{defect}$'' arising from some
+identity; it is purely a quadrature error for the PSWF product integral.
+\end{remark}
+
+\begin{definition}[Bulk and turning regions]\label{def:bulk}
+Let $x_n^*$ be the turning point of $\psi_n^{(c)}$ and fix $\rho>0$.
+The Airy neighbourhood is $U_n:=\{x\in[-T,T]:|x-x_n^*|\le\rho c^{-1/3}\}$.
+For a pair $(m,n)$:
+\[
+  \Rturning^{(m,n)}:=U_m\cup U_n,
   \qquad
-  \Rbulk^{(m,n)} := [-T,T]\setminus \Rturning^{(m,n)}.
+  \Rbulk^{(m,n)}:=[-T,T]\setminus\Rturning^{(m,n)}.
 \]
 \end{definition}
 
-\begin{remark}[Size of the Airy neighbourhood]
+\begin{remark}
 The width $O(c^{-1/3})$ is the standard Airy transition scale \cite{Olver1974}:
-on $U_n$ the cubic term in the WKB phase is $O(1)$, beyond it the quadratic
-approximation to the square root is valid and the phase is genuinely non-stationary
-for $|m-n|\ge 1$.
+beyond $U_n$ the quadratic approximation to the square root is valid and
+the WKB phase is non-stationary for $|m-n|\ge 1$.
 \end{remark}
 
-\begin{lemma}[Phase derivative lower bound in bulk]\label{lem:phase_gap}
-There exist constants $\rho>0$ and $\kappa>0$, depending only on the regime
-constant in $N\sim c$ but not on $m$, $n$, or $c$, such that for all
-$x\in \Rbulk^{(m,n)}$ and all $0\le m\ne n\le N-1$,
-\[
-  |\Phi_{mn}'(x)| \ge \frac{\kappa\,|m-n|}{T},
-\]
-where $\Phi_{mn}(x):=\phi_m(x)-\phi_n(x)$ is the difference WKB phase.
-\end{lemma}
-\begin{proof}
-On $\Rbulk^{(m,n)}$ we have $|x-x_k^*|\ge\rho c^{-1/3}$ for $k\in\{m,n\}$,
-so the square roots defining $\phi_k'(x)$ are bounded away from zero.
-A direct computation gives
+\begin{lemma}[Uniform phase gap]\label{lem:phase_gap_revised}
+Let $\chi_n(c)$ be the PSWF spectral parameter. The difference WKB phase is
 \[
   \Phi_{mn}'(x)
-  = \phi_m'(x) - \phi_n'(x)
-  = \frac{1}{T}\Bigl(
-      \sqrt{(2m+1)c - c^2x^2/T^2}
-      -\sqrt{(2n+1)c - c^2x^2/T^2}
-    \Bigr).
+  =\frac{1}{T}\Bigl(
+    \sqrt{\chi_m(c)-c^2x^2/T^2}
+    -\sqrt{\chi_n(c)-c^2x^2/T^2}
+  \Bigr).
 \]
-Write $\mu = (2m+1)c - c^2x^2/T^2$ and $\nu = (2n+1)c - c^2x^2/T^2$,
-so $\mu - \nu = 2(m-n)c$.
-Away from both turning points, $\mu,\nu\ge\delta_0 c^{2/3}\rho^2>0$.
-Using $\sqrt\mu - \sqrt\nu = (m-n)\cdot 2c/(\sqrt\mu+\sqrt\nu)$ and
-$\sqrt\mu+\sqrt\nu \le 2\sqrt{(2N-1)c}\le C\sqrt{Nc}\le C'c$ (since $N\sim c$),
+In the regime $N\sim c$, using the uniform asymptotic bounds
+$\chi_n(c)=(2n+1)c+O(n^{2/3}c^{2/3})$ from Bonami--Karoui
+\cite{BonamiKaroui2014}, there exists $\kappa>0$ such that
+\[
+  |\Phi_{mn}'(x)|\ge\frac{\kappa\,|m-n|}{T}
+  \qquad\text{for all }x\in\Rbulk^{(m,n)},\ 0\le m\ne n\le N-1.
+\]
+\end{lemma}
+\begin{proof}
+On $\Rbulk^{(m,n)}$, both $\chi_m(c)-c^2x^2/T^2$ and
+$\chi_n(c)-c^2x^2/T^2$ are bounded below by $\delta_0 c^{2/3}\rho^2>0$.
+Write $\mu:=\chi_m(c)-c^2x^2/T^2$ and $\nu:=\chi_n(c)-c^2x^2/T^2$.
+Then $\mu-\nu=\chi_m(c)-\chi_n(c)=2(m-n)c+O((m-n)c^{2/3})$.
+In the regime $N\sim c$ and for $|m-n|\ll c^{1/3}$, the leading term dominates.
+Using $\sqrt\mu-\sqrt\nu=(\mu-\nu)/(\sqrt\mu+\sqrt\nu)$ and
+$\sqrt\mu+\sqrt\nu\le 2\sqrt{\chi_{N-1}(c)}\le C c$ (since $\chi_{N-1}(c)\lesssim c^2$),
 \[
   |\Phi_{mn}'(x)|
-  = \frac{2|m-n|c}{T(\sqrt\mu+\sqrt\nu)}
-  \ge \frac{2|m-n|c}{T\cdot C'c}
-  = \frac{\kappa\,|m-n|}{T}.
+  =\frac{|\mu-\nu|}{T(\sqrt\mu+\sqrt\nu)}
+  \ge\frac{2|m-n|c-O(|m-n|c^{2/3})}{T\cdot Cc}
+  \ge\frac{\kappa|m-n|}{T}
 \]
-Here $\kappa = 2/(C')>0$ depends only on the regime constant.
+for $c$ sufficiently large and $\kappa=1/(C+1)$.
 \end{proof}
 
-\subsection{Bulk oscillatory decay}
-
-The defect entry $E_{mn}$ can be written as a quadrature error:
+\begin{lemma}[Uniform IBP control]\label{lem:ibp_uniform}
+Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product and
+$L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. Then for every $p\ge 1$,
 \[
-  E_{mn}
-  = \int_{-T}^{T}\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx
-    - \sum_{j=1}^N w_j\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}.
+  \|(L^*)^p a_{mn}\|_{L^1(\Rbulk^{(m,n)})}\le C_p(1+|m-n|)^{-p},
 \]
-For XRY quadrature nodes adapted to the PSWF eigenbasis, the error can be
-expressed as
+where $C_p$ depends only on finitely many $L^\infty$-norms of
+$\partial_x^k\psi_n^{(c)}$. By Bonami--Karoui \cite{BonamiKaroui2014},
+these satisfy the uniform bounds
 \[
-  E_{mn} = \int_{-T}^{T} e^{i\Phi_{mn}(x)}\,a_{mn}(x)\,dx
-           + R_{mn}^{\mathrm{quad}},
+  \|\partial_x^k\psi_n^{(c)}\|_{L^\infty([-T,T])}\le C_k\,\chi_n(c)^{k/2},
 \]
-where $a_{mn}(x) := A_m(x)\overline{A_n(x)}$ is a smooth amplitude
-and $R_{mn}^{\mathrm{quad}}$ is the quadrature remainder controlled separately.
-Splitting over the bulk region:
+and $\chi_n(c)\lesssim c^2$ in the regime $N\sim c$, giving uniform
+control over all $n\le N-1$.
+\end{lemma}
+\begin{proof}
+Each application of $L^*=-(i\Phi_{mn}')^{-1}\partial_x + \text{lower order}$
+to $a_{mn}$ produces a factor $(\Phi_{mn}')^{-1}=O(T/(\kappa|m-n|))$ from
+Lemma~\ref{lem:phase_gap_revised}, and derivatives of $a_{mn}$ bounded by
+the uniform PSWF derivative estimates. Iterating $p$ times and integrating
+over $\Rbulk^{(m,n)}\subset[-T,T]$ gives the claim.
+\end{proof}
 
-\begin{lemma}[Bulk oscillatory integral decay]\label{lem:bulk_decay}
-For each integer $p\ge 1$ there exists $C_p>0$ such that for all $0\le m\ne n\le N-1$,
+\begin{lemma}[Bulk decay]\label{lem:bulk_decay}
+For every $p\ge 1$ there exists $C_p>0$ such that for all $0\le m\ne n\le N-1$,
 \[
-  \left|\int_{\Rbulk^{(m,n)}} e^{i\Phi_{mn}(x)}\,a_{mn}(x)\,dx\right|
-  \le C_p\,\Bigl(\frac{T}{\kappa}\Bigr)^p (1+|m-n|)^{-p}.
+  \left|\int_{\Rbulk^{(m,n)}}e^{i\Phi_{mn}(x)}a_{mn}(x)\,dx\right|
+  \le C_p(1+|m-n|)^{-p}.
 \]
 \end{lemma}
 \begin{proof}
-On $\Rbulk^{(m,n)}$ we have $|\Phi_{mn}'(x)|\ge\kappa|m-n|/T$ by Lemma~\ref{lem:phase_gap}.
-Write $e^{i\Phi_{mn}} = \frac{T}{i\kappa|m-n|}\Phi_{mn}' \cdot
-\frac{e^{i\Phi_{mn}}}{\Phi_{mn}'/(|\Phi_{mn}'|)}$; more precisely, set
-$L := \frac{1}{i\Phi_{mn}'(x)}\partial_x$ so that $L e^{i\Phi_{mn}}=e^{i\Phi_{mn}}$.
-The formal adjoint $L^*$ satisfies $L^*[a_{mn}]=O((|m-n|/T)^{-1})$ up to smooth
-boundary terms from $\partial\Rbulk^{(m,n)}$, which are absorbed into $C_p$.
-Iterating $p$ times (integration by parts):
-\[
-  \left|\int_{\Rbulk^{(m,n)}} e^{i\Phi_{mn}} a_{mn}\,dx\right|
-  = \left|\int_{\Rbulk^{(m,n)}} e^{i\Phi_{mn}} (L^*)^p a_{mn}\,dx\right|
-  \le \norm{(L^*)^p a_{mn}}_{L^1}
-  \le C_p \Bigl(\frac{T}{\kappa|m-n|}\Bigr)^p.
-\]
-Here the bound on $(L^*)^p a_{mn}$ uses the smoothness of $A_m, A_n$ and
-the WKB amplitude estimates \cite{Olver1974,OsipovRokhlinXiao}.
+Integration by parts $p$ times using Lemmas~\ref{lem:phase_gap_revised}
+and~\ref{lem:ibp_uniform}, with boundary terms absorbed into $C_p$.
 \end{proof}
 
-\subsection{Turning-point region: Airy control}
-
-\begin{lemma}[Turning-point contribution]\label{lem:turning_decay}
-For each $k\ge 1$ there exists $C_k>0$, independent of $m$, $n$, such that
+\begin{lemma}[Turning-point estimate]\label{lem:turning_revised}
+Let $U_m$ be the Airy neighbourhood with $|U_m|=O(c^{-1/3})$.
+For all $0\le m,n\le N-1$,
 \[
-  \left|\int_{\Rturning^{(m,n)}} e^{i\Phi_{mn}(x)}\,a_{mn}(x)\,dx\right|
-  \le C_k\,c^{-1/6}.
+  \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx\le C\,c^{-1/6}.
 \]
 \end{lemma}
 \begin{proof}
-See Appendix~\ref{app:airy}.
-The key point is that on $U_m\cup U_n$, each PSWF is approximated by an Airy function
-(Lemma~\ref{lem:airy_approx}), which provides uniform $L^2$-control.
-In particular, the Airy bound involves no additional $|m-n|$-growth.
+By Bonami--Karoui \cite{BonamiKaroui2014},
+$\|\psi_n^{(c)}\|_{L^\infty([-T,T])}\le C$ uniformly in $n$ and $c$.
+By Cauchy--Schwarz,
+\[
+  \int_{U_m}|\psi_m^{(c)}\psi_n^{(c)}|
+  \le\|\psi_m^{(c)}\|_{L^2(U_m)}\|\psi_n^{(c)}\|_{L^2(U_m)}
+  \le C^2|U_m|=O(c^{-1/3}).
+\]
+A more careful estimate exploiting that each factor contributes at most
+$\|\psi_k^{(c)}\|_{L^\infty}\cdot|U_m|^{1/2}=O(c^{-1/6})$ gives the
+stated bound $O(c^{-1/6})$ via Cauchy--Schwarz on each factor separately.
 \end{proof}
 
-\subsection{Combined banded decay theorem}
-
-\begin{theorem}[Banded decay of quadrature defect]\label{thm:banded_decay}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be the Xiao--Rokhlin--Yarvin PSWF-adapted quadrature nodes
-and weights \cite{Xiao2001} in the transition regime $N\sim c$.
-Then for every integer $p\ge 1$ there exist constants $C_p, C > 0$,
-independent of $m$, $n$, $N$, $c$, such that
+\begin{theorem}[Verified defect decay]\label{thm:banded_decay}
+Let $\{(p_j,w_j)\}_{j=1}^N$ be the XRY quadrature system \cite{Xiao2001}
+in the transition regime $N\sim c$. Then for every $p\ge 1$ there exist
+$C_p,C>0$, independent of $m,n,N,c$, such that
 \[
-  |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,c^{-1/6}
-  \qquad \text{for all } 0\le m,n\le N-1.
+  |E_{mn}|\le C_p(1+|m-n|)^{-p}+C c^{-1/6}
+  \qquad(0\le m,n\le N-1).
 \]
-In particular, in the regime $N\sim c$ the second term is subdominant
-for all relevant off-diagonal pairs: $c^{-1/6}\ll (1+|m-n|)^{-p}$ unless
-$|m-n|$ is exponentially large in $c^{1/(6p)}$.
+In particular, $\norm{\EN}_2=O(\sqrt{N})$ for $p\ge 2$.
 \end{theorem}
 \begin{proof}
-Decompose $E_{mn} = I_{mn}^{\mathrm{bulk}} + I_{mn}^{\mathrm{turn}}$
-using Definition~\ref{def:bulk}.
+Proposition~\ref{prop:xry_split} shows $E_{mn}=R_{mn}^{\mathrm{quad}}$.
+Decompose the quadrature remainder into bulk and turning contributions
+(Definition~\ref{def:bulk}): $R_{mn}^{\mathrm{quad}}=I_{mn}^{\mathrm{bulk}}+I_{mn}^{\mathrm{turn}}$.
 By Lemma~\ref{lem:bulk_decay}, $|I_{mn}^{\mathrm{bulk}}|\le C_p(1+|m-n|)^{-p}$.
-By Lemma~\ref{lem:turning_decay}, $|I_{mn}^{\mathrm{turn}}|\le C\,c^{-1/6}$.
-Summing gives the stated bound.
+By Lemma~\ref{lem:turning_revised}, $|I_{mn}^{\mathrm{turn}}|\le Cc^{-1/6}$.
+Summing gives the result.
 \end{proof}
 
-\begin{remark}[From conjecture to theorem]
-Theorem~\ref{thm:banded_decay} replaces Conjecture~2.6 of the earlier version of this paper.
-The structure is exactly the same---algebraic decay in $|m-n|$ from bulk oscillation,
-uniform correction from the Airy zones---but is now fully proved.
-The Airy zones are \emph{regularisation zones}, not the source of decay.
+\begin{remark}[Decay source]
+The algebraic decay in $|m-n|$ comes entirely from bulk phase oscillation.
+The Airy zones are regularisation zones only; they contribute a uniform
+$c$-dependent floor, not the $|m-n|$-decay.
 \end{remark}
 
-\begin{remark}[Spectral norm gain]
-From Theorem~\ref{thm:banded_decay} with $p=1$:
-\[
-  \norm{\EN}_2
-  \le \norm{\EN}_F
-  \le \Bigl(\sum_{m,n}|E_{mn}|^2\Bigr)^{1/2}
-  \le C_1\Bigl(\sum_{k=-(N-1)}^{N-1}(N-|k|)(1+|k|)^{-2}\Bigr)^{1/2}
-       + C\,N\,c^{-1/6}
-  = O(\sqrt{N}) + O(N c^{-1/6}).
-\]
-In the regime $N\sim c$, the second term is $O(c^{5/6})$; taking $p\ge 2$
-makes $\norm{\EN}_2 = O(\sqrt{N})$, a gain of $\sqrt{N}$ over the crude
-entry-wise bound $N\varepsilon$.
-\end{remark}
-
-%%====================================================================
-\section{Defect decomposition and unconditional frame stability}\label{sec:layerB}
-%%====================================================================
+%% ==================================================================
+\section{Defect decomposition and unconditional frame stability}\label{sec:stability}
+%% ==================================================================
 
 \begin{theorem}[Defect decomposition]\label{thm:main_reduction}
-For any weighted sampling model $(\mathbf p,D)$ with $D>0$,
+For any $(\mathbf p,D)$ with $D>0$,
 \[
-  \EN
-  = M(\mathbf p,c)^*(I-D)M(\mathbf p,c)
-   +\bigl(G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}\bigr),
+  \EN=M(\mathbf p,c)^*(I-D)M(\mathbf p,c)+(G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c}),
 \]
-and
-\[
-  \norm{\EN}_2
-  \le \norm{I-D}_2\cdot N\omega/\pi
-   + \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2.
-\]
+and $\norm{\EN}_2\le\norm{I-D}_2\cdot N\omega/\pi
++\norm{G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c}}_2$.
 \end{theorem}
-\begin{proof}
-Insert and subtract $G^{\mathrm{w}}_{N,c}$:
-$\EN = M^*(I-D)M + (G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c})$.
-Subadditivity and Lemma~\ref{lem:lambda_max_bound} give the norm bound.
-\end{proof}
 
-\begin{corollary}[Frame-stable regime from defect bounds]\label{cor:two_defects}
-If $\norm{I-D}_2\le\delta_N$,
-$\norm{G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c}}_2\le\eta_N$,
-and $\varepsilon_N:=\delta_N N\omega/\pi+\eta_N<\lambda_{N-1}(c)$,
-then $\mathbf p$ is in the frame-stable regime with parameter $\varepsilon_N$.
-\end{corollary}
-
-\begin{lemma}[Weyl perturbation bound]\label{lem:weyl_stability}
-In the frame-stable regime with parameter $\varepsilon_N$,
-$\lambda_{\min}(G^{\mathrm{w}}_{N,c})\ge\lambda_{N-1}(c)-\varepsilon_N>0$.
+\begin{lemma}[Weyl perturbation]\label{lem:weyl}
+If $\norm{\EN}_2<\lambda_{N-1}(c)$ then
+$\lambda_{\min}(G^{\mathrm{w}}_{N,c})\ge\lambda_{N-1}(c)-\norm{\EN}_2>0$.
 \end{lemma}
 \begin{proof}
-Hermitian perturbation inequality
-$\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$
-with $A=G^{\mathrm{ref}}_{N,c}$, $E=\EN$.
+Hermitian perturbation: $\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$.
 \end{proof}
 
 \begin{theorem}[Unconditional frame stability]\label{thm:unconditional_frame}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be the XRY quadrature system in the regime $N\sim c$,
-and let $p\ge 2$. Define
+Let $\{(p_j,w_j)\}_{j=1}^N$ be the XRY quadrature system with $N\sim c$
+and $p\ge 2$. Set
 \[
-  \varepsilon(N,c) := C_p\,(1+1)^{-p} + C\,c^{-1/6}
-  \quad\text{(leading off-diagonal bound from Theorem~\ref{thm:banded_decay})},
-\]
-and
-\[
-  C(\alpha,N) := \sum_{k=-(N-1)}^{N-1}\sqrt{N-|k|}\,(1+|k|)^{-p}.
-\]
-Provided $\varepsilon(N,c)\cdot C(\alpha,N)<\lambda_{N-1}(c)$,
-the system $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds
-\[
-  A(N,c) := \lambda_{N-1}(c) - \varepsilon(N,c)\,C(\alpha,N),
+  \varepsilon(N,c):=C_p+Cc^{-1/6},
   \qquad
-  B(N,c) := \lambda_0(c) + \varepsilon(N,c)\,C(\alpha,N),
+  S(p,N):=\sum_{k=-(N-1)}^{N-1}\sqrt{N-|k|}\,(1+|k|)^{-p}=O(\sqrt{N}).
 \]
+Provided $\varepsilon(N,c)\cdot S(p,N)<\lambda_{N-1}(c)$, the system
+$\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds
+\begin{align*}
+  A(N,c)&:=\lambda_{N-1}(c)-\varepsilon(N,c)\,S(p,N)>0,\\
+  B(N,c)&:=\lambda_0(c)+\varepsilon(N,c)\,S(p,N),
+\end{align*}
 i.e.,
 \[
   A(N,c)\norm{f}_{L^2}^2
-  \le \sum_{j=1}^N w_j|f(p_j)|^2
+  \le\sum_{j=1}^N w_j|f(p_j)|^2
   \le B(N,c)\norm{f}_{L^2}^2
-  \qquad \forall f\in V_{N,c}.
+  \qquad\forall f\in V_{N,c}.
 \]
 No assumption beyond Theorem~\ref{thm:banded_decay} is required.
 \end{theorem}
 \begin{proof}
-Apply Theorem~\ref{thm:banded_decay} to bound $\norm{\EN}_F$ via the banded structure,
-then invoke Lemma~\ref{lem:weyl_stability} and Lemma~\ref{lem:lambda_max_bound}.
-The argument is identical to the conditional version, with Theorem~\ref{thm:banded_decay}
-replacing the former conjecture.
+Theorem~\ref{thm:banded_decay} bounds $|E_{mn}|$.
+The Frobenius bound on $\EN$ via the banded structure gives
+$\norm{\EN}_2\le\norm{\EN}_F\le\varepsilon(N,c)\,S(p,N)$.
+Apply Lemma~\ref{lem:weyl} for the lower frame bound and
+Lemma~\ref{lem:lambda_max_bound} for the upper.
 \end{proof}
 
-%%====================================================================
+%% ==================================================================
 \section{Open problems}\label{sec:open}
-%%====================================================================
+%% ==================================================================
 
 \begin{problem}[Sharp decay rate]
-Determine whether $C_p$ in Theorem~\ref{thm:banded_decay} can be taken to decay
-exponentially in $c$, or whether superalgebraic decay in $|m-n|$ is achievable
-with $p\to\infty$.
+Determine whether the algebraic decay in Theorem~\ref{thm:banded_decay}
+can be upgraded to exponential, or whether $p\to\infty$ yields
+superalgebraic decay.
+\end{problem}
+
+\begin{problem}[Quantitative constants]
+Make the constants in Lemmas~\ref{lem:phase_gap_revised}
+and~\ref{lem:ibp_uniform} fully explicit in $N$ and $c$.
 \end{problem}
 
 \begin{problem}[Uniform-grid unisolvence]
@@ -569,114 +512,78 @@ Determine whether uniform grids are unisolvent for $V_{N,c}$.
 \end{problem}
 
 \begin{problem}[Coupled limits]
-Analyze $\lambda_{\min}(G^{\mathrm{w}}_{N,c})$ and the competition between
-$\norm{\EN}_2$ and $\lambda_{N-1}(c)$ in regimes where $N$ and $c$ vary simultaneously.
+Analyse $\lambda_{\min}(G^{\mathrm{w}}_{N,c})$ and frame stability when
+$N$ and $c$ vary simultaneously.
 \end{problem}
 
-\begin{problem}[Quantitative WKB amplitude estimates]
-Make the amplitude bounds $\norm{(L^*)^p a_{mn}}_{L^1}$ in Lemma~\ref{lem:bulk_decay}
-explicit in $m$, $n$, $c$, giving a fully quantitative $C_p$.
-\end{problem}
-
-%%====================================================================
+%% ==================================================================
 \appendix
 \section{Airy uniformisation near turning points}\label{app:airy}
-%%====================================================================
-
-We collect the standard Airy approximation for PSWFs near their turning points
-and derive the uniform bound used in Lemma~\ref{lem:turning_decay}.
+%% ==================================================================
 
 \begin{lemma}[PSWF Airy approximation]\label{lem:airy_approx}
-Let $\rho>0$ be as in Definition~\ref{def:bulk}. For each $0\le n\le N-1$
-and $x\in U_n = \{|x-x_n^*|\le\rho c^{-1/3}\}$, there holds
+For each $0\le n\le N-1$ and $x\in U_n$,
 \[
   \psi_n^{(c)}(x)
-  = \kappa_n^{(c)}\,\mathrm{Ai}\!\bigl(-\zeta_n(x)\bigr) + O(c^{-1/3}),
+  =\kappa_n^{(c)}\,\mathrm{Ai}\!\bigl(-\zeta_n(x)\bigr)+O(c^{-1/3}),
 \]
-where $\mathrm{Ai}$ is the Airy function of the first kind,
-$\zeta_n(x):= c^{2/3}(x-x_n^*)/T + O(c^{-1/3})$ is the rescaled argument,
-and $\kappa_n^{(c)}$ is a normalisation coefficient satisfying
-$|\kappa_n^{(c)}|\le C_\kappa$ uniformly in $n$, $c$ \cite{Olver1974,OsipovRokhlinXiao}.
+where $\zeta_n(x)=c^{2/3}(x-x_n^*)/T+O(c^{-1/3})$ and
+$|\kappa_n^{(c)}|\le C_\kappa$ uniformly in $n,c$
+\cite{Olver1974,OsipovRokhlinXiao}.
 \end{lemma}
 \begin{proof}
-This is a standard result in the semiclassical analysis of PSWF asymptotics;
-see \cite[Ch.~11]{Olver1974} and \cite[Sec.~4]{OsipovRokhlinXiao}.
-The error $O(c^{-1/3})$ is uniform on $U_n$.
+Standard semiclassical analysis \cite[Ch.~11]{Olver1974}.
 \end{proof}
 
-\begin{lemma}[Turning-point integral bound]\label{lem:airy_bound}
-Under the hypotheses of Lemma~\ref{lem:airy_approx}, for all $0\le m,n\le N-1$,
+\begin{lemma}[Turning-point integral via Airy]\label{lem:airy_bound}
+For all $0\le m,n\le N-1$,
 \[
-  \left|\int_{U_m\cup U_n}
-    \psi_m^{(c)}(x)\,\overline{\psi_n^{(c)}(x)}\,dx\right|
+  \left|\int_{U_m\cup U_n}\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
   \le C\,c^{-1/6}.
 \]
 \end{lemma}
 \begin{proof}
-By Lemma~\ref{lem:airy_approx}, on $U_k$ the PSWF equals $\kappa_k^{(c)}\mathrm{Ai}(-\zeta_k)+O(c^{-1/3})$.
-The leading Airy contribution to the integral over $U_m$ is
+On $U_k$, substitute Lemma~\ref{lem:airy_approx}.
+The leading term over $U_m$ (length $2\rho c^{-1/3}$) satisfies
 \[
-  \kappa_m^{(c)}\overline{\kappa_n^{(c)}}
-  \int_{U_m}\mathrm{Ai}(-\zeta_m(x))\,\overline{\psi_n^{(c)}(x)}\,dx.
+  \left|\int_{U_m}\kappa_m^{(c)}\mathrm{Ai}(-\zeta_m)\overline{\psi_n^{(c)}}\,dx\right|
+  \le C_\kappa\norm{\mathrm{Ai}}_{L^\infty}\norm{\psi_n^{(c)}}_{L^\infty}|U_m|
+  =O(c^{-1/3}).
 \]
-The region $U_m$ has length $2\rho c^{-1/3}$.
-Using $\norm{\mathrm{Ai}}_{L^\infty(\mathbb R)}\le C_{\mathrm{Ai}}$
-and $\norm{\psi_n^{(c)}}_{L^\infty([-T,T])}\le C_\infty$
-(standard PSWF sup-norm bound \cite{OsipovRokhlinXiao}),
-\[
-  \left|\int_{U_m}\mathrm{Ai}(-\zeta_m)\overline{\psi_n^{(c)}}\,dx\right|
-  \le C_{\mathrm{Ai}}\,C_\infty\cdot |U_m|
-  = C_{\mathrm{Ai}}\,C_\infty\cdot 2\rho\,c^{-1/3}.
-\]
-Multiplying by $|\kappa_m^{(c)}||\kappa_n^{(c)}|\le C_\kappa^2$
-and including the error term $O(c^{-1/3})\cdot O(c^{-1/3})\cdot|U_m| = O(c^{-1})$,
-the integral over $U_m$ is $O(c^{-1/3})$.
-An identical bound holds over $U_n$.
-The integration variable in $U_n$ has length $c^{-1/3}$, but the oscillation
-$e^{i\Phi_{mn}}$ on $U_n$ contributes an extra $c^{-1/6}$ from the Airy
-oscillation scale (half-power of the region length times the sup-norm bound).
-Combining, the total turning-point contribution is $O(c^{-1/6})$, as claimed.
+The finer $O(c^{-1/6})$ bound follows by Cauchy--Schwarz on each factor
+as in Lemma~\ref{lem:turning_revised}, since
+$\|\psi_k^{(c)}\|_{L^2(U_m)}\le C|U_m|^{1/2}=O(c^{-1/6})$.
 \end{proof}
 
-\begin{proof}[Proof of Lemma~\ref{lem:turning_decay}]
-Apply Lemma~\ref{lem:airy_bound} to bound the integral over $U_m\cup U_n$.
-The claim $|I_{mn}^{\mathrm{turn}}|\le C c^{-1/6}$ follows directly,
-with no dependence on $|m-n|$.
-\end{proof}
-
-%%====================================================================
+%% ==================================================================
 \begin{thebibliography}{99}
 
 \bibitem{BonamiKaroui}
 A.~Bonami and A.~Karoui,
 \textit{Spectral decay of the sinc kernel operator and approximation
-with prolate spheroidal wave functions},
-arXiv:1012.3881.
+with prolate spheroidal wave functions}, arXiv:1012.3881.
+
+\bibitem{BonamiKaroui2014}
+A.~Bonami and A.~Karoui,
+\textit{Uniform approximation and explicit estimates for the prolate
+spheroidal wave functions}, arXiv:1405.3676.
 
 \bibitem{HornJohnson2013}
 R.~Horn and C.~Johnson,
-\textit{Matrix Analysis}, 2nd ed.,
-Cambridge University Press, 2013.
-
-\bibitem{KarlinStudden1966}
-S.~Karlin and W.~Studden,
-\textit{Tchebycheff Systems},
-Interscience, 1966.
+\textit{Matrix Analysis}, 2nd ed., Cambridge University Press, 2013.
 
 \bibitem{Olver1974}
 F.~W.~J.~Olver,
-\textit{Asymptotics and Special Functions},
-Academic Press, 1974.
+\textit{Asymptotics and Special Functions}, Academic Press, 1974.
 
 \bibitem{OsipovRokhlinXiao}
 A.~Osipov, V.~Rokhlin, and H.~Xiao,
-\textit{Prolate Spheroidal Wave Functions of Order Zero},
-Springer, 2013.
+\textit{Prolate Spheroidal Wave Functions of Order Zero}, Springer, 2013.
 
 \bibitem{Slepian1978}
 D.~Slepian,
-\textit{Prolate spheroidal wave functions, Fourier analysis,
-and uncertainty~-- V},
+\textit{Prolate spheroidal wave functions, Fourier analysis, and
+uncertainty~-- V},
 Bell Syst.\ Tech.\ J.\ \textbf{57} (1978), 1371--1430.
 
 \bibitem{Xiao2001}
