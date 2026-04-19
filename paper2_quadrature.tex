@@ -270,14 +270,25 @@ $N^k e^{-(\alpha-\alpha')N}\to0$ as $N\to\infty$.
 \end{proof}
 
 \begin{assumption}[Uniform effective decay rate]\label{ass:uniform_alpha}
-There exists $\alpha_0>0$ such that the effective PSWF tail decay rates for
-the family $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ satisfy
+There exists $\alpha_0>0$ and a sequence $\varepsilon_N\downarrow0$ such that
+the effective PSWF tail decay rates for the family
+$f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ satisfy
 \[
-  \inf_{0\le m,n\le N} \alpha_{m,n,N} \ge \alpha_0
+  \inf_{0\le m,n\le N} \alpha_{m,n,N} \ge \alpha_0-\varepsilon_N
 \]
 in the regime $N\sim c$, after absorbing polynomial losses into the
 constants as in Assumption~\ref{ass:uniform_bounds} and
-Lemma~\ref{lem:poly_exp}.
+Lemma~\ref{lem:poly_exp}. This is the strongest PSWF-side hypothesis used in
+the paper.
+\end{assumption}
+
+\begin{assumption}[Uniform PSWF sup-norm control]\label{ass:pswf_sup}
+There exists a constant $C_{\infty}>0$ such that
+\[
+  \norm{\psi_n^{(c)}}_{L^\infty([-T,T])}\le C_{\infty}
+\]
+uniformly for $0\le n\le N\sim c$ in the bulk regime; compare the standard
+PSWF bounds discussed in \cite{Slepian1978,OsipovRokhlinXiao}.
 \end{assumption}
 
 \begin{lemma}[Conditional exponential PSWF coefficient decay]\label{lem:coeff_decay}
@@ -291,7 +302,7 @@ $\alpha_{m,n,N}>0$, possibly deteriorating as $m,n\to N$, such that
 \]
 Moreover, the tail estimate can be written in the uniform form
 \[
-  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}\le C' e^{-\alpha_0 N}
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}\le C' e^{-(\alpha_0-\varepsilon_N) N}
   \qquad(0\le m,n\le N\sim c)
 \]
 for a constant $C'>0$ independent of $m,n$ in the stated index range.
@@ -310,8 +321,8 @@ $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
 \begin{lemma}[Uniform product norm bound]\label{lem:product_norm}
-Assume the regime $0\le m,n\le N\sim c$. Then there exists a constant
-$C>0$ such that
+Assume Assumption~\ref{ass:pswf_sup} and the regime $0\le m,n\le N\sim c$.
+Then there exists a constant $C>0$ such that
 \[
   \norm{f_{mn}}_{L^2([-T,T])}
   = \norm{\psi_m^{(c)}\overline{\psi_n^{(c)}}}_{L^2([-T,T])}
@@ -320,13 +331,14 @@ $C>0$ such that
 uniformly in $m,n$.
 \end{lemma}
 \begin{proof}
-Using standard uniform bounds for PSWFs in the bulk regime, one has
-$\norm{\psi_m^{(c)}}_{L^\infty([-T,T])}\le C$ and
-$\norm{\psi_n^{(c)}}_{L^2([-T,T])}=1$. Hence
+By Assumption~\ref{ass:pswf_sup},
+$\norm{\psi_m^{(c)}}_{L^\infty([-T,T])}\le C_{\infty}$ uniformly in the
+bulk regime, while $\norm{\psi_n^{(c)}}_{L^2([-T,T])}=1$ by orthonormality.
+Hence
 \[
   \norm{f_{mn}}_{L^2}
   \le \norm{\psi_m^{(c)}}_{L^\infty}\norm{\psi_n^{(c)}}_{L^2}
-  \le C.
+  \le C_{\infty}.
 \]
 \end{proof}
 
@@ -347,8 +359,10 @@ The XRY construction is built from the same PSWF spectral data that underlie
 the projector $\PN$, so it is reasonable to expect its quadrature error to
 be governed primarily by the PSWF spectral tail of the test function, up to
 a residual term that is exponentially small in the regime $N\sim c$. This
-does not prove Assumption~\ref{ass:xry_stability}, but it explains why a
-bound of the form
+is also consistent with the role of approximate spectral projectors and with
+the interpolation formulas underlying the XRY construction. This does not
+prove Assumption~\ref{ass:xry_stability}, but it explains why a bound of the
+form
 \[
   |Q_N(f)-\int_{-T}^T f|\lesssim \|(I-\PN)f\| + e^{-\alpha N}\norm{f}_{L^2}
 \]
@@ -412,7 +426,8 @@ Applying Assumption~\ref{ass:xry_stability} to $f=f_{mn}$ gives
 \[
   |E_{mn}|\le \CXRY\|(I-\PN)f_{mn}\|+Ce^{-\alpha N}\norm{f_{mn}}_{L^2}.
 \]
-By Lemma~\ref{lem:coeff_decay}, $\|(I-\PN)f_{mn}\|\le C' e^{-\alpha_0 N}$
+By Lemma~\ref{lem:coeff_decay},
+$\|(I-\PN)f_{mn}\|\le C' e^{-(\alpha_0-\varepsilon_N) N}$
 uniformly over $0\le m,n\le N\sim c$, and by
 Lemma~\ref{lem:product_norm}, $\norm{f_{mn}}_{L^2}\le C$ uniformly in the
 same regime. All exponential contributions are therefore absorbed into a
@@ -424,9 +439,11 @@ absorbed into $C$. This yields the stated bound.
 For $0\le m,n\le N-1$ one has $|m-n|\le N-1$. Hence any comparison between
 an $N$-dependent exponential quantity and an algebraic factor
 $(1+|m-n|)^{-p}$ is understood in the worst-case sense over the admissible
-index range, namely via $(1+|m-n|)^{-p}\ge (1+N)^{-p}$. This is the precise
-sense in which an exponential bound in $N$ dominates the algebraic defect
-profile required in Assumption~3.10 of \cite{PaperI}.
+index range, namely via $(1+|m-n|)^{-p}\ge (1+N)^{-p}$. In particular,
+for every $p\ge1$ and sufficiently large $N$, one has
+$e^{-\alpha N}\le C_p(1+N)^{-p}$. This is the precise sense in which an
+exponential bound in $N$ dominates the algebraic defect profile required in
+Assumption~3.10 of \cite{PaperI}.
 \end{remark}
 
 \begin{theorem}[Conditional verification of Assumption~3.10]\label{thm:compatibility_verified}
@@ -479,8 +496,9 @@ Frobenius norm, hence $\norm{\EN}_2\le\norm{\EN}_F$.
 \begin{theorem}[Conditional frame stability for PSWF-Gauss sampling]
 \label{thm:frame_stability}
 Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
-Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
-Once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
+Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order
+$N=\gamma c$ with $\gamma<2/\pi$ in the bulk regime. Once
+$NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
 frame for $V_{N,c}$ with bounds
 \[
   A(N,c)\,\norm{f}_{L^2}^2
