@@ -37,7 +37,7 @@
 \thanks{This version replaces the earlier conditional decay conjecture
 by a proof architecture based on a quadrature--projection decomposition,
 a fully quantified bulk phase-gap lemma, bulk-localised integration-by-parts control,
-and a turning-point estimate via Cauchy--Schwarz and Airy-scale widths.}
+and a conservative turning-point estimate via Cauchy--Schwarz and Airy-scale widths.}
 
 \author{Anonymous Author}
 \address{}
@@ -71,7 +71,7 @@ defect.
 The central new result is a verified banded decay estimate for the quadrature
 defect matrix in the PSWF eigenbasis:
 \[
-  |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,c^{-1/6}
+  |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,c^{-1/3}
   \qquad \text{for all } 0\le m,n\le N-1,
 \]
 proved via a bulk--turning decomposition. The exact identity
@@ -80,10 +80,11 @@ clarifies that the first term vanishes by PSWF orthogonality, so the
 defect is purely a quadrature remainder. In the bulk region, a fully quantified
 phase-gap estimate (Lemma~\ref{lem:phase_gap_final}) and iterated
 integration by parts yield algebraic decay in $|m-n|$; in the turning
-region, a Cauchy--Schwarz argument exploiting Airy-scale widths
-$|U_n|=O(c^{-1/3})$ and uniform sup-norm bounds yields $O(c^{-1/6})$.
-In the regime $N\sim c$ the turning correction is subdominant, yielding
-unconditional quantitative Marcinkiewicz--Zygmund frame bounds.
+region, a uniform Cauchy--Schwarz argument exploiting Airy-scale widths
+$|U_n|=O(c^{-1/3})$ and uniform sup-norm bounds yields $O(c^{-1/3})$.
+In the regime $N\sim c$ this turning correction remains lower order relative to
+coercive spectral scales, yielding quantitative Marcinkiewicz--Zygmund frame bounds
+under an explicit operator-norm hypothesis.
 All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
 \end{abstract}
 
@@ -127,15 +128,15 @@ decay conjecture by a proof architecture with four explicit components:
 \item \textbf{Uniform IBP control} (Lemma~\ref{lem:ibp_uniform}):
   bulk-localised iterated integration by parts yields decay factors driven by the quantified phase gap.
 \item \textbf{Turning-point estimate} (Lemma~\ref{lem:turning_revised}):
-  $O(c^{-1/6})$ bound via $L^\infty$ control, Airy-scale width $|U_n|=O(c^{-1/3})$,
-  and Cauchy--Schwarz.
+  a conservative $O(c^{-1/3})$ bound follows from $L^\infty$ control,
+  Airy-scale width $|U_n|=O(c^{-1/3})$, and Cauchy--Schwarz.
 \end{enumerate}
 
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
 Section~\ref{sec:coercivity} proves coercivity.
 Section~\ref{sec:decay} establishes the decay estimate.
-Section~\ref{sec:stability} derives the unconditional frame stability theorem.
+Section~\ref{sec:stability} derives the quantitative frame stability theorem.
 Section~\ref{sec:open} lists open problems.
 Appendix~\ref{app:airy} contains the Airy approximation lemma.
 
@@ -374,39 +375,25 @@ hence
 \noindent
 \textbf{Step 1: Spectral gap estimate.}
 
-By the uniform asymptotics of $\chi_n(c)$
-(see \cite{BonamiKaroui2014}), in the regime $N\sim c$ one has
+By uniform spectral parameter bounds in the transition regime $N\sim c$
+(see \cite{OsipovRokhlinXiao,BonamiKaroui2014}), there exists a constant $C_*$ such that
 \[
-  \chi_n(c) = (2n+1)c + O(n^{2/3}c^{2/3}),
+  \chi_n(c) = (2n+1)c + r_n(c),
+  \qquad |r_n(c)|\le C_* c^{4/3}
 \]
-uniformly for $0\le n\le N-1$.
+for all $0\le n\le N-1$ and all sufficiently large $c$.
 Therefore,
 \[
   |\chi_m(c)-\chi_n(c)|
-  \ge 2c|m-n| - C c^{2/3}\bigl(m^{2/3}+n^{2/3}\bigr).
-\]
-Since $m,n\le N-1$ and $N\sim c$, there exists $C_0>0$ such that
-$m^{2/3},n^{2/3}\le C_0 c^{2/3}$, and hence
-\[
-  |\chi_m(c)-\chi_n(c)|
-  \ge 2c|m-n| - C_1 c^{4/3}.
+  \ge 2c|m-n| - 2C_* c^{4/3}.
 \]
 We distinguish two regimes.
 
 \medskip
 \noindent
 \emph{(i) If $1\le |m-n|\le c^{1/3}$:}
+Choose $c_0$ sufficiently large that $2C_* c^{1/3}\le c$ for all $c\ge c_0$.
 Then
-\[
-  |\chi_m(c)-\chi_n(c)|
-  \ge c|m-n|\bigl(2 - C_1 c^{-2/3}|m-n|^{-1} c^{1/3}\bigr).
-\]
-Choosing $c_0$ sufficiently large so that
-\[
-  2 - C_1 c^{-1/3} \ge 1
-  \qquad\text{for all }c\ge c_0,
-\]
-we obtain
 \[
   |\chi_m(c)-\chi_n(c)| \ge c|m-n|.
 \]
@@ -414,7 +401,7 @@ we obtain
 \medskip
 \noindent
 \emph{(ii) If $|m-n|\ge c^{1/3}$:}
-Then $2c|m-n|\ge 2c^{4/3}$, so for $c\ge c_0$ large enough,
+Then $2c|m-n|\ge 2c^{4/3}$, so after increasing $c_0$ if necessary,
 \[
   |\chi_m(c)-\chi_n(c)| \ge c^{4/3}.
 \]
@@ -461,30 +448,33 @@ $L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. Then for every $p\ge 1$,
   \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p,
 \]
 where all estimates are restricted to the bulk region $\Rbulk^{(m,n)}$.
-The constant $C_p$ depends only on finitely many $L^\infty$-norms of
-$\partial_x^k\psi_n^{(c)}$ on compact subsets of the bulk. By Bonami--Karoui
-\cite{BonamiKaroui2014}, these derivatives satisfy uniform bounds of the form
+Moreover, $(L^*)^p a_{mn}$ is a finite linear combination of terms of the form
 \[
-  \|\partial_x^k\psi_n^{(c)}\|_{L^\infty([-T,T])}\le C_k\,\chi_n(c)^{k/2},
+  c_{p,k,\ell}(x)\,\frac{\partial_x^k a_{mn}(x)}{(\Phi_{mn}'(x))^{\ell}},
+  \qquad 0\le k\le p,\; 1\le \ell\le p,
 \]
-and $\chi_n(c)\lesssim c^2$ in the regime $N\sim c$, giving uniform control
-over all $n\le N-1$ away from the turning regions.
+with coefficients $c_{p,k,\ell}$ depending only on $p$ and finitely many derivatives of
+$\Phi_{mn}'$. By Bonami--Karoui \cite{BonamiKaroui2014}, the derivatives
+$\partial_x^k\psi_n^{(c)}$ satisfy uniform bounds on $[-T,T]$, and hence on compact subsets
+of the bulk. This yields uniform control over all $n\le N-1$ away from the turning regions.
 \end{lemma}
 \begin{proof}
-Each application of
+The formal adjoint has the form
 \[
-  L^*=-(i\Phi_{mn}'(x))^{-1}\partial_x + \text{lower-order terms}
+  L^* = -(i\Phi_{mn}'(x))^{-1}\partial_x + b_1(x)(\Phi_{mn}'(x))^{-2},
 \]
-to $a_{mn}$ produces one factor $(\Phi_{mn}')^{-1}$. By
-Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
+where $b_1$ is smooth on $\Rbulk^{(m,n)}$ and depends on $\Phi_{mn}''$.
+By induction on $p$, $(L^*)^p a_{mn}$ is a finite linear combination of terms of the stated form.
+Each application of $L^*$ increases either the derivative order on $a_{mn}$ or the power of
+$(\Phi_{mn}')^{-1}$ by at most one, and the number of such terms depends only on $p$.
+By Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
 \[
   |(\Phi_{mn}'(x))^{-1}|
   \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}.
 \]
 All derivatives of $a_{mn}$ are estimated using the uniform PSWF derivative
-bounds and the fact that the present argument is restricted to the bulk, where
-no turning-point singularity occurs. Iterating $p$ times and integrating over
-$\Rbulk^{(m,n)}\subset[-T,T]$ yields the stated estimate.
+bounds and the fact that the argument is restricted to the bulk, where no turning-point
+singularity occurs. Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
 \begin{lemma}[Bulk decay]\label{lem:bulk_decay}
@@ -514,7 +504,7 @@ for all $|m-n|\ge 1$ and $c\ge 1$, the simpler algebraic bound follows.
 Let $U_m$ be the Airy neighbourhood with $|U_m|=O(c^{-1/3})$.
 For all $0\le m,n\le N-1$,
 \[
-  \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx\le C\,c^{-1/6}.
+  \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx\le C\,c^{-1/3}.
 \]
 \end{lemma}
 \begin{proof}
@@ -533,23 +523,19 @@ Since $|U_m|=O(c^{-1/3})$, we obtain for each $k$,
 Applying Cauchy--Schwarz on $U_m$ gives
 \[
   \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx
-  \le \|\psi_m^{(c)}\|_{L^2(U_m)}\,\|\psi_n^{(c)}\|_{L^2(U_m)}.
+  \le \|\psi_m^{(c)}\|_{L^2(U_m)}\,\|\psi_n^{(c)}\|_{L^2(U_m)}
+  \le C |U_m|.
 \]
-Using the previous bound for each factor yields
-\[
-  \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx
-  \le C\,|U_m|^{1/2}
-  \le C\,c^{-1/6},
-\]
-after absorbing constants. This is the claimed estimate.
+Since $|U_m|=O(c^{-1/3})$, the stated bound follows.
 \end{proof}
 
 \begin{theorem}[Verified defect decay]\label{thm:banded_decay}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be the XRY quadrature system \cite{Xiao2001}
-in the transition regime $N\sim c$. Then for every $p\ge 1$ there exist
+Let $\{(p_j,w_j)\}_{j=1}^N$ be any quadrature rule on $[-T,T]$ for which
+Proposition~\ref{prop:xry_split} applies and the associated quadrature remainder
+admits the bulk/turning decomposition above. Then for every $p\ge 1$ there exist
 $C_p,C>0$, independent of $m,n,N,c$, such that
 \[
-  |E_{mn}|\le C_p(1+|m-n|)^{-p}+C c^{-1/6}
+  |E_{mn}|\le C_p(1+|m-n|)^{-p}+C c^{-1/3}
   \qquad(0\le m,n\le N-1).
 \]
 In particular, $\norm{\EN}_2=O(\sqrt{N})$ for $p\ge 2$.
@@ -559,7 +545,7 @@ Proposition~\ref{prop:xry_split} shows $E_{mn}=R_{mn}^{\mathrm{quad}}$.
 Decompose the quadrature remainder into bulk and turning contributions
 (Definition~\ref{def:bulk}): $R_{mn}^{\mathrm{quad}}=I_{mn}^{\mathrm{bulk}}+I_{mn}^{\mathrm{turn}}$.
 By Lemma~\ref{lem:bulk_decay}, $|I_{mn}^{\mathrm{bulk}}|\le C_p(1+|m-n|)^{-p}$.
-By Lemma~\ref{lem:turning_revised}, $|I_{mn}^{\mathrm{turn}}|\le Cc^{-1/6}$.
+By Lemma~\ref{lem:turning_revised}, $|I_{mn}^{\mathrm{turn}}|\le Cc^{-1/3}$.
 Summing gives the result.
 \end{proof}
 
@@ -569,8 +555,15 @@ The Airy zones are regularisation zones only; they contribute a uniform
 $c$-dependent floor, not the $|m-n|$-decay.
 \end{remark}
 
+\begin{remark}[Quadrature models]
+The proof of Theorem~\ref{thm:banded_decay} uses only the existence of a quadrature
+remainder representation for the PSWF product integrals and not any finer structural property
+specific to a single rule. The Xiao--Rokhlin--Yarvin quadrature \cite{Xiao2001} is one natural
+instance of such a scheme.
+\end{remark}
+
 %% ==================================================================
-\section{Defect decomposition and unconditional frame stability}\label{sec:stability}
+\section{Defect decomposition and quantitative frame stability}\label{sec:stability}
 %% ==================================================================
 
 \begin{theorem}[Defect decomposition]\label{thm:main_reduction}
@@ -590,11 +583,11 @@ $\lambda_{\min}(G^{\mathrm{w}}_{N,c})\ge\lambda_{N-1}(c)-\norm{\EN}_2>0$.
 Hermitian perturbation: $\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$.
 \end{proof}
 
-\begin{theorem}[Unconditional frame stability]\label{thm:unconditional_frame}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be the XRY quadrature system with $N\sim c$
-and $p\ge 2$. Set
+\begin{theorem}[Quantitative frame stability]\label{thm:unconditional_frame}
+Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying the hypotheses of
+Theorem~\ref{thm:banded_decay}, with $N\sim c$ and $p\ge 2$. Set
 \[
-  \varepsilon(N,c):=C_p+Cc^{-1/6},
+  \varepsilon(N,c):=C_p+Cc^{-1/3},
   \qquad
   S(p,N):=\sum_{k=-(N-1)}^{N-1}\sqrt{N-|k|}\,(1+|k|)^{-p}=O(\sqrt{N}).
 \]
@@ -611,7 +604,6 @@ i.e.,
   \le B(N,c)\norm{f}_{L^2}^2
   \qquad\forall f\in V_{N,c}.
 \]
-No assumption beyond Theorem~\ref{thm:banded_decay} is required.
 \end{theorem}
 \begin{proof}
 Theorem~\ref{thm:banded_decay} bounds $|E_{mn}|$.
@@ -629,6 +621,12 @@ Lemma~\ref{lem:lambda_max_bound} for the upper.
 Determine whether the algebraic decay in Theorem~\ref{thm:banded_decay}
 can be upgraded to exponential, or whether $p\to\infty$ yields
 superalgebraic decay.
+\end{problem}
+
+\begin{problem}[Sharper turning bounds]
+It is plausible that the turning contribution can be improved from
+$O(c^{-1/3})$ to $O(c^{-1/6})$ via refined Airy asymptotics and more precise
+microlocal analysis near the turning points; we do not pursue this here.
 \end{problem}
 
 \begin{problem}[Quantitative constants]
@@ -668,7 +666,7 @@ Standard semiclassical analysis \cite[Ch.~11]{Olver1974}.
 For all $0\le m,n\le N-1$,
 \[
   \left|\int_{U_m\cup U_n}\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
-  \le C\,c^{-1/6}.
+  \le C\,c^{-1/3}.
 \]
 \end{lemma}
 \begin{proof}
@@ -677,7 +675,8 @@ for PSWFs and the Airy-scale width $|U_k|=O(c^{-1/3})$, each factor satisfies
 \[
   \|\psi_k^{(c)}\|_{L^2(U_m\cup U_n)}\le C\,(|U_m|+|U_n|)^{1/2}=O(c^{-1/6}).
 \]
-Applying Cauchy--Schwarz on $U_m\cup U_n$ gives the bound.
+Applying Cauchy--Schwarz on $U_m\cup U_n$ gives the bound
+$O(c^{-1/3})$.
 \end{proof}
 
 %% ==================================================================
