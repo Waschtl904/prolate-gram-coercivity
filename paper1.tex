@@ -72,6 +72,8 @@ admits an exact structural decomposition into a weighted-frame defect and a spec
 As a corollary, any regime in which both defects are simultaneously controlled yields
 an explicit comparison formula
 $\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$.
+We also formulate a PSWF-adapted quadrature model as a concrete candidate mechanism
+for realizing the ideal spectral-alignment regime.
 The paper is restricted throughout to fixed finite-dimensional regimes $(N,c)$.
 \end{abstract}
 
@@ -100,12 +102,14 @@ but rather how special a sampling configuration must be in order to align discre
 with the PSWF eigenstructure of the concentration operator.
 We therefore formulate the paper as a structural decomposition result,
 with conditional spectral comparison appearing only after the relevant defects are controlled.
+To make this alignment problem more concrete, we also record a PSWF-adapted quadrature model
+as a candidate construction principle for the ideal regime.
 We restrict attention throughout to fixed finite-dimensional regimes $(N,c)$.
 
 Layer~A proves unisolvence for random sampling and for weighted sampling models
 satisfying a lower frame inequality, and records the uniform-grid case as an open zero-counting problem.
-Layer~B proves the exact two-defect decomposition and then derives the spectral comparison theorem
-as a corollary under an ideal spectral-alignment regime.
+Layer~B proves the exact two-defect decomposition, introduces a concrete quadrature-inspired candidate model,
+and then derives the spectral comparison theorem as a corollary under an ideal spectral-alignment regime.
 Layer~C contains heuristic discussion of prime sampling.
 
 No statement is made about zeros of $\zeta(s)$.
@@ -222,6 +226,47 @@ The regime $\norm{\EN}_2\ll 1$ should be interpreted as a target condition, not 
 One would expect it, if at all, from structured quadrature-like constructions, weighted Marcinkiewicz--Zygmund systems,
 or other sampling geometries specifically designed to approximate the PSWF spectral projector on the finite-dimensional space $V_{N,c}$.
 \end{remark}
+
+\subsection{A constructive candidate for the ideal spectral-alignment regime}
+
+The abstract condition~\textup{(T.2)} is deliberately nonconstructive and should be interpreted as a spectral matching principle rather than a generic property of point sets.
+We now describe a class of sampling configurations for which this regime is expected to hold in a quantitative sense.
+
+\begin{definition}[PSWF-adapted quadrature model]\label{def:pswf_quad}
+A weighted sampling system $(\mathbf p,D)$, with $D=\operatorname{diag}(w_1,\dots,w_N)$,
+is called \emph{PSWF-adapted of order $N$} if it satisfies the approximate orthogonality relations
+\[
+\left|
+\sum_{j=1}^N w_j\,\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
+- \lambda_n(c)\delta_{mn}
+\right|
+\le \varepsilon_N,
+\qquad 0\le m,n\le N-1.
+\]
+\end{definition}
+
+\begin{remark}[Quadrature interpretation]\label{rem:quad_interp}
+Definition~\ref{def:pswf_quad} can be interpreted as a finite-dimensional quadrature rule
+for the spectral projector of the concentration operator $\Kop$ restricted to $V_{N,c}$.
+Equivalently, it asks for approximate discrete PSWF orthogonality with respect to the weighted sampling rule.
+\end{remark}
+
+\begin{remark}[Relation to the ideal regime]\label{rem:quad_to_T2}
+If $(\mathbf p,D)$ is PSWF-adapted in the sense of Definition~\ref{def:pswf_quad},
+then the weighted defect matrix satisfies
+\[
+\norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2 \lesssim \varepsilon_N,
+\]
+so the approximation part of the ideal spectral-alignment regime follows formally once the weighted-frame defect is also controlled.
+The spectral stability condition is then a separation requirement between the PSWF spectral scale and the residual quadrature defect.
+\end{remark}
+
+\begin{heuristic}[Candidate constructions]\label{heur:quad_candidates}
+Known constructions of high-order quadrature rules for oscillatory kernels,
+including PSWF-based Gaussian quadrature and related methods \cite{Xiao2001},
+suggest that PSWF-adapted systems should exist at least in regimes where $N\lesssim c$.
+However, no general existence theorem guaranteeing the ideal spectral-alignment regime is currently known.
+\end{heuristic}
 
 \begin{remark}[Coefficient-space identification]\label{rem:coeff_ident}
 The matrices $\GVM$ and $G^{\mathrm{ref}}_{N,c}$ are both viewed as operators on
