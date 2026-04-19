@@ -190,12 +190,12 @@ We say that $\mathbf{p}$ satisfies~(T.2) if
 \]
 \end{definition}
 
-\begin{remark}[Relation to the broader program]
-The matrix $\GVM$ arises from discrete point evaluation, whereas
-$G^{\mathrm{ref}}_{N,c}$ represents the restriction of the continuous
-operator $\Kop$ to $V_{N,c}$ in the PSWF basis.
-Thus $\EN$ measures the discrepancy between discrete sampling and the
-spectral decomposition of the prolate operator.
+\begin{remark}[Coefficient-space identification]\label{rem:coeff_ident}
+The matrices $\GVM$ and $G^{\mathrm{ref}}_{N,c}$ are both viewed as operators on
+$\mathbb C^N$ through the coefficient map
+$f=\sum_{n=0}^{N-1}a_n\psi_n^{(c)}\longleftrightarrow \mathbf a=(a_0,\dots,a_{N-1})$.
+Under this identification, $\GVM$ encodes the discrete sampling quadratic form
+and $G^{\mathrm{ref}}_{N,c}$ encodes the restriction of $\Kop$ to $V_{N,c}$.
 The notation \textup{(T.2)} is chosen to remain compatible with the numbering
 used later in the scaling-limit continuation of this project.
 \end{remark}
@@ -209,6 +209,29 @@ if the only $f\in V_{N,c}$ satisfying $f(p_j)=0$ for all $j$ is $f\equiv 0$.
 Since $\dim V_{N,c}=N$, this is equivalent to bijectivity of the evaluation map
 $\mathcal{E}_{\mathbf{p}}:V_{N,c}\to\mathbb{C}^N$.
 \end{definition}
+
+\begin{definition}[Axiomatic Gauss--PSWF quadrature model]\label{def:gauss_model}
+A family of nodes and weights
+\[
+  \{(p_j,w_j)\}_{j=1}^N, \qquad -T\le p_1<\cdots<p_N\le T, \qquad w_j>0,
+\]
+will be called a \emph{Gauss--PSWF quadrature model for $V_{N,c}$} if it satisfies
+\[
+  \int_{-T}^{T} f(x)\overline{g(x)}\,dx
+  =\sum_{j=1}^N w_j f(p_j)\overline{g(p_j)}
+  \qquad \text{for all } f,g\in V_{N,c}.
+\]
+This exactness assumption is the structural input used in the sequel.
+It is motivated by PSWF quadrature constructions such as \cite{Xiao2001},
+but is stated here as an explicit hypothesis on the discrete model.
+\end{definition}
+
+\begin{remark}[Weighted-frame viewpoint]
+Under Definition~\ref{def:gauss_model}, the evaluation map from $V_{N,c}$ to $\mathbb C^N$
+becomes a weighted discrete model of the $L^2(-T,T)$ geometry of $V_{N,c}$.
+The Gauss--PSWF branch of the paper should therefore be read as a reduction of sampling geometry
+to a weighted frame perturbation problem.
+\end{remark}
 
 \begin{remark}[Why unisolvence is non-trivial for $V_{N,c}$]
 For a Chebyshev system, every $N$-tuple of distinct points is unisolvent
@@ -231,11 +254,9 @@ must vanish identically, hence $f\equiv 0$ on $\mathbb R$.
 \end{proof}
 
 \begin{proposition}[Gauss--PSWF nodes are unisolvent]\label{prop:gauss}
-Let $p_1<\cdots<p_N$ be Gauss--PSWF quadrature nodes with positive weights
-$w_1,\dots,w_N$, arising from the Gaussian quadrature adapted to the PSWF basis,
-and chosen so that the quadrature rule is exact on products
-$f\overline{g}$ with $f,g\in V_{N,c}$; see \cite{Xiao2001}.
-Then $\mathbf{p}$ is unisolvent for $V_{N,c}$.
+Assume that $\{(p_j,w_j)\}_{j=1}^N$ is a Gauss--PSWF quadrature model for $V_{N,c}$
+in the sense of Definition~\ref{def:gauss_model}.
+Then $\mathbf{p}=(p_1,\dots,p_N)$ is unisolvent for $V_{N,c}$.
 \end{proposition}
 
 \begin{proof}
@@ -263,7 +284,7 @@ Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
 It is not identically zero since there exists at least one configuration
-(for instance, the Gauss--PSWF nodes of Proposition~\ref{prop:gauss})
+(for instance, any Gauss--PSWF quadrature model from Proposition~\ref{prop:gauss})
 for which the matrix has full rank.
 The zero set of a nonzero real-analytic function has Lebesgue measure zero,
 so absolute continuity implies that non-unisolvence occurs with probability zero.
@@ -287,7 +308,7 @@ Then:
 \item $\QM(f)\ge \AM^2\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
 \item $\QM(f)\le N(\omega/\pi)\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
 \end{enumerate}
-In particular, these bounds hold unconditionally for Gauss--PSWF nodes and,
+In particular, these bounds hold unconditionally for every Gauss--PSWF quadrature model and,
 by Proposition~\ref{prop:random}, for random sampling almost surely.
 \end{theorem}
 
@@ -303,12 +324,34 @@ Therefore
 The upper bound follows by summing Lemma~\ref{lem:upper} over the $N$ sample points.
 \end{proof}
 
+\begin{lemma}[Rayleigh-quotient form of the upper bound]\label{lem:lambda_max_bound}
+For every set of distinct points $\mathbf p\subset[-T,T]$,
+\[
+  \lambda_{\max}(\GVM)=\sup_{\norm{\mathbf a}_2=1}\ip{\GVM\mathbf a}{\mathbf a}
+  =\sup_{\substack{f\in V_{N,c}\\ \norm{f}_{L^2}=1}} \QM(f).
+\]
+Consequently, if $\QM(f)\le B\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$,
+then $\lambda_{\max}(\GVM)\le B$.
+In particular,
+\[
+  \lambda_{\max}(\GVM)\le N\omega/\pi.
+\]
+\end{lemma}
+
+\begin{proof}
+Under the coefficient-space identification from Remark~\ref{rem:coeff_ident},
+one has $\norm{f}_{L^2}=\norm{\mathbf a}_2$ and
+$\QM(f)=\ip{\GVM\mathbf a}{\mathbf a}$.
+The first identity is therefore just the Rayleigh-quotient characterization of the largest eigenvalue
+of the Hermitian matrix $\GVM$.
+The implication with constant $B$ is immediate.
+Applying Theorem~\ref{thm:layerA}(II) gives the final bound.
+\end{proof}
+
 \begin{proposition}[Explicit error representation for Gauss--PSWF nodes]
 \label{prop:gauss_error}
-Let $p_1<\cdots<p_N$ be Gauss--PSWF quadrature nodes with positive weights
-$w_1,\dots,w_N$, and let $D:=\operatorname{diag}(w_1,\dots,w_N)$.
-Assume that the quadrature rule is exact on products $f\overline g$ with
-$f,g\in V_{N,c}$.
+Assume that $\{(p_j,w_j)\}_{j=1}^N$ is a Gauss--PSWF quadrature model for $V_{N,c}$,
+and let $D:=\operatorname{diag}(w_1,\dots,w_N)$.
 Then, in the PSWF basis,
 \[
   M(\mathbf p,c)^* D\, M(\mathbf p,c)=G^{\mathrm{ref}}_{N,c}.
@@ -326,7 +369,8 @@ In particular,
 \end{proposition}
 
 \begin{proof}
-For basis vectors $\psi_m^{(c)},\psi_n^{(c)}\in V_{N,c}$, quadrature exactness gives
+For basis vectors $\psi_m^{(c)},\psi_n^{(c)}\in V_{N,c}$, the exactness property in
+Definition~\ref{def:gauss_model} gives
 \[
   \sum_{j=1}^N w_j\,\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
   =\int_{-T}^{T}\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx.
@@ -346,9 +390,9 @@ Finally, the operator-norm bound follows from submultiplicativity.
 \end{proof}
 
 \begin{remark}[Interpretation of Proposition~\ref{prop:gauss_error}]
-For Gauss--PSWF nodes, the deviation from the reference operator is entirely governed by
+For Gauss--PSWF quadrature models, the deviation from the reference operator is entirely governed by
 the deviation of the quadrature weights from uniformity.
-Thus, for this family, the comparison problem reduces to quantitative control of the weight matrix.
+Thus, for this family, the comparison problem reduces to a weighted frame perturbation problem.
 \end{remark}
 
 \begin{corollary}[Reduction of \textup{(T.2)} to weight flatness for Gauss--PSWF nodes]
@@ -374,7 +418,7 @@ Since $\GVM=M(\mathbf p,c)^*M(\mathbf p,c)$, the identity
 $\norm{M(\mathbf p,c)}_2^2=\norm{M(\mathbf p,c)^*M(\mathbf p,c)}_2
 =\norm{\GVM}_2=\lambda_{\max}(\GVM)$
 holds for the operator norm.
-By Theorem~\ref{thm:layerA}(II),
+By Lemma~\ref{lem:lambda_max_bound},
 $\lambda_{\max}(\GVM)\le N\omega/\pi$.
 Therefore
 \[
@@ -385,7 +429,7 @@ $\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\ref{def:T2} applies.
 \end{proof}
 
 \begin{remark}[What Corollary~\ref{cor:gauss_weight_flatness} does and does not prove]
-The corollary reduces the verification of~\textup{(T.2)} for Gauss--PSWF nodes to a
+The corollary reduces the verification of~\textup{(T.2)} for Gauss--PSWF quadrature models to a
 pure weight-flatness estimate.
 It does not by itself prove that $\delta_N\to0$; that is an additional quantitative
 quadrature question.
@@ -417,7 +461,8 @@ Then
   >0,
 \]
 where the first inequality is the standard Hermitian perturbation bound
-$\lambda_{\min}(A+E)\ge \lambda_{\min}(A)-\norm{E}_2$.
+$\lambda_{\min}(A+E)\ge \lambda_{\min}(A)-\norm{E}_2$ applied on $\mathbb C^N$
+under the coefficient-space identification of Remark~\ref{rem:coeff_ident}.
 \end{lemma}
 
 \begin{theorem}[Spectral decomposition with remainder]\label{thm:layerB}
@@ -454,7 +499,7 @@ The key quantitative issue for any future application is to prove that
 $\norm{\EN}_2$ is small relative to $\lambda_{N-1}(c)$ for structured
 sampling sets.
 Without such control, Layer~B remains a formal comparison principle.
-For Gauss--PSWF nodes, Proposition~\ref{prop:gauss_error} and
+For Gauss--PSWF quadrature models, Proposition~\ref{prop:gauss_error} and
 Corollary~\ref{cor:gauss_weight_flatness} reduce this problem to quantitative
 flatness of the quadrature weights.
 \end{remark}
@@ -490,7 +535,7 @@ Is prime sampling unisolvent for $V_{N,c}$?
 
 \begin{problem}[Condition~(T.2) for structured point sets]
 Prove~(T.2) for prime sampling or derive quantitative weight-flatness estimates
-for Gauss--PSWF nodes strong enough to trigger Corollary~\ref{cor:gauss_weight_flatness}.
+for Gauss--PSWF quadrature models strong enough to trigger Corollary~\ref{cor:gauss_weight_flatness}.
 Does a Marcinkiewicz--Zygmund inequality hold for PSWFs at prime nodes?
 \end{problem}
 
