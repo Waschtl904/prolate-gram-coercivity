@@ -204,6 +204,8 @@ $\mathbb C^N$ through the coefficient map
 $f=\sum_{n=0}^{N-1}a_n\psi_n^{(c)}\longleftrightarrow \mathbf a=(a_0,\dots,a_{N-1})$.
 Under this identification, $\GVM$ encodes the unweighted discrete sampling quadratic form
 and $G^{\mathrm{ref}}_{N,c}$ encodes the restriction of $\Kop$ to $V_{N,c}$.
+This identification is unitary only on the finite-dimensional space $V_{N,c}$ equipped with the PSWF basis,
+not on the whole Paley--Wiener space.
 The notation \textup{(T.2)} is chosen to remain compatible with the numbering
 used later in the scaling-limit continuation of this project.
 \end{remark}
@@ -259,6 +261,7 @@ Every $f\in\PW$ extends to an entire function of exponential type.
 If it vanishes on an interval, it has an accumulation set of zeros.
 By the identity theorem for holomorphic functions, the entire extension
 must vanish identically, hence $f\equiv 0$ on $\mathbb R$.
+Classically, this is a basic uniqueness phenomenon for Paley--Wiener spaces.
 \end{proof}
 
 \begin{proposition}[Weighted MZ lower frame implies unisolvence]\label{prop:mz_unisolvent}
@@ -293,8 +296,9 @@ Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
-The point-evaluation functionals on the finite-dimensional space $V_{N,c}$ are separating,
-so one can choose points $p_1,\dots,p_N\in[-T,T]$ for which the evaluation map
+It therefore suffices to know that this determinant is not identically zero.
+Since the point-evaluation functionals on the finite-dimensional space $V_{N,c}$ are separating,
+there exists at least one configuration $\mathbf p\subset[-T,T]$ for which the evaluation map
 $\mathcal E_{\mathbf p}:V_{N,c}\to\mathbb C^N$ is bijective. Hence
 $\det M(\mathbf{p},c)$ is not identically zero.
 Therefore its zero set has Lebesgue measure zero, and absolute continuity implies
@@ -360,7 +364,8 @@ Applying Theorem~\ref{thm:layerA}(II) gives the final bound.
 \end{proof}
 
 \begin{remark}[Crudeness of the global upper bound]
-The bound $\lambda_{\max}(\GVM)\le N\omega/\pi$ is intentionally crude and independent of $c$.
+The bound $\lambda_{\max}(\GVM)\le N\omega/\pi$ is intentionally crude, dimension-only,
+and independent of $c$.
 Its role is to provide a geometry-free estimate suitable for the fixed-$(N,c)$ framework of this paper.
 Sharper bounds exploiting PSWF concentration are left for later work.
 \end{remark}
@@ -473,6 +478,11 @@ $\lambda_{\min}(A+E)\ge \lambda_{\min}(A)-\norm{E}_2$ applied on $\mathbb C^N$
 under the coefficient-space identification of Remark~\ref{rem:coeff_ident}.
 \end{lemma}
 
+\begin{remark}[Eigenvalue versus eigenvector stability]\label{rem:weyl_scope}
+Lemma~\ref{lem:weyl_stability} only gives eigenvalue stability.
+It does not by itself provide control of eigenvector alignment between the discrete Gram matrix and the reference spectral model.
+\end{remark}
+
 \begin{theorem}[Spectral decomposition with remainder]\label{thm:layerB}
 Assume~(T.2) with $\varepsilon_N<\lambda_{N-1}(c)$.
 For every $f=\sum_n a_n\psin\in V_{N,c}$,
@@ -483,6 +493,7 @@ For every $f=\sum_n a_n\psin\in V_{N,c}$,
 \end{theorem}
 
 \begin{proof}
+By Remark~\ref{rem:coeff_ident}, the coefficient identification is unitary on $V_{N,c}$ in the PSWF basis.
 In the PSWF basis,
 \[
   \ip{\Kop f}{f}_{L^2}
