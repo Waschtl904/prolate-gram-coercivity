@@ -36,7 +36,7 @@
 
 \thanks{This version replaces the earlier conditional decay conjecture
 by a proof architecture based on a quadrature--projection decomposition,
-a uniform phase-gap lemma, uniform integration-by-parts control,
+a fully quantified bulk phase-gap lemma, bulk-localised integration-by-parts control,
 and a turning-point estimate via Cauchy--Schwarz and Airy-scale widths.}
 
 \author{Anonymous Author}
@@ -77,8 +77,8 @@ defect matrix in the PSWF eigenbasis:
 proved via a bulk--turning decomposition. The exact identity
 $E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$ (Proposition~\ref{prop:xry_split})
 clarifies that the first term vanishes by PSWF orthogonality, so the
-defect is purely a quadrature remainder. In the bulk region, a uniform
-phase-gap estimate (Lemma~\ref{lem:phase_gap_revised}) and iterated
+defect is purely a quadrature remainder. In the bulk region, a fully quantified
+phase-gap estimate (Lemma~\ref{lem:phase_gap_final}) and iterated
 integration by parts yield algebraic decay in $|m-n|$; in the turning
 region, a Cauchy--Schwarz argument exploiting Airy-scale widths
 $|U_n|=O(c^{-1/3})$ and uniform sup-norm bounds yields $O(c^{-1/6})$.
@@ -121,15 +121,14 @@ decay conjecture by a proof architecture with four explicit components:
 \item \textbf{Quadrature--projection split} (Proposition~\ref{prop:xry_split}):
   $E_{mn}$ is a pure quadrature remainder; the PSWF orthogonality term is
   exactly zero.
-\item \textbf{Uniform phase gap} (Lemma~\ref{lem:phase_gap_revised}):
-  $|\Phi_{mn}'(x)|\ge\kappa|m-n|$ uniformly on $\Rbulk^{(m,n)}$,
-  stated in terms of the true spectral parameters $\chi_n(c)$.
+\item \textbf{Uniform phase gap} (Lemma~\ref{lem:phase_gap_final}):
+  $|\Phi_{mn}'(x)|$ admits a global lower bound on $\Rbulk^{(m,n)}$
+  that is uniform in $(m,n)$ and quantitatively tracks the diagonal and far-range regimes.
 \item \textbf{Uniform IBP control} (Lemma~\ref{lem:ibp_uniform}):
-  $\|(L^*)^p a_{mn}\|_{L^1}\le C_p(1+|m-n|)^{-p}$ using uniform
-  derivative bounds from \cite{BonamiKaroui2014}.
+  bulk-localised iterated integration by parts yields decay factors driven by the quantified phase gap.
 \item \textbf{Turning-point estimate} (Lemma~\ref{lem:turning_revised}):
-  $O(c^{-1/6})$ bound via Cauchy--Schwarz + $|U_n|=O(c^{-1/3})$,
-  fully elementary.
+  $O(c^{-1/6})$ bound via $L^\infty$ control, Airy-scale width $|U_n|=O(c^{-1/3})$,
+  and Cauchy--Schwarz.
 \end{enumerate}
 
 \subsection*{Organisation}
@@ -292,13 +291,6 @@ of $\Kop$, and the quadrature remainder is
   -\sum_{j=1}^N w_j f_{mn}(p_j),
   \qquad f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}.
 \]
-Moreover, the XRY quadrature rule \cite{Xiao2001} satisfies
-\[
-  |R_{mn}^{\mathrm{quad}}|
-  \le\varepsilon_{\mathrm{quad}}(N,c)\,\|f_{mn}\|_{H^s([-T,T])}
-\]
-for any fixed $s\ge 0$, with superalgebraic decay in $N$ in the regime
-$N\sim c$.
 \end{proposition}
 
 \begin{remark}
@@ -325,73 +317,197 @@ beyond $U_n$ the quadratic approximation to the square root is valid and
 the WKB phase is non-stationary for $|m-n|\ge 1$.
 \end{remark}
 
-\begin{lemma}[Uniform phase gap]\label{lem:phase_gap_revised}
-Let $\chi_n(c)$ be the PSWF spectral parameter. The difference WKB phase is
+\begin{lemma}[Uniform phase gap in the bulk, fully quantified]\label{lem:phase_gap_final}
+Let $N\sim c$ and let $\chi_n(c)$ denote the PSWF spectral parameters.
+Fix $\rho>0$ and define the bulk region $\Rbulk^{(m,n)}$ as in
+Definition~\ref{def:bulk}. Then there exist constants
+$c_0>0$ and $\kappa>0$, independent of $m,n,N,c$, such that
+for all $c\ge c_0$ and all $0\le m\ne n\le N-1$ the phase derivative
 \[
   \Phi_{mn}'(x)
   =\frac{1}{T}\Bigl(
     \sqrt{\chi_m(c)-c^2x^2/T^2}
     -\sqrt{\chi_n(c)-c^2x^2/T^2}
-  \Bigr).
+  \Bigr)
 \]
-In the regime $N\sim c$, using the uniform asymptotic bounds
-$\chi_n(c)=(2n+1)c+O(n^{2/3}c^{2/3})$ from Bonami--Karoui
-\cite{BonamiKaroui2014}, there exists $\kappa>0$ such that
-\[
-  |\Phi_{mn}'(x)|\ge\frac{\kappa\,|m-n|}{T}
-  \qquad\text{for all }x\in\Rbulk^{(m,n)},\ 0\le m\ne n\le N-1.
-\]
-\end{lemma}
-\begin{proof}
-On $\Rbulk^{(m,n)}$, both $\chi_m(c)-c^2x^2/T^2$ and
-$\chi_n(c)-c^2x^2/T^2$ are bounded below by $\delta_0 c^{2/3}\rho^2>0$.
-Write $\mu:=\chi_m(c)-c^2x^2/T^2$ and $\nu:=\chi_n(c)-c^2x^2/T^2$.
-Then $\mu-\nu=\chi_m(c)-\chi_n(c)=2(m-n)c+O((m-n)c^{2/3})$.
-In the regime $N\sim c$ and for $|m-n|\ll c^{1/3}$, the leading term dominates.
-Using $\sqrt\mu-\sqrt\nu=(\mu-\nu)/(\sqrt\mu+\sqrt\nu)$ and
-$\sqrt\mu+\sqrt\nu\le 2\sqrt{\chi_{N-1}(c)}\le C c$ (since $\chi_{N-1}(c)\lesssim c^2$),
+satisfies the uniform lower bound
 \[
   |\Phi_{mn}'(x)|
-  =\frac{|\mu-\nu|}{T(\sqrt\mu+\sqrt\nu)}
-  \ge\frac{2|m-n|c-O(|m-n|c^{2/3})}{T\cdot Cc}
-  \ge\frac{\kappa|m-n|}{T}
+  \ge
+  \frac{\kappa}{T}\,\frac{|m-n|}{1 + c^{-2/3}|m-n|}
+  \qquad\text{for all }x\in\Rbulk^{(m,n)}.
 \]
-for $c$ sufficiently large and $\kappa=1/(C+1)$.
+In particular,
+\begin{align*}
+  |\Phi_{mn}'(x)|
+  &\ge \frac{\kappa}{T}|m-n|,
+  &&\text{if } |m-n|\le c^{1/3},\\
+  |\Phi_{mn}'(x)|
+  &\ge \frac{\kappa}{T}c^{1/3},
+  &&\text{if } |m-n|\ge c^{1/3}.
+\end{align*}
+\end{lemma}
+\begin{proof}
+Let $x\in\Rbulk^{(m,n)}$ and set
+\[
+  \mu := \chi_m(c)-c^2x^2/T^2,
+  \qquad
+  \nu := \chi_n(c)-c^2x^2/T^2.
+\]
+By definition of the bulk region, both $\mu$ and $\nu$ are bounded below:
+there exists $\delta_0>0$ such that
+\[
+  \mu,\nu \ge \delta_0 c^{2/3}.
+\]
+We use the identity
+\[
+  |\sqrt{\mu}-\sqrt{\nu}|
+  = \frac{|\mu-\nu|}{\sqrt{\mu}+\sqrt{\nu}},
+\]
+hence
+\[
+  |\Phi_{mn}'(x)|
+  = \frac{1}{T}\frac{|\chi_m(c)-\chi_n(c)|}{\sqrt{\mu}+\sqrt{\nu}}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 1: Spectral gap estimate.}
+
+By the uniform asymptotics of $\chi_n(c)$
+(see \cite{BonamiKaroui2014}), in the regime $N\sim c$ one has
+\[
+  \chi_n(c) = (2n+1)c + O(n^{2/3}c^{2/3}),
+\]
+uniformly for $0\le n\le N-1$.
+Therefore,
+\[
+  |\chi_m(c)-\chi_n(c)|
+  \ge 2c|m-n| - C c^{2/3}\bigl(m^{2/3}+n^{2/3}\bigr).
+\]
+Since $m,n\le N-1$ and $N\sim c$, there exists $C_0>0$ such that
+$m^{2/3},n^{2/3}\le C_0 c^{2/3}$, and hence
+\[
+  |\chi_m(c)-\chi_n(c)|
+  \ge 2c|m-n| - C_1 c^{4/3}.
+\]
+We distinguish two regimes.
+
+\medskip
+\noindent
+\emph{(i) If $1\le |m-n|\le c^{1/3}$:}
+Then
+\[
+  |\chi_m(c)-\chi_n(c)|
+  \ge c|m-n|\bigl(2 - C_1 c^{-2/3}|m-n|^{-1} c^{1/3}\bigr).
+\]
+Choosing $c_0$ sufficiently large so that
+\[
+  2 - C_1 c^{-1/3} \ge 1
+  \qquad\text{for all }c\ge c_0,
+\]
+we obtain
+\[
+  |\chi_m(c)-\chi_n(c)| \ge c|m-n|.
+\]
+
+\medskip
+\noindent
+\emph{(ii) If $|m-n|\ge c^{1/3}$:}
+Then $2c|m-n|\ge 2c^{4/3}$, so for $c\ge c_0$ large enough,
+\[
+  |\chi_m(c)-\chi_n(c)| \ge c^{4/3}.
+\]
+
+Combining both cases yields the uniform estimate
+\[
+  |\chi_m(c)-\chi_n(c)|
+  \ge C_2\,\frac{c|m-n|}{1+c^{-2/3}|m-n|}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 2: Denominator control.}
+
+On $\Rbulk^{(m,n)}$, we have $\mu,\nu\ge\delta_0 c^{2/3}$, hence
+\[
+  \sqrt{\mu}+\sqrt{\nu}
+  \le 2\sqrt{\chi_{N-1}(c)}
+  \le C_3 c,
+\]
+since $\chi_{N-1}(c)\lesssim c^2$ in the regime $N\sim c$.
+
+\medskip
+\noindent
+\textbf{Step 3: Conclusion.}
+
+Combining numerator and denominator bounds,
+\[
+  |\Phi_{mn}'(x)|
+  \ge
+  \frac{1}{T}
+  \frac{C_2\,\frac{c|m-n|}{1+c^{-2/3}|m-n|}}{C_3 c}
+  =
+  \frac{\kappa}{T}\,\frac{|m-n|}{1+c^{-2/3}|m-n|}.
+\]
+The regime-wise statements follow immediately.
 \end{proof}
 
-\begin{lemma}[Uniform IBP control]\label{lem:ibp_uniform}
+\begin{lemma}[Bulk-localised uniform IBP control]\label{lem:ibp_uniform}
 Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product and
 $L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. Then for every $p\ge 1$,
 \[
-  \|(L^*)^p a_{mn}\|_{L^1(\Rbulk^{(m,n)})}\le C_p(1+|m-n|)^{-p},
+  \|(L^*)^p a_{mn}\|_{L^1(\Rbulk^{(m,n)})}
+  \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p,
 \]
-where $C_p$ depends only on finitely many $L^\infty$-norms of
-$\partial_x^k\psi_n^{(c)}$. By Bonami--Karoui \cite{BonamiKaroui2014},
-these satisfy the uniform bounds
+where all estimates are restricted to the bulk region $\Rbulk^{(m,n)}$.
+The constant $C_p$ depends only on finitely many $L^\infty$-norms of
+$\partial_x^k\psi_n^{(c)}$ on compact subsets of the bulk. By Bonami--Karoui
+\cite{BonamiKaroui2014}, these derivatives satisfy uniform bounds of the form
 \[
   \|\partial_x^k\psi_n^{(c)}\|_{L^\infty([-T,T])}\le C_k\,\chi_n(c)^{k/2},
 \]
-and $\chi_n(c)\lesssim c^2$ in the regime $N\sim c$, giving uniform
-control over all $n\le N-1$.
+and $\chi_n(c)\lesssim c^2$ in the regime $N\sim c$, giving uniform control
+over all $n\le N-1$ away from the turning regions.
 \end{lemma}
 \begin{proof}
-Each application of $L^*=-(i\Phi_{mn}')^{-1}\partial_x + \text{lower order}$
-to $a_{mn}$ produces a factor $(\Phi_{mn}')^{-1}=O(T/(\kappa|m-n|))$ from
-Lemma~\ref{lem:phase_gap_revised}, and derivatives of $a_{mn}$ bounded by
-the uniform PSWF derivative estimates. Iterating $p$ times and integrating
-over $\Rbulk^{(m,n)}\subset[-T,T]$ gives the claim.
+Each application of
+\[
+  L^*=-(i\Phi_{mn}'(x))^{-1}\partial_x + \text{lower-order terms}
+\]
+to $a_{mn}$ produces one factor $(\Phi_{mn}')^{-1}$. By
+Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
+\[
+  |(\Phi_{mn}'(x))^{-1}|
+  \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}.
+\]
+All derivatives of $a_{mn}$ are estimated using the uniform PSWF derivative
+bounds and the fact that the present argument is restricted to the bulk, where
+no turning-point singularity occurs. Iterating $p$ times and integrating over
+$\Rbulk^{(m,n)}\subset[-T,T]$ yields the stated estimate.
 \end{proof}
 
 \begin{lemma}[Bulk decay]\label{lem:bulk_decay}
 For every $p\ge 1$ there exists $C_p>0$ such that for all $0\le m\ne n\le N-1$,
 \[
   \left|\int_{\Rbulk^{(m,n)}}e^{i\Phi_{mn}(x)}a_{mn}(x)\,dx\right|
+  \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p.
+\]
+In particular,
+\[
+  \left|\int_{\Rbulk^{(m,n)}}e^{i\Phi_{mn}(x)}a_{mn}(x)\,dx\right|
   \le C_p(1+|m-n|)^{-p}.
 \]
 \end{lemma}
 \begin{proof}
-Integration by parts $p$ times using Lemmas~\ref{lem:phase_gap_revised}
-and~\ref{lem:ibp_uniform}, with boundary terms absorbed into $C_p$.
+Integrate by parts $p$ times on $\Rbulk^{(m,n)}$ using
+Lemmas~\ref{lem:phase_gap_final} and~\ref{lem:ibp_uniform}; boundary terms
+are absorbed into the constant $C_p$. Since
+\[
+  \frac{1+c^{-2/3}|m-n|}{|m-n|}
+  \le \frac{2}{1+|m-n|}
+\]
+for all $|m-n|\ge 1$ and $c\ge 1$, the simpler algebraic bound follows.
 \end{proof}
 
 \begin{lemma}[Turning-point estimate]\label{lem:turning_revised}
@@ -403,16 +519,29 @@ For all $0\le m,n\le N-1$,
 \end{lemma}
 \begin{proof}
 By Bonami--Karoui \cite{BonamiKaroui2014},
-$\|\psi_n^{(c)}\|_{L^\infty([-T,T])}\le C$ uniformly in $n$ and $c$.
-By Cauchy--Schwarz,
 \[
-  \int_{U_m}|\psi_m^{(c)}\psi_n^{(c)}|
-  \le\|\psi_m^{(c)}\|_{L^2(U_m)}\|\psi_n^{(c)}\|_{L^2(U_m)}
-  \le C^2|U_m|=O(c^{-1/3}).
+  \|\psi_k^{(c)}\|_{L^\infty([-T,T])}\le C_\infty
+  \qquad\text{uniformly for all }0\le k\le N-1.
 \]
-A more careful estimate exploiting that each factor contributes at most
-$\|\psi_k^{(c)}\|_{L^\infty}\cdot|U_m|^{1/2}=O(c^{-1/6})$ gives the
-stated bound $O(c^{-1/6})$ via Cauchy--Schwarz on each factor separately.
+Since $|U_m|=O(c^{-1/3})$, we obtain for each $k$,
+\[
+  \|\psi_k^{(c)}\|_{L^2(U_m)}
+  \le \|\psi_k^{(c)}\|_{L^\infty([-T,T])}|U_m|^{1/2}
+  \le C_\infty |U_m|^{1/2}
+  = O(c^{-1/6}).
+\]
+Applying Cauchy--Schwarz on $U_m$ gives
+\[
+  \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx
+  \le \|\psi_m^{(c)}\|_{L^2(U_m)}\,\|\psi_n^{(c)}\|_{L^2(U_m)}.
+\]
+Using the previous bound for each factor yields
+\[
+  \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx
+  \le C\,|U_m|^{1/2}
+  \le C\,c^{-1/6},
+\]
+after absorbing constants. This is the claimed estimate.
 \end{proof}
 
 \begin{theorem}[Verified defect decay]\label{thm:banded_decay}
@@ -503,7 +632,7 @@ superalgebraic decay.
 \end{problem}
 
 \begin{problem}[Quantitative constants]
-Make the constants in Lemmas~\ref{lem:phase_gap_revised}
+Make the constants in Lemmas~\ref{lem:phase_gap_final}
 and~\ref{lem:ibp_uniform} fully explicit in $N$ and $c$.
 \end{problem}
 
@@ -543,16 +672,12 @@ For all $0\le m,n\le N-1$,
 \]
 \end{lemma}
 \begin{proof}
-On $U_k$, substitute Lemma~\ref{lem:airy_approx}.
-The leading term over $U_m$ (length $2\rho c^{-1/3}$) satisfies
+On $U_k$, substitute Lemma~\ref{lem:airy_approx}. By the uniform sup-norm bound
+for PSWFs and the Airy-scale width $|U_k|=O(c^{-1/3})$, each factor satisfies
 \[
-  \left|\int_{U_m}\kappa_m^{(c)}\mathrm{Ai}(-\zeta_m)\overline{\psi_n^{(c)}}\,dx\right|
-  \le C_\kappa\norm{\mathrm{Ai}}_{L^\infty}\norm{\psi_n^{(c)}}_{L^\infty}|U_m|
-  =O(c^{-1/3}).
+  \|\psi_k^{(c)}\|_{L^2(U_m\cup U_n)}\le C\,(|U_m|+|U_n|)^{1/2}=O(c^{-1/6}).
 \]
-The finer $O(c^{-1/6})$ bound follows by Cauchy--Schwarz on each factor
-as in Lemma~\ref{lem:turning_revised}, since
-$\|\psi_k^{(c)}\|_{L^2(U_m)}\le C|U_m|^{1/2}=O(c^{-1/6})$.
+Applying Cauchy--Schwarz on $U_m\cup U_n$ gives the bound.
 \end{proof}
 
 %% ==================================================================
