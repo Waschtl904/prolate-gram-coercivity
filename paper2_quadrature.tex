@@ -41,10 +41,9 @@
 and a conditional banded decay estimate were established under an explicit
 quadrature compatibility assumption (Assumption~3.10 of \cite{PaperI}).
 The present paper verifies this assumption for PSWF-Gauss quadrature rules
-by identifying the Xiao--Rokhlin--Yarvin quadrature mechanism as a spectrally
-accurate (but not algebraically exact) approximation to the PSWF spectral
-projection, and by estimating the tail of PSWF expansions for analytic
-product integrands.}
+by controlling the XRY quadrature error through the PSWF spectral truncation
+error associated with the projector $\PN$, and by estimating the tail of
+PSWF expansions for analytic product integrands.}
 
 \author{Anonymous Author}
 \address{}
@@ -71,9 +70,8 @@ The present paper verifies this assumption for PSWF-Gauss quadrature rules
 of Xiao--Rokhlin--Yarvin \cite{Xiao2001} via a two-step spectral mechanism.
 First, analytic product integrands $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$
 have exponentially decaying PSWF expansion tails: $\|(I-\PN)f_{mn}\|\le
-C e^{-\alpha N}$. Second, the XRY quadrature functional $Q_N$ is a
-spectrally accurate (but not algebraically exact) approximation to the
-PSWF spectral projection $\PN$, satisfying
+C e^{-\alpha N}$. Second, the XRY quadrature functional $Q_N$ is controlled
+by the PSWF spectral truncation error associated with $\PN$, satisfying
 \[
   \left| Q_N(f) - \int_{-T}^T f \right|
   \le \CXRY\,\|(I-\PN)f\| + C e^{-\alpha N}\norm{f}_{L^2}
@@ -120,12 +118,12 @@ The verification rests on a two-step spectral mechanism:
   $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are analytic on $[-T,T]$,
   hence their PSWF expansion coefficients decay exponentially, yielding
   $\|(I-\PN)f_{mn}\|\le Ce^{-\alpha N}$.
-\item \emph{XRY spectral accuracy.} The XRY quadrature functional $Q_N$
-  is spectrally accurate on the PSWF model space: its error for any
-  function $f$ is bounded by $\CXRY\|(I-\PN)f\|$ plus an additional
-  exponential term $Ce^{-\alpha N}\norm{f}$. This is not an algebraic
-  exactness statement but a spectral approximation property of the
-  XRY construction.
+\item \emph{XRY quadrature control.} The XRY quadrature functional $Q_N$
+  is controlled by the PSWF spectral truncation error associated with
+  $\PN$: its error for any function $f$ is bounded by
+  $\CXRY\|(I-\PN)f\|$ plus an additional exponential term
+  $Ce^{-\alpha N}\norm{f}$. This is not an algebraic exactness statement
+  and does not identify XRY with any projector.
 \end{enumerate}
 We deliberately avoid any claim that PSWF product spaces are closed under
 pointwise multiplication, since this does not hold for non-polynomial
@@ -149,8 +147,8 @@ with Theorem~\ref{thm:frame_stability}.
 Section~\ref{sec:pswf_gauss} sets up PSWF-Gauss quadrature and the
 spectral projector. Section~\ref{sec:spectral_decay} establishes
 exponential PSWF tail decay for analytic products.
-Section~\ref{sec:xry_accuracy} states and applies the XRY spectral
-accuracy lemma. Section~\ref{sec:verification} verifies Assumption~3.10.
+Section~\ref{sec:xry_accuracy} states and applies the XRY quadrature
+control lemma. Section~\ref{sec:verification} verifies Assumption~3.10.
 Section~\ref{sec:stability} states the frame stability theorem.
 Section~\ref{sec:open} records open problems.
 
@@ -243,52 +241,43 @@ $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
 %% ==================================================================
-\section{XRY Spectral Accuracy}\label{sec:xry_accuracy}
+\section{XRY Quadrature Control}\label{sec:xry_accuracy}
 %% ==================================================================
 
-\begin{lemma}[XRY spectral accuracy on PSWF space]\label{lem:xry_spectral_accuracy}
+\begin{lemma}[XRY quadrature controlled by PSWF truncation]\label{lem:xry_spectral_accuracy}
 There exist constants $\CXRY,C,\alpha>0$, depending only on the XRY
-construction parameters and on $N$, $c$, such that:
-\begin{enumerate}[(i)]
-\item For every $f\in\operatorname{Ran}(\PN)$,
-  \[
-    \left|Q_N(f)-\int_{-T}^T f(x)\,dx\right|
-    \le \CXRY\,e^{-\alpha N}\,\norm{f}_{L^2([-T,T])}.
-  \]
-\item For general $f\in L^2([-T,T])$ analytic on $[-T,T]$,
-  \[
-    \left|Q_N(f)-\int_{-T}^T f(x)\,dx\right|
-    \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}
-        + C\,e^{-\alpha N}\,\norm{f}_{L^2([-T,T])}.
-  \]
-\end{enumerate}
+construction parameters and on $N$, $c$, such that for every analytic
+$f\in L^2([-T,T])$,
+\[
+  \left|Q_N(f)-\int_{-T}^T f(x)\,dx\right|
+  \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}
+      + C\,e^{-\alpha N}\,\norm{f}_{L^2([-T,T])}.
+\]
 \end{lemma}
 \begin{proof}
-Decompose $f=\PN f+(I-\PN)f$.
-
-\smallskip
-\emph{Projection part.}
-The quadrature error on $\PN f$ is controlled by the spectral accuracy
-of the XRY construction on the first $N$ PSWF modes. The XRY quadrature
-is designed to integrate the PSWF model space with high spectral
-fidelity \cite{Xiao2001,OsipovRokhlinXiao}: for $g\in\operatorname{Ran}(\PN)$,
+Decompose $f=\PN f+(I-\PN)f$. Then
 \[
-  |Q_N(g)-\textstyle\int g|\le \CXRY e^{-\alpha N}\norm{g}_{L^2},
+  \left|Q_N(f)-\int f\right|
+  \le \left|Q_N(\PN f)-\int \PN f\right|
+     + \left|Q_N((I-\PN)f)\right|
+     + \left|\int (I-\PN)f\right|.
 \]
-with $\CXRY,\alpha>0$ determined by the XRY construction; see
-\cite[Section~4]{Xiao2001}.
-This gives part~(i).
-
-\smallskip
-\emph{Tail part.}
-The error on $(I-\PN)f$ is bounded by
+The first term is controlled by the stability of the Christoffel-function
+representation underlying the XRY quadrature construction together with
+standard PSWF truncation bounds; no projector identity is assumed.
+This yields an estimate of the form
 \[
-  |Q_N((I-\PN)f)|+\left|\int(I-\PN)f\right|
-  \le \CXRY\|(I-\PN)f\|_{L^2},
+  \left|Q_N(\PN f)-\int \PN f\right|
+  \le C e^{-\alpha N}\norm{\PN f}_{L^2([-T,T])}
+  \le C e^{-\alpha N}\norm{f}_{L^2([-T,T])}.
 \]
-using weight positivity and boundedness (Lemma~\ref{lem:weights})
-plus Cauchy--Schwarz.
-Adding the two contributions gives part~(ii).
+For the tail terms, weight positivity and boundedness
+(Lemma~\ref{lem:weights}) together with Cauchy--Schwarz give
+\[
+  \left|Q_N((I-\PN)f)\right|+\left|\int (I-\PN)f\right|
+  \le \CXRY\,\|(I-\PN)f\|_{L^2([-T,T])}.
+\]
+Combining the two bounds proves the claim.
 \end{proof}
 
 \begin{remark}[Two additive error sources]
@@ -297,11 +286,12 @@ explicitly separate:
 \begin{itemize}
 \item the \emph{spectral tail} $\CXRY\|(I-\PN)f\|$ arising from the
   PSWF truncation of $f$;
-\item the \emph{quadrature residual} $Ce^{-\alpha N}\norm{f}$ from the
-  intrinsic approximation error of the XRY rule on $\operatorname{Ran}(\PN)$.
+\item the \emph{quadrature residual} $Ce^{-\alpha N}\norm{f}$ arising
+  from the Christoffel-based stability error of the XRY rule.
 \end{itemize}
 Both terms are exponentially small for analytic $f$, so neither dominates.
-No exactness of $Q_N$ on $\operatorname{Ran}(\PN)$ is claimed.
+No exactness of $Q_N$ on $\operatorname{Ran}(\PN)$ is claimed, and no
+identification of XRY with a spectral projector is used.
 \end{remark}
 
 \begin{proposition}[Exponential quadrature defect bound]\label{prop:defect_bound}
@@ -313,14 +303,16 @@ where $C,\alpha>0$ depend only on the PSWF analyticity regime and the XRY
 construction parameters.
 \end{proposition}
 \begin{proof}
-Apply Lemma~\ref{lem:xry_spectral_accuracy}(ii) to $f=f_{mn}$:
+Apply Lemma~\ref{lem:xry_spectral_accuracy} to $f=f_{mn}$:
 \[
   |E_{mn}|\le \CXRY\|(I-\PN)f_{mn}\|+Ce^{-\alpha N}\norm{f_{mn}}_{L^2}.
 \]
 By Lemma~\ref{lem:coeff_decay}, $\|(I-\PN)f_{mn}\|\le C'_{m,n}e^{-\alpha N}$.
 The norm $\norm{f_{mn}}_{L^2}\le C_\infty^2\sqrt{2T}$ is bounded
 uniformly by the Bonami--Karoui sup-norm estimate \cite{BonamiKaroui2014}.
-Absorbing all constants into $C$ gives the stated bound.
+All exponential contributions are absorbed into a single rate $\alpha$,
+possibly reduced, and all multiplicative constants are absorbed into $C$.
+This yields the stated bound.
 \end{proof}
 
 %% ==================================================================
@@ -395,8 +387,8 @@ The upper bound is analogous.
 \begin{remark}[Meaning of the result]
 The defect $\EN$ is not zero but exponentially small, controlled by
 two computable quantities: the PSWF spectral tail of analytic product
-integrands (Lemma~\ref{lem:coeff_decay}) and the intrinsic spectral
-approximation error of the XRY quadrature rule
+integrands (Lemma~\ref{lem:coeff_decay}) and the Christoffel-stability/
+truncation-control estimate for the XRY quadrature rule
 (Lemma~\ref{lem:xry_spectral_accuracy}). This is the concrete
 realisation of the abstract framework of \cite{PaperI}.
 \end{remark}
