@@ -72,8 +72,8 @@ Instead, for PSWF-Gauss quadrature rules of Xiao--Rokhlin--Yarvin
 XRY spectral stability hypothesis via a two-step spectral mechanism.
 First, analytic product integrands
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ have exponentially decaying
-PSWF expansion tails: $\|(I-\PN)f_{mn}\|\le C e^{-\alpha N}$. Second,
-assuming an XRY stability bound of the form
+PSWF expansion tails in the relevant index regime. Second, assuming an
+XRY stability bound of the form
 \[
   \left| Q_N(f) - \int_{-T}^T f \right|
   \le \CXRY\,\|(I-\PN)f\| + C e^{-\alpha N}\norm{f}_{L^2},
@@ -83,8 +83,9 @@ one obtains the conditional defect estimate
   |E_{mn}| \le C e^{-\alpha N} \qquad (0\le m,n\le N-1).
 \]
 Therefore Assumption~3.10 of \cite{PaperI} is verified conditionally on
-this XRY stability hypothesis. No algebraic closure of PSWF product spaces
-is assumed or required.
+this XRY stability hypothesis together with explicit technical hypotheses
+on the PSWF side. No algebraic closure of PSWF product spaces is assumed
+or required.
 \end{abstract}
 
 \tableofcontents
@@ -127,9 +128,9 @@ The reduction rests on two ingredients:
 \begin{enumerate}[(i)]
 \item \emph{PSWF product analysis.} The product integrands
   $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are analytic on $[-T,T]$.
-  Under the corresponding analyticity and uniform-bound hypotheses, their
-  PSWF expansion coefficients decay exponentially, yielding
-  $\|(I-\PN)f_{mn}\|\le Ce^{-\alpha N}$.
+  Under the corresponding analyticity and growth hypotheses, their
+  PSWF expansion coefficients decay exponentially in the regime
+  $0\le m,n\le N\sim c$.
 \item \emph{XRY quadrature stability.} The XRY quadrature functional $Q_N$
   is assumed to satisfy a stability bound controlled by the PSWF spectral
   truncation error associated with $\PN$.
@@ -142,14 +143,14 @@ spectral tail analysis and an explicit XRY stability bridge.
 \subsection*{Main result}
 
 \begin{theorem}[Main theorem, informal]\label{thm:main_informal}
-Assume the XRY spectral stability condition stated in
-Assumption~\ref{ass:xry_stability}. Then for PSWF-Gauss quadrature rules
-\cite{Xiao2001}, the quadrature defect satisfies $|E_{mn}|\le Ce^{-\alpha N}$
-for all $0\le m,n\le N-1$, with constants depending only on the PSWF
-analyticity regime and the stability constants. Consequently,
-Assumption~3.10 of \cite{PaperI} holds conditionally on the same XRY
-stability hypothesis, and the frame stability theorem of \cite{PaperI}
-applies to PSWF-Gauss sampling.
+Assume the technical hypotheses stated in
+Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}. Then for
+PSWF-Gauss quadrature rules \cite{Xiao2001}, the quadrature defect satisfies
+$|E_{mn}|\le Ce^{-\alpha N}$ for all $0\le m,n\le N-1$, with constants
+depending on the PSWF analyticity regime, the allowed growth in the index
+range, and the XRY stability constants. Consequently, Assumption~3.10 of
+\cite{PaperI} holds conditionally on the same hypotheses, and the frame
+stability theorem of \cite{PaperI} applies to PSWF-Gauss sampling.
 \end{theorem}
 
 The formal version is Theorem~\ref{thm:compatibility_verified} together
@@ -158,13 +159,12 @@ with Theorem~\ref{thm:frame_stability}.
 \subsection*{Organisation}
 
 Section~\ref{sec:pswf_gauss} sets up PSWF-Gauss quadrature and the
-spectral projector. Section~\ref{sec:spectral_decay} establishes
-exponential PSWF tail decay for analytic products and explains the scope
-of that step. Section~\ref{sec:xry_accuracy} states the XRY spectral
-stability assumption. Section~\ref{sec:verification} derives the conditional
-verification of Assumption~3.10. Section~\ref{sec:stability} states the
-conditional frame stability theorem. Section~\ref{sec:open} records open
-problems.
+spectral projector. Section~\ref{sec:spectral_decay} states the technical
+PSWF-side hypotheses and explains the scope of the product-tail step.
+Section~\ref{sec:xry_accuracy} states the XRY spectral stability assumption.
+Section~\ref{sec:verification} derives the conditional verification of
+Assumption~3.10. Section~\ref{sec:stability} states the conditional frame
+stability theorem. Section~\ref{sec:open} records open problems.
 
 %% ==================================================================
 \section{PSWF-Gauss Quadrature and Spectral Projector}\label{sec:pswf_gauss}
@@ -210,31 +210,33 @@ uniformly in $j$ in the regime $N\sim c$.
 \end{proof}
 
 %% ==================================================================
-\section{Exponential PSWF Tail Decay for Analytic Products}\label{sec:spectral_decay}
+\section{Technical PSWF Hypotheses and Product Tails}\label{sec:spectral_decay}
 %% ==================================================================
 
-\begin{lemma}[Analytic regularity of PSWF products]\label{lem:analytic}
-For all $0\le m,n\le N-1$, the function
-$f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$
-is real-analytic on $[-T,T]$ with holomorphic extension to a complex
-strip of width $\rho>0$ and satisfies Cauchy derivative bounds
+\begin{assumption}[PSWF analyticity in the relevant regime]\label{ass:pswf_analyticity}
+For $0\le m,n\le N\sim c$, the product functions
+$f_{mn}(x)=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$ admit holomorphic
+extensions to complex strips of width $\rho_{m,n}(c)>0$, with Cauchy bounds
 \[
-  \norm{f_{mn}^{(k)}}_{L^\infty([-T,T])}\le M_{m,n}\,k!\,\rho^{-k}
-  \qquad(k\ge0),
+  \norm{f_{mn}^{(k)}}_{L^\infty([-T,T])}\le M_{m,n}(c)\,k!\,\rho_{m,n}(c)^{-k}
+  \qquad(k\ge0).
 \]
-for constants $M_{m,n},\rho>0$ controlled by the uniform PSWF bounds of
-\cite{BonamiKaroui2014}.
-\end{lemma}
-\begin{proof}
-The PSWFs are real-analytic as solutions of a prolate differential equation
-with analytic coefficients \cite{OsipovRokhlinXiao}; their product inherits
-real-analyticity. The derivative bound follows from the Cauchy integral
-estimate and the uniform sup-norm bound
-$\norm{\psi_n^{(c)}}_{L^\infty}\le C_\infty$ of \cite{BonamiKaroui2014}.
-\end{proof}
+No uniform strip width independent of $(m,n,c)$ is assumed.
+\end{assumption}
 
-\begin{lemma}[Exponential PSWF coefficient decay]\label{lem:coeff_decay}
-There exist constants $C_{m,n},\alpha>0$ such that
+\begin{assumption}[Controlled growth of PSWF product constants]\label{ass:uniform_bounds}
+In the regime $0\le m,n\le N\sim c$, the constants governing the PSWF
+product-tail estimates are uniformly controlled in the sense that the
+quantities $M_{m,n}(c)$, the reciprocal strip widths $\rho_{m,n}(c)^{-1}$,
+and the resulting spectral-tail prefactors $C_{m,n}$ grow at most
+polynomially in $N$ (or satisfy any equivalent bound sufficient to keep the
+product-tail estimate asymptotically dominated by an exponential rate after
+possibly reducing that rate).
+\end{assumption}
+
+\begin{lemma}[Conditional exponential PSWF coefficient decay]\label{lem:coeff_decay}
+Assume Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}.
+Then there exist constants $C_{m,n},\alpha>0$ such that
 \[
   |\widehat f_{mn}(k)|
   :=|\ip{f_{mn}}{\psi_k^{(c)}}|\le C_{m,n}\,e^{-\alpha k}
@@ -246,20 +248,22 @@ Consequently,
 \]
 \end{lemma}
 \begin{proof}
-For functions analytic in a strip of width $\rho$, the coefficients in
-the PSWF basis decay exponentially; this follows from the spectral
-approximation theory of \cite{BonamiKaroui2014,BonamiKaroui}
-combined with Lemma~\ref{lem:analytic}. The tail bound follows by summing
-the geometric series $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
+For functions analytic in a strip, the coefficients in the PSWF basis decay
+exponentially; this follows from the spectral approximation theory of
+\cite{BonamiKaroui2014,BonamiKaroui} together with
+Assumption~\ref{ass:pswf_analyticity}. The controlled-growth hypothesis in
+Assumption~\ref{ass:uniform_bounds} ensures that the prefactors remain
+compatible with an overall exponential decay statement in the regime
+$0\le m,n\le N\sim c$. The tail bound follows by summing the geometric
+series $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
 \begin{remark}[Status of the PSWF step]\label{rem:pswf_status}
 The PSWF part of the argument is not purely formal. Its force comes from
 analytic continuation of the product functions $f_{mn}$ together with
-uniform control of the relevant PSWF bounds. In a full quantitative
-version, the dependence of the constants on $m$, $n$, $c$, and the strip
-width must be tracked carefully. Thus the PSWF product analysis is itself
-a substantive ingredient of the paper, not a routine closure argument.
+quantitative control of the dependence on $m$, $n$, and $c$. Thus the PSWF
+product analysis is itself a substantive ingredient of the paper, not a
+routine closure argument.
 \end{remark}
 
 %% ==================================================================
@@ -303,7 +307,8 @@ even though it is not yet fully resolved here.
 %% ==================================================================
 
 \begin{proposition}[Conditional exponential quadrature defect bound]\label{prop:defect_bound}
-Assume Assumption~\ref{ass:xry_stability}. Then for all $0\le m,n\le N-1$,
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Then for all $0\le m,n\le N-1$,
 \[
   |E_{mn}|=|R_{mn}^{\mathrm{quad}}|\le C\,e^{-\alpha N},
 \]
@@ -316,42 +321,54 @@ Applying Assumption~\ref{ass:xry_stability} to $f=f_{mn}$ gives
   |E_{mn}|\le \CXRY\|(I-\PN)f_{mn}\|+Ce^{-\alpha N}\norm{f_{mn}}_{L^2}.
 \]
 By Lemma~\ref{lem:coeff_decay}, $\|(I-\PN)f_{mn}\|\le C'_{m,n}e^{-\alpha N}$.
-The norm $\norm{f_{mn}}_{L^2}\le C_\infty^2\sqrt{2T}$ is bounded
-uniformly by the Bonami--Karoui sup-norm estimate \cite{BonamiKaroui2014}.
-All exponential contributions are absorbed into a single rate $\alpha$,
-possibly reduced, and all multiplicative constants are absorbed into $C$.
+Under Assumption~\ref{ass:uniform_bounds}, these prefactors are compatible
+with absorption into a single exponential rate, possibly reduced.
+All exponential contributions are therefore absorbed into a single rate
+$\alpha$, possibly reduced, and all multiplicative constants are absorbed
+into $C$.
 This yields the stated bound.
 \end{proof}
 
+\begin{remark}[Uniform domination over the index range]\label{rem:index_domination}
+For $0\le m,n\le N-1$ one has $|m-n|\le N-1$. Hence any comparison between
+an $N$-dependent exponential quantity and an algebraic factor
+$(1+|m-n|)^{-p}$ is understood in the worst-case sense over the admissible
+index range, namely via $(1+|m-n|)^{-p}\ge (1+N)^{-p}$. This is the precise
+sense in which an exponential bound in $N$ dominates the algebraic defect
+profile required in Assumption~3.10 of \cite{PaperI}.
+\end{remark}
+
 \begin{theorem}[Conditional verification of Assumption~3.10]\label{thm:compatibility_verified}
-Assume Assumption~\ref{ass:xry_stability}. Let $(\mathbf{p},\mathbf{w})$
-be the XRY PSWF-Gauss rule of order $N\sim c$. Then for every $p\ge1$
-there exist constants $C_p,C>0$ such that
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
+Then for every $p\ge1$ there exist constants $C_p,C>0$ such that
 \[
   |E_{mn}|\le C_p(1+|m-n|)^{-p}+Cc^{-1/3}
   \qquad(0\le m,n\le N-1).
 \]
 Hence Assumption~3.10 of \cite{PaperI} holds conditionally for PSWF-Gauss
-sampling under the XRY stability hypothesis.
+sampling under the stated hypotheses.
 \end{theorem}
 \begin{proof}
 By Proposition~\ref{prop:defect_bound}, $|E_{mn}|\le Ce^{-\alpha N}$.
-For fixed $p$, we have $e^{-\alpha N}\le C_p(1+|m-n|)^{-p}$ after
-adjusting constants, since the exponential bound dominates any algebraic
-rate. Similarly, $e^{-\alpha N}\le Cc^{-1/3}$ in the regime $N\sim c$ for
-$c$ sufficiently large. Thus both terms in Assumption~3.10 are dominated.
+By Remark~\ref{rem:index_domination}, the exponential bound dominates any
+algebraic factor $(1+|m-n|)^{-p}$ uniformly over the index range after
+adjusting constants. Similarly, $e^{-\alpha N}\le Cc^{-1/3}$ in the regime
+$N\sim c$ for $c$ sufficiently large. Thus both terms in
+Assumption~3.10 are dominated.
 \end{proof}
 
 \begin{remark}[What has been achieved]
 The preceding theorem does not close the construction problem of
 \cite{PaperI} unconditionally. What it provides is a clean reduction:
-once Assumption~\ref{ass:xry_stability} is established, the compatibility
-assumption of \cite{PaperI} follows automatically for XRY PSWF-Gauss
-quadrature.
+once Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability} are
+established, the compatibility assumption of \cite{PaperI} follows for XRY
+PSWF-Gauss quadrature.
 \end{remark}
 
 \begin{corollary}[Conditional defect norm bound]\label{cor:defect_norm}
-Assume Assumption~\ref{ass:xry_stability}. Then there exists $C_*>0$ such that
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Then there exists $C_*>0$ such that
 \[
   \norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\xrightarrow{N\to\infty}0.
 \]
@@ -366,9 +383,9 @@ Sum Proposition~\ref{prop:defect_bound} over $N^2$ entries.
 
 \begin{theorem}[Conditional frame stability for PSWF-Gauss sampling]
 \label{thm:frame_stability}
-Assume Assumption~\ref{ass:xry_stability}. Let $(\mathbf{p},\mathbf{w})$
-be the XRY PSWF-Gauss rule of order $N\sim c$. Once
-$NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
+Once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
 frame for $V_{N,c}$ with bounds
 \[
   A(N,c)\,\norm{f}_{L^2}^2
@@ -394,7 +411,7 @@ The upper bound is analogous.
 \begin{remark}[Meaning of the result]
 The defect $\EN$ is controlled by two separate ingredients: the PSWF
 spectral tail of analytic product integrands and the assumed XRY stability
-hypothesis. Under these two inputs, the abstract conditional framework of
+hypothesis. Under these inputs, the abstract conditional framework of
 \cite{PaperI} becomes effective for XRY PSWF-Gauss quadrature.
 \end{remark}
 
@@ -418,11 +435,10 @@ parameters.
 \end{problem}
 
 \begin{problem}[Quantify PSWF product tails]
-Make the constants $C_{m,n},\alpha$ in Lemma~\ref{lem:coeff_decay}
-explicit as functions of $m$, $n$, $c$, and $T$, using the analyticity
-radius estimates of \cite{BonamiKaroui2014}. In particular, clarify the
-uniform dependence of the tail bound on the mode indices in the regime
-relevant for the defect matrix.
+Derive Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}
+from PSWF analyticity theory with explicit dependence on $m$, $n$, $c$, and
+$T$. In particular, clarify the admissible degeneration of strip widths and
+the prefactor growth compatible with the exponential defect estimate.
 \end{problem}
 
 \begin{problem}[Node separation and weight bounds]
