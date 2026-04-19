@@ -43,9 +43,9 @@ and a conditional banded decay estimate were established under an explicit
 quadrature compatibility assumption (Assumption~3.10 of \cite{PaperI}).
 The present paper does not prove that assumption outright. Instead, it
 organises the problem into two explicit conjectural components: a PSWF
-product-tail conjecture and an XRY spectral stability conjecture. Their
-combination yields a conditional verification mechanism for the compatibility
-assumption used in \cite{PaperI}.}
+product spectral tail conjecture and an XRY spectral stability conjecture.
+Their combination yields a conditional verification mechanism for the
+compatibility assumption used in \cite{PaperI}.}
 
 \author{Anonymous Author}
 \address{}
@@ -71,8 +71,8 @@ on an explicit quadrature compatibility assumption (Assumption~3.10 of
 The present paper does not verify that assumption unconditionally.
 Instead, for PSWF-Gauss quadrature rules of Xiao--Rokhlin--Yarvin
 \cite{Xiao2001}, it organises the compatibility problem into two explicit
-conjectural inputs. First, one needs a PSWF product-tail statement for the
-analytic product family
+conjectural inputs. First, one needs a PSWF product spectral tail statement
+for the analytic product family
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ in the relevant index regime.
 Second, one needs an XRY spectral stability statement on the same family.
 Assuming these two conjectural inputs, one obtains the conditional defect
@@ -114,8 +114,8 @@ quadrature class satisfying Assumption~3.10.
 This paper does not solve the full construction problem unconditionally.
 Its contribution is an implication framework: for XRY PSWF-Gauss quadrature,
 Assumption~3.10 of \cite{PaperI} follows from two separate conjectural
-inputs, namely a PSWF product-tail conjecture and an XRY spectral stability
-conjecture on the relevant product family
+inputs, namely a PSWF product spectral tail conjecture and an XRY spectral
+stability conjecture on the relevant product family
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$.
 The argument is therefore a conditional verification framework rather
 than a complete closure theorem.
@@ -125,7 +125,7 @@ than a complete closure theorem.
 The conditional implication rests on two explicit open analytical
 components:
 \begin{enumerate}[(i)]
-\item \emph{PSWF product-tail conjecture.} The product integrands
+\item \emph{PSWF product spectral tail conjecture.} The product integrands
   $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are expected to admit
   sufficiently uniform PSWF spectral tail decay in the regime
   $0\le m,n\le N\sim c$.
@@ -136,20 +136,24 @@ components:
 \end{enumerate}
 Thus the compatibility problem is not solved here; rather, it is organised
 as an implication chain from two conjectural inputs to the compatibility
-condition of \cite{PaperI}. We deliberately avoid any claim that PSWF
-product spaces are closed under pointwise multiplication, and we do not
-identify XRY with any spectral projector. The substantive output is a clean
-separation between the PSWF product-tail issue, the XRY stability issue,
-and the downstream frame-theoretic consequences.
+condition of \cite{PaperI}. This decomposition is intended as a structural
+separation between two different mathematical issues --- PSWF spectral
+theory on the function side and quadrature operator stability on the XRY
+side --- rather than as a mere renaming of the original difficulty. We
+deliberately avoid any claim that PSWF product spaces are closed under
+pointwise multiplication, and we do not identify XRY with any spectral
+projector. The substantive output is a clean separation between the PSWF
+product-tail issue, the XRY stability issue, and the downstream
+frame-theoretic consequences.
 
 \subsection*{Main result}
 
 \begin{theorem}[Conditional implication theorem]\label{thm:main_informal}
-Assume Conjectures~\ref{conj:pswf_tail} and~\ref{conj:xry_stability},
+Assume Conjectures~\ref{conj:pswf_product_tail} and~\ref{conj:xry_stability},
 together with the auxiliary technical hypotheses stated in
 Assumptions~\ref{ass:pswf_sup}, \ref{ass:node_sep}, and~\ref{ass:weights}.
 Then for PSWF-Gauss quadrature rules \cite{Xiao2001}, the quadrature defect
-satisfies $|E_{mn}|\le Ce^{-\alpha N}$ for all $0\le m,n\le N-1$.
+satisfies $|E_{mn}|\le Ce^{-\alpha N}$ for all $0\le m,n\le N-1}$.
 Consequently, Assumption~3.10 of \cite{PaperI} holds conditionally on the
 same inputs, and the frame stability theorem of \cite{PaperI} applies to
 PSWF-Gauss sampling.
@@ -160,14 +164,15 @@ with Theorem~\ref{thm:frame_stability}.
 
 \subsection*{Positioning}
 
-This paper should be read as a conditional framework paper rather than a
-Theorem-paper in the traditional sense. Its purpose is to isolate the two
-core unresolved analytical components that stand between the abstract
-framework of \cite{PaperI} and a concrete verification for XRY PSWF-Gauss
-quadrature. The PSWF product-tail step and the XRY stability step are both
-left as explicit conjectural inputs. What the present analysis contributes
-is the exact implication chain showing how these two inputs together force
-the compatibility condition and hence the frame-theoretic conclusions.
+This paper should be read as an implication framework (in the sense of a
+reduction between explicit analytic hypotheses) rather than a Theorem-paper
+in the traditional sense. Its purpose is to isolate the two core unresolved
+analytical components that stand between the abstract framework of
+\cite{PaperI} and a concrete verification for XRY PSWF-Gauss quadrature.
+The PSWF product-tail step and the XRY stability step are both left as
+explicit conjectural inputs. What the present analysis contributes is the
+exact implication chain showing how these two inputs together force the
+compatibility condition and hence the frame-theoretic conclusions.
 
 \subsection*{Organisation}
 
@@ -217,7 +222,7 @@ uniformly in $j$ in the regime $N\sim c$.
 \end{assumption}
 
 %% ==================================================================
-\section{PSWF Product-Tail Conjecture}\label{sec:spectral_decay}
+\section{PSWF Product Spectral Tail Conjecture}\label{sec:spectral_decay}
 %% ==================================================================
 
 \begin{assumption}[Uniform PSWF sup-norm control]\label{ass:pswf_sup}
@@ -259,21 +264,31 @@ of standard PSWF approximation results, but a separate open analytical
 problem.
 \end{remark}
 
-\begin{conjecture}[PSWF product-tail conjecture]\label{conj:pswf_tail}
+\begin{conjecture}[PSWF product spectral tail conjecture]\label{conj:pswf_product_tail}
 For the family
 \[
   \mathcal{F}_N:=\{\psi_m^{(c)}\overline{\psi_n^{(c)}}:0\le m,n\le N\},
 \]
-there exist constants $C,\alpha>0$ and a sequence $\varepsilon_N\downarrow0$
-such that, for every $f_{mn}\in\mathcal{F}_N$,
-\[
-  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
-  \le C e^{-(\alpha-\varepsilon_N)N}
-  \qquad(0\le m,n\le N\sim c).
-\]
-This conjecture encapsulates the full PSWF-side spectral tail input needed
-in the sequel. Its verification appears to be a central open analytical
-problem in the present framework.
+the following hierarchy is expected to hold in the regime $N\sim c$:
+\begin{enumerate}[(i)]
+\item \emph{Off-diagonal control.} For $|m-n|\gg 1$, the tails
+  $\|(I-\PN)f_{mn}\|_{L^2([-T,T])}$ satisfy an exponentially decaying bound
+  with constants uniform away from the diagonal.
+\item \emph{Bulk control.} For $m,n\le \gamma N$ with fixed $\gamma<1$,
+  the same bound holds with constants uniform in the bulk.
+\item \emph{Uniform control up to the relevant index range.} There exist
+  constants $C,\alpha>0$ and a sequence $\varepsilon_N\downarrow0$ such that
+  for every $f_{mn}\in\mathcal{F}_N$,
+  \[
+    \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
+    \le C e^{-(\alpha-\varepsilon_N)N}
+    \qquad(0\le m,n\le N\sim c).
+  \]
+\end{enumerate}
+The third statement is the form actually used in the sequel. The preceding
+staging is included to reflect a possible route toward verification and to
+avoid suggesting that a fully uniform bound is the only reasonable entry
+point.
 \end{conjecture}
 
 %% ==================================================================
@@ -317,11 +332,11 @@ known theorem.
 \end{conjecture}
 
 \begin{remark}[Why this is an implication framework]
-Conjectures~\ref{conj:pswf_tail} and~\ref{conj:xry_stability} isolate the
-two unresolved analytical inputs used in this paper. Accordingly, the
-present work should be read as an implication framework for the quadrature
-compatibility problem of \cite{PaperI}, not as an unconditional verification
-of that compatibility condition.
+Conjectures~\ref{conj:pswf_product_tail} and~\ref{conj:xry_stability}
+isolate the two unresolved analytical inputs used in this paper.
+Accordingly, the present work should be read as an implication framework
+for the quadrature compatibility problem of \cite{PaperI}, not as an
+unconditional verification of that compatibility condition.
 \end{remark}
 
 %% ==================================================================
@@ -345,8 +360,9 @@ Conjecture~\ref{conj:xry_stability} applied to $f=f_{mn}$.
 \end{proof}
 
 \begin{proposition}[Conditional exponential quadrature defect bound]\label{prop:defect_bound}
-Assume Conjectures~\ref{conj:pswf_tail} and~\ref{conj:xry_stability},
-together with Assumption~\ref{ass:pswf_sup}. Then for all $0\le m,n\le N-1$,
+Assume Conjectures~\ref{conj:pswf_product_tail}
+and~\ref{conj:xry_stability}, together with Assumption~\ref{ass:pswf_sup}.
+Then for all $0\le m,n\le N-1$,
 \[
   |E_{mn}|=|R_{mn}^{\mathrm{quad}}|\le C\,e^{-\alpha N},
 \]
@@ -358,13 +374,28 @@ By Proposition~\ref{prop:structured_defect},
 \[
   |E_{mn}|\le \CXRY\|(I-\PN)f_{mn}\|+Ce^{-\alpha N}\norm{f_{mn}}_{L^2}.
 \]
-By Conjecture~\ref{conj:pswf_tail},
+By Conjecture~\ref{conj:pswf_product_tail}(iii),
 $\|(I-\PN)f_{mn}\|\le C' e^{-(\alpha'-\varepsilon_N) N}$
 uniformly over $0\le m,n\le N\sim c$, and by
 Lemma~\ref{lem:product_norm}, $\norm{f_{mn}}_{L^2}\le C$ uniformly in the
 same regime. All exponential contributions are therefore absorbed into a
 single rate $\alpha$, possibly reduced, and all multiplicative constants are
 absorbed into $C$. This yields the stated bound.
+\end{proof}
+
+\begin{lemma}[Exponential domination of the bulk error scale]
+\label{lem:bulk_scale}
+Assume $N=\gamma c$ with fixed $\gamma>0$. Then for every $\alpha>0$ there
+exists $C_{\alpha,\gamma}>0$ such that
+\[
+  e^{-\alpha N}\le C_{\alpha,\gamma} c^{-1/3}
+\]
+for all sufficiently large $c$.
+\end{lemma}
+\begin{proof}
+Since $N=\gamma c$, one has
+$e^{-\alpha N}=e^{-\alpha\gamma c}$. Because exponential decay dominates
+any negative power of $c$ as $c\to\infty$, the stated bound follows.
 \end{proof}
 
 \begin{remark}[Uniform domination over the index range]\label{rem:index_domination}
@@ -379,11 +410,11 @@ Assumption~3.10 of \cite{PaperI}.
 \end{remark}
 
 \begin{theorem}[Conditional verification theorem]\label{thm:compatibility_verified}
-Assume Conjectures~\ref{conj:pswf_tail} and~\ref{conj:xry_stability},
-together with Assumptions~\ref{ass:pswf_sup}, \ref{ass:node_sep},
-and~\ref{ass:weights}. Let $(\mathbf{p},\mathbf{w})$ be the XRY
-PSWF-Gauss rule of order $N\sim c$. Then for every $p\ge1$ there exist
-constants $C_p,C>0$ such that
+Assume Conjectures~\ref{conj:pswf_product_tail}
+and~\ref{conj:xry_stability}, together with Assumptions~\ref{ass:pswf_sup},
+\ref{ass:node_sep}, and~\ref{ass:weights}. Let $(\mathbf{p},\mathbf{w})$
+be the XRY PSWF-Gauss rule of order $N=\gamma c$ with fixed $\gamma>0$.
+Then for every $p\ge1$ there exist constants $C_p,C>0$ such that
 \[
   |E_{mn}|\le C_p(1+|m-n|)^{-p}+Cc^{-1/3}
   \qquad(0\le m,n\le N-1).
@@ -395,23 +426,23 @@ sampling under the stated inputs.
 By Proposition~\ref{prop:defect_bound}, $|E_{mn}|\le Ce^{-\alpha N}$.
 By Remark~\ref{rem:index_domination}, the exponential bound dominates any
 algebraic factor $(1+|m-n|)^{-p}$ uniformly over the index range after
-adjusting constants. Similarly, $e^{-\alpha N}\le Cc^{-1/3}$ in the regime
-$N\sim c$ for $c$ sufficiently large. Thus both terms in
-Assumption~3.10 are dominated.
+adjusting constants. By Lemma~\ref{lem:bulk_scale}, one also has
+$e^{-\alpha N}\le Cc^{-1/3}$ for $N=\gamma c$ and sufficiently large $c$.
+Thus both terms in Assumption~3.10 are dominated.
 \end{proof}
 
 \begin{remark}[What has been achieved]
 The preceding theorem does not close the construction problem of
 \cite{PaperI} unconditionally. What it provides is a pure implication:
-once Conjectures~\ref{conj:pswf_tail} and~\ref{conj:xry_stability} are
-established, the compatibility assumption of \cite{PaperI} follows for XRY
-PSWF-Gauss quadrature.
+once Conjectures~\ref{conj:pswf_product_tail} and~\ref{conj:xry_stability}
+are established, the compatibility assumption of \cite{PaperI} follows for
+XRY PSWF-Gauss quadrature.
 \end{remark}
 
 \begin{corollary}[Conditional defect norm bound]\label{cor:defect_norm}
-Assume Conjectures~\ref{conj:pswf_tail} and~\ref{conj:xry_stability},
-together with Assumption~\ref{ass:pswf_sup}. Then there exists $C_*>0$ such
-that
+Assume Conjectures~\ref{conj:pswf_product_tail}
+and~\ref{conj:xry_stability}, together with Assumption~\ref{ass:pswf_sup}.
+Then there exists $C_*>0$ such that
 \[
   \norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\xrightarrow{N\to\infty}0.
 \]
@@ -429,12 +460,12 @@ Frobenius norm, hence $\norm{\EN}_2\le\norm{\EN}_F$.
 %% ==================================================================
 
 \begin{theorem}[Conditional frame stability theorem]\label{thm:frame_stability}
-Assume Conjectures~\ref{conj:pswf_tail} and~\ref{conj:xry_stability},
-together with Assumptions~\ref{ass:pswf_sup}, \ref{ass:node_sep},
-and~\ref{ass:weights}. Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss
-rule of order $N=\gamma c$ with $\gamma<2/\pi$ in the bulk regime. Once
-$NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
-frame for $V_{N,c}$ with bounds
+Assume Conjectures~\ref{conj:pswf_product_tail}
+and~\ref{conj:xry_stability}, together with Assumptions~\ref{ass:pswf_sup},
+\ref{ass:node_sep}, and~\ref{ass:weights}. Let $(\mathbf{p},\mathbf{w})$
+be the XRY PSWF-Gauss rule of order $N=\gamma c$ with $\gamma<2/\pi$ in the
+bulk regime. Once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$,
+$\{(p_j,w_j)\}_{j=1}^N$ is a weighted frame for $V_{N,c}$ with bounds
 \[
   A(N,c)\,\norm{f}_{L^2}^2
   \le \sum_{j=1}^N w_j|f(p_j)|^2
@@ -460,9 +491,9 @@ The upper bound is analogous.
 \end{proof}
 
 \begin{remark}[Meaning of the result]
-The defect $\EN$ is controlled by two conjectural inputs: the PSWF
-product-tail conjecture and the XRY stability conjecture. Under these
-inputs, the abstract conditional framework of \cite{PaperI} becomes
+The defect $\EN$ is controlled by two conjectural inputs: the PSWF product
+spectral tail conjecture and the XRY stability conjecture. Under these
+inputs, the abstract implication framework of \cite{PaperI} becomes
 effective for XRY PSWF-Gauss quadrature.
 \end{remark}
 
@@ -478,9 +509,9 @@ stability condition may fail; see Open Problem~\ref{op:critical}.
 \section{Open Problems}\label{sec:open}
 %% ==================================================================
 
-\begin{problem}[Derive the PSWF product-tail conjecture]
-Prove Conjecture~\ref{conj:pswf_tail} rigorously, with explicit constants
-and explicit dependence on $m$, $n$, $c$, and $T$.
+\begin{problem}[Derive the PSWF product spectral tail conjecture]
+Prove Conjecture~\ref{conj:pswf_product_tail} rigorously, with explicit
+constants and explicit dependence on $m$, $n$, $c$, and $T$.
 \end{problem}
 
 \begin{problem}[Derive the XRY stability conjecture]
