@@ -119,22 +119,24 @@ than a complete closure theorem.
 
 \subsection*{Strategy of this paper}
 
-The reduction rests on two ingredients:
+The reduction rests on two independent analytical components:
 \begin{enumerate}[(i)]
-\item \emph{PSWF product analysis.} The product integrands
+\item \emph{Uniform PSWF product tail decay.} The product integrands
   $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are analytic on $[-T,T]$.
   Under the corresponding analyticity and growth hypotheses, their
   PSWF expansion coefficients decay exponentially in the regime
   $0\le m,n\le N\sim c$.
-\item \emph{XRY quadrature stability.} The XRY quadrature functional $Q_N$
+\item \emph{XRY spectral stability.} The XRY quadrature functional $Q_N$
   is assumed to satisfy a stability bound on the relevant PSWF product
   family, controlled by the PSWF spectral truncation error associated with
   $\PN$.
 \end{enumerate}
-We deliberately avoid any claim that PSWF product spaces are closed under
-pointwise multiplication, and we do not identify XRY with any spectral
-projector. The substantive output is a clean separation between a PSWF
-spectral tail analysis and an explicit XRY stability bridge.
+Thus the compatibility problem is reduced to two separate hard cores:
+a PSWF product-tail problem and an XRY stability problem. We deliberately
+avoid any claim that PSWF product spaces are closed under pointwise
+multiplication, and we do not identify XRY with any spectral projector.
+The substantive output is a clean separation between a PSWF spectral tail
+analysis and an explicit XRY stability bridge.
 
 \subsection*{Main result}
 
@@ -269,7 +271,7 @@ This is immediate from
 $N^k e^{-(\alpha-\alpha')N}\to0$ as $N\to\infty$.
 \end{proof}
 
-\begin{assumption}[Uniform effective decay rate]\label{ass:uniform_alpha}
+\begin{assumption}[PSWF product tail hypothesis]\label{ass:uniform_alpha}
 There exists $\alpha_0>0$ and a sequence $\varepsilon_N\downarrow0$ such that
 the effective PSWF tail decay rates for the family
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ satisfy
@@ -278,8 +280,9 @@ $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ satisfy
 \]
 in the regime $N\sim c$, after absorbing polynomial losses into the
 constants as in Assumption~\ref{ass:uniform_bounds} and
-Lemma~\ref{lem:poly_exp}. This is the strongest PSWF-side hypothesis used in
-the paper.
+Lemma~\ref{lem:poly_exp}. We emphasise that this is the strongest
+PSWF-side hypothesis used in the paper and that its verification appears
+to be a central open analytical problem in PSWF theory.
 \end{assumption}
 
 \begin{assumption}[Uniform PSWF sup-norm control]\label{ass:pswf_sup}
@@ -370,7 +373,7 @@ represents a natural spectral stability statement rather than an ad hoc
 reformulation of the original compatibility problem.
 \end{remark}
 
-\begin{assumption}[XRY spectral stability on the PSWF product family]
+\begin{assumption}[XRY stability hypothesis on the PSWF product family]
 \label{ass:xry_stability}
 Let
 \[
@@ -388,7 +391,8 @@ This hypothesis formalises the stability bridge between the PSWF spectral
 truncation and the XRY quadrature rule on the specific family relevant to
 the defect matrix. It is consistent with the structural formulas and
 numerical behaviour of \cite{Xiao2001,OsipovRokhlinXiao}, but is not claimed
-here as a theorem extracted verbatim from those sources.
+here as a theorem extracted verbatim from those sources. It represents the
+second hard-core open component in the present reduction.
 \end{assumption}
 
 \begin{remark}[Why this is a reduction, not a closure]
