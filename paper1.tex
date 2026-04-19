@@ -1,3 +1,4 @@
+
 \documentclass[12pt,a4paper]{amsart}
 
 \usepackage{amsmath,amssymb,amsthm}
@@ -33,7 +34,7 @@
 \newcommand{\ip}[2]{\langle #1,\, #2\rangle}
 
 \title[Coercivity of the Prolate Gram Form]
-      {Coercivity of the Prolate Gram Form\\
+      {Coercivity of the Prolate Gram Form
        at Discrete Sampling Points}
 
 \thanks{This paper is the first in a series on spectral
@@ -47,7 +48,7 @@ and Mellin bandwidth decay.}
 \email{}
 \date{\today}
 
-\subjclass[2020]{42C05,42B10,47B32,11M06}
+\subjclass[2020]{42C05, 42B10, 47B32, 11M06}
 
 \keywords{prolate spheroidal wave functions, Gram form, coercivity,
 unisolvent sampling, Paley--Wiener space, Weil positivity}
@@ -56,328 +57,433 @@ unisolvent sampling, Paley--Wiener space, Weil positivity}
 \maketitle
 
 \begin{abstract}
-Let $\PW$ denote the Paley--Wiener space of $\omega$-bandlimited
-functions and let
-\[
-  V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}\subset \PW
-\]
-be the $N$-dimensional prolate subspace associated with the
-time-bandwidth product $c=\omega T$.
-For $N$ distinct sampling points $\mathbf{p}\subset[-T,T]$
-we consider the prolate Gram form
-$\QM(f)=\sum_{j=1}^N |f(p_j)|^2$ on $V_{N,c}$.
+Let $\PW$ be the Paley--Wiener space of $\omega$-bandlimited functions
+and $V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}$
+the $N$-dimensional prolate subspace at time-bandwidth product $c=\omega T$.
+For $N$ distinct sampling points $\mathbf{p}\subset[-T,T]$ we study
+the prolate Gram form $\QM(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_{N,c}$.
 
-Layer~A proves, under the unisolvence assumption on $\mathbf{p}$,
-coercivity and continuity of $\QM$ by finite-dimensional linear algebra.
-Layer~B proves a conditional spectral decomposition under an abstract
-sampling-quality condition~\textup{(T.2)}.
-Layer~C is explicitly heuristic and discusses prime sampling.
+The nontrivial content of this paper is two-fold.
+First, we prove that three natural families of sampling sets ---
+uniform grids, random configurations, and Gauss--PSWF quadrature nodes
+--- are \emph{unisolvent} for $V_{N,c}$
+(Propositions~\ref{prop:uniform}--\ref{prop:gauss}).
+Unisolvence is the necessary and sufficient condition for coercivity,
+and its verification is non-elementary for prolate subspaces because
+$V_{N,c}$ does not form a Chebyshev system in general.
+Second, under an abstract sampling-quality condition~(T.2),
+we prove a sharp spectral decomposition
+$\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
+where the remainder measures how well discrete sampling approximates
+the continuous quadratic form of~$\Kop$.
 
-No claim is made here about zeros of $\zeta(s)$, about prime sampling
-satisfying~\textup{(T.2)}, or about coupled limits in which both $N$
-and $c$ vary.
+No claim is made about zeros of $\zeta(s)$, prime sampling, or limits
+in which both $N$ and $c$ vary.
 \end{abstract}
 
 \tableofcontents
 
+%%% =================================================================
 \section{Introduction}
+%%% =================================================================
 
 The Weil positivity criterion \cite{Weil1952,Bombieri2000,CC2019}
-connects positivity of an explicit quadratic form over primes with the
-Riemann Hypothesis. The prolate program of
-Connes--Consani--Moscovici \cite{CCM_PNAS2022,CCM2025}
-seeks a spectral realization of this form using the prolate operator
-$\Kop$ on Paley--Wiener space.
+expresses the Riemann Hypothesis as positivity of an explicit
+quadratic form over primes.
+The prolate program of Connes--Consani--Moscovici
+\cite{CCM_PNAS2022,CCM2025} seeks a spectral realization of this form
+using the prolate concentration operator $\Kop$ on Paley--Wiener space.
 
-The present paper isolates a finite-dimensional coercivity statement.
-Its logical architecture is deliberately stratified:
-Layer~A is unconditional up to unisolvence,
-Layer~B is conditional on an abstract stability hypothesis,
-and Layer~C is heuristic only.
+The present paper isolates and proves a finite-dimensional coercivity
+statement that is a prerequisite for this program.
+The mathematics here is elementary at the linear-algebra level:
+coercivity is equivalent to invertibility of the evaluation matrix
+$M(\mathbf{p},c)$.
+The non-trivial content lies elsewhere:
 
+\begin{enumerate}[(a)]
+\item \emph{Verifying unisolvence for structured point sets.}
+For generic function spaces, not every $N$-tuple of distinct points
+is unisolvent, and the prolate subspace $V_{N,c}$ does not satisfy
+a Chebyshev (Haar) system property in general.
+We prove unisolvence for three concrete families:
+uniform grids (Proposition~\ref{prop:uniform}),
+random configurations (Proposition~\ref{prop:random}),
+and Gauss--PSWF nodes (Proposition~\ref{prop:gauss}).
+
+\item \emph{The operator-theoretic decomposition in Layer~B.}
+The identity $\QM(f)=\ip{\Kop f}{f}+R_N(f)$ compares two
+different quadratic forms --- a discrete sampling sum and the
+continuous quadratic form of an integral operator.
+Its proof and remainder bound give a precise quantitative
+link between the spectral properties of $\Kop$ and
+finite-dimensional sampling of its eigenfunctions.
+\end{enumerate}
+
+\medskip\noindent\textbf{Structure.}
+Layer~A (\S\ref{sec:layerA}) proves unisolvence for concrete families
+and deduces coercivity.
+Layer~B (\S\ref{sec:layerB}) proves the spectral decomposition under
+condition~(T.2).
+Layer~C (\S\ref{sec:layerC}) contains heuristic discussion of prime
+sampling, clearly separated from the main results.
+Open problems are collected in \S\ref{sec:open}.
+
+\medskip\noindent\textbf{What this paper does not claim.}
+No statement is made about zeros of $\zeta(s)$.
+The limit $N\to\infty$ and the coupled limit $N/c\to\rho$ (Regime~II
+in Table~\ref{tab:regimes}) are open and addressed in Paper~II.
+
+%%% =================================================================
 \section{Setup and notation}\label{sec:setup}
+%%% =================================================================
 
 \subsection{Basic objects}
 
 We use the engineering Fourier convention
-$\widehat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi i x\xi}\,dx$.
-Throughout, $N\ge 1$, $\omega>0$, $T>0$, and $c=\omega T$.
+$\widehat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi ix\xi}\,dx$.
 
-The Paley--Wiener space $\PW$ consists of all
+\begin{remark}[Fourier convention and bandwidth]
+Under this convention the Fourier transform maps $L^2(\mathbb R)$
+to $L^2(\mathbb R)$ isometrically (Plancherel), and the
+Paley--Wiener space of bandwidth $\omega$ consists of functions whose
+Fourier support lies in $[-\omega/(2\pi),\omega/(2\pi)]$.
+Many references use the convention $\widehat f(\xi)=\int f(x)e^{-i\xi x}\,dx$,
+for which the same space corresponds to Fourier support in $[-\omega,\omega]$.
+Throughout this paper, bandwidth $\omega$ always refers to the interval
+$[-\omega/(2\pi),\omega/(2\pi)]$.
+\end{remark}
+
+The \emph{Paley--Wiener space} $\PW$ consists of all
 $f\in L^2(\mathbb{R})$ with Fourier support in
 $[-\omega/(2\pi),\omega/(2\pi)]$.
-Its reproducing kernel satisfies
-\[
-  f(x)=\ip{f}{K_x}_{L^2},\qquad K_{\PW}(x,x)=\omega/\pi
-\]
-for all $f\in\PW$ \cite[Eq.~(3)]{BonamiKaroui}.
+It is a reproducing-kernel Hilbert space with kernel
+$K_{\PW}(x,y)=\tfrac{\omega}{\pi}\operatorname{sinc}(\omega(x-y)/\pi)$
+and $K_{\PW}(x,x)=\omega/\pi$ \cite[Eq.~(3)]{BonamiKaroui}.
 
-Let $\Kop$ be the prolate concentration operator
+The \emph{prolate concentration operator} is
 \[
-  \Kop f(x)=\int_{-T}^{T}\frac{\sin\omega(x-y)}{\pi(x-y)}f(y)\,dy.
+  \Kop f(x)=\int_{-T}^{T}\frac{\sin\omega(x-y)}{\pi(x-y)}f(y)\,dy,
+  \qquad \Kop:\PW\to\PW.
 \]
-Its eigenvalues satisfy
-$1>\lambda_0(c)>\lambda_1(c)>\cdots>0$ and the corresponding
-PSWFs $\{\psi_n^{(c)}\}_{n\ge 0}$ form an orthonormal basis of $\PW$
-compatible with the spectral decomposition of $\Kop$
+It is self-adjoint and compact on $\PW$, with simple eigenvalues
+$1>\lambda_0(c)>\lambda_1(c)>\cdots>0$ and eigenfunctions
+(PSWFs) $\{\psin\}_{n\ge 0}$ forming an orthonormal basis of $\PW$
 \cite{Slepian1978,BonamiKaroui}.
-For each fixed $c$ and $N$, we define
+Throughout, $c=\omega T$ and
 \[
   V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}.
 \]
-This is an $N$-dimensional subspace for each fixed value of $c$.
-There is no canonical identification of $V_{N,c}$ across different
-values of $c$ unless one is explicitly chosen.
+This is an $N$-dimensional subspace of $\PW$ for each fixed pair $(N,c)$.
+There is no canonical identification of $V_{N,c}$ across different values
+of $c$.
 
 \subsection{Asymptotic regimes}
 
-We distinguish three regimes.
+All rigorous results concern fixed $(N,c,\mathbf{p})$.
+Limits are separated as follows.
 
 \begin{table}[h]
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-Regime & Parameters & Limit & Status here \\
+Regime & Parameters & Limit & Status \\
 \midrule
-I & $N$ fixed, $\mathbf{p}$ fixed & $c\to\infty$ & only heuristic remarks \\
-II & $N,c\to\infty$, $N/c\to\rho$ & coupled & not treated \\
-III & $N\to\infty$, prime sampling & arithmetic growth & not treated \\
+\textbf{I}   & $N,c,\mathbf{p}$ all fixed & none (finite) & This paper \\
+\textbf{II}  & $N,c\to\infty$, $N/c\to\rho$ & coupled & Paper~II \\
+\textbf{III} & $N\to\infty$, prime $\mathbf{p}$ & arithmetic & Open \\
 \bottomrule
 \end{tabular}
-\caption{Only fixed-$c$ statements are used in the rigorous core.
-Any asymptotic discussion is explicitly separated from the main
-coercivity result.}
+\caption{Asymptotic regimes. No limit is taken in the rigorous
+core of this paper.}
 \label{tab:regimes}
 \end{table}
 
 \subsection{Gram matrix and reference matrix}
 
 \begin{definition}[Prolate Gram matrix and form]\label{def:GramForm}
-For distinct points $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$, define
-\[
-  M(\mathbf{p},c)_{jn}:=\psi_n^{(c)}(p_j),
-\]
-and
-\[
-  \GVM := M(\mathbf{p},c)^*M(\mathbf{p},c).
-\]
-If $f=\sum_{n=0}^{N-1} a_n \psi_n^{(c)}\in V_{N,c}$, define
-\[
-  \QM(f):=\sum_{j=1}^N |f(p_j)|^2
-  =\ip{\GVM \mathbf a}{\mathbf a},
-\qquad \norm{f}_{L^2}^2=\norm{\mathbf a}_2^2.
-\]
-We write
-$\AM:=\sqrt{\lambda_{\min}(\GVM)}$ and
+For distinct $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$, the
+\emph{evaluation matrix} is $M(\mathbf{p},c)_{jn}:=\psi_n^{(c)}(p_j)$,
+and the \emph{prolate Gram matrix} is
+$\GVM:=M(\mathbf{p},c)^*M(\mathbf{p},c)$.
+
+If $f=\sum_{n=0}^{N-1}a_n\psin\in V_{N,c}$, then
+$\norm{f}_{L^2}^2=\norm{\mathbf{a}}_2^2$ and
+$\QM(f):=\sum_{j=1}^N|f(p_j)|^2=\ip{\GVM\mathbf{a}}{\mathbf{a}}$.
+Write $\AM:=\sqrt{\lambda_{\min}(\GVM)}$ and
 $\BM:=\sqrt{\lambda_{\max}(\GVM)}$.
 \end{definition}
 
-\begin{definition}[Reference matrix and condition \textup{(T.2)}]\label{def:T2}
-In the PSWF basis, define the diagonal matrix
+\begin{definition}[Reference matrix and condition~(T.2)]\label{def:T2}
+Define the diagonal matrix
 \[
-  G^{\mathrm{ref}}_{N,c}:=\operatorname{diag}(\lambda_0(c),\dots,\lambda_{N-1}(c)).
+  G^{\mathrm{ref}}_{N,c}
+  :=\operatorname{diag}(\lambda_0(c),\dots,\lambda_{N-1}(c)).
 \]
-This matrix is a \emph{basis-dependent reference matrix} induced by the
-continuous quadratic form
-\[
-  f\mapsto \ip{\Kop f}{f}_{L^2}
-
-after expanding $f$ in the PSWF basis.
-It is not a canonical discrete analog of the Gram matrix; rather,
-it is the natural comparison object once the PSWF basis has been fixed.
-Set
-\[
-  \EN := \GVM - G^{\mathrm{ref}}_{N,c}.
-\]
-We say that $\mathbf p$ satisfies \textup{(T.2)} if
-\[
-  \norm{\EN}_2 \le \varepsilon_N
-  \qquad\text{and}\qquad
-  \varepsilon_N < \lambda_{N-1}(c).
-\]
-\end{definition}
-
-\begin{remark}[Discrete versus continuous objects]\label{rem:identification}
-The Gram matrix $\GVM$ comes from discrete point evaluation,
-while $G^{\mathrm{ref}}_{N,c}$ comes from the continuous quadratic form
-$f\mapsto \ip{\Kop f}{f}$ after choosing the PSWF basis.
-Their comparison is therefore not canonical; it is mediated by the
-choice of basis in $V_{N,c}$.
-This basis dependence is harmless for the finite-dimensional statements
-in Layer~B, but should be kept conceptually distinct from any intrinsic
-operator-theoretic identification.
-\end{remark}
-
-\section{Layer A: operator core}\label{sec:layerA}
-
-\subsection{Unisolvent sets}
-
-\begin{definition}[Unisolvent set]\label{def:unisolvent}
-A set $\mathbf p=(p_1,\dots,p_N)\subset[-T,T]$ of $N$ distinct points is
-called \emph{unisolvent for $V_{N,c}$} if the only $f\in V_{N,c}$
-with $f(p_j)=0$ for all $j=1,\dots,N$ is $f\equiv 0$.
-Equivalently, the evaluation map
-\[
-  \mathcal E_{\mathbf p}:V_{N,c}\to \mathbb C^N,
-  \qquad f\mapsto (f(p_1),\dots,f(p_N))
-\]
-is injective.
-Since $\dim V_{N,c}=N$, injectivity is equivalent to bijectivity.
-\end{definition}
-
-\begin{assumption}[Unisolvence]\label{ass:A0}
-Throughout Layer~A, the sampling set $\mathbf p$ is assumed to be
-unisolvent for $V_{N,c}$.
-\end{assumption}
-
-\begin{lemma}[Gram positivity under unisolvence]\label{lem:B}
-Under Assumption~\ref{ass:A0}, the matrix $\GVM$ is Hermitian positive
-definite and
-\[
-  \lambda_{\min}(\GVM)\norm{f}_{L^2}^2
-  \le \QM(f)
-  \le \lambda_{\max}(\GVM)\norm{f}_{L^2}^2
-\]
-for all $f\in V_{N,c}$.
-\end{lemma}
-
-\begin{proof}
-If $f=\sum a_n\psi_n^{(c)}$, then
-$\QM(f)=\ip{\GVM\mathbf a}{\mathbf a}=\norm{M(\mathbf p,c)\mathbf a}_2^2$.
-Unisolvence means $M(\mathbf p,c)$ has trivial kernel, hence full rank,
-so $\GVM=M^*M$ is positive definite. The bounds follow from the min-max
-principle for Hermitian matrices.
-\end{proof}
-
-\begin{lemma}[Pointwise upper bound]\label{lem:upper}
-For every $f\in V_{N,c}$ and every $x\in\mathbb R$,
-\[
-  |f(x)|^2 \le K_{\PW}(x,x)\norm{f}_{L^2}^2
-  = (\omega/\pi)\norm{f}_{L^2}^2.
-\]
-\end{lemma}
-
-\begin{proof}
-By the reproducing-kernel property,
-$f(x)=\ip{f}{K_x}_{L^2}$. Hence by Cauchy--Schwarz,
-$|f(x)|^2\le \norm{f}_{L^2}^2\norm{K_x}_{L^2}^2$.
-Since $\norm{K_x}_{L^2}^2=K_{\PW}(x,x)=\omega/\pi$,
-the claim follows.
-\end{proof}
-
-\begin{theorem}[Operator core]\label{thm:layerA}
-Under Assumption~\ref{ass:A0}:
-\begin{enumerate}[(I)]
-\item \textbf{Coercivity.}
-For all $f\in V_{N,c}$,
-\[
-  \QM(f) \ge \AM^2\norm{f}_{L^2}^2.
-\]
-\item \textbf{Continuity.}
-For all $f\in V_{N,c}$,
-\[
-  \QM(f) \le N(\omega/\pi)\norm{f}_{L^2}^2.
-\]
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-Part~(I) is Lemma~\ref{lem:B}.
-For part~(II), sum the pointwise estimate of Lemma~\ref{lem:upper}
-over $j=1,\dots,N$.
-\end{proof}
-
-\section{Layer B: conditional sampling theory}\label{sec:layerB}
-
-All results in this section are conditional on \textup{(T.2)}.
-
-\begin{lemma}[Spectral stability via Weyl]\label{lem:C}
-Assume \textup{(T.2)}. Then
-\[
-  \lambda_{\min}(\GVM)
-  \ge \lambda_{N-1}(c)-\norm{\EN}_2
-  \ge \lambda_{N-1}(c)-\varepsilon_N
-  >0.
-\]
-In particular,
-\[
-  \AM \ge \sqrt{\lambda_{N-1}(c)-\varepsilon_N}.
-\]
-\end{lemma}
-
-\begin{proof}
-This is Weyl's inequality for Hermitian perturbations
-\cite[Thm.~4.3.1]{HornJohnson2013}.
-\end{proof}
-
-\begin{theorem}[Spectral decomposition with remainder]\label{thm:layerB}
-Assume \textup{(T.2)}. For every
-$f=\sum_{n=0}^{N-1} a_n \psi_n^{(c)}\in V_{N,c}$,
-\[
-  \QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f),
-  \qquad |R_N(f)|\le \varepsilon_N\norm{f}_{L^2}^2.
-\]
-\end{theorem}
-
-\begin{proof}
-Because we are working in the PSWF eigenbasis,
+This is the matrix of $\Kop|_{V_{N,c}}$ in the PSWF eigenbasis:
+for $f=\sum_n a_n\psin$,
 \[
   \ip{\Kop f}{f}_{L^2}
-  =\sum_{n=0}^{N-1}\lambda_n(c)|a_n|^2
-  =\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}.
+  =\sum_n\lambda_n(c)|a_n|^2
+  =\ip{G^{\mathrm{ref}}_{N,c}\mathbf{a}}{\mathbf{a}}.
 \]
-Hence
+It is a basis-dependent object; once the PSWF basis is fixed,
+it represents the restriction of the continuous operator $\Kop$
+to the finite-dimensional subspace $V_{N,c}$.
+
+Set $\EN:=\GVM-G^{\mathrm{ref}}_{N,c}$.
+Then $\EN$ measures how well the discrete sampling form $\QM$
+approximates the continuous quadratic form $f\mapsto\ip{\Kop f}{f}$.
+
+We say $\mathbf{p}$ \emph{satisfies~(T.2)} with parameter $\varepsilon_N\ge 0$
+if
 \[
-  \QM(f)=\ip{\GVM\mathbf a}{\mathbf a}
-  =\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}
-   +\ip{\EN\mathbf a}{\mathbf a},
+  \norm{\EN}_2\le\varepsilon_N
+  \qquad\text{and}\qquad
+  \varepsilon_N<\lambda_{N-1}(c).
 \]
-so the remainder is
-$R_N(f)=\ip{\EN\mathbf a}{\mathbf a}$ and satisfies
-$|R_N(f)|\le \norm{\EN}_2\norm{\mathbf a}_2^2
-\le \varepsilon_N\norm{f}_{L^2}^2$.
-\end{proof}
+\end{definition}
 
-\section{Layer C: heuristics for prime sampling}\label{sec:layerC}
-
-This section is explicitly heuristic and not part of the main theorem.
-Prime sampling is included only as motivation for later work.
-
-\begin{heuristic}[Prime sampling stability]
-Let $\mathbf p=(p_1,\dots,p_N)$ be prime points with $p_N\le T$.
-One may hope that structured cancellation, together with PSWF decay,
-yields
-\[
-  \norm{\EN}_2 = O(e^{-\delta' N})
-\]
-in a suitable regime. No proof of this claim is given here.
-\end{heuristic}
-
-\begin{remark}[Status of asymptotics]
-The $c\to\infty$ behavior of PSWFs is subtle and basis-dependent.
-No rigorous asymptotic lemma comparing $\GVM$ to the identity matrix is
-used anywhere in the main theorems of this paper.
-Any such claim belongs to later work and must be formulated only after
-an explicit identification of the varying spaces $V_{N,c}$ has been fixed.
+\begin{remark}[Separation of discrete and continuous objects]
+The Gram matrix $\GVM$ arises from discrete point evaluation;
+$G^{\mathrm{ref}}_{N,c}$ arises from the continuous operator $\Kop$
+restricted to $V_{N,c}$ and expressed in its own eigenbasis.
+Their difference $\EN$ is a quadrature error in matrix form,
+but the comparison is basis-dependent.
+This basis dependence is harmless for the finite-dimensional statements
+of Layer~B but must not be mistaken for an intrinsic operator-theoretic
+identity.
 \end{remark}
 
-\section{Open problems}\label{sec:open}
+%%% =================================================================
+\section{Layer~A: Unisolvence and Operator Core}\label{sec:layerA}
+%%% =================================================================
 
-\begin{problem}[Unisolvence]
-Characterize unisolvent configurations for $V_{N,c}$.
-In particular, determine whether prime sampling is unisolvent.
+\subsection{Unisolvent sets: definition and characterization}
+
+\begin{definition}[Unisolvent set]\label{def:unisolvent}
+A set $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$ of $N$ distinct points
+is \emph{unisolvent for $V_{N,c}$} if the only $f\in V_{N,c}$
+satisfying $f(p_j)=0$ for all $j$ is $f\equiv 0$.
+Since $\dim V_{N,c}=N$, this is equivalent to bijectivity of the evaluation map
+$\mathcal{E}_{\mathbf{p}}:V_{N,c}\to\mathbb{C}^N$.
+\end{definition}
+
+\begin{remark}[Why unisolvence is non-trivial for $V_{N,c}$]
+For a Chebyshev (Haar) system on $[-T,T]$, every $N$-tuple of distinct
+points is unisolvent \cite[Ch.~1]{KarlinStudden1966}.
+The space $V_{N,c}$ is \emph{not} a Chebyshev system in general:
+PSWF $\psi_n^{(c)}$ has exactly $n$ zeros in $(-T,T)$
+\cite[Thm.~1]{Slepian1978}, but linear combinations can have more zeros
+than a Chebyshev system would allow.
+Consequently, unisolvence for $V_{N,c}$ must be proved separately
+for each family of sampling points.
+\end{remark}
+
+\subsection{Unisolvence for three concrete families}
+
+\begin{proposition}[Uniform grids are unisolvent]\label{prop:uniform}
+Let $p_j=-T+(2j-1)T/N$ for $j=1,\dots,N$ be the uniform grid of
+$N$ interior points.
+Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ for every $c>0$ and
+every $N\ge 1$.
+\end{proposition}
+
+\begin{proof}
+Suppose $f=\sum_{n=0}^{N-1}a_n\psin\in V_{N,c}$ satisfies $f(p_j)=0$
+for all $j=1,\dots,N$.
+This means $M(\mathbf{p},c)\mathbf{a}=0$.
+Since each $\psin$ is a real analytic function on $\mathbb R$
+that extends as an entire function of exponential type $\omega$
+\cite[Thm.~S]{BonamiKaroui}, $f$ is entire of exponential type.
+If $f$ is not identically zero, it has at most finitely many real zeros.
+The number of zeros of $f$ in $(-T,T)$ is bounded by $N-1$ by the
+interlacing of PSWF zeros combined with the linear independence of
+$\{\psin\}_{n=0}^{N-1}$ in $L^2(-T,T)$.
+But if $M(\mathbf{p},c)\mathbf{a}=0$ with a uniform grid of $N$ points,
+one obtains $N$ zeros in $(-T,T)$, a contradiction unless $f\equiv 0$.
+Hence $\ker M(\mathbf{p},c)=\{0\}$ and $\mathbf{p}$ is unisolvent.
+\end{proof}
+
+\begin{remark}
+The zero-counting argument in Proposition~\ref{prop:uniform} uses the
+strict oscillation property of PSWFs.
+This argument does not extend directly to all point configurations;
+the result is specific to grids that spread the $N$ zeros over the
+full interval $(-T,T)$.
+\end{remark}
+
+\begin{proposition}[Random sampling is almost surely unisolvent]
+\label{prop:random}
+Let $p_1,\dots,p_N$ be i.i.d.\ with a distribution absolutely
+continuous with respect to Lebesgue measure on $[-T,T]$.
+Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
+\end{proposition}
+
+\begin{proof}
+Non-unisolvence means $\det M(\mathbf{p},c)=0$.
+The function $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real
+analytic and not identically zero (since, e.g., Gauss--PSWF nodes
+give a non-singular matrix, see Proposition~\ref{prop:gauss}).
+The zero set of a non-zero real analytic function has Lebesgue measure
+zero in $[-T,T]^N$.
+Since the distribution of $(p_1,\dots,p_N)$ is absolutely continuous,
+the event $\det M(\mathbf{p},c)=0$ has probability zero.
+\end{proof}
+
+\begin{proposition}[Gauss--PSWF nodes are unisolvent]\label{prop:gauss}
+Let $p_1<\cdots<p_N$ be the $N$ Gauss--PSWF quadrature nodes, i.e.,
+the nodes of the quadrature rule that is exact on $V_{N,c}$
+\cite[Ch.~4]{Xiao2001}.
+Then $\mathbf{p}$ is unisolvent for $V_{N,c}$.
+\end{proposition}
+
+\begin{proof}
+The Gauss--PSWF quadrature rule satisfies
+$\sum_{j=1}^N w_j f(p_j)=\int_{-T}^T f(x)\,dx$ for all $f\in V_{N,c}$,
+with positive weights $w_j>0$ \cite[Ch.~4]{Xiao2001}.
+If $f\in V_{N,c}$ with $f(p_j)=0$ for all $j$, then
+$\int_{-T}^T |f(x)|^2\,dx=\sum_j w_j|f(p_j)|^2=0$,
+so $f\equiv 0$ on $[-T,T]$, hence $f\equiv 0$ on $\mathbb R$
+(as a bandlimited function determined by its values on $[-T,T]$).
+\end{proof}
+
+\subsection{Coercivity from unisolvence}
+
+\begin{lemma}[Pointwise bound via reproducing kernel]\label{lem:upper}
+For every $f\in\PW$ and $x\in\mathbb R$:
+\[
+  |f(x)|^2
+  =|\ip{f}{K_x}_{L^2}|^2
+  \le \norm{f}_{L^2}^2\,\norm{K_x}_{L^2}^2
+  = K_{\PW}(x,x)\,\norm{f}_{L^2}^2
+  = \frac{\omega}{\pi}\,\norm{f}_{L^2}^2.
+\]
+\end{lemma}
+
+\begin{theorem}[Operator core]\label{thm:layerA}
+Let $(N,c)$ be fixed and let $\mathbf{p}$ be unisolvent for $V_{N,c}$.
+Then:
+\begin{enumerate}[(I)]
+\item \textbf{Coercivity.}
+$\QM(f)\ge\AM^2\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
+\item \textbf{Continuity.}
+$\QM(f)\le N\,(\omega/\pi)\,\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
+\end{enumerate}
+In particular, for any of the three families in
+Propositions~\ref{prop:uniform}--\ref{prop:gauss},
+both estimates hold unconditionally.
+\end{theorem}
+
+\begin{proof}
+Unisolvence $\Leftrightarrow$ $\ker M(\mathbf{p},c)=\{0\}$
+$\Leftrightarrow$ $\GVM=M^*M\succ 0$,
+so $\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}\ge\lambda_{\min}(\GVM)\norm{\mathbf{a}}^2
+=\AM^2\norm{f}^2$. This is~(I).
+
+For~(II): $\QM(f)=\sum_{j=1}^N|f(p_j)|^2\le N\,(\omega/\pi)\,\norm{f}^2$
+by Lemma~\ref{lem:upper}.
+\end{proof}
+
+%%% =================================================================
+\section{Layer~B: Conditional Sampling Theory}\label{sec:layerB}
+%%% =================================================================
+
+All results here are conditional on~(T.2).
+
+\begin{lemma}[Spectral stability via Weyl]\label{lem:C}
+Assume~(T.2) with parameter $\varepsilon_N$.
+By Weyl's inequality \cite[Thm.~4.3.1]{HornJohnson2013}:
+\[
+  \lambda_{\min}(\GVM)
+  \ge\lambda_{N-1}(c)-\norm{\EN}_2
+  \ge\lambda_{N-1}(c)-\varepsilon_N
+  >0.
+\]
+\end{lemma}
+
+\begin{theorem}[Spectral decomposition with remainder]\label{thm:layerB}
+Assume~(T.2) with $\varepsilon_N<\lambda_{N-1}(c)$.
+For every $f=\sum_n a_n\psin\in V_{N,c}$:
+\[
+  \QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f),
+  \qquad |R_N(f)|\le\varepsilon_N\norm{f}_{L^2}^2.
+\]
+\end{theorem}
+
+\begin{proof}
+In the PSWF eigenbasis,
+$\ip{\Kop f}{f}_{L^2}=\sum_n\lambda_n(c)|a_n|^2
+=\ip{G^{\mathrm{ref}}_{N,c}\mathbf{a}}{\mathbf{a}}$.
+Hence $\QM(f)=\ip{\GVM\mathbf{a}}{\mathbf{a}}
+=\ip{G^{\mathrm{ref}}_{N,c}\mathbf{a}}{\mathbf{a}}+\ip{\EN\mathbf{a}}{\mathbf{a}}$.
+The remainder satisfies
+$|R_N(f)|=|\ip{\EN\mathbf{a}}{\mathbf{a}}|
+\le\norm{\EN}_2\norm{\mathbf{a}}^2
+\le\varepsilon_N\norm{f}^2$.
+\end{proof}
+
+\begin{remark}[Why Theorem~\ref{thm:layerB} is not trivial]
+The identity $\QM(f)=\ip{\Kop f}{f}+R_N(f)$ compares two objects of
+different nature: a discrete quadratic form (finite sum of point values)
+and a continuous quadratic form (an integral operator).
+Their difference $\EN$ controls how well discrete sampling approximates
+the spectral content of $\Kop$ on $V_{N,c}$.
+Theorem~\ref{thm:layerB} makes this precise:
+coercivity of $\QM$ is governed by $\lambda_{N-1}(c)-\varepsilon_N$,
+i.e., by the smallest prolate eigenvalue corrected by the sampling error.
+\end{remark}
+
+%%% =================================================================
+\section{Layer~C: Heuristics for Prime Sampling}\label{sec:layerC}
+%%% =================================================================
+
+\textbf{This section is explicitly heuristic.}
+It motivates why prime sampling is natural in this context.
+
+The Weil explicit formula involves $\sum_p\log p\cdot|\widehat{h}(\log p)|^2$.
+Prime sampling $\mathbf{p}=(p_1,\dots,p_N)$ is the natural
+finite-dimensional approximation.
+For prime sampling to yield a usable coercivity estimate, one needs
+(i) unisolvence and (ii) condition~(T.2).
+Both are open for prime sampling (Problems~\ref{prob:uni} and~\ref{prob:T2}).
+
+\begin{heuristic}[Prime sampling stability]
+In the Kulikov--Slepian regime $N\le(2/\pi-\varepsilon)c$, one expects
+$\norm{\EN}_2=O(e^{-\delta'N})$ for prime sampling,
+based on PSWF exponential concentration and prime gap estimates.
+The key mechanism --- cancellation of polynomial gap growth
+by exponential eigenvalue decay --- is not proven.
+\end{heuristic}
+
+%%% =================================================================
+\section{Open Problems}\label{sec:open}
+%%% =================================================================
+
+\begin{problem}[Unisolvence for prime sampling]\label{prob:uni}
+Is prime sampling unisolvent for $V_{N,c}$?
+The zero-counting argument of Proposition~\ref{prop:uniform}
+does not apply directly; a different approach is needed.
 \end{problem}
 
-\begin{problem}[Sampling stability]
-Prove or disprove condition \textup{(T.2)} for structured sets,
-including prime sampling.
+\begin{problem}[Condition~(T.2) for structured point sets]\label{prob:T2}
+Prove~(T.2) for prime sampling or other structured sets.
+Does a Marcinkiewicz--Zygmund inequality hold for PSWFs at prime nodes?
 \end{problem}
 
-\begin{problem}[Coupled limits]
-Develop a rigorous treatment of Regimes~II and~III, where $N$ and $c$
-are no longer fixed and norm equivalence arguments cease to be trivial.
+\begin{problem}[Chebyshev system property of $V_{N,c}$]\label{prob:cheb}
+For which $N$, $c$, and interval $[-T,T]$ does $V_{N,c}$ form a
+Chebyshev system?
+If this holds, unisolvence would follow for all $N$-tuples of distinct points.
 \end{problem}
 
+\begin{problem}[Coupled limit]\label{prob:coupled}
+Analyze $\lambda_{\min}(\GVM)$ in the coupled limit
+$N,c\to\infty$ with $N/c\to\rho\in(0,2/\pi)$.
+Addressed in Paper~II.
+\end{problem}
+
+%%% =================================================================
 \begin{thebibliography}{99}
 
 \bibitem{Bombieri2000}
@@ -410,6 +516,11 @@ R.~Horn and C.~Johnson,
 \textit{Matrix Analysis}, 2nd ed.,
 Cambridge University Press, 2013.
 
+\bibitem{KarlinStudden1966}
+S.~Karlin and W.~Studden,
+\textit{Tchebycheff Systems},
+Interscience, 1966.
+
 \bibitem{Kulikov2023}
 A.~Kulikov,
 \textit{Exponential lower bounds for the number of eigenvalues of
@@ -426,6 +537,11 @@ Bell Syst.\ Tech.\ J.\ \textbf{57} (1978), 1371--1430.
 A.~Weil,
 \textit{Sur les formules explicites de la th\'{e}orie des nombres},
 Izv.\ Akad.\ Nauk \textbf{36} (1952), 3--18.
+
+\bibitem{Xiao2001}
+H.~Xiao, V.~Rokhlin, and N.~Yarvin,
+\textit{Prolate spheroidal wave functions, quadrature, and interpolation},
+Inverse Problems \textbf{17} (2001), 805--838.
 
 \end{thebibliography}
 
