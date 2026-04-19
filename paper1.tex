@@ -48,7 +48,7 @@ phase obstruction, and Mellin bandwidth decay.}
 \subjclass[2020]{42C05, 42B10, 47B32, 11M06}
 
 \keywords{prolate spheroidal wave functions, Gram form, coercivity,
-unisolvent sampling, Paley--Wiener space, Weil positivity}
+unisolvent sampling, Paley--Wiener space, Marcinkiewicz--Zygmund inequalities}
 
 \begin{document}
 \maketitle
@@ -61,9 +61,9 @@ For $N$ distinct sampling points $\mathbf{p}\subset[-T,T]$ we study
 the prolate Gram form $\QM(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_{N,c}$.
 
 The nontrivial content of this paper is two-fold.
-First, we prove unisolvence for two concrete families of sampling sets:
-Gauss--PSWF quadrature nodes and random configurations
-(Propositions~\ref{prop:gauss} and~\ref{prop:random}).
+First, we prove unisolvence for random configurations and for weighted sampling models
+satisfying a Marcinkiewicz--Zygmund-type lower frame bound
+(Propositions~\ref{prop:random} and~\ref{prop:mz_unisolvent}).
 For uniform grids we explain the associated zero-counting problem,
 but we do not claim a theorem because $V_{N,c}$ is not known to be
 a Chebyshev system in general.
@@ -73,10 +73,8 @@ namely
 $\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
 where the remainder measures how well discrete sampling approximates
 the continuous quadratic form of~$\Kop$.
-For Gauss--PSWF nodes we also record an explicit structural identity for the error matrix,
-showing that the deviation from the reference operator is governed by the deviation of the
-quadrature weights from uniformity. This yields a complete reduction of~(T.2)
-for that family to a quantitative weight-flatness estimate.
+For weighted sampling models we further isolate the discrete operator error into a weighted-frame defect
+and a spectral mismatch term, thereby reducing the comparison problem to two explicit perturbative components.
 
 No claim is made about zeros of $\zeta(s)$, prime sampling, or limits
 in which both $N$ and $c$ vary.
@@ -103,8 +101,8 @@ unisolvence can actually be proved, and
 (ii) quantifying the gap between the discrete sampling form and the
 continuous quadratic form of $\Kop$.
 
-Layer~A proves unisolvence for Gauss--PSWF nodes and random sampling,
-and records the uniform-grid case as an open zero-counting problem.
+Layer~A proves unisolvence for random sampling and for weighted sampling models
+satisfying a lower frame inequality, and records the uniform-grid case as an open zero-counting problem.
 Layer~B proves the spectral decomposition under condition~(T.2).
 Layer~C contains heuristic discussion of prime sampling.
 
@@ -204,33 +202,33 @@ used later in the scaling-limit continuation of this project.
 
 \begin{definition}[Unisolvent set]\label{def:unisolvent}
 A set $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$ of $N$ distinct points
-is \emph{unisolvent for $V_{N,c}$} (equivalently, uniqueness of interpolation in $V_{N,c}$)
-if the only $f\in V_{N,c}$ satisfying $f(p_j)=0$ for all $j$ is $f\equiv 0$.
+is \emph{unisolvent for $V_{N,c}$} if the only $f\in V_{N,c}$ satisfying
+$f(p_j)=0$ for all $j$ is $f\equiv0$.
 Since $\dim V_{N,c}=N$, this is equivalent to bijectivity of the evaluation map
 $\mathcal{E}_{\mathbf{p}}:V_{N,c}\to\mathbb{C}^N$.
 \end{definition}
 
-\begin{definition}[Axiomatic Gauss--PSWF quadrature model]\label{def:gauss_model}
-A family of nodes and weights
+\begin{definition}[Weighted frame model on $V_{N,c}$]\label{def:mz_model}
+A family of nodes and positive weights
 \[
   \{(p_j,w_j)\}_{j=1}^N, \qquad -T\le p_1<\cdots<p_N\le T, \qquad w_j>0,
 \]
-will be called a \emph{Gauss--PSWF quadrature model for $V_{N,c}$} if it satisfies
+is said to satisfy a \emph{Marcinkiewicz--Zygmund frame condition} on $V_{N,c}$
+with defect $\delta\in[0,1)$ if
 \[
-  \int_{-T}^{T} f(x)\overline{g(x)}\,dx
-  =\sum_{j=1}^N w_j f(p_j)\overline{g(p_j)}
-  \qquad \text{for all } f,g\in V_{N,c}.
+  (1-\delta)\norm{f}_{L^2(-T,T)}^2
+  \le \sum_{j=1}^N w_j |f(p_j)|^2
+  \le (1+\delta)\norm{f}_{L^2(-T,T)}^2
 \]
-This exactness assumption is the structural input used in the sequel.
-It is motivated by PSWF quadrature constructions such as \cite{Xiao2001},
-but is stated here as an explicit hypothesis on the discrete model.
+for all $f\in V_{N,c}$.
+The case $\delta=0$ corresponds to exact weighted discretization of the
+$L^2(-T,T)$ geometry of $V_{N,c}$.
 \end{definition}
 
 \begin{remark}[Weighted-frame viewpoint]
-Under Definition~\ref{def:gauss_model}, the evaluation map from $V_{N,c}$ to $\mathbb C^N$
-becomes a weighted discrete model of the $L^2(-T,T)$ geometry of $V_{N,c}$.
-The Gauss--PSWF branch of the paper should therefore be read as a reduction of sampling geometry
-to a weighted frame perturbation problem.
+Definition~\ref{def:mz_model} treats discrete sampling on $V_{N,c}$ as a weighted frame problem.
+The geometry is therefore encoded not by an exact quadrature oracle but by a stability defect $\delta$.
+Gauss--PSWF constructions should be regarded as motivation for such models, not as an automatic source of exact identities.
 \end{remark}
 
 \begin{remark}[Why unisolvence is non-trivial for $V_{N,c}$]
@@ -253,22 +251,24 @@ By the identity theorem for holomorphic functions, the entire extension
 must vanish identically, hence $f\equiv 0$ on $\mathbb R$.
 \end{proof}
 
-\begin{proposition}[Gauss--PSWF nodes are unisolvent]\label{prop:gauss}
-Assume that $\{(p_j,w_j)\}_{j=1}^N$ is a Gauss--PSWF quadrature model for $V_{N,c}$
-in the sense of Definition~\ref{def:gauss_model}.
-Then $\mathbf{p}=(p_1,\dots,p_N)$ is unisolvent for $V_{N,c}$.
+\begin{proposition}[Weighted MZ lower frame implies unisolvence]\label{prop:mz_unisolvent}
+Assume that $\{(p_j,w_j)\}_{j=1}^N$ satisfies the lower frame bound
+\[
+  A\norm{f}_{L^2(-T,T)}^2\le \sum_{j=1}^N w_j |f(p_j)|^2
+\]
+for all $f\in V_{N,c}$, with some constant $A>0$.
+Then $\mathbf p=(p_1,\dots,p_N)$ is unisolvent for $V_{N,c}$.
+In particular, every Marcinkiewicz--Zygmund frame condition with defect $\delta<1$
+implies unisolvence.
 \end{proposition}
 
 \begin{proof}
-Assume $f\in V_{N,c}$ and $f(p_j)=0$ for all $j$.
-Since $|f|^2=f\overline{f}$ belongs to the exactness class,
+If $f\in V_{N,c}$ satisfies $f(p_j)=0$ for all $j$, then
 \[
-  \int_{-T}^{T}|f(x)|^2\,dx
-  =\sum_{j=1}^N w_j |f(p_j)|^2
-  =0.
+  0=\sum_{j=1}^N w_j|f(p_j)|^2\ge A\norm{f}_{L^2(-T,T)}^2.
 \]
 Hence $f=0$ almost everywhere on $[-T,T]$, thus everywhere on that interval
-by continuity, and therefore $f\equiv 0$ on $\mathbb R$
+by continuity, and therefore $f\equiv0$ on $\mathbb R$
 by Lemma~\ref{lem:identity}.
 \end{proof}
 
@@ -283,9 +283,8 @@ Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
-It is not identically zero since there exists at least one configuration
-(for instance, any Gauss--PSWF quadrature model from Proposition~\ref{prop:gauss})
-for which the matrix has full rank.
+It is not identically zero because the family of point-evaluation functionals on
+$V_{N,c}$ is separating, hence one can choose $N$ points giving an invertible evaluation map.
 The zero set of a nonzero real-analytic function has Lebesgue measure zero,
 so absolute continuity implies that non-unisolvence occurs with probability zero.
 \end{proof}
@@ -308,8 +307,8 @@ Then:
 \item $\QM(f)\ge \AM^2\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
 \item $\QM(f)\le N(\omega/\pi)\norm{f}_{L^2}^2$ for all $f\in V_{N,c}$.
 \end{enumerate}
-In particular, these bounds hold unconditionally for every Gauss--PSWF quadrature model and,
-by Proposition~\ref{prop:random}, for random sampling almost surely.
+In particular, these bounds hold for every weighted frame model satisfying the hypotheses of
+Proposition~\ref{prop:mz_unisolvent}, and by Proposition~\ref{prop:random} for random sampling almost surely.
 \end{theorem}
 
 \begin{proof}
@@ -348,107 +347,90 @@ The implication with constant $B$ is immediate.
 Applying Theorem~\ref{thm:layerA}(II) gives the final bound.
 \end{proof}
 
-\begin{proposition}[Explicit error representation for Gauss--PSWF nodes]
-\label{prop:gauss_error}
-Assume that $\{(p_j,w_j)\}_{j=1}^N$ is a Gauss--PSWF quadrature model for $V_{N,c}$,
-and let $D:=\operatorname{diag}(w_1,\dots,w_N)$.
-Then, in the PSWF basis,
+\section{Layer~B: Comparison Theorem}\label{sec:layerB}
+
+All results here are conditional on~(T.2).
+
+\begin{definition}[Weighted discrete reference matrix]\label{def:weighted_ref}
+Given positive weights $w_1,\dots,w_N$, let $D:=\operatorname{diag}(w_1,\dots,w_N)$ and define
 \[
-  M(\mathbf p,c)^* D\, M(\mathbf p,c)=G^{\mathrm{ref}}_{N,c}.
+  G^{\mathrm{w}}_{N,c}(\mathbf p,D):=M(\mathbf p,c)^* D\,M(\mathbf p,c).
 \]
-Consequently,
+This is the weighted discrete Gram matrix associated with the sampling model $(\mathbf p,D)$.
+\end{definition}
+
+\begin{proposition}[Two-step error decomposition]\label{prop:two_step_error}
+Let $(\mathbf p,D)$ be a weighted sampling model with positive diagonal weight matrix $D$.
+Then
 \[
   \EN
   =\GVM-G^{\mathrm{ref}}_{N,c}
-  =M(\mathbf p,c)^*(I-D)M(\mathbf p,c).
+  =M(\mathbf p,c)^*(I-D)M(\mathbf p,c)
+   +\bigl(G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}\bigr).
 \]
-In particular,
+Consequently,
 \[
-  \norm{\EN}_2\le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2.
+  \norm{\EN}_2
+  \le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2
+   + \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2.
 \]
 \end{proposition}
 
 \begin{proof}
-For basis vectors $\psi_m^{(c)},\psi_n^{(c)}\in V_{N,c}$, the exactness property in
-Definition~\ref{def:gauss_model} gives
+Insert and subtract the weighted discrete Gram matrix:
 \[
-  \sum_{j=1}^N w_j\,\psi_m^{(c)}(p_j)\overline{\psi_n^{(c)}(p_j)}
-  =\int_{-T}^{T}\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx.
+  \EN
+  =\GVM-G^{\mathrm{w}}_{N,c}(\mathbf p,D)
+   +G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}.
 \]
-Since the PSWFs diagonalize $\Kop$, the right-hand side equals
-$\lambda_n(c)\,\delta_{mn}$.
-Hence the matrix of the weighted discrete form in the PSWF basis is exactly
-$G^{\mathrm{ref}}_{N,c}$, i.e.
+Since
 \[
-  M(\mathbf p,c)^* D\,M(\mathbf p,c)=G^{\mathrm{ref}}_{N,c}.
+  \GVM-G^{\mathrm{w}}_{N,c}(\mathbf p,D)
+  =M(\mathbf p,c)^*(I-D)M(\mathbf p,c),
 \]
-Subtracting this identity from $\GVM=M(\mathbf p,c)^*M(\mathbf p,c)$ yields
-\[
-  \EN=M(\mathbf p,c)^*(I-D)M(\mathbf p,c).
-\]
-Finally, the operator-norm bound follows from submultiplicativity.
+the claimed identity follows. The norm bound is immediate from subadditivity and submultiplicativity.
 \end{proof}
 
-\begin{remark}[Interpretation of Proposition~\ref{prop:gauss_error}]
-For Gauss--PSWF quadrature models, the deviation from the reference operator is entirely governed by
-the deviation of the quadrature weights from uniformity.
-Thus, for this family, the comparison problem reduces to a weighted frame perturbation problem.
+\begin{remark}[Interpretation of Proposition~\ref{prop:two_step_error}]
+The error now splits into two independent effects: a weighted-frame defect
+$M^*(I-D)M$ and a spectral mismatch term
+$G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}$.
+Thus condition~\textup{(T.2)} is not reduced to pure weight flatness alone;
+it also requires compatibility between the weighted discrete model and the prolate spectrum.
 \end{remark}
 
-\begin{corollary}[Reduction of \textup{(T.2)} to weight flatness for Gauss--PSWF nodes]
-\label{cor:gauss_weight_flatness}
-In the setting of Proposition~\ref{prop:gauss_error}, assume in addition that
+\begin{corollary}[Sufficient criterion for \textup{(T.2)} from two defects]\label{cor:two_defects}
+Assume that the weighted sampling model $(\mathbf p,D)$ satisfies
 \[
-  \delta_N:=\norm{I-D}_2<\frac{\lambda_{N-1}(c)}{N\omega/\pi}.
+  \norm{I-D}_2\le \delta_N,
+  \qquad
+  \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2\le \eta_N,
+\]
+with
+\[
+  \delta_N\,\frac{N\omega}{\pi}+\eta_N<\lambda_{N-1}(c).
 \]
 Then condition~\textup{(T.2)} holds with
 \[
-  \varepsilon_N:=\delta_N\,\frac{N\omega}{\pi}.
+  \varepsilon_N:=\delta_N\,\frac{N\omega}{\pi}+\eta_N.
 \]
-In particular, if $\delta_N\to0$ in a regime where $N\omega/\pi$ remains bounded,
-then $\varepsilon_N\to0$.
 \end{corollary}
 
 \begin{proof}
-By Proposition~\ref{prop:gauss_error},
+By Proposition~\ref{prop:two_step_error},
 \[
-  \norm{\EN}_2\le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2.
+  \norm{\EN}_2
+  \le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2
+   +\norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2.
 \]
-Since $\GVM=M(\mathbf p,c)^*M(\mathbf p,c)$, the identity
-$\norm{M(\mathbf p,c)}_2^2=\norm{M(\mathbf p,c)^*M(\mathbf p,c)}_2
-=\norm{\GVM}_2=\lambda_{\max}(\GVM)$
-holds for the operator norm.
-By Lemma~\ref{lem:lambda_max_bound},
-$\lambda_{\max}(\GVM)\le N\omega/\pi$.
+Using Lemma~\ref{lem:lambda_max_bound},
+$\norm{M(\mathbf p,c)}_2^2=\lambda_{\max}(\GVM)\le N\omega/\pi$.
 Therefore
 \[
-  \norm{\EN}_2\le \delta_N\,\frac{N\omega}{\pi}=\varepsilon_N.
+  \norm{\EN}_2\le \delta_N\,\frac{N\omega}{\pi}+\eta_N=\varepsilon_N.
 \]
-The displayed hypothesis gives
-$\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\ref{def:T2} applies.
+The displayed hypothesis gives $\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\ref{def:T2} applies.
 \end{proof}
-
-\begin{remark}[What Corollary~\ref{cor:gauss_weight_flatness} does and does not prove]
-The corollary reduces the verification of~\textup{(T.2)} for Gauss--PSWF quadrature models to a
-pure weight-flatness estimate.
-It does not by itself prove that $\delta_N\to0$; that is an additional quantitative
-quadrature question.
-Accordingly, the main unresolved issue for this family is no longer the matrix structure
-of the error term, but the asymptotic behavior of the quadrature weights.
-\end{remark}
-
-\begin{remark}[Uniform grids]
-We do not claim unisolvence for uniform grids.
-A natural approach would be to prove that every nonzero element of
-$V_{N,c}$ has at most $N-1$ zeros in $(-T,T)$, but such a bound would
-follow from a Chebyshev-type property that is not available in general
-for PSWF spans. Establishing or disproving uniform-grid unisolvence is
-therefore left open.
-\end{remark}
-
-\section{Layer~B: Comparison Theorem}\label{sec:layerB}
-
-All results here are conditional on~(T.2).
 
 \begin{lemma}[Spectral stability via Weyl]\label{lem:C}
 Assume~(T.2) with parameter $\varepsilon_N$.
@@ -498,10 +480,9 @@ Then
 The key quantitative issue for any future application is to prove that
 $\norm{\EN}_2$ is small relative to $\lambda_{N-1}(c)$ for structured
 sampling sets.
+By Proposition~\ref{prop:two_step_error}, this requires simultaneous control of a weighted-frame defect
+and a spectral mismatch defect.
 Without such control, Layer~B remains a formal comparison principle.
-For Gauss--PSWF quadrature models, Proposition~\ref{prop:gauss_error} and
-Corollary~\ref{cor:gauss_weight_flatness} reduce this problem to quantitative
-flatness of the quadrature weights.
 \end{remark}
 
 \section{Layer~C: Heuristics for prime sampling}\label{sec:layerC}
@@ -516,8 +497,8 @@ unisolvence and condition~(T.2), and both problems are open.
 
 \begin{heuristic}[Prime sampling stability]
 In the regime $N\le (2/\pi-\varepsilon)c$, one may hope that PSWF
-concentration and prime-gap information combine to yield an estimate of the form
-$\norm{\EN}_2=O(e^{-\delta' N})$.
+concentration and prime-gap information combine to yield estimates simultaneously controlling
+weighted-frame stability and the spectral mismatch term.
 This is currently speculative.
 \end{heuristic}
 
@@ -529,13 +510,13 @@ More generally, decide whether nontrivial zero-counting bounds hold for
 linear combinations of the first $N$ PSWFs.
 \end{problem}
 
-\begin{problem}[Unisolvence for prime sampling]
-Is prime sampling unisolvent for $V_{N,c}$?
+\begin{problem}[Weighted frame models for PSWF sampling]
+Construct explicit structured sampling sets and weights satisfying a Marcinkiewicz--Zygmund frame condition on $V_{N,c}$.
 \end{problem}
 
-\begin{problem}[Condition~(T.2) for structured point sets]
-Prove~(T.2) for prime sampling or derive quantitative weight-flatness estimates
-for Gauss--PSWF quadrature models strong enough to trigger Corollary~\ref{cor:gauss_weight_flatness}.
+\begin{problem}[Condition~(T.2) from two defects]
+Derive quantitative estimates on the weighted-frame defect and the spectral mismatch defect
+strong enough to trigger Corollary~\ref{cor:two_defects}.
 Does a Marcinkiewicz--Zygmund inequality hold for PSWFs at prime nodes?
 \end{problem}
 
