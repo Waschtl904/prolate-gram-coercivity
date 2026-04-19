@@ -168,6 +168,13 @@ Unweighted sampling corresponds to the special case $w_j\equiv 1$, which in gene
 frame bounds that are uniform with respect to the geometry of $\mathbf p$.
 \end{definition}
 
+\begin{remark}[Basis dependence and spectral invariance]\label{rem:basis_invariance}
+The matrix $\GVM$ depends on the chosen orthonormal basis of $V_{N,c}$.
+In this paper we use the PSWF basis, for which the coefficient identification is canonical.
+However, the associated Gram operator on $V_{N,c}$ and its spectral quantities,
+such as $\lambda_{\min}(\GVM)$ and $\lambda_{\max}(\GVM)$, are basis-invariant.
+\end{remark}
+
 \begin{definition}[Reference matrix and condition~(T.2)]\label{def:T2}
 Define the diagonal matrix
 \[
@@ -192,6 +199,7 @@ We say that $\mathbf{p}$ satisfies
   \varepsilon_N<\lambda_{N-1}(c).
 \]
 \end{enumerate}
+Condition~\textup{(T.2)} is a strong spectral matching hypothesis and should not be regarded as generic.
 \end{definition}
 
 \begin{remark}[Geometric meaning of $\EN$]\label{rem:EN_meaning}
@@ -208,6 +216,13 @@ This identification is unitary only on the finite-dimensional space $V_{N,c}$ eq
 not on the whole Paley--Wiener space.
 The notation \textup{(T.2)} is chosen to remain compatible with the numbering
 used later in the scaling-limit continuation of this project.
+\end{remark}
+
+\begin{remark}[Invariance of $V_{N,c}$ under $\Kop$]\label{rem:K_invariant}
+Because the PSWFs are eigenfunctions of $\Kop$ on the whole space $\PW$,
+the finite-dimensional subspace $V_{N,c}$ is invariant under $\Kop$.
+The matrix $G^{\mathrm{ref}}_{N,c}$ is therefore exactly the matrix of the restricted operator
+$\Kop|_{V_{N,c}}$ in the PSWF basis.
 \end{remark}
 
 \section{Layer~A: Unisolvence and operator core}\label{sec:layerA}
@@ -252,13 +267,13 @@ In particular, the natural zero-counting route for uniform grids remains open.
 \end{remark}
 
 \begin{lemma}[Identity principle for Paley--Wiener functions]\label{lem:identity}
-If $f\in\PW$ vanishes on a nonempty interval, then $f\equiv 0$ on
-$\mathbb R$.
+If $f\in\PW$ vanishes on a set with an accumulation point, then $f\equiv 0$
+on $\mathbb R$.
 \end{lemma}
 
 \begin{proof}
 Every $f\in\PW$ extends to an entire function of exponential type.
-If it vanishes on an interval, it has an accumulation set of zeros.
+If it vanishes on a set with an accumulation point, then the entire extension has a non-discrete zero set.
 By the identity theorem for holomorphic functions, the entire extension
 must vanish identically, hence $f\equiv 0$ on $\mathbb R$.
 Classically, this is a basic uniqueness phenomenon for Paley--Wiener spaces.
@@ -297,11 +312,12 @@ Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 Since each PSWF $\psi_n^{(c)}$ is a real-analytic function, the map
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
 It therefore suffices to know that this determinant is not identically zero.
-Since the point-evaluation functionals on the finite-dimensional space $V_{N,c}$ are separating,
-there exists at least one configuration $\mathbf p\subset[-T,T]$ for which the evaluation map
-$\mathcal E_{\mathbf p}:V_{N,c}\to\mathbb C^N$ is bijective. Hence
-$\det M(\mathbf{p},c)$ is not identically zero.
-Therefore its zero set has Lebesgue measure zero, and absolute continuity implies
+Because the functions $\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}$ are linearly independent,
+there exists a configuration $\mathbf p\subset[-T,T]$ for which the evaluation matrix is invertible;
+otherwise every $N\times N$ evaluation determinant would vanish and the functions would be pointwise linearly dependent,
+contrary to basis independence.
+Consequently $\det M(\mathbf{p},c)$ is not identically zero.
+Its zero set therefore has Lebesgue measure zero, and absolute continuity implies
 that non-unisolvence occurs with probability zero.
 \end{proof}
 
@@ -354,7 +370,7 @@ In particular,
 \end{lemma}
 
 \begin{proof}
-Under the coefficient-space identification from Remark~\ref{rem:coeff_ident},
+Using the PSWF isometry between $\mathbb C^N$ and $V_{N,c}$,
 one has $\norm{f}_{L^2}=\norm{\mathbf a}_2$ and
 $\QM(f)=\ip{\GVM\mathbf a}{\mathbf a}$.
 The first identity is therefore just the Rayleigh-quotient characterization of the largest eigenvalue
@@ -388,6 +404,7 @@ $M(\mathbf p,c)$ and therefore from the same PSWF samples.
 They differ only in whether one inserts the weight matrix $D$.
 Thus the decomposition in Proposition~\ref{prop:two_step_error} separates two analytically distinct
 contributions, but not two statistically or geometrically independent sources of randomness.
+This coupling prevents a naive decoupling of geometric and spectral sampling errors.
 \end{remark}
 
 \begin{proposition}[Two-step error decomposition]\label{prop:two_step_error}
@@ -500,7 +517,7 @@ In the PSWF basis,
   =\sum_n \lambda_n(c)|a_n|^2
   =\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}.
 \]
-Hence
+Consequently,
 \[
   \QM(f)=\ip{\GVM\mathbf a}{\mathbf a}
   =\ip{G^{\mathrm{ref}}_{N,c}\mathbf a}{\mathbf a}+\ip{\EN\mathbf a}{\mathbf a}.
