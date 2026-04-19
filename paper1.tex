@@ -69,7 +69,8 @@ For uniform grids we explain the associated zero-counting problem,
 but we do not claim a theorem because $V_{N,c}$ is not known to be
 a Chebyshev system in general.
 Second, under an abstract sampling-quality condition~(T.2),
-we prove a spectral decomposition
+we prove a quantitative comparison between discrete sampling and the prolate operator,
+namely
 $\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
 where the remainder measures how well discrete sampling approximates
 the continuous quadratic form of~$\Kop$.
@@ -197,8 +198,8 @@ Thus $\EN$ is a matrix-valued quadrature error.
 
 \begin{definition}[Unisolvent set]\label{def:unisolvent}
 A set $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$ of $N$ distinct points
-is \emph{unisolvent for $V_{N,c}$} if the only $f\in V_{N,c}$
-satisfying $f(p_j)=0$ for all $j$ is $f\equiv 0$.
+is \emph{unisolvent for $V_{N,c}$} (equivalently, interpolation-unique for $V_{N,c}$)
+if the only $f\in V_{N,c}$ satisfying $f(p_j)=0$ for all $j$ is $f\equiv 0$.
 Since $\dim V_{N,c}=N$, this is equivalent to bijectivity of the evaluation map
 $\mathcal{E}_{\mathbf{p}}:V_{N,c}\to\mathbb{C}^N$.
 \end{definition}
@@ -235,13 +236,16 @@ Non-unisolvence means $\det M(\mathbf{p},c)=0$.
 The map $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real analytic.
 It is not identically zero because Gauss--PSWF nodes give a nonsingular
 matrix by Proposition~\ref{prop:gauss}.
+Alternatively, the same nondegeneracy follows from analyticity together
+with the existence of at least one configuration having full rank.
 The zero set of a nonzero real-analytic function has Lebesgue measure zero,
 so absolute continuity implies that non-unisolvence occurs with probability zero.
 \end{proof}
 
 \begin{proposition}[Gauss--PSWF nodes are unisolvent]\label{prop:gauss}
 Let $p_1<\cdots<p_N$ be Gauss--PSWF quadrature nodes with positive weights
-$w_1,\dots,w_N$, chosen so that the quadrature rule is exact on products
+$w_1,\dots,w_N$, arising from the Gaussian quadrature adapted to the PSWF basis,
+and chosen so that the quadrature rule is exact on products
 $f\overline{g}$ with $f,g\in V_{N,c}$.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$.
 \end{proposition}
