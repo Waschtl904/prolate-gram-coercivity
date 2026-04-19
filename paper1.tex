@@ -67,14 +67,11 @@ satisfying a Marcinkiewicz--Zygmund-type lower frame bound
 For uniform grids we explain the associated zero-counting problem and record a natural oscillation question,
 but we do not claim a theorem because $V_{N,c}$ is not known to be
 a Chebyshev system in general.
-Second, under an abstract sampling-quality condition~(T.2),
-we prove an explicit quantitative comparison between discrete sampling and the prolate operator,
-namely
-$\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$,
-where the remainder measures how well discrete sampling approximates
-the continuous quadratic form of~$\Kop$.
-For weighted sampling models we further isolate the discrete operator error into a weighted-frame defect
-and a spectral mismatch term, thereby reducing the comparison problem to two explicit perturbative components.
+Second, we show that the deviation between discrete sampling and the prolate spectral model
+admits an exact structural decomposition into a weighted-frame defect and a spectral mismatch defect.
+As a corollary, any regime in which both defects are simultaneously controlled yields
+an explicit comparison formula
+$\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$.
 The paper is restricted throughout to fixed finite-dimensional regimes $(N,c)$.
 \end{abstract}
 
@@ -96,16 +93,19 @@ invertibility of the evaluation matrix $M(\mathbf{p},c)$.
 The real content lies in two issues:
 (i) identifying concrete families of sampling sets for which
 unisolvence can actually be proved, and
-(ii) quantifying the gap between the discrete sampling form and the
-continuous quadratic form of $\Kop$.
+(ii) reducing the deviation between discrete sampling geometry and the PSWF spectral model
+to explicit defect operators.
 The main difficulty is not the finite-dimensional linear algebra itself,
 but rather how special a sampling configuration must be in order to align discrete evaluation geometry
 with the PSWF eigenstructure of the concentration operator.
+We therefore formulate the paper as a structural decomposition result,
+with conditional spectral comparison appearing only after the relevant defects are controlled.
 We restrict attention throughout to fixed finite-dimensional regimes $(N,c)$.
 
 Layer~A proves unisolvence for random sampling and for weighted sampling models
 satisfying a lower frame inequality, and records the uniform-grid case as an open zero-counting problem.
-Layer~B proves the spectral decomposition under condition~(T.2).
+Layer~B proves the exact two-defect decomposition and then derives the spectral comparison theorem
+as a corollary under an ideal spectral-alignment regime.
 Layer~C contains heuristic discussion of prime sampling.
 
 No statement is made about zeros of $\zeta(s)$.
@@ -181,7 +181,7 @@ However, the associated Gram operator on $V_{N,c}$ and its spectral quantities,
 such as $\lambda_{\min}(\GVM)$ and $\lambda_{\max}(\GVM)$, are basis-invariant.
 \end{remark}
 
-\begin{definition}[Reference matrix and condition~(T.2)]\label{def:T2}
+\begin{definition}[Reference matrix]\label{def:ref_matrix}
 Define the diagonal matrix
 \[
   G^{\mathrm{ref}}_{N,c}:=\operatorname{diag}(\lambda_0(c),\dots,\lambda_{N-1}(c)).
@@ -194,7 +194,10 @@ for $f=\sum_n a_n\psin$,
   =\ip{G^{\mathrm{ref}}_{N,c}\mathbf{a}}{\mathbf{a}}.
 \]
 Set $\EN:=\GVM-G^{\mathrm{ref}}_{N,c}$.
-We say that $\mathbf{p}$ satisfies
+\end{definition}
+
+\begin{definition}[Ideal spectral-alignment regime]\label{def:T2}
+We say that $\mathbf{p}$ satisfies the ideal spectral-alignment regime if
 \begin{enumerate}[(T.2a)]
 \item the approximation condition
 \[
@@ -205,9 +208,9 @@ We say that $\mathbf{p}$ satisfies
   \varepsilon_N<\lambda_{N-1}(c).
 \]
 \end{enumerate}
-Condition~\textup{(T.2)} is a strong spectral matching hypothesis, comparable in spirit to a near-diagonalization or near-quadrature condition,
+This is a strong spectral matching hypothesis, comparable in spirit to a near-diagonalization or near-quadrature condition,
 and should not be regarded as generic.
-Typically one should expect such a condition, if at all, only for specially constructed sampling or weighted-frame systems.
+Typically one should expect such a regime, if at all, only for specially constructed sampling or weighted-frame systems.
 \end{definition}
 
 \begin{remark}[Geometric meaning of $\EN$]\label{rem:EN_meaning}
@@ -228,8 +231,6 @@ Under this identification, $\GVM$ encodes the unweighted discrete sampling quadr
 and $G^{\mathrm{ref}}_{N,c}$ encodes the restriction of $\Kop$ to $V_{N,c}$.
 This identification is unitary only on the finite-dimensional space $V_{N,c}$ equipped with the PSWF basis,
 not on the whole Paley--Wiener space.
-The notation \textup{(T.2)} is chosen to remain compatible with the numbering
-used later in the scaling-limit continuation of this project.
 \end{remark}
 
 \begin{remark}[Invariance of $V_{N,c}$ under $\Kop$]\label{rem:K_invariant}
@@ -399,9 +400,9 @@ Its role is to provide a geometry-free estimate suitable for the fixed-$(N,c)$ f
 Sharper bounds exploiting prolate concentration are left for later work.
 \end{remark}
 
-\section{Layer~B: Comparison Theorem}\label{sec:layerB}
+\section{Layer~B: Structural reduction and comparison}\label{sec:layerB}
 
-All results here are conditional on~(T.2) and take place after restriction to the finite-dimensional PSWF space $V_{N,c}$.
+All results here take place after restriction to the finite-dimensional PSWF space $V_{N,c}$.
 
 \begin{definition}[Weighted discrete reference matrix]\label{def:weighted_ref}
 Given positive weights $w_1,\dots,w_N$, let $D:=\operatorname{diag}(w_1,\dots,w_N)$ and define
@@ -415,13 +416,13 @@ This is the weighted discrete Gram matrix associated with the sampling model $(\
 The matrices $\GVM$ and $G^{\mathrm{w}}_{N,c}(\mathbf p,D)$ are built from the same evaluation matrix
 $M(\mathbf p,c)$ and therefore from the same PSWF samples.
 They differ only in whether one inserts the weight matrix $D$.
-Thus the decomposition in Proposition~\ref{prop:two_step_error} separates two analytically distinct
+Thus the decomposition in Theorem~\ref{thm:main_reduction} separates two analytically distinct
 contributions, but not two statistically or geometrically independent sources of randomness.
 The splitting is algebraic, but not probabilistically or geometrically decoupled.
 This coupling obstruction prevents a naive decoupling of geometric and spectral sampling errors.
 \end{remark}
 
-\begin{proposition}[Two-step error decomposition]\label{prop:two_step_error}
+\begin{theorem}[Structural reduction theorem]\label{thm:main_reduction}
 Let $(\mathbf p,D)$ be a weighted sampling model with positive diagonal weight matrix $D$.
 Then
 \[
@@ -436,7 +437,9 @@ Consequently,
   \le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2
    + \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2.
 \]
-\end{proposition}
+Thus the entire deviation between discrete sampling and the PSWF spectral model is reducible
+to a weighted-frame defect and a spectral mismatch defect.
+\end{theorem}
 
 \begin{proof}
 Insert and subtract the weighted discrete Gram matrix:
@@ -453,15 +456,15 @@ Since
 the claimed identity follows. The norm bound is immediate from subadditivity and submultiplicativity.
 \end{proof}
 
-\begin{remark}[Interpretation of Proposition~\ref{prop:two_step_error}]
+\begin{remark}[Interpretation of the reduction theorem]
 The error splits into a weighted-frame defect
 $M^*(I-D)M$ and a spectral mismatch term
 $G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}$.
 These two terms are analytically distinct, but structurally coupled through the same evaluation matrix.
-Condition~\textup{(T.2)} therefore requires simultaneous control of both effects, not independent estimates.
+Any constructive route to spectral comparison must therefore control both mechanisms simultaneously.
 \end{remark}
 
-\begin{corollary}[Sufficient criterion for \textup{(T.2)} from two defects]\label{cor:two_defects}
+\begin{corollary}[Ideal-regime criterion from two defects]\label{cor:two_defects}
 Assume that the weighted sampling model $(\mathbf p,D)$ satisfies
 \[
   \norm{I-D}_2\le \delta_N,
@@ -472,14 +475,14 @@ with
 \[
   \delta_N\,\frac{N\omega}{\pi}+\eta_N<\lambda_{N-1}(c).
 \]
-Then condition~\textup{(T.2)} holds with
+Then the ideal spectral-alignment regime from Definition~\ref{def:T2} holds with
 \[
   \varepsilon_N:=\delta_N\,\frac{N\omega}{\pi}+\eta_N.
 \]
 \end{corollary}
 
 \begin{proof}
-By Proposition~\ref{prop:two_step_error},
+By Theorem~\ref{thm:main_reduction},
 \[
   \norm{\EN}_2
   \le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2
@@ -495,7 +498,7 @@ The displayed hypothesis gives $\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\
 \end{proof}
 
 \begin{lemma}[Spectral stability via Weyl]\label{lem:weyl_stability}
-Assume~(T.2) with parameter $\varepsilon_N$.
+Assume the ideal spectral-alignment regime with parameter $\varepsilon_N$.
 Then
 \[
   \lambda_{\min}(\GVM)
@@ -514,14 +517,14 @@ Lemma~\ref{lem:weyl_stability} only gives eigenvalue stability.
 It does not by itself provide control of eigenvector alignment between the discrete Gram matrix and the reference spectral model.
 \end{remark}
 
-\begin{theorem}[Spectral decomposition with remainder]\label{thm:layerB}
-Assume~(T.2) with $\varepsilon_N<\lambda_{N-1}(c)$.
+\begin{corollary}[Spectral comparison in the ideal regime]\label{cor:spectral_comparison}
+Assume the ideal spectral-alignment regime with $\varepsilon_N<\lambda_{N-1}(c)$.
 For every $f=\sum_n a_n\psin\in V_{N,c}$,
 \[
   \QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f),
   \qquad |R_N(f)|\le\varepsilon_N\norm{f}_{L^2}^2.
 \]
-\end{theorem}
+\end{corollary}
 
 \begin{proof}
 By Remark~\ref{rem:coeff_ident}, the coefficient identification is unitary on $V_{N,c}$ in the PSWF basis.
@@ -542,16 +545,16 @@ Then
   |R_N(f)|\le \norm{\EN}_2\norm{\mathbf a}_2^2
   \le \varepsilon_N\norm{f}_{L^2}^2.
 \]
-This theorem isolates the entire source of deviation between discrete sampling and the PSWF spectral model in the single defect operator $\EN$.
+This corollary isolates the spectral comparison as a consequence of the reduction theorem plus defect control.
 \end{proof}
 
 \begin{remark}[Structural bottleneck]
 The key quantitative issue for any future application is to prove that
 $\norm{\EN}_2$ is small relative to $\lambda_{N-1}(c)$ for structured
 sampling sets.
-By Proposition~\ref{prop:two_step_error}, this requires simultaneous control of a weighted-frame defect
+By Theorem~\ref{thm:main_reduction}, this requires simultaneous control of a weighted-frame defect
 and a spectral mismatch defect.
-Without such control, Layer~B remains a formal comparison principle.
+Without such control, the reduction theorem remains structural rather than constructive.
 \end{remark}
 
 \section{Layer~C: Heuristics for prime sampling}\label{sec:layerC}
@@ -562,7 +565,7 @@ The Weil explicit formula involves prime sums of the form
 $\sum_p \log p\,|\widehat h(\log p)|^2$,
 which motivates considering prime sampling sets.
 To obtain coercivity from prime sampling one would need both
-unisolvence and condition~(T.2), and both problems are open.
+unisolvence and the ideal spectral-alignment regime, and both problems are open.
 
 \begin{heuristic}[Speculative consistency scenario for prime sampling]
 In the regime $N\le (2/\pi-\varepsilon)c$, one may hope that PSWF
@@ -583,7 +586,7 @@ for linear combinations of the first $N$ PSWFs on $[-T,T]$.
 Construct explicit structured sampling sets and weights satisfying a Marcinkiewicz--Zygmund frame condition on $V_{N,c}$.
 \end{problem}
 
-\begin{problem}[Condition~(T.2) from two defects]
+\begin{problem}[Ideal spectral alignment from two defects]
 Derive quantitative estimates on the weighted-frame defect and the spectral mismatch defect
 strong enough to trigger Corollary~\ref{cor:two_defects}.
 Does a Marcinkiewicz--Zygmund inequality hold for PSWFs at prime nodes?
