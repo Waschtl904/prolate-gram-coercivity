@@ -453,6 +453,13 @@ Combining numerator and denominator bounds,
 The regime-wise statements follow immediately.
 \end{proof}
 
+\begin{remark}[Regime separation in the phase-gap lemma]\label{rem:phase_gap_regimes}
+The uniformity stated in Lemma~\ref{lem:phase_gap_final} should be understood across two asymptotically distinct regimes.
+In the \emph{bulk-interior regime} $|m-n|\ll c^{1/3}$, the lower bound is driven by the dominant linear dependence of the spectral parameters $\chi_n(c)$ on $n$.
+In the \emph{transition regime} $|m-n|\sim c^{1/3}$, the lower bound is stabilised by the combined effect of the $c^{4/3}$ remainder scale and the Airy-scaled nonlinearity.
+The single estimate in Lemma~\ref{lem:phase_gap_final} is obtained by combining these two separate cases and should not be read as a one-regime asymptotic formula.
+\end{remark}
+
 \begin{lemma}[Bulk-localised uniform IBP control]\label{lem:ibp_uniform}
 Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product and
 $L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. Then for every $p\ge 1$,
@@ -490,6 +497,13 @@ all derivatives of the PSWF amplitudes entering $a_{mn}$ are uniformly controlle
 We do not track these constants explicitly, only the resulting polynomial dependence on the quantified phase gap.
 Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
+
+\begin{remark}[Uniformity of PSWF amplitudes in the bulk]\label{rem:ibp_uniformity}
+The uniformity used in Lemma~\ref{lem:ibp_uniform} for $n\le N-1$ and for derivative bounds of the PSWF amplitudes rests on two separate mechanisms.
+First, the geometric definition of $\Rbulk^{(m,n)}$ ensures a fixed positive distance from the turning points, so that no Airy singularity enters the analysis.
+Second, the global Bonami--Karoui bounds provide uniform $L^\infty$ and derivative control for PSWFs throughout the bulk, uniformly over the full spectral range $0\le n\le N-1$.
+Together these two inputs yield the uniformity used in Lemma~\ref{lem:ibp_uniform}.
+\end{remark}
 
 \begin{lemma}[Bulk decay bound]\label{lem:bulk_decay}
 Under the hypotheses of Lemma~\ref{lem:ibp_uniform}, the bulk contribution satisfies
