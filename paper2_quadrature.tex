@@ -156,6 +156,19 @@ stability theorem of \cite{PaperI} applies to PSWF-Gauss sampling.
 The formal version is Theorem~\ref{thm:compatibility_verified} together
 with Theorem~\ref{thm:frame_stability}.
 
+\subsection*{Positioning}
+
+This paper isolates the only missing analytic ingredient needed to make the
+conditional framework of \cite{PaperI} effective for a concrete quadrature
+class. The PSWF spectral side of the argument --- analytic regularity of
+product integrands and exponential tail decay --- is carried out explicitly
+under stated hypotheses. The remaining open task is a single, clearly
+formulated operator stability conjecture for the XRY quadrature functional
+(Assumption~\ref{ass:xry_stability}), which represents the precise point
+where the present analysis reaches its current boundary. All other
+ingredients of the frame stability argument are fully reduced to this one
+place.
+
 \subsection*{Organisation}
 
 Section~\ref{sec:pswf_gauss} sets up PSWF-Gauss quadrature and the
@@ -238,8 +251,8 @@ possibly reducing that rate).
 Assume Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}.
 Then there exist constants $C_{m,n}$ and a rate $\alpha=\alpha(N)>0$,
 possibly depending on $N$, such that the resulting exponential decay remains
-uniform in the regime $N\sim c$ after incorporating the growth control from
-Assumption~\ref{ass:uniform_bounds}, and
+uniform over the index range $0\le m,n\le N\sim c$ after incorporating the
+growth control from Assumption~\ref{ass:uniform_bounds}, and
 \[
   |\widehat f_{mn}(k)|
   :=|\ip{f_{mn}}{\psi_k^{(c)}}|\le C_{m,n}\,e^{-\alpha k}
@@ -256,10 +269,10 @@ exponentially; this follows from the spectral approximation theory of
 \cite{BonamiKaroui2014,BonamiKaroui} together with
 Assumption~\ref{ass:pswf_analyticity}. The controlled-growth hypothesis in
 Assumption~\ref{ass:uniform_bounds} ensures that the prefactors remain
-compatible with an overall exponential decay statement in the regime
-$0\le m,n\le N\sim c$, after incorporating the allowed growth into the
-constants and, if necessary, into a slightly reduced exponential rate. The
-tail bound follows by summing the geometric series
+compatible with an overall exponential decay statement uniform over the
+index range $0\le m,n\le N\sim c$, after incorporating the allowed growth
+into the constants and, if necessary, into a slightly reduced exponential
+rate. The tail bound follows by summing the geometric series
 $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
