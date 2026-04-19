@@ -31,24 +31,23 @@
 \newcommand{\norm}[1]{\|#1\|}
 \newcommand{\ip}[2]{\langle #1,\, #2\rangle}
 
-\title[Coercivity of the Prolate Gram Form]
-      {Coercivity of the Prolate Gram Form
-       at Discrete Sampling Points}
+\title[Coercivity and Defect Decomposition of Discrete Prolate Sampling Operators]
+      {Coercivity and Defect Decomposition of Discrete Prolate Sampling Operators}
 
-\thanks{This paper is motivated by a broader program on spectral
-constructions related to the Hilbert--P\'{o}lya conjecture.
-Future work will address scaling limits, trace formulae,
-phase obstruction, and Mellin bandwidth decay.}
+\thanks{Future work will address constructive sampling models,
+sharper spectral estimates, and scaling regimes in which
+both $N$ and $c$ vary.}
 
 \author{Anonymous Author}
 \address{}
 \email{}
 \date{\today}
 
-\subjclass[2020]{42C05, 42B10, 47B32, 11M06}
+\subjclass[2020]{42C05, 42B10, 47B32}
 
 \keywords{prolate spheroidal wave functions, Gram form, coercivity,
-unisolvent sampling, Paley--Wiener space, Marcinkiewicz--Zygmund inequalities}
+unisolvent sampling, Paley--Wiener space, Marcinkiewicz--Zygmund inequalities,
+finite frames, reproducing kernel Hilbert spaces}
 
 \begin{document}
 \maketitle
@@ -58,22 +57,17 @@ Let $\PW$ be the Paley--Wiener space of $\omega$-bandlimited functions
 and $V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}$
 the $N$-dimensional prolate subspace at time-bandwidth product $c=\omega T$.
 For $N$ distinct sampling points $\mathbf{p}\subset[-T,T]$ we study
-the prolate Gram form $\QM(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_{N,c}$.
+the discrete prolate Gram form $\QM(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_{N,c}$.
 
-The nontrivial content of this paper is two-fold.
-First, we prove unisolvence for random configurations and for weighted sampling models
-satisfying a Marcinkiewicz--Zygmund-type lower frame bound
-(Propositions~\ref{prop:random} and~\ref{prop:mz_unisolvent}).
-For uniform grids we explain the associated zero-counting problem and record a natural oscillation question,
-but we do not claim a theorem because $V_{N,c}$ is not known to be
-a Chebyshev system in general.
-Second, we show that the deviation between discrete sampling and the prolate spectral model
+We prove unisolvence for random configurations and for weighted sampling models
+satisfying a Marcinkiewicz--Zygmund-type lower frame bound.
+We then show that the deviation between discrete sampling and the reference prolate spectral model
 admits an exact structural decomposition into a weighted-frame defect and a spectral mismatch defect.
 As a corollary, any regime in which both defects are simultaneously controlled yields
 an explicit comparison formula
 $\QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with $|R_N(f)|\le\varepsilon_N\norm{f}^2$.
-We also formulate a PSWF-adapted quadrature model as a concrete candidate mechanism
-for realizing the ideal spectral-alignment regime.
+We also record a PSWF-adapted quadrature model as a conjectural construction principle
+for such defect control.
 The paper is restricted throughout to fixed finite-dimensional regimes $(N,c)$.
 \end{abstract}
 
@@ -81,40 +75,29 @@ The paper is restricted throughout to fixed finite-dimensional regimes $(N,c)$.
 
 \section{Introduction}
 
-The Weil positivity criterion \cite{Weil1952,Bombieri2000,CC2019}
-expresses the Riemann Hypothesis as positivity of an explicit
-quadratic form over primes.
-The prolate program of Connes--Consani--Moscovici
-\cite{CCM_PNAS2022,CCM2025} seeks a spectral realization of this form
-using the prolate concentration operator $\Kop$ on Paley--Wiener space.
+Prolate spheroidal wave functions (PSWFs) provide a natural orthonormal basis
+for finite-dimensional spectral truncations of the Paley--Wiener space associated
+with the time--band limiting operator \cite{Slepian1978,BonamiKaroui}.
+The resulting finite-dimensional spaces are classical objects in sampling theory,
+reproducing kernel Hilbert spaces, and finite frame analysis.
 
-This paper isolates a finite-dimensional coercivity principle that is
-independent of any number-theoretic input.
-The linear-algebraic core is elementary: coercivity is equivalent to
-invertibility of the evaluation matrix $M(\mathbf{p},c)$.
+This paper studies the stability of discrete sampling on the PSWF space
+$V_{N,c}=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}$.
+The linear-algebraic core is elementary: coercivity of the discrete sampling form
+is equivalent to invertibility of the evaluation matrix $M(\mathbf{p},c)$.
 The real content lies in two issues:
-(i) identifying concrete families of sampling sets for which
-unisolvence can actually be proved, and
-(ii) reducing the deviation between discrete sampling geometry and the PSWF spectral model
+(i) identifying concrete families of sampling sets for which unisolvence can be proved,
+and (ii) reducing the deviation between discrete sampling geometry and the reference spectral model
 to explicit defect operators.
-The main difficulty is not the finite-dimensional linear algebra itself,
-but rather how special a sampling configuration must be in order to align discrete evaluation geometry
-with the PSWF eigenstructure of the concentration operator.
-We therefore formulate the paper as a structural decomposition result,
-with conditional spectral comparison appearing only after the relevant defects are controlled.
-To make this alignment problem more concrete, we also record a PSWF-adapted quadrature model
-as a candidate construction principle for the ideal regime.
+We therefore formulate the paper as an operator-theoretic and frame-theoretic decomposition result,
+with spectral comparison appearing only after the relevant defects are controlled.
 We restrict attention throughout to fixed finite-dimensional regimes $(N,c)$.
 
-Layer~A proves unisolvence for random sampling and for weighted sampling models
+Section~\ref{sec:layerA} proves unisolvence for random sampling and for weighted sampling models
 satisfying a lower frame inequality, and records the uniform-grid case as an open zero-counting problem.
-Layer~B proves the exact two-defect decomposition, introduces a concrete quadrature-inspired candidate model,
-and then derives the spectral comparison theorem as a corollary under an ideal spectral-alignment regime.
-Layer~C contains heuristic discussion of prime sampling.
-
-No statement is made about zeros of $\zeta(s)$.
-The limit $N\to\infty$ and coupled limits in which $N$ and $c$ vary
-are outside the scope of this paper.
+Section~\ref{sec:layerB} proves the exact two-defect decomposition, introduces a quadrature-inspired candidate model,
+and derives the spectral comparison theorem as a corollary under an ideal spectral-approximation regime.
+The final section records several open problems and one heuristic construction principle.
 
 \section{Setup and notation}\label{sec:setup}
 
@@ -200,8 +183,8 @@ for $f=\sum_n a_n\psin$,
 Set $\EN:=\GVM-G^{\mathrm{ref}}_{N,c}$.
 \end{definition}
 
-\begin{definition}[Ideal spectral-alignment regime]\label{def:T2}
-We say that $\mathbf{p}$ satisfies the ideal spectral-alignment regime if
+\begin{definition}[Ideal spectral-approximation regime]\label{def:T2}
+We say that $\mathbf{p}$ satisfies the ideal spectral-approximation regime if
 \begin{enumerate}[(T.2a)]
 \item the approximation condition
 \[
@@ -212,13 +195,12 @@ We say that $\mathbf{p}$ satisfies the ideal spectral-alignment regime if
   \varepsilon_N<\lambda_{N-1}(c).
 \]
 \end{enumerate}
-This is a strong spectral matching hypothesis, comparable in spirit to a near-diagonalization or near-quadrature condition,
-and should not be regarded as generic.
+This is a strong spectral matching hypothesis and should not be regarded as generic.
 Typically one should expect such a regime, if at all, only for specially constructed sampling or weighted-frame systems.
 \end{definition}
 
 \begin{remark}[Geometric meaning of $\EN$]\label{rem:EN_meaning}
-Thus $\EN$ measures the deviation between discrete sampling geometry and spectral concentration geometry of $\Kop$.
+Thus $\EN$ measures the deviation between discrete sampling geometry and the reference spectral geometry of $\Kop$.
 \end{remark}
 
 \begin{remark}[Bridge to constructive sampling questions]\label{rem:bridge_sampling}
@@ -227,10 +209,10 @@ One would expect it, if at all, from structured quadrature-like constructions, w
 or other sampling geometries specifically designed to approximate the PSWF spectral projector on the finite-dimensional space $V_{N,c}$.
 \end{remark}
 
-\subsection{A constructive candidate for the ideal spectral-alignment regime}
+\subsection{A conjectural construction principle}
 
 The abstract condition~\textup{(T.2)} is deliberately nonconstructive and should be interpreted as a spectral matching principle rather than a generic property of point sets.
-We now describe a class of sampling configurations for which this regime is expected to hold in a quantitative sense.
+We now describe a class of sampling configurations that may serve as a concrete candidate mechanism for defect control.
 
 \begin{definition}[PSWF-adapted quadrature model]\label{def:pswf_quad}
 A weighted sampling system $(\mathbf p,D)$, with $D=\operatorname{diag}(w_1,\dots,w_N)$,
@@ -257,7 +239,7 @@ then the weighted defect matrix satisfies
 \[
 \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2 \lesssim \varepsilon_N,
 \]
-so the approximation part of the ideal spectral-alignment regime follows formally once the weighted-frame defect is also controlled.
+so the approximation part of the ideal spectral-approximation regime follows formally once the weighted-frame defect is also controlled.
 The spectral stability condition is then a separation requirement between the PSWF spectral scale and the residual quadrature defect.
 \end{remark}
 
@@ -265,7 +247,7 @@ The spectral stability condition is then a separation requirement between the PS
 Known constructions of high-order quadrature rules for oscillatory kernels,
 including PSWF-based Gaussian quadrature and related methods \cite{Xiao2001},
 suggest that PSWF-adapted systems should exist at least in regimes where $N\lesssim c$.
-However, no general existence theorem guaranteeing the ideal spectral-alignment regime is currently known.
+However, no general existence theorem guaranteeing the ideal spectral-approximation regime is currently known.
 \end{heuristic}
 
 \begin{remark}[Coefficient-space identification]\label{rem:coeff_ident}
@@ -285,7 +267,7 @@ The matrix $G^{\mathrm{ref}}_{N,c}$ is therefore exactly the matrix of the restr
 $\Kop|_{V_{N,c}}$ in the PSWF basis.
 \end{remark}
 
-\section{Layer~A: Unisolvence and operator core}\label{sec:layerA}
+\section{Unisolvence and operator core}\label{sec:layerA}
 
 \begin{definition}[Unisolvent set]\label{def:unisolvent}
 A set $\mathbf{p}=(p_1,\dots,p_N)\subset[-T,T]$ of $N$ distinct points
@@ -445,7 +427,7 @@ Its role is to provide a geometry-free estimate suitable for the fixed-$(N,c)$ f
 Sharper bounds exploiting prolate concentration are left for later work.
 \end{remark}
 
-\section{Layer~B: Structural reduction and comparison}\label{sec:layerB}
+\section{Structural reduction and comparison}\label{sec:layerB}
 
 All results here take place after restriction to the finite-dimensional PSWF space $V_{N,c}$.
 
@@ -482,7 +464,7 @@ Consequently,
   \le \norm{I-D}_2\,\norm{M(\mathbf p,c)}_2^2
    + \norm{G^{\mathrm{w}}_{N,c}(\mathbf p,D)-G^{\mathrm{ref}}_{N,c}}_2.
 \]
-Thus the entire deviation between discrete sampling and the PSWF spectral model is reducible
+Thus the entire deviation between discrete sampling and the PSWF reference model is reducible
 to a weighted-frame defect and a spectral mismatch defect.
 \end{theorem}
 
@@ -520,7 +502,7 @@ with
 \[
   \delta_N\,\frac{N\omega}{\pi}+\eta_N<\lambda_{N-1}(c).
 \]
-Then the ideal spectral-alignment regime from Definition~\ref{def:T2} holds with
+Then the ideal spectral-approximation regime from Definition~\ref{def:T2} holds with
 \[
   \varepsilon_N:=\delta_N\,\frac{N\omega}{\pi}+\eta_N.
 \]
@@ -543,7 +525,7 @@ The displayed hypothesis gives $\varepsilon_N<\lambda_{N-1}(c)$, so Definition~\
 \end{proof}
 
 \begin{lemma}[Spectral stability via Weyl]\label{lem:weyl_stability}
-Assume the ideal spectral-alignment regime with parameter $\varepsilon_N$.
+Assume the ideal spectral-approximation regime with parameter $\varepsilon_N$.
 Then
 \[
   \lambda_{\min}(\GVM)
@@ -563,7 +545,7 @@ It does not by itself provide control of eigenvector alignment between the discr
 \end{remark}
 
 \begin{corollary}[Spectral comparison in the ideal regime]\label{cor:spectral_comparison}
-Assume the ideal spectral-alignment regime with $\varepsilon_N<\lambda_{N-1}(c)$.
+Assume the ideal spectral-approximation regime with $\varepsilon_N<\lambda_{N-1}(c)$.
 For every $f=\sum_n a_n\psin\in V_{N,c}$,
 \[
   \QM(f)=\ip{\Kop f}{f}_{L^2}+R_N(f),
@@ -602,24 +584,10 @@ and a spectral mismatch defect.
 Without such control, the reduction theorem remains structural rather than constructive.
 \end{remark}
 
-\section{Layer~C: Heuristics for prime sampling}\label{sec:layerC}
+\section{Open problems and heuristic directions}\label{sec:layerC}
 
-This section is explicitly heuristic: statements in the environment
-below indicate motivation and possible future directions, not proved theorems.
-The Weil explicit formula involves prime sums of the form
-$\sum_p \log p\,|\widehat h(\log p)|^2$,
-which motivates considering prime sampling sets.
-To obtain coercivity from prime sampling one would need both
-unisolvence and the ideal spectral-alignment regime, and both problems are open.
-
-\begin{heuristic}[Speculative consistency scenario for prime sampling]
-In the regime $N\le (2/\pi-\varepsilon)c$, one may hope that PSWF
-concentration and prime-gap information combine to yield estimates simultaneously controlling
-weighted-frame stability and the spectral mismatch term.
-This is currently speculative.
-\end{heuristic}
-
-\section{Open problems}\label{sec:open}
+The results of this paper isolate the finite-dimensional operator structure of discrete PSWF sampling.
+The remaining questions concern constructive sampling models, sharper estimates, and asymptotic regimes.
 
 \begin{problem}[Uniform-grid unisolvence]
 Determine whether uniform grids are unisolvent for $V_{N,c}$.
@@ -631,10 +599,9 @@ for linear combinations of the first $N$ PSWFs on $[-T,T]$.
 Construct explicit structured sampling sets and weights satisfying a Marcinkiewicz--Zygmund frame condition on $V_{N,c}$.
 \end{problem}
 
-\begin{problem}[Ideal spectral alignment from two defects]
+\begin{problem}[Ideal spectral approximation from two defects]
 Derive quantitative estimates on the weighted-frame defect and the spectral mismatch defect
 strong enough to trigger Corollary~\ref{cor:two_defects}.
-Does a Marcinkiewicz--Zygmund inequality hold for PSWFs at prime nodes?
 \end{problem}
 
 \begin{problem}[Coupled limits]
@@ -643,32 +610,19 @@ $\norm{\EN}_2$ and $\lambda_{N-1}(c)$ in regimes where $N$ and $c$
 vary simultaneously.
 \end{problem}
 
-\begin{thebibliography}{99}
+\begin{heuristic}[Quadrature-based construction principle]
+PSWF-adapted quadrature systems should be viewed as a natural candidate mechanism
+for realizing the ideal spectral-approximation regime in a constructive way.
+This remains open at the level of general existence theorems.
+\end{heuristic}
 
-\bibitem{Bombieri2000}
-E.~Bombieri,
-\textit{Problems of the Millennium: The Riemann Hypothesis},
-Clay Mathematics Institute, 2000.
+\begin{thebibliography}{99}
 
 \bibitem{BonamiKaroui}
 A.~Bonami and A.~Karoui,
 \textit{Spectral decay of the sinc kernel operator and approximation
 with prolate spheroidal wave functions},
 arXiv:1012.3881.
-
-\bibitem{CC2019}
-A.~Connes and C.~Consani,
-\textit{Riemann--Roch and Weil positivity},
-arXiv:1910.14368 (2019).
-
-\bibitem{CCM_PNAS2022}
-A.~Connes, C.~Consani, and H.~Moscovici,
-\textit{The UV prolate spectrum matches the zeros of zeta},
-Proc.\ Natl.\ Acad.\ Sci.\ \textbf{119} (2022), e2123174119.
-
-\bibitem{CCM2025}
-A.~Connes, C.~Consani, and H.~Moscovici,
-arXiv:2511.22755 (2025).
 
 \bibitem{HornJohnson2013}
 R.~Horn and C.~Johnson,
@@ -685,11 +639,6 @@ D.~Slepian,
 \textit{Prolate spheroidal wave functions, Fourier analysis,
 and uncertainty~-- V},
 Bell Syst.\ Tech.\ J.\ \textbf{57} (1978), 1371--1430.
-
-\bibitem{Weil1952}
-A.~Weil,
-\textit{Sur les formules explicites de la th\'{e}orie des nombres},
-Izv.\ Akad.\ Nauk \textbf{36} (1952), 3--18.
 
 \bibitem{Xiao2001}
 H.~Xiao, V.~Rokhlin, and N.~Yarvin,
