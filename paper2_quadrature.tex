@@ -205,22 +205,16 @@ under pointwise multiplication, which does not hold. All arguments
 below use only analytic regularity and spectral approximation properties.
 \end{remark}
 
-\begin{lemma}[Node separation]\label{lem:node_sep}
+\begin{assumption}[Node separation]\label{ass:node_sep}
 The PSWF-Gauss nodes satisfy
 $\min_{j\ne k}|p_j-p_k|\ge c_0 T/N$
 for some constant $c_0>0$ in the regime $N\sim c$.
-\end{lemma}
-\begin{proof}
-% TODO: Derive from XRY node geometry and PSWF zero-spacing estimates.
-\end{proof}
+\end{assumption}
 
-\begin{lemma}[Weight positivity and boundedness]\label{lem:weights}
+\begin{assumption}[Weight positivity and boundedness]\label{ass:weights}
 The weights satisfy $w_j>0$ and $C_1 T/N\le w_j\le C_2 T/N$
 uniformly in $j$ in the regime $N\sim c$.
-\end{lemma}
-\begin{proof}
-% TODO: Derive from XRY weight formulas / Christoffel number estimates.
-\end{proof}
+\end{assumption}
 
 %% ==================================================================
 \section{Technical PSWF Hypotheses and Product Tails}\label{sec:spectral_decay}
@@ -247,6 +241,20 @@ product-tail estimate asymptotically dominated by an exponential rate after
 possibly reducing that rate).
 \end{assumption}
 
+\begin{lemma}[Polynomial factors are absorbed by exponential decay]
+\label{lem:poly_exp}
+Let $\alpha>0$ and $k\in\mathbb{N}$. Then for every $\alpha'\in(0,\alpha)$
+there exists $N_0\ge1$ and $C_{k,\alpha,\alpha'}>0$ such that
+\[
+  N^k e^{-\alpha N}\le C_{k,\alpha,\alpha'} e^{-\alpha' N}
+  \qquad(N\ge N_0).
+\]
+\end{lemma}
+\begin{proof}
+This is immediate from
+$N^k e^{-(\alpha-\alpha')N}\to0$ as $N\to\infty$.
+\end{proof}
+
 \begin{lemma}[Conditional exponential PSWF coefficient decay]\label{lem:coeff_decay}
 Assume Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}.
 Then there exist constants $C_{m,n}$ and a rate $\alpha=\alpha(N)>0$,
@@ -267,13 +275,17 @@ Consequently,
 For functions analytic in a strip, the coefficients in the PSWF basis decay
 exponentially; this follows from the spectral approximation theory of
 \cite{BonamiKaroui2014,BonamiKaroui} together with
-Assumption~\ref{ass:pswf_analyticity}. The controlled-growth hypothesis in
+Assumption~\ref{ass:pswf_analyticity}. To our knowledge, uniform control of
+this type for the product family $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$
+in the full index range $0\le m,n\le N\sim c$ is not explicitly available
+in the literature and is therefore isolated here through
+Assumption~\ref{ass:uniform_bounds}. The controlled-growth hypothesis in
 Assumption~\ref{ass:uniform_bounds} ensures that the prefactors remain
 compatible with an overall exponential decay statement uniform over the
 index range $0\le m,n\le N\sim c$, after incorporating the allowed growth
 into the constants and, if necessary, into a slightly reduced exponential
-rate. The tail bound follows by summing the geometric series
-$\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
+rate via Lemma~\ref{lem:poly_exp}. The tail bound follows by summing the
+geometric series $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
 
 \begin{remark}[Status of the PSWF step]\label{rem:pswf_status}
@@ -325,7 +337,7 @@ even though it is not yet fully resolved here.
 %% ==================================================================
 
 \begin{proposition}[Conditional exponential quadrature defect bound]\label{prop:defect_bound}
-Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
 Then for all $0\le m,n\le N-1$,
 \[
   |E_{mn}|=|R_{mn}^{\mathrm{quad}}|\le C\,e^{-\alpha N},
@@ -342,7 +354,7 @@ By Lemma~\ref{lem:coeff_decay}, $\|(I-\PN)f_{mn}\|\le C'_{m,n}e^{-\alpha N}$.
 Under Assumption~\ref{ass:uniform_bounds}, these prefactors are compatible
 with absorption into a single exponential rate, possibly reduced, using that
 any polynomial growth in $N$ can be absorbed into a slightly reduced
-exponential rate $e^{-\alpha N}$.
+exponential rate $e^{-\alpha N}$ by Lemma~\ref{lem:poly_exp}.
 All exponential contributions are therefore absorbed into a single rate
 $\alpha$, possibly reduced, and all multiplicative constants are absorbed
 into $C$.
@@ -359,7 +371,7 @@ profile required in Assumption~3.10 of \cite{PaperI}.
 \end{remark}
 
 \begin{theorem}[Conditional verification of Assumption~3.10]\label{thm:compatibility_verified}
-Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
 Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
 Then for every $p\ge1$ there exist constants $C_p,C>0$ such that
 \[
@@ -387,14 +399,17 @@ PSWF-Gauss quadrature.
 \end{remark}
 
 \begin{corollary}[Conditional defect norm bound]\label{cor:defect_norm}
-Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
 Then there exists $C_*>0$ such that
 \[
   \norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\xrightarrow{N\to\infty}0.
 \]
 \end{corollary}
 \begin{proof}
-Sum Proposition~\ref{prop:defect_bound} over $N^2$ entries.
+By Proposition~\ref{prop:defect_bound}, each of the $N^2$ matrix entries of
+$\EN$ is bounded by $C_*e^{-\alpha N}$. Summing their squares yields
+$\norm{\EN}_F^2\le N^2 C_*^2 e^{-2\alpha N}$, hence
+$\norm{\EN}_F\le N C_* e^{-\alpha N}$.
 \end{proof}
 
 %% ==================================================================
@@ -403,7 +418,7 @@ Sum Proposition~\ref{prop:defect_bound} over $N^2$ entries.
 
 \begin{theorem}[Conditional frame stability for PSWF-Gauss sampling]
 \label{thm:frame_stability}
-Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
 Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
 Once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
 frame for $V_{N,c}$ with bounds
@@ -462,7 +477,7 @@ the prefactor growth compatible with the exponential defect estimate.
 \end{problem}
 
 \begin{problem}[Node separation and weight bounds]
-Make Lemmas~\ref{lem:node_sep} and~\ref{lem:weights} fully quantitative
+Prove Assumptions~\ref{ass:node_sep} and~\ref{ass:weights} quantitatively,
 with explicit constants in $N$ and $c$.
 \end{problem}
 
