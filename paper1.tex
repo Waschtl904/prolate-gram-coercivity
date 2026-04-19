@@ -30,16 +30,16 @@
 \newcommand{\Rbulk}{\mathcal{R}_{\mathrm{bulk}}}
 \newcommand{\Rturning}{\mathcal{R}_{\mathrm{turn}}}
 
-\title[Frame Coercivity of Discrete Prolate Sampling Operators]
-      {Frame Coercivity of Discrete Prolate Sampling Operators:\\
-       Defect Decomposition and a Bulk--Turning Decay Mechanism\\
-       under Quadrature Compatibility}
+\title[Frame Coercivity under Quadrature Compatibility]
+      {Frame Coercivity of Discrete Prolate Sampling Operators\\
+       under Quadrature Compatibility:\\
+       Defect Decomposition and a Bulk--Turning Decay Mechanism}
 
 \thanks{This version replaces the earlier conditional decay conjecture
 by a proof architecture based on a quadrature--projection decomposition,
 a fully quantified bulk phase-gap lemma, bulk-localised integration-by-parts control,
 and a conservative turning-point estimate via Cauchy--Schwarz and Airy-scale widths.
-The resulting decay and stability theorems are conditional on an explicit quadrature
+The resulting decay and frame-stability theorems are conditional on an explicit quadrature
 compatibility assumption, which isolates the remaining quadrature-realisation problem.}
 
 \author{Anonymous Author}
@@ -62,17 +62,17 @@ WKB asymptotics, turning points}
 Let $\PW$ be the Paley--Wiener space of $\omega$-bandlimited functions
 and $V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,\psi_{N-1}^{(c)}\}$
 the $N$-dimensional prolate subspace at time-bandwidth product $c=\omega T$.
-We study the stability of the discrete sampling form
-$\QM(f)=\sum_{j=1}^N w_j|f(p_j)|^2$ as a finite frame operator on $V_{N,c}$.
+We study the discrete sampling form
+$\QM(f)=\sum_{j=1}^N w_j|f(p_j)|^2$ as a finite frame form on $V_{N,c}$.
 
-We establish coercivity for random sampling configurations and for weighted
+We establish coercivity results for random sampling configurations and for weighted
 sampling models satisfying a Marcinkiewicz--Zygmund lower frame bound.
 Our main structural result is an exact defect decomposition reducing frame
 analysis to simultaneous control of a weighted-frame defect and a quadrature
 defect.
 
-We then derive a conditional banded decay estimate for the quadrature
-defect matrix in the PSWF eigenbasis, under an explicit quadrature compatibility assumption:
+Under an explicit quadrature compatibility assumption, we then derive a conditional banded decay estimate for the quadrature
+defect matrix in the PSWF eigenbasis:
 \[
   |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,c^{-1/3}
   \qquad \text{for all } 0\le m,n\le N-1.
@@ -136,8 +136,8 @@ decay conjecture by a proof architecture with four explicit components:
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
 Section~\ref{sec:coercivity} proves coercivity.
-Section~\ref{sec:decay} establishes the decay mechanism.
-Section~\ref{sec:stability} derives the conditional quantitative frame stability theorem.
+Section~\ref{sec:decay} establishes the conditional decay mechanism.
+Section~\ref{sec:stability} derives the combined conditional frame stability theorem.
 Section~\ref{sec:open} lists open problems.
 Appendix~\ref{app:airy} contains the Airy approximation lemma.
 
@@ -491,30 +491,6 @@ We do not track these constants explicitly, only the resulting polynomial depend
 Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
-\begin{lemma}[Bulk decay]\label{lem:bulk_decay}
-For every $p\ge 1$ there exists $C_p>0$ such that for all $0\le m\ne n\le N-1$,
-\[
-  \left|\int_{\Rbulk^{(m,n)}}e^{i\Phi_{mn}(x)}a_{mn}(x)\,dx\right|
-  \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p.
-\]
-In particular,
-\[
-  \left|\int_{\Rbulk^{(m,n)}}e^{i\Phi_{mn}(x)}a_{mn}(x)\,dx\right|
-  \le C_p(1+|m-n|)^{-p}.
-\]
-\end{lemma}
-\begin{proof}
-Integrate by parts $p$ times on $\Rbulk^{(m,n)}$ using
-Lemmas~\ref{lem:phase_gap_final} and~\ref{lem:ibp_uniform}; boundary terms
-are uniformly bounded since the bulk region has finitely many endpoints in $[-T,T]$, independent of $m$ and $n$, and are therefore absorbed into the constant $C_p$.
-Since
-\[
-  \frac{1+c^{-2/3}|m-n|}{|m-n|}
-  \le \frac{2}{1+|m-n|}
-\]
-for all $|m-n|\ge 1$ and $c\ge 1$, the simpler algebraic bound follows.
-\end{proof}
-
 \begin{lemma}[Turning-point estimate]\label{lem:turning_revised}
 Let $U_m$ be the Airy neighbourhood with $|U_m|=O(c^{-1/3})$.
 For all $0\le m,n\le N-1$,
@@ -559,6 +535,7 @@ admits a decomposition
 \[
 R_{mn}^{\mathrm{quad}} = I_{mn}^{\mathrm{bulk}} + I_{mn}^{\mathrm{turn}},
 \]
+consistent with WKB bulk oscillations and Airy-scale localisation near turning points,
 where the terms satisfy the bounds established in
 Lemmas~\ref{lem:bulk_decay} and~\ref{lem:turning_revised}.
 We refer to Assumption~\ref{ass:quad_structure} as the quadrature compatibility condition.
@@ -651,6 +628,14 @@ $\norm{\EN}_2\le\norm{\EN}_F\le\varepsilon(N,c)\,S(p,N)$.
 Apply Lemma~\ref{lem:weyl} for the lower frame bound and
 Lemma~\ref{lem:lambda_max_bound} for the upper.
 \end{proof}
+
+\begin{remark}[Terminology hierarchy]\label{rem:terminology}
+In this paper, \emph{coercivity} refers to the unconditional lower-frame geometry established in
+Section~\ref{sec:coercivity}; \emph{conditional defect decay} refers to the analytic input from
+Section~\ref{sec:decay}; and \emph{conditional frame stability} refers to the combined result of
+Section~\ref{sec:stability} obtained by joining these two ingredients under the quadrature
+compatibility condition.
+\end{remark}
 
 \begin{remark}[Scaling of the stability condition]\label{rem:scaling_stability}
 In the regime $N\sim c$, one has
