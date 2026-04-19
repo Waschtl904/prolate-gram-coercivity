@@ -236,8 +236,10 @@ possibly reducing that rate).
 
 \begin{lemma}[Conditional exponential PSWF coefficient decay]\label{lem:coeff_decay}
 Assume Assumptions~\ref{ass:pswf_analyticity} and~\ref{ass:uniform_bounds}.
-Then there exist constants $C_{m,n}$ and a rate $\alpha=\alpha(N)>0$, bounded
-below by a positive constant in the regime $N\sim c$, such that
+Then there exist constants $C_{m,n}$ and a rate $\alpha=\alpha(N)>0$,
+possibly depending on $N$, such that the resulting exponential decay remains
+uniform in the regime $N\sim c$ after incorporating the growth control from
+Assumption~\ref{ass:uniform_bounds}, and
 \[
   |\widehat f_{mn}(k)|
   :=|\ip{f_{mn}}{\psi_k^{(c)}}|\le C_{m,n}\,e^{-\alpha k}
@@ -255,8 +257,8 @@ exponentially; this follows from the spectral approximation theory of
 Assumption~\ref{ass:pswf_analyticity}. The controlled-growth hypothesis in
 Assumption~\ref{ass:uniform_bounds} ensures that the prefactors remain
 compatible with an overall exponential decay statement in the regime
-$0\le m,n\le N\sim c$, possibly after replacing the decay rate by a smaller
-one that remains bounded below by a positive constant in that regime. The
+$0\le m,n\le N\sim c$, after incorporating the allowed growth into the
+constants and, if necessary, into a slightly reduced exponential rate. The
 tail bound follows by summing the geometric series
 $\sum_{k\ge N}|\widehat f_{mn}(k)|^2$.
 \end{proof}
@@ -325,7 +327,9 @@ Applying Assumption~\ref{ass:xry_stability} to $f=f_{mn}$ gives
 \]
 By Lemma~\ref{lem:coeff_decay}, $\|(I-\PN)f_{mn}\|\le C'_{m,n}e^{-\alpha N}$.
 Under Assumption~\ref{ass:uniform_bounds}, these prefactors are compatible
-with absorption into a single exponential rate, possibly reduced.
+with absorption into a single exponential rate, possibly reduced, using that
+any polynomial growth in $N$ can be absorbed into a slightly reduced
+exponential rate $e^{-\alpha N}$.
 All exponential contributions are therefore absorbed into a single rate
 $\alpha$, possibly reduced, and all multiplicative constants are absorbed
 into $C$.
