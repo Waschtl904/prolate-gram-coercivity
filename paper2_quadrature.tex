@@ -231,14 +231,31 @@ extensions to complex strips of width $\rho_{m,n}(c)>0$, with Cauchy bounds
 No uniform strip width independent of $(m,n,c)$ is assumed.
 \end{assumption}
 
+\begin{remark}[Why the PSWF product assumptions are plausible]
+The PSWFs are bandlimited eigenfunctions of a time-frequency concentration
+operator, so the product $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ should
+heuristically behave like a function of effective bandwidth of order $2c$.
+This does not imply finite-dimensional closure in the PSWF basis, but it
+suggests that higher PSWF modes should be increasingly suppressed once one
+combines analyticity with control of the dependence on the indices $m,n$.
+The purpose of Assumptions~\ref{ass:pswf_analyticity} and
+\ref{ass:uniform_bounds} is to isolate exactly the quantitative version of
+this heuristic that is needed in the proof.
+\end{remark}
+
 \begin{assumption}[Controlled growth of PSWF product constants]\label{ass:uniform_bounds}
-In the regime $0\le m,n\le N\sim c$, the constants governing the PSWF
-product-tail estimates are uniformly controlled in the sense that the
-quantities $M_{m,n}(c)$, the reciprocal strip widths $\rho_{m,n}(c)^{-1}$,
-and the resulting spectral-tail prefactors $C_{m,n}$ grow at most
-polynomially in $N$ (or satisfy any equivalent bound sufficient to keep the
+There exist constants $C_*>0$ and $k_*>0$ such that, in the regime
+$0\le m,n\le N\sim c$,
+\[
+  M_{m,n}(c)\le C_* N^{k_*},
+  \qquad
+  \rho_{m,n}(c)^{-1}\le C_* N^{k_*},
+  \qquad
+  C_{m,n}\le C_* N^{k_*}.
+\]
+Any comparable family of explicit polynomial bounds sufficient to keep the
 product-tail estimate asymptotically dominated by an exponential rate after
-possibly reducing that rate).
+possibly reducing that rate would also suffice for the arguments below.
 \end{assumption}
 
 \begin{lemma}[Polynomial factors are absorbed by exponential decay]
@@ -300,6 +317,20 @@ routine closure argument.
 \section{XRY Spectral Stability Hypothesis}\label{sec:xry_accuracy}
 %% ==================================================================
 
+\begin{remark}[Why the XRY stability hypothesis is structurally plausible]
+The XRY construction is built from the same PSWF spectral data that underlie
+the projector $\PN$, so it is reasonable to expect its quadrature error to
+be governed primarily by the PSWF spectral tail of the test function, up to
+a residual term that is exponentially small in the regime $N\sim c$. This
+does not prove Assumption~\ref{ass:xry_stability}, but it explains why a
+bound of the form
+\[
+  |Q_N(f)-\int_{-T}^T f|\lesssim \|(I-\PN)f\| + e^{-\alpha N}\norm{f}_{L^2}
+\]
+represents a natural spectral stability statement rather than an ad hoc
+reformulation of the original compatibility problem.
+\end{remark}
+
 \begin{assumption}[XRY spectral stability]\label{ass:xry_stability}
 There exist constants $\CXRY,C,\alpha>0$, depending on the XRY
 construction parameters and on the regime $N\sim c$, such that for every
@@ -337,7 +368,7 @@ even though it is not yet fully resolved here.
 %% ==================================================================
 
 \begin{proposition}[Conditional exponential quadrature defect bound]\label{prop:defect_bound}
-Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
 Then for all $0\le m,n\le N-1$,
 \[
   |E_{mn}|=|R_{mn}^{\mathrm{quad}}|\le C\,e^{-\alpha N},
@@ -371,7 +402,7 @@ profile required in Assumption~3.10 of \cite{PaperI}.
 \end{remark}
 
 \begin{theorem}[Conditional verification of Assumption~3.10]\label{thm:compatibility_verified}
-Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
 Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
 Then for every $p\ge1$ there exist constants $C_p,C>0$ such that
 \[
@@ -399,7 +430,7 @@ PSWF-Gauss quadrature.
 \end{remark}
 
 \begin{corollary}[Conditional defect norm bound]\label{cor:defect_norm}
-Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
 Then there exists $C_*>0$ such that
 \[
   \norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\xrightarrow{N\to\infty}0.
@@ -418,7 +449,7 @@ $\norm{\EN}_F\le N C_* e^{-\alpha N}$.
 
 \begin{theorem}[Conditional frame stability for PSWF-Gauss sampling]
 \label{thm:frame_stability}
-Assume Assumptions~\ref{ass:node_sep}--\ref{ass:xry_stability}.
+Assume Assumptions~\ref{ass:pswf_analyticity}--\ref{ass:xry_stability}.
 Let $(\mathbf{p},\mathbf{w})$ be the XRY PSWF-Gauss rule of order $N\sim c$.
 Once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$, $\{(p_j,w_j)\}_{j=1}^N$ is a weighted
 frame for $V_{N,c}$ with bounds
