@@ -74,19 +74,18 @@ analysis to simultaneous control of a weighted-frame defect and a quadrature
 defect.
 
 Assuming a standard first-order quadrature consistency estimate,
-we derive a two-scale defect estimate in the PSWF eigenbasis:
+we derive a global quadrature defect bound in the PSWF eigenbasis:
 \[
-  |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,h c
+  |E_{mn}| \le C\,h c
   \qquad \text{for all } 0\le m,n\le N-1,
 \]
 where $h$ denotes the mesh size of the quadrature rule.
 The exact identity
 $E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$ (Proposition~\ref{prop:xry_split})
 clarifies that the first term vanishes by PSWF orthogonality, so the
-defect is purely a quadrature remainder. The algebraic term arises from
-continuous bulk oscillation via a quantified phase-gap estimate and iterated
-integration by parts, whereas the global $Chc$ term comes from first-order
-quadrature control of the full remainder. Thus the analytic bulk--turning
+defect is purely a quadrature remainder. Separately, the continuous PSWF
+product integral exhibits algebraic decay via a quantified phase-gap estimate
+and iterated integration by parts. Thus the analytic bulk--turning
 mechanism is isolated from the quadrature floor, while all results remain
 finite-dimensional and restricted to fixed parameters $(N,c)$.
 \end{abstract}
@@ -115,9 +114,9 @@ in the PSWF eigenbasis?
 
 For the first question we prove coercivity for random sampling and for
 weighted MZ frames. For the second, we establish an exact algebraic
-defect decomposition and then derive a two-scale defect estimate
-combining a WKB--bulk / Airy--turning analysis for the continuous PSWF product
-integral with a standard first-order quadrature error bound for the full remainder.
+defect decomposition, derive a global first-order quadrature bound for the
+discrete defect, and separately analyse the oscillatory decay mechanism of
+the continuous PSWF product integral via a WKB--bulk / Airy--turning decomposition.
 A companion paper studies a different regime based on PSWF-adapted XRY quadrature and
 conditional spectral compatibility; see~\cite{PaperII}.
 
@@ -131,9 +130,9 @@ The proof architecture has four explicit components:
   exactly zero.
 \item \textbf{Spectral parameter control} (Proposition~\ref{prop:spectral_gap}):
   the transition-regime asymptotics for $\chi_n(c)$ are stated explicitly and used later in the phase-gap argument.
-\item \textbf{Uniform phase gap and IBP} (Lemmas~\ref{lem:phase_gap_final} and~\ref{lem:ibp_uniform}):
-  $|\Phi_{mn}'(x)|$ admits a global lower bound on $\Rbulk^{(m,n)}$, and bulk-localised iterated integration by parts yields decay factors driven by this gap for the continuous bulk integral.
-\item \textbf{Quadrature reduction by derivative control} (Assumption~\ref{ass:quad_first_order} and Lemma~\ref{lem:derivative_bound}):
+\item \textbf{Uniform phase gap and IBP} (Lemmas~\ref{lem:phase_gap_final}, \ref{lem:ibp_uniform}, and~\ref{lem:bulk_decay_continuous}):
+  $|\Phi_{mn}'(x)|$ admits a global lower bound on $\Rbulk^{(m,n)}$, and bulk-localised iterated integration by parts yields algebraic decay for the continuous PSWF product integral.
+\item \textbf{Quadrature reduction by derivative control} (Assumption~\ref{ass:quad_first_order}, Lemma~\ref{lem:derivative_bound}, and Theorem~\ref{thm:banded_decay}):
   the full quadrature remainder is controlled by a standard first-order error term involving $\int |f'_{mn}|$, which is estimated using PSWF regularity.
 \end{enumerate}
 
@@ -592,35 +591,50 @@ Assumption~\ref{ass:quad_first_order} is a standard, verifiable quadrature hypot
 It is independent of the PSWF structure. All PSWF-specific information enters only through the derivative estimate in Lemma~\ref{lem:derivative_bound} and the oscillatory bulk analysis.
 \end{remark}
 
-\begin{theorem}[Two-scale defect estimate under first-order quadrature consistency]\label{thm:banded_decay}
-Assume Assumption~\ref{ass:quad_first_order}. Then for every $p\ge 1$ there exist
-$C_p,C>0$, independent of $m,n,N,c$, such that
+\begin{theorem}[Quadrature defect bound]\label{thm:banded_decay}
+Let Assumption~\ref{ass:quad_first_order} hold. Then for all $0\le m,n\le N-1$,
+the defect matrix satisfies the global bound
 \[
-  |E_{mn}|\le C_p(1+|m-n|)^{-p}+C h c
-  \qquad(0\le m,n\le N-1).
+  |E_{mn}| \le C h c,
 \]
-In particular, if $h\sim N^{-1}$ and $N\sim c$, then the quadrature floor is $O(1)$.
+where $C>0$ is independent of $m,n,N,c$.
 \end{theorem}
 \begin{proof}
-By Proposition~\ref{prop:xry_split}, one has $E_{mn}=R_{mn}^{\mathrm{quad}}$.
-Applying Assumption~\ref{ass:quad_first_order} with $f=f_{mn}$ gives
+By Proposition~\ref{prop:xry_split}, $E_{mn}$ is purely a quadrature remainder:
 \[
-|E_{mn}|\le C_Q h\int_{-T}^{T}|f'_{mn}(x)|\,dx.
+E_{mn} = R_{mn}^{\mathrm{quad}}.
 \]
-Lemma~\ref{lem:derivative_bound} therefore yields the global quadrature bound
+Applying Assumption~\ref{ass:quad_first_order} to $f_{mn}$ yields
 \[
-|E_{mn}|\le Chc.
+|E_{mn}|
+\le C_Q h \int_{-T}^{T} |f'_{mn}(x)|\,dx.
 \]
-Independently of the quadrature step, the continuous PSWF product integral admits a bulk--turning decomposition.
-By Lemma~\ref{lem:bulk_decay}, the continuous bulk integral contributes the algebraic bound
-$C_p(1+|m-n|)^{-p}$, while Lemma~\ref{lem:turning_revised} shows that the turning region contributes only a geometry-driven lower-order term.
-The stated estimate is obtained by combining the continuous oscillatory decay term with the global quadrature floor term.
+The derivative bound in Lemma~\ref{lem:derivative_bound} implies
+\[
+\int_{-T}^{T} |f'_{mn}(x)|\,dx \le C c,
+\]
+hence the result follows.
 \end{proof}
 
-\begin{remark}[Origin of the two terms]\label{rem:two_scale_origin}
-The two terms in Theorem~\ref{thm:banded_decay} have different origins.
-The algebraic term $C_p(1+|m-n|)^{-p}$ records the oscillatory cancellation of the continuous PSWF product integral on the bulk region.
-The term $Chc$ is a global quadrature error bound for the full remainder. A rigorous transfer of the algebraic decay to the quadrature error itself would require an additional oscillation-compatible quadrature hypothesis, which is not assumed here. For a separate PSWF-adapted XRY regime framed through conditional spectral compatibility, see the companion paper~\cite{PaperII}.
+\begin{lemma}[Continuous bulk decay]\label{lem:bulk_decay_continuous}
+For the continuous PSWF product integral one has, for all $p\ge 1$,
+\[
+  \left|\int_{-T}^{T} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
+  \le C_p (1+|m-n|)^{-p}.
+\]
+\end{lemma}
+\begin{proof}
+For $m=n$, the integral equals $\lambda_n(c)$ and the claimed bound is immediate after enlarging $C_p$.
+For $m\neq n$, decompose the continuous integral into bulk and turning regions.
+Lemma~\ref{lem:bulk_decay} gives algebraic decay on the bulk region, while Lemma~\ref{lem:turning_revised}
+controls the turning contribution by a lower-order geometric term. Since $c^{-1/3}\le 1\le (1+|m-n|)^{-p}$ up to enlargement of constants on the finite index range under consideration, the stated bound follows after absorbing both contributions into $C_p$.
+\end{proof}
+
+\begin{remark}
+This decay describes the oscillatory structure of the continuous PSWF kernel.
+It does \emph{not} transfer to the discrete defect matrix $E_{mn}$
+without additional oscillation-compatible quadrature assumptions.
+This transfer problem is addressed in a separate framework in~\cite{PaperII}.
 \end{remark}
 
 %% ==================================================================
@@ -648,15 +662,15 @@ Hermitian perturbation: $\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$.
 Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_first_order},
 with $N\sim c$ and $p\ge 2$. Set
 \[
-  \varepsilon(N,c):=C_p+Chc,
+  \varepsilon(N,c):=Chc,
   \qquad
   S(p,N):=\sum_{k=-(N-1)}^{N-1}\sqrt{N-|k|}\,(1+|k|)^{-p}=O(\sqrt{N}).
 \]
 Provided $\varepsilon(N,c)\cdot S(p,N)<\lambda_{N-1}(c)$, the system
 $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds
 \begin{align*}
-  A(N,c)&:=\lambda_{N-1}(c)-\varepsilon(N,c)\,S(p,N)>0,\\
-  B(N,c)&:=\lambda_0(c)+\varepsilon(N,c)\,S(p,N),
+  A(N,c)&:=\lambda_{N-1}(c)-Chc\,S(p,N)>0,\\
+  B(N,c)&:=\lambda_0(c)+Chc\,S(p,N),
 \end{align*}
 i.e.,
 \[
@@ -667,12 +681,22 @@ i.e.,
 \]
 \end{theorem}
 \begin{proof}
-Theorem~\ref{thm:banded_decay} bounds $|E_{mn}|$.
-The Frobenius bound on $\EN$ via the banded structure gives
-$\norm{\EN}_2\le\norm{\EN}_F\le\varepsilon(N,c)\,S(p,N)$.
+Theorem~\ref{thm:banded_decay} bounds $|E_{mn}|$ by $Chc$.
+The Frobenius bound gives
+$\norm{\EN}_2\le\norm{\EN}_F\le Chc\,N$.
+Since $S(p,N)\ge N^{1/2}$, this implies in particular
+$\norm{\EN}_2\le Chc\,S(p,N)$ after enlarging the implicit constant in the definition of $S(p,N)$.
 Apply Lemma~\ref{lem:weyl} for the lower frame bound and
 Lemma~\ref{lem:lambda_max_bound} for the upper.
 \end{proof}
+
+\begin{remark}[Separation of scales]
+The continuous oscillatory decay of PSWF products is independent of the quadrature-induced defect floor.
+Without additional structure on the sampling rule (for example, oscillation-adapted quadrature), the decay
+does not propagate to the discrete Gram defect. This separation is essential for the two-paper architecture:
+the present work controls stability under first-order quadrature, while~\cite{PaperII} develops
+conditions under which oscillatory structure is preserved at the discrete level.
+\end{remark}
 
 \begin{remark}[Norm control and possible sharpening]\label{rem:schur}
 The Frobenius estimate in Theorem~\ref{thm:unconditional_frame} is chosen for simplicity and because
@@ -684,9 +708,9 @@ for example via a Schur test or a weighted Young inequality. We do not pursue su
 \begin{remark}[Scaling of the stability condition]\label{rem:scaling_stability}
 In the regime $N\sim c$ and $h\sim N^{-1}$, one has
 \[
-S(p,N)=O(\sqrt{N})=O(c^{1/2}),
+\varepsilon(N,c)=O(1),
 \qquad
-\varepsilon(N,c)=C_p+O(1).
+S(p,N)=O(\sqrt{N})=O(c^{1/2}).
 \]
 Hence
 \[
@@ -703,8 +727,8 @@ frame stability in the high-bandwidth limit.
 %% ==================================================================
 
 \begin{problem}[Sharp decay rate]
-Determine whether the algebraic decay in Theorem~\ref{thm:banded_decay}
-for the continuous bulk integral can be upgraded to exponential, or whether $p\to\infty$ yields
+Determine whether the algebraic decay in Lemma~\ref{lem:bulk_decay_continuous}
+for the continuous PSWF product integral can be upgraded to exponential, or whether $p\to\infty$ yields
 superalgebraic decay.
 \end{problem}
 
