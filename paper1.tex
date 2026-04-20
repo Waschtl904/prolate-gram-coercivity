@@ -338,8 +338,11 @@ identity; it is purely a quadrature error for the PSWF product integral.
 \end{remark}
 
 \begin{definition}[Bulk and turning regions]\label{def:bulk}
-Let $x_n^*$ be the turning point of $\psi_n^{(c)}$ and fix $\rho>0$.
-The Airy neighbourhood is $U_n:=\{x\in[-T,T]:|x-x_n^*|\le\rho c^{-1/3}\}$.
+Let $x_n^*>0$ denote the positive turning point of $\psi_n^{(c)}$ and fix $\rho>0$.
+The Airy neighbourhood is
+\[
+  U_n:=\{x\in[-T,T]:|x-x_n^*|\le\rho c^{-1/3}\}\cup\{x\in[-T,T]:|x+x_n^*|\le\rho c^{-1/3}\}.
+\]
 For a pair $(m,n)$:
 \[
   \Rturning^{(m,n)}:=U_m\cup U_n,
@@ -350,7 +353,7 @@ For a pair $(m,n)$:
 
 \begin{remark}
 The width $O(c^{-1/3})$ is the standard Airy transition scale \cite{Olver1974}:
-beyond $U_n$ the quadratic approximation to the square root is valid and
+beyond the neighborhoods of the two turning points $\pm x_n^*$ the quadratic approximation to the square root is valid and
 the WKB phase is non-stationary for $|m-n|\ge 1$.
 \end{remark}
 
@@ -363,7 +366,7 @@ Let $x\in \Rbulk^{(m,n)}$. Then there exists $\delta_0>0$, depending only on the
 \]
 \end{lemma}
 \begin{proof}
-For $k\in\{m,n\}$, the turning point $x_k^*$ is defined by
+For $k\in\{m,n\}$, the positive turning point $x_k^*$ is defined by
 \[
   \chi_k(c)-\frac{c^2(x_k^*)^2}{T^2}=0.
 \]
@@ -372,17 +375,25 @@ Hence
   \chi_k(c)-\frac{c^2x^2}{T^2}
   = \frac{c^2}{T^2}\bigl((x_k^*)^2-x^2\bigr).
 \]
-We factor
-\[
-(x_k^*)^2-x^2 = (x_k^*-x)(x_k^*+x).
-\]
-Since $x\in\Rbulk^{(m,n)}$, we have $|x-x_k^*|\ge \rho c^{-1/3}$. Moreover, by the turning-point geometry in the transition regime $N\sim c$, the quantity $|x_k^*+x|$ remains bounded below by a positive constant on the relevant oscillatory side of the interval; compare \cite{Olver1974,OsipovRokhlinXiao}. Therefore,
+Since $x\in\Rbulk^{(m,n)}\subset[-x_k^*,x_k^*]$ on the oscillatory side, the quantity on the left is nonnegative, and we may write
 \[
   \chi_k(c)-\frac{c^2x^2}{T^2}
-  \ge \frac{c^2}{T^2}\,\rho c^{-1/3}\,c_2
-  = \delta_0 c^{2/3},
+  = \frac{c^2}{T^2}\,|(x_k^*)^2-x^2|
+  = \frac{c^2}{T^2}\,|x_k^*-x|\,|x_k^*+x|.
 \]
-for some constant $c_2>0$ depending only on the interval geometry and the turning-point localisation, and hence for $\delta_0:=\rho c_2/T^2$.
+By Definition~\ref{def:bulk}, the bulk region excludes Airy-scale neighborhoods of both turning points $\pm x_k^*$. Therefore,
+\[
+  |x_k^*-x|\ge \rho c^{-1/3},
+  \qquad
+  |x_k^*+x|\ge \rho c^{-1/3}.
+\]
+It follows that
+\[
+  \chi_k(c)-\frac{c^2x^2}{T^2}
+  \ge \frac{c^2}{T^2}\,\rho c^{-1/3}\cdot \rho c^{-1/3}
+  = \frac{\rho^2}{T^2}c^{2/3}.
+\]
+Thus the claim holds with $\delta_0:=\rho^2/T^2$.
 \end{proof}
 
 \begin{lemma}[Uniform phase gap in the bulk, two-regime form]\label{lem:phase_gap_final}
