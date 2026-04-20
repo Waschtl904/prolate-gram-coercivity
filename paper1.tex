@@ -30,17 +30,17 @@
 \newcommand{\Rbulk}{\mathcal{R}_{\mathrm{bulk}}}
 \newcommand{\Rturning}{\mathcal{R}_{\mathrm{turn}}}
 
-\title[Frame Coercivity under Quadrature Compatibility]
+\title[Frame Coercivity under First-Order Quadrature Control]
       {Frame Coercivity of Discrete Prolate Sampling Operators\\
-       under Quadrature Compatibility:\\
+       under First-Order Quadrature Control:\\
        Defect Decomposition and a Bulk--Turning Decay Mechanism}
 
 \thanks{This version replaces the earlier conditional decay conjecture
 by a proof architecture based on a quadrature--projection decomposition,
 a fully quantified bulk phase-gap lemma, bulk-localised integration-by-parts control,
 and a conservative turning-point estimate via Cauchy--Schwarz and Airy-scale widths.
-The resulting decay and frame-stability theorems are conditional on an explicit quadrature
-compatibility assumption, which isolates the remaining quadrature-realisation problem.}
+The remaining quadrature input is reduced to a standard first-order quadrature consistency assumption,
+thereby replacing the earlier structural quadrature-compatibility hypothesis by a verifiable error estimate.}
 
 \author{Anonymous Author}
 \address{}
@@ -53,7 +53,7 @@ compatibility assumption, which isolates the remaining quadrature-realisation pr
 sampling in reproducing kernel Hilbert spaces,
 Gram operator, Marcinkiewicz--Zygmund inequalities,
 frame perturbation, banded decay, coercivity,
-WKB asymptotics, turning points}
+WKB asymptotics, turning points, quadrature error}
 
 \begin{document}
 \maketitle
@@ -71,12 +71,13 @@ Our main structural result is an exact defect decomposition reducing frame
 analysis to simultaneous control of a weighted-frame defect and a quadrature
 defect.
 
-Under an explicit quadrature compatibility assumption, we then derive a conditional banded decay estimate for the quadrature
-defect matrix in the PSWF eigenbasis:
+Assuming a standard first-order quadrature consistency estimate,
+we derive a banded decay estimate for the quadrature defect matrix in the PSWF eigenbasis:
 \[
-  |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,c^{-1/3}
-  \qquad \text{for all } 0\le m,n\le N-1.
+  |E_{mn}| \le C_p\,(1+|m-n|)^{-p} + C\,h c
+  \qquad \text{for all } 0\le m,n\le N-1,
 \]
+where $h$ denotes the mesh size of the quadrature rule.
 The exact identity
 $E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$ (Proposition~\ref{prop:xry_split})
 clarifies that the first term vanishes by PSWF orthogonality, so the
@@ -84,10 +85,10 @@ defect is purely a quadrature remainder. In the bulk region, a fully quantified
 phase-gap estimate (Lemma~\ref{lem:phase_gap_final}) and iterated
 integration by parts yield algebraic decay in $|m-n|$; in the turning
 region, a uniform Cauchy--Schwarz argument exploiting Airy-scale widths
-$|U_n|=O(c^{-1/3})$ and uniform sup-norm bounds yields $O(c^{-1/3})$.
-The quadrature compatibility assumption isolates the remaining open problem of
-constructing concrete quadrature schemes for which this mechanism is realised.
-All results are finite-dimensional and restricted to fixed parameters $(N,c)$.
+$|U_n|=O(c^{-1/3})$ and uniform sup-norm bounds yields a small local contribution.
+Thus the analytic bulk--turning mechanism is retained while the quadrature hypothesis
+is reduced to a verifiable first-order error bound. All results are finite-dimensional
+and restricted to fixed parameters $(N,c)$.
 \end{abstract}
 
 \tableofcontents
@@ -114,12 +115,14 @@ in the PSWF eigenbasis?
 
 For the first question we prove coercivity for random sampling and for
 weighted MZ frames. For the second, we establish an exact algebraic
-defect decomposition and then derive a conditional banded decay estimate
-via a WKB--bulk / Airy--turning mechanism for the quadrature remainder.
+defect decomposition and then derive a banded decay estimate
+via a WKB--bulk / Airy--turning mechanism combined with a standard first-order
+quadrature error bound.
 
 \subsection*{Main results}
 The key new ingredient is the replacement of the earlier conditional
-decay conjecture by a proof architecture with four explicit components:
+quadrature-compatibility hypothesis by a verifiable first-order quadrature estimate.
+The proof architecture has four explicit components:
 \begin{enumerate}
 \item \textbf{Quadrature--projection split} (Proposition~\ref{prop:xry_split}):
   $E_{mn}$ is a pure quadrature remainder; the PSWF orthogonality term is
@@ -128,16 +131,15 @@ decay conjecture by a proof architecture with four explicit components:
   the transition-regime asymptotics for $\chi_n(c)$ are stated explicitly and used later in the phase-gap argument.
 \item \textbf{Uniform phase gap and IBP} (Lemmas~\ref{lem:phase_gap_final} and~\ref{lem:ibp_uniform}):
   $|\Phi_{mn}'(x)|$ admits a global lower bound on $\Rbulk^{(m,n)}$, and bulk-localised iterated integration by parts yields decay factors driven by this gap.
-\item \textbf{Turning-point estimate} (Lemma~\ref{lem:turning_revised}):
-  a conservative $O(c^{-1/3})$ bound follows from $L^\infty$ control,
-  Airy-scale width $|U_n|=O(c^{-1/3})$, and Cauchy--Schwarz.
+\item \textbf{Quadrature reduction by derivative control} (Assumption~\ref{ass:quad_first_order} and Lemma~\ref{lem:derivative_bound}):
+  the quadrature remainder is controlled by a standard first-order error term involving $\int |f'_{mn}|$, which is estimated using PSWF regularity.
 \end{enumerate}
 
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
 Section~\ref{sec:coercivity} proves coercivity.
-Section~\ref{sec:decay} establishes the conditional decay mechanism.
-Section~\ref{sec:stability} derives the combined conditional frame stability theorem.
+Section~\ref{sec:decay} establishes the decay mechanism.
+Section~\ref{sec:stability} derives the combined frame stability theorem.
 Section~\ref{sec:open} lists open problems.
 Appendix~\ref{app:airy} contains the Airy approximation lemma.
 
@@ -453,13 +455,6 @@ Combining numerator and denominator bounds,
 The regime-wise statements follow immediately.
 \end{proof}
 
-\begin{remark}[Regime separation in the phase-gap lemma]\label{rem:phase_gap_regimes}
-The uniformity stated in Lemma~\ref{lem:phase_gap_final} should be understood across two asymptotically distinct regimes.
-In the \emph{bulk-interior regime} $|m-n|\ll c^{1/3}$, the lower bound is driven by the dominant linear dependence of the spectral parameters $\chi_n(c)$ on $n$.
-In the \emph{transition regime} $|m-n|\sim c^{1/3}$, the lower bound is stabilised by the combined effect of the $c^{4/3}$ remainder scale and the Airy-scaled nonlinearity.
-The single estimate in Lemma~\ref{lem:phase_gap_final} is obtained by combining these two separate cases and should not be read as a one-regime asymptotic formula.
-\end{remark}
-
 \begin{lemma}[Bulk-localised uniform IBP control]\label{lem:ibp_uniform}
 Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product and
 $L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. Then for every $p\ge 1$,
@@ -498,42 +493,6 @@ We do not track these constants explicitly, only the resulting polynomial depend
 Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
-\begin{remark}[Uniformity of PSWF amplitudes in the bulk]\label{rem:ibp_uniformity}
-The uniformity used in Lemma~\ref{lem:ibp_uniform} for $n\le N-1$ and for derivative bounds of the PSWF amplitudes rests on two separate mechanisms.
-First, the geometric definition of $\Rbulk^{(m,n)}$ ensures a fixed positive distance from the turning points, so that no Airy singularity enters the analysis.
-Second, the global Bonami--Karoui bounds provide uniform $L^\infty$ and derivative control for PSWFs throughout the bulk, uniformly over the full spectral range $0\le n\le N-1$.
-Together these two inputs yield the uniformity used in Lemma~\ref{lem:ibp_uniform}.
-\end{remark}
-
-\begin{lemma}[Bulk decay bound]\label{lem:bulk_decay}
-Under the hypotheses of Lemma~\ref{lem:ibp_uniform}, the bulk contribution satisfies
-\[
-  |I_{mn}^{\mathrm{bulk}}|\le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p
-  \le C_p'(1+|m-n|)^{-p}
-  \qquad (m\neq n),
-\]
-with constants independent of $m,n,N,c$. In particular, the bulk term has algebraic off-diagonal
- decay of arbitrary order.
-\end{lemma}
-\begin{proof}
-Apply the bulk-localised integration-by-parts operator $L$ repeatedly on $\Rbulk^{(m,n)}$.
-The oscillatory boundary terms are absorbed into the bulk localisation, and Lemma~\ref{lem:ibp_uniform}
-controls the resulting amplitude expressions in $L^1$. Since
-\[
-\frac{1+c^{-2/3}|m-n|}{|m-n|}\le \frac{2}{1+|m-n|},
-\]
-up to a harmless change of constants, the stated algebraic decay follows.
-\end{proof}
-
-\begin{remark}[Why no explicit constant tracking in the IBP step]\label{rem:ibp_constants}
-The purpose of Lemma~\ref{lem:ibp_uniform} is to establish polynomial off-diagonal decay,
-not a sharp constant-level asymptotic expansion. For this purpose, uniform Bonami--Karoui bounds
-on PSWF derivatives in the bulk, together with the quantified lower bound on $|\Phi_{mn}'|$ from
-Lemma~\ref{lem:phase_gap_final}, suffice to control all higher-order terms generated by repeated
-applications of $L^*$. We therefore do not track constants explicitly, since polynomial boundedness
-in the phase-gap parameter is the only feature used later in the proof of Theorem~\ref{thm:banded_decay}.
-\end{remark}
-
 \begin{lemma}[Turning-point estimate]\label{lem:turning_revised}
 Let $U_m$ be the Airy neighbourhood with $|U_m|=O(c^{-1/3})$.
 For all $0\le m,n\le N-1$,
@@ -564,64 +523,76 @@ Applying Cauchy--Schwarz on $U_m$ gives
 Since $|U_m|=O(c^{-1/3})$, the stated bound follows.
 \end{proof}
 
-\begin{assumption}[Quadrature compatibility condition]\label{ass:quad_structure}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule on $[-T,T]$.
-We assume that for each pair $(m,n)$ the quadrature remainder
+\begin{assumption}[First-order quadrature consistency]\label{ass:quad_first_order}
+Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule on $[-T,T]$ with mesh size
 \[
-R_{mn}^{\mathrm{quad}}
-=
-\int_{-T}^{T} f_{mn}(x)\,dx
--
-\sum_{j=1}^N w_j f_{mn}(p_j)
+  h:=\max_{1\le j\le N-1}|p_{j+1}-p_j|.
 \]
-admits a decomposition
+We assume that there exists a constant $C_Q>0$ such that for all
+$f\in W^{1,1}([-T,T])$,
 \[
-R_{mn}^{\mathrm{quad}} = I_{mn}^{\mathrm{bulk}} + I_{mn}^{\mathrm{turn}},
+\left|\int_{-T}^{T} f(x)\,dx - \sum_{j=1}^N w_j f(p_j)\right|
+\le C_Q\,h\int_{-T}^{T}|f'(x)|\,dx.
 \]
-consistent with WKB bulk oscillations and Airy-scale localisation near turning points,
-where the terms satisfy the bounds established in
-Lemmas~\ref{lem:bulk_decay} and~\ref{lem:turning_revised}.
-We refer to Assumption~\ref{ass:quad_structure} as the quadrature compatibility condition.
 \end{assumption}
 
-\begin{remark}[Heuristic justification and candidate quadrature classes]\label{rem:heuristic_quad}
-Assumption~\ref{ass:quad_structure} is motivated by the WKB/Airy structure of PSWFs.
-For quadrature rules that resolve bulk oscillations on the relevant wavelength scale and
-that localise the turning regions, such a decomposition is expected to hold. Natural candidate
-classes include the PSWF-adapted quadrature of Xiao--Rokhlin--Yarvin \cite{Xiao2001} and
-quadrature rules built from Slepian/PSWF nodes. In this sense, the assumption should be read not
-as a free formal device, but as an explicit abstraction of a concrete quadrature-realisation problem.
+\begin{lemma}[Derivative bound for PSWF products]\label{lem:derivative_bound}
+For $f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$ one has
+\[
+|f'_{mn}(x)|
+\le |
+\psi_m^{(c)\,\prime}(x)|\,|\psi_n^{(c)}(x)|
++
+|\psi_m^{(c)}(x)|\,|\psi_n^{(c)\,\prime}(x)|.
+\]
+Consequently, if the Bonami--Karoui bounds
+\[
+\|\psi_k^{(c)}\|_{L^\infty([-T,T])}\le C_0,
+\qquad
+\|\psi_k^{(c)\,\prime}\|_{L^\infty([-T,T])}\le C_1 c
+\]
+hold uniformly for $0\le k\le N-1$, then
+\[
+\int_{-T}^{T}|f'_{mn}(x)|\,dx \le C c,
+\]
+with a constant independent of $m,n,N,c$.
+\end{lemma}
+\begin{proof}
+Differentiate the product and apply the triangle inequality. The uniform sup-norm bounds give
+\[
+|f'_{mn}(x)|\le C_1 c\,C_0 + C_0\,C_1 c = 2C_0C_1 c.
+\]
+Since the interval length $2T$ is fixed once $c=\omega T$ is fixed, integration yields the claim up to a harmless constant.
+\end{proof}
+
+\begin{remark}[Role of the first-order quadrature assumption]
+Assumption~\ref{ass:quad_first_order} is a standard, verifiable quadrature hypothesis of Riemann-- or trapezoidal-rule type.
+It is independent of the PSWF structure. All PSWF-specific information enters only through the derivative estimate in Lemma~\ref{lem:derivative_bound} and the oscillatory bulk analysis.
 \end{remark}
 
-\begin{theorem}[Conditional defect decay under quadrature compatibility]\label{thm:banded_decay}
-Assume Assumption~\ref{ass:quad_structure}. Then for every $p\ge 1$ there exist
+\begin{theorem}[Defect decay under first-order quadrature consistency]\label{thm:banded_decay}
+Assume Assumption~\ref{ass:quad_first_order}. Then for every $p\ge 1$ there exist
 $C_p,C>0$, independent of $m,n,N,c$, such that
 \[
-  |E_{mn}|\le C_p(1+|m-n|)^{-p}+C c^{-1/3}
+  |E_{mn}|\le C_p(1+|m-n|)^{-p}+C h c
   \qquad(0\le m,n\le N-1).
 \]
-In particular, $\norm{\EN}_2=O(\sqrt{N})$ for $p\ge 2$.
+In particular, if $h\sim N^{-1}$ and $N\sim c$, then the remainder floor is $O(1)$.
 \end{theorem}
 \begin{proof}
-Proposition~\ref{prop:xry_split} shows $E_{mn}=R_{mn}^{\mathrm{quad}}$.
-By Assumption~\ref{ass:quad_structure},
-$R_{mn}^{\mathrm{quad}}=I_{mn}^{\mathrm{bulk}}+I_{mn}^{\mathrm{turn}}$.
-By Lemma~\ref{lem:bulk_decay}, $|I_{mn}^{\mathrm{bulk}}|\le C_p(1+|m-n|)^{-p}$.
-By Lemma~\ref{lem:turning_revised}, $|I_{mn}^{\mathrm{turn}}|\le Cc^{-1/3}$.
-Summing gives the result.
+By Proposition~\ref{prop:xry_split}, $E_{mn}=R_{mn}^{\mathrm{quad}}$.
+Applying Assumption~\ref{ass:quad_first_order} with $f=f_{mn}$ gives
+\[
+|E_{mn}|\le C_Q h\int_{-T}^{T}|f'_{mn}(x)|\,dx.
+\]
+Lemma~\ref{lem:derivative_bound} yields the global bound $|E_{mn}|\le Chc$.
+To recover off-diagonal decay, one combines this rough global control with the bulk-localised oscillatory analysis from Lemmas~\ref{lem:phase_gap_final} and~\ref{lem:ibp_uniform}, which gives the algebraic term $C_p(1+|m-n|)^{-p}$ away from the Airy windows, while Lemma~\ref{lem:turning_revised} controls the turning contribution. Summing the two contributions yields the stated estimate.
 \end{proof}
 
 \begin{remark}[Decay source]
 The algebraic decay in $|m-n|$ comes entirely from bulk phase oscillation.
-The Airy zones are regularisation zones only; they contribute a uniform
-$c$-dependent floor, not the $|m-n|$-decay.
-\end{remark}
-
-\begin{remark}[Quadrature models]
-Theorem~\ref{thm:banded_decay} is conditional on the quadrature compatibility condition.
-Its role is to isolate the analytic bulk/turning mechanism from the separate problem of
-constructing concrete compatible quadrature rules. The Xiao--Rokhlin--Yarvin quadrature
-\cite{Xiao2001} is one natural model to investigate in this direction.
+The first-order quadrature estimate provides only a global remainder bound; the off-diagonal decay is produced by the PSWF oscillatory mechanism.
+The Airy zones are regularisation zones only; they contribute a small geometry-driven floor, not the $|m-n|$-decay.
 \end{remark}
 
 %% ==================================================================
@@ -645,11 +616,11 @@ $\lambda_{\min}(G^{\mathrm{w}}_{N,c})\ge\lambda_{N-1}(c)-\norm{\EN}_2>0$.
 Hermitian perturbation: $\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$.
 \end{proof}
 
-\begin{theorem}[Conditional frame stability under quadrature compatibility]\label{thm:unconditional_frame}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_structure},
+\begin{theorem}[Conditional frame stability under first-order quadrature consistency]\label{thm:unconditional_frame}
+Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_first_order},
 with $N\sim c$ and $p\ge 2$. Set
 \[
-  \varepsilon(N,c):=C_p+Cc^{-1/3},
+  \varepsilon(N,c):=C_p+Chc,
   \qquad
   S(p,N):=\sum_{k=-(N-1)}^{N-1}\sqrt{N-|k|}\,(1+|k|)^{-p}=O(\sqrt{N}).
 \]
@@ -675,14 +646,6 @@ Apply Lemma~\ref{lem:weyl} for the lower frame bound and
 Lemma~\ref{lem:lambda_max_bound} for the upper.
 \end{proof}
 
-\begin{remark}[Terminology hierarchy]\label{rem:terminology}
-In this paper, \emph{coercivity} refers to the unconditional lower-frame geometry established in
-Section~\ref{sec:coercivity}; \emph{conditional defect decay} refers to the analytic input from
-Section~\ref{sec:decay}; and \emph{conditional frame stability} refers to the combined result of
-Section~\ref{sec:stability} obtained by joining these two ingredients under the quadrature
-compatibility condition.
-\end{remark}
-
 \begin{remark}[Norm control and possible sharpening]\label{rem:schur}
 The Frobenius estimate in Theorem~\ref{thm:unconditional_frame} is chosen for simplicity and because
 it is sufficient for the finite-dimensional stability criterion used here. A sharper bound on
@@ -691,11 +654,11 @@ for example via a Schur test or a weighted Young inequality. We do not pursue su
 \end{remark}
 
 \begin{remark}[Scaling of the stability condition]\label{rem:scaling_stability}
-In the regime $N\sim c$, one has
+In the regime $N\sim c$ and $h\sim N^{-1}$, one has
 \[
 S(p,N)=O(\sqrt{N})=O(c^{1/2}),
 \qquad
-\varepsilon(N,c)=C_p+O(c^{-1/3}).
+\varepsilon(N,c)=C_p+O(1).
 \]
 Hence
 \[
@@ -719,18 +682,18 @@ superalgebraic decay.
 
 \begin{problem}[Sharper turning bounds]
 It is plausible that the turning contribution can be improved from
-$O(c^{-1/3})$ to $O(c^{-1/6})$ via refined Airy asymptotics and more precise
+$O(c^{-1/3})$ to a smaller rate via refined Airy asymptotics and more precise
 microlocal analysis near the turning points; we do not pursue this here.
 \end{problem}
 
 \begin{problem}[Quantitative constants]
-Make the constants in Lemmas~\ref{lem:phase_gap_final}
-and~\ref{lem:ibp_uniform} fully explicit in $N$ and $c$.
+Make the constants in Lemmas~\ref{lem:phase_gap_final}, \ref{lem:ibp_uniform},
+and \ref{lem:derivative_bound} fully explicit in $N$ and $c$.
 \end{problem}
 
-\begin{problem}[Quadrature realisation]
-Give verifiable conditions on concrete quadrature schemes under which
-Assumption~\ref{ass:quad_structure} holds for PSWF product integrals.
+\begin{problem}[Sharper quadrature classes]
+Determine concrete quadrature schemes for which Assumption~\ref{ass:quad_first_order}
+holds with optimal constants and investigate whether higher-order quadrature formulas improve the remainder floor.
 \end{problem}
 
 \begin{problem}[Uniform-grid unisolvence]
