@@ -141,6 +141,7 @@ Section~\ref{sec:setup} fixes notation.
 Section~\ref{sec:coercivity} proves coercivity.
 Section~\ref{sec:decay} establishes the decay mechanism.
 Section~\ref{sec:stability} derives the combined frame stability theorem.
+Section~\ref{sec:bridge} explains the conceptual boundary between the present paper and the companion spectral-transfer framework.
 Section~\ref{sec:open} lists open problems.
 Appendix~\ref{app:airy} contains the Airy approximation lemma.
 
@@ -422,7 +423,12 @@ Then $2c|m-n|\ge 2c^{4/3}$, so after increasing $c_0$ if necessary,
   |\chi_m(c)-\chi_n(c)| \ge c^{4/3}.
 \]
 
-Combining both cases yields the uniform estimate
+The unified bound follows by observing that both regimes can be written as a single interpolation inequality
+\[
+  c|m-n|\,\mathbf{1}_{|m-n|\le c^{1/3}} + c^{4/3}\,\mathbf{1}_{|m-n|\ge c^{1/3}}
+  \gtrsim \frac{c|m-n|}{1+c^{-2/3}|m-n|},
+\]
+which is an elementary monotone gluing of the two asymptotic scales. Combining both cases yields the uniform estimate
 \[
   |\chi_m(c)-\chi_n(c)|
   \ge C_2\,\frac{c|m-n|}{1+c^{-2/3}|m-n|}.
@@ -731,6 +737,20 @@ small and the condition
 is not guaranteed to hold uniformly. As a consequence, frame stability may fail
 near the critical density $N\to (2/\pi)c$.
 \end{remark}
+
+%% ==================================================================
+\section{Boundary to the companion framework}\label{sec:bridge}
+%% ==================================================================
+
+The present paper proves a robust finite-dimensional stability statement under a standard first-order quadrature consistency assumption. Its role is to separate three distinct mechanisms: continuous PSWF orthogonality, oscillatory decay of the continuous product kernel, and quadrature-induced defect control.
+
+This separation is deliberate. The continuous bulk--turning analysis explains why off-diagonal PSWF interactions decay analytically, but the proof of Theorem~\ref{thm:unconditional_frame} does not transfer that decay to the discrete defect matrix $E_{mn}$. Instead, the discrete estimate is governed only by the coarse quadrature bound $|E_{mn}|\le Chc$.
+
+As a consequence, the present framework is robust but not spectrally sharp. It yields frame stability for fixed $(N,c)$ once the defect is dominated by $\lambda_{N-1}(c)$, but it does not provide an asymptotically uniform stability theorem in the transition regime $N\sim c$.
+
+The companion paper~\cite{PaperII} addresses a genuinely different question: whether oscillatory structure of PSWF products can be preserved at the discrete level by PSWF-adapted quadrature rules. In that setting the goal is not merely to control the quadrature remainder by a first-order envelope, but to establish a spectral transfer principle that reflects the decay of continuous correlations inside the discrete Gram defect itself.
+
+Thus the two papers have complementary roles. The present work provides a stable, assumption-transparent baseline theorem, while~\cite{PaperII} develops the finer PSWF-Gauss/XRY mechanism needed for asymptotically sensitive spectral stability.
 
 %% ==================================================================
 \section{Open problems}\label{sec:open}
