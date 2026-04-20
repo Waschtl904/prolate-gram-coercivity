@@ -644,18 +644,40 @@ The derivative bound in Lemma~\ref{lem:derivative_bound} implies
 hence the result follows.
 \end{proof}
 
-\begin{lemma}[Continuous bulk decay]\label{lem:bulk_decay_continuous}
-For the continuous PSWF product integral one has, for all $p\ge 1$,
+\begin{remark}[Sharpness under first-order quadrature]\label{rem:sharpness_quad}
+The bound $|E_{mn}|\le Chc$ is intentionally structure-blind and reflects only the first-order quadrature control from Assumption~\ref{ass:quad_first_order}. Without additional oscillation-sensitive or PSWF-adapted structure in the quadrature rule, no off-diagonal decay in $|m-n|$ can in general be expected at the level of the discrete defect matrix. In this sense, the estimate is essentially sharp under the present assumptions.
+\end{remark}
+
+\begin{lemma}[Continuous bulk--turning decay]\label{lem:bulk_decay_continuous}
+For the continuous PSWF product integral one has, for all $p\ge 1$ and all $0\le m,n\le N-1$,
 \[
   \left|\int_{-T}^{T} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
-  \le C_p (1+|m-n|)^{-p}.
+  \le C_p (1+|m-n|)^{-p} + C\,c^{-1/3}.
 \]
+For $m=n$, the integral equals $\lambda_n(c)$.
 \end{lemma}
 \begin{proof}
-For $m=n$, the integral equals $\lambda_n(c)$. Since $\lambda_n(c)\le \lambda_0(c)<1$, the diagonal case is covered trivially once $C_p\ge \lambda_0(c)$.
-For $m\neq n$, decompose the continuous integral into bulk and turning regions.
-Lemma~\ref{lem:bulk_decay} gives algebraic decay on the bulk region, while Lemma~\ref{lem:turning_revised}
-controls the turning contribution by a lower-order geometric term. Since $c^{-1/3}\le 1\le (1+|m-n|)^{-p}$ up to enlargement of constants on the finite index range under consideration, the stated bound follows after absorbing both contributions into $C_p$.
+For $m=n$, the integral equals $\lambda_n(c)$ and the statement is trivial.
+
+For $m\neq n$, decompose the integral into bulk and turning regions:
+\[
+  \int_{-T}^{T} = \int_{\Rbulk^{(m,n)}} + \int_{\Rturning^{(m,n)}}.
+\]
+
+The bulk contribution satisfies
+\[
+  \left|\int_{\Rbulk^{(m,n)}} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
+  \le C_p (1+|m-n|)^{-p}
+\]
+by Lemma~\ref{lem:bulk_decay}.
+
+The turning contribution is controlled by Lemma~\ref{lem:turning_revised}:
+\[
+  \left|\int_{\Rturning^{(m,n)}} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
+  \le C\,c^{-1/3}.
+\]
+
+Combining both estimates yields the result.
 \end{proof}
 
 \begin{remark}
@@ -735,7 +757,7 @@ conditions under which oscillatory structure is preserved at the discrete level.
 \end{remark}
 
 \begin{remark}[DSTP as interface axiom]\label{rem:dstp_interface}
-The present paper does not establish DSTP. Rather, DSTP is treated as a structural interface axiom: once such a discrete spectral transfer principle holds, the frame stability theorem follows by the Schur-test argument above.
+The present paper does not establish DSTP. Rather, DSTP is treated as a structural interface axiom: once such a discrete spectral transfer principle holds, the frame stability theorem follows by the Schur-test argument above. Typical candidates for such a property are PSWF-adapted or oscillation-compatible quadrature rules, including variants of the Xiao--Rokhlin--Yarvin (XRY) framework; this is developed in detail in~\cite{PaperII}.
 \end{remark}
 
 \begin{remark}[Norm control and possible sharpening]\label{rem:schur}
