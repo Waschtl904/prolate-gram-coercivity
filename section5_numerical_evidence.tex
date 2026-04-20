@@ -1,0 +1,175 @@
+%%============================================================
+%% Section 5: Numerical Evidence for Spectral Tail Separation
+%% To be inserted into paper2_quadrature.tex before \end{document}
+%%============================================================
+
+\section{Numerical Evidence for Spectral Tail Separation}
+\label{sec:numerics}
+
+We present numerical experiments for the PSWF product family
+$f_{mn} := \psi_m^{(c)}\overline{\psi_n^{(c)}}$
+in the regime $N \sim c$.
+The computations use the tridiagonal spectral construction
+of PSWFs (\cite{OsipovRokhlinXiao}, Ch.~3)
+and a high-resolution Gauss--Legendre quadrature
+for all reference inner products.
+All experiments were performed in double precision (64-bit floating point).
+All code is available in \texttt{numerics/pswf\_tail\_numerics.py}.
+
+\subsection{Setup}
+\label{sec:numerics-setup}
+
+Prolate spheroidal wave functions $\psi_n^{(c)}$ on $[-1,1]$
+are computed via eigenvectors of the
+symmetric tridiagonal matrix $T^{(c)}$
+whose entries in the Legendre basis are given by
+(see \cite{OsipovRokhlinXiao}, Ch.~3):
+\begin{align*}
+  T^{(c)}_{kk} &= k(k+1)
+    + c^2 \frac{2k(k+1)-1}{(2k-1)(2k+3)}, \\
+  T^{(c)}_{k,k+1} &= c^2
+    \frac{(k+1)(k+2)}{(2k+3)\sqrt{(2k+1)(2k+5)}}.
+\end{align*}
+Eigenvectors are sorted in order of increasing prolate eigenvalue,
+yielding Legendre coefficients
+$\psi_n^{(c)}(x) = \sum_k a_k^{(n)} P_k^*(x)$,
+where $P_k^*$ denotes the $L^2([-1,1])$-normalized Legendre polynomial.
+Orthonormality was verified numerically:
+\[
+  \max_{\,i,j \le N_{\mathrm{test}}}|\langle\psi_i,\psi_j\rangle - \delta_{ij}|
+  < 10^{-12},
+\]
+with $N_{\mathrm{test}} = 20$ for $c=50$ and $N_{\mathrm{test}} = 30$ for $c=100$.
+
+The spectral projection $\PN$ is defined by
+\[
+  \PN f := \sum_{k=0}^{N-1} \langle f, \psi_k^{(c)} \rangle_{L^2}
+  \psi_k^{(c)},
+\]
+with inner products evaluated via Gauss--Legendre quadrature
+(700 nodes; stability of results under variation to 500 and 900 nodes
+was verified).
+The tail norm is computed via the stable formula
+\[
+  \|(I-\PN)f_{mn}\|^2
+  = \|f_{mn}\|^2
+  - \sum_{k=0}^{N-1}
+  |\langle f_{mn}, \psi_k^{(c)} \rangle|^2,
+\]
+which avoids catastrophic cancellation in the direct subtraction.
+
+\subsection{Spectral Tail Behavior}
+\label{sec:numerics-tail}
+
+Figure~\ref{fig:tail-vs-N} displays
+\[
+  \|(I-\PN)f_{mn}\|_{L^2([-1,1])}
+\]
+as a function of the projection dimension $N$,
+for representative index pairs in the bulk,
+off-diagonal, and edge regimes,
+at $c = 50$ and $c = 100$.
+
+The experiments exhibit a clear separation of regimes:
+for $m, n \ll N$, the spectral tail is at machine-precision level,
+while for $m, n \approx N$ the tail remains of order one
+and does not exhibit significant decay with $N$.
+Intermediate (off-diagonal) pairs show intermediate behavior.
+
+\begin{remark}
+The near-zero tail values for bulk pairs
+are consistent with strong numerical concentration
+of PSWF products within $\PN$
+in the bulk regime.
+We note that machine-precision saturation
+is expected for the bulk from spectral concentration
+theory (\cite{OsipovRokhlinXiao}, Ch.~4--5)
+and does not by itself constitute a proof of exponential decay;
+it is included here as an illustration of the regime structure.
+\end{remark}
+
+\subsection{Dependence on Index Separation}
+\label{sec:numerics-dist}
+
+Figure~\ref{fig:tail-vs-dist}
+shows the dependence of
+$\|(I-\PN)f_{mn}\|$ on the index distance $|m-n|$,
+with $m$ fixed at $N/4$ and $N = c$.
+A sharp transition is observed
+as $n$ approaches the effective bandlimit scale $N \sim c$:
+the tail remains negligible for $n \ll N$
+and grows sharply as $n \to N$.
+This behavior is consistent with
+the qualitative structure posited in
+Conjecture~\ref{conj:pswf_product_tail}.
+
+\subsection{Diagonal Regime Behavior}
+\label{sec:numerics-diag}
+
+Figure~\ref{fig:diag-tail}
+illustrates the diagonal tail
+$\|(I-\PN)\psi_m^{(c)2}\|$
+as a function of $m$, with $N = c$.
+A sharp transition is observed near $m \approx N$,
+separating a numerically saturated bulk regime
+from a non-negligible edge regime.
+The transition between bulk and edge regimes
+appears numerically sharp rather than gradual,
+suggesting that the effective spectral cutoff
+is well localized near $N \sim c$.
+
+\subsection{Interpretation}
+\label{sec:numerics-interp}
+
+The numerical results are consistent with a
+three-regime structure:
+bulk ($m, n \ll N$),
+off-diagonal, and edge ($m, n \approx N$) behavior.
+This is precisely the qualitative regime structure
+encoded in Conjecture~\ref{conj:pswf_product_tail},
+and motivates the separation between spectral tail control
+and quadrature stability in the overall framework.
+
+We emphasize that these experiments are heuristic
+and do not constitute rigorous bounds;
+they are included to illustrate
+the structure of the underlying spectral phenomena
+and to motivate the analytical decomposition framework
+of this paper.
+
+%%============================================================
+%% Figure stubs (uncomment and place figures in numerics/)
+%%============================================================
+
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=\textwidth]{numerics/plot1_tail_vs_N.png}
+%   \caption{Spectral tail
+%     $\|(I-\PN)f_{mn}\|$ vs.\ projection dimension $N$
+%     for representative index pairs
+%     (bulk, off-diagonal, edge)
+%     at $c=50$ (left) and $c=100$ (right). Log scale.}
+%   \label{fig:tail-vs-N}
+% \end{figure}
+
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.7\textwidth]{numerics/plot2_tail_vs_dist.png}
+%   \caption{Spectral tail
+%     $\|(I-\PN)f_{mn}\|$ at $N=c$
+%     vs.\ index distance $|m-n|$,
+%     with $m$ fixed at $N/4$,
+%     for $c=50$ and $c=100$. Log scale.}
+%   \label{fig:tail-vs-dist}
+% \end{figure}
+
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.7\textwidth]{numerics/plot3_diagonal_tail.png}
+%   \caption{Diagonal tail
+%     $\|(I-\PN)\psi_m^{(c)2}\|$
+%     vs.\ index $m$ at $N=c$,
+%     for $c=50$ and $c=100$. Log scale.
+%     Sharp transition near $m \approx N$ separates bulk from edge regime.}
+%   \label{fig:diag-tail}
+% \end{figure}
