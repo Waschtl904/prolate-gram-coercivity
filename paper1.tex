@@ -371,11 +371,14 @@ Let $x\in\Rbulk^{(m,n)}$ and set
   \qquad
   \nu := \chi_n(c)-c^2x^2/T^2.
 \]
-By definition of the bulk region, both $\mu$ and $\nu$ are bounded below:
-there exists $\delta_0>0$ such that
+Since $x\notin U_m\cup U_n$, the Airy-scale exclusion implies
+$|x-x_m^*|,|x-x_n^*|\ge \rho c^{-1/3}$. By the standard turning-point normal form,
+$\chi_k(c)-c^2x^2/T^2$ varies linearly in $x-x_k^*$ at Airy scale, so there exists
+$\delta_0>0$ depending only on $\rho$ such that
 \[
   \mu,\nu \ge \delta_0 c^{2/3}.
 \]
+This is precisely the bulk-to-spectral separation furnished by the Airy scaling near turning points; compare Definition~\ref{def:bulk} and Appendix~\ref{app:airy}.
 We use the identity
 \[
   |\sqrt{\mu}-\sqrt{\nu}|
@@ -625,7 +628,7 @@ For the continuous PSWF product integral one has, for all $p\ge 1$,
 \]
 \end{lemma}
 \begin{proof}
-For $m=n$, the integral equals $\lambda_n(c)$ and the claimed bound is immediate after enlarging $C_p$.
+For $m=n$, the integral equals $\lambda_n(c)$. Since $\lambda_n(c)\le \lambda_0(c)<1$, the diagonal case is covered trivially once $C_p\ge \lambda_0(c)$.
 For $m\neq n$, decompose the continuous integral into bulk and turning regions.
 Lemma~\ref{lem:bulk_decay} gives algebraic decay on the bulk region, while Lemma~\ref{lem:turning_revised}
 controls the turning contribution by a lower-order geometric term. Since $c^{-1/3}\le 1\le (1+|m-n|)^{-p}$ up to enlargement of constants on the finite index range under consideration, the stated bound follows after absorbing both contributions into $C_p$.
