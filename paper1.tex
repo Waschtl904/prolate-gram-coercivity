@@ -40,7 +40,9 @@ by a proof architecture based on a quadrature--projection decomposition,
 a fully quantified bulk phase-gap lemma, bulk-localised integration-by-parts control,
 and a conservative turning-point estimate via Cauchy--Schwarz and Airy-scale widths.
 The remaining quadrature input is reduced to a standard first-order quadrature consistency assumption,
-thereby replacing the earlier structural quadrature-compatibility hypothesis by a verifiable error estimate.}
+thereby replacing the earlier structural quadrature-compatibility hypothesis by a verifiable error estimate.
+A companion paper develops a separate, more structured PSWF-Gauss/XRY regime and formulates
+an implication framework for oscillation-compatible quadrature based on PSWF-adapted rules; see~\cite{PaperII}.}
 
 \author{Anonymous Author}
 \address{}
@@ -116,6 +118,8 @@ weighted MZ frames. For the second, we establish an exact algebraic
 defect decomposition and then derive a two-scale defect estimate
 combining a WKB--bulk / Airy--turning analysis for the continuous PSWF product
 integral with a standard first-order quadrature error bound for the full remainder.
+A companion paper studies a different regime based on PSWF-adapted XRY quadrature and
+conditional spectral compatibility; see~\cite{PaperII}.
 
 \subsection*{Main results}
 The key new ingredient is the replacement of the earlier conditional
@@ -616,7 +620,7 @@ The stated estimate is obtained by combining the continuous oscillatory decay te
 \begin{remark}[Origin of the two terms]\label{rem:two_scale_origin}
 The two terms in Theorem~\ref{thm:banded_decay} have different origins.
 The algebraic term $C_p(1+|m-n|)^{-p}$ records the oscillatory cancellation of the continuous PSWF product integral on the bulk region.
-The term $Chc$ is a global quadrature error bound for the full remainder. A rigorous transfer of the algebraic decay to the quadrature error itself would require an additional oscillation-compatible quadrature hypothesis, which is not assumed here.
+The term $Chc$ is a global quadrature error bound for the full remainder. A rigorous transfer of the algebraic decay to the quadrature error itself would require an additional oscillation-compatible quadrature hypothesis, which is not assumed here. For a separate PSWF-adapted XRY regime framed through conditional spectral compatibility, see the companion paper~\cite{PaperII}.
 \end{remark}
 
 %% ==================================================================
@@ -716,7 +720,7 @@ and \ref{lem:derivative_bound} fully explicit in $N$ and $c$.
 \end{problem}
 
 \begin{problem}[Oscillation-compatible quadrature]
-Determine concrete quadrature schemes for which the algebraic decay of the continuous bulk integral transfers directly to the quadrature error itself, for example through an oscillation-compatible quadrature estimate.
+Determine concrete quadrature schemes for which the algebraic decay of the continuous bulk integral transfers directly to the quadrature error itself, for example through an oscillation-compatible quadrature estimate. A structured PSWF-Gauss/XRY implication framework in this direction is developed separately in~\cite{PaperII}.
 \end{problem}
 
 \begin{problem}[Uniform-grid unisolvence]
@@ -788,6 +792,12 @@ F.~W.~J.~Olver,
 \bibitem{OsipovRokhlinXiao}
 A.~Osipov, V.~Rokhlin, and H.~Xiao,
 \textit{Prolate Spheroidal Wave Functions of Order Zero}, Springer, 2013.
+
+\bibitem{PaperII}
+Anonymous Author,
+\emph{Conditional Frame Stability of Prolate Sampling Operators via PSWF Spectral Projection and XRY Quadrature:
+A Conditional Implication Framework for Quadrature Compatibility},
+preprint, 2026.
 
 \bibitem{Slepian1978}
 D.~Slepian,
