@@ -692,12 +692,12 @@ Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:
   |E_{mn}|\le C h c\,(1+|m-n|)^{-p}
   \qquad \text{for all } 0\le m,n\le N-1.
 \]
-Thus DSTP is a structural hypothesis asserting that the discrete defect inherits a Schur-summable off-diagonal profile at scale $hc$.
+Thus DSTP is a structural hypothesis asserting that the discrete defect inherits a Schur-summable off-diagonal profile at scale $hc$. It is not implied by the continuous decay estimates established in Section~\ref{sec:decay}.
 \end{definition}
 
 \begin{theorem}[Conditional frame stability under Schur-decay hypothesis]\label{thm:conditional_frame_schur}
 Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_first_order},
-with $N\sim c$. Assume in addition that the rule satisfies DSTP in the sense of Definition~\ref{def:dstp}.
+with $N\sim c$. Assume in addition that the rule satisfies DSTP (Definition~\ref{def:dstp}).
 If
 \[
   C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p}<\lambda_{N-1}(c),
@@ -760,7 +760,7 @@ This separation is deliberate. The continuous bulk--turning analysis explains wh
 
 As a consequence, the present framework is robust but not spectrally sharp. It yields frame stability for fixed $(N,c)$ once the defect is dominated by $\lambda_{N-1}(c)$, but it does not provide an asymptotically uniform stability theorem in the transition regime $N\sim c$.
 
-The companion paper~\cite{PaperII} addresses a genuinely different question: whether oscillatory structure of PSWF products can be preserved at the discrete level by PSWF-adapted quadrature rules. In that setting the goal is not merely to control the quadrature remainder by a first-order envelope, but to establish a spectral transfer principle that reflects the decay of continuous correlations inside the discrete Gram defect itself.
+The companion paper~\cite{PaperII} addresses a genuinely different question: whether oscillatory structure of PSWF products can be preserved at the discrete level by PSWF-adapted quadrature rules. In that setting the goal is not merely to control the quadrature remainder by a first-order envelope, but to establish a spectral transfer principle that reflects the decay of continuous correlations inside the discrete Gram defect itself. Establishing DSTP for concrete quadrature schemes is deferred entirely to the companion paper.
 
 Thus the two papers address different levels of structure within the same framework.
 The present work isolates a stability result under a minimal, first-order quadrature assumption,
