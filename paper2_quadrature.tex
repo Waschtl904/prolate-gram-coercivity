@@ -119,8 +119,8 @@ $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$.
 
 \subsection*{Strategy of this paper}
 
-The conditional implication rests on two explicit open analytical
-components:
+The technical strategy consists of an implication chain with two explicit
+analytical inputs:
 \begin{enumerate}[(i)]
 \item \emph{PSWF product spectral tail conjecture.} The product integrands
   $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are expected to admit
@@ -131,21 +131,11 @@ components:
   product family, controlled by the PSWF spectral truncation error
   associated with $\PN$.
 \end{enumerate}
-Thus the compatibility problem is not solved here; rather, it is organised
-as an implication chain from two conjectural inputs to the compatibility
-condition of \cite{PaperI}. This decomposition is intended as a structural
-separation between two different mathematical issues --- PSWF spectral
-theory on the function side and quadrature operator stability on the XRY
-side --- rather than as a mere renaming of the original difficulty. We
-do not assume any closure of the PSWF system under pointwise
-multiplication, and we do not identify XRY with any spectral projector.
-The substantive output is a clean separation between the PSWF
-product-tail issue, the XRY stability issue, and the downstream
-frame-theoretic consequences. More precisely, the only step in the present
-argument that is not reducible to a perturbation analysis around the
-projector $\PN$ is the spectral control of the nonlinear PSWF product
-family; once that input is combined with the XRY stability statement, the
-frame-theoretic consequences follow from a perturbative analysis.
+Within the present framework, these two inputs are used only through their
+combination in the deduction of the defect estimate. The technical content
+of the paper is therefore the exact implication chain from these two
+conjectural inputs to the compatibility condition of \cite{PaperI}, together
+with the perturbative passage from that condition to frame stability.
 
 \subsection*{Main result}
 
@@ -171,9 +161,11 @@ in the traditional sense. Its purpose is to isolate the two core unresolved
 analytical components that stand between the abstract framework of
 \cite{PaperI} and a concrete verification for XRY PSWF-Gauss quadrature.
 The PSWF product-tail step and the XRY stability step are both left as
-explicit conjectural inputs. What the present analysis contributes is the
-exact implication chain showing how these two inputs together force the
-compatibility condition and hence the frame-theoretic conclusions.
+explicit conjectural inputs. In particular, the present work is not a
+classical analysis paper deriving the conclusion from weaker previously
+established estimates; rather, it makes explicit where the unresolved
+analytic burden lies and how the downstream frame-theoretic conclusion would
+follow once those inputs are available.
 
 \subsection*{Organisation}
 
@@ -255,6 +247,14 @@ Hence
 \]
 \end{proof}
 
+\begin{remark}[Role of the product norm bound]\label{rem:generic_bound}
+The preceding estimate uses only the generic $L^\infty\cdot L^2$ bound and
+carries no PSWF-specific spectral information. Its role is solely to ensure
+that the $L^2$ factor in Conjecture~\ref{conj:xry_stability} remains
+uniformly bounded; the nontrivial spectral content is entirely contained in
+Conjecture~\ref{conj:pswf_product_tail}.
+\end{remark}
+
 \begin{remark}[Why the PSWF product-tail issue is difficult]
 The family $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ is not known to enjoy
 any finite-dimensional closure property in the PSWF basis. Thus a uniform
@@ -293,19 +293,32 @@ expected to deteriorate and where any proof would have to control possible
 collapse of effective analyticity widths.
 \end{conjecture}
 
+\begin{remark}[Status of intermediate structure]
+To the best of our knowledge, there is currently no established
+intermediate property of the PSWF product family that would serve as a
+quantitative precursor to Conjecture~\ref{conj:pswf_product_tail}. In
+particular, there is no known stable multiplicative closure scale in the
+PSWF basis that would bridge the gap between generic analyticity and the
+uniform tail estimate required here.
+\end{remark}
+
 %% ==================================================================
 \section{XRY Spectral Stability Conjecture}\label{sec:xry_accuracy}
 %% ==================================================================
 
 \begin{remark}[Why the XRY stability conjecture is structurally plausible]
-The XRY construction is built from the same PSWF spectral data that underlie
-the projector $\PN$, so it is reasonable to expect its quadrature error to
-be governed primarily by the PSWF spectral tail of the test function, up to
-a residual term that is exponentially small in the regime $N\sim c$. This
-is also consistent with the role of approximate spectral projectors and with
-the interpolation formulas underlying the XRY construction. This does not
-prove Conjecture~\ref{conj:xry_stability}, but it explains why a bound of the
-form
+The XRY quadrature rule is constructed independently through the
+PSWF-Gauss node-weight scheme of Xiao--Rokhlin--Yarvin \cite{Xiao2001}, and
+not by building the projector $\PN$ into the quadrature functional itself.
+The role of $\PN$ in Conjecture~\ref{conj:xry_stability} is therefore
+an a posteriori analytical comparison device rather than part of the
+construction of $Q_N$. With that distinction in place, it is reasonable to
+expect the quadrature error to be governed primarily by the PSWF spectral
+tail of the test function, up to a residual term that is exponentially
+small in the regime $N\sim c$. This is also consistent with the role of
+approximate spectral projectors and with the interpolation formulas
+underlying the XRY construction. This does not prove
+Conjecture~\ref{conj:xry_stability}, but it explains why a bound of the form
 \[
   |Q_N(f)-\int_{-T}^T f|\lesssim \|(I-\PN)f\| + e^{-\alpha N}\norm{f}_{L^2}
 \]
@@ -384,6 +397,13 @@ same regime. All exponential contributions are therefore absorbed into a
 single rate $\alpha$, possibly reduced, and all multiplicative constants are
 absorbed into $C$. This yields the stated bound.
 \end{proof}
+
+\begin{remark}[No gradual interpolation in the present framework]
+Within the present argument, there is no gradual weakening of the
+conclusion obtainable from partial versions of the two conjectures. The
+exponential defect bound follows only once both conjectural inputs are
+available in the stated form.
+\end{remark}
 
 \begin{lemma}[Exponential domination of the bulk error scale]
 \label{lem:bulk_scale}
