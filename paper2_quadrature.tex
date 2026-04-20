@@ -212,6 +212,15 @@ The weights satisfy $w_j>0$ and $C_1 T/N\le w_j\le C_2 T/N$
 uniformly in $j$ in the regime $N\sim c$.
 \end{assumption}
 
+\begin{remark}[Node-weight assumptions and evidence]\label{rem:nodes_weights_evidence}
+Assumptions~\ref{ass:node_sep} and~\ref{ass:weights} are included here as
+explicit hypotheses rather than derived facts. They are, however,
+consistent with the numerical behaviour reported for PSWF-Gauss rules in
+\cite{Xiao2001,OsipovRokhlinXiao}, where the nodes appear well separated and
+the weights remain positive and of the expected order $T/N$ in the regime
+$N\sim c$. We do not claim these properties as proved here.
+\end{remark}
+
 %% ==================================================================
 \section{PSWF Product Spectral Tail Conjecture}\label{sec:spectral_decay}
 %% ==================================================================
@@ -293,6 +302,19 @@ expected to deteriorate and where any proof would have to control possible
 collapse of effective analyticity widths.
 \end{conjecture}
 
+\begin{remark}[Frequency-space heuristic for the product-tail problem]
+PSWFs with bandlimit parameter $c$ may be viewed heuristically as functions
+whose Fourier content is essentially concentrated on a frequency window of
+size comparable to $c$. Under this heuristic, the pointwise product
+$\psi_m^{(c)}\overline{\psi_n^{(c)}}$ corresponds in frequency space to a
+convolution, so one expects an effective bandwidth of order $2c$ rather
+than $c$. Since the projector $\PN$ retains only the first $N\sim c$ PSWF
+modes, the main issue is not whether spectral mass extends beyond that
+range, but how rapidly the corresponding PSWF coefficients decay past the
+cutoff. This is precisely where the edge regime $m,n\sim N$ becomes
+critical.
+\end{remark}
+
 \begin{remark}[Status of intermediate structure]
 To the best of our knowledge, there is currently no established
 intermediate property of the PSWF product family that would serve as a
@@ -300,6 +322,14 @@ quantitative precursor to Conjecture~\ref{conj:pswf_product_tail}. In
 particular, there is no known stable multiplicative closure scale in the
 PSWF basis that would bridge the gap between generic analyticity and the
 uniform tail estimate required here.
+\end{remark}
+
+\begin{remark}[Analytical bottleneck]\label{rem:bottleneck}
+The overall implication chain shows that the main unresolved analytical
+difficulty is concentrated in the PSWF product spectral tail, especially
+near the edge regime $m,n\sim N$. Once such a tail estimate is available,
+the remaining steps reduce to quadrature stability and perturbative frame
+analysis.
 \end{remark}
 
 %% ==================================================================
@@ -312,13 +342,17 @@ PSWF-Gauss node-weight scheme of Xiao--Rokhlin--Yarvin \cite{Xiao2001}, and
 not by building the projector $\PN$ into the quadrature functional itself.
 The role of $\PN$ in Conjecture~\ref{conj:xry_stability} is therefore
 an a posteriori analytical comparison device rather than part of the
-construction of $Q_N$. With that distinction in place, it is reasonable to
-expect the quadrature error to be governed primarily by the PSWF spectral
-tail of the test function, up to a residual term that is exponentially
-small in the regime $N\sim c$. This is also consistent with the role of
-approximate spectral projectors and with the interpolation formulas
-underlying the XRY construction. This does not prove
-Conjecture~\ref{conj:xry_stability}, but it explains why a bound of the form
+construction of $Q_N$. Moreover, the XRY formulas are exact on the
+underlying PSWF trial space, so $Q_N$ integrates $\PN f$ exactly whenever
+$\PN f\in V_{N,c}$. This suggests that $Q_N$ behaves as an approximate
+spectral projector onto $V_{N,c}$ at the level of integration functionals,
+with the defect governed by the contribution of $(I-\PN)f$. With that
+distinction in place, it is reasonable to expect the quadrature error to be
+governed primarily by the PSWF spectral tail of the test function, up to a
+residual term that is exponentially small in the regime $N\sim c$. This is
+also consistent with the interpolation formulas underlying the XRY
+construction. This does not prove Conjecture~\ref{conj:xry_stability}, but
+it explains why a bound of the form
 \[
   |Q_N(f)-\int_{-T}^T f|\lesssim \|(I-\PN)f\| + e^{-\alpha N}\norm{f}_{L^2}
 \]
@@ -403,6 +437,45 @@ Within the present argument, there is no gradual weakening of the
 conclusion obtainable from partial versions of the two conjectures. The
 exponential defect bound follows only once both conjectural inputs are
 available in the stated form.
+\end{remark}
+
+\begin{proposition}[Partial compatibility under bulk/off-diagonal control]
+\label{prop:partial_compatibility}
+Assume Conjecture~\ref{conj:xry_stability}, Assumption~\ref{ass:pswf_sup},
+and the following partial PSWF tail information:
+\begin{enumerate}[(a)]
+\item for indices in the bulk regime $m,n\le \gamma N$ with fixed
+  $\gamma<1$, one has a uniform algebraic estimate
+  \[
+    \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
+    \le C_p(1+|m-n|)^{-p};
+  \]
+\item for off-diagonal indices $|m-n|\gg1$, the same algebraic estimate
+  holds uniformly away from the diagonal.
+\end{enumerate}
+Then the quadrature defect satisfies the corresponding partial bound
+\[
+  |E_{mn}|\le C_p'(1+|m-n|)^{-p}+C e^{-\alpha N}
+\]
+in the union of these bulk and off-diagonal regimes. In particular, one
+obtains a banded-type compatibility statement away from the unresolved edge
+region.
+\end{proposition}
+\begin{proof}
+Insert the assumed algebraic tail estimate into
+Proposition~\ref{prop:structured_defect}. The $L^2$ term is uniformly
+bounded by Lemma~\ref{lem:product_norm}, so the residual contribution
+remains exponentially small in $N$. The resulting estimate is therefore of
+the stated algebraic-plus-exponential form in every regime where the
+assumed partial tail control is available.
+\end{proof}
+
+\begin{remark}[Scope of the partial compatibility statement]
+Proposition~\ref{prop:partial_compatibility} does not address the full
+uniform range $0\le m,n\le N-1$. Its purpose is only to record that bulk and
+off-diagonal control would already imply a partial banded structure for the
+quadrature defect, while the unresolved edge regime remains the obstruction
+to a global compatibility theorem.
 \end{remark}
 
 \begin{lemma}[Exponential domination of the bulk error scale]
