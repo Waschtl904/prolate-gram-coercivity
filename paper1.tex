@@ -130,8 +130,8 @@ The proof architecture has four explicit components:
   exactly zero.
 \item \textbf{Spectral parameter control} (Proposition~\ref{prop:spectral_gap}):
   the transition-regime asymptotics for $\chi_n(c)$ are stated explicitly and used later in the phase-gap argument.
-\item \textbf{Uniform phase gap and IBP} (Lemmas~\ref{lem:phase_gap_final}, \ref{lem:ibp_uniform}, and~\ref{lem:bulk_decay_continuous}):
-  $|\Phi_{mn}'(x)|$ admits a global lower bound on $\Rbulk^{(m,n)}$, and bulk-localised iterated integration by parts yields algebraic decay for the continuous PSWF product integral.
+\item \textbf{Uniform phase gap and IBP} (Lemmas~\ref{lem:phase_gap_final}, \ref{lem:bulk_derivative}, \ref{lem:ibp_uniform}, and~\ref{lem:bulk_decay_continuous}):
+  $|\Phi_{mn}'(x)|$ admits a global lower bound on $\Rbulk^{(m,n)}$, bulk-restricted semiclassical derivative bounds control PSWF derivatives away from turning regions, and bulk-localised iterated integration by parts yields algebraic decay for the continuous PSWF product integral.
 \item \textbf{Quadrature reduction by derivative control} (Assumption~\ref{ass:quad_first_order}, Lemma~\ref{lem:derivative_bound}, and Theorem~\ref{thm:banded_decay}):
   the full quadrature remainder is controlled by a standard first-order error term involving $\int |f'_{mn}|$, which is estimated using PSWF regularity.
 \end{enumerate}
@@ -336,35 +336,28 @@ beyond $U_n$ the quadratic approximation to the square root is valid and
 the WKB phase is non-stationary for $|m-n|\ge 1$.
 \end{remark}
 
-\begin{lemma}[Uniform phase gap in the bulk, fully quantified]\label{lem:phase_gap_final}
+\begin{lemma}[Uniform phase gap in the bulk, two-regime form]\label{lem:phase_gap_final}
 Let $N\sim c$ and let $\chi_n(c)$ denote the PSWF spectral parameters.
 Fix $\rho>0$ and define the bulk region $\Rbulk^{(m,n)}$ as in
 Definition~\ref{def:bulk}. Then there exist constants
-$c_0>0$ and $\kappa>0$, independent of $m,n,N,c$, such that
-for all $c\ge c_0$ and all $0\le m\ne n\le N-1$ the phase derivative
-\[
-  \Phi_{mn}'(x)
-  =\frac{1}{T}\Bigl(
-    \sqrt{\chi_m(c)-c^2x^2/T^2}
-    -\sqrt{\chi_n(c)-c^2x^2/T^2}
-  \Bigr)
-\]
-satisfies the uniform lower bound
-\[
-  |\Phi_{mn}'(x)|
-  \ge
-  \frac{\kappa}{T}\,\frac{|m-n|}{1 + c^{-2/3}|m-n|}
-  \qquad\text{for all }x\in\Rbulk^{(m,n)}.
-\]
-In particular,
+$c_0>0$ and $\kappa>0$ such that for all $c\ge c_0$ the following bounds hold uniformly in
+$0\le m\ne n\le N-1$:
 \begin{align*}
   |\Phi_{mn}'(x)|
   &\ge \frac{\kappa}{T}|m-n|,
   &&\text{if } |m-n|\le c^{1/3},\\
   |\Phi_{mn}'(x)|
   &\ge \frac{\kappa}{T}c^{1/3},
-  &&\text{if } |m-n|\ge c^{1/3}.
+  &&\text{if } |m-n|\ge c^{1/3},
 \end{align*}
+for all $x\in\Rbulk^{(m,n)}$. Consequently,
+\[
+  |\Phi_{mn}'(x)|
+  \ge
+  \frac{\kappa}{T}\,\frac{|m-n|}{1 + c^{-2/3}|m-n|}
+  \qquad\text{for all }x\in\Rbulk^{(m,n)}.
+\]
+The final bound is used only as a unified lower envelope for subsequent estimates and is not claimed to be sharp.
 \end{lemma}
 \begin{proof}
 Let $x\in\Rbulk^{(m,n)}$ and set
@@ -423,16 +416,12 @@ Then $2c|m-n|\ge 2c^{4/3}$, so after increasing $c_0$ if necessary,
   |\chi_m(c)-\chi_n(c)| \ge c^{4/3}.
 \]
 
-The unified bound follows by observing that both regimes can be written as a single interpolation inequality
+The unified form follows by observing that the two regime bounds define a monotone envelope:
 \[
   c|m-n|\,\mathbf{1}_{|m-n|\le c^{1/3}} + c^{4/3}\,\mathbf{1}_{|m-n|\ge c^{1/3}}
-  \gtrsim \frac{c|m-n|}{1+c^{-2/3}|m-n|},
+  \gtrsim \frac{c|m-n|}{1+c^{-2/3}|m-n|}.
 \]
-which is an elementary monotone gluing of the two asymptotic scales. Combining both cases yields the uniform estimate
-\[
-  |\chi_m(c)-\chi_n(c)|
-  \ge C_2\,\frac{c|m-n|}{1+c^{-2/3}|m-n|}.
-\]
+No claim is made that this lower envelope reflects the exact spectral spacing of PSWF eigenparameters; it is used solely to write the two cases in a single form.
 
 \medskip
 \noindent
@@ -450,16 +439,18 @@ since $\chi_{N-1}(c)\lesssim c^2$ in the regime $N\sim c$.
 \noindent
 \textbf{Step 3: Conclusion.}
 
-Combining numerator and denominator bounds,
+Combining numerator and denominator bounds yields the stated two-regime estimates, and the unified lower bound follows from the monotone envelope displayed above after adjusting constants.
+\end{proof}
+
+\begin{lemma}[Bulk semiclassical derivative control]\label{lem:bulk_derivative}
+For every fixed integer $k\ge 0$ there exists a constant $C_k>0$ such that
 \[
-  |\Phi_{mn}'(x)|
-  \ge
-  \frac{1}{T}
-  \frac{C_2\,\frac{c|m-n|}{1+c^{-2/3}|m-n|}}{C_3 c}
-  =
-  \frac{\kappa}{T}\,\frac{|m-n|}{1+c^{-2/3}|m-n|}.
+\|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})} \le C_k c^{k/2}
 \]
-The regime-wise statements follow immediately.
+uniformly for all $0\le n\le N-1$, provided the evaluation is restricted to bulk regions staying a fixed Airy-scale distance away from the turning neighborhoods. This is the standard semiclassical derivative growth away from turning points and follows from the WKB representation together with the turning-point exclusion; compare Olver~\cite{Olver1974} and the uniform PSWF estimates in~\cite{BonamiKaroui2014,OsipovRokhlinXiao}.
+\end{lemma}
+\begin{proof}
+Away from the turning region, the PSWF differential equation is in the non-stationary WKB regime. Standard semiclassical differentiation of the WKB ansatz shows that each spatial derivative contributes at most a factor of order $c^{1/2}$ while the amplitude remains uniformly controlled on compact subsets of the bulk. Since the bulk region excludes Airy neighborhoods of size $O(c^{-1/3})$, the phase and amplitude denominators stay uniformly separated from zero there. The stated estimate follows by combining the classical WKB derivative bookkeeping with the uniform transition-regime PSWF bounds cited above.
 \end{proof}
 
 \begin{lemma}[Bulk-localised uniform IBP control]\label{lem:ibp_uniform}
@@ -476,9 +467,7 @@ Moreover, $(L^*)^p a_{mn}$ is a finite linear combination of terms of the form
   \qquad 0\le k\le p,\; 1\le \ell\le p,
 \]
 with coefficients $c_{p,k,\ell}$ depending only on $p$ and finitely many derivatives of
-$\Phi_{mn}'$. By Bonami--Karoui \cite{BonamiKaroui2014}, the derivatives
-$\partial_x^k\psi_n^{(c)}$ satisfy uniform bounds on $[-T,T]$, and hence on compact subsets
-of the bulk. This yields uniform control over all $n\le N-1$ away from the turning regions.
+$\Phi_{mn}'$.
 \end{lemma}
 \begin{proof}
 The formal adjoint has the form
@@ -494,10 +483,7 @@ By Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
   |(\Phi_{mn}'(x))^{-1}|
   \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}.
 \]
-Since $\Rbulk^{(m,n)}$ stays a positive distance away from the turning points,
-all derivatives of the PSWF amplitudes entering $a_{mn}$ are uniformly controlled there.
-We do not track these constants explicitly, only the resulting polynomial dependence on the quantified phase gap.
-Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
+Lemma~\ref{lem:bulk_derivative} provides uniform semiclassical control of PSWF derivatives in the bulk region, away from Airy-scale neighborhoods. Therefore all derivatives of the WKB amplitudes entering $a_{mn}$ are uniformly controlled on $\Rbulk^{(m,n)}$, with at most polynomial dependence on $c$ already accounted for by the quantified phase-gap factors. We do not track these constants explicitly, only the resulting polynomial dependence on the lower bound for $|\Phi_{mn}'|$. Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
 \begin{lemma}[Bulk decay for the continuous integral]\label{lem:bulk_decay}
