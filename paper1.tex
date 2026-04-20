@@ -41,7 +41,7 @@ a fully quantified bulk phase-gap lemma, bulk-localised integration-by-parts con
 and a conservative turning-point estimate via Cauchy--Schwarz and Airy-scale widths.
 The remaining quadrature input is reduced to a standard first-order quadrature consistency assumption,
 thereby replacing the earlier structural quadrature-compatibility hypothesis by a verifiable error estimate.
-A companion paper develops a separate, more structured PSWF-Gauss/XRY regime and formulates
+A companion paper develops a separate PSWF-Gauss/XRY regime and formulates
 an implication framework for oscillation-compatible quadrature based on PSWF-adapted rules; see~\cite{PaperII}.}
 
 \author{Anonymous Author}
@@ -83,7 +83,7 @@ where $h$ denotes the mesh size of the quadrature rule.
 The exact identity
 $E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$ (Proposition~\ref{prop:xry_split})
 clarifies that the first term vanishes by PSWF orthogonality, so the
-defect is purely a quadrature remainder. Separately, the continuous PSWF
+quadrature defect is fully isolated. Separately, the continuous PSWF
 product integral exhibits algebraic decay via a quantified phase-gap estimate
 and iterated integration by parts. Thus the analytic bulk--turning
 mechanism is isolated from the quadrature floor, while all results remain
@@ -117,7 +117,7 @@ weighted MZ frames. For the second, we establish an exact algebraic
 defect decomposition, derive a global first-order quadrature bound for the
 discrete defect, and separately analyse the oscillatory decay mechanism of
 the continuous PSWF product integral via a WKB--bulk / Airy--turning decomposition.
-A companion paper studies a different regime based on PSWF-adapted XRY quadrature and
+A companion paper studies a PSWF-adapted XRY quadrature regime and
 conditional spectral compatibility; see~\cite{PaperII}.
 
 \subsection*{Main results}
@@ -306,10 +306,15 @@ of $\Kop$, and the quadrature remainder is
 \[
   R_{mn}^{\mathrm{quad}}
   =
-  \int_{-T}^{T}f_{mn}(x)\,dx
-  -\sum_{j=1}^N w_j f_{mn}(p_j),
+  \sum_{j=1}^N w_j f_{mn}(p_j)
+  -\int_{-T}^{T}f_{mn}(x)\,dx,
   \qquad f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}.
 \]
+Consequently,
+\[
+  E_{mn} = - R_{mn}^{\mathrm{quad}}
+\]
+under the sign convention of Assumption~\ref{ass:quad_first_order}, so all later estimates use only $|R_{mn}^{\mathrm{quad}}|$.
 \end{proposition}
 
 \begin{remark}
@@ -549,6 +554,10 @@ $f\in W^{1,1}([-T,T])$,
 \]
 \end{assumption}
 
+\begin{remark}[Scope of the quadrature input]\label{rem:scope_quad}
+Assumption~\ref{ass:quad_first_order} is intentionally coarse. It is used only to control the absolute size of the quadrature remainder and does not encode oscillation-sensitive cancellation, PSWF-adapted exactness, or any transfer of continuous off-diagonal decay to the discrete defect matrix.
+\end{remark}
+
 \begin{lemma}[Derivative bound for PSWF products]\label{lem:derivative_bound}
 For $f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$ one has
 \[
@@ -592,9 +601,9 @@ the defect matrix satisfies the global bound
 where $C>0$ is independent of $m,n,N,c$.
 \end{theorem}
 \begin{proof}
-By Proposition~\ref{prop:xry_split}, $E_{mn}$ is purely a quadrature remainder:
+By Proposition~\ref{prop:xry_split}, $E_{mn}$ equals the quadrature remainder up to the sign convention fixed there, so
 \[
-E_{mn} = R_{mn}^{\mathrm{quad}}.
+|E_{mn}| = |R_{mn}^{\mathrm{quad}}|.
 \]
 Applying Assumption~\ref{ass:quad_first_order} to $f_{mn}$ yields
 \[
@@ -681,6 +690,14 @@ $\norm{\EN}_2\le Chc\,S(p,N)$ after enlarging the implicit constant in the defin
 Apply Lemma~\ref{lem:weyl} for the lower frame bound and
 Lemma~\ref{lem:lambda_max_bound} for the upper.
 \end{proof}
+
+\begin{corollary}[Interpretive consequence of the stability criterion]\label{cor:fixed_param_scope}
+Theorem~\ref{thm:unconditional_frame} yields a robust finite-dimensional stability statement for fixed parameter pairs $(N,c)$ satisfying the defect domination condition
+\[
+\varepsilon(N,c)\cdot S(p,N)<\lambda_{N-1}(c).
+\]
+By itself, it does not claim asymptotically uniform frame stability in coupled high-bandwidth limits.
+\end{corollary}
 
 \begin{remark}[Separation of scales]
 The continuous oscillatory decay of PSWF products is independent of the quadrature-induced defect floor.
