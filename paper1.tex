@@ -135,6 +135,9 @@ The proof architecture has four explicit components:
 \item \textbf{Quadrature reduction by derivative control} (Assumption~\ref{ass:quad_first_order}, Lemma~\ref{lem:derivative_bound}, and Theorem~\ref{thm:banded_decay}):
   the full quadrature remainder is controlled by a standard first-order error term involving $\int |f'_{mn}|$, which is estimated using PSWF regularity.
 \end{enumerate}
+A key conceptual point is that the oscillatory bulk--turning analysis developed below is not used to derive the discrete quadrature defect bound itself. Rather, it isolates the analytic decay mechanism of continuous PSWF interactions and thereby identifies the missing structural ingredient required for transferring such decay to the discrete level.
+
+In particular, the first-order quadrature bound yields a structure-blind estimate of size $hc$, while the bulk--turning analysis explains why any refinement must rely on additional oscillation-compatible quadrature structure. This observation motivates the Discrete Spectral Transfer Property (DSTP) introduced later, which serves as the precise interface between continuous oscillatory decay and discrete frame stability.
 
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
@@ -310,7 +313,17 @@ of $\Kop$, and the quadrature remainder is
   -\int_{-T}^{T}f_{mn}(x)\,dx,
   \qquad f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}.
 \]
-Consequently,
+Since $\Kop$ is self-adjoint on $\PW$ and $\{\psi_n^{(c)}\}$ is an orthonormal eigenbasis, we have
+\[
+\langle \Kop \psi_n^{(c)}, \psi_m^{(c)} \rangle_{L^2(\mathbb{R})}
+= \lambda_n(c)\,\delta_{mn}.
+\]
+Using the integral representation of $\Kop$, this identity becomes
+\[
+\int_{-T}^{T} \psi_n^{(c)}(x)\overline{\psi_m^{(c)}(x)}\,dx
+= \lambda_n(c)\,\delta_{mn},
+\]
+which proves that the projection term vanishes. Consequently,
 \[
   E_{mn} = - R_{mn}^{\mathrm{quad}}
 \]
@@ -357,16 +370,19 @@ For $k\in\{m,n\}$, the turning point $x_k^*$ is defined by
 Hence
 \[
   \chi_k(c)-\frac{c^2x^2}{T^2}
-  = \frac{c^2}{T^2}\bigl((x_k^*)^2-x^2\bigr)
-  = \frac{c^2}{T^2}(x_k^*-x)(x_k^*+x).
+  = \frac{c^2}{T^2}\bigl((x_k^*)^2-x^2\bigr).
 \]
-Since $x\in\Rbulk^{(m,n)}$, we have $|x-x_k^*|\ge \rho c^{-1/3}$. Moreover, in the oscillatory region one has $x_k^*+x\ge c_1>0$ uniformly for $x\in[-T,T]$ and $0\le k\le N-1$ in the transition regime $N\sim c$, by standard PSWF turning-point geometry; see \cite{Olver1974,OsipovRokhlinXiao}. Therefore
+We factor
+\[
+(x_k^*)^2-x^2 = (x_k^*-x)(x_k^*+x).
+\]
+Since $x\in\Rbulk^{(m,n)}$, we have $|x-x_k^*|\ge \rho c^{-1/3}$. Moreover, by the turning-point geometry in the transition regime $N\sim c$, the quantity $|x_k^*+x|$ remains bounded below by a positive constant on the relevant oscillatory side of the interval; compare \cite{Olver1974,OsipovRokhlinXiao}. Therefore,
 \[
   \chi_k(c)-\frac{c^2x^2}{T^2}
-  \ge \frac{c^2}{T^2}\,\rho c^{-1/3}\,c_1
+  \ge \frac{c^2}{T^2}\,\rho c^{-1/3}\,c_2
   = \delta_0 c^{2/3},
 \]
-with $\delta_0:=\rho c_1/T^2$.
+for some constant $c_2>0$ depending only on the interval geometry and the turning-point localisation, and hence for $\delta_0:=\rho c_2/T^2$.
 \end{proof}
 
 \begin{lemma}[Uniform phase gap in the bulk, two-regime form]\label{lem:phase_gap_final}
@@ -515,7 +531,7 @@ By Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
   |(\Phi_{mn}'(x))^{-1}|
   \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}.
 \]
-Lemma~\ref{lem:bulk_derivative} provides uniform semiclassical control of PSWF derivatives in the bulk region, away from Airy-scale neighborhoods. Therefore all derivatives of the WKB amplitudes entering $a_{mn}$ are uniformly controlled on $\Rbulk^{(m,n)}$, with at most polynomial dependence on $c$ already accounted for by the quantified phase-gap factors. We do not track these constants explicitly, only the resulting polynomial dependence on the lower bound for $|\Phi_{mn}'|$. Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
+Lemma~\ref{lem:bulk_derivative} provides uniform semiclassical control of PSWF derivatives in the bulk region, away from Airy-scale neighborhoods. Therefore all derivatives of the WKB amplitudes entering $a_{mn}$ are uniformly controlled on $\Rbulk^{(m,n)}$, with at most polynomial dependence on $c$ already accounted for by the quantified phase-gap factors. All coefficients arising in the expansion of $(L^*)^p a_{mn}$ remain uniformly bounded on $\Rbulk^{(m,n)}$, together with all derivatives appearing in the expansion, due to the exclusion of Airy-scale neighborhoods. In particular, all terms are uniformly integrable on $\Rbulk^{(m,n)}$. We do not track these constants explicitly, only the resulting polynomial dependence on the lower bound for $|\Phi_{mn}'|$. Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
 \begin{lemma}[Bulk decay for the continuous integral]\label{lem:bulk_decay}
@@ -757,7 +773,7 @@ conditions under which oscillatory structure is preserved at the discrete level.
 \end{remark}
 
 \begin{remark}[DSTP as interface axiom]\label{rem:dstp_interface}
-The present paper does not establish DSTP. Rather, DSTP is treated as a structural interface axiom: once such a discrete spectral transfer principle holds, the frame stability theorem follows by the Schur-test argument above. Typical candidates for such a property are PSWF-adapted or oscillation-compatible quadrature rules, including variants of the Xiao--Rokhlin--Yarvin (XRY) framework; this is developed in detail in~\cite{PaperII}.
+The present paper does not establish DSTP. Rather, DSTP is treated as a structural interface axiom: once such a discrete spectral transfer principle holds, the frame stability theorem follows by the Schur-test argument above. Typical candidates for such a property are PSWF-adapted or oscillation-compatible quadrature rules, including variants of the Xiao--Rokhlin--Yarvin (XRY) framework; this is developed in detail in~\cite{PaperII}. Standard quadrature rules of Riemann or trapezoidal type do not, in general, satisfy DSTP, as they do not encode oscillation-sensitive cancellation for highly oscillatory integrands. Identifying concrete quadrature schemes with this property is deferred to the companion framework in~\cite{PaperII}.
 \end{remark}
 
 \begin{remark}[Norm control and possible sharpening]\label{rem:schur}
