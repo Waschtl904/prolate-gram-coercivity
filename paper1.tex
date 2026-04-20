@@ -686,7 +686,7 @@ $\lambda_{\min}(G^{\mathrm{w}}_{N,c})\ge\lambda_{N-1}(c)-\norm{\EN}_2>0$.
 Hermitian perturbation: $\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$.
 \end{proof}
 
-\begin{theorem}[Conditional frame stability under first-order quadrature consistency]\label{thm:unconditional_frame}
+\begin{theorem}[Conditional frame stability under Schur-decay hypothesis]\label{thm:conditional_frame_schur}
 Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_first_order},
 with $N\sim c$. Assume in addition that the discrete defect matrix satisfies the off-diagonal decay estimate
 \[
@@ -718,7 +718,7 @@ Apply Lemma~\ref{lem:weyl} for the lower frame bound and the reference diagonal 
 \end{proof}
 
 \begin{corollary}[Interpretive consequence of the stability criterion]\label{cor:fixed_param_scope}
-Theorem~\ref{thm:unconditional_frame} yields a finite-dimensional stability statement under an explicit discrete off-diagonal decay hypothesis together with first-order quadrature control. By itself, Assumption~\ref{ass:quad_first_order} alone does not imply the Schur-summable defect structure required above.
+Theorem~\ref{thm:conditional_frame_schur} yields a finite-dimensional stability statement under an explicit discrete off-diagonal decay hypothesis together with first-order quadrature control. By itself, Assumption~\ref{ass:quad_first_order} alone does not imply the Schur-summable defect structure required above.
 \end{corollary}
 
 \begin{remark}[Separation of scales]
@@ -730,15 +730,15 @@ conditions under which oscillatory structure is preserved at the discrete level.
 \end{remark}
 
 \begin{remark}[Norm control and possible sharpening]\label{rem:schur}
-The operator-norm estimate in Theorem~\ref{thm:unconditional_frame} is now based on a direct Schur test, which is the natural mechanism once one assumes an explicit off-diagonal decay profile for the discrete defect. Frobenius estimates are too coarse to capture this structure and are not used in the final argument.
+The operator-norm estimate in Theorem~\ref{thm:conditional_frame_schur} is now based on a direct Schur test, which is the natural mechanism once one assumes an explicit off-diagonal decay profile for the discrete defect. Frobenius estimates are too coarse to capture this structure and are not used in the final argument.
 \end{remark}
 
 \begin{remark}[Scaling of the stability condition]\label{rem:scaling_stability}
-Under the Schur-summable decay hypothesis of Theorem~\ref{thm:unconditional_frame}, the defect norm is controlled by
+Under the Schur-summable decay hypothesis of Theorem~\ref{thm:conditional_frame_schur}, the defect norm is controlled by
 \[
 \norm{\EN}_2=O(hc),
 \]
-with the constant depending only on the summable profile $\sum_{k\in\mathbb Z}(1+|k|)^{-p}$. Thus the stability condition is governed directly by the size of $hc$ relative to $\lambda_{N-1}(c)$, rather than by any additional polynomial growth factor in $N$.
+with the constant depending only on the summable profile $\sum_{k\in\mathbb Z}(1+|k|)^{-p}$. Thus the stability condition is governed directly by the size of $hc$ relative to $\lambda_{N-1}(c)$, rather than by any additional polynomial growth factor in $N$. This Schur-decay hypothesis is precisely the bridge to the companion framework in~\cite{PaperII}, where the discrete preservation of oscillatory structure is studied as a separate problem.
 \end{remark}
 
 %% ==================================================================
@@ -747,7 +747,7 @@ with the constant depending only on the summable profile $\sum_{k\in\mathbb Z}(1
 
 The present paper proves a robust finite-dimensional stability statement under a standard first-order quadrature consistency assumption. Its role is to separate three distinct mechanisms: continuous PSWF orthogonality, oscillatory decay of the continuous product kernel, and quadrature-induced defect control.
 
-This separation is deliberate. The continuous bulk--turning analysis explains why off-diagonal PSWF interactions decay analytically, but the proof of Theorem~\ref{thm:unconditional_frame} does not transfer that decay to the discrete defect matrix $E_{mn}$. Instead, the unconditional discrete estimate is governed only by the coarse quadrature bound $|E_{mn}|\le Chc$, while the frame theorem in Section~\ref{sec:stability} requires an additional Schur-summable off-diagonal decay hypothesis.
+This separation is deliberate. The continuous bulk--turning analysis explains why off-diagonal PSWF interactions decay analytically, but the proof of Theorem~\ref{thm:conditional_frame_schur} does not transfer that decay to the discrete defect matrix $E_{mn}$. Instead, the unconditional discrete estimate is governed only by the coarse quadrature bound $|E_{mn}|\le Chc$, while the frame theorem in Section~\ref{sec:stability} requires an additional Schur-summable off-diagonal decay hypothesis.
 
 As a consequence, the present framework is robust but not spectrally sharp. It yields frame stability for fixed $(N,c)$ once the defect is dominated by $\lambda_{N-1}(c)$, but it does not provide an asymptotically uniform stability theorem in the transition regime $N\sim c$.
 
