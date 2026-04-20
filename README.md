@@ -15,40 +15,60 @@ Coercivity → scaling limits → spectral phase → bandwidth decay → rigorou
 
 ---
 
-## Repository Structure
+## Current Repository State (as of April 2026)
 
 | File | Paper | Status | Description |
 |---|---|---|---|
-| `paper1_FINAL.tex` | I | ✅ FINAL | Gram matrix coercivity |
-| `paper2_FINAL.tex` | II | ✅ FINAL | Scaling limits & trace formula |
-| `paper3_FINAL.tex` | III | ✅ FINAL | Spectral phase analysis |
-| `paper4_FINAL.tex` | IV | ✅ FINAL | No-go theorem (naive constructions) |
-| `paper5_FINAL.tex` | V | ✅ FINAL | Barrier estimates & numerical evidence |
-| `paper6_FINAL.tex` | VI | ✅ FINAL | Rigorous upper bounds (Airy profile) |
-| `paper7_FINAL.tex` | VII | ✅ FINAL | Composite asymptotics in crossover zone |
-| `paper8_FINAL.tex` | VIII | ✅ FINAL | Non-cancellation & sharp lower bound |
-| `paper9_DRAFT.tex` | IX | 🔶 DRAFT | Conditional framework: domain & closability |
-| `paper10_DRAFT.tex` | X | 🔶 DRAFT | Mosco form convergence & Friedrichs extension |
-| `paper11_DRAFT.tex` | XI | 🔶 DRAFT | Spectral structure & density criterion |
-| `paper12_DRAFT.tex` | XII | 🔶 DRAFT | Localization principle for spectral projections |
-| `paper13_DRAFT.tex` | XIII | 🔶 DRAFT | Completeness barrier (no-reduction theorem) |
-| `paper14_DRAFT.tex` | XIV | 🔶 DRAFT | HS-norm estimates & regime decomposition |
-| `paper15_DRAFT.tex` | XV | 🔶 DRAFT | Intermediate-regime kernel estimates |
-| `fold_model.tex` | — | 🔶 MODEL | Universal CFU fold-amplitude normal form |
-| `paper_xvi_draft.tex` | XVI | 🔶 DRAFT | Lagrangian singularity transport / Airy normal form |
-| `paper_xvii.tex` | XVII | 🔶 DRAFT | Uniform CFU stability for PSWF fold geometry |
+| `paper1.tex` | I | ✅ pushed | Gram matrix coercivity |
+| `paper2.tex` | II | ✅ pushed | Scaling limits & trace formula |
+| `paper2_quadrature.tex` | II (ext.) | ✅ pushed | Quadrature extension to Paper II |
+| `section5_numerical_evidence.tex` | V (section) | ✅ pushed | Numerical evidence section |
 | `context_summary.md` | — | 📋 META | Full series context & open problems |
 | `DEPENDENCIES.md` | — | 📋 META | Logical dependency graph |
+| `numerics/` | — | 📁 DIR | Numerical scripts & data |
+
+> **Note:** Files currently in the repo are early draft versions (without `_FINAL` suffix).
+> Referee-ready `_FINAL` versions will replace them as revision is completed.
 
 ---
 
-## Upload Order (planned)
+## Planned Structure (upload in progress)
 
 Papers are pushed in order of logical independence and revision completeness:
-1. **Phase 1** — Papers I–V (most self-contained, near publication-ready)
-2. **Phase 2** — Papers VI–VIII (after VI→VII dependency is explicitly declared)
-3. **Phase 3** — Papers IX–XIII (conditional framework, ongoing revision)
-4. **Phase 4** — Papers XIV–XVII + fold_model (microlocal layer, after Closing Moves A+B)
+
+### Phase 1 — Papers I–V (most self-contained, near publication-ready)
+| File | Paper | Target Status | Description |
+|---|---|---|---|
+| `paper1_FINAL.tex` | I | 🔶 pending | Gram matrix coercivity |
+| `paper2_FINAL.tex` | II | 🔶 pending | Scaling limits & trace formula |
+| `paper3_FINAL.tex` | III | 🔶 pending | Spectral phase analysis |
+| `paper4_FINAL.tex` | IV | 🔶 pending | No-go theorem (naive constructions) |
+| `paper5_FINAL.tex` | V | 🔶 pending | Barrier estimates & numerical evidence |
+
+### Phase 2 — Papers VI–VIII (after VI→VII dependency is explicitly declared)
+| File | Paper | Target Status | Description |
+|---|---|---|---|
+| `paper6_FINAL.tex` | VI | 🔶 pending | Rigorous upper bounds (Airy profile) |
+| `paper7_FINAL.tex` | VII | 🔶 pending | Composite asymptotics in crossover zone |
+| `paper8_FINAL.tex` | VIII | 🔶 pending | Non-cancellation & sharp lower bound |
+
+### Phase 3 — Papers IX–XIII (conditional framework, ongoing revision)
+| File | Paper | Target Status | Description |
+|---|---|---|---|
+| `paper9_DRAFT.tex` | IX | 🔶 pending | Conditional framework: domain & closability |
+| `paper10_DRAFT.tex` | X | 🔶 pending | Mosco form convergence & Friedrichs extension |
+| `paper11_DRAFT.tex` | XI | 🔶 pending | Spectral structure & density criterion |
+| `paper12_DRAFT.tex` | XII | 🔶 pending | Localization principle for spectral projections |
+| `paper13_DRAFT.tex` | XIII | 🔶 pending | Completeness barrier (no-reduction theorem) |
+
+### Phase 4 — Papers XIV–XVII + fold_model (microlocal layer, after Closing Moves A+B)
+| File | Paper | Target Status | Description |
+|---|---|---|---|
+| `paper14_DRAFT.tex` | XIV | 🔶 pending | HS-norm estimates & regime decomposition |
+| `paper15_DRAFT.tex` | XV | 🔶 pending | Intermediate-regime kernel estimates |
+| `fold_model.tex` | — | 🔶 pending | Universal CFU fold-amplitude normal form |
+| `paper_xvi_draft.tex` | XVI | 🔶 pending | Lagrangian singularity transport / Airy normal form |
+| `paper_xvii.tex` | XVII | 🔶 pending | Uniform CFU stability for PSWF fold geometry |
 
 ---
 
