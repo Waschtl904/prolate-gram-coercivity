@@ -85,9 +85,14 @@ $E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$ (Proposition~\ref{prop:xry_split})
 clarifies that the first term vanishes by PSWF orthogonality, so the
 quadrature defect is fully isolated. Separately, the continuous PSWF
 product integral exhibits algebraic decay via a quantified phase-gap estimate
-and iterated integration by parts. Thus the analytic bulk--turning
-mechanism is isolated from the quadrature floor, while all results remain
-finite-dimensional and restricted to fixed parameters $(N,c)$.
+and iterated integration by parts. Thus the analytic bulk--turning mechanism
+is isolated from the quadrature floor, while all results remain
+finite-dimensional and restricted to fixed parameters $(N,c)$. The
+bulk--turning analysis is developed as an independent structural component;
+it identifies the oscillatory mechanism underlying decay in continuous PSWF
+interactions but does not by itself transfer this structure to the discrete
+sampling level. This transfer is encapsulated in the DSTP interface hypothesis
+and is addressed in a companion paper.
 \end{abstract}
 
 \tableofcontents
@@ -129,22 +134,43 @@ The proof architecture has four explicit components:
   $E_{mn}$ is a pure quadrature remainder; the PSWF orthogonality term is
   exactly zero.
 \item \textbf{Spectral parameter control} (Proposition~\ref{prop:spectral_gap}):
-  the transition-regime asymptotics for $\chi_n(c)$ are stated explicitly and used later in the phase-gap argument.
-\item \textbf{Uniform phase gap and IBP} (Lemmas~\ref{lem:bulk_spectral_sep}, \ref{lem:phase_gap_final}, \ref{lem:bulk_derivative}, \ref{lem:ibp_uniform}, and~\ref{lem:bulk_decay_continuous}):
-  bulk-to-spectral separation makes the phase-gap estimate explicit, bulk-restricted semiclassical derivative bounds control PSWF derivatives away from turning regions, and bulk-localised iterated integration by parts yields algebraic decay for the continuous PSWF product integral.
-\item \textbf{Quadrature reduction by derivative control} (Assumption~\ref{ass:quad_first_order}, Lemma~\ref{lem:derivative_bound}, and Theorem~\ref{thm:banded_decay}):
-  the full quadrature remainder is controlled by a standard first-order error term involving $\int |f'_{mn}|$, which is estimated using PSWF regularity.
+  the transition-regime asymptotics for $\chi_n(c)$ are stated explicitly
+  and used later in the phase-gap argument.
+\item \textbf{Uniform phase gap and IBP}
+  (Lemmas~\ref{lem:bulk_spectral_sep}, \ref{lem:phase_gap_final},
+  \ref{lem:bulk_derivative}, \ref{lem:ibp_uniform},
+  and~\ref{lem:bulk_decay_continuous}):
+  bulk-to-spectral separation makes the phase-gap estimate explicit,
+  bulk-restricted semiclassical derivative bounds control PSWF derivatives
+  away from turning regions, and bulk-localised iterated integration by
+  parts yields algebraic decay for the continuous PSWF product integral.
+\item \textbf{Quadrature reduction by derivative control}
+  (Assumption~\ref{ass:quad_first_order}, Lemma~\ref{lem:derivative_bound},
+  and Theorem~\ref{thm:banded_decay}):
+  the full quadrature remainder is controlled by a standard first-order
+  error term involving $\int |f'_{mn}|$, which is estimated using PSWF
+  regularity.
 \end{enumerate}
-A key conceptual point is that the oscillatory bulk--turning analysis developed below is not used to derive the discrete quadrature defect bound itself. Rather, it isolates the analytic decay mechanism of continuous PSWF interactions and thereby identifies the missing structural ingredient required for transferring such decay to the discrete level.
+A key conceptual point is that the oscillatory bulk--turning analysis
+developed below is not used to derive the discrete quadrature defect bound
+itself. Rather, it isolates the analytic decay mechanism of continuous PSWF
+interactions and thereby identifies the missing structural ingredient
+required for transferring such decay to the discrete level.
 
-In particular, the first-order quadrature bound yields a structure-blind estimate of size $hc$, while the bulk--turning analysis explains why any refinement must rely on additional oscillation-compatible quadrature structure. This observation motivates the Discrete Spectral Transfer Property (DSTP) introduced later, which serves as the precise interface between continuous oscillatory decay and discrete frame stability.
+In particular, the first-order quadrature bound yields a structure-blind
+estimate of size $hc$, while the bulk--turning analysis explains why any
+refinement must rely on additional oscillation-compatible quadrature
+structure. This observation motivates the Discrete Spectral Transfer
+Property (DSTP) introduced later, which serves as the precise axiomatic
+interface between continuous oscillatory decay and discrete frame stability.
 
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
 Section~\ref{sec:coercivity} proves coercivity.
 Section~\ref{sec:decay} establishes the decay mechanism.
 Section~\ref{sec:stability} derives the combined frame stability theorem.
-Section~\ref{sec:bridge} explains the conceptual boundary between the present paper and the companion spectral-transfer framework.
+Section~\ref{sec:bridge} explains the conceptual boundary between the
+present paper and the companion spectral-transfer framework.
 Section~\ref{sec:open} lists open problems.
 Appendix~\ref{app:airy} contains the Airy approximation lemma.
 
@@ -218,8 +244,8 @@ Let $N\sim c$. Then there exists $C>0$ such that
 uniformly for $0\le n\le N-1$.
 \end{proposition}
 \begin{proof}
-See \cite[Section~2.5]{OsipovRokhlinXiao} together with the uniform transition-regime bounds in
-\cite{BonamiKaroui2014}.
+See \cite[Section~2.5]{OsipovRokhlinXiao} together with the uniform
+transition-regime bounds in \cite{BonamiKaroui2014}.
 \end{proof}
 
 %% ==================================================================
@@ -238,7 +264,8 @@ $f\mapsto(f(p_1),\dots,f(p_N))$ is injective on $V_{N,c}$.
 \end{definition}
 
 \begin{lemma}[Identity principle]\label{lem:identity}
-If $f\in\PW$ vanishes on a set with a limit point in $\mathbb R$, then $f\equiv 0$.
+If $f\in\PW$ vanishes on a set with a limit point in $\mathbb R$,
+then $f\equiv 0$.
 \end{lemma}
 \begin{proof}
 Every $f\in\PW$ is entire of exponential type; apply the identity theorem.
@@ -313,21 +340,25 @@ of $\Kop$, and the quadrature remainder is
   -\int_{-T}^{T}f_{mn}(x)\,dx,
   \qquad f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}.
 \]
-Since $\Kop$ is self-adjoint on $\PW$ and $\{\psi_n^{(c)}\}$ is an orthonormal eigenbasis, we have
+Since $\Kop$ is self-adjoint on $\PW$ and $\{\psi_n^{(c)}\}$ is an
+orthonormal eigenbasis of $\PW$, we have
 \[
 \langle \Kop \psi_n^{(c)}, \psi_m^{(c)} \rangle_{L^2(\mathbb{R})}
 = \lambda_n(c)\,\delta_{mn}.
 \]
-Using the integral representation of $\Kop$, this identity becomes
+Using the kernel representation of $\Kop$ and the restriction of the
+integration to $[-T,T]$, this inner product rewrites explicitly as
 \[
 \int_{-T}^{T} \psi_n^{(c)}(x)\overline{\psi_m^{(c)}(x)}\,dx
+= \langle \Kop \psi_n^{(c)}, \psi_m^{(c)} \rangle_{L^2(\mathbb{R})}
 = \lambda_n(c)\,\delta_{mn},
 \]
 which proves that the projection term vanishes. Consequently,
 \[
   E_{mn} = - R_{mn}^{\mathrm{quad}}
 \]
-under the sign convention of Assumption~\ref{ass:quad_first_order}, so all later estimates use only $|R_{mn}^{\mathrm{quad}}|$.
+under the sign convention of Assumption~\ref{ass:quad_first_order}, so
+all later estimates use only $|R_{mn}^{\mathrm{quad}}|$.
 \end{proposition}
 
 \begin{remark}
@@ -338,10 +369,11 @@ identity; it is purely a quadrature error for the PSWF product integral.
 \end{remark}
 
 \begin{definition}[Bulk and turning regions]\label{def:bulk}
-Let $x_n^*>0$ denote the positive turning point of $\psi_n^{(c)}$ and fix $\rho>0$.
-The Airy neighbourhood is
+Let $x_n^*>0$ denote the positive turning point of $\psi_n^{(c)}$ and
+fix $\rho>0$. The Airy neighbourhood is
 \[
-  U_n:=\{x\in[-T,T]:|x-x_n^*|\le\rho c^{-1/3}\}\cup\{x\in[-T,T]:|x+x_n^*|\le\rho c^{-1/3}\}.
+  U_n:=\{x\in[-T,T]:|x-x_n^*|\le\rho c^{-1/3}\}
+       \cup\{x\in[-T,T]:|x+x_n^*|\le\rho c^{-1/3}\}.
 \]
 For a pair $(m,n)$:
 \[
@@ -352,13 +384,16 @@ For a pair $(m,n)$:
 \end{definition}
 
 \begin{remark}
-The width $O(c^{-1/3})$ is the standard Airy transition scale \cite{Olver1974}:
-beyond the neighborhoods of the two turning points $\pm x_n^*$ the quadratic approximation to the square root is valid and
+The width $O(c^{-1/3})$ is the standard Airy transition scale
+\cite{Olver1974}: beyond the neighborhoods of the two turning points
+$\pm x_n^*$ the quadratic approximation to the square root is valid and
 the WKB phase is non-stationary for $|m-n|\ge 1$.
 \end{remark}
 
-\begin{lemma}[Bulk spectral separation via turning-point geometry]\label{lem:bulk_spectral_sep}
-Let $x\in \Rbulk^{(m,n)}$. Then there exists $\delta_0>0$, depending only on the Airy exclusion parameter $\rho$, such that
+\begin{lemma}[Bulk spectral separation via turning-point geometry]%
+\label{lem:bulk_spectral_sep}
+Let $x\in \Rbulk^{(m,n)}$. Then there exists $\delta_0>0$, depending
+only on the Airy exclusion parameter $\rho$, such that
 \[
   \left|\chi_m(c)-\frac{c^2x^2}{T^2}\right|\ge \delta_0 c^{2/3},
   \qquad
@@ -367,41 +402,26 @@ Let $x\in \Rbulk^{(m,n)}$. Then there exists $\delta_0>0$, depending only on the
 \end{lemma}
 \begin{proof}
 For $k\in\{m,n\}$, the turning point $x_k^*>0$ is defined by
-\[
-  \chi_k(c)-\frac{c^2(x_k^*)^2}{T^2}=0.
-\]
-Hence for all $x\in[-T,T]$,
+$\chi_k(c)-c^2(x_k^*)^2/T^2=0$, hence
 \[
   \chi_k(c)-\frac{c^2x^2}{T^2}
-  = \frac{c^2}{T^2}\bigl((x_k^*)^2-x^2\bigr)
   = \frac{c^2}{T^2}(x_k^*-x)(x_k^*+x).
 \]
-Taking absolute values, we obtain
+By Definition~\ref{def:bulk}, the bulk region excludes Airy-scale
+neighborhoods of both turning points $\pm x_k^*$, so
+$|x_k^*\pm x|\ge \rho c^{-1/3}$. Therefore
 \[
   \left|\chi_k(c)-\frac{c^2x^2}{T^2}\right|
-  = \frac{c^2}{T^2}\,|x_k^*-x|\,|x_k^*+x|.
+  \ge \frac{c^2}{T^2}\,\rho^2 c^{-2/3}
+  = \frac{\rho^2}{T^2}c^{2/3},
 \]
-By Definition~\ref{def:bulk}, the bulk region excludes Airy-scale neighborhoods
-of both turning points $\pm x_k^*$. Therefore,
-\[
-  |x_k^*-x|\ge \rho c^{-1/3},
-  \qquad
-  |x_k^*+x|\ge \rho c^{-1/3}.
-\]
-It follows that
-\[
-  \left|\chi_k(c)-\frac{c^2x^2}{T^2}\right|
-  \ge \frac{c^2}{T^2}\,\rho c^{-1/3}\cdot \rho c^{-1/3}
-  = \frac{\rho^2}{T^2}c^{2/3}.
-\]
-This proves the claim with $\delta_0:=\rho^2/T^2$.
+which proves the claim with $\delta_0:=\rho^2/T^2$.
 \end{proof}
 
-\begin{lemma}[Uniform phase gap in the bulk, two-regime form]\label{lem:phase_gap_final}
-Let $N\sim c$ and let $\chi_n(c)$ denote the PSWF spectral parameters.
-Fix $\rho>0$ and define the bulk region $\Rbulk^{(m,n)}$ as in
-Definition~\ref{def:bulk}. Then there exist constants
-$c_0>0$ and $\kappa>0$ such that for all $c\ge c_0$ the following bounds hold uniformly in
+\begin{lemma}[Uniform phase gap in the bulk, two-regime form]%
+\label{lem:phase_gap_final}
+Let $N\sim c$ and fix $\rho>0$. Then there exist constants $c_0>0$ and
+$\kappa>0$ such that for all $c\ge c_0$, uniformly in
 $0\le m\ne n\le N-1$:
 \begin{align*}
   |\Phi_{mn}'(x)|
@@ -418,104 +438,51 @@ for all $x\in\Rbulk^{(m,n)}$. Consequently,
   \frac{\kappa}{T}\,\frac{|m-n|}{1 + c^{-2/3}|m-n|}
   \qquad\text{for all }x\in\Rbulk^{(m,n)}.
 \]
-The final bound is used only as a unified lower envelope for subsequent estimates and is not claimed to be sharp.
+The final bound is used only as a unified lower envelope and is not
+claimed to be sharp.
 \end{lemma}
 \begin{proof}
-Let $x\in\Rbulk^{(m,n)}$ and set
-\[
-  \mu := \chi_m(c)-c^2x^2/T^2,
-  \qquad
-  \nu := \chi_n(c)-c^2x^2/T^2.
-\]
-By Lemma~\ref{lem:bulk_spectral_sep}, there exists $\delta_0>0$ such that
-\[
-  \mu,\nu \ge \delta_0 c^{2/3}.
-\]
-We use the identity
-\[
-  |\sqrt{\mu}-\sqrt{\nu}|
-  = \frac{|\mu-\nu|}{\sqrt{\mu}+\sqrt{\nu}},
-\]
-hence
+Set $\mu:=\chi_m(c)-c^2x^2/T^2$ and $\nu:=\chi_n(c)-c^2x^2/T^2$.
+By Lemma~\ref{lem:bulk_spectral_sep}, $\mu,\nu\ge\delta_0 c^{2/3}$.
+Using $|\sqrt{\mu}-\sqrt{\nu}|=|\mu-\nu|/(\sqrt{\mu}+\sqrt{\nu})$,
 \[
   |\Phi_{mn}'(x)|
-  = \frac{1}{T}\frac{|\chi_m(c)-\chi_n(c)|}{\sqrt{\mu}+\sqrt{\nu}}.
+  = \frac{|\chi_m(c)-\chi_n(c)|}{T(\sqrt{\mu}+\sqrt{\nu})}.
 \]
 
-\medskip
-\noindent
-\textbf{Step 1: Spectral gap estimate.}
-
+\noindent\textbf{Step 1: Spectral gap.}
 By Proposition~\ref{prop:spectral_gap},
-\[
-  \chi_n(c) = (2n+1)c + r_n(c),
-  \qquad |r_n(c)|\le C_* c^{4/3}
-\]
-uniformly for $0\le n\le N-1$.
-Therefore,
-\[
-  |\chi_m(c)-\chi_n(c)|
-  \ge 2c|m-n| - 2C_* c^{4/3}.
-\]
-We distinguish two regimes.
+$|\chi_m(c)-\chi_n(c)|\ge 2c|m-n|-2C_*c^{4/3}$.
+For $|m-n|\le c^{1/3}$ and $c\ge c_0$ large enough,
+$|\chi_m-\chi_n|\ge c|m-n|$.
+For $|m-n|\ge c^{1/3}$, $2c|m-n|\ge 2c^{4/3}$, so
+$|\chi_m-\chi_n|\ge c^{4/3}$.
 
-\medskip
-\noindent
-\emph{(i) If $1\le |m-n|\le c^{1/3}$:}
-Choose $c_0$ sufficiently large that $2C_* c^{1/3}\le c$ for all $c\ge c_0$.
-Then
-\[
-  |\chi_m(c)-\chi_n(c)| \ge c|m-n|.
-\]
-
-\medskip
-\noindent
-\emph{(ii) If $|m-n|\ge c^{1/3}$:}
-Then $2c|m-n|\ge 2c^{4/3}$, so after increasing $c_0$ if necessary,
-\[
-  |\chi_m(c)-\chi_n(c)| \ge c^{4/3}.
-\]
-
-The unified form follows by observing that the two regime bounds define a monotone envelope:
-\[
-  c|m-n|\,\mathbf{1}_{|m-n|\le c^{1/3}} + c^{4/3}\,\mathbf{1}_{|m-n|\ge c^{1/3}}
-  \gtrsim \frac{c|m-n|}{1+c^{-2/3}|m-n|}.
-\]
-No claim is made that this lower envelope reflects the exact spectral spacing of PSWF eigenparameters; it is used solely to write the two cases in a single form.
-
-\medskip
-\noindent
-\textbf{Step 2: Denominator control.}
-
-On $\Rbulk^{(m,n)}$, we have $\mu,\nu\ge\delta_0 c^{2/3}$, hence
-\[
-  \sqrt{\mu}+\sqrt{\nu}
-  \le 2\sqrt{\chi_{N-1}(c)}
-  \le C_3 c,
-\]
+\noindent\textbf{Step 2: Denominator.}
+$\sqrt{\mu}+\sqrt{\nu}\le 2\sqrt{\chi_{N-1}(c)}\le C_3 c$
 since $\chi_{N-1}(c)\lesssim c^2$ in the regime $N\sim c$.
 
-\medskip
-\noindent
-\textbf{Step 3: Conclusion.}
-
-Combining numerator and denominator bounds yields the stated two-regime estimates, and the unified lower bound follows from the monotone envelope displayed above after adjusting constants.
+\noindent\textbf{Step 3.}
+Combining the two steps yields the stated two-regime bounds. The unified
+envelope follows by observing
+$c|m-n|\,\mathbf{1}_{|m-n|\le c^{1/3}}+c^{4/3}\,\mathbf{1}_{|m-n|\ge c^{1/3}}
+\gtrsim c|m-n|/(1+c^{-2/3}|m-n|)$.
 \end{proof}
 
 \begin{lemma}[Bulk semiclassical derivative control]\label{lem:bulk_derivative}
 Fix $\rho>0$ and let $\Rbulk^{(m,n)}$ be as in Definition~\ref{def:bulk}.
-For every integer $k\ge 0$ there exists a constant $C_k>0$,
-depending only on $k$ and $\rho$, such that
+For every integer $k\ge 0$ there exists a constant $C_k>0$, depending
+only on $k$ and $\rho$, such that
 \[
 \|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
 \le C_k\, c^{k/2}
 \]
-uniformly for all $0\le n\le N-1$ and all $c\ge 1$ in the transition regime $N\sim c$.
+uniformly for all $0\le n\le N-1$ and all $c\ge 1$ in the transition
+regime $N\sim c$.
 \end{lemma}
-
 \begin{proof}
-This follows from uniform semiclassical estimates for PSWFs as developed in
-\cite{OsipovRokhlinXiao} and \cite{BonamiKaroui2014}, together with
+This follows from uniform semiclassical estimates for PSWFs as developed
+in \cite{OsipovRokhlinXiao} and \cite{BonamiKaroui2014}, together with
 classical WKB regularity theory \cite[Ch.~6]{Olver1974}.
 
 On $\Rbulk^{(m,n)}$, the PSWF differential equation lies in the
@@ -530,8 +497,8 @@ by Lemma~\ref{lem:bulk_spectral_sep}.
 
 The cited results provide uniform $C^k$ bounds for the PSWFs themselves
 on compact subsets of the bulk region separated from the turning points
-by Airy-scale neighbourhoods of size $\rho c^{-1/3}$.
-In particular, for every fixed $k\ge 0$,
+by Airy-scale neighbourhoods of size $\rho c^{-1/3}$. In particular,
+for every fixed $k\ge 0$,
 \[
 \|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
 \le C_k'\, c^{k/2},
@@ -541,8 +508,8 @@ This can be interpreted equivalently at the level of the WKB ansatz,
 but we do not require an explicit amplitude-phase decomposition.
 
 Each application of $\partial_x$ contributes at most a factor
-$\Phi_n'(x) = O(c^{1/2})$, consistent with the stated bound.
-Collecting the $k$-fold contributions yields the estimate
+$\Phi_n'(x)=O(c^{1/2})$, consistent with the stated bound. Collecting
+the $k$-fold contributions yields
 \[
 \|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
 \le C_k\, c^{k/2}.
@@ -550,61 +517,56 @@ Collecting the $k$-fold contributions yields the estimate
 \end{proof}
 
 \begin{lemma}[Bulk-localised uniform IBP control]\label{lem:ibp_uniform}
-Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product and
-$L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. Then for every $p\ge 1$,
+Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product
+and $L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. Then for every $p\ge 1$,
 \[
   \|(L^*)^p a_{mn}\|_{L^1(\Rbulk^{(m,n)})}
   \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p,
 \]
 where all estimates are restricted to the bulk region $\Rbulk^{(m,n)}$.
-Moreover, $(L^*)^p a_{mn}$ is a finite linear combination of terms of the form
+Moreover, $(L^*)^p a_{mn}$ is a finite linear combination of terms of
+the form
 \[
   c_{p,k,\ell}(x)\,\frac{\partial_x^k a_{mn}(x)}{(\Phi_{mn}'(x))^{\ell}},
   \qquad 0\le k\le p,\; 1\le \ell\le p,
 \]
-with coefficients $c_{p,k,\ell}$ depending only on $p$ and finitely many derivatives of
-$\Phi_{mn}'$.
+with coefficients $c_{p,k,\ell}$ depending only on $p$ and finitely many
+derivatives of $\Phi_{mn}'$.
 \end{lemma}
 \begin{proof}
 The formal adjoint has the form
-\[
-  L^* = -(i\Phi_{mn}'(x))^{-1}\partial_x + b_1(x)(\Phi_{mn}'(x))^{-2},
-\]
+$L^*=-(i\Phi_{mn}')^{-1}\partial_x+b_1(x)(\Phi_{mn}')^{-2}$,
 where $b_1$ is smooth on $\Rbulk^{(m,n)}$ and depends on $\Phi_{mn}''$.
-By induction on $p$, $(L^*)^p a_{mn}$ is a finite linear combination of terms of the stated form.
-Each application of $L^*$ increases either the derivative order on $a_{mn}$ or the power of
-$(\Phi_{mn}')^{-1}$ by at most one, and the number of such terms depends only on $p$.
-By Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
+By induction on $p$, $(L^*)^p a_{mn}$ is a finite linear combination of
+terms of the stated form, with the number of terms depending only on $p$.
+By Lemma~\ref{lem:phase_gap_final},
 \[
   |(\Phi_{mn}'(x))^{-1}|
-  \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}.
+  \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}
+  \qquad\text{on }\Rbulk^{(m,n)}.
 \]
-Lemma~\ref{lem:bulk_derivative} provides uniform $C^k$ bounds for the PSWFs on
-$\Rbulk^{(m,n)}$, from which all derivatives of the amplitude product $a_{mn}$
-are uniformly controlled on this region, with polynomial dependence on $c$ already
-accounted for by the phase-gap factors. All terms in the expansion of $(L^*)^p a_{mn}$
-are therefore uniformly integrable on $\Rbulk^{(m,n)}\subset[-T,T]$.
-Integrating yields the stated estimate.
+Lemma~\ref{lem:bulk_derivative} provides uniform $C^k$ bounds for the
+PSWFs on $\Rbulk^{(m,n)}$, from which all derivatives of $a_{mn}$ are
+uniformly controlled, with polynomial dependence on $c$ already accounted
+for by the phase-gap factors. All terms in the expansion of
+$(L^*)^p a_{mn}$ are therefore uniformly integrable on
+$\Rbulk^{(m,n)}\subset[-T,T]$. Integrating yields the stated estimate.
 \end{proof}
 
 \begin{lemma}[Bulk decay for the continuous integral]\label{lem:bulk_decay}
-Under the hypotheses of Lemma~\ref{lem:ibp_uniform}, the continuous bulk integral satisfies
+Under the hypotheses of Lemma~\ref{lem:ibp_uniform}, for $m\neq n$,
 \[
   \left|\int_{\Rbulk^{(m,n)}} f_{mn}(x)\,dx\right|
   \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p
-  \le C_p'(1+|m-n|)^{-p}
-  \qquad (m\neq n),
+  \le C_p'(1+|m-n|)^{-p},
 \]
 with constants independent of $m,n,N,c$.
 \end{lemma}
 \begin{proof}
-Apply the bulk-localised integration-by-parts operator $L$ repeatedly on $\Rbulk^{(m,n)}$.
-The oscillatory boundary terms are absorbed into the bulk localisation, and Lemma~\ref{lem:ibp_uniform}
-controls the resulting amplitude expressions in $L^1$. Since
-\[
-\frac{1+c^{-2/3}|m-n|}{|m-n|}\le \frac{2}{1+|m-n|},
-\]
-up to a harmless change of constants, the stated algebraic decay follows.
+Apply $L$ iteratively on $\Rbulk^{(m,n)}$; oscillatory boundary terms
+are absorbed into the bulk localisation. Lemma~\ref{lem:ibp_uniform}
+controls the resulting amplitude expressions in $L^1$. The simplification
+$(1+c^{-2/3}|m-n|)/|m-n|\le 2/(1+|m-n|)$ yields the final bound.
 \end{proof}
 
 \begin{lemma}[Turning-point estimate]\label{lem:turning_revised}
@@ -615,35 +577,19 @@ For all $0\le m,n\le N-1$,
 \]
 \end{lemma}
 \begin{proof}
-By Bonami--Karoui \cite{BonamiKaroui2014},
-\[
-  \|\psi_k^{(c)}\|_{L^\infty([-T,T])}\le C_\infty
-  \qquad\text{uniformly for all }0\le k\le N-1.
-\]
-Since $|U_m|=O(c^{-1/3})$, we obtain for each $k$,
-\[
-  \|\psi_k^{(c)}\|_{L^2(U_m)}
-  \le \|\psi_k^{(c)}\|_{L^\infty([-T,T])}|U_m|^{1/2}
-  \le C_\infty |U_m|^{1/2}
-  = O(c^{-1/6}).
-\]
-Applying Cauchy--Schwarz on $U_m$ gives
-\[
-  \int_{U_m}|\psi_m^{(c)}(x)\psi_n^{(c)}(x)|\,dx
-  \le \|\psi_m^{(c)}\|_{L^2(U_m)}\,\|\psi_n^{(c)}\|_{L^2(U_m)}
-  \le C |U_m|^{1/2}\cdot C |U_m|^{1/2}
-  = C |U_m|.
-\]
-Since $|U_m|=O(c^{-1/3})$, the stated bound follows.
+By \cite{BonamiKaroui2014}, $\|\psi_k^{(c)}\|_{L^\infty([-T,T])}\le
+C_\infty$ uniformly for $0\le k\le N-1$. Hence
+$\|\psi_k^{(c)}\|_{L^2(U_m)}\le C_\infty|U_m|^{1/2}=O(c^{-1/6})$.
+Cauchy--Schwarz gives
+$\int_{U_m}|\psi_m^{(c)}\psi_n^{(c)}|\,dx
+\le C|U_m|^{1/2}\cdot C|U_m|^{1/2}=C|U_m|=O(c^{-1/3})$.
 \end{proof}
 
-\begin{assumption}[First-order quadrature consistency]\label{ass:quad_first_order}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule on $[-T,T]$ with mesh size
-\[
-  h:=\max_{1\le j\le N-1}|p_{j+1}-p_j|.
-\]
-We assume that there exists a constant $C_Q>0$ such that for all
-$f\in W^{1,1}([-T,T])$,
+\begin{assumption}[First-order quadrature consistency]%
+\label{ass:quad_first_order}
+Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule on $[-T,T]$ with mesh
+size $h:=\max_{1\le j\le N-1}|p_{j+1}-p_j|$. We assume there exists
+$C_Q>0$ such that for all $f\in W^{1,1}([-T,T])$,
 \[
 \left|\int_{-T}^{T} f(x)\,dx - \sum_{j=1}^N w_j f(p_j)\right|
 \le C_Q\,h\int_{-T}^{T}|f'(x)|\,dx.
@@ -651,73 +597,66 @@ $f\in W^{1,1}([-T,T])$,
 \end{assumption}
 
 \begin{remark}[Scope of the quadrature input]\label{rem:scope_quad}
-Assumption~\ref{ass:quad_first_order} is intentionally coarse. It is used only to control the absolute size of the quadrature remainder and does not encode oscillation-sensitive cancellation, PSWF-adapted exactness, or any transfer of continuous off-diagonal decay to the discrete defect matrix.
+Assumption~\ref{ass:quad_first_order} is intentionally coarse. It
+controls only the absolute size of the quadrature remainder and does not
+encode oscillation-sensitive cancellation, PSWF-adapted exactness, or any
+transfer of continuous off-diagonal decay to the discrete defect matrix.
 \end{remark}
 
 \begin{lemma}[Derivative bound for PSWF products]\label{lem:derivative_bound}
-For $f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$ one has
+For $f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$,
 \[
 |f'_{mn}(x)|
 \le |\psi_m^{(c)\,\prime}(x)|\,|\psi_n^{(c)}(x)|
-+
-|\psi_m^{(c)}(x)|\,|\psi_n^{(c)\,\prime}(x)|.
++|\psi_m^{(c)}(x)|\,|\psi_n^{(c)\,\prime}(x)|.
 \]
-Consequently, if the Bonami--Karoui bounds
-\[
-\|\psi_k^{(c)}\|_{L^\infty([-T,T])}\le C_0,
-\qquad
-\|\psi_k^{(c)\,\prime}\|_{L^\infty([-T,T])}\le C_1 c
-\]
+If the Bonami--Karoui bounds
+$\|\psi_k^{(c)}\|_{L^\infty}\le C_0$ and
+$\|\psi_k^{(c)\,\prime}\|_{L^\infty}\le C_1 c$
 hold uniformly for $0\le k\le N-1$, then
 \[
 \int_{-T}^{T}|f'_{mn}(x)|\,dx \le C c,
 \]
 with a constant independent of $m,n,N,c$.
-\end{lemma>
+\end{lemma}
 \begin{proof}
-Differentiate the product and apply the triangle inequality. The uniform sup-norm bounds give
-\[
-|f'_{mn}(x)|\le C_1 c\,C_0 + C_0\,C_1 c = 2C_0C_1 c.
-\]
-Since the interval length $2T$ is fixed once $c=\omega T$ is fixed, integration yields the claim up to a harmless constant.
+Differentiate the product and apply the triangle inequality:
+$|f'_{mn}|\le C_1 c\,C_0+C_0\,C_1 c=2C_0C_1 c$.
+Integration over the fixed interval $[-T,T]$ yields the claim.
 \end{proof}
 
 \begin{remark}[Role of the first-order quadrature assumption]
-Assumption~\ref{ass:quad_first_order} is a standard, verifiable quadrature hypothesis of Riemann-- or trapezoidal-rule type.
-It is independent of the PSWF structure. All PSWF-specific information enters only through the derivative estimate in Lemma~\ref{lem:derivative_bound} and the oscillatory bulk analysis.
+Assumption~\ref{ass:quad_first_order} is a standard, verifiable
+quadrature hypothesis of Riemann- or trapezoidal-rule type, independent
+of the PSWF structure. All PSWF-specific information enters only through
+Lemma~\ref{lem:derivative_bound} and the oscillatory bulk analysis.
 \end{remark}
 
 \begin{theorem}[Quadrature defect bound]\label{thm:banded_decay}
-Let Assumption~\ref{ass:quad_first_order} hold. Then for all $0\le m,n\le N-1$,
-the defect matrix satisfies the global bound
+Let Assumption~\ref{ass:quad_first_order} hold. Then for all
+$0\le m,n\le N-1$,
 \[
   |E_{mn}| \le C h c,
 \]
 where $C>0$ is independent of $m,n,N,c$.
 \end{theorem}
 \begin{proof}
-By Proposition~\ref{prop:xry_split}, $E_{mn}$ equals the quadrature remainder up to the sign convention fixed there, so
-\[
-|E_{mn}| = |R_{mn}^{\mathrm{quad}}|.
-\]
-Applying Assumption~\ref{ass:quad_first_order} to $f_{mn}$ yields
-\[
-|E_{mn}|
-\le C_Q h \int_{-T}^{T} |f'_{mn}(x)|\,dx.
-\]
-The derivative bound in Lemma~\ref{lem:derivative_bound} implies
-\[
-\int_{-T}^{T} |f'_{mn}(x)|\,dx \le C c,
-\]
-hence the result follows.
+By Proposition~\ref{prop:xry_split}, $|E_{mn}|=|R_{mn}^{\mathrm{quad}}|$.
+Applying Assumption~\ref{ass:quad_first_order} to $f_{mn}$ and then
+Lemma~\ref{lem:derivative_bound} gives
+$|E_{mn}|\le C_Q h\int_{-T}^T|f'_{mn}|\,dx\le C_Q C\,hc$.
 \end{proof}
 
 \begin{remark}[Sharpness under first-order quadrature]\label{rem:sharpness_quad}
-The bound $|E_{mn}|\le Chc$ is intentionally structure-blind and reflects only the first-order quadrature control from Assumption~\ref{ass:quad_first_order}. Without additional oscillation-sensitive or PSWF-adapted structure in the quadrature rule, no off-diagonal decay in $|m-n|$ can in general be expected at the level of the discrete defect matrix. In this sense, the estimate is essentially sharp under the present assumptions.
+The bound $|E_{mn}|\le Chc$ is intentionally structure-blind. Without
+additional oscillation-sensitive or PSWF-adapted quadrature structure,
+no off-diagonal decay in $|m-n|$ can be expected at the discrete level.
+In this sense the estimate is essentially sharp under the present
+assumptions.
 \end{remark}
 
 \begin{lemma}[Continuous bulk--turning decay]\label{lem:bulk_decay_continuous}
-For the continuous PSWF product integral one has, for all $p\ge 1$ and all $0\le m,n\le N-1$,
+For all $p\ge 1$ and all $0\le m,n\le N-1$,
 \[
   \left|\int_{-T}^{T} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
   \le C_p (1+|m-n|)^{-p} + C\,c^{-1/3}.
@@ -725,36 +664,26 @@ For the continuous PSWF product integral one has, for all $p\ge 1$ and all $0\le
 For $m=n$, the integral equals $\lambda_n(c)$.
 \end{lemma}
 \begin{proof}
-For $m=n$, the integral equals $\lambda_n(c)$ and the statement is trivial.
-
-For $m\neq n$, decompose the integral into bulk and turning regions:
+For $m=n$ the statement is trivial. For $m\neq n$ decompose:
 \[
   \int_{-T}^{T} = \int_{\Rbulk^{(m,n)}} + \int_{\Rturning^{(m,n)}}.
 \]
-The bulk contribution satisfies
-\[
-  \left|\int_{\Rbulk^{(m,n)}} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
-  \le C_p (1+|m-n|)^{-p}
-\]
-by Lemma~\ref{lem:bulk_decay}.
-
-The turning contribution is controlled by Lemma~\ref{lem:turning_revised}:
-\[
-  \left|\int_{\Rturning^{(m,n)}} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
-  \le C\,c^{-1/3}.
-\]
-Combining both estimates yields the result.
+The bulk term is bounded by $C_p(1+|m-n|)^{-p}$ by
+Lemma~\ref{lem:bulk_decay}. The turning term is bounded by
+$C\,c^{-1/3}$ by Lemma~\ref{lem:turning_revised}. Combining yields
+the result.
 \end{proof}
 
 \begin{remark}
-This decay describes the oscillatory structure of the continuous PSWF kernel.
-It does \emph{not} transfer to the discrete defect matrix $E_{mn}$
-without additional oscillation-compatible quadrature assumptions.
-This transfer problem is addressed in a separate framework in~\cite{PaperII}.
+This decay describes the oscillatory structure of the continuous PSWF
+kernel. It does \emph{not} transfer to the discrete defect matrix
+$E_{mn}$ without additional oscillation-compatible quadrature
+assumptions; see~\cite{PaperII}.
 \end{remark}
 
 %% ==================================================================
-\section{Defect decomposition and quantitative frame stability}\label{sec:stability}
+\section{Defect decomposition and quantitative frame stability}%
+\label{sec:stability}
 %% ==================================================================
 
 \begin{theorem}[Defect decomposition]\label{thm:main_reduction}
@@ -775,85 +704,111 @@ Hermitian perturbation: $\lambda_{\min}(A+E)\ge\lambda_{\min}(A)-\norm{E}_2$.
 \end{proof}
 
 \begin{definition}[Discrete Spectral Transfer Property]\label{def:dstp}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_first_order}, with defect matrix $\EN=(E_{mn})_{0\le m,n\le N-1}$. We say that the rule satisfies the \emph{Discrete Spectral Transfer Property} (DSTP) on $V_{N,c}$ if there exist constants $C>0$ and $p>1$ such that
+Let $\{(p_j,w_j)\}_{j=1}^N$ satisfy Assumption~\ref{ass:quad_first_order}
+with defect matrix $\EN=(E_{mn})$. We say the rule satisfies the
+\emph{Discrete Spectral Transfer Property} (DSTP) on $V_{N,c}$ if there
+exist constants $C>0$ and $p>1$ such that
 \[
   |E_{mn}|\le C h c\,(1+|m-n|)^{-p}
   \qquad \text{for all } 0\le m,n\le N-1.
 \]
-Thus DSTP is a structural hypothesis asserting that the discrete defect inherits a Schur-summable off-diagonal profile at scale $hc$. It is not implied by the continuous decay estimates established in Section~\ref{sec:decay}.
+DSTP is an \emph{axiomatic interface hypothesis}: it asserts that the
+discrete defect inherits a Schur-summable off-diagonal profile at scale
+$hc$, in a form that mirrors the continuous oscillatory decay of PSWF
+products established in Section~\ref{sec:decay}. DSTP is \emph{not}
+implied by those continuous estimates; it precisely identifies the
+structural gap that a companion quadrature framework must close.
 \end{definition}
 
-\begin{theorem}[Conditional frame stability under Schur-decay hypothesis]\label{thm:conditional_frame_schur}
-Let $\{(p_j,w_j)\}_{j=1}^N$ be a quadrature rule satisfying Assumption~\ref{ass:quad_first_order},
-with $N\sim c$. Assume in addition that the rule satisfies DSTP (Definition~\ref{def:dstp}).
-If
+\begin{theorem}[Conditional frame stability under Schur-decay hypothesis]%
+\label{thm:conditional_frame_schur}
+Let $\{(p_j,w_j)\}_{j=1}^N$ satisfy Assumption~\ref{ass:quad_first_order}
+with $N\sim c$, and assume in addition that the rule satisfies DSTP
+(Definition~\ref{def:dstp}). If
 \[
   C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p}<\lambda_{N-1}(c),
 \]
-then the system $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds
+then $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds
 \begin{align*}
   A(N,c)&:=\lambda_{N-1}(c)-C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p}>0,\\
   B(N,c)&:=\lambda_0(c)+C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p}.
 \end{align*}
 \end{theorem}
 \begin{proof}
-By DSTP, each row and each column of $\EN$ is absolutely summable with uniform bound
-\[
-  \sup_m \sum_{n=0}^{N-1}|E_{mn}|\le C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p},
-  \qquad
-  \sup_n \sum_{m=0}^{N-1}|E_{mn}|\le C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p}.
-\]
-Hence the Schur test yields
-\[
-  \norm{\EN}_2\le C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p}.
-\]
-Apply Lemma~\ref{lem:weyl} for the lower frame bound and the reference diagonal bound for the upper frame bound.
+By DSTP, the Schur test gives
+$\norm{\EN}_2\le C h c\sum_{k\in\mathbb Z}(1+|k|)^{-p}$.
+Apply Lemma~\ref{lem:weyl} for the lower bound and the reference
+diagonal bound for the upper bound.
 \end{proof}
 
-\begin{corollary}[Interpretive consequence of the stability criterion]\label{cor:fixed_param_scope}
-Theorem~\ref{thm:conditional_frame_schur} yields a finite-dimensional stability statement under DSTP together with first-order quadrature control. By itself, Assumption~\ref{ass:quad_first_order} alone does not imply the Schur-summable defect structure required above.
+\begin{corollary}[Interpretive consequence]\label{cor:fixed_param_scope}
+Theorem~\ref{thm:conditional_frame_schur} yields a finite-dimensional
+stability statement under DSTP together with first-order quadrature
+control. Assumption~\ref{ass:quad_first_order} alone does not imply the
+Schur-summable defect structure required above.
 \end{corollary}
 
 \begin{remark}[Separation of scales]
-The continuous oscillatory decay of PSWF products is independent of the quadrature-induced defect floor.
-Without additional structure on the sampling rule (for example, oscillation-adapted quadrature), the decay
-does not propagate to the discrete Gram defect. This separation is essential for the two-paper architecture:
-the present work controls stability under first-order quadrature, while~\cite{PaperII} develops
-conditions under which oscillatory structure is preserved at the discrete level.
+The continuous oscillatory decay of PSWF products is independent of the
+quadrature-induced defect floor. Without additional structure on the
+sampling rule, this decay does not propagate to the discrete Gram defect.
 \end{remark}
 
 \begin{remark}[DSTP as interface axiom]\label{rem:dstp_interface}
-The present paper does not establish DSTP. Rather, DSTP is treated as a structural interface axiom: once such a discrete spectral transfer principle holds, the frame stability theorem follows by the Schur-test argument above. Typical candidates for such a property are PSWF-adapted or oscillation-compatible quadrature rules, including variants of the Xiao--Rokhlin--Yarvin (XRY) framework; this is developed in detail in~\cite{PaperII}. Standard quadrature rules of Riemann or trapezoidal type do not, in general, satisfy DSTP, as they do not encode oscillation-sensitive cancellation for highly oscillatory integrands. Identifying concrete quadrature schemes with this property is deferred to the companion framework in~\cite{PaperII}.
+The present paper does not establish DSTP. DSTP is the axiomatic
+interface between the present paper and~\cite{PaperII}: once DSTP holds,
+frame stability follows by the Schur-test argument above. Standard
+Riemann- or trapezoidal-type rules do not in general satisfy DSTP.
+Identifying concrete schemes with this property is developed
+in~\cite{PaperII}.
 \end{remark}
 
-\begin{remark}[Norm control and possible sharpening]\label{rem:schur}
-The operator-norm estimate in Theorem~\ref{thm:conditional_frame_schur} is now based on a direct Schur test, which is the natural mechanism once one assumes an explicit off-diagonal decay profile for the discrete defect. Frobenius estimates are too coarse to capture this structure and are not used in the final argument.
+\begin{remark}[Norm control]\label{rem:schur}
+The operator-norm estimate in Theorem~\ref{thm:conditional_frame_schur}
+is based on the Schur test, which is the natural mechanism once an
+explicit off-diagonal decay profile is assumed. Frobenius estimates are
+too coarse and are not used.
 \end{remark}
 
 \begin{remark}[Scaling of the stability condition]\label{rem:scaling_stability}
-Under the Schur-summable decay hypothesis of Theorem~\ref{thm:conditional_frame_schur}, the defect norm is controlled by
-\[
-\norm{\EN}_2=O(hc),
-\]
-with the constant depending only on the summable profile $\sum_{k\in\mathbb Z}(1+|k|)^{-p}$. Thus the stability condition is governed directly by the size of $hc$ relative to $\lambda_{N-1}(c)$, rather than by any additional polynomial growth factor in $N$. This Schur-decay hypothesis is precisely the bridge to the companion framework in~\cite{PaperII}, where the discrete preservation of oscillatory structure is studied as a separate problem.
+Under DSTP, $\norm{\EN}_2=O(hc)$, so the stability condition is governed
+directly by $hc$ relative to $\lambda_{N-1}(c)$, without additional
+polynomial growth in $N$.
 \end{remark}
 
 %% ==================================================================
 \section{Boundary to the companion framework}\label{sec:bridge}
 %% ==================================================================
 
-The present paper proves a robust finite-dimensional stability statement under a standard first-order quadrature consistency assumption. Its role is to separate three distinct mechanisms: continuous PSWF orthogonality, oscillatory decay of the continuous product kernel, and quadrature-induced defect control.
+The present paper proves a robust finite-dimensional stability statement
+under a standard first-order quadrature consistency assumption. Its role
+is to separate three distinct mechanisms: continuous PSWF orthogonality,
+oscillatory decay of the continuous product kernel, and
+quadrature-induced defect control.
 
-This separation is deliberate. The continuous bulk--turning analysis explains why off-diagonal PSWF interactions decay analytically, but the proof of Theorem~\ref{thm:conditional_frame_schur} does not transfer that decay to the discrete defect matrix $E_{mn}$. Instead, the unconditional discrete estimate is governed only by the coarse quadrature bound $|E_{mn}|\le Chc$, while the frame theorem in Section~\ref{sec:stability} requires the additional interface hypothesis DSTP from Definition~\ref{def:dstp}.
+This separation is deliberate. The continuous bulk--turning analysis
+explains why off-diagonal PSWF interactions decay analytically, but the
+proof of Theorem~\ref{thm:conditional_frame_schur} does not transfer that
+decay to the discrete defect matrix $E_{mn}$. Instead, the unconditional
+discrete estimate is governed only by the coarse quadrature bound
+$|E_{mn}|\le Chc$, while the frame theorem requires the additional
+interface hypothesis DSTP.
 
-As a consequence, the present framework is robust but not spectrally sharp. It yields frame stability for fixed $(N,c)$ once the defect is dominated by $\lambda_{N-1}(c)$, but it does not provide an asymptotically uniform stability theorem in the transition regime $N\sim c$.
+As a consequence, the present framework is robust but not spectrally
+sharp. It yields frame stability for fixed $(N,c)$ once the defect is
+dominated by $\lambda_{N-1}(c)$, but does not provide an asymptotically
+uniform stability theorem in the transition regime $N\sim c$.
 
-The companion paper~\cite{PaperII} addresses a genuinely different question: whether oscillatory structure of PSWF products can be preserved at the discrete level by PSWF-adapted quadrature rules. In that setting the goal is not merely to control the quadrature remainder by a first-order envelope, but to establish a spectral transfer principle that reflects the decay of continuous correlations inside the discrete Gram defect itself. Establishing DSTP for concrete quadrature schemes is deferred entirely to the companion paper.
+The companion paper~\cite{PaperII} addresses a genuinely different
+question: whether oscillatory structure of PSWF products can be preserved
+at the discrete level by PSWF-adapted quadrature rules. Establishing DSTP
+for concrete quadrature schemes is deferred entirely to that paper.
 
-Thus the two papers address different levels of structure within the same framework.
-The present work isolates a stability result under a minimal, first-order quadrature assumption,
-while~\cite{PaperII} studies conditions under which oscillatory structure of PSWF products
-can be reflected at the discrete level through PSWF-adapted quadrature mechanisms. In this sense, DSTP is the explicit interface axiom between the two papers.
+Thus the two papers address different levels of structure: the present
+work isolates stability under minimal first-order assumptions, while
+\cite{PaperII} studies when oscillatory structure of PSWF products is
+reflected at the discrete level. DSTP is the explicit interface axiom
+between them.
 
 %% ==================================================================
 \section{Open problems}\label{sec:open}
@@ -861,23 +816,26 @@ can be reflected at the discrete level through PSWF-adapted quadrature mechanism
 
 \begin{problem}[Sharp decay rate]
 Determine whether the algebraic decay in Lemma~\ref{lem:bulk_decay_continuous}
-for the continuous PSWF product integral can be upgraded to exponential, or whether $p\to\infty$ yields
+can be upgraded to exponential, or whether $p\to\infty$ yields
 superalgebraic decay.
 \end{problem}
 
 \begin{problem}[Sharper turning bounds]
 It is plausible that the turning contribution can be improved from
-$O(c^{-1/3})$ to a smaller rate via refined Airy asymptotics and more precise
-microlocal analysis near the turning points; we do not pursue this here.
+$O(c^{-1/3})$ via refined Airy asymptotics and microlocal analysis near
+the turning points.
 \end{problem}
 
 \begin{problem}[Quantitative constants]
-Make the constants in Lemmas~\ref{lem:bulk_spectral_sep}, \ref{lem:phase_gap_final}, \ref{lem:ibp_uniform},
+Make the constants in Lemmas~\ref{lem:bulk_spectral_sep},
+\ref{lem:phase_gap_final}, \ref{lem:ibp_uniform},
 and \ref{lem:derivative_bound} fully explicit in $N$ and $c$.
 \end{problem}
 
 \begin{problem}[Oscillation-compatible quadrature]
-Determine concrete quadrature schemes for which the algebraic decay of the continuous bulk integral transfers directly to the quadrature error itself, for example through an oscillation-compatible quadrature estimate. A structured PSWF-Gauss/XRY implication framework in this direction is developed separately in~\cite{PaperII}.
+Determine concrete quadrature schemes for which algebraic decay of the
+continuous bulk integral transfers to the quadrature error. A
+PSWF-Gauss/XRY implication framework is developed in~\cite{PaperII}.
 \end{problem}
 
 \begin{problem}[Uniform-grid unisolvence]
@@ -903,7 +861,7 @@ For each $0\le n\le N-1$ and $x\in U_n$,
 where $\zeta_n(x)=c^{2/3}(x-x_n^*)/T+O(c^{-1/3})$ and
 $|\kappa_n^{(c)}|\le C_\kappa$ uniformly in $n,c$
 \cite{Olver1974,OsipovRokhlinXiao}.
-\end{lemma>
+\end{lemma}
 \begin{proof}
 Standard semiclassical analysis \cite[Ch.~11]{Olver1974}.
 \end{proof}
@@ -916,13 +874,10 @@ For all $0\le m,n\le N-1$,
 \]
 \end{lemma}
 \begin{proof}
-On $U_k$, substitute Lemma~\ref{lem:airy_approx}. By the uniform sup-norm bound
-for PSWFs and the Airy-scale width $|U_k|=O(c^{-1/3})$, each factor satisfies
-\[
-  \|\psi_k^{(c)}\|_{L^2(U_m\cup U_n)}\le C\,(|U_m|+|U_n|)^{1/2}=O(c^{-1/6}).
-\]
-Applying Cauchy--Schwarz on $U_m\cup U_n$ gives the bound
-$O(c^{-1/3})$.
+By the uniform sup-norm bound and the Airy-scale width
+$|U_k|=O(c^{-1/3})$,
+$\|\psi_k^{(c)}\|_{L^2(U_m\cup U_n)}\le C(|U_m|+|U_n|)^{1/2}=O(c^{-1/6})$.
+Cauchy--Schwarz on $U_m\cup U_n$ gives the bound $O(c^{-1/3})$.
 \end{proof}
 
 %% ==================================================================
@@ -952,9 +907,9 @@ A.~Osipov, V.~Rokhlin, and H.~Xiao,
 
 \bibitem{PaperII}
 Anonymous Author,
-\emph{Conditional Frame Stability of Prolate Sampling Operators via PSWF Spectral Projection and XRY Quadrature:
-A Conditional Implication Framework for Quadrature Compatibility},
-preprint, 2026.
+\emph{Conditional Frame Stability of Prolate Sampling Operators via
+PSWF Spectral Projection and XRY Quadrature: A Conditional Implication
+Framework for Quadrature Compatibility}, preprint, 2026.
 
 \bibitem{Slepian1978}
 D.~Slepian,
