@@ -247,7 +247,7 @@ Every $f\in\PW$ is entire of exponential type; apply the identity theorem.
 \begin{proposition}[MZ lower bound implies unisolvence]\label{prop:mz_unisolvent}
 If $\{(p_j,w_j)\}$ is a weighted frame with lower bound $A>0$,
 then $\mathbf p$ is unisolvent for $V_{N,c}$.
-\end{proposition}
+\end{proposition>
 \begin{proof}
 $f(p_j)=0$ for all $j$ implies $A\norm{f}^2\le 0$, hence $f\equiv 0$.
 \end{proof}
@@ -376,28 +376,24 @@ Hence for all $x\in[-T,T]$,
   = \frac{c^2}{T^2}\bigl((x_k^*)^2-x^2\bigr)
   = \frac{c^2}{T^2}(x_k^*-x)(x_k^*+x).
 \]
-
 Taking absolute values, we obtain
 \[
   \left|\chi_k(c)-\frac{c^2x^2}{T^2}\right|
   = \frac{c^2}{T^2}\,|x_k^*-x|\,|x_k^*+x|.
 \]
-
-By Definition~\ref{def:bulk}, the bulk region excludes Airy-scale neighborhoods 
+By Definition~\ref{def:bulk}, the bulk region excludes Airy-scale neighborhoods
 of both turning points $\pm x_k^*$. Therefore,
 \[
   |x_k^*-x|\ge \rho c^{-1/3},
   \qquad
   |x_k^*+x|\ge \rho c^{-1/3}.
 \]
-
 It follows that
 \[
   \left|\chi_k(c)-\frac{c^2x^2}{T^2}\right|
   \ge \frac{c^2}{T^2}\,\rho c^{-1/3}\cdot \rho c^{-1/3}
   = \frac{\rho^2}{T^2}c^{2/3}.
 \]
-
 This proves the claim with $\delta_0:=\rho^2/T^2$.
 \end{proof}
 
@@ -506,7 +502,6 @@ since $\chi_{N-1}(c)\lesssim c^2$ in the regime $N\sim c$.
 Combining numerator and denominator bounds yields the stated two-regime estimates, and the unified lower bound follows from the monotone envelope displayed above after adjusting constants.
 \end{proof}
 
-%% ---- PATCH: lem:bulk_derivative (reviewer-ready version) ----------
 \begin{lemma}[Bulk semiclassical derivative control]\label{lem:bulk_derivative}
 Fix $\rho>0$ and let $\Rbulk^{(m,n)}$ be as in Definition~\ref{def:bulk}.
 For every integer $k\ge 0$ there exists a constant $C_k>0$,
@@ -519,49 +514,38 @@ uniformly for all $0\le n\le N-1$ and all $c\ge 1$ in the transition regime $N\s
 \end{lemma}
 
 \begin{proof}
-On $\Rbulk^{(m,n)}$, the PSWF differential equation lies in the non-stationary
-semiclassical regime, away from the turning points.
-Thus $\psi_n^{(c)}$ admits a WKB representation of the form
-\[
-\psi_n^{(c)}(x)
-= A_n(x)\,e^{i\Phi_n(x)} + \overline{A_n(x)}\,e^{-i\Phi_n(x)},
-\]
-where $A_n$ is a smooth amplitude and the phase satisfies
+This follows from uniform semiclassical estimates for PSWFs as developed in
+\cite{OsipovRokhlinXiao} and \cite{BonamiKaroui2014}, together with
+classical WKB amplitude regularity \cite[Ch.~6]{Olver1974}.
+
+On $\Rbulk^{(m,n)}$, the PSWF differential equation lies in the
+non-stationary semiclassical regime away from the turning points.
+The WKB phase satisfies
 \[
 \Phi_n'(x)
-= \frac{1}{T}\sqrt{\chi_n(c)-\frac{c^2x^2}{T^2}}.
+= \frac{1}{T}\sqrt{\chi_n(c)-\frac{c^2x^2}{T^2}}
+= O(c^{1/2})
 \]
+by Lemma~\ref{lem:bulk_spectral_sep}.
 
-By Lemma~\ref{lem:bulk_spectral_sep}, the bulk exclusion implies
-\[
-\chi_n(c)-\frac{c^2x^2}{T^2} \gtrsim c^{2/3}
-\quad \text{on } \Rbulk^{(m,n)},
-\]
-so in particular $\Phi_n'(x)=O(c^{1/2})$ uniformly in $n$.
+The cited results imply that, for any fixed $\rho>0$, PSWFs admit
+uniform $C^k$ bounds on compact subsets of the bulk region separated
+from the turning points by Airy-scale neighbourhoods of size
+$\rho c^{-1/3}$. In particular, the WKB amplitude $A_n$ and all its
+derivatives are uniformly bounded on $\Rbulk^{(m,n)}$.
 
-Differentiating the WKB ansatz $k$ times yields a finite sum of terms
-of the form
-\[
-(\Phi_n')^{\ell}\,\partial_x^{k-\ell} A_n(x)\,e^{\pm i\Phi_n(x)},
-\qquad 0\le \ell\le k.
-\]
+The uniformity in $n$ follows from the transition regime $N\sim c$,
+which keeps all indices within the semiclassical scaling window
+covered by the cited estimates.
 
-Each differentiation either hits the oscillatory phase, producing a factor
-$\Phi_n'(x)=O(c^{1/2})$, or hits the amplitude $A_n(x)$.
-The amplitude and all its derivatives remain uniformly bounded on
-$\Rbulk^{(m,n)}$, since this region excludes Airy-scale neighbourhoods
-of size $\rho c^{-1/3}$ around the turning points.
-
-Therefore each term is bounded by $C_k c^{k/2}$, and summing over the finitely
-many contributions yields
+Each application of $\partial_x$ to the WKB ansatz produces either
+a factor $\Phi_n'(x)=O(c^{1/2})$ or a derivative of $A_n$, both
+uniformly controlled. Collecting the $k$-fold contributions yields
 \[
 \|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
-\le C_k c^{k/2}.
+\le C_k\, c^{k/2}.
 \]
-
-All constants are uniform in $n$ for $0\le n\le N-1$ in the regime $N\sim c$.
 \end{proof}
-%% ---- END PATCH ---------------------------------------------------
 
 \begin{lemma}[Bulk-localised uniform IBP control]\label{lem:ibp_uniform}
 Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product and
@@ -593,7 +577,14 @@ By Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
   |(\Phi_{mn}'(x))^{-1}|
   \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}.
 \]
-Lemma~\ref{lem:bulk_derivative} provides uniform semiclassical control of PSWF derivatives in the bulk region, away from Airy-scale neighborhoods. Therefore all derivatives of the WKB amplitudes entering $a_{mn}$ are uniformly controlled on $\Rbulk^{(m,n)}$, with at most polynomial dependence on $c$ already accounted for by the quantified phase-gap factors. All coefficients arising in the expansion of $(L^*)^p a_{mn}$ remain uniformly bounded on $\Rbulk^{(m,n)}$, together with all derivatives appearing in the expansion, due to the exclusion of Airy-scale neighborhoods. In particular, all terms are uniformly integrable on $\Rbulk^{(m,n)}$. We do not track these constants explicitly, only the resulting polynomial dependence on the lower bound for $|\Phi_{mn}'|$. Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
+Lemma~\ref{lem:bulk_derivative} provides uniform semiclassical control of PSWF derivatives
+in the bulk region, away from Airy-scale neighborhoods. For any fixed $\rho>0$, the WKB
+amplitudes $A_m$, $A_n$ and all their derivatives are uniformly bounded on $\Rbulk^{(m,n)}$
+by the cited references, with at most polynomial dependence on $c$ already accounted for by
+the quantified phase-gap factors. All coefficients arising in the expansion of $(L^*)^p a_{mn}$
+remain uniformly bounded on $\Rbulk^{(m,n)}$, and all terms are uniformly integrable there.
+We do not track these constants explicitly, only the resulting polynomial dependence on the
+lower bound for $|\Phi_{mn}'|$. Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
 \end{proof}
 
 \begin{lemma}[Bulk decay for the continuous integral]\label{lem:bulk_decay}
@@ -667,8 +658,7 @@ Assumption~\ref{ass:quad_first_order} is intentionally coarse. It is used only t
 For $f_{mn}(x):=\psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}$ one has
 \[
 |f'_{mn}(x)|
-\le |
-\psi_m^{(c)\,\prime}(x)|\,|\psi_n^{(c)}(x)|
+\le |\psi_m^{(c)\,\prime}(x)|\,|\psi_n^{(c)}(x)|
 +
 |\psi_m^{(c)}(x)|\,|\psi_n^{(c)\,\prime}(x)|.
 \]
@@ -741,7 +731,6 @@ For $m\neq n$, decompose the integral into bulk and turning regions:
 \[
   \int_{-T}^{T} = \int_{\Rbulk^{(m,n)}} + \int_{\Rturning^{(m,n)}}.
 \]
-
 The bulk contribution satisfies
 \[
   \left|\int_{\Rbulk^{(m,n)}} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
@@ -754,7 +743,6 @@ The turning contribution is controlled by Lemma~\ref{lem:turning_revised}:
   \left|\int_{\Rturning^{(m,n)}} \psi_m^{(c)}(x)\overline{\psi_n^{(c)}(x)}\,dx\right|
   \le C\,c^{-1/3}.
 \]
-
 Combining both estimates yields the result.
 \end{proof}
 
