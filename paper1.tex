@@ -247,7 +247,7 @@ Every $f\in\PW$ is entire of exponential type; apply the identity theorem.
 \begin{proposition}[MZ lower bound implies unisolvence]\label{prop:mz_unisolvent}
 If $\{(p_j,w_j)\}$ is a weighted frame with lower bound $A>0$,
 then $\mathbf p$ is unisolvent for $V_{N,c}$.
-\end{proposition>
+\end{proposition}
 \begin{proof}
 $f(p_j)=0$ for all $j$ implies $A\norm{f}^2\le 0$, hence $f\equiv 0$.
 \end{proof}
@@ -516,7 +516,7 @@ uniformly for all $0\le n\le N-1$ and all $c\ge 1$ in the transition regime $N\s
 \begin{proof}
 This follows from uniform semiclassical estimates for PSWFs as developed in
 \cite{OsipovRokhlinXiao} and \cite{BonamiKaroui2014}, together with
-classical WKB amplitude regularity \cite[Ch.~6]{Olver1974}.
+classical WKB regularity theory \cite[Ch.~6]{Olver1974}.
 
 On $\Rbulk^{(m,n)}$, the PSWF differential equation lies in the
 non-stationary semiclassical regime away from the turning points.
@@ -528,19 +528,21 @@ The WKB phase satisfies
 \]
 by Lemma~\ref{lem:bulk_spectral_sep}.
 
-The cited results imply that, for any fixed $\rho>0$, PSWFs admit
-uniform $C^k$ bounds on compact subsets of the bulk region separated
-from the turning points by Airy-scale neighbourhoods of size
-$\rho c^{-1/3}$. In particular, the WKB amplitude $A_n$ and all its
-derivatives are uniformly bounded on $\Rbulk^{(m,n)}$.
+The cited results provide uniform $C^k$ bounds for the PSWFs themselves
+on compact subsets of the bulk region separated from the turning points
+by Airy-scale neighbourhoods of size $\rho c^{-1/3}$.
+In particular, for every fixed $k\ge 0$,
+\[
+\|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
+\le C_k'\, c^{k/2},
+\]
+with constants uniform in $n$ in the transition regime $N\sim c$.
+This can be interpreted equivalently at the level of the WKB ansatz,
+but we do not require an explicit amplitude-phase decomposition.
 
-The uniformity in $n$ follows from the transition regime $N\sim c$,
-which keeps all indices within the semiclassical scaling window
-covered by the cited estimates.
-
-Each application of $\partial_x$ to the WKB ansatz produces either
-a factor $\Phi_n'(x)=O(c^{1/2})$ or a derivative of $A_n$, both
-uniformly controlled. Collecting the $k$-fold contributions yields
+Each application of $\partial_x$ contributes at most a factor
+$\Phi_n'(x) = O(c^{1/2})$, consistent with the stated bound.
+Collecting the $k$-fold contributions yields the estimate
 \[
 \|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
 \le C_k\, c^{k/2}.
@@ -577,14 +579,12 @@ By Lemma~\ref{lem:phase_gap_final}, on $\Rbulk^{(m,n)}$ we have
   |(\Phi_{mn}'(x))^{-1}|
   \le \frac{T}{\kappa}\cdot\frac{1+c^{-2/3}|m-n|}{|m-n|}.
 \]
-Lemma~\ref{lem:bulk_derivative} provides uniform semiclassical control of PSWF derivatives
-in the bulk region, away from Airy-scale neighborhoods. For any fixed $\rho>0$, the WKB
-amplitudes $A_m$, $A_n$ and all their derivatives are uniformly bounded on $\Rbulk^{(m,n)}$
-by the cited references, with at most polynomial dependence on $c$ already accounted for by
-the quantified phase-gap factors. All coefficients arising in the expansion of $(L^*)^p a_{mn}$
-remain uniformly bounded on $\Rbulk^{(m,n)}$, and all terms are uniformly integrable there.
-We do not track these constants explicitly, only the resulting polynomial dependence on the
-lower bound for $|\Phi_{mn}'|$. Integrating over $\Rbulk^{(m,n)}\subset[-T,T]$ yields the estimate.
+Lemma~\ref{lem:bulk_derivative} provides uniform $C^k$ bounds for the PSWFs on
+$\Rbulk^{(m,n)}$, from which all derivatives of the amplitude product $a_{mn}$
+are uniformly controlled on this region, with polynomial dependence on $c$ already
+accounted for by the phase-gap factors. All terms in the expansion of $(L^*)^p a_{mn}$
+are therefore uniformly integrable on $\Rbulk^{(m,n)}\subset[-T,T]$.
+Integrating yields the stated estimate.
 \end{proof}
 
 \begin{lemma}[Bulk decay for the continuous integral]\label{lem:bulk_decay}
@@ -673,7 +673,7 @@ hold uniformly for $0\le k\le N-1$, then
 \int_{-T}^{T}|f'_{mn}(x)|\,dx \le C c,
 \]
 with a constant independent of $m,n,N,c$.
-\end{lemma}
+\end{lemma>
 \begin{proof}
 Differentiate the product and apply the triangle inequality. The uniform sup-norm bounds give
 \[
@@ -903,7 +903,7 @@ For each $0\le n\le N-1$ and $x\in U_n$,
 where $\zeta_n(x)=c^{2/3}(x-x_n^*)/T+O(c^{-1/3})$ and
 $|\kappa_n^{(c)}|\le C_\kappa$ uniformly in $n,c$
 \cite{Olver1974,OsipovRokhlinXiao}.
-\end{lemma}
+\end{lemma>
 \begin{proof}
 Standard semiclassical analysis \cite[Ch.~11]{Olver1974}.
 \end{proof}
