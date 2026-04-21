@@ -506,16 +506,62 @@ since $\chi_{N-1}(c)\lesssim c^2$ in the regime $N\sim c$.
 Combining numerator and denominator bounds yields the stated two-regime estimates, and the unified lower bound follows from the monotone envelope displayed above after adjusting constants.
 \end{proof}
 
+%% ---- PATCH: lem:bulk_derivative (reviewer-ready version) ----------
 \begin{lemma}[Bulk semiclassical derivative control]\label{lem:bulk_derivative}
-For every fixed integer $k\ge 0$ there exists a constant $C_k>0$ such that
+Fix $\rho>0$ and let $\Rbulk^{(m,n)}$ be as in Definition~\ref{def:bulk}.
+For every integer $k\ge 0$ there exists a constant $C_k>0$,
+depending only on $k$ and $\rho$, such that
 \[
-\|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})} \le C_k c^{k/2}
+\|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
+\le C_k\, c^{k/2}
 \]
-uniformly for all $0\le n\le N-1$, provided the evaluation is restricted to bulk regions staying a fixed Airy-scale distance away from the turning neighborhoods. This is the standard semiclassical derivative growth away from turning points and follows from the WKB representation together with the turning-point exclusion; compare Olver~\cite{Olver1974} and the uniform PSWF estimates in~\cite{BonamiKaroui2014,OsipovRokhlinXiao}.
+uniformly for all $0\le n\le N-1$ and all $c\ge 1$ in the transition regime $N\sim c$.
 \end{lemma}
+
 \begin{proof}
-Away from the turning region, the PSWF differential equation is in the non-stationary WKB regime. Standard semiclassical differentiation of the WKB ansatz shows that each spatial derivative contributes at most a factor of order $c^{1/2}$ while the amplitude remains uniformly controlled on compact subsets of the bulk. Since the bulk region excludes Airy neighborhoods of size $O(c^{-1/3})$, the phase and amplitude denominators stay uniformly separated from zero there. The stated estimate follows by combining the classical WKB derivative bookkeeping with the uniform transition-regime PSWF bounds cited above.
+On $\Rbulk^{(m,n)}$, the PSWF differential equation lies in the non-stationary
+semiclassical regime, away from the turning points.
+Thus $\psi_n^{(c)}$ admits a WKB representation of the form
+\[
+\psi_n^{(c)}(x)
+= A_n(x)\,e^{i\Phi_n(x)} + \overline{A_n(x)}\,e^{-i\Phi_n(x)},
+\]
+where $A_n$ is a smooth amplitude and the phase satisfies
+\[
+\Phi_n'(x)
+= \frac{1}{T}\sqrt{\chi_n(c)-\frac{c^2x^2}{T^2}}.
+\]
+
+By Lemma~\ref{lem:bulk_spectral_sep}, the bulk exclusion implies
+\[
+\chi_n(c)-\frac{c^2x^2}{T^2} \gtrsim c^{2/3}
+\quad \text{on } \Rbulk^{(m,n)},
+\]
+so in particular $\Phi_n'(x)=O(c^{1/2})$ uniformly in $n$.
+
+Differentiating the WKB ansatz $k$ times yields a finite sum of terms
+of the form
+\[
+(\Phi_n')^{\ell}\,\partial_x^{k-\ell} A_n(x)\,e^{\pm i\Phi_n(x)},
+\qquad 0\le \ell\le k.
+\]
+
+Each differentiation either hits the oscillatory phase, producing a factor
+$\Phi_n'(x)=O(c^{1/2})$, or hits the amplitude $A_n(x)$.
+The amplitude and all its derivatives remain uniformly bounded on
+$\Rbulk^{(m,n)}$, since this region excludes Airy-scale neighbourhoods
+of size $\rho c^{-1/3}$ around the turning points.
+
+Therefore each term is bounded by $C_k c^{k/2}$, and summing over the finitely
+many contributions yields
+\[
+\|\partial_x^k \psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
+\le C_k c^{k/2}.
+\]
+
+All constants are uniform in $n$ for $0\le n\le N-1$ in the regime $N\sim c$.
 \end{proof}
+%% ---- END PATCH ---------------------------------------------------
 
 \begin{lemma}[Bulk-localised uniform IBP control]\label{lem:ibp_uniform}
 Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product and
