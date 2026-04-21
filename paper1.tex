@@ -297,7 +297,7 @@ $f(p_j)=0$ for all $j$ implies $A\norm{f}^2\le 0$, hence $f\equiv 0$.
 \begin{proposition}[Random sampling]\label{prop:random}
 Let $p_1,\dots,p_N$ be i.i.d.\ absolutely continuous on $[-T,T]$.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
-\end{proposition}
+\end{proposition>
 \begin{proof}
 $(p_1,\dots,p_N)\mapsto\det M(\mathbf{p},c)$ is real-analytic and
 non-identically zero, so its zero set has measure zero.
@@ -306,7 +306,7 @@ non-identically zero, so its zero set has measure zero.
 \begin{lemma}[Pointwise RKHS bound]\label{lem:upper}
 For $f\in\PW$ and $x\in\mathbb R$,
 $|f(x)|^2\le(\omega/\pi)\norm{f}_{L^2}^2$.
-\end{lemma}
+\end{lemma>
 \begin{proof}
 Cauchy--Schwarz with the reproducing kernel.
 \end{proof}
@@ -540,7 +540,7 @@ and absorbed into the turning estimate; see Lemma~\ref{lem:ibp_uniform}.
 Lemma~\ref{lem:ibp_uniform} controls the amplitude expressions in
 $L^1$. The simplification
 $(1+c^{-2/3}|m-n|)/|m-n|\le 2/(1+|m-n|)$ yields the final bound.
-\end{proof}
+\end{proof>
 
 \begin{lemma}[Turning-point estimate]\label{lem:turning_revised}
 For all $0\le m,n\le N-1$,
@@ -678,6 +678,23 @@ rules (Riemann sums, trapezoidal rule) that carry no
 oscillation-alignment structure with respect to the PSWF eigenbasis;
 see Remark~\ref{rem:dstp_interface}.
 \end{definition}
+
+\begin{remark}[DSTP in the context of quadrature literature]%
+\label{rem:dstp_literature}
+The Discrete Spectral Transfer Property is not expected to hold for
+classical quadrature families such as Riemann sums, Newton--Cotes
+rules, or standard Gauss--Legendre rules applied without adaptation to
+the PSWF eigenbasis: these rules do not incorporate oscillation-alignment
+with respect to the PSWF spectral structure and therefore lead only to
+the structure-blind bound of Theorem~\ref{thm:banded_decay}. DSTP
+should instead be viewed as a structural strengthening of
+Marcinkiewicz--Zygmund-type quadrature conditions in the spectral
+regime, analogous in spirit to classical exactness and stability
+requirements in MZ theory \cite{OsipovRokhlinXiao,Xiao2001}, but
+specialised to the off-diagonal decay geometry of PSWF kernels. The
+existence and explicit construction of rules satisfying DSTP is the
+subject of~\cite{PaperII}.
+\end{remark}
 
 \begin{theorem}[Conditional frame stability under Schur-decay hypothesis]%
 \label{thm:conditional_frame_schur}
