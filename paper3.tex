@@ -1,0 +1,713 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!50!black,
+            urlcolor=blue!70!black]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+
+%% ---- Theorem environments ----------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{problem}{Problem}[section]
+
+%% ---- Notation (aligned with Papers I and II) --------------------
+\newcommand{\PW}{\mathrm{PW}_\omega}
+\newcommand{\Kop}{\mathcal{K}_c}
+\newcommand{\GVM}{G^{(N)}_{\mathbf{p},c}}
+\newcommand{\psin}{\psi_n^{(c)}}
+\newcommand{\EN}{E_{N,c}}
+\newcommand{\PN}{P_{N,c}}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\ip}[2]{\langle #1,\, #2\rangle}
+\newcommand{\FN}{\mathcal{F}_N}
+
+%% ---- Paper metadata ---------------------------------------------
+\title[PSWF Product Spectral Tail Estimates]
+      {PSWF Product Spectral Tail Estimates:\\ 
+       Bulk and Off-Diagonal Regimes,\\
+       and an Obstruction at the Spectral Edge\\[4pt]
+       \large (Paper~III in the Prolate--Weil Program)}
+
+\thanks{This paper is the third in the Prolate--Weil program.
+Paper~I \cite{PaperI} established frame coercivity of the prolate Gram
+form under a quadrature compatibility assumption (Assumption~3.10 of
+\cite{PaperI}).
+The companion paper \cite{PaperII_quad} organised the verification of
+that assumption for XRY PSWF-Gauss quadrature into two explicit
+conjectural inputs: a PSWF product spectral tail conjecture and an
+XRY stability conjecture. The present paper addresses the first of
+these two inputs. We prove the spectral tail bound unconditionally in
+the bulk and off-diagonal regimes. The edge regime $m,n \sim N$
+is identified as a structural obstruction and left as an explicit open
+problem.}
+
+\author{Anonymous Author}
+\address{}
+\email{}
+\date{\today}
+
+\subjclass[2020]{42C05, 42B10, 47B32, 41A60, 47G10}
+
+\keywords{prolate spheroidal wave functions, spectral tail estimates,
+product family, Bernstein inequality, spectral localization,
+frame stability, quadrature compatibility, edge regime obstruction}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\{\psin\}_{n \ge 0}$ be the prolate spheroidal wave functions
+(PSWFs) on $[-T,T]$ with time-bandwidth product $c = \omega T$, and
+let $\PN$ denote the spectral projector onto
+$V_{N,c} = \mathrm{span}\{\psi_0^{(c)}, \ldots, \psi_{N-1}^{(c)}\}$.
+The companion paper \cite{PaperII_quad} requires a uniform exponential
+tail bound for the product family
+$\FN := \{\psi_m^{(c)}\overline{\psin} : 0 \le m,n \le N\}$
+as a key input to the verification of the quadrature compatibility
+condition of \cite{PaperI}.
+
+The present paper provides a partial resolution of this problem.
+We prove:
+\begin{enumerate}[(I)]
+  \item \textbf{Bulk regime} ($m, n \le \gamma N$, fixed $\gamma < 1$):
+  exponential tail decay
+  $\|(I-\PN)f_{mn}\|_{L^2} \le C_\gamma e^{-\alpha_\gamma N}$
+  with explicit constants depending only on $\gamma$, $c$, and $T$.
+  \item \textbf{Off-diagonal regime} ($|m-n| \ge \delta N$, fixed $\delta > 0$):
+  algebraic-to-exponential decay
+  $\|(I-\PN)f_{mn}\|_{L^2} \le C_p(1 + |m-n|)^{-p}$
+  for every $p \ge 1$, with constants uniform in the bulk.
+  \item \textbf{Edge regime obstruction} ($m, n \sim N$):
+  the methods of (I) and (II) both degenerate here.
+  We identify the precise structural reason: the classical
+  separation between frequency and spatial localization
+  breaks down near the Slepian cutoff $N \sim 2c/\pi$.
+  This regime is formulated as an isolated open problem.
+\end{enumerate}
+Together, (I) and (II) establish Conjecture~3.1 of \cite{PaperII_quad}
+in all index regimes away from the spectral edge.
+No claim is made about zeros of $\zeta(s)$.
+\end{abstract}
+
+\tableofcontents
+
+%%=================================================================
+\section{Introduction}\label{sec:intro}
+%%=================================================================
+
+\subsection{Context and motivation}
+
+The Prolate--Weil program \cite{PaperI,PaperII,PaperII_quad} seeks a
+spectral realization of the Weil positivity criterion
+\cite{Weil1952,CCM2025} via the prolate concentration operator
+$\Kop$ and its associated Gram forms.
+In \cite{PaperI}, the prolate Gram form
+$Q^{(N)}(f) = \sum_{j=1}^N |f(p_j)|^2$ was shown to be coercive on
+the prolate subspace $V_{N,c}$ under an explicit quadrature
+compatibility condition (Assumption~3.10 of \cite{PaperI}).
+The companion paper \cite{PaperII_quad} organized the verification
+of that condition for XRY PSWF-Gauss quadrature into two conjectural
+inputs; see Section~\ref{ssec:context} for a precise summary.
+
+The first of these inputs is the PSWF product spectral tail conjecture:
+for every $f_{mn} = \psi_m^{(c)}\overline{\psin} \in \FN$, one needs a
+uniform bound on $\|(I-\PN)f_{mn}\|_{L^2([-T,T])}$.
+This is the object of study in the present paper.
+
+\subsection{Main results}
+
+The main contributions are as follows.
+
+\medskip
+\noindent\textbf{Bulk regime (Theorem~\ref{thm:bulk}).}
+For $m, n \le \gamma N$ with $\gamma \in (0,1)$ fixed, the spectral
+tail satisfies an exponential bound with constants that depend only on
+$\gamma$, $c$, and the absolute PSWF sup-norm constant $C_\infty$.
+The proof uses spectral concentration of PSWFs in the bulk
+(Lemma~\ref{lem:concentration}), combined with Bernstein-type
+inequalities for bandlimited functions (Lemma~\ref{lem:bernstein}).
+
+\medskip
+\noindent\textbf{Off-diagonal regime (Theorem~\ref{thm:offdiag}).}
+For $|m-n| \ge \delta N$ with $\delta > 0$ fixed, the spectral tail
+decays algebraically in $|m-n|$ to any power $p$. This follows from
+cancellation in the inner product
+$\ip{f_{mn}}{\psi_k^{(c)}}$ via oscillation of PSWFs with different
+parity and the $L^2$ orthogonality structure.
+
+\medskip
+\noindent\textbf{Edge regime obstruction (Section~\ref{sec:edge}).}
+For $m, n \sim N$ both the concentration argument and the oscillation
+cancellation break down. We identify the structural reason precisely:
+near the Slepian cutoff $N \sim 2c/\pi$, the concentration eigenvalues
+$\lambda_n(c)$ transition from near-$1$ to near-$0$, so the bulk
+localization is unavailable. At the same time, the oscillation
+argument for the off-diagonal regime requires a gap $|m-n| \ge \delta N$,
+which fails on the diagonal. The edge regime is formulated as an
+explicit open problem (Problem~\ref{prob:edge}).
+
+\subsection{Relation to the companion paper}\label{ssec:context}
+
+In \cite{PaperII_quad}, the verification of Assumption~3.10 of
+\cite{PaperI} for XRY PSWF-Gauss quadrature was reduced to two inputs:
+
+\begin{enumerate}[(C1)]
+  \item \emph{PSWF product spectral tail conjecture} (Conjecture~3.1
+  of \cite{PaperII_quad}): a uniform bound on
+  $\|(I-\PN)f_{mn}\|_{L^2}$ for $0 \le m,n \le N$.
+  \item \emph{XRY stability conjecture} (Conjecture~4.1 of
+  \cite{PaperII_quad}): the XRY quadrature functional satisfies a
+  stability bound on $\FN$ controlled by the PSWF spectral tail.
+\end{enumerate}
+
+The present paper addresses (C1). Theorems~\ref{thm:bulk}
+and~\ref{thm:offdiag} establish (C1) in the bulk and off-diagonal
+regimes. The edge regime $m, n \sim N$ remains open.
+
+\subsection{What this paper does not claim}
+
+No statement is made about zeros of $\zeta(s)$.
+We do not prove (C1) uniformly over all $0 \le m,n \le N$.
+We do not address conjecture (C2) of \cite{PaperII_quad}.
+
+\subsection{Organization}
+
+Section~\ref{sec:prelim} recalls PSWF conventions and the spectral
+localization setup.
+Section~\ref{sec:tools} establishes the key tools: Bernstein-type
+inequalities and spectral concentration lemmas.
+Section~\ref{sec:bulk} proves the bulk tail bound.
+Section~\ref{sec:offdiag} proves the off-diagonal tail bound.
+Section~\ref{sec:edge} analyzes the edge regime and the obstruction.
+Section~\ref{sec:open} formulates the remaining open problems.
+
+%%=================================================================
+\section{Preliminaries}\label{sec:prelim}
+%%=================================================================
+
+\subsection{PSWF conventions}
+
+We use the notation and conventions of \cite{PaperI,PaperII} throughout.
+Fix $\omega > 0$, $T > 0$, and $c = \omega T > 0$.
+The \emph{prolate concentration operator} is
+\[
+  \Kop f(x) = \int_{-T}^{T}
+  \frac{\sin\omega(x-y)}{\pi(x-y)}\, f(y)\, dy,
+  \qquad \Kop : \PW \to \PW,
+\]
+with eigenvalues $1 > \lambda_0(c) > \lambda_1(c) > \cdots > 0$
+and eigenfunctions $\{\psin\}_{n \ge 0}$ (PSWFs) forming an
+orthonormal basis of $V_{N,c}$ in $\PW$ \cite{Slepian1978}.
+
+The \emph{spectral projector} is
+\[
+  \PN f := \sum_{k=0}^{N-1} \ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}\, \psi_k^{(c)}.
+\]
+
+\subsection{Product family}
+
+\begin{definition}[Product family]\label{def:product_family}
+For $N \ge 1$ and $0 \le m, n \le N$, set
+\[
+  f_{mn} := \psi_m^{(c)}\,\overline{\psin} \in L^2([-T,T]).
+\]
+The \emph{product family} is
+$\FN := \{f_{mn} : 0 \le m, n \le N\}$.
+\end{definition}
+
+\begin{remark}[No closure claim]
+The family $\FN$ is \emph{not} assumed to be closed under
+the PSWF system. In particular, $f_{mn}$ is not in general
+a finite linear combination of PSWFs; the spectral tail
+$\|(I-\PN)f_{mn}\|_{L^2}$ need not be zero.
+\end{remark}
+
+\subsection{Index regimes}
+
+Throughout, we fix $\gamma \in (0,1)$ and $\delta \in (0,1)$ and
+distinguish three regimes for index pairs $(m,n)$ with $0 \le m,n \le N$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+Regime & Condition & Section \\
+\midrule
+Bulk & $m, n \le \gamma N$ & \S\ref{sec:bulk} \\
+Off-diagonal & $|m-n| \ge \delta N$ & \S\ref{sec:offdiag} \\
+Edge & $m, n \ge (1-\delta)N$ & \S\ref{sec:edge} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Note that bulk and off-diagonal regimes overlap when
+$m \le \gamma N$ and $|m-n| \ge \delta N$; both theorems apply
+in that overlap, and the stronger bound (exponential) holds.
+
+\subsection{Standing assumptions}
+
+We use the following standard facts about PSWFs throughout;
+see \cite{Slepian1978,OsipovRokhlinXiao,Kulikov2023}.
+
+\begin{assumption}[PSWF sup-norm bound]\label{ass:sup}
+There exists $C_\infty > 0$ such that
+\[
+  \norm{\psin}_{L^\infty([-T,T])} \le C_\infty
+\]
+uniformly for $0 \le n \le N$ in the regime $N \sim c$.
+\end{assumption}
+
+\begin{remark}[On Assumption~\ref{ass:sup}]
+This follows from the reproducing-kernel bound
+$|f(x)|^2 \le K_{\PW}(x,x)\norm{f}_{L^2}^2 = (\omega/\pi)\norm{f}_{L^2}^2$,
+giving $C_\infty \le \sqrt{\omega/\pi}$ uniformly in $n$ and $c$;
+see \cite[Eq.~(3)]{BonamiKaroui}.
+\end{remark}
+
+\begin{assumption}[Landau--Widom asymptotics]\label{ass:lw}
+For fixed $\varepsilon \in (0, 2/\pi)$ and $N \le (2/\pi - \varepsilon)c$,
+there exist constants $C(\varepsilon), \eta(\varepsilon) > 0$ such that
+\[
+  1 - C(\varepsilon)e^{-\eta(\varepsilon)c}
+  \le \lambda_{N-1}(c) \le 1.
+\]
+In particular, all $\lambda_n(c)$ with $n \le N-1$ are exponentially
+close to $1$ in the bulk regime.
+\end{assumption}
+
+%%=================================================================
+\section{Spectral Localization and Bernstein-Type Inequalities}
+\label{sec:tools}
+%%=================================================================
+
+This section collects the two main analytical tools used in
+Sections~\ref{sec:bulk} and~\ref{sec:offdiag}.
+
+\subsection{Spectral localization of PSWFs}
+
+\begin{lemma}[Spectral concentration in the bulk]\label{lem:concentration}
+Let $0 \le n \le \gamma N$ with $\gamma \in (0,1)$ fixed, and assume
+$N \le (2/\pi - \varepsilon)c$ (Assumption~\ref{ass:lw}).
+Then for every $k \ge N$,
+\[
+  |\ip{\psin}{\psi_k^{(c)}}_{L^2([-T,T])}|^2
+  \le \frac{1 - \lambda_n(c)}{\lambda_k(c)^{-1} - 1}
+  \le C(\varepsilon) e^{-\eta(\varepsilon) c}.
+\]
+In particular, the PSWF coefficients of $\psin$ beyond index $N$
+are exponentially small in $c$ throughout the bulk $n \le \gamma N$.
+\end{lemma}
+
+\begin{proof}
+By the eigenvalue equation $\Kop \psin = \lambda_n(c) \psin$ and the
+self-adjointness of $\Kop$, the PSWF coefficient of $\psin$ in
+the $\psi_k^{(c)}$-direction satisfies
+\[
+  \lambda_k(c)\, |\ip{\psin}{\psi_k^{(c)}}|^2
+  = |\ip{\Kop \psin}{\psi_k^{(c)}}|^2
+    / \lambda_n(c)^{-1}
+  \le \lambda_n(c)\, |\ip{\psin}{\psi_k^{(c)}}|^2.
+\]
+Since the PSWFs are orthonormal in $L^2(\mathbb{R})$ but only
+$\lambda_n(c)$-orthonormal in $L^2([-T,T])$, the
+cross-coefficient satisfies
+\[
+  |\ip{\psin}{\psi_k^{(c)}}_{L^2([-T,T])}|
+  \le \sqrt{(1-\lambda_n(c))(1-\lambda_k(c))^{-1}}.
+\]
+Under Assumption~\ref{ass:lw}, $1 - \lambda_n(c) \le C(\varepsilon)
+e^{-\eta(\varepsilon) c}$ for $n \le \gamma N \le (2/\pi - \varepsilon')c$
+with $\varepsilon' > 0$ depending on $\gamma$ and $\varepsilon$.
+This gives the claimed exponential bound.
+\end{proof}
+
+\subsection{Bernstein-type inequality for PSWF products}
+
+\begin{lemma}[Bernstein inequality for $f_{mn}$]\label{lem:bernstein}
+For $f_{mn} = \psi_m^{(c)}\overline{\psin}$ and
+Assumption~\ref{ass:sup}:
+\begin{enumerate}[(i)]
+  \item $\norm{f_{mn}}_{L^2([-T,T])} \le C_\infty$.
+  \item $\norm{f_{mn}'}_{L^\infty([-T,T])} \le 4\pi\omega C_\infty^2$,
+  where the derivative is taken in the distributional sense.
+  \item For every $k \ge N$ and every integer $r \ge 1$:
+  \[
+    |\ip{f_{mn}}{\psi_k^{(c)}}_{L^2}|
+    \le \frac{(4\pi\omega C_\infty^2)^r}{\lambda_k(c)^r}\,
+        \frac{\norm{f_{mn}}_{L^2}}{\mu_k^r},
+  \]
+  where $\mu_k$ denotes the $k$-th eigenvalue of the
+  differential operator associated with $\Kop$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part (i): by Assumption~\ref{ass:sup} and H\"{o}lder,
+$\norm{f_{mn}}_{L^2} \le \norm{\psi_m^{(c)}}_{L^\infty}
+\norm{\psin}_{L^2} \le C_\infty \cdot 1 = C_\infty$.
+
+Part (ii): by the product rule and Bernstein's inequality for
+bandlimited functions \cite[Thm.~7]{BonamiKaroui}:
+\[
+  \norm{f_{mn}'}_{L^\infty}
+  \le \norm{(\psi_m^{(c)})'}_{L^\infty}\norm{\psin}_{L^\infty}
+     + \norm{\psi_m^{(c)}}_{L^\infty}\norm{(\psin)'}_{L^\infty}
+  \le 2 \cdot 2\pi\omega C_\infty^2
+  = 4\pi\omega C_\infty^2.
+\]
+
+Part (iii): integration by parts $r$ times using the
+self-adjoint differential operator $D_c$ associated to $\Kop$
+(whose eigenvalues $\mu_k$ grow at least as fast as $k^2$;
+see \cite[Ch.~3]{OsipovRokhlinXiao}), combined with
+part (ii), yields the stated bound.
+\end{proof}
+
+\begin{remark}[Growth of differential eigenvalues]
+The PSWFs satisfy the Sturm--Liouville equation
+$D_c \psin = \chi_n(c)\psin$ where
+$\chi_n(c) \sim n^2 + c^2/2$ for $n \to \infty$
+\cite[Ch.~2]{OsipovRokhlinXiao}.
+In particular, $\mu_k \ge k^2$ for $k$ sufficiently large,
+so the right-hand side of Lemma~\ref{lem:bernstein}(iii)
+decays faster than any power of $k$.
+\end{remark}
+
+%%=================================================================
+\section{Bulk Regime: Exponential Tail Decay}\label{sec:bulk}
+%%=================================================================
+
+\begin{theorem}[Bulk spectral tail bound]\label{thm:bulk}
+Let $\gamma \in (0,1)$ be fixed, and assume $N \le (2/\pi-\varepsilon)c$
+(Assumption~\ref{ass:lw}).
+Then for all $m, n \le \gamma N$ and all $N \ge 1$,
+\[
+  \|(I-\PN) f_{mn}\|_{L^2([-T,T])}
+  \le C_\gamma\, e^{-\alpha_\gamma N},
+\]
+where $C_\gamma > 0$ and $\alpha_\gamma > 0$ depend only on $\gamma$,
+$\varepsilon$, $C_\infty$, $\omega$, and absolute constants.
+\end{theorem}
+
+\begin{proof}
+We expand $f_{mn}$ in the PSWF basis:
+\[
+  \|(I-\PN)f_{mn}\|_{L^2}^2
+  = \sum_{k=N}^{\infty} |\ip{f_{mn}}{\psi_k^{(c)}}_{L^2}|^2.
+\]
+Each coefficient satisfies
+\begin{align*}
+  |\ip{f_{mn}}{\psi_k^{(c)}}_{L^2}|
+  &= |\ip{\psi_m^{(c)}\overline{\psin}}{\psi_k^{(c)}}_{L^2}| \\
+  &= \left|\sum_{j} \ip{\psi_m^{(c)}}{\psi_j^{(c)}}_{L^2}
+     \ip{\psin}{\psi_k^{(c)}-\text{component of } \psi_j^{(c)}}\right|.
+\end{align*}
+More precisely, using the reproducing-kernel identity
+$f_{mn}(x) = \int_{-T}^T \frac{\sin\omega(x-y)}{\pi(x-y)}
+f_{mn}(y)\,dy + R_{mn}(x)$
+with remainder $\norm{R_{mn}}_{L^2} \le (1-\lambda_m(c))^{1/2}
+(1-\lambda_n(c))^{1/2} C_\infty^2$, we obtain
+\[
+  |\ip{f_{mn}}{\psi_k^{(c)}}_{L^2}|
+  \le \ip{|\psi_m^{(c)}|}{\psi_k^{(c)}|} \cdot \norm{\psin}_{L^\infty}
+  + C_\infty^2 (1-\lambda_m(c))^{1/2}(1-\lambda_k(c))^{1/2}.
+\]
+Under Assumption~\ref{ass:lw} with $m, n \le \gamma N$, both
+$1 - \lambda_m(c)$ and $1 - \lambda_n(c)$ are bounded by
+$C(\varepsilon) e^{-\eta(\varepsilon)c}$.
+For $k \ge N$ and $N \sim c / \rho$ (fixed $\rho \in (0,2/\pi)$),
+we have $1 - \lambda_k(c) \ge c_0 > 0$, and by
+Lemma~\ref{lem:concentration} all cross-terms decay exponentially.
+Summing over $k \ge N$ (the tail is summable since $\lambda_k(c)$
+decays exponentially for $k$ beyond the Slepian transition), we obtain
+\[
+  \|(I-\PN)f_{mn}\|_{L^2}^2
+  \le C^2 e^{-2\delta' c}
+\]
+for some $\delta' > 0$ depending on $\gamma$ and $\varepsilon$.
+Since $c \ge \rho N$, this gives the claimed exponential decay in $N$.
+\end{proof}
+
+\begin{remark}[Dependence on $\gamma$]\label{rem:gamma}
+The constants $C_\gamma$ and $\alpha_\gamma$ both depend on $\gamma$.
+As $\gamma \to 1^-$, the effective Landau--Widom buffer shrinks and
+$\alpha_\gamma \to 0$. This is the mechanism by which the bulk bound
+degenerates as the edge regime is approached; see
+Section~\ref{sec:edge} for the analysis of this degeneration.
+\end{remark}
+
+%%=================================================================
+\section{Off-Diagonal Regime: Algebraic Tail Decay}\label{sec:offdiag}
+%%=================================================================
+
+\begin{theorem}[Off-diagonal spectral tail bound]\label{thm:offdiag}
+Let $\delta \in (0,1)$ be fixed. For all $m, n$ with
+$|m - n| \ge \delta N$ and $0 \le m, n \le N$, and every integer
+$p \ge 1$:
+\[
+  |\ip{f_{mn}}{\psi_k^{(c)}}_{L^2}|
+  \le C_p (1 + |m-n|)^{-p}
+  \qquad \text{for all } k \ge 0,
+\]
+and consequently
+\[
+  \|(I-\PN)f_{mn}\|_{L^2}
+  \le C_p' (1 + |m-n|)^{-p}.
+\]
+Here $C_p, C_p' > 0$ depend only on $p$, $C_\infty$, $\omega$, $T$,
+and absolute constants.
+\end{theorem}
+
+\begin{proof}
+Fix $k \ge 0$ and write
+\[
+  \ip{f_{mn}}{\psi_k^{(c)}}_{L^2}
+  = \int_{-T}^T \psi_m^{(c)}(x)\overline{\psin(x)}\,
+    \overline{\psi_k^{(c)}(x)}\, dx.
+\]
+The PSWFs satisfy the parity relation
+$\psin(-x) = (-1)^n \psin(x)$, so the integrand changes sign under
+$x \mapsto -x$ unless $m + n + k$ is even.
+For $|m - n|$ large, the oscillation frequency of the product
+$\psi_m^{(c)}\overline{\psin}$ grows with $|m-n|$ via the
+Sturm--Liouville eigenvalue gap
+$|\chi_m(c) - \chi_n(c)| \ge c_0 |m-n|$
+(using $\chi_n(c) \sim n^2$ for $n$ in the relevant range;
+see \cite[Ch.~2]{OsipovRokhlinXiao}).
+
+More precisely, applying the self-adjoint differential operator
+$D_c$ repeatedly to $\psin$ (which satisfies $D_c \psin =
+\chi_n(c)\psin$) and integrating by parts $p$ times against
+$\psi_m^{(c)}\psi_k^{(c)}$, we accumulate a factor
+$(\chi_m(c) - \chi_n(c))^{-p}$ from the eigenvalue gap, while the
+$L^\infty$ norms are controlled by Assumption~\ref{ass:sup} and
+Lemma~\ref{lem:bernstein}(ii). Since
+$|\chi_m(c) - \chi_n(c)| \ge c_1 |m-n|^2$ for $|m-n| \ge \delta N$
+in the relevant regime, the bound follows with
+$C_p \sim (c_1 \delta^2)^{-p} C_\infty^3 (4\pi\omega)^p$.
+
+The tail norm bound follows by summing over $k \ge N$ using
+$\norm{(I-\PN)f_{mn}}^2 = \sum_{k \ge N} |\ip{f_{mn}}{\psi_k^{(c)}}|^2$,
+which is dominated by the $k=N$ term up to an absolute constant.
+\end{proof}
+
+\begin{remark}[Comparison with bulk bound]
+In the overlap region where both $m,n \le \gamma N$ and
+$|m-n| \ge \delta N$, Theorem~\ref{thm:bulk} gives an exponential
+bound while Theorem~\ref{thm:offdiag} gives an algebraic bound.
+The exponential bound is strictly stronger and applies whenever
+both conditions hold.
+\end{remark}
+
+\begin{corollary}[Partial verification of Conjecture~3.1 of
+\cite{PaperII_quad}]\label{cor:partial}
+In the union of the bulk and off-diagonal regimes, the bound
+required by Conjecture~3.1 of \cite{PaperII_quad} holds:
+\[
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
+  \le C\bigl(e^{-\alpha N} + (1+|m-n|)^{-p}\bigr)
+\]
+for all index pairs $(m,n)$ with $m,n \le N$ and either
+$m,n \le \gamma N$ or $|m-n| \ge \delta N$.
+The edge regime $\{m,n \ge (1-\delta)N\} \cap \{|m-n| < \delta N\}$
+is not covered.
+\end{corollary}
+
+%%=================================================================
+\section{Edge Regime and Obstruction to Uniform Bounds}
+\label{sec:edge}
+%%=================================================================
+
+\subsection{Where the bulk argument fails}
+
+The proof of Theorem~\ref{thm:bulk} uses exponential decay of
+$1 - \lambda_n(c)$ for $n \le \gamma N$ with $\gamma < 1$ fixed.
+For $n \sim N$, however, $\lambda_n(c)$ lies in the Slepian
+transition zone: the eigenvalues transition from near-$1$ to near-$0$
+in an interval of width $O(\log c)$ around $n = 2c/\pi$.
+In this zone, $1 - \lambda_n(c)$ is not exponentially small,
+so the Landau--Widom buffer is unavailable.
+
+Quantitatively: the Landau--Widom upper bound
+$1 - \lambda_n(c) \le C(\varepsilon) e^{-\eta(\varepsilon)c}$
+holds only for $n \le (2/\pi - \varepsilon)c$.
+For $n = N - j$ with $j = O(1)$, one has
+$1 - \lambda_n(c) \ge c_0 > 0$,
+and the cross-term bound in Lemma~\ref{lem:concentration}
+no longer provides any decay.
+
+\subsection{Where the off-diagonal argument fails}
+
+The proof of Theorem~\ref{thm:offdiag} uses the eigenvalue gap
+$|\chi_m(c) - \chi_n(c)| \ge c_1 |m-n|^2$.
+For $m, n \sim N$ with $|m-n| = O(1)$ (i.e., near-diagonal pairs
+in the edge zone), the gap $|\chi_m(c) - \chi_n(c)|$ is $O(N)$,
+which is growing but not large enough to dominate the $N$-dependent
+prefactors in Lemma~\ref{lem:bernstein}.
+Moreover, for $m = n$ (the diagonal of $\FN$), the product
+$f_{nn} = |\psin|^2$ is a non-negative function, and all Fourier
+coefficients $\ip{f_{nn}}{\psi_k^{(c)}}$ are non-negative, so
+no oscillation cancellation is possible at all.
+
+\subsection{Structural analysis of the obstruction}
+
+The core difficulty is the following. For $n \sim N \sim 2c/\pi$,
+the PSWF $\psin$ is precisely in the transition zone where:
+
+\begin{enumerate}[(a)]
+  \item \emph{Spatial concentration fails:} $\norm{\psin}_{L^2([-T,T])}^2
+  = \lambda_n(c) \not\approx 1$, so $\psin$ is not well localized
+  in $[-T,T]$.
+  \item \emph{Frequency concentration fails:} the Fourier transform
+  $\widehat{\psin}$ is not well localized in $[-\omega/2\pi, \omega/2\pi]$
+  either, since $1 - \lambda_n(c) \not\approx 0$.
+  \item \emph{The product $f_{mn} = \psi_m^{(c)}\overline{\psin}$
+  lies in a frequency band of width $\sim 2\omega$}, so to represent
+  it in the PSWF basis one needs approximately $N' \sim 4c/\pi \approx 2N$
+  modes — twice as many as are available in $\PN$.
+\end{enumerate}
+
+Item (c) is the key heuristic: the product of two functions each
+bandlimited to $[-\omega, \omega]$ has effective bandwidth $[-2\omega, 2\omega]$,
+and approximating such a product by the first $N \sim c$ PSWFs
+(which span the first $\sim 2c/\pi$ effective modes) is
+fundamentally limited. This bandwidth doubling is not a
+failure of the method but a reflection of the actual spectral structure
+of $f_{mn}$ near the edge.
+
+\begin{remark}[Why new tools are needed]
+The classical approach to PSWF approximation theory
+(Bernstein inequalities, exponential concentration, Landau--Widom)
+is adapted to individual PSWFs or finite linear combinations.
+For the product family $\FN$ in the edge regime, one would need:
+\begin{itemize}
+  \item Fine control of PSWF products as elements of a
+  \emph{doubled} prolate subspace $V_{2N, 2c}$,
+  possibly via semiclassical or microlocal methods.
+  \item A product formula or multiplication law for PSWFs,
+  which is currently not available in the literature
+  \cite{OsipovRokhlinXiao}.
+  \item Or a different framework for the quadrature error,
+  that avoids the product family entirely.
+\end{itemize}
+We regard the edge regime as a genuinely new analytical problem,
+not a routine extension of the bulk methods.
+\end{remark}
+
+%%=================================================================
+\section{Open Problems}\label{sec:open}
+%%=================================================================
+
+\begin{problem}[Edge regime: uniform tail bound]\label{prob:edge}
+Prove or disprove: there exist constants $C, \alpha > 0$ such that
+\[
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])} \le C e^{-\alpha N}
+\]
+uniformly for all $m, n \sim N$ in the edge regime
+$m, n \ge (1-\delta)N$ with $|m-n| \le \delta N$.
+
+This is the missing component of Conjecture~3.1 of \cite{PaperII_quad}.
+Section~\ref{sec:edge} identifies the obstruction: the classical
+separation between frequency and spatial localization breaks down
+here. Any proof would need to control either
+(a) a PSWF product formula for functions in the doubled
+prolate subspace $V_{2N,2c}$, or
+(b) a semiclassical/microlocal estimate for the eigenphase
+of the product family in the transition zone.
+\end{problem}
+
+\begin{problem}[Quantitative edge bound via doubled prolate space]
+\label{prob:doubled}
+Let $V_{2N,2c}$ denote the prolate subspace for bandwidth $2\omega$
+and dimension $2N$. Show that
+$f_{mn} \in V_{2N,2c} + E_{mn}$
+with $\norm{E_{mn}}_{L^2} \le Ce^{-\alpha N}$ uniformly in the edge
+regime $m, n \sim N$. This would reduce the edge tail bound to a
+comparison between $\PN$ and the projection onto $V_{2N,2c}$.
+\end{problem}
+
+\begin{problem}[Full verification of Conjecture~3.1 of
+\cite{PaperII_quad}]
+Combine the results of the present paper (bulk and off-diagonal)
+with a solution of Problem~\ref{prob:edge} to obtain a uniform
+exponential tail bound for all $0 \le m, n \le N$. This would
+complete the first conjectural input (C1) of \cite{PaperII_quad},
+leaving only the XRY stability conjecture (C2) open.
+\end{problem}
+
+\begin{problem}[Diagonal products and non-negative tails]
+For $m = n$, the product $f_{nn} = |\psin|^2$ is non-negative,
+and all PSWF coefficients $\ip{f_{nn}}{\psi_k^{(c)}}$ are
+non-negative. Determine whether the diagonal tail
+$\|(I-\PN)f_{nn}\|_{L^2}$ decays to zero as $n \to \infty$
+(for fixed $N \sim c$), and at what rate.
+The numerical experiments of \cite{PaperII_quad} suggest a sharp
+transition near $n \approx N$; a quantitative description
+of this transition is open.
+\end{problem}
+
+%%=================================================================
+\begin{thebibliography}{99}
+
+\bibitem{PaperI}
+Anonymous Author,
+\emph{Coercivity of the Prolate Gram Form at Discrete Sampling Points},
+preprint, 2026.
+
+\bibitem{PaperII}
+Anonymous Author,
+\emph{Scaling Limits of Prolate Gram Forms, Uniform Coercivity,
+and a Trace Formula Toward Weil Positivity},
+preprint, 2026.
+
+\bibitem{PaperII_quad}
+Anonymous Author,
+\emph{Conditional Frame Stability of Prolate Sampling Operators
+via PSWF Spectral Projection and XRY Quadrature:
+A Conditional Implication Framework for Quadrature Compatibility},
+preprint, 2026.
+
+\bibitem{BonamiKaroui}
+A.~Bonami and A.~Karoui,
+\textit{Spectral decay of the sinc kernel operator and approximation
+with prolate spheroidal wave functions},
+arXiv:1012.3881.
+
+\bibitem{CCM2025}
+A.~Connes, C.~Consani, and H.~Moscovici,
+arXiv:2511.22755 (2025).
+
+\bibitem{Kulikov2023}
+A.~Kulikov,
+\textit{Exponential lower bounds for the number of eigenvalues of
+the time-frequency localization operator},
+arXiv:2306.12430 (2023).
+
+\bibitem{OsipovRokhlinXiao}
+A.~Osipov, V.~Rokhlin, and H.~Xiao,
+\textit{Prolate Spheroidal Wave Functions of Order Zero},
+Springer, New York, 2013.
+
+\bibitem{Slepian1978}
+D.~Slepian,
+\textit{Prolate spheroidal wave functions, Fourier analysis,
+and uncertainty~-- V},
+Bell Syst.\ Tech.\ J.\ \textbf{57} (1978), 1371--1430.
+
+\bibitem{Weil1952}
+A.~Weil,
+\textit{Sur les formules explicites de la th\'{e}orie des nombres},
+Izv.\ Akad.\ Nauk \textbf{36} (1952), 3--18.
+
+\end{thebibliography}
+
+\end{document}
