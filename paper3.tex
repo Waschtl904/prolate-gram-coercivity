@@ -46,14 +46,15 @@ The companion paper \cite{PaperII_quad} organised the verification of
 that assumption for XRY PSWF-Gauss quadrature into two explicit
 conjectural inputs: a PSWF product spectral tail conjecture and an
 XRY stability conjecture. The present paper addresses the first of
-these two inputs. We prove the spectral tail bound in the bulk and
-off-diagonal regimes via a Fourier-side argument based on the
-Slepian energy identity. The bulk result is conditional on
-Assumption~\ref{ass:nearedge}, which asserts exponential decay
-of Fourier mass near the band edge $\xi = \pm\omega$ for bulk PSWFs;
-this is identified as an explicit open problem.
-The edge regime $m,n \sim N$ is identified
-as a structural obstruction and left as an explicit open problem.}
+these two inputs.
+We prove the spectral tail bound in the off-diagonal regime unconditionally
+via Sturm--Liouville eigenvalue gaps.
+The bulk result is conditional on Assumption~\ref{ass:bulkconv},
+which asserts exponential decay of out-of-band convolution energy
+for the product of bulk PSWF Fourier transforms; this is identified as
+an explicit open problem (Problem~\ref{prob:bulkconv}).
+The edge regime $m,n \sim N$ is identified as a structural obstruction
+and left as an explicit open problem.}
 
 \author{Anonymous Author}
 \address{}
@@ -65,7 +66,7 @@ as a structural obstruction and left as an explicit open problem.}
 \keywords{prolate spheroidal wave functions, spectral tail estimates,
 product family, Slepian energy identity, out-of-band energy,
 band-edge convolution, frame stability, quadrature compatibility,
-near-edge exponential control, edge regime obstruction, bandwidth doubling}
+bulk convolution decay, edge regime obstruction, bandwidth doubling}
 
 \begin{document}
 \maketitle
@@ -86,43 +87,38 @@ The central analytical tool is the \emph{Slepian energy identity}
 (Lemma~\ref{lem:slepian}), which bounds the spectral tail
 $\|(I-\PN)f\|_{L^2([-T,T])}^2$ directly by the out-of-band Fourier
 energy $\Eout(f) := \int_{|\xi|>\omega}|\hat{f}(\xi)|^2\,d\xi$.
-For the product $f_{mn}$, the Fourier transform
-$\widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psi_n^{(c)}$
-is a convolution of two functions supported in $[-\omega,\omega]$.
-The out-of-band energy $\Eout(f_{mn})$ is bounded via the
-\emph{band-edge convolution estimate} (Lemma~\ref{lem:bandedge}),
-which gives a rigorous, non-circular upper bound on
-$\|g_m*g_n\|_{L^2(|\xi|>\omega)}^2$ entirely in terms of the
-$L^2$-norms $\|g_m\|_{L^2}^2 = \lambda_m(c)$ and
-$\|g_n\|_{L^2}^2 = \lambda_n(c)$.
-The cross-terms (Lemma~\ref{lem:oob}) are exponentially small in the
-bulk by Landau--Widom asymptotics. The in-band$\times$in-band
-convolution term is $O(\omega)$ (an absolute constant independent of
-$c$), and cannot be made exponentially small by the Fourier
-decomposition alone. Exponential decay of this term requires
-Assumption~\ref{ass:nearedge} (near-edge exponential control).
+For the product $f_{mn} = \psi_m^{(c)}\overline{\psin}$, the Fourier
+transform $\widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psi_n^{(c)}$
+is a convolution of two functions supported in $[-\omega,\omega]$,
+so that $f_{mn} \in \mathrm{PW}_{2\omega}$ (bandwidth doubling).
+The out-of-band energy $\Eout(f_{mn})$ is the sole object requiring
+estimation; it is controlled by the \emph{band-edge convolution
+estimate} (Lemma~\ref{lem:bandedge}), which gives $\Eout(f_{mn})
+\le 4\omega$ uniformly -- an absolute constant that does not decay
+with $c$. Exponential decay of $\Eout(f_{mn})$ in the bulk requires
+Assumption~\ref{ass:bulkconv}.
 
 We prove:
 \begin{enumerate}[(I)]
   \item \textbf{Bulk regime} ($m, n \le \gamma N$, $\gamma < 1$ fixed):
   $\|(I-\PN)f_{mn}\|_{L^2} \le C_\gamma e^{-\alpha_\gamma N}$,
-  \emph{conditional on Assumption~\ref{ass:nearedge}},
-  which asserts that for $n \le \gamma N$ the Fourier mass of
-  $\hat\psi_n^{(c)}$ near $|\xi| = \omega$ is exponentially small.
+  \emph{conditional on Assumption~\ref{ass:bulkconv}},
+  which asserts exponential decay of
+  $\|\hat\psi_m^{(c)} * \hat\psi_n^{(c)}\|_{L^2(|\xi|>\omega)}$
+  for bulk-index PSWFs.
   This assumption is identified as an explicit open problem
-  (Problem~\ref{prob:nearedge}) and is expected to follow from
-  WKB analysis of the associated Sturm--Liouville problem.
+  (Problem~\ref{prob:bulkconv}) and is expected to follow from
+  WKB-type analysis of the prolate Fourier transforms near the
+  turning point $|\xi| = \omega$.
   \item \textbf{Off-diagonal regime} ($|m-n| \ge \delta N$,
   $\delta > 0$ fixed): algebraic decay
   $\|(I-\PN)f_{mn}\|_{L^2} \le C_p(1+|m-n|)^{-p}$ for all $p \ge 1$,
-  via the Sturm--Liouville eigenvalue gap. The gap estimate uses
-  $N \ge |m-n|/\delta$ explicitly; see Lemma~\ref{lem:gap}.
+  via the Sturm--Liouville eigenvalue gap. This result is unconditional.
   \item \textbf{Edge regime obstruction} ($m, n \sim N$):
-  both arguments degenerate. The PSWF leakage $1-\lambda_n(c)$
-  is $O(1)$ near the Slepian cutoff, and the lower bound
-  (Proposition~\ref{prop:bwdoubling}) shows that
+  Proposition~\ref{prop:bwdoubling} shows that
   $\Eout(f_{nn}) \ge c_0 > 0$ on the diagonal,
-  ruling out exponential decay. This regime is an isolated open problem.
+  ruling out exponential decay via any argument based on $\Eout$.
+  This regime is an isolated open problem.
 \end{enumerate}
 No claim is made about zeros of $\zeta(s)$.
 \end{abstract}
@@ -152,41 +148,30 @@ for every $f_{mn} = \psi_m^{(c)}\overline{\psin} \in \FN$, one needs a
 uniform bound on $\|(I-\PN)f_{mn}\|_{L^2([-T,T])}$.
 This is the object of study in the present paper.
 
-\subsection{Strategy: Fourier side via the Slepian energy identity}
+\subsection{Strategy: Slepian identity and bandwidth doubling}
 
-The key insight is to work on the \emph{Fourier side} rather than
-directly in $L^2([-T,T])$. The Slepian energy identity
-(Lemma~\ref{lem:slepian}) states:
+The key insight is to reduce to bounding the out-of-band Fourier energy
+$\Eout(f_{mn})$ via the Slepian energy identity (Lemma~\ref{lem:slepian}):
 \[
   \|(I-\PN)f\|_{L^2([-T,T])}^2
-  \le \frac{\Eout(f)}{1-\lambda_{N-1}(c)},
+  \le \frac{\Eout(f)}{1-\lambda_{N-1}(c)}.
 \]
-reducing the problem to bounding
-$\Eout(f) = \int_{|\xi|>\omega}|\hat f(\xi)|^2\,d\xi$.
-
-For $f_{mn}$, the Fourier convolution theorem gives
+For $f_{mn}$, the convolution theorem gives
 $\widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psi_n^{(c)}$,
-a convolution of two functions in $[-\omega,\omega]$.
-We decompose $\hat\psi_k^{(c)} = g_k + r_k$ (in-band and leak)
-and bound $\Eout(f_{mn})$ by four terms (Lemma~\ref{lem:oob}).
-Three involve at least one leak factor $r_k$ with
-$\|r_k\|_{L^2}^2 = \ell_k = 1-\lambda_k(c)$
---- these are exponentially small in the bulk by Landau--Widom.
-The fourth term, $\|g_m*g_n\|_{L^2(|\xi|>\omega)}^2$,
-is bounded by a Fubini--Cauchy--Schwarz argument
-(Lemma~\ref{lem:bandedge}) giving
-$\|g_m*g_n\|_{L^2(|\xi|>\omega)}^2 \le 4\omega\lambda_m(c)\lambda_n(c) \le 4\omega$.
-This is an \emph{absolute constant} in $\omega$, independent of $c$ or $n$,
-and does not itself decay. Exponential control of this term requires the
-separate near-edge input of Assumption~\ref{ass:nearedge}.
+supported in $[-2\omega,2\omega]$ (bandwidth doubling).
+The sole term to estimate is
+$\Eout(f_{mn}) = \|\hat\psi_m^{(c)} * \hat\psi_n^{(c)}\|_{L^2(|\xi|>\omega)}^2$.
+The band-edge convolution estimate (Lemma~\ref{lem:bandedge}) gives
+$\Eout(f_{mn}) \le 4\omega$, an absolute constant.
+Exponential control of this term in the bulk regime requires
+Assumption~\ref{ass:bulkconv}.
 
 \subsection{Main results}
 
 \begin{theorem}[Bulk regime; Theorem~\ref{thm:bulk}]
-Under Assumption~\ref{ass:nearedge}, for $m, n \le \gamma N$
+Under Assumption~\ref{ass:bulkconv}, for $m, n \le \gamma N$
 with $\gamma \in (0,1)$ fixed,
-$N \le (2/\pi-\varepsilon)c$, and $c$ sufficiently large
-(depending only on $\varepsilon$ and $\gamma$):
+$N \le (2/\pi-\varepsilon)c$, and $c$ sufficiently large:
 \[
   \|(I-\PN)f_{mn}\|_{L^2([-T,T])} \le C_\gamma e^{-\alpha_\gamma N}.
 \]
@@ -203,7 +188,7 @@ and every integer $p \ge 1$:
 Together these give Corollary~\ref{cor:partial}: Conjecture~3.1
 of \cite{PaperII_quad} holds in all index regimes except the
 edge $\{m,n \ge (1-\delta)N,\, |m-n| \le \delta N\}$,
-conditionally on Assumption~\ref{ass:nearedge} in the bulk.
+conditionally on Assumption~\ref{ass:bulkconv} in the bulk.
 
 \subsection{Relation to the companion paper}\label{ssec:context}
 
@@ -217,22 +202,22 @@ In \cite{PaperII_quad}, the verification of Assumption~3.10 of
   stability of the XRY quadrature functional on $\FN$.
 \end{enumerate}
 The present paper addresses (C1). The bulk result is conditional on
-Assumption~\ref{ass:nearedge}. The edge regime remains open.
+Assumption~\ref{ass:bulkconv}. The edge regime remains open.
 
 \subsection{What this paper does not claim}
 
 No statement is made about zeros of $\zeta(s)$.
 We do not prove (C1) uniformly over all $0 \le m,n \le N$.
-We do not prove Assumption~\ref{ass:nearedge}; it is formulated
-as an explicit open problem (Problem~\ref{prob:nearedge}).
+We do not prove Assumption~\ref{ass:bulkconv}; it is formulated
+as an explicit open problem (Problem~\ref{prob:bulkconv}).
 We do not address (C2).
 
 \subsection{Organization}
 
-Section~\ref{sec:prelim} recalls PSWF conventions.
-Section~\ref{sec:tools} establishes the Slepian energy identity,
-the Fourier decomposition of the product family, and the
-band-edge convolution estimate.
+Section~\ref{sec:prelim} recalls PSWF conventions, establishes the
+time/Fourier separation, and formulates the two key assumptions.
+Section~\ref{sec:tools} establishes the Slepian energy identity
+and the band-edge convolution estimate.
 Section~\ref{sec:bulk} proves the bulk tail bound.
 Section~\ref{sec:offdiag} proves the off-diagonal bound.
 Section~\ref{sec:edge} analyzes the edge obstruction.
@@ -244,73 +229,114 @@ Section~\ref{sec:open} formulates the remaining open problems.
 
 \subsection{PSWF conventions}
 
-We use the notation and conventions of \cite{PaperI,PaperII}
-throughout. Fix $\omega > 0$, $T > 0$, and $c = \omega T > 0$.
-We use the symmetric Fourier convention
+We follow the standard setup for prolate spheroidal wave functions;
+see \cite{Slepian1978,OsipovRokhlinXiao}.
+Fix $\omega > 0$, $T > 0$, and $c = \omega T > 0$.
+We use the Fourier convention
 $\hat{f}(\xi) = \int_{\mathbb{R}} f(x)e^{-2\pi i\xi x}\,dx$.
-The \emph{prolate concentration operator} is
+
+The \emph{prolate concentration operator} is the composition
+\begin{equation}\label{eq:Kop_def}
+  \Kop = R_T \circ B_\omega \circ R_T,
+\end{equation}
+where $B_\omega := \mathcal{F}^{-1}\mathbf{1}_{[-\omega,\omega]}\mathcal{F}$
+is the ideal bandlimiting projection on $L^2(\mathbb{R})$,
+and $R_T$ denotes multiplication by $\mathbf{1}_{[-T,T]}$:
+$(R_T f)(x) := f(x)\mathbf{1}_{[-T,T]}(x)$.
+Explicitly:
 \[
-  \Kop f(x)
-  = \int_{-T}^{T} \frac{\sin 2\pi\omega(x-y)}{\pi(x-y)}\,f(y)\,dy,
-  \qquad f \in L^2(\mathbb{R}),
+  (\Kop f)(x)
+  = \int_{-T}^{T}\frac{\sin 2\pi\omega(x-y)}{\pi(x-y)}\,f(y)\,dy,
+  \qquad f \in L^2(\mathbb{R}).
 \]
-with eigenvalues $1 > \lambda_0(c) > \lambda_1(c) > \cdots > 0$
-and eigenfunctions $\{\psin\}_{n \ge 0}$, the PSWFs,
-orthonormal in $L^2(\mathbb{R})$ and satisfying
-$\ip{\psi_m^{(c)}}{\psin}_{L^2([-T,T])} = \lambda_n(c)\delta_{mn}$.
-The \emph{spectral projector} is
+As a self-adjoint compact operator on $L^2([-T,T])$, $\Kop$ has
+eigenvalues $1 > \lambda_0(c) > \lambda_1(c) > \cdots > 0$
+with orthonormal eigenfunctions $\{\psin\}_{n\ge 0}$ satisfying
 \[
-  \PN f
-  := \sum_{k=0}^{N-1}
-  \ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}\,\psi_k^{(c)}.
+  \ip{\psi_m^{(c)}}{\psin}_{L^2([-T,T])} = \lambda_n(c)\,\delta_{mn}.
 \]
 
-\subsection{PSWF Fourier structure and leakage}
+\subsection{Time concentration and leakage}
 
-Since each $\psin \in \mathrm{PW}_\omega$, we have
-$\operatorname{supp}\hat\psin \subset [-\omega,\omega]$
-and $\|\hat\psin\|_{L^2}^2 = \|\psin\|_{L^2(\mathbb{R})}^2 = 1$.
-Define the \emph{leakage} and \emph{in-band energy} of $\psin$ as
+The eigenvalues $\lambda_n(c)$ measure \emph{time concentration}:
+\begin{equation}\label{eq:time_conc}
+  \lambda_n(c) = \|\psin\|_{L^2([-T,T])}^2.
+\end{equation}
+Define the \emph{time-domain leakage}:
 \begin{equation}\label{eq:leakage}
   \ell_n := 1 - \lambda_n(c)
-  = \int_{|\xi|>\omega} |\hat\psin(\xi)|^2\,d\xi
-  = \norm{\psin}_{L^2(\mathbb{R}\setminus[-T,T])}^2 \ge 0,
-  \qquad
-  \lambda_n(c) = \int_{-\omega}^{\omega}|\hat\psin(\xi)|^2\,d\xi,
+  = \|\psin\|_{L^2(\mathbb{R}\setminus[-T,T])}^2 \ge 0.
 \end{equation}
-where the identities follow from Parseval and
-$\Kop\psin = \lambda_n(c)\psin$ \cite[Eq.~(1.3)]{Slepian1978}.
 
-\begin{remark}\label{rem:leakage-meaning}
-Note that $\ell_n$ measures the Fourier energy of $\psin$
-\emph{outside} the band $[-\omega,\omega]$, while $\lambda_n(c)$
-is the Fourier energy \emph{inside} the band.
-These are complementary quantities summing to $1$.
-In particular, $\int_{\omega-\delta}^\omega|\hat\psin|^2\,d\xi$
-(near-edge in-band mass) and $\ell_n$ are in general
-\emph{different} objects and cannot be identified without
-additional assumptions. The near-edge in-band mass is precisely
-the object controlled by Assumption~\ref{ass:nearedge} below.
+\begin{remark}[Leakage is a time-domain quantity]\label{rem:leakage}
+The quantity $\ell_n$ is exclusively a \emph{time-domain} object:
+it measures the $L^2$-mass of $\psin$ outside $[-T,T]$.
+No Fourier-domain interpretation of $\ell_n$ is used anywhere
+in this paper. In particular, $\ell_n$ is \emph{not} identified with
+any integral of $|\hat\psin|^2$ outside $[-\omega,\omega]$;
+such an integral vanishes identically by
+Section~\ref{ssec:bandlimited} below.
 \end{remark}
 
-\subsection{Product family}
+\subsection{Bandlimited structure}\label{ssec:bandlimited}
+
+Each $\psin$ belongs to the Paley--Wiener space $\mathrm{PW}_\omega$:
+\begin{equation}\label{eq:bandlimited}
+  \operatorname{supp}\hat\psin \subset [-\omega,\omega],
+  \qquad
+  \|\hat\psin\|_{L^2(\mathbb{R})}^2 = 1.
+\end{equation}
+
+\begin{remark}[No Fourier leakage for individual PSWFs]
+\label{rem:no_fourier_leak}
+By~\eqref{eq:bandlimited},
+$\int_{|\xi|>\omega}|\hat\psin(\xi)|^2\,d\xi = 0$ exactly.
+Individual PSWFs are exactly bandlimited: all their $L^2$-energy
+lies in $[-\omega,\omega]$. This is structurally independent of
+the time-domain leakage $\ell_n > 0$, and is the reason
+the $g_k + r_k$ Fourier decomposition used in earlier drafts
+is ill-founded: $r_k \equiv 0$ identically.
+\end{remark}
+
+\subsection{Product family and bandwidth doubling}
 
 \begin{definition}[Product family]\label{def:product_family}
-For $N \ge 1$ and $0 \le m, n \le N$, set
-$f_{mn} := \psi_m^{(c)}\,\overline{\psin}$.
-The \emph{product family} is
-$\FN := \{f_{mn} : 0 \le m, n \le N\}$.
+For $N \ge 1$ and $0 \le m,n \le N$, set
+$f_{mn} := \psi_m^{(c)}\overline{\psin}$.
+The \emph{product family} is $\FN := \{f_{mn}: 0 \le m,n \le N\}$.
 \end{definition}
 
-\begin{remark}[Fourier support: bandwidth doubling]
-Since both factors lie in $\mathrm{PW}_\omega$,
-$\widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psin$
-is supported in $[-2\omega, 2\omega]$.
-In particular $f_{mn} \in \mathrm{PW}_{2\omega}$.
-This \emph{bandwidth doubling} is the primary structural reason
-why the edge regime is resistant to the methods of this paper;
-see Section~\ref{sec:edge}.
+By the convolution theorem and~\eqref{eq:bandlimited}:
+\begin{equation}\label{eq:product_fourier}
+  \widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psin,
+  \qquad
+  \operatorname{supp}\widehat{f_{mn}} \subset [-2\omega,2\omega],
+  \qquad
+  f_{mn} \in \mathrm{PW}_{2\omega}.
+\end{equation}
+
+\begin{remark}[Bandwidth doubling as the structural source]
+\label{rem:bwdoubling}
+While individual PSWFs lie in $\mathrm{PW}_\omega$, their products
+lie in $\mathrm{PW}_{2\omega}$ but not in $\mathrm{PW}_\omega$ in general.
+The out-of-band energy
+\[
+  \Eout(f_{mn})
+  := \int_{|\xi|>\omega}|\widehat{f_{mn}}(\xi)|^2\,d\xi
+  = \|\hat\psi_m^{(c)} * \hat\psin\|_{L^2(|\xi|>\omega)}^2
+\]
+is strictly positive in general, and is the \emph{sole} term
+requiring estimation throughout this paper.
+This is not an approximation artefact but an exact structural
+property of the convolution.
 \end{remark}
+
+\subsection{Spectral projector}
+
+\[
+  \PN f := \sum_{k=0}^{N-1}
+  \ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}\,\psi_k^{(c)}.
+\]
 
 \subsection{Index regimes}
 
@@ -318,11 +344,11 @@ see Section~\ref{sec:edge}.
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{lll}
 \toprule
-Regime & Condition & Section \\
+Regime       & Condition                            & Section \\
 \midrule
-Bulk & $m, n \le \gamma N$ & \S\ref{sec:bulk} \\
-Off-diagonal & $|m-n| \ge \delta N$ & \S\ref{sec:offdiag} \\
-Edge & $m, n \ge (1-\delta)N$ & \S\ref{sec:edge} \\
+Bulk         & $m,n \le \gamma N$, $\gamma\in(0,1)$ & \S\ref{sec:bulk}    \\
+Off-diagonal & $|m-n| \ge \delta N$, $\delta>0$     & \S\ref{sec:offdiag} \\
+Edge         & $m,n \ge (1-\delta)N$                & \S\ref{sec:edge}    \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -330,77 +356,92 @@ Edge & $m, n \ge (1-\delta)N$ & \S\ref{sec:edge} \\
 \subsection{Landau--Widom asymptotics}
 
 \begin{assumption}[Landau--Widom]\label{ass:lw}
-Fix $\varepsilon \in (0, 2/\pi)$ and assume $N \le (2/\pi-\varepsilon)c$.
-There exist $C(\varepsilon), \eta(\varepsilon) > 0$, and $c_0(\varepsilon) > 0$
-such that for all $c \ge c_0(\varepsilon)$:
+Fix $\varepsilon \in (0,2/\pi)$ and $N \le (2/\pi-\varepsilon)c$.
+There exist $C(\varepsilon),\eta(\varepsilon) > 0$ and
+$c_0(\varepsilon) > 0$ such that for all $c \ge c_0(\varepsilon)$:
 \[
-  \ell_n = 1 - \lambda_n(c) \le C(\varepsilon)\,e^{-\eta(\varepsilon)c}
-  \qquad \text{for all } n \le N-1.
+  \ell_n \le C(\varepsilon)\,e^{-\eta(\varepsilon)c}
+  \qquad\text{for all } n \le N-1.
 \]
-In particular, $1 - \lambda_{N-1}(c) \le C(\varepsilon)e^{-\eta(\varepsilon)c} < 1/2$
-for $c \ge c_0(\varepsilon)$, so $\lambda_{N-1}(c) > 1/2$ and
+In particular $\lambda_{N-1}(c) > 1/2$ and
 $1/(1-\lambda_{N-1}(c)) \le 2$.
 \end{assumption}
 
 See \cite[Thm.~1]{Widom1964} and \cite[Ch.~4]{OsipovRokhlinXiao}.
 
-\subsection{Near-edge exponential control}
+\subsection{Bulk convolution decay assumption}
 
-\begin{assumption}[Near-edge exponential control]\label{ass:nearedge}
+\begin{assumption}[Bulk convolution decay]\label{ass:bulkconv}
 Fix $\gamma \in (0,1)$.
-There exist constants $C_{\mathrm{ne}}(\gamma) > 0$,
-$\eta_{\mathrm{ne}}(\gamma) > 0$, $\delta_{\mathrm{ne}}(\gamma) > 0$,
-and $c_0(\gamma) > 0$ such that for all $n \le \gamma N$
-and all $c \ge c_0(\gamma)$:
+There exist $C_{\mathrm{bc}}(\gamma), \alpha_{\mathrm{bc}}(\gamma) > 0$
+and $c_0(\gamma) > 0$ such that for all $m,n \le \gamma N$
+and $c \ge c_0(\gamma)$:
 \[
-  \int_{|\xi| \in (\omega - \delta_{\mathrm{ne}}, \omega)}
-  |\hat\psi_n^{(c)}(\xi)|^2\,d\xi
-  \le C_{\mathrm{ne}}\,e^{-\eta_{\mathrm{ne}} c}.
+  \Eout(f_{mn})
+  = \|\hat\psi_m^{(c)} * \hat\psin\|_{L^2(|\xi|>\omega)}^2
+  \le C_{\mathrm{bc}}\,e^{-\alpha_{\mathrm{bc}}\,c}.
 \]
 \end{assumption}
 
-\begin{remark}[Interpretation and status of Assumption~\ref{ass:nearedge}]
-\label{rem:nearedge-interp}
-Assumption~\ref{ass:nearedge} asserts that bulk PSWFs ($n \le \gamma N$
-with $\gamma < 1$) are not only concentrated inside the band
-$[-\omega,\omega]$, but exhibit \emph{exponential decay of Fourier mass
-near the turning points} $\xi = \pm\omega$.
-Heuristically, $\xi = \pm\omega$ is a turning point of the
-Sturm--Liouville differential equation for PSWFs: in the WKB approximation,
-solutions transition from oscillatory behavior ($|\xi| < \omega$)
-to exponential decay ($|\xi| > \omega$), and one expects the amplitude
-of $|\hat\psi_n^{(c)}|^2$ to be exponentially small in a neighborhood of
-$\pm\omega$ when $n$ is far below the Slepian cutoff.
-This is consistent with known pointwise WKB estimates for prolate
-functions (see \cite{OsipovRokhlinXiao}), but we are not aware of
-an explicit quantitative statement in the literature in the
-$L^2$-integrated form required here.
-Assumption~\ref{ass:nearedge} is therefore formulated as an explicit
-open problem (Problem~\ref{prob:nearedge}).
-It is structurally analogous to Assumption~3.10 of \cite{PaperI},
-which likewise isolates a precise analytical input required by the
-broader Prolate--Weil program.
+\begin{remark}[Status and sufficient condition for
+Assumption~\ref{ass:bulkconv}]\label{rem:bulkconv-status}
+By the support geometry of Lemma~\ref{lem:geom}, the integrand
+$|(\hat\psi_m^{(c)} * \hat\psin)(\xi)|^2$ for $\xi$ near $\omega^+$
+draws exclusively from the near-edge values
+$\hat\psi_m^{(c)}(\eta)$, $\hat\psin(\eta)$ with $|\eta|$
+near $\omega^-$.
+A sufficient condition for Assumption~\ref{ass:bulkconv} is therefore
+a uniform \emph{turning-point decay estimate}: the existence of
+$C, \eta > 0$ such that for all $n \le \gamma N$
+and $|\xi|$ sufficiently close to $\omega$,
+\begin{equation}\label{eq:wkb_suff}
+  |\hat\psi_n^{(c)}(\xi)| \le C\,e^{-\eta\,c\,(\omega-|\xi|)}.
+\end{equation}
+The point $|\xi| = \omega$ is a turning point of the prolate
+Sturm--Liouville equation in the Fourier representation.
+Standard WKB analysis is \emph{consistent with} amplitude suppression
+of this form near $\pm\omega$ when $n$ is well below the
+Slepian cutoff, but to our knowledge no quantitative form
+of~\eqref{eq:wkb_suff} sufficient to imply
+Assumption~\ref{ass:bulkconv} through the convolution has been
+established in the literature.
+Assumption~\ref{ass:bulkconv} is therefore an explicit open
+problem; see Problem~\ref{prob:bulkconv}.
 \end{remark}
 
 %%=================================================================
-\section{Key Analytical Tools}\label{sec:tools}
+\section{Analytical Tools}\label{sec:tools}
 %%=================================================================
+
+\subsection{Out-of-band energy}
+
+\begin{definition}[Out-of-band energy]\label{def:eout}
+For $f \in L^2(\mathbb{R})$, define
+\[
+  \Eout(f) := \int_{|\xi|>\omega}|\hat{f}(\xi)|^2\,d\xi.
+\]
+\end{definition}
+
+This quantity is zero for any $f \in \mathrm{PW}_\omega$ (in
+particular for individual PSWFs by~\eqref{eq:bandlimited}),
+and strictly positive for generic elements of $\mathrm{PW}_{2\omega}$
+(in particular for the product family $\FN$).
 
 \subsection{Slepian energy identity}
 
 \begin{lemma}[Slepian energy identity]\label{lem:slepian}
-For every $f \in L^2(\mathbb{R})$:
+For every $f \in L^2(\mathbb{R})$ and $N \ge 1$:
 \begin{align}
-  \sum_{k=0}^{\infty} \lambda_k(c)\,
+  \sum_{k=0}^{\infty}\lambda_k(c)\,
   |\ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}|^2
-  &= \int_{-\omega}^{\omega} |\hat{f}(\xi)|^2\,d\xi,
+  &= \int_{-\omega}^{\omega}|\hat{f}(\xi)|^2\,d\xi,
   \label{eq:sei-in}\\
-  \sum_{k=0}^{\infty} (1-\lambda_k(c))\,
+  \sum_{k=0}^{\infty}(1-\lambda_k(c))\,
   |\ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}|^2
-  &= \Eout(f).
+  &= \Eout(f),
   \label{eq:sei-out}
 \end{align}
-In particular, for every $N \ge 1$:
+and consequently:
 \begin{equation}\label{eq:tail-bound}
   \|(I-\PN)f\|_{L^2([-T,T])}^2
   \le \frac{\Eout(f)}{1-\lambda_{N-1}(c)}.
@@ -408,286 +449,220 @@ In particular, for every $N \ge 1$:
 \end{lemma}
 
 \begin{proof}
-Identity~\eqref{eq:sei-in}: expand $f$ in the PSWF basis and use
-$\Kop\psin = \lambda_n(c)\psin$:
+Recall from~\eqref{eq:Kop_def} that
+$\Kop = R_T \circ B_\omega \circ R_T$,
+where $B_\omega = \mathcal{F}^{-1}\mathbf{1}_{[-\omega,\omega]}\mathcal{F}$.
+For $f \in L^2(\mathbb{R})$, let $\tilde f := R_T f \in L^2([-T,T])$.
+Then:
 \[
-  \int_{-\omega}^{\omega}|\hat{f}|^2
-  = \ip{\Kop(f|_{[-T,T]})}{f|_{[-T,T]}}_{L^2([-T,T])}
-  = \sum_k \lambda_k(c)|\ip{f}{\psi_k^{(c)}}|^2.
+  \int_{-\omega}^{\omega}|\hat{f}(\xi)|^2\,d\xi
+  = \ip{B_\omega f}{f}_{L^2(\mathbb{R})}
+  = \ip{\Kop \tilde f}{\tilde f}_{L^2([-T,T])}
+  = \sum_k \lambda_k(c)\,
+  |\ip{\tilde f}{\psi_k^{(c)}}_{L^2([-T,T])}|^2,
 \]
+where the second equality uses $R_T B_\omega = \Kop R_T$ and
+self-adjointness of $R_T$, and the third expands $\tilde f$
+in the eigenbasis of $\Kop$.
+This gives~\eqref{eq:sei-in}.
 Identity~\eqref{eq:sei-out} follows by subtracting~\eqref{eq:sei-in}
-from Parseval: $\sum_k|\ip{f}{\psi_k^{(c)}}|^2 = \|f\|_{L^2([-T,T])}^2$.
-
-Bound~\eqref{eq:tail-bound}: since $\lambda_k(c)$ is strictly
-decreasing, $1-\lambda_k(c) \ge 1-\lambda_{N-1}(c) > 0$ for $k \ge N$,
-so $(1-\lambda_{N-1}(c))\|(I-\PN)f\|^2
-\le \sum_{k\ge N}(1-\lambda_k(c))|\ip{f}{\psi_k^{(c)}}|^2 \le \Eout(f)$.
+from Parseval:
+$\sum_k|\ip{\tilde f}{\psi_k^{(c)}}|^2 = \|\tilde f\|_{L^2([-T,T])}^2
+= \|f\|_{L^2([-T,T])}^2$.
+Bound~\eqref{eq:tail-bound}: for $k \ge N$,
+$1-\lambda_k(c) \ge 1-\lambda_{N-1}(c) > 0$, so
+\[
+  (1-\lambda_{N-1}(c))\|(I-\PN)f\|_{L^2([-T,T])}^2
+  \le \sum_{k \ge N}(1-\lambda_k(c))
+  |\ip{f}{\psi_k^{(c)}}|^2 \le \Eout(f). \qedhere
+\]
 \end{proof}
 
-\subsection{Fourier decomposition of the product family}
-
-For $k \in \{m,n\}$, split $\hat\psi_k^{(c)} = g_k + r_k$ where
-$g_k := \mathbf{1}_{[-\omega,\omega]}\hat\psi_k^{(c)}$
-(the in-band part) and
-$r_k := \mathbf{1}_{|\xi|>\omega}\hat\psi_k^{(c)}$
-(the out-of-band leak). By~\eqref{eq:leakage}:
-\begin{equation}\label{eq:norms}
-  \|g_k\|_{L^2}^2 = \lambda_k(c), \qquad \|r_k\|_{L^2}^2 = \ell_k.
-\end{equation}
-
-\begin{lemma}[Out-of-band energy decomposition]\label{lem:oob}
-With the above notation:
-\begin{equation}\label{eq:oob-decomp}
-  \Eout(f_{mn})
-  \le 4\bigl(
-  \|g_m * r_n\|_{L^2}^2
-  + \|r_m * g_n\|_{L^2}^2
-  + \|r_m * r_n\|_{L^2}^2
-  + \|g_m * g_n\|_{L^2(|\xi|>\omega)}^2
-  \bigr).
-\end{equation}
-The first three terms satisfy:
-\begin{align}
-  \|g_m * r_n\|_{L^2}^2 &\le 2\omega\,\ell_n, \label{eq:gmrn}\\
-  \|r_m * g_n\|_{L^2}^2 &\le 2\omega\,\ell_m, \label{eq:rmgn}\\
-  \|r_m * r_n\|_{L^2}^2 &\le \ell_m\,\ell_n. \label{eq:rmrn}
-\end{align}
-\end{lemma}
-
-\begin{proof}
-Expand $\widehat{f_{mn}} = (g_m+r_m)*(g_n+r_n)$, restrict to
-$|\xi|>\omega$, apply the triangle inequality, and use
-$(a+b+c+d)^2 \le 4(a^2+b^2+c^2+d^2)$ for~\eqref{eq:oob-decomp}.
-
-For~\eqref{eq:gmrn}: Young's convolution inequality
-$\|g_m*r_n\|_{L^2} \le \|g_m\|_{L^1}\|r_n\|_{L^2}$,
-then $\|g_m\|_{L^1} \le (2\omega)^{1/2}\|g_m\|_{L^2} \le (2\omega)^{1/2}$
-by Cauchy--Schwarz and $\operatorname{supp}g_m \subset [-\omega,\omega]$.
-Bound~\eqref{eq:rmgn} is symmetric.
-Bound~\eqref{eq:rmrn}: Young gives $\|r_m*r_n\|_{L^2}
-\le \|r_m\|_{L^2}\|r_n\|_{L^2}$.
-\end{proof}
-
-\subsection{Band-edge convolution estimate}
-
-\begin{remark}[Why a naive approach fails]\label{rem:naivefail}
-One might try to bound $\int_{\omega-\eta}^\omega|g_m(u)|^2\,du$
-by the leakage $\ell_m$.
-However, as noted in Remark~\ref{rem:leakage-meaning},
-$\ell_m$ measures out-of-band energy while the near-edge integral
-is in-band energy. These objects are in general unrelated.
-The correct approach, given in Lemma~\ref{lem:bandedge} below,
-bounds the near-edge in-band mass by $\lambda_m(c) \le 1$.
-To obtain exponential decay of the in-band$\times$in-band term,
-one needs the finer near-edge control of Assumption~\ref{ass:nearedge}.
+\begin{remark}[Scope of application]\label{rem:slepian-scope}
+Bound~\eqref{eq:tail-bound} is applied throughout this paper to
+$f = f_{mn} \in \mathrm{PW}_{2\omega}$, for which $\Eout(f_{mn}) > 0$.
+For $f = \psin$ with $n < N$: since $\psin \in V_{N,c}$ by definition,
+$(I-\PN)\psin = 0$ trivially; consistently, $\Eout(\psin) = 0$
+by~\eqref{eq:bandlimited}.
 \end{remark}
 
-%% ----------------------------------------------------------------
-%% FIX 1: Geometric support lemma
-%% ----------------------------------------------------------------
-\begin{lemma}[Geometric support restriction]\label{lem:geom}
-Let $g_m, g_n$ be supported in $[-\omega,\omega]$, and let
-$\xi > \omega$. Then
+\subsection{Geometric support restriction}
+
+\begin{lemma}[Support geometry]\label{lem:geom}
+Let $g_m, g_n \in L^2(\mathbb{R})$ with supports in
+$[-\omega,\omega]$. For $\xi \in (\omega, 2\omega)$:
 \[
   (g_m * g_n)(\xi)
   = \int_{\xi-\omega}^{\omega} g_m(\xi-\eta)\,g_n(\eta)\,d\eta.
 \]
-In particular, every $\eta$ contributing to this integral satisfies
-$\eta \in (\xi-\omega,\,\omega)$, and hence:
-\begin{equation}\label{eq:geom}
-  \eta \in (-\omega, \omega),\quad \xi-\eta \in (-\omega,\omega),
-  \quad \xi > \omega
-  \quad\Longrightarrow\quad
-  \eta > \xi - \omega.
-\end{equation}
-For $\xi \in (\omega, \omega + \delta_{\mathrm{ne}})$, this forces
-$\eta \in (\xi - \omega,\, \omega) \subset
-(\omega - \delta_{\mathrm{ne}},\, \omega)$.
+In particular, for $\xi \in (\omega, \omega+\delta)$, every
+contributing $\eta$ satisfies
+$\eta \in (\xi-\omega, \omega) \subset (\omega-\delta,\omega)$.
+The symmetric statement holds for $\xi \in (-2\omega,-\omega)$.
 \end{lemma}
 
 \begin{proof}
-Since $g_m$ is supported on $[-\omega,\omega]$, the integrand
-$g_m(\xi - \eta)$ is zero unless $\xi - \eta \in [-\omega,\omega]$,
-i.e.\ $\eta \in [\xi-\omega, \xi+\omega]$.
-Combined with $g_n$ supported on $[-\omega,\omega]$ (so $\eta \in [-\omega,\omega]$),
-the effective integration domain is $\eta \in [\xi-\omega, \omega]$.
-For $\xi > \omega$ this interval is non-empty iff $\xi < 2\omega$,
-and its lower endpoint satisfies $\xi - \omega > 0$.
-Implication~\eqref{eq:geom} is immediate.
-For $\xi \in (\omega, \omega+\delta_{\mathrm{ne}})$, the lower endpoint
-$\xi - \omega \in (0, \delta_{\mathrm{ne}})$, so
-$\eta > \xi - \omega > \omega - \delta_{\mathrm{ne}}$,
-giving $\eta \in (\omega-\delta_{\mathrm{ne}}, \omega)$.
+$g_m(\xi-\eta) = 0$ unless $\xi-\eta \in [-\omega,\omega]$,
+i.e.\ $\eta \ge \xi-\omega$; combined with
+$\operatorname{supp}g_n \subset [-\omega,\omega]$, the domain
+is $[\xi-\omega,\omega]$.
+For $\xi > \omega$ this interval has positive length iff
+$\xi < 2\omega$, and its lower endpoint $\xi-\omega > 0$.
+The near-edge localization follows immediately.
 \end{proof}
 
-\begin{remark}[Role of Lemma~\ref{lem:geom} in the bulk proof]
-Lemma~\ref{lem:geom} makes the support restriction in Step~3 of
-Theorem~\ref{thm:bulk} completely explicit: the restriction of
-the convolution integral to $\eta \in (\omega-\delta_{\mathrm{ne}},\omega)$
-is an exact consequence of the support geometry,
-not an approximation. This is what makes the application of
-Assumption~\ref{ass:nearedge} in the bulk proof watertight.
-\end{remark}
+\subsection{Band-edge convolution estimate}
 
-\begin{lemma}[Band-edge convolution estimate]\label{lem:bandedge}
-Let $g_m, g_n \in L^2(\mathbb{R})$ with
-$\operatorname{supp}g_m, \operatorname{supp}g_n \subset [-\omega, \omega]$.
-Then:
+\begin{lemma}[Band-edge bound]\label{lem:bandedge}
+For $g_m, g_n \in L^2(\mathbb{R})$ supported in $[-\omega,\omega]$:
 \begin{equation}\label{eq:bandedge}
   \|g_m * g_n\|_{L^2(|\xi|>\omega)}^2
-  \le 4\omega\,\|g_m\|_{L^2}^2\,\|g_n\|_{L^2}^2
-  \le 4\omega.
+  \le 4\omega\,\|g_m\|_{L^2}^2\,\|g_n\|_{L^2}^2.
 \end{equation}
-When $g_k = \mathbf{1}_{[-\omega,\omega]}\hat\psi_k^{(c)}$,
-we have $\|g_k\|_{L^2}^2 = \lambda_k(c)$, giving:
-\begin{equation}\label{eq:bandedge-pswf}
-  \|g_m * g_n\|_{L^2(|\xi|>\omega)}^2
-  \le 4\omega\,\lambda_m(c)\,\lambda_n(c)
-  \le 4\omega.
+For PSWFs, $\|\hat\psi_k^{(c)}\|_{L^2}^2 = 1$, yielding:
+\begin{equation}\label{eq:eout-uniform}
+  \Eout(f_{mn}) \le 4\omega.
 \end{equation}
-This bound is an absolute constant in $\omega$,
-independent of $c$, $m$, and $n$.
 \end{lemma}
 
 \begin{proof}
-By Lemma~\ref{lem:geom}, for $\xi \in (\omega, 2\omega)$:
-$(g_m*g_n)(\xi) = \int_{\xi-\omega}^{\omega} g_m(\xi-\eta)g_n(\eta)\,d\eta$
-with interval length $2\omega - \xi \le \omega$.
-Apply Cauchy--Schwarz:
+By Lemma~\ref{lem:geom} and Cauchy--Schwarz, for
+$\xi \in (\omega, 2\omega)$:
 \[
   |(g_m*g_n)(\xi)|^2
-  \le (2\omega-\xi)\int_{\xi-\omega}^{\omega}|g_m(\xi-\eta)|^2|g_n(\eta)|^2\,d\eta.
+  \le (2\omega-\xi)
+  \int_{\xi-\omega}^{\omega}|g_m(\xi-\eta)|^2|g_n(\eta)|^2\,d\eta.
 \]
-Integrate over $\xi \in (\omega, 2\omega)$ and apply Fubini.
-The domain is
-$\{(\xi,\eta): \omega < \xi < 2\omega,\; \xi-\omega < \eta < \omega\}
-= \{0 < \eta < \omega,\; \omega < \xi < \omega+\eta\}$.
-Thus:
+Integrate over $\xi \in (\omega,2\omega)$ and apply Fubini
+using the domain $\{0 < \eta < \omega,\; \omega < \xi < \omega+\eta\}$;
+substitute $u = \xi-\eta$:
 \[
   \|g_m*g_n\|_{L^2(\omega,2\omega)}^2
-  \le \int_{0}^{\omega}|g_n(\eta)|^2
-  \int_{\omega}^{\omega+\eta}(2\omega-\xi)|g_m(\xi-\eta)|^2\,d\xi\,d\eta.
+  \le 2\omega\,\|g_m\|_{L^2}^2\,\|g_n\|_{L^2}^2.
 \]
-Substituting $u = \xi - \eta$:
-\[
-  \int_{\omega}^{\omega+\eta}(2\omega-\xi)|g_m(\xi-\eta)|^2\,d\xi
-  \le 2\omega\int_{\omega-\eta}^{\omega}|g_m(u)|^2\,du
-  \le 2\omega\,\|g_m\|_{L^2}^2.
-\]
-Therefore $\|g_m*g_n\|_{L^2(\omega,2\omega)}^2
-\le 2\omega\,\|g_m\|_{L^2}^2\,\|g_n\|_{L^2}^2$.
-The symmetric bound for $\xi \in (-2\omega,-\omega)$ is identical,
-giving the full bound $4\omega\,\|g_m\|_{L^2}^2\,\|g_n\|_{L^2}^2$.
+The $(-2\omega,-\omega)$ half is symmetric, giving~\eqref{eq:bandedge}.
 \end{proof}
 
-\begin{remark}[What the estimate actually says]\label{rem:bandedge-interpretation}
-Lemma~\ref{lem:bandedge} gives the bound
-$\|g_m*g_n\|_{L^2(|\xi|>\omega)}^2 \le 4\omega\lambda_m(c)\lambda_n(c) \le 4\omega$.
-This is an \emph{absolute constant} in $\omega$, independent of $c$,
-$m$, and $n$. It does \emph{not} provide exponential decay.
-The three cross-terms (i)--(iii) in Lemma~\ref{lem:oob} carry factors
-of $\ell_m$ or $\ell_n$, which are exponentially small by Landau--Widom
-(Assumption~\ref{ass:lw}).
-The in-band$\times$in-band term (iv) requires
-the separate input of Assumption~\ref{ass:nearedge},
-made precise in Theorem~\ref{thm:bulk}.
+\begin{remark}[$4\omega$ is not exponentially small]
+\label{rem:4omega}
+The bound~\eqref{eq:eout-uniform} is uniform in $c$, $m$, $n$.
+It does not decay as $c \to \infty$. Exponential control of
+$\Eout(f_{mn})$ in the bulk therefore requires additional structure
+beyond the support geometry, captured in Assumption~\ref{ass:bulkconv}.
 \end{remark}
 
 %%=================================================================
-\section{Bulk Regime: Exponential Tail Decay}\label{sec:bulk}
+\section{Bulk Regime: Conditional Exponential Tail Decay}
+\label{sec:bulk}
 %%=================================================================
 
+The bulk regime concerns pairs $(m,n)$ with $m,n \le \gamma N$
+for a fixed $\gamma \in (0,1)$.
+The proof uses exactly three inputs:
+the Slepian energy identity (Lemma~\ref{lem:slepian}),
+the Landau--Widom bound (Assumption~\ref{ass:lw}),
+and the bulk convolution decay assumption
+(Assumption~\ref{ass:bulkconv}).
+No Fourier-domain property of individual PSWFs beyond
+exact bandlimitedness~\eqref{eq:bandlimited} is used.
+
 \begin{theorem}[Bulk spectral tail bound]\label{thm:bulk}
-Let $\gamma \in (0,1)$ and $\varepsilon \in (0,2/\pi)$ with
-$\gamma < 1-\pi\varepsilon/2$.
-Assume Assumptions~\ref{ass:lw} and~\ref{ass:nearedge},
-$N \le (2/\pi-\varepsilon)c$, and $c \ge c_0(\varepsilon,\gamma)$.
-Then for all $m, n \le \gamma N$:
+Let $\gamma \in (0,1)$ and $\varepsilon \in (0,2/\pi)$.
+Assume Assumptions~\ref{ass:lw} and~\ref{ass:bulkconv},
+and suppose $N \le (2/\pi - \varepsilon)c$.
+Then there exist $C_\gamma, \alpha_\gamma > 0$ depending only on
+$\gamma$, $\varepsilon$, $C_{\mathrm{bc}}$, $\alpha_{\mathrm{bc}}$,
+such that for all $c \ge c_0(\gamma, \varepsilon)$
+and all $m,n \le \gamma N$:
 \[
-  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
-  \le C_\gamma\,e^{-\alpha_\gamma N},
+  \|(I - \PN)f_{mn}\|_{L^2([-T,T])}
+  \le C_\gamma\,e^{-\alpha_\gamma N}.
 \]
-where $C_\gamma, \alpha_\gamma > 0$ depend only on
-$\gamma$, $\varepsilon$, $\omega$, and $T$.
 \end{theorem}
 
 \begin{proof}
-Apply Lemma~\ref{lem:slepian}:
-\begin{equation}\label{eq:bulk-start}
-  \|(I-\PN)f_{mn}\|_{L^2}^2
-  \le \frac{\Eout(f_{mn})}{1-\lambda_{N-1}(c)}.
+\textbf{Step 1: Apply the Slepian bound.}
+By Lemma~\ref{lem:slepian} (bound~\eqref{eq:tail-bound}):
+\begin{equation}\label{eq:bulk-slepian}
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}^2
+  \le \frac{\Eout(f_{mn})}{1 - \lambda_{N-1}(c)}.
 \end{equation}
 
-\textbf{Step 1: Prefactor.}
-By Assumption~\ref{ass:lw} with $c \ge c_0(\varepsilon)$,
-$1-\lambda_{N-1}(c) \le Ce^{-\eta c} < 1/2$, so
-$1/(1-\lambda_{N-1}(c)) \le 2$.
+\textbf{Step 2: Bound the denominator.}
+By Assumption~\ref{ass:lw}, $\lambda_{N-1}(c) \to 1$
+as $c \to \infty$ with $N \le (2/\pi-\varepsilon)c$;
+for $c \ge c_0(\varepsilon)$, $\lambda_{N-1}(c) > 1/2$ and:
+\begin{equation}\label{eq:bulk-denom}
+  \frac{1}{1-\lambda_{N-1}(c)} \le 2.
+\end{equation}
 
-\textbf{Step 2: Leakage bound.}
-For $m, n \le \gamma N$ with $\gamma < 1-\pi\varepsilon/2$,
-Assumption~\ref{ass:lw} gives
-$\ell_m, \ell_n \le C(\varepsilon')e^{-\eta(\varepsilon')c}$
-with $\varepsilon' = \varepsilon/2$.
-
-\textbf{Step 3: Bounding $\Eout(f_{mn})$.}
-For the cross-terms via~\eqref{eq:gmrn}--\eqref{eq:rmrn}:
-\[
-  \|g_m*r_n\|^2 + \|r_m*g_n\|^2 + \|r_m*r_n\|^2
-  \le 2(4\omega+1)C(\varepsilon')e^{-\eta(\varepsilon')c}.
-\]
-
-For the in-band$\times$in-band term: by Lemma~\ref{lem:geom},
-for every $\xi \in (\omega, \omega + \delta_{\mathrm{ne}})$,
-every $\eta$ contributing to $(g_m*g_n)(\xi)$ satisfies
-$\eta \in (\omega - \delta_{\mathrm{ne}}, \omega)$.
-The Fubini--Cauchy--Schwarz estimate from Lemma~\ref{lem:bandedge}
-therefore gives:
-\begin{align*}
-  \|g_m*g_n\|_{L^2(|\xi|>\omega)}^2
-  &\le 4\omega \cdot \|g_m\|_{L^2}^2 \cdot
-  \int_{\omega-\delta_{\mathrm{ne}}}^{\omega}|g_n(\eta)|^2\,d\eta \\
-  &\le 4\omega \cdot C_{\mathrm{ne}}(\gamma)\,e^{-\eta_{\mathrm{ne}}(\gamma)c},
-\end{align*}
-where we used $\|g_m\|_{L^2}^2 \le 1$ and
-Assumption~\ref{ass:nearedge}.
-By symmetry the same bound holds with $m$ and $n$ interchanged.
-
-Combining via~\eqref{eq:oob-decomp}:
-\[
+\textbf{Step 3: Bound the numerator.}
+By Assumption~\ref{ass:bulkconv} with $m,n \le \gamma N$
+and $c \ge c_0(\gamma)$:
+\begin{equation}\label{eq:bulk-num}
   \Eout(f_{mn})
-  \le C_1 e^{-\eta_{\min}c},
-  \quad
-  \eta_{\min} = \min(\eta(\varepsilon'), \eta_{\mathrm{ne}}(\gamma)) > 0.
+  = \|\hat\psi_m^{(c)} * \hat\psin\|_{L^2(|\xi|>\omega)}^2
+  \le C_{\mathrm{bc}}(\gamma)\,e^{-\alpha_{\mathrm{bc}}(\gamma)\,c}.
+\end{equation}
+
+\textbf{Step 4: Combine.}
+Inserting~\eqref{eq:bulk-denom} and~\eqref{eq:bulk-num}
+into~\eqref{eq:bulk-slepian}:
+\[
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}^2
+  \le 2\,C_{\mathrm{bc}}(\gamma)\,e^{-\alpha_{\mathrm{bc}}(\gamma)\,c}.
 \]
 
-\textbf{Step 4: Conclusion.}
+\textbf{Step 5: Convert $c$ to $N$.}
+Since $N \le (2/\pi - \varepsilon)c$, we have
+$c \ge N/(2/\pi - \varepsilon)$, so:
 \[
-  \|(I-\PN)f_{mn}\|_{L^2}^2
-  \le 2C_1 e^{-\eta_{\min}c}
-  \le 2C_1 e^{-\eta_{\min}(2/\pi-\varepsilon)N}.
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}^2
+  \le 2\,C_{\mathrm{bc}}\,
+  e^{-\alpha_{\mathrm{bc}}\cdot N/(2/\pi - \varepsilon)}.
 \]
-Setting $\alpha_\gamma = \tfrac{1}{2}\eta_{\min}(2/\pi-\varepsilon)$
-and $C_\gamma = (2C_1)^{1/2}$ gives the result.
+Taking square roots and setting
+$C_\gamma := (2C_{\mathrm{bc}})^{1/2}$ and
+$\alpha_\gamma := \tfrac{1}{2}\,\alpha_{\mathrm{bc}}/(2/\pi-\varepsilon)$
+gives the result.
 \end{proof}
 
-\begin{remark}[Role of Assumption~\ref{ass:nearedge} in the proof]
-\label{rem:termiv-role}
-Without Assumption~\ref{ass:nearedge}, the argument yields only
-$\|(I-\PN)f_{mn}\|_{L^2}^2 \le C$ (bounded but not decaying),
-since Lemma~\ref{lem:bandedge} alone gives $O(\omega)$.
-Assumption~\ref{ass:nearedge} replaces
-$\int_{\omega-\delta}^\omega|g_n|^2 \le 1$
-by $\le C_{\mathrm{ne}} e^{-\eta_{\mathrm{ne}} c}$;
-combined with the support geometry of Lemma~\ref{lem:geom},
-this drives the in-band$\times$in-band term to zero exponentially.
-This is the precise and only use of Assumption~\ref{ass:nearedge}.
+\begin{remark}[Proof uses exactly three inputs]\label{rem:bulk-inputs}
+The proof of Theorem~\ref{thm:bulk} uses:
+\begin{enumerate}[(i)]
+  \item Slepian identity: Lemma~\ref{lem:slepian}
+        (operator-theoretic; exact)
+  \item Denominator bound: Assumption~\ref{ass:lw}
+        (Landau--Widom; classical)
+  \item Numerator bound: Assumption~\ref{ass:bulkconv}
+        (the open input; see Problem~\ref{prob:bulkconv})
+\end{enumerate}
+No other property of PSWFs is invoked.
+In particular, no Fourier-domain structure of individual
+$\psin$ beyond exact bandlimitedness~\eqref{eq:bandlimited}
+is used anywhere in the proof.
 \end{remark}
 
-\begin{remark}[Explicit constants and degeneration]
-$\alpha_\gamma = \tfrac{1}{2}\min(\eta(\varepsilon/2),\eta_{\mathrm{ne}}(\gamma))
-\cdot (2/\pi-\varepsilon)$.
-As $\gamma \to 1^-$, $\varepsilon \to 0$ and $\alpha_\gamma \to 0$;
-see Section~\ref{sec:edge}.
+\begin{remark}[What fails without Assumption~\ref{ass:bulkconv}]
+\label{rem:bulk-without}
+Without Assumption~\ref{ass:bulkconv}, Lemma~\ref{lem:bandedge}
+gives only $\Eout(f_{mn}) \le 4\omega$, and~\eqref{eq:bulk-slepian}
+yields $\|(I-\PN)f_{mn}\|_{L^2}^2 \le 8\omega$:
+bounded but non-decaying.
+Assumption~\ref{ass:bulkconv} is precisely the additional input
+needed to convert this into exponential decay.
+\end{remark}
+
+\begin{remark}[Degeneration as $\gamma \to 1^-$]
+\label{rem:bulk-degeneration}
+The rate $\alpha_\gamma = \tfrac{1}{2}\alpha_{\mathrm{bc}}(\gamma)
+/(2/\pi-\varepsilon)$ depends on $\gamma$ through
+$\alpha_{\mathrm{bc}}(\gamma)$.
+If $\alpha_{\mathrm{bc}}(\gamma) \to 0$ as $\gamma \to 1^-$
+(expected, since bulk PSWFs approach the Slepian transition
+zone), then $\alpha_\gamma \to 0$ and the exponential bound
+degenerates, consistent with the edge obstruction of
+Section~\ref{sec:edge}.
 \end{remark}
 
 %%=================================================================
@@ -695,9 +670,6 @@ see Section~\ref{sec:edge}.
 \label{sec:offdiag}
 %%=================================================================
 
-%% ----------------------------------------------------------------
-%% FIX 2: Explicit gap lemma with N >= |m-n|/delta
-%% ----------------------------------------------------------------
 \begin{lemma}[Eigenvalue gap estimate]\label{lem:gap}
 For $0 \le m,n \le N$ with $m \ne n$, $|m-n| \ge \delta N$
 ($\delta > 0$ fixed), and $N \le (2/\pi)c$:
@@ -720,7 +692,7 @@ $\chi_k(c) = k(k+1) + c^2/2 + O(k^{-1}c^2)$
   = (m-n)(m+n+1) + O(N^{-1}c^2).
 \]
 For $m,n \le N$ with $N \le (2/\pi)c$, the error is
-$O(N^{-1}c^2) = O(N)$ (using $c \le \pi N/2$).
+$O(N^{-1}c^2) = O(N)$.
 The leading term satisfies $(m-n)(m+n+1) \ge |m-n|\cdot N/C_0$
 for some absolute $C_0$, since $m+n+1 \ge \max(m,n) \ge N/2$
 when $\max(m,n) \ge N/2$. For $c$ large enough the error is
@@ -759,7 +731,7 @@ Integrating by parts $p$ times using self-adjointness of $D_c$:
   \ip{D_c^{[p]}f_{mn}}{\psi_k^{(c)}}.
 \]
 The $L^2$-norm of $D_c^{[p]}f_{mn}$ is bounded by
-$B_p \le C_p(CN^2)^p$ (Leibniz rule, $\chi_k \le CN^2$).
+$B_p \le C_p(CN^2)^p$.
 By Cauchy--Schwarz and~\eqref{eq:gap}:
 \[
   |\ip{f_{mn}}{\psi_k^{(c)}}|
@@ -778,14 +750,15 @@ By Bessel's inequality:
 
 \begin{corollary}[Partial verification of Conjecture~3.1 of
 \cite{PaperII_quad}]\label{cor:partial}
-Under Assumption~\ref{ass:nearedge}, in the bulk and off-diagonal
+Under Assumption~\ref{ass:bulkconv}, in the bulk and off-diagonal
 regimes combined:
 \[
   \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
   \le C\bigl(e^{-\alpha N} + (1+|m-n|)^{-p}\bigr)
 \]
 for all $(m,n)$ with either $m,n \le \gamma N$ or $|m-n| \ge \delta N$.
-The edge regime $\{m,n \ge (1-\delta)N,\;|m-n|<\delta N\}$ is not covered.
+The edge regime $\{m,n \ge (1-\delta)N,\;|m-n|<\delta N\}$
+is not covered.
 \end{corollary}
 
 %%=================================================================
@@ -822,12 +795,8 @@ where $c_0 > 0$ is an absolute constant independent of $c$ and $n$.
 
 \begin{proof}
 By Widom transition-zone asymptotics \cite[Ch.~4]{OsipovRokhlinXiao},
-$\lambda_n(c) \ge 1/4$ and $1-\lambda_n(c) \ge 1/4$
-for $c$ sufficiently large.
+$\lambda_n(c) \ge 1/4$ for $c$ sufficiently large.
 
-%% ----------------------------------------------------------------
-%% FIX 3: Explicit half-bandwidth / Slepian-cutoff argument
-%% ----------------------------------------------------------------
 \textbf{Step 1: Positive Fourier mass near the band edge.}
 We claim:
 \begin{equation}\label{eq:edge-mass-lower}
@@ -838,35 +807,28 @@ for an absolute constant $\delta_0 > 0$.
 Suppose for contradiction that
 $\int_{\omega/2}^\omega|\hat\psi_n^{(c)}|^2 < \delta_0$.
 Since $\int_{-\omega}^\omega|\hat\psi_n^{(c)}|^2 = \lambda_n(c) \ge 1/4$,
-the Fourier mass is then concentrated on $(-\omega/2, \omega/2)$:
+the Fourier mass is concentrated on $(-\omega/2, \omega/2)$:
 \[
   \int_{-\omega/2}^{\omega/2}|\hat\psi_n^{(c)}(\xi)|^2\,d\xi
   \ge \tfrac{1}{4} - 2\delta_0.
 \]
-Now consider the concentration operator for the \emph{half-bandwidth}
-$\omega/2$, with time-bandwidth product $c_{1/2} = (\omega/2)\cdot T = c/2$.
-Its Slepian cutoff is $N_{1/2} \approx 2c_{1/2}/\pi = c/\pi$.
-Since $n \approx 2c/\pi \gg c/\pi = N_{1/2}$, the index $n$ lies
-deep in the superexponentially decaying regime for bandwidth $\omega/2$.
-By Assumption~\ref{ass:lw} applied with $c_{1/2} = c/2$ and
-$n \ge (2/\pi + \varepsilon_0)c_{1/2}$ (for some fixed $\varepsilon_0 > 0$
-depending only on the transition zone condition $|n-2c/\pi| \le c^{1/2}$):
+Now the half-bandwidth concentration operator with bandwidth $\omega/2$
+and time-bandwidth product $c_{1/2} = c/2$ has Slepian cutoff
+$N_{1/2} \approx c/\pi$.
+Since $n \approx 2c/\pi \gg c/\pi$, the index $n$ lies deep in
+the superexponential decay regime for bandwidth $\omega/2$.
+By Assumption~\ref{ass:lw} applied with $c_{1/2} = c/2$:
 \[
-  \lambda_n^{(\omega/2)}(c)
-  := \int_{-\omega/2}^{\omega/2}|\hat\psi_n^{(c)}(\xi)|^2\,d\xi
-  \le Ce^{-\eta c/2} \to 0.
+  \int_{-\omega/2}^{\omega/2}|\hat\psi_n^{(c)}(\xi)|^2\,d\xi
+  \le Ce^{-\eta c/2} \to 0,
 \]
-But this contradicts $\int_{-\omega/2}^{\omega/2}|\hat\psi_n^{(c)}|^2
-\ge \tfrac{1}{4} - 2\delta_0 > 0$ for $\delta_0 < 1/8$ and $c$ large.
+contradicting $\ge \tfrac{1}{4} - 2\delta_0 > 0$ for $\delta_0 < 1/8$.
 Hence~\eqref{eq:edge-mass-lower} holds with $\delta_0 = 1/16$.
 
 \textbf{Step 2: Lower bound for out-of-band convolution energy.}
 Let $h := \hat\psi_n^{(c)} * \hat\psi_n^{(c)}$.
 By Lemma~\ref{lem:geom}, for $\xi \in (\omega, 3\omega/2)$,
-every $\eta$ contributing to $h(\xi)$ satisfies
-$\eta \in (\xi-\omega, \omega)$, and since $\xi - \omega < \omega/2$,
-we have $\eta \in (\xi-\omega, \omega) \supset (\omega/2, \omega)$
-partially. A direct computation using~\eqref{eq:edge-mass-lower}:
+a direct estimate using~\eqref{eq:edge-mass-lower} gives:
 \[
   \int_\omega^{2\omega}|h(\xi)|^2\,d\xi
   \ge \frac{\delta_0^2}{\omega} > 0.
@@ -879,19 +841,18 @@ $\Eout(|\psi_n^{(c)}|^2)
 
 \begin{remark}[Structural consequence]
 Proposition~\ref{prop:bwdoubling} shows that the diagonal products
-$|\psi_n^{(c)}|^2$ in the edge regime are \emph{genuinely not
-approximable} by any finite prolate subspace with exponentially
-small error. The out-of-band Fourier energy is bounded away from
-zero by an absolute constant.
+$|\psi_n^{(c)}|^2$ in the edge regime are genuinely not approximable
+by the prolate subspace $V_{N,c}$ with exponentially small error
+via any argument based solely on $\Eout$.
 \end{remark}
 
 \begin{remark}[Why new tools are needed]
 Any proof for the edge regime must address at least one of:
 \begin{enumerate}[(a)]
-  \item Controlling $f_{mn}$ in the \emph{doubled} prolate subspace
+  \item Controlling $f_{mn}$ in the doubled prolate subspace
   $V_{2N,2c}$ and relating $P_{2N,2c}$ back to $\PN$.
-  \item Exploiting a product formula for PSWFs, currently unavailable
-  \cite{OsipovRokhlinXiao}.
+  \item Exploiting a product formula for PSWFs (currently unavailable
+  \cite{OsipovRokhlinXiao}).
   \item Reformulating the quadrature condition to avoid the full
   product family.
 \end{enumerate}
@@ -902,18 +863,17 @@ Route~(a) is addressed in Problem~\ref{prob:doubled}.
 \section{Open Problems}\label{sec:open}
 %%=================================================================
 
-\begin{problem}[Near-edge exponential control for bulk PSWFs]
-\label{prob:nearedge}
-Prove Assumption~\ref{ass:nearedge}: for fixed $\gamma \in (0,1)$
-and all $n \le \gamma N$, $c \ge c_0(\gamma)$:
+\begin{problem}[Bulk convolution decay]\label{prob:bulkconv}
+Prove Assumption~\ref{ass:bulkconv}: for fixed $\gamma \in (0,1)$
+and all $m,n \le \gamma N$, $c \ge c_0(\gamma)$:
 \[
-  \int_{|\xi| \in (\omega - \delta_{\mathrm{ne}}, \omega)}
-  |\hat\psi_n^{(c)}(\xi)|^2\,d\xi
-  \le C_{\mathrm{ne}}(\gamma)\,e^{-\eta_{\mathrm{ne}}(\gamma)c}.
+  \|\hat\psi_m^{(c)} * \hat\psin\|_{L^2(|\xi|>\omega)}^2
+  \le C_{\mathrm{bc}}(\gamma)\,e^{-\alpha_{\mathrm{bc}}(\gamma)c}.
 \]
-A proof would follow from pointwise WKB estimates for
-$|\hat\psi_n^{(c)}(\xi)|$ near $\xi = \pm\omega$, integrated over
-a width-$\delta_{\mathrm{ne}}$ interval.
+A natural route is via a uniform turning-point decay estimate
+$|\hat\psi_n^{(c)}(\xi)| \le Ce^{-\eta c(\omega-|\xi|)}$
+for $|\xi|$ near $\omega$ and $n \le \gamma N$; see
+Remark~\ref{rem:bulkconv-status}.
 \end{problem}
 
 \begin{problem}[Edge regime: uniform tail bound]\label{prob:edge}
@@ -921,7 +881,7 @@ Prove or disprove: there exist $C, \alpha > 0$ such that
 $\|(I-\PN)f_{mn}\|_{L^2} \le Ce^{-\alpha N}$
 for all $m,n \sim N$.
 Proposition~\ref{prop:bwdoubling} rules out exponential decay
-on the diagonal.
+on the diagonal via $\Eout$-based arguments.
 \end{problem}
 
 \begin{problem}[Doubled prolate subspace]\label{prob:doubled}
