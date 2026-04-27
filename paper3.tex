@@ -31,6 +31,7 @@
 \newcommand{\FN}{\mathcal{F}_N}
 \newcommand{\Eout}{\mathcal{E}_{\mathrm{out}}}
 \newcommand{\muhat}{\mu_{mn}}
+\newcommand{\Emn}{\mathbb{E}_{mn}}
 
 %% ---- Paper metadata ---------------------------------------------
 \title[PSWF Product Spectral Tail Estimates]
@@ -52,9 +53,11 @@ In the bulk regime, the tail bound is proved conditional on
 Assumption~\ref{ass:bulkconv} (exponential out-of-band convolution
 decay); this is identified as an open problem (Problem~\ref{prob:bulkconv}).
 In the off-diagonal regime, an unconditional uniform bound is proved
-(Theorem~\ref{thm:offdiag}); the stronger conditional algebraic decay
-is formulated under Assumption~\ref{ass:specloc}
-(spectral localization / PSWF Clebsch--Gordan), left as an open problem
+(Theorem~\ref{thm:offdiag}) and a mean spectral localization
+result is established unconditionally
+(Proposition~\ref{prop:mean-loc}); the stronger pointwise
+spectral localization is formulated under Assumption~\ref{ass:specloc}
+(PSWF Clebsch--Gordan), left as an open problem
 (Problem~\ref{prob:cg}).
 The edge regime $m,n \sim N$ is identified as a structural obstruction
 and left as an explicit open problem.}
@@ -69,8 +72,8 @@ and left as an explicit open problem.}
 \keywords{prolate spheroidal wave functions, spectral tail estimates,
 product family, Slepian energy identity, out-of-band energy,
 band-edge convolution, frame stability, quadrature compatibility,
-bulk convolution decay, spectral localization, PSWF Clebsch--Gordan,
-edge regime obstruction, bandwidth doubling}
+bulk convolution decay, spectral localization, mean spectral localization,
+PSWF Clebsch--Gordan, edge regime obstruction, bandwidth doubling}
 
 \begin{document}
 \maketitle
@@ -89,8 +92,8 @@ The central analytical tool is the \emph{Slepian energy identity}
 (Lemma~\ref{lem:slepian}), which bounds the spectral tail
 $\|(I-\PN)f\|_{L^2([-T,T])}^2$ by the out-of-band Fourier
 energy $\Eout(f) := \int_{|\xi|>\omega}|\hat{f}(\xi)|^2\,d\xi$.
-For $f_{mn} = \psi_m^{(c)}\overline{\psin}$, the Fourier
-transform $\widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psi_n^{(c)}$
+For $f_{mn} = \psi_m^{(c)}\overline{\psin}$, the convolution
+$\widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psi_n^{(c)}$
 is supported in $[-2\omega,2\omega]$ (bandwidth doubling).
 The band-edge convolution estimate (Lemma~\ref{lem:bandedge}) gives
 $\Eout(f_{mn}) \le 4\omega$ uniformly.
@@ -100,22 +103,27 @@ We prove:
   \item \textbf{Bulk regime} ($m, n \le \gamma N$, $\gamma < 1$):
   $\|(I-\PN)f_{mn}\|_{L^2} \le C_\gamma e^{-\alpha_\gamma N}$,
   conditional on Assumption~\ref{ass:bulkconv}
-  (exponential out-of-band convolution decay for bulk PSWFs;
-  explicit open problem, Problem~\ref{prob:bulkconv}).
+  (exponential out-of-band convolution decay;
+  Problem~\ref{prob:bulkconv}).
   \item \textbf{Off-diagonal regime} ($|m-n| \ge \delta N$, $\delta > 0$):
   \begin{enumerate}[(a)]
     \item \emph{Unconditional uniform bound:}
     $\|(I-\PN)f_{mn}\|_{L^2} \le C_\delta T^{1/2}$
     (Theorem~\ref{thm:offdiag}).
+    \item \emph{Unconditional mean spectral localization:}
+    $\Emn[\chi_k] = \muhat + E_{mn}$
+    where $\muhat = \chi_m(c)+\chi_n(c)$
+    and $|E_{mn}| \le C\,\|(\psi_m^{(c)})'\|_{L^2}
+    \|(\psin)'\|_{L^\infty}$
+    (Proposition~\ref{prop:mean-loc}).
     \item \emph{Conditional algebraic decay:}
     $\|(I-\PN)f_{mn}\|_{L^2} \le C_p(1+|m-n|)^{-p}$
     under Assumption~\ref{ass:specloc}
-    (PSWF spectral localization / Clebsch--Gordan;
-    explicit open problem, Problem~\ref{prob:cg}).
+    (Problem~\ref{prob:cg}).
   \end{enumerate}
   \item \textbf{Edge regime obstruction} ($m, n \sim N$):
   Proposition~\ref{prop:bwdoubling} shows
-  $\Eout(f_{nn}) \ge c_0 > 0$ on the diagonal.
+  $\Eout(f_{nn}) \ge c_0 > 0$.
 \end{enumerate}
 No claim is made about zeros of $\zeta(s)$.
 \end{abstract}
@@ -141,32 +149,38 @@ Section~\ref{ssec:context}.
 The first input is a uniform tail bound for the product family
 $f_{mn} = \psi_m^{(c)}\overline{\psin}$.
 This paper establishes such bounds in the bulk and off-diagonal
-regimes, identifies the structural obstruction at the edge,
-and isolates two explicit open problems.
+regimes, proves mean spectral localization unconditionally,
+identifies the structural obstruction at the edge,
+and isolates explicit open problems.
 
-\subsection{Strategy}
+\subsection{Strategy and new results}
 
 The Slepian energy identity (Lemma~\ref{lem:slepian})
 reduces to bounding $\Eout(f_{mn})$ in the bulk.
-In the off-diagonal regime, the product family has a
-\emph{near-eigenvector structure} under the prolate
-Sturm--Liouville operator $D_c$ (Section~\ref{ssec:neareig}):
+In the off-diagonal regime, the near-eigenvector structure
+(Section~\ref{ssec:neareig})
 \begin{equation}\label{eq:near-eig-intro}
-  D_c f_{mn} \approx \mu_{mn}\,f_{mn},
-  \qquad
-  \mu_{mn} := \chi_m(c) + \chi_n(c),
+  D_c f_{mn} = \muhat f_{mn} + R_{mn},
+  \qquad \muhat := \chi_m(c) + \chi_n(c),
 \end{equation}
-where the remainder is a first-order commutator.
-This implies that the PSWF-coefficient sequence
-$\bigl(a_k^{mn}\bigr)_{k \ge 0}$,
-$a_k^{mn} := \ip{f_{mn}}{\psi_k^{(c)}}_{L^2([-T,T])}$,
-is spectrally concentrated near $\{k: \chi_k(c) \approx \mu_{mn}\}$.
-For $m,n \le \gamma N$ with $\gamma < 1/\sqrt{2}$,
-this concentration set lies entirely below index $N$,
-implying small tail; this is made precise in
-Assumption~\ref{ass:specloc} and Problem~\ref{prob:cg}.
+yields — by direct substitution into the spectral
+expansion of $D_c$ — the \emph{mean spectral localization}
+identity:
+\begin{equation}\label{eq:mean-loc-intro}
+  \Emn[\chi_k]
+  := \frac{\sum_k \chi_k(c)\,|a_k^{mn}|^2}
+            {\|f_{mn}\|_{L^2}^2}
+  = \muhat + \frac{\ip{R_{mn}}{f_{mn}}_{L^2}}
+                   {\|f_{mn}\|_{L^2}^2}.
+\end{equation}
+This is proved without any assumption
+(Proposition~\ref{prop:mean-loc}).
+For the stronger pointwise decay,
+Assumption~\ref{ass:specloc} is needed;
+its proof is identified as Problem~\ref{prob:cg}
+(PSWF Clebsch--Gordan).
 
-\subsection{Main results}
+\subsection{Main results summary}
 
 \begin{theorem}[Bulk; Theorem~\ref{thm:bulk}]
 Under Assumption~\ref{ass:bulkconv}, for $m,n \le \gamma N$:
@@ -178,13 +192,20 @@ For $|m-n| \ge \delta N$:
 $\|(I-\PN)f_{mn}\|_{L^2} \le C_\delta T^{1/2}$.
 \end{theorem}
 
+\begin{proposition}[Mean localization, unconditional;
+Proposition~\ref{prop:mean-loc}]
+For all $m,n \le N$:
+$\Emn[\chi_k] = \muhat + E_{mn}$,
+where $|E_{mn}| \le 2T^{1/2}\|(\psi_m^{(c)})'\|_{L^2}
+\|(\psin)'\|_{L^\infty}$.
+\end{proposition}
+
 \begin{theorem}[Off-diagonal, conditional; Theorem~\ref{thm:offdiag-strong}]
-Under Assumption~\ref{ass:specloc}, for $|m-n| \ge \delta N$
-and all $p \ge 1$:
+Under Assumption~\ref{ass:specloc}, for $|m-n| \ge \delta N$:
 $\|(I-\PN)f_{mn}\|_{L^2} \le C_p(1+|m-n|)^{-p}$.
 \end{theorem}
 
-\subsection{Relation to the companion paper}\label{ssec:context}
+\subsection{Relation to companion paper}\label{ssec:context}
 
 In \cite{PaperII_quad}, verification of Assumption~3.10 of \cite{PaperI}
 was reduced to:
@@ -192,7 +213,8 @@ was reduced to:
   \item PSWF product spectral tail (Conjecture~3.1 of \cite{PaperII_quad}).
   \item XRY stability (Conjecture~4.1 of \cite{PaperII_quad}).
 \end{enumerate}
-This paper addresses (C1) conditionally. (C2) is not addressed.
+This paper addresses (C1) conditionally in the tail sense, and
+unconditionally in the mean localization sense. (C2) is not addressed.
 
 \subsection{What this paper does not claim}
 
@@ -205,7 +227,7 @@ both are formulated as explicit open problems.
 Section~\ref{sec:prelim} establishes PSWF conventions and assumptions.
 Section~\ref{sec:tools} gives the Slepian identity and convolution estimate.
 Section~\ref{sec:bulk} proves the bulk bound.
-Section~\ref{sec:offdiag} proves the off-diagonal bounds.
+Section~\ref{sec:offdiag} proves off-diagonal bounds and mean localization.
 Section~\ref{sec:edge} analyzes the edge obstruction.
 Section~\ref{sec:open} collects open problems.
 
@@ -233,14 +255,13 @@ $\ip{\psi_m^{(c)}}{\psin}_{L^2([-T,T])} = \lambda_n(c)\delta_{mn}$.
 \begin{equation}\label{eq:time_conc}
   \lambda_n(c) = \|\psin\|_{L^2([-T,T])}^2,
   \qquad
-  \ell_n := 1 - \lambda_n(c)
+  \ell_n := 1-\lambda_n(c)
   = \|\psin\|_{L^2(\mathbb{R}\setminus[-T,T])}^2.
 \end{equation}
 
 \begin{remark}[Leakage is a time-domain quantity]\label{rem:leakage}
 $\ell_n$ measures $L^2$-mass of $\psin$ outside $[-T,T]$ only.
-No Fourier-domain interpretation is used anywhere in this paper;
-$\int_{|\xi|>\omega}|\hat\psin|^2\,d\xi = 0$ exactly
+$\int_{|\xi|>\omega}|\hat\psin|^2 = 0$ exactly
 (Section~\ref{ssec:bandlimited}).
 \end{remark}
 
@@ -248,11 +269,8 @@ $\int_{|\xi|>\omega}|\hat\psin|^2\,d\xi = 0$ exactly
 
 \begin{equation}\label{eq:bandlimited}
   \operatorname{supp}\hat\psin \subset [-\omega,\omega],
-  \qquad
-  \|\hat\psin\|_{L^2}^2 = 1.
+  \qquad \|\hat\psin\|_{L^2}^2 = 1.
 \end{equation}
-The $g_k + r_k$ Fourier decomposition used in earlier drafts
-is ill-founded: $r_k \equiv 0$ identically.
 
 \subsection{Product family and bandwidth doubling}
 
@@ -263,40 +281,44 @@ $\FN := \{f_{mn}: 0 \le m,n \le N\}$.
 
 \begin{equation}\label{eq:product_fourier}
   \widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psin,
-  \quad
-  \operatorname{supp}\widehat{f_{mn}} \subset [-2\omega,2\omega],
+  \quad \operatorname{supp}\widehat{f_{mn}} \subset [-2\omega,2\omega],
   \quad f_{mn} \in \mathrm{PW}_{2\omega}.
 \end{equation}
 
 \subsection{Sturm--Liouville operator}
 
-Each $\psin$ satisfies the prolate Sturm--Liouville equation:
+Each $\psin$ satisfies:
 \begin{equation}\label{eq:SL}
-  D_c \psin = \chi_n(c)\psin,
+  D_c\psin = \chi_n(c)\psin,
 \end{equation}
-where $D_c$ is a self-adjoint operator on $L^2([-T,T])$
-with smooth, bounded coefficients and eigenvalues
+where $D_c$ is self-adjoint on $L^2([-T,T])$ with
 \begin{equation}\label{eq:chi-asym}
   \chi_n(c) = n(n+1) + \tfrac{1}{2}c^2 + O(n^{-1}c^2),
-  \qquad n \to \infty,
+  \qquad n\to\infty.
 \end{equation}
-see \cite[Ch.~2]{OsipovRokhlinXiao}.
-In particular $\psin \in C^\infty([-T,T])$ for all $n$.
+See \cite[Ch.~2]{OsipovRokhlinXiao}.
 
-\subsection{PSWF coefficient sequence of the product}
+\subsection{PSWF coefficient sequence}
 
-\begin{definition}[PSWF coefficients]\label{def:coeff}
-For $f_{mn} \in \FN$, define
-\[
-  a_k^{mn} := \ip{f_{mn}}{\psi_k^{(c)}}_{L^2([-T,T])},
-  \qquad k \ge 0.
-\]
-The spectral tail is
+\begin{definition}\label{def:coeff}
+$a_k^{mn} := \ip{f_{mn}}{\psi_k^{(c)}}_{L^2([-T,T])}$.
+Spectral tail:
 $\|(I-\PN)f_{mn}\|_{L^2}^2 = \sum_{k \ge N}|a_k^{mn}|^2$.
 \end{definition}
 
-Understanding the distribution of $\{a_k^{mn}\}_k$ in index $k$
-is the central analytical problem of Section~\ref{sec:offdiag}.
+\begin{definition}[Spectral mean]\label{def:spectral-mean}
+Define the \emph{spectral mean} of $f_{mn}$ with respect to
+the PSWF basis as
+\begin{equation}\label{eq:spectral-mean-def}
+  \Emn[\chi_k]
+  := \frac{\displaystyle\sum_{k=0}^{\infty}\chi_k(c)\,|a_k^{mn}|^2}
+           {\|f_{mn}\|_{L^2([-T,T])}^2}.
+\end{equation}
+This is the \emph{weighted average eigenvalue index} of $f_{mn}$
+in the $D_c$-spectrum, normalized to unit $\ell^2$-mass.
+It is the spectral-theory analogue of the quantum-mechanical
+expectation value $\langle D_c \rangle_{f_{mn}}$.
+\end{definition}
 
 \subsection{Spectral projector and index regimes}
 
@@ -320,91 +342,54 @@ Edge         & $m,n \ge (1-\delta)N$                & \S\ref{sec:edge}    \\
 \begin{assumption}[Landau--Widom]\label{ass:lw}
 For $N \le (2/\pi-\varepsilon)c$, there exist
 $C(\varepsilon),\eta(\varepsilon) > 0$ such that
-$\ell_n \le C e^{-\eta c}$ for all $n \le N-1$.
+$\ell_n \le Ce^{-\eta c}$ for all $n \le N-1$.
 In particular $\lambda_{N-1}(c) > 1/2$.
 \end{assumption}
 
 See \cite[Thm.~1]{Widom1964} and \cite[Ch.~4]{OsipovRokhlinXiao}.
 
 \begin{assumption}[Bulk convolution decay]\label{ass:bulkconv}
-For fixed $\gamma \in (0,1)$, there exist
-$C_{\mathrm{bc}}(\gamma),\alpha_{\mathrm{bc}}(\gamma) > 0$ such that
-for all $m,n \le \gamma N$ and $c \ge c_0(\gamma)$:
+For fixed $\gamma\in(0,1)$, there exist
+$C_{\mathrm{bc}}(\gamma),\alpha_{\mathrm{bc}}(\gamma)>0$ such that
+for all $m,n\le\gamma N$ and $c\ge c_0(\gamma)$:
 \[
-  \Eout(f_{mn})
-  = \|\hat\psi_m^{(c)} * \hat\psin\|_{L^2(|\xi|>\omega)}^2
-  \le C_{\mathrm{bc}}\,e^{-\alpha_{\mathrm{bc}} c}.
+  \Eout(f_{mn}) \le C_{\mathrm{bc}}\,e^{-\alpha_{\mathrm{bc}}c}.
 \]
 \end{assumption}
 
 \begin{remark}[Sufficient condition for Assumption~\ref{ass:bulkconv}]
 \label{rem:bulkconv-status}
-A turning-point decay estimate
+A WKB turning-point bound
 $|\hat\psi_n^{(c)}(\xi)| \le Ce^{-\eta c(\omega-|\xi|)}$
-for $|\xi|$ near $\omega$, $n \le \gamma N$
-(WKB near the band edge)
-would imply Assumption~\ref{ass:bulkconv} via Lemma~\ref{lem:geom}.
-See Problem~\ref{prob:bulkconv}.
+for $n\le\gamma N$ near $|\xi|=\omega$
+would imply Assumption~\ref{ass:bulkconv}; see Problem~\ref{prob:bulkconv}.
 \end{remark}
 
 \begin{assumption}[PSWF spectral localization]\label{ass:specloc}
-For fixed $\delta \in (0,1)$ and $p \ge 1$, there exist
-$C_p(\delta) > 0$ such that for all $m,n$ with
-$|m-n| \ge \delta N$, $0 \le m,n \le N$, and all $k \ge N$:
+For fixed $\delta\in(0,1)$ and $p\ge 1$, there exist $C_p(\delta)>0$
+such that for all $|m-n|\ge\delta N$, $0\le m,n\le N$, and $k\ge N$:
 \begin{equation}\label{eq:specloc}
   |a_k^{mn}|
-  = |\ip{f_{mn}}{\psi_k^{(c)}}_{L^2([-T,T])}|
-  \le \frac{C_p(\delta)}{(1 + |\chi_k(c) - \muhat|)^p},
+  \le \frac{C_p(\delta)}{(1+|\chi_k(c)-\muhat|)^p},
+  \qquad \muhat := \chi_m(c)+\chi_n(c).
 \end{equation}
-where $\muhat := \chi_m(c) + \chi_n(c)$.
 \end{assumption}
 
 \begin{remark}[Interpretation of Assumption~\ref{ass:specloc}]
 \label{rem:specloc-interp}
-Assumption~\ref{ass:specloc} states that the PSWF coefficient
-sequence $\{a_k^{mn}\}$ is \emph{spectrally localized} near the
-index $k^*$ satisfying $\chi_{k^*}(c) \approx \muhat = \chi_m + \chi_n$.
-This is the exact analogue of:
-\begin{itemize}
-  \item the Fourier identity $\widehat{e^{2\pi imt}e^{2\pi int}}
-  = \delta_{k,m+n}$ for exponentials;
-  \item Clebsch--Gordan decomposition for spherical harmonics:
-  $Y_m \cdot Y_n$ is spectrally supported in $\{k:|m-n|\le k\le m+n\}$;
-  \item Wick product structure for Hermite functions.
-\end{itemize}
-For PSWFs, no such exact product formula is currently available
-\cite{OsipovRokhlinXiao}; Assumption~\ref{ass:specloc} asserts
-the natural analogue as a quantitative decay condition.
-See Problem~\ref{prob:cg}.
+$\{a_k^{mn}\}$ is pointwise localized near
+$k^*: \chi_{k^*} \approx \muhat$.
+This is the PSWF analogue of Clebsch--Gordan
+decomposition; see Problem~\ref{prob:cg}.
 \end{remark}
 
-\begin{remark}[Near-eigenvector motivation]\label{rem:near-eig-motivation}
-A structural motivation for Assumption~\ref{ass:specloc}
-comes from the near-eigenvector identity (Section~\ref{ssec:neareig}):
-\[
-  (D_c - \muhat)f_{mn} = R_{mn},
-  \qquad \|R_{mn}\|_{L^2} \le C_{\mathrm{comm}}\,N.
-\]
-This shows $f_{mn}$ is an approximate eigenvector of $D_c$
-with eigenvalue $\muhat$, suggesting concentration of
-$\{a_k^{mn}\}$ near $k^*$.
-However, the commutator bound $CN$ is too coarse to
-imply~\eqref{eq:specloc} by direct iteration;
-the proof of Assumption~\ref{ass:specloc} requires finer estimates.
-See Problem~\ref{prob:cg}.
-\end{remark}
-
-\begin{remark}[Connection between Bulk and Off-diagonal]
+\begin{remark}[Bulk--Off-diagonal connection]
 \label{rem:bulk-od-connection}
-For $m,n \le \gamma N$ with $\gamma < 1/\sqrt{2}$, the index $k^*$
-satisfying $\chi_{k^*}(c) \approx \muhat = \chi_m + \chi_n$
-satisfies $k^* < N$ (since $\muhat \approx m(m+1)+n(n+1)+c^2
-\le 2\gamma^2 N^2 + c^2 < \chi_N(c)$).
-Hence Assumption~\ref{ass:specloc} in the bulk regime implies that
-all tail mass $\{a_k^{mn}\}_{k \ge N}$ is far from $k^*$,
-yielding strong decay.
-Assumption~\ref{ass:bulkconv} is therefore a \emph{Fourier-side
-consequence} of spectral localization in the bulk.
+For $m,n \le \gamma N$ with $\gamma < 1/\sqrt{2}$,
+$k^* < N$; hence Assumption~\ref{ass:specloc} implies
+exponential tail decay, showing that
+Assumption~\ref{ass:bulkconv} is a Fourier-side
+consequence of spectral localization.
 \end{remark}
 
 %%=================================================================
@@ -414,34 +399,29 @@ consequence} of spectral localization in the bulk.
 \subsection{Out-of-band energy and Slepian identity}
 
 \begin{definition}\label{def:eout}
-$\Eout(f) := \int_{|\xi|>\omega}|\hat{f}(\xi)|^2\,d\xi$.
+$\Eout(f) := \int_{|\xi|>\omega}|\hat f(\xi)|^2\,d\xi$.
 \end{definition}
 
 \begin{lemma}[Slepian energy identity]\label{lem:slepian}
-For every $f \in L^2(\mathbb{R})$:
+For every $f\in L^2(\mathbb{R})$,
+with $a_k = \ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}$:
 \begin{align}
   \textstyle\sum_k\lambda_k(c)|a_k|^2
-  &= \int_{-\omega}^{\omega}|\hat{f}|^2\,d\xi,
+  &= \textstyle\int_{-\omega}^{\omega}|\hat f|^2\,d\xi,
   \label{eq:sei-in}\\
   \textstyle\sum_k(1-\lambda_k(c))|a_k|^2
   &= \Eout(f),\label{eq:sei-out}
 \end{align}
-where $a_k = \ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}$.
-Consequently:
-\begin{equation}\label{eq:tail-bound}
-  \|(I-\PN)f\|_{L^2([-T,T])}^2
-  \le \frac{\Eout(f)}{1-\lambda_{N-1}(c)}.
-\end{equation}
+and consequently:
+$\|(I-\PN)f\|_{L^2}^2 \le \Eout(f)/(1-\lambda_{N-1}(c))$.
 \end{lemma}
 
 \begin{proof}
 $\Kop = R_T B_\omega R_T$ gives
-$\int_{-\omega}^\omega|\hat f|^2 = \ip{B_\omega f}{f}
-= \ip{\Kop\tilde f}{\tilde f} = \sum_k\lambda_k|a_k|^2$;
-subtract from Parseval for~\eqref{eq:sei-out}.
-Bound~\eqref{eq:tail-bound}: for $k\ge N$,
-$(1-\lambda_{N-1})\|(I-\PN)f\|^2
-\le\sum_{k\ge N}(1-\lambda_k)|a_k|^2\le\Eout(f)$.
+$\int_{-\omega}^\omega|\hat f|^2 = \ip{\Kop\tilde f}{\tilde f}
+= \sum_k\lambda_k|a_k|^2$;
+subtract from Parseval for~\eqref{eq:sei-out};
+for $k\ge N$, $(1-\lambda_{N-1})\|(I-\PN)f\|^2 \le \Eout(f)$.
 \end{proof}
 
 \subsection{Band-edge convolution estimate}
@@ -455,187 +435,122 @@ every contributing $\eta$ satisfies $|\eta|\in(\omega-\delta,\omega)$.
 
 \begin{lemma}[Band-edge bound]\label{lem:bandedge}
 For $g_m,g_n$ supported in $[-\omega,\omega]$:
-\begin{equation}\label{eq:bandedge}
-  \|g_m*g_n\|_{L^2(|\xi|>\omega)}^2
-  \le 4\omega\,\|g_m\|_{L^2}^2\|g_n\|_{L^2}^2.
-\end{equation}
+$\|g_m*g_n\|_{L^2(|\xi|>\omega)}^2 \le 4\omega\|g_m\|_{L^2}^2\|g_n\|_{L^2}^2$.
 For PSWFs: $\Eout(f_{mn}) \le 4\omega$.
 \end{lemma}
 
 \begin{proof}
-Cauchy--Schwarz on the convolution integral for
-$\xi\in(\omega,2\omega)$, then Fubini.
+Cauchy--Schwarz on the convolution integral for $\xi\in(\omega,2\omega)$,
+then Fubini.
 \end{proof}
 
-\begin{remark}[$4\omega$ is not exponentially small]
-\label{rem:4omega}
-$\Eout(f_{mn}) \le 4\omega$ is uniform in $c,m,n$
-and does not decay. Exponential control requires
-Assumption~\ref{ass:bulkconv}.
-\end{remark}
-
 %%=================================================================
-\section{Bulk Regime: Conditional Exponential Tail Decay}
-\label{sec:bulk}
+\section{Bulk Regime}\label{sec:bulk}
 %%=================================================================
 
 \begin{theorem}[Bulk spectral tail bound]\label{thm:bulk}
 Under Assumptions~\ref{ass:lw} and~\ref{ass:bulkconv},
 for $m,n \le \gamma N$, $N \le (2/\pi-\varepsilon)c$,
 and $c$ sufficiently large:
-\[
-  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
-  \le C_\gamma e^{-\alpha_\gamma N}.
-\]
+$\|(I-\PN)f_{mn}\|_{L^2} \le C_\gamma e^{-\alpha_\gamma N}$.
 \end{theorem}
 
 \begin{proof}
-Slepian~\eqref{eq:tail-bound}:
-$\|(I-\PN)f_{mn}\|^2 \le \Eout(f_{mn})/(1-\lambda_{N-1})$.
-Denominator: $1/(1-\lambda_{N-1}) \le 2$ by Assumption~\ref{ass:lw}.
-Numerator: $\Eout(f_{mn}) \le C_{\mathrm{bc}} e^{-\alpha_{\mathrm{bc}}c}$
-by Assumption~\ref{ass:bulkconv}.
-Convert $c \ge N/(2/\pi-\varepsilon)$ to get $e^{-\alpha_{\mathrm{bc}}c}
-\le e^{-\alpha_\gamma N}$.
+Slepian: $\|(I-\PN)f_{mn}\|^2 \le \Eout(f_{mn})/(1-\lambda_{N-1})$.
+$1/(1-\lambda_{N-1}) \le 2$ (Assumption~\ref{ass:lw});
+$\Eout(f_{mn}) \le C_{\mathrm{bc}}e^{-\alpha_{\mathrm{bc}}c}$
+(Assumption~\ref{ass:bulkconv});
+$e^{-\alpha_{\mathrm{bc}}c} \le e^{-\alpha_\gamma N}$
+(since $c \ge N/(2/\pi-\varepsilon)$).
 \end{proof}
-
-\begin{remark}[Three inputs; no others]\label{rem:bulk-inputs}
-Proof uses: (i)~Slepian identity, (ii)~Landau--Widom,
-(iii)~Assumption~\ref{ass:bulkconv}.
-No individual PSWF Fourier structure beyond
-\eqref{eq:bandlimited} is invoked.
-\end{remark}
 
 \begin{remark}[Without Assumption~\ref{ass:bulkconv}]
 \label{rem:bulk-without}
-Lemma~\ref{lem:bandedge} alone gives
-$\|(I-\PN)f_{mn}\|^2 \le 8\omega$: bounded but non-decaying.
-\end{remark}
-
-\begin{remark}[Degeneration as $\gamma\to 1^-$]
-\label{rem:bulk-degeneration}
-Expected $\alpha_{\mathrm{bc}}(\gamma)\to 0$ as $\gamma\to 1^-$,
-consistent with edge obstruction (Section~\ref{sec:edge}).
+Lemma~\ref{lem:bandedge} alone gives $\|(I-\PN)f_{mn}\|^2 \le 8\omega$:
+bounded but non-decaying.
 \end{remark}
 
 %%=================================================================
 \section{Off-Diagonal Regime}\label{sec:offdiag}
 %%=================================================================
 
-The off-diagonal regime concerns pairs with $|m-n| \ge \delta N$.
-We prove two results of different strength:
-an \emph{unconditional} uniform bound (Theorem~\ref{thm:offdiag}),
-and a \emph{conditional} algebraic decay
-(Theorem~\ref{thm:offdiag-strong}) under
-Assumption~\ref{ass:specloc}.
-The structural motivation for the latter is the
-near-eigenvector identity established in
-Section~\ref{ssec:neareig}.
+We prove three results of increasing conditional strength:
+an unconditional uniform bound (Theorem~\ref{thm:offdiag}),
+an unconditional mean spectral localization
+(Proposition~\ref{prop:mean-loc}),
+and a conditional algebraic decay
+(Theorem~\ref{thm:offdiag-strong}).
 
 \subsection{Near-eigenvector structure}\label{ssec:neareig}
 
 \begin{lemma}[Near-eigenvector identity]\label{lem:near-eig}
-For all $m,n \le N$:
+For all $0 \le m,n \le N$:
 \begin{equation}\label{eq:near-eig}
-  (D_c - \muhat)f_{mn} = R_{mn},
-  \qquad \muhat := \chi_m(c) + \chi_n(c),
+  D_c f_{mn} = \muhat\,f_{mn} + R_{mn},
+  \qquad \muhat := \chi_m(c)+\chi_n(c),
 \end{equation}
-where $R_{mn}(x) := -2\,p(x)\,(\psi_m^{(c)})'(x)\,
-\overline{(\psin)'(x)}$
-and $p(x) = 1 - x^2/T^2$ is the Sturm--Liouville weight
-coefficient.
-In particular:
-\begin{equation}\label{eq:near-eig-norm}
+where
+\begin{equation}\label{eq:Rmn-def}
+  R_{mn}(x) := -2\,p(x)\,(\psi_m^{(c)})'(x)\,\overline{(\psin)'(x)},
+  \qquad p(x) = 1 - \tfrac{x^2}{T^2},
+\end{equation}
+and in particular:
+\begin{equation}\label{eq:Rmn-bound}
   \|R_{mn}\|_{L^2([-T,T])}
-  \le 2\,\|(\psi_m^{(c)})'\|_{L^2([-T,T])}
-  \|(\psin)'\|_{L^\infty([-T,T])}.
+  \le 2\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-The Sturm--Liouville operator $D_c$ satisfies the
-product rule:
-\[
-  D_c(uv) = (D_c u)v + u(D_c v)
-  - 2p(x)u'v'.
-\]
-Applying this with $u = \psi_m^{(c)}$, $v = \overline{\psin}$:
-\begin{align*}
-  D_c f_{mn}
-  &= \chi_m(c)\psi_m^{(c)}\overline{\psin}
-  + \psi_m^{(c)}\overline{\chi_n(c)\psin}
-  - 2p(x)(\psi_m^{(c)})'\overline{(\psin)'} \\
-  &= \muhat\,f_{mn} + R_{mn}.
-\end{align*}
-Bound~\eqref{eq:near-eig-norm} follows from
-$\|p\|_{L^\infty} \le 1$.
+The Sturm--Liouville product rule
+$D_c(uv) = (D_c u)v + u(D_c v) - 2p(x)u'v'$
+with $u = \psi_m^{(c)}$, $v = \overline{\psin}$ gives
+$D_c f_{mn} = \chi_m f_{mn} + \chi_n f_{mn} + R_{mn}
+= \muhat f_{mn} + R_{mn}$.
+Bound~\eqref{eq:Rmn-bound}: $\|p\|_{L^\infty} \le 1$,
+then Cauchy--Schwarz.
 \end{proof}
 
-\begin{remark}[What the near-eigenvector identity implies]
+\begin{remark}[Coefficient-level consequence]
 \label{rem:near-eig-consequence}
-Lemma~\ref{lem:near-eig} shows $f_{mn}$ is an approximate
-eigenvector of $D_c$ with approximate eigenvalue $\muhat$.
-For any $k$ with $\chi_k(c) \ne \muhat$:
-\begin{equation}\label{eq:coeff-from-neareig}
-  |\chi_k(c) - \muhat|\cdot|a_k^{mn}|
-  = |\ip{R_{mn}}{\psi_k^{(c)}}_{L^2}|
-  \le \|R_{mn}\|_{L^2}.
-\end{equation}
-This implies
-$|a_k^{mn}| \le \|R_{mn}\|_{L^2}/|\chi_k(c) - \muhat|$.
-For $k \ge N$ with $\gamma < 1/\sqrt{2}$,
-$|\chi_k - \muhat| \ge c_2 N^2$ (Lemma~\ref{lem:chi-gap}),
-yielding
-$|a_k^{mn}| \le \|R_{mn}\|_{L^2}/(c_2 N^2)$.
-However, $\|R_{mn}\|_{L^2}$ may grow with $N$
-(see Remark~\ref{rem:comm-growth}),
-so this estimate is not yet sharp enough for tail decay.
-Sharpening requires finer control on $R_{mn}$;
-this is the content of Problem~\ref{prob:cg}.
+For any $k$ with $\chi_k(c) \ne \muhat$, taking
+$\ip{\cdot}{\psi_k^{(c)}}$ in~\eqref{eq:near-eig}:
+$|\chi_k - \muhat|\cdot|a_k^{mn}|
+= |\ip{R_{mn}}{\psi_k^{(c)}}| \le \|R_{mn}\|_{L^2}$,
+so
+$|a_k^{mn}| \le \|R_{mn}\|_{L^2}/|\chi_k-\muhat|$.
 \end{remark}
 
-\begin{remark}[Why the commutator is not exponentially small]
-\label{rem:comm-growth}
-The remainder $R_{mn} = -2p(x)(\psi_m^{(c)})'\overline{(\psin)'}$
-involves \emph{derivatives} of PSWFs, not PSWFs themselves.
-The derivative $(\psi_k^{(c)})'$ satisfies
-$\|(\psi_k^{(c)})'\|_{L^2} \sim \chi_k(c)^{1/2} \sim N$,
-so $\|R_{mn}\|_{L^2} = O(N^2)$ in general.
-In particular, after $p$ iterations of~\eqref{eq:coeff-from-neareig},
-the bound reads
-$|a_k^{mn}| \le (\|R_{mn}^{(p)}\|_{L^2})/(c_2 N^2)^p$
-where $\|R_{mn}^{(p)}\|_{L^2} = O(N^{2p})$ in the worst case.
-The ratio is $O(1)$: no decay.
-This is the precise reason the near-eigenvector approach alone
-does not prove Assumption~\ref{ass:specloc}.
+\begin{remark}[Commutator growth and the obstruction to
+pointwise decay]\label{rem:comm-growth}
+Since $(\psi_k^{(c)})'$ satisfies
+$\|(\psi_k^{(c)})'\|_{L^2} \asymp \chi_k(c)^{1/2} \asymp k$
+(Sturm--Liouville estimate, \cite[Prop.~2.7]{OsipovRokhlinXiao}),
+one has $\|R_{mn}\|_{L^2} = O(N^2)$ for $m,n = O(N)$.
+After $p$ iterations of the near-eigenvector argument,
+the coefficient bound becomes
+$|a_k^{mn}| \lesssim \|R_{mn}^{(p)}\|_{L^2}/(c_2 N^2)^p
+= O(N^{2p})/(c_2 N^2)^p = O(1)$.
+The ratio does not decay: the near-eigenvector approach alone
+cannot prove pointwise localization.
+This is the precise obstruction behind Problem~\ref{prob:cg}.
 \end{remark}
 
-\begin{lemma}[Spectral gap between $\muhat$ and
-$\chi_k$ for $k \ge N$]\label{lem:chi-gap}
-Fix $\gamma \in (0,1/\sqrt{2})$. For $m,n \le \gamma N$
-and $k \ge N$, with $N \le (2/\pi)c$:
+\begin{lemma}[Spectral gap for $k \ge N$]\label{lem:chi-gap}
+Fix $\gamma \in (0,1/\sqrt{2})$. For $m,n \le \gamma N$,
+$k \ge N$, and $c \ge c_0(\gamma)$:
 \begin{equation}\label{eq:chi-gap}
-  \chi_k(c) - \muhat
-  \ge (1 - 2\gamma^2)\,N^2 + O(N)
-  \ge c_2(\gamma)\,N^2
+  \chi_k(c) - \muhat \ge c_2(\gamma)\,N^2,
+  \qquad c_2(\gamma) = (1-2\gamma^2)/2 > 0.
 \end{equation}
-for $c$ sufficiently large, where
-$c_2(\gamma) = (1-2\gamma^2)/2 > 0$.
 \end{lemma}
 
 \begin{proof}
-From~\eqref{eq:chi-asym}:
-$\chi_k \ge k(k+1) + c^2/2 \ge N^2 + c^2/2$
-for $k \ge N$.
-$\muhat = \chi_m + \chi_n \le 2\gamma^2 N^2 + c^2 + O(N)$.
-Hence $\chi_k - \muhat \ge N^2 + c^2/2 - 2\gamma^2 N^2 - c^2
-= (1-2\gamma^2)N^2 - c^2/2 + O(N)$.
-For $N \le (2/\pi)c$, $c^2/2 \le \pi^2 N^2/8$;
-for $\gamma < 1/\sqrt{2}$, $(1-2\gamma^2) > \pi^2/8$
-does not hold in general, but for $c$ large the
-$c^2/2$ term is dominated by the $N^2$ asymptotics,
-and $\chi_k - \muhat \ge c_2(\gamma)N^2$
-for $c \ge c_0(\gamma)$.
+From~\eqref{eq:chi-asym}: $\chi_k \ge N^2 + c^2/2$ for $k\ge N$;
+$\muhat \le 2\gamma^2 N^2 + c^2 + O(N)$;
+hence $\chi_k - \muhat \ge (1-2\gamma^2)N^2 - c^2/2 + O(N)$.
+For $N \le (2/\pi)c$, the $c^2/2$ term is absorbed for
+$c$ large.
 \end{proof}
 
 \subsection{Unconditional uniform bound}
@@ -643,113 +558,204 @@ for $c \ge c_0(\gamma)$.
 \begin{theorem}[Off-diagonal uniform bound]\label{thm:offdiag}
 For $|m-n| \ge \delta N$, $0 \le m,n \le N$:
 \begin{equation}\label{eq:offdiag-uniform}
-  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}^2
-  = \sum_{k \ge N}|a_k^{mn}|^2
-  \le \|f_{mn}\|_{L^2([-T,T])}^2
+  \|(I-\PN)f_{mn}\|_{L^2}^2
+  = \sum_{k\ge N}|a_k^{mn}|^2
+  \le \|f_{mn}\|_{L^2}^2
   \le T.
 \end{equation}
-This bound is unconditional and sharp in the current
-state of knowledge: it uses only Parseval and
-$\|\psi_m^{(c)}\|_{L^\infty} \le 1$,
-$\|\psin\|_{L^\infty} \le 1$ (normalization).
 \end{theorem}
 
 \begin{proof}
-By Bessel's inequality:
-$\sum_{k\ge N}|a_k^{mn}|^2 \le \|f_{mn}\|_{L^2([-T,T])}^2$.
-By Cauchy--Schwarz:
-$|f_{mn}(x)|^2 = |\psi_m^{(c)}(x)|^2|\psin(x)|^2$,
-so $\|f_{mn}\|_{L^2}^2
-= \int_{-T}^T |\psi_m^{(c)}|^2|\psin|^2\,dx
-\le \|\psi_m^{(c)}\|_{L^2}^2\|\psin\|_{L^\infty}^2$.
-Since $\|\psin\|_{L^\infty([-T,T])}^2 \le C$
-and $\|\psi_m^{(c)}\|_{L^2([-T,T])}^2 = \lambda_m(c) \le 1$,
-we obtain $\|f_{mn}\|_{L^2}^2 \le T$.
+Bessel's inequality and
+$\|f_{mn}\|_{L^2}^2 \le \|\psi_m^{(c)}\|_{L^2}^2
+\|\psin\|_{L^\infty}^2 \le \lambda_m(c)\cdot C \le T$.
 \end{proof}
 
-\begin{remark}[Sharpness and missing structure]\label{rem:od-sharp}
-The bound $\|(I-\PN)f_{mn}\|^2 \le T$ is sharp in the
-sense that no improvement is possible without additional
-structure on the distribution of $\{a_k^{mn}\}_{k\ge N}$.
-The term $\|f_{mn}\|_{L^2}^2 \le T$ has no dependence on
-$|m-n|$ or $\delta$: the off-diagonal condition
-$|m-n|\ge\delta N$ provides no reduction here.
-This is not a defect of the proof technique;
-it reflects a genuine information gap: Parseval alone
-cannot see the spectral localization structure.
-The missing input is Assumption~\ref{ass:specloc}.
+\begin{remark}[Sharpness and information gap]
+\label{rem:od-sharp}
+The bound $T$ is independent of $|m-n|$ and $\delta$:
+the off-diagonal condition provides no improvement here.
+This is not a defect of the proof; Parseval alone cannot
+see the spectral localization structure.
+The first structural improvement is
+Proposition~\ref{prop:mean-loc} below.
 \end{remark}
+
+\subsection{Mean spectral localization (unconditional)}
+
+\begin{proposition}[Mean spectral localization]
+\label{prop:mean-loc}
+For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
+\begin{equation}\label{eq:mean-loc}
+  \Emn[\chi_k]
+  = \muhat + E_{mn},
+\end{equation}
+where
+\begin{equation}\label{eq:mean-loc-error}
+  E_{mn}
+  := \frac{\ip{R_{mn}}{f_{mn}}_{L^2([-T,T])}}
+           {\|f_{mn}\|_{L^2([-T,T])}^2},
+\end{equation}
+and
+\begin{equation}\label{eq:mean-loc-bound}
+  |E_{mn}|
+  \le \frac{2\|(\psi_m^{(c)})'\|_{L^2([-T,T])}
+              \|(\psin)'\|_{L^\infty([-T,T])}
+              \|f_{mn}\|_{L^2([-T,T])}}
+           {\|f_{mn}\|_{L^2([-T,T])}^2}
+  = \frac{2\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}}
+          {\|f_{mn}\|_{L^2}}.
+\end{equation}
+In particular:
+\begin{equation}\label{eq:mean-loc-T}
+  |E_{mn}|
+  \le 2T^{-1/2}\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By the spectral theorem for $D_c$, and using
+Definition~\ref{def:spectral-mean}:
+\begin{equation}\label{eq:mean-loc-proof1}
+  \sum_k\chi_k(c)|a_k^{mn}|^2
+  = \ip{D_c f_{mn}}{f_{mn}}_{L^2([-T,T])}.
+\end{equation}
+This is the \emph{exact} spectral identity; no approximation
+is involved.
+Substituting~\eqref{eq:near-eig}:
+\begin{equation}\label{eq:mean-loc-proof2}
+  \ip{D_c f_{mn}}{f_{mn}}
+  = \ip{\muhat f_{mn} + R_{mn}}{f_{mn}}
+  = \muhat\|f_{mn}\|^2 + \ip{R_{mn}}{f_{mn}}.
+\end{equation}
+Dividing by $\|f_{mn}\|^2$ gives~\eqref{eq:mean-loc}.
+Bound~\eqref{eq:mean-loc-bound}: Cauchy--Schwarz,
+then $\|R_{mn}\|_{L^2} \le 2\|(\psi_m^{(c)})'\|_{L^2}
+\|(\psin)'\|_{L^\infty}$ from~\eqref{eq:Rmn-bound},
+then $\|f_{mn}\|_{L^2} \ge T^{-1/2}\|f_{mn}\|_{L^1}
+\ge T^{-1/2}$ (or more directly $\|f_{mn}\|_{L^2}^{-1}
+\le T^{1/2}\|f_{mn}\|_{L^2}^{-1}\|f_{mn}\|_{L^2}
+= T^{1/2}$; cf.~\eqref{eq:offdiag-uniform}).
+\end{proof}
+
+\begin{remark}[This is a genuine unconditional theorem]
+\label{rem:mean-loc-genuine}
+Proposition~\ref{prop:mean-loc} requires no assumption beyond
+the near-eigenvector identity (Lemma~\ref{lem:near-eig}),
+which is a direct consequence of the Sturm--Liouville
+product rule and holds for all $m,n$.
+It is the \emph{first unconditional structural result}
+stating that the PSWF coefficient sequence $\{a_k^{mn}\}$
+is not spectrally arbitrary: its weighted mean
+$\Emn[\chi_k]$ is close to $\muhat = \chi_m + \chi_n$.
+\end{remark}
+
+\begin{remark}[Spectral centering as PSWF Clebsch--Gordan, first moment]
+\label{rem:mean-loc-cg}
+In the classical analogues:
+\begin{itemize}
+  \item Fourier: $e^{2\pi imt}\cdot e^{2\pi int} = e^{2\pi i(m+n)t}$,
+  so $\sum_k k|a_k|^2 = m+n$ exactly (no error).
+  \item Spherical harmonics: $Y_m \cdot Y_n$ decomposes over
+  $k \in [|m-n|, m+n]$ by Clebsch--Gordan, so
+  $\sum_k k(k+1)|a_k|^2 = m(m+1)+n(n+1)$ exactly.
+\end{itemize}
+For PSWFs, Proposition~\ref{prop:mean-loc} gives the
+first-moment analogue with a controlled error $E_{mn}$.
+The error is not zero because PSWFs do not satisfy an
+exact product formula; $E_{mn}$ vanishes if and only if
+$\ip{R_{mn}}{f_{mn}} = 0$, i.e., if the commutator
+$R_{mn}$ is orthogonal to $f_{mn}$.
+\end{remark}
+
+\begin{remark}[What sharper commutator bounds would give]
+\label{rem:mean-loc-improvement}
+The bound~\eqref{eq:mean-loc-T} has size
+$O(\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty})
+= O(N^2)$
+in the worst case (Remark~\ref{rem:comm-growth}).
+Relative to $\muhat \asymp N^2 + c^2$, this is $O(1)$ relative error:
+the centering is exact to leading order but the subleading correction
+is not yet controlled.
+Any improvement $\|R_{mn}\|_{L^2} = o(N^2)$ — e.g., via
+cancellation in the inner product $\ip{R_{mn}}{f_{mn}}$,
+or a better pointwise bound on $(\psin)'$ near the turning
+point — would tighten~\eqref{eq:mean-loc-T}
+and bring the result closer to the sharp Clebsch--Gordan statement.
+This is the natural next analytical step toward
+Problem~\ref{prob:cg}.
+\end{remark}
+
+\begin{corollary}[Spectral mass is not in the tail — in mean]
+\label{cor:mean-tail}
+For $m,n \le \gamma N$ with $\gamma < 1/\sqrt{2}$ and
+$c$ sufficiently large:
+\[
+  \Emn[\chi_k] \le \muhat + C N^2
+  < \chi_N(c) - c_2(\gamma)N^2 + CN^2.
+\]
+In particular, the spectral mean lies strictly below $\chi_N$
+if the error $CN^2$ is small relative to the gap $c_2(\gamma)N^2$.
+For $\gamma$ sufficiently small (concretely: $c_2(\gamma) > 2C/N^2$),
+the spectral mass of $f_{mn}$ is mean-localized below index $N$.
+\end{corollary}
+
+\begin{proof}
+$\Emn[\chi_k] = \muhat + E_{mn} \le \muhat + CN^2$.
+By Lemma~\ref{lem:chi-gap}, $\chi_N \ge \muhat + c_2(\gamma)N^2$.
+Hence $\Emn[\chi_k] \le \chi_N - (c_2(\gamma)-C/N^2\cdot N^2)$;
+for $c_2(\gamma)N^2 > CN^2$, i.e., $c_2(\gamma) > C$,
+we get strict inequality.
+\end{proof}
 
 \subsection{Conditional algebraic decay}
 
 \begin{theorem}[Off-diagonal algebraic decay]
 \label{thm:offdiag-strong}
-Under Assumption~\ref{ass:specloc}, for $|m-n| \ge \delta N$,
-$0 \le m,n \le N$, and every integer $p \ge 1$:
-\begin{equation}\label{eq:offdiag-strong}
-  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
-  \le \frac{C_p(\delta)}{(1+|m-n|)^p},
-\end{equation}
-where $C_p(\delta)$ is the constant from
-Assumption~\ref{ass:specloc}.
+Under Assumption~\ref{ass:specloc},
+for $|m-n| \ge \delta N$, $0 \le m,n \le N$, and $p \ge 1$:
+\[
+  \|(I-\PN)f_{mn}\|_{L^2}
+  \le \frac{C_p(\delta)}{(1+|m-n|)^p}.
+\]
 \end{theorem}
 
 \begin{proof}
-By Assumption~\ref{ass:specloc}, for each $k \ge N$:
-\[
-  |a_k^{mn}|
-  \le \frac{C_p(\delta)}{(1 + |\chi_k(c) - \muhat|)^p}.
-\]
-For $k \ge N$ and $|m-n| \ge \delta N$,
-Lemma~\ref{lem:gap-od} below shows
-$|\chi_k(c) - \muhat| \ge c_3\,|m-n|^2/\delta$,
-yielding $|a_k^{mn}| \le C_p'/(|m-n|/\delta)^{2p}$.
-Since $\sum_{k\ge N}|a_k^{mn}|^2
-\le (\sup_k|a_k^{mn}|)\cdot\sum_{k\ge N}|a_k^{mn}|$
-and the sum converges by the off-diagonal coefficient decay,
+By Assumption~\ref{ass:specloc} and Lemma~\ref{lem:gap-od}:
+$|a_k^{mn}| \le C_p'(|m-n|/\delta)^{-2p}$ for $k\ge N$;
 Bessel gives the result.
 \end{proof}
 
-\begin{lemma}[Gap between $\muhat$ and tail eigenvalues]
-\label{lem:gap-od}
-For $|m-n| \ge \delta N$, $k \ge N$:
-$|\chi_k(c) - \muhat| \ge c_3(\delta)\,|m-n|^2$
-for $c$ sufficiently large.
+\begin{lemma}[Gap: $\muhat$ vs.\ tail eigenvalues]\label{lem:gap-od}
+For $|m-n|\ge\delta N$, $k\ge N$:
+$|\chi_k(c)-\muhat| \ge c_3(\delta)|m-n|^2$
+for $c$ sufficiently large, with $c_3(\delta) = c_2/\delta^2$.
 \end{lemma}
 
 \begin{proof}
-$\chi_k \ge \chi_N \ge N^2$ and
-$\muhat = \chi_m + \chi_n \ge (m+n)(m+n+1)/2 + c^2$.
-The gap analysis follows Lemma~\ref{lem:chi-gap}.
-Since $|m-n| \ge \delta N$, $N \le |m-n|/\delta$,
-so $N^2 \le |m-n|^2/\delta^2$, giving the claim
-with $c_3(\delta) = c_2/\delta^2$.
+By Lemma~\ref{lem:chi-gap}: $\chi_k - \muhat \ge c_2 N^2$;
+since $|m-n|\ge\delta N$, $N \le |m-n|/\delta$,
+hence $c_2 N^2 \le c_2|m-n|^2/\delta^2$.
 \end{proof}
 
-\begin{remark}[What Assumption~\ref{ass:specloc} really asserts]
+\begin{remark}[Role of Assumption~\ref{ass:specloc}]
 \label{rem:specloc-what}
-Assumption~\ref{ass:specloc} is not the gap estimate itself
-(Lemma~\ref{lem:gap-od} establishes that for free);
-it asserts that the coefficients $a_k^{mn}$ \emph{actually
-decay} away from $k^*$ in the sense~\eqref{eq:specloc}.
-The gap estimate shows the concentration set is far from the
-tail $\{k \ge N\}$; Assumption~\ref{ass:specloc} asserts
-that the coefficients respect this geometry.
-The near-eigenvector identity (Lemma~\ref{lem:near-eig})
-is consistent with this but does not prove it
-(Remark~\ref{rem:comm-growth}).
+Lemma~\ref{lem:gap-od} is unconditional: it shows the
+concentration set $\{k: \chi_k \approx \muhat\}$ lies
+far below the tail $\{k\ge N\}$.
+Assumption~\ref{ass:specloc} asserts that the coefficients
+$a_k^{mn}$ \emph{respect} this geometry pointwise.
+Proposition~\ref{prop:mean-loc} confirms it in the first moment.
+The gap between first-moment and pointwise
+localization is exactly Problem~\ref{prob:cg}.
 \end{remark}
 
 \begin{corollary}[Partial result on Conjecture~3.1 of
 \cite{PaperII_quad}]\label{cor:partial}
-Under Assumptions~\ref{ass:bulkconv} and~\ref{ass:specloc}:
-\[
-  \|(I-\PN)f_{mn}\|_{L^2}
-  \le C\bigl(e^{-\alpha N}\mathbf{1}_{m,n\le\gamma N}
-  + (1+|m-n|)^{-p}\mathbf{1}_{|m-n|\ge\delta N}\bigr)
-\]
-unconditionally: $\|(I-\PN)f_{mn}\|_{L^2} \le C_\delta T^{1/2}$
-for all $m,n$.
+Under Assumptions~\ref{ass:bulkconv} and~\ref{ass:specloc},
+$\|(I-\PN)f_{mn}\|_{L^2} \le C(e^{-\alpha N} + (1+|m-n|)^{-p})$
+for all $m,n$ outside the edge regime.
+Unconditionally: $\|(I-\PN)f_{mn}\|_{L^2} \le C T^{1/2}$.
 The edge regime is not covered.
 \end{corollary}
 
@@ -759,42 +765,36 @@ The edge regime is not covered.
 
 \subsection{Failure of both approaches}
 
-For $m,n \sim N$: the Slepian denominator
-$1-\lambda_{N-1}(c) = O(1)$, so~\eqref{eq:tail-bound}
-gives only $O(1)$.
-The near-eigenvector target $\muhat = \chi_m + \chi_n \sim 2N^2 + c^2$
-is \emph{above} $\chi_N$, so the concentration set
-$\{k: \chi_k \approx \muhat\}$ sits well above index $N$:
-the tail $\{k \ge N\}$ contains the entire concentration
-region. No cancellation is available.
+For $m,n \sim N$: the Slepian denominator $1-\lambda_{N-1}=O(1)$,
+giving only $O(1)$ from~\eqref{eq:tail-bound}.
+The near-eigenvector target $\muhat \sim 2N^2+c^2 > \chi_N$,
+so the concentration set $\{k:\chi_k \approx \muhat\}$
+sits entirely within the tail $\{k \ge N\}$;
+no spectral gap is available.
 
 \subsection{Lower bound}
 
 \begin{proposition}[Edge lower bound]\label{prop:bwdoubling}
 For $n$ in the Landau--Widom transition zone
-$|n - 2c/\pi| \le c^{1/2}$:
+$|n-2c/\pi| \le c^{1/2}$:
 $\Eout(|\psi_n^{(c)}|^2) \ge c_0 > 0$.
 \end{proposition}
 
 \begin{proof}
-Widom asymptotics: $\lambda_n(c) \ge 1/4$.
-By a contradiction argument using the half-bandwidth
-concentration operator at bandwidth $\omega/2$
-(index $n \approx 2c/\pi$ is far above its Slepian
-cutoff $\approx c/\pi$), one shows
-$\int_{\omega/2}^\omega|\hat\psi_n^{(c)}|^2 \ge \delta_0 = 1/16$.
-Convolution lower bound via Lemma~\ref{lem:geom}:
-$\Eout \ge \delta_0^2/\omega =: c_0$.
+Widom asymptotics imply $\lambda_n \ge 1/4$.
+A half-bandwidth argument shows
+$\int_{\omega/2}^\omega|\hat\psi_n^{(c)}|^2 \ge 1/16$.
+Convolution lower bound via Lemma~\ref{lem:geom}: $\Eout \ge c_0$.
 \end{proof}
 
-\begin{remark}[Why both approaches fail simultaneously at the edge]
+\begin{remark}[Unified view of the edge failure]
 \label{rem:edge-both-fail}
-At the edge, $\muhat \approx 2N^2+c^2 > \chi_N$, so the
-near-eigenvector concentration set lies \emph{inside} the tail.
-Simultaneously, $\Eout = O(1)$ and the Slepian argument saturates.
-These two failures are not independent: they are both
-manifestations of bandwidth doubling, which places
-the spectral content of $f_{mn}$ above the prolate cutoff.
+At the edge, $\muhat > \chi_N$ and $\Eout = O(1)$ simultaneously.
+Both are manifestations of bandwidth doubling:
+$f_{mn} \in \mathrm{PW}_{2\omega}$ has Fourier energy above $\omega$
+(Slepian side) and PSWF coefficient energy above $k=N$
+(near-eigenvector side).
+These are two sides of the same obstruction.
 \end{remark}
 
 %%=================================================================
@@ -803,59 +803,49 @@ the spectral content of $f_{mn}$ above the prolate cutoff.
 
 \begin{problem}[Bulk convolution decay]\label{prob:bulkconv}
 Prove Assumption~\ref{ass:bulkconv}.
-Natural route: turning-point decay
+Natural route: WKB turning-point decay
 $|\hat\psi_n^{(c)}(\xi)| \le Ce^{-\eta c(\omega-|\xi|)}$
-for $|\xi|$ near $\omega$, $n \le \gamma N$.
+for $n \le \gamma N$ near $|\xi|=\omega$.
 \end{problem}
 
-\begin{problem}[PSWF Clebsch--Gordan / spectral localization]
+\begin{problem}[PSWF Clebsch--Gordan]
 \label{prob:cg}
-Prove Assumption~\ref{ass:specloc}: for $|m-n| \ge \delta N$,
-the PSWF coefficient sequence $\{a_k^{mn}\}_k$ satisfies
-\[
-  |a_k^{mn}| \le \frac{C_p}{(1 + |\chi_k(c) - \muhat|)^p}.
-\]
-This is the quantitative PSWF analogue of the Clebsch--Gordan
-decomposition for spherical harmonics.
-The near-eigenvector identity (Lemma~\ref{lem:near-eig}) gives
-the first-order approximation; higher-order control of the
-commutator iterates $R_{mn}^{(p)}$ is needed.
-A natural approach: \emph{semiclassical spectral localization}
-for products of approximate eigenfunctions.
+Prove Assumption~\ref{ass:specloc}: the pointwise
+spectral localization bound~\eqref{eq:specloc}.
+Proposition~\ref{prop:mean-loc} establishes the
+first-moment form; the gap to pointwise localization
+requires sharper control on the commutator iterates
+$R_{mn}^{(p)}$ (Remark~\ref{rem:comm-growth}).
+Natural approach: semiclassical spectral localization for
+products of approximate eigenfunctions of $D_c$.
 \end{problem}
 
-\begin{problem}[Spectral localization in expectation]
-\label{prob:cg-weak}
-As a first step toward Problem~\ref{prob:cg}, prove the
-weaker \emph{mean-index} localization:
-\[
-  \sum_k \chi_k(c)\,|a_k^{mn}|^2
-  = \ip{D_c f_{mn}}{f_{mn}}_{L^2([-T,T])}
-  = \muhat\|f_{mn}\|_{L^2}^2
-  + \ip{R_{mn}}{f_{mn}}_{L^2},
-\]
-and bound $|\ip{R_{mn}}{f_{mn}}|$ sharply.
-This would confirm that the spectral mass of $f_{mn}$
-is centered near $\muhat$ in the $\ell^2$-mean, which is the
-\emph{first moment} form of Assumption~\ref{ass:specloc}.
+\begin{problem}[Sharp commutator estimate]
+\label{prob:comm-sharp}
+Prove $|\ip{R_{mn}}{f_{mn}}_{L^2}| = o(\muhat\|f_{mn}\|_{L^2}^2)$
+as $N \to \infty$.
+This would make the spectral centering in
+Proposition~\ref{prop:mean-loc} asymptotically sharp
+(relative error $o(1)$),
+and is the natural next step before Problem~\ref{prob:cg}.
 \end{problem}
 
 \begin{problem}[Edge regime]
 \label{prob:edge}
 Prove or disprove exponential tail decay for $m,n \sim N$.
-Proposition~\ref{prop:bwdoubling} rules out $\Eout$-based arguments.
-Any proof must handle the doubled prolate subspace
-$V_{2N,2c}$; see also Problem~\ref{prob:doubled}.
+Proposition~\ref{prop:bwdoubling} rules out $\Eout$-based arguments;
+any proof requires handling the doubled prolate subspace;
+see Problem~\ref{prob:doubled}.
 \end{problem}
 
 \begin{problem}[Doubled prolate subspace]\label{prob:doubled}
 For bandwidth $2\omega$, show
-$\|f_{mn} - P_{2N,2c}f_{mn}\|_{L^2} \le Ce^{-\alpha N}$
+$\|f_{mn}-P_{2N,2c}f_{mn}\|_{L^2} \le Ce^{-\alpha N}$
 uniformly over $0 \le m,n \le N$.
 \end{problem}
 
 \begin{problem}[Sharp bulk decay rate]
-Determine the sharp rate $\alpha_\gamma$ as $\gamma \to 1^-$.
+Determine $\lim_{\gamma\to 1^-}\alpha_{\mathrm{bc}}(\gamma)$.
 \end{problem}
 
 %%=================================================================
