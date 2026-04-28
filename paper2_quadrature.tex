@@ -45,7 +45,10 @@ The present paper does not prove that assumption outright. Instead, it
 organises the problem into two explicit conjectural components: a PSWF
 product spectral tail conjecture and an XRY spectral stability conjecture.
 Their combination yields a conditional verification mechanism for the
-compatibility assumption used in \cite{PaperI}.}
+compatibility assumption used in \cite{PaperI}.
+The PSWF product tail conjecture (Conjecture~\ref{conj:pswf_product_tail})
+is now known to be false as a global uniform statement;
+the edge obstruction is documented in \cite{PaperIII}.}
 
 \author{Anonymous Author}
 \address{}
@@ -56,7 +59,8 @@ compatibility assumption used in \cite{PaperI}.}
 
 \keywords{prolate spheroidal wave functions, PSWF-Gauss quadrature,
 finite frames, frame stability, Gram operator, spectral projection,
-quadrature compatibility, Xiao--Rokhlin--Yarvin, exponential convergence}
+quadrature compatibility, Xiao--Rokhlin--Yarvin, exponential convergence,
+edge obstruction, bandwidth doubling}
 
 \begin{document}
 \maketitle
@@ -75,13 +79,16 @@ conjectural inputs. First, one needs a PSWF product spectral tail statement
 for the analytic product family
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ in the relevant index regime.
 Second, one needs an XRY spectral stability statement on the same family.
-Assuming these two conjectural inputs, one obtains the conditional defect
-estimate
+Assuming these two conjectural inputs in the bulk and off-diagonal regimes,
+one obtains the conditional defect estimate
 \[
-  |E_{mn}| \le C e^{-\alpha N} \qquad (0\le m,n\le N-1).
+  |E_{mn}| \le C e^{-\alpha N} \qquad (0\le m,n\le N-1,\; m,n\le\gamma N).
 \]
-Therefore Assumption~3.10 of \cite{PaperI} is verified conditionally, and
-the frame stability theorem of \cite{PaperI} applies to PSWF-Gauss sampling.
+The edge regime $m,n\sim N$ is identified as an obstruction:
+no uniform exponential bound of this form can hold globally,
+as proved in \cite{PaperIII} via a bandwidth doubling argument.
+Consequently, the conditional implication of \cite{PaperI} applies
+in the bulk and off-diagonal regimes under the stated inputs.
 \end{abstract}
 
 \tableofcontents
@@ -115,7 +122,12 @@ Its contribution is an implication framework: for XRY PSWF-Gauss quadrature,
 Assumption~3.10 of \cite{PaperI} follows from two separate conjectural
 inputs, namely a PSWF product spectral tail conjecture and an XRY spectral
 stability conjecture on the relevant product family
-$f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$.
+$f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$, restricted to the bulk
+and off-diagonal regimes.
+The companion paper \cite{PaperIII} has since established that a
+globally uniform exponential bound is false at the edge ($m,n\sim N$)
+due to bandwidth doubling; see Conjecture~\ref{conj:pswf_product_tail}(iii)
+and Remark~\ref{rem:edge-failure}.
 
 \subsection*{Strategy of this paper}
 
@@ -124,8 +136,8 @@ analytical inputs:
 \begin{enumerate}[(i)]
 \item \emph{PSWF product spectral tail conjecture.} The product integrands
   $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ are expected to admit
-  sufficiently uniform PSWF spectral tail decay in the regime
-  $0\le m,n\le N\sim c$.
+  sufficiently uniform PSWF spectral tail decay in the bulk and
+  off-diagonal regimes. The edge regime is an obstruction.
 \item \emph{XRY spectral stability conjecture.} The XRY quadrature
   functional $Q_N$ is expected to satisfy a stability bound on the same
   product family, controlled by the PSWF spectral truncation error
@@ -140,14 +152,18 @@ with the perturbative passage from that condition to frame stability.
 \subsection*{Main result}
 
 \begin{theorem}[Conditional implication theorem]\label{thm:main_informal}
-Assume Conjectures~\ref{conj:pswf_product_tail} and~\ref{conj:xry_stability},
+Assume parts~(i) and~(ii) of Conjecture~\ref{conj:pswf_product_tail}
+and Conjecture~\ref{conj:xry_stability},
 together with the auxiliary technical hypotheses stated in
-Assumptions~\ref{ass:pswf_sup}, \ref{ass:node_sep}, and~\ref{ass:weights}.
+Assumptions~\ref{ass:pswf_sup}, \ref{ass:node_sep}, and~\ref{ass:weights},
+restricted to the bulk regime $m,n\le\gamma N$.
 Then for PSWF-Gauss quadrature rules \cite{Xiao2001}, the quadrature defect
-satisfies $|E_{mn}|\le Ce^{-\alpha N}$ for all $0\le m,n\le N-1$.
-Consequently, Assumption~3.10 of \cite{PaperI} holds conditionally on the
-same inputs, and the frame stability theorem of \cite{PaperI} applies to
-PSWF-Gauss sampling.
+satisfies $|E_{mn}|\le Ce^{-\alpha N}$ for all $0\le m,n\le\gamma N$.
+Consequently, Assumption~3.10 of \cite{PaperI} holds conditionally
+in the bulk and off-diagonal regimes, and the frame stability theorem
+of \cite{PaperI} applies to PSWF-Gauss sampling in those regimes.
+The edge regime $m,n\sim N$ is excluded; see part~(iii) of
+Conjecture~\ref{conj:pswf_product_tail} and \cite{PaperIII}.
 \end{theorem}
 
 The formal version is Theorem~\ref{thm:compatibility_verified} together
@@ -166,6 +182,11 @@ classical analysis paper deriving the conclusion from weaker previously
 established estimates; rather, it makes explicit where the unresolved
 analytic burden lies and how the downstream frame-theoretic conclusion would
 follow once those inputs are available.
+Paper~III \cite{PaperIII} has since resolved the edge question negatively
+and has established unconditional first-moment spectral localization
+in the off-diagonal regime; these results are incorporated into
+Conjecture~\ref{conj:pswf_product_tail} and Remarks~\ref{rem:bottleneck}
+and~\ref{rem:edge-failure} below.
 
 \subsection*{Organisation}
 
@@ -249,11 +270,9 @@ By Assumption~\ref{ass:pswf_sup},
 $\norm{\psi_m^{(c)}}_{L^\infty([-T,T])}\le C_{\infty}$ uniformly in the
 bulk regime, while $\norm{\psi_n^{(c)}}_{L^2([-T,T])}=1$ by orthonormality.
 Hence
-\[
-  \norm{f_{mn}}_{L^2}
+$\norm{f_{mn}}_{L^2}
   \le \norm{\psi_m^{(c)}}_{L^\infty}\norm{\psi_n^{(c)}}_{L^2}
-  \le C_{\infty}.
-\]
+  \le C_{\infty}.$
 \end{proof}
 
 \begin{remark}[Role of the product norm bound]\label{rem:generic_bound}
@@ -269,38 +288,127 @@ The family $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ is not known to enjoy
 any finite-dimensional closure property in the PSWF basis. Thus a uniform
 spectral-tail statement for $0\le m,n\le N\sim c$ is not a routine corollary
 of standard PSWF approximation results, but a separate open analytical
-problem.
+problem — and one that is now known to have a negative answer at the edge;
+see part~(iii) below.
 \end{remark}
 
-\begin{conjecture}[PSWF product spectral tail conjecture]\label{conj:pswf_product_tail}
+\begin{conjecture}[PSWF product spectral tail — revised]\label{conj:pswf_product_tail}
 For the family
-\[
-  \mathcal{F}_N:=\{\psi_m^{(c)}\overline{\psi_n^{(c)}}:0\le m,n\le N\},
-\]
-the following hierarchy is expected to hold in the regime $N\sim c$:
+$\mathcal{F}_N:=\{\psi_m^{(c)}\overline{\psi_n^{(c)}}:0\le m,n\le N\}$
+and the regime $N\sim c$:
+
 \begin{enumerate}[(i)]
-\item \emph{Off-diagonal control.} For $|m-n|\gg 1$, the tails
-  $\|(I-\PN)f_{mn}\|_{L^2([-T,T])}$ satisfy an exponentially decaying bound
-  with constants uniform away from the diagonal.
-\item \emph{Bulk control.} For $m,n\le \gamma N$ with fixed $\gamma<1$,
-  the same bound holds with constants uniform in the bulk.
-\item \emph{Uniform control up to the relevant index range.} There exist
-  constants $C,\alpha>0$ and a sequence $\varepsilon_N\downarrow0$ such that
-  for every $f_{mn}\in\mathcal{F}_N$,
-  \[
-    \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
-    \le C e^{-(\alpha-\varepsilon_N)N}
-    \qquad(0\le m,n\le N\sim c).
-  \]
+\item \emph{Bulk regime.}
+For $m,n\le \gamma N$ with fixed $\gamma<1$,
+there exist constants $C_{\mathrm{b}}(\gamma),\alpha_{\mathrm{b}}(\gamma)>0$
+such that
+\[
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
+  \le C_{\mathrm{b}}\,e^{-\alpha_{\mathrm{b}} N}
+\]
+uniformly in $m,n\le\gamma N$.
+This is the regime used in the conditional implication of this paper.
+A proof route via exponential convolution decay of PSWF Fourier tails
+is identified as Problem~\ref{prob:bulkconj}.
+
+\item \emph{Off-diagonal regime.}
+For $|m-n|\ge\delta N$ with fixed $\delta>0$,
+there exist $C_p(\delta)>0$ for every $p\ge1$ such that
+\[
+  \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
+  \le C_p(\delta)\,(1+|m-n|)^{-p}
+\]
+uniformly over $0\le m,n\le N$.
+Conditional pointwise spectral localization supporting this
+estimate is Assumption~3.1 of \cite{PaperIII}.
+An unconditional uniform $L^2$ bound
+$\|(I-\PN)f_{mn}\|\le C T^{1/2}$ holds without assumptions
+(Theorem~1 of \cite{PaperIII}); the algebraic-decay
+form above requires additional structural input.
+
+\item \emph{Edge obstruction (proved).}
+No uniform exponential bound of the form in~(i) can hold for indices
+approaching the edge $m,n\sim N$.
+Precisely: for $n$ in the Landau--Widom transition zone
+$|n - 2c/\pi|\le c^{1/2}$, the bandwidth doubling of
+$\widehat{f_{nn}}=\hat\psi_n^{(c)}*\hat\psi_n^{(c)}$ implies
+\[
+  \mathcal{E}_{\mathrm{out}}(f_{nn}) \ge c_0 > 0,
+\]
+so the Slepian bound cannot yield exponential tail decay
+(Proposition~4.1 of \cite{PaperIII}).
+This is the fundamental obstruction to a globally uniform statement
+and is not a conjecture but a proved fact.
 \end{enumerate}
-The third statement is the form actually used in the sequel. The preceding
-staging is included to reflect a possible route toward verification and to
-avoid suggesting that a fully uniform bound is the only reasonable entry
-point. The strongest and most vulnerable part of this conjecture is the
-uniformity near the edge regime $m,n\sim N$, where PSWF regularity is
-expected to deteriorate and where any proof would have to control possible
-collapse of effective analyticity widths.
+
+The form actually used in the conditional implication of this paper
+is part~(i). Parts~(ii) and~(iii) record the current state
+of knowledge and the limits of the global conjecture.
 \end{conjecture}
+
+\begin{remark}[Edge failure is structural, not technical]\label{rem:edge-failure}
+Part~(iii) is not a limitation of the proof method.
+Bandwidth doubling forces $\operatorname{supp}\widehat{f_{mn}}\subset[-2\omega,2\omega]$,
+so the out-of-band energy $\mathcal{E}_{\mathrm{out}}(f_{mn})$
+measures the Fourier mass of $f_{mn}$ in $(\omega,2\omega)$.
+For edge indices this mass is bounded away from zero uniformly in $N$.
+Consequently, any argument based on the Slepian energy identity fails
+at the edge, regardless of how refined the analysis is.
+The edge regime must be handled — if at all — by entirely different methods.
+\end{remark}
+
+\begin{remark}[Refined bottleneck: from absence of structure to
+explicit energy gap]\label{rem:bottleneck}
+The companion paper \cite{PaperIII} has established two unconditional
+results that replace the previously open structural question with
+a precisely identified analytic gap:
+\begin{enumerate}[(a)]
+\item \emph{Mean spectral localization} (Proposition~3.2 of
+  \cite{PaperIII}): for all $0\le m,n\le N$,
+  \[
+    \mathbb{E}_{mn}[\chi_k] = \mu_{mn} + E_{mn},
+  \]
+  where $\mu_{mn}=\chi_m(c)+\chi_n(c)$ and $E_{mn}$ is given
+  by an explicit energy formula.
+\item \emph{Spectral lower bound} (Proposition~3.3 of \cite{PaperIII}):
+  \[
+    \mathbb{E}_{mn}[\chi_k] \ge \mu_{mn}/2
+  \]
+  unconditionally for all $0\le m,n\le N$ with $f_{mn}\not\equiv0$.
+\end{enumerate}
+The obstruction is therefore no longer the absence of intermediate
+structure, but rather the lack of sufficiently sharp control on the
+weighted energy terms in the commutator identity:
+specifically, whether the kinetic and potential contributions average
+to approximately $\mu_{mn}/2$ under the product measure $\psi_m^2\psi_n^2\,dx$.
+This is an energy equidistribution problem with a semiclassical character;
+see Problem~4.2 of \cite{PaperIII}.
+\end{remark}
+
+\begin{remark}[Unconditional vs.\ conditional tail bounds]\label{rem:unconditional-gap}
+Paper~III \cite{PaperIII} provides the following hierarchy
+of unconditional results in the off-diagonal regime ($|m-n|\ge\delta N$):
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+Bound & Status & Source \\
+\midrule
+$\|(I-\PN)f_{mn}\|\le CT^{1/2}$ & \textbf{unconditional} & Thm.~1 of \cite{PaperIII} \\
+$\mathbb{E}_{mn}[\chi_k]\ge\mu_{mn}/2$ & \textbf{unconditional} & Prop.~3.3 of \cite{PaperIII} \\
+$\|(I-\PN)f_{mn}\|\le C_p(1+|m-n|)^{-p}$ & conditional & Thm.~2 of \cite{PaperIII} \\
+\bottomrule
+\end{tabular}
+\end{center}
+The unconditional $T^{1/2}$ bound does not exhibit decay in $|m-n|$
+and is therefore insufficient for the exponential defect estimate
+required by \cite{PaperI} without the additional structural input
+of Conjecture~\ref{conj:pswf_product_tail}(ii).
+Any quantitative improvement toward algebraic or exponential decay
+requires either the semiclassical energy equidistribution result
+(Problem~4.2 of \cite{PaperIII}) or a direct spectral localization
+assumption.
+\end{remark}
 
 \begin{remark}[Frequency-space heuristic for the product-tail problem]
 PSWFs with bandlimit parameter $c$ may be viewed heuristically as functions
@@ -311,25 +419,19 @@ convolution, so one expects an effective bandwidth of order $2c$ rather
 than $c$. Since the projector $\PN$ retains only the first $N\sim c$ PSWF
 modes, the main issue is not whether spectral mass extends beyond that
 range, but how rapidly the corresponding PSWF coefficients decay past the
-cutoff. This is precisely where the edge regime $m,n\sim N$ becomes
-critical.
+cutoff. Part~(iii) of Conjecture~\ref{conj:pswf_product_tail} shows that
+this decay fails at the edge.
 \end{remark}
 
-\begin{remark}[Status of intermediate structure]
-To the best of our knowledge, there is currently no established
-intermediate property of the PSWF product family that would serve as a
-quantitative precursor to Conjecture~\ref{conj:pswf_product_tail}. In
-particular, there is no known stable multiplicative closure scale in the
-PSWF basis that would bridge the gap between generic analyticity and the
-uniform tail estimate required here.
-\end{remark}
-
-\begin{remark}[Analytical bottleneck]\label{rem:bottleneck}
+\begin{remark}[Analytical bottleneck — updated]\label{rem:bottleneck-implication}
 The overall implication chain shows that the main unresolved analytical
-difficulty is concentrated in the PSWF product spectral tail, especially
-near the edge regime $m,n\sim N$. Once such a tail estimate is available,
-the remaining steps reduce to quadrature stability and perturbative frame
-analysis.
+difficulty is concentrated in the PSWF product spectral tail in the
+bulk regime $m,n\le\gamma N$ (Conjecture~\ref{conj:pswf_product_tail}(i))
+and the off-diagonal algebraic-decay regime
+(Conjecture~\ref{conj:pswf_product_tail}(ii)).
+The edge regime is excluded by the proved obstruction in part~(iii).
+Once the bulk tail estimate is available, the remaining steps
+reduce to quadrature stability and perturbative frame analysis.
 \end{remark}
 
 %% ==================================================================
@@ -354,7 +456,7 @@ also consistent with the interpolation formulas underlying the XRY
 construction. This does not prove Conjecture~\ref{conj:xry_stability}, but
 it explains why a bound of the form
 \[
-  |Q_N(f)-\int_{-T}^T f|\lesssim \|(I-\PN)f\| + e^{-\alpha N}\norm{f}_{L^2}
+  |Q_N(f)-\textstyle\int_{-T}^T f|\lesssim \|(I-\PN)f\| + e^{-\alpha N}\norm{f}_{L^2}
 \]
 represents a natural stability statement rather than an ad hoc
 reformulation of the original compatibility problem.
@@ -363,9 +465,7 @@ reformulation of the original compatibility problem.
 \begin{conjecture}[XRY stability conjecture on the PSWF product family]
 \label{conj:xry_stability}
 Let
-\[
-  \mathcal{F}_N:=\{\psi_m^{(c)}\overline{\psi_n^{(c)}}:0\le m,n\le N\}.
-\]
+$\mathcal{F}_N:=\{\psi_m^{(c)}\overline{\psi_n^{(c)}}:0\le m,n\le N\}$.
 There exist constants $\CXRY,C,\alpha>0$, depending on the XRY
 construction parameters and on the regime $N\sim c$, such that for every
 $f\in\mathcal{F}_N$,
@@ -386,6 +486,8 @@ isolate the two unresolved analytical inputs used in this paper.
 Accordingly, the present work should be read as an implication framework
 for the quadrature compatibility problem of \cite{PaperI}, not as an
 unconditional verification of that compatibility condition.
+The scope of the implication is now restricted to the bulk and off-diagonal
+regimes; the edge is excluded by Conjecture~\ref{conj:pswf_product_tail}(iii).
 \end{remark}
 
 %% ==================================================================
@@ -396,47 +498,42 @@ unconditional verification of that compatibility condition.
 Assume Conjecture~\ref{conj:xry_stability}. Then for all $0\le m,n\le N-1$,
 \[
   |E_{mn}|
-  \le \left|Q_N(f_{mn})-\int_{-T}^T f_{mn}(x)\,dx\right|
   \le \CXRY\,\|(I-\PN)f_{mn}\|_{L^2([-T,T])}
       + C\,e^{-\alpha N}\,\norm{f_{mn}}_{L^2([-T,T])}.
 \]
 \end{proposition}
 \begin{proof}
-The first inequality is the exact identity
+The exact identity
 $E_{mn}=R_{mn}^{\mathrm{quad}}=Q_N(f_{mn})-\int_{-T}^T f_{mn}(x)\,dx$
-from \cite{PaperI}. The second inequality is precisely the statement of
-Conjecture~\ref{conj:xry_stability} applied to $f=f_{mn}$.
+from \cite{PaperI} and Conjecture~\ref{conj:xry_stability}.
 \end{proof}
 
-\begin{proposition}[Conditional exponential quadrature defect bound]\label{prop:defect_bound}
-Assume Conjectures~\ref{conj:pswf_product_tail}
-and~\ref{conj:xry_stability}, together with Assumption~\ref{ass:pswf_sup}.
-Then for all $0\le m,n\le N-1$,
+\begin{proposition}[Conditional exponential quadrature defect bound
+--- bulk/off-diagonal]\label{prop:defect_bound}
+Assume part~(i) or part~(ii) of
+Conjecture~\ref{conj:pswf_product_tail},
+Conjecture~\ref{conj:xry_stability}, and Assumption~\ref{ass:pswf_sup},
+for indices in the respective regime.
+Then
 \[
-  |E_{mn}|=|R_{mn}^{\mathrm{quad}}|\le C\,e^{-\alpha N},
+  |E_{mn}|\le C\,e^{-\alpha N}
+  \quad\text{(bulk, part~(i))},
+  \qquad
+  |E_{mn}|\le C_p(1+|m-n|)^{-p}
+  \quad\text{(off-diagonal, part~(ii))}.
 \]
-where $C,\alpha>0$ depend on the conjectural constants and on the product
-norm bound from Assumption~\ref{ass:pswf_sup}.
 \end{proposition}
 \begin{proof}
-By Proposition~\ref{prop:structured_defect},
-\[
-  |E_{mn}|\le \CXRY\|(I-\PN)f_{mn}\|+Ce^{-\alpha N}\norm{f_{mn}}_{L^2}.
-\]
-By Conjecture~\ref{conj:pswf_product_tail}(iii),
-$\|(I-\PN)f_{mn}\|\le C' e^{-(\alpha'-\varepsilon_N) N}$
-uniformly over $0\le m,n\le N\sim c$, and by
-Lemma~\ref{lem:product_norm}, $\norm{f_{mn}}_{L^2}\le C$ uniformly in the
-same regime. All exponential contributions are therefore absorbed into a
-single rate $\alpha$, possibly reduced, and all multiplicative constants are
-absorbed into $C$. This yields the stated bound.
+Insert the respective tail bound into
+Proposition~\ref{prop:structured_defect} and use
+Lemma~\ref{lem:product_norm} for the $L^2$ factor.
 \end{proof}
 
 \begin{remark}[No gradual interpolation in the present framework]
 Within the present argument, there is no gradual weakening of the
 conclusion obtainable from partial versions of the two conjectures. The
 exponential defect bound follows only once both conjectural inputs are
-available in the stated form.
+available in the stated form within the relevant regime.
 \end{remark}
 
 \begin{proposition}[Partial compatibility under bulk/off-diagonal control]
@@ -444,110 +541,100 @@ available in the stated form.
 Assume Conjecture~\ref{conj:xry_stability}, Assumption~\ref{ass:pswf_sup},
 and the following partial PSWF tail information:
 \begin{enumerate}[(a)]
-\item for indices in the bulk regime $m,n\le \gamma N$ with fixed
-  $\gamma<1$, one has a uniform algebraic estimate
+\item \emph{Unconditional $L^2$ bound} (Theorem~1 of \cite{PaperIII}):
+  for all $0\le m,n\le N$,
+  \[
+    \|(I-\PN)f_{mn}\|_{L^2([-T,T])} \le C T^{1/2}.
+  \]
+  This bound is unconditional but does not decay in $|m-n|$.
+\item \emph{Conditional algebraic bound} (Theorem~2 of \cite{PaperIII},
+  under Assumption~3.1 therein): for $|m-n|\ge\delta N$,
   \[
     \|(I-\PN)f_{mn}\|_{L^2([-T,T])}
-    \le C_p(1+|m-n|)^{-p};
+    \le C_p(1+|m-n|)^{-p}.
   \]
-\item for off-diagonal indices $|m-n|\gg1$, the same algebraic estimate
-  holds uniformly away from the diagonal.
 \end{enumerate}
-Then the quadrature defect satisfies the corresponding partial bound
+From~(a), the unconditional defect estimate is
+$|E_{mn}| \le C'T^{1/2} + Ce^{-\alpha N}$,
+which does not decay and gives no banded structure.
+From~(b), the conditional defect estimate is
 \[
   |E_{mn}|\le C_p'(1+|m-n|)^{-p}+C e^{-\alpha N}
 \]
-in the union of these bulk and off-diagonal regimes. In particular, one
-obtains a banded-type compatibility statement away from the unresolved edge
-region.
+in the off-diagonal regime, giving a banded-type compatibility statement
+away from the edge.
 \end{proposition}
-\begin{proof}
-Insert the assumed algebraic tail estimate into
-Proposition~\ref{prop:structured_defect}. The $L^2$ term is uniformly
-bounded by Lemma~\ref{lem:product_norm}, so the residual contribution
-remains exponentially small in $N$. The resulting estimate is therefore of
-the stated algebraic-plus-exponential form in every regime where the
-assumed partial tail control is available.
-\end{proof}
 
-\begin{remark}[Scope of the partial compatibility statement]
-Proposition~\ref{prop:partial_compatibility} does not address the full
-uniform range $0\le m,n\le N-1$. Its purpose is only to record that bulk and
-off-diagonal control would already imply a partial banded structure for the
-quadrature defect, while the unresolved edge regime remains the obstruction
-to a global compatibility theorem.
+\begin{remark}[Unconditional bound is insufficient for frame stability]
+\label{rem:unconditional-insufficient}
+The unconditional $T^{1/2}$ bound from part~(a) of
+Proposition~\ref{prop:partial_compatibility} does not exhibit decay
+in $|m-n|$ and therefore does not imply the banded structure required
+by Assumption~3.10 of \cite{PaperI}.
+Frame stability in the off-diagonal regime requires the conditional
+algebraic decay of part~(b), i.e., the spectral localization input
+of Assumption~3.1 of \cite{PaperIII}.
 \end{remark}
 
 \begin{lemma}[Exponential domination of the bulk error scale]
 \label{lem:bulk_scale}
 Assume $N=\gamma c$ with fixed $\gamma>0$. Then for every $\alpha>0$ there
 exists $C_{\alpha,\gamma}>0$ such that
-\[
-  e^{-\alpha N}\le C_{\alpha,\gamma} c^{-1/3}
-\]
+$e^{-\alpha N}\le C_{\alpha,\gamma} c^{-1/3}$
 for all sufficiently large $c$.
 \end{lemma}
 \begin{proof}
-Since $N=\gamma c$, one has
-$e^{-\alpha N}=e^{-\alpha\gamma c}$. Because exponential decay dominates
-any negative power of $c$ as $c\to\infty$, the stated bound follows.
+$e^{-\alpha N}=e^{-\alpha\gamma c}$ decays faster than any power of $c$.
 \end{proof}
 
 \begin{remark}[Uniform domination over the index range]\label{rem:index_domination}
-For $0\le m,n\le N-1$ one has $|m-n|\le N-1$. Hence any comparison between
-an $N$-dependent exponential quantity and an algebraic factor
-$(1+|m-n|)^{-p}$ is understood in the worst-case sense over the admissible
-index range, namely via $(1+|m-n|)^{-p}\ge (1+N)^{-p}$. In particular,
-for every $p\ge1$ and sufficiently large $N$, one has
-$e^{-\alpha N}\le C_p(1+N)^{-p}$. This is the precise sense in which an
-exponential bound in $N$ dominates the algebraic defect profile required in
-Assumption~3.10 of \cite{PaperI}.
+For every $p\ge1$ and sufficiently large $N$, $e^{-\alpha N}\le C_p(1+N)^{-p}$.
+This is the precise sense in which an exponential bound in $N$ dominates
+the algebraic defect profile required in Assumption~3.10 of \cite{PaperI}.
 \end{remark}
 
-\begin{theorem}[Conditional verification theorem]\label{thm:compatibility_verified}
-Assume Conjectures~\ref{conj:pswf_product_tail}
-and~\ref{conj:xry_stability}, together with Assumptions~\ref{ass:pswf_sup},
-\ref{ass:node_sep}, and~\ref{ass:weights}. Let $(\mathbf{p},\mathbf{w})$
+\begin{theorem}[Conditional verification theorem --- bulk
+regime]\label{thm:compatibility_verified}
+Assume part~(i) of Conjecture~\ref{conj:pswf_product_tail},
+Conjecture~\ref{conj:xry_stability}, and Assumptions~\ref{ass:pswf_sup},
+\ref{ass:node_sep}, \ref{ass:weights}. Let $(\mathbf{p},\mathbf{w})$
 be the XRY PSWF-Gauss rule of order $N=\gamma c$ with fixed $\gamma>0$.
-Then for every $p\ge1$ there exist constants $C_p,C>0$ such that
+For indices $m,n\le\gamma N$, every $p\ge1$, there exist $C_p,C>0$ such that
 \[
-  |E_{mn}|\le C_p(1+|m-n|)^{-p}+Cc^{-1/3}
-  \qquad(0\le m,n\le N-1).
+  |E_{mn}|\le C_p(1+|m-n|)^{-p}+Cc^{-1/3}.
 \]
-Hence Assumption~3.10 of \cite{PaperI} holds conditionally for PSWF-Gauss
-sampling under the stated inputs.
+Hence Assumption~3.10 of \cite{PaperI} holds conditionally for
+PSWF-Gauss sampling in the bulk regime.
+The edge regime $m,n\sim N$ is excluded;
+see Conjecture~\ref{conj:pswf_product_tail}(iii).
 \end{theorem}
 \begin{proof}
-By Proposition~\ref{prop:defect_bound}, $|E_{mn}|\le Ce^{-\alpha N}$.
-By Remark~\ref{rem:index_domination}, the exponential bound dominates any
-algebraic factor $(1+|m-n|)^{-p}$ uniformly over the index range after
-adjusting constants. By Lemma~\ref{lem:bulk_scale}, one also has
-$e^{-\alpha N}\le Cc^{-1/3}$ for fixed $\gamma>0$, $N=\gamma c$, and
-sufficiently large $c$. Thus both terms in Assumption~3.10 are dominated.
+By Proposition~\ref{prop:defect_bound} (part~(i)),
+$|E_{mn}|\le Ce^{-\alpha N}$.
+Lemma~\ref{lem:bulk_scale} and Remark~\ref{rem:index_domination}
+absorb this into the stated form.
 \end{proof}
 
 \begin{remark}[What has been achieved]
 The preceding theorem does not close the construction problem of
-\cite{PaperI} unconditionally. What it provides is a pure implication:
-once Conjectures~\ref{conj:pswf_product_tail} and~\ref{conj:xry_stability}
-are established, the compatibility assumption of \cite{PaperI} follows for
-XRY PSWF-Gauss quadrature.
+\cite{PaperI} unconditionally, nor globally: the edge regime
+$m,n\sim N$ is excluded by the proved obstruction of
+Conjecture~\ref{conj:pswf_product_tail}(iii).
+What it provides is a precise conditional implication in the bulk:
+once Conjectures~\ref{conj:pswf_product_tail}(i) and
+\ref{conj:xry_stability} are established, the compatibility
+assumption of \cite{PaperI} follows for XRY PSWF-Gauss quadrature
+in the bulk regime.
 \end{remark}
 
 \begin{corollary}[Conditional defect norm bound]\label{cor:defect_norm}
-Assume Conjectures~\ref{conj:pswf_product_tail}
-and~\ref{conj:xry_stability}, together with Assumption~\ref{ass:pswf_sup}.
-Then there exists $C_*>0$ such that
-\[
-  \norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\xrightarrow{N\to\infty}0.
-\]
+Under the assumptions of Theorem~\ref{thm:compatibility_verified},
+restricting to $m,n\le\gamma N$:
+$\norm{\EN}_2\le\norm{\EN}_F\le N C_* e^{-\alpha N}\to0$.
 \end{corollary}
 \begin{proof}
-By Proposition~\ref{prop:defect_bound}, each of the $N^2$ matrix entries of
-$\EN$ is bounded by $C_*e^{-\alpha N}$. Hence
-$\norm{\EN}_F^2=\sum_{m,n}|E_{mn}|^2\le N^2 C_*^2 e^{-2\alpha N}$, so
-$\norm{\EN}_F\le N C_* e^{-\alpha N}$. The operator norm is bounded by the
-Frobenius norm, hence $\norm{\EN}_2\le\norm{\EN}_F$.
+$N^2$ entries each bounded by $C_*e^{-\alpha N}$;
+$\norm{\EN}_F\le NC_*e^{-\alpha N}$.
 \end{proof}
 
 %% ==================================================================
@@ -555,76 +642,63 @@ Frobenius norm, hence $\norm{\EN}_2\le\norm{\EN}_F$.
 %% ==================================================================
 
 \begin{theorem}[Conditional frame stability theorem]\label{thm:frame_stability}
-Assume Conjectures~\ref{conj:pswf_product_tail}
-and~\ref{conj:xry_stability}, together with Assumptions~\ref{ass:pswf_sup},
-\ref{ass:node_sep}, and~\ref{ass:weights}. Let $(\mathbf{p},\mathbf{w})$
-be the XRY PSWF-Gauss rule of order $N=\gamma c$ with $\gamma<2/\pi$ in the
-bulk regime. Once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$,
+Under the assumptions of Theorem~\ref{thm:compatibility_verified}
+and $\gamma<2/\pi$, once $NC_*e^{-\alpha N}<\lambda_{N-1}(c)$,
 $\{(p_j,w_j)\}_{j=1}^N$ is a weighted frame for $V_{N,c}$ with bounds
 \[
   A(N,c)\,\norm{f}_{L^2}^2
   \le \sum_{j=1}^N w_j|f(p_j)|^2
   \le B(N,c)\,\norm{f}_{L^2}^2,
-  \qquad f\in V_{N,c},
+  \quad f\in V_{N,c},
 \]
-where
-\[
-  A(N,c)=\lambda_{N-1}(c)-NC_*e^{-\alpha N}>0,
-  \qquad
-  B(N,c)=\lambda_0(c)+NC_*e^{-\alpha N}.
-\]
-In the bulk regime, this condition is compatible with the known asymptotic
-behaviour of PSWF eigenvalues; see \cite{Slepian1978} and the classical
-Landau--Widom theory.
+where $A(N,c)=\lambda_{N-1}(c)-NC_*e^{-\alpha N}>0$,
+$B(N,c)=\lambda_0(c)+NC_*e^{-\alpha N}$.
 \end{theorem}
 \begin{proof}
-The Weyl perturbation bound applied to
-$\GVM=G^{\mathrm{ref}}_{N,c}+\EN$ gives
-$\lambda_{\min}(\GVM)\ge\lambda_{N-1}(c)-\norm{\EN}_2\ge A(N,c)>0$
-by Corollary~\ref{cor:defect_norm}.
-The upper bound is analogous.
+Weyl perturbation: $\lambda_{\min}(\GVM)\ge\lambda_{N-1}(c)-\norm{\EN}_2
+\ge A(N,c)>0$ by Corollary~\ref{cor:defect_norm}.
 \end{proof}
 
-\begin{remark}[Meaning of the result]
-The defect $\EN$ is controlled by two conjectural inputs: the PSWF product
-spectral tail conjecture and the XRY stability conjecture. Under these
-inputs, the abstract implication framework of \cite{PaperI} becomes
-effective for XRY PSWF-Gauss quadrature.
-\end{remark}
-
 \begin{remark}[Critical density regime]\label{rem:critical}
-The condition $A(N,c)>0$ holds in the Landau--Widom bulk regime
-$N<(2/\pi-\varepsilon)c$, where $\lambda_{N-1}(c)\ge1-Ce^{-\eta c}$
-dominates the exponential defect. Near the critical density
-$N\to(2/\pi)c$, the eigenvalue $\lambda_{N-1}(c)\to0$ and the
-stability condition may fail; see Open Problem~\ref{op:critical}.
+Near the critical density $N\to(2/\pi)c$,
+$\lambda_{N-1}(c)\to0$ and the stability condition may fail;
+see Open Problem~\ref{op:critical}.
 \end{remark}
 
 %% ==================================================================
 \section{Open Problems}\label{sec:open}
 %% ==================================================================
 
-\begin{problem}[Derive the PSWF product spectral tail conjecture]
-Prove Conjecture~\ref{conj:pswf_product_tail} rigorously, with explicit
-constants and explicit dependence on $m$, $n$, $c$, and $T$.
+\begin{problem}[Derive the bulk PSWF product spectral tail conjecture]
+\label{prob:bulkconj}
+Prove Conjecture~\ref{conj:pswf_product_tail}(i) rigorously.
+Natural route: exponential WKB decay of PSWF Fourier tails near $|\xi|=\omega$
+for $n\le\gamma N$; see Problem~1 of \cite{PaperIII}.
+\end{problem}
+
+\begin{problem}[Derive the off-diagonal spectral localization]
+Prove Conjecture~\ref{conj:pswf_product_tail}(ii) rigorously,
+i.e., Assumption~3.1 of \cite{PaperIII}.
+The energy equidistribution question of Problem~4.2 of \cite{PaperIII}
+is the identified analytic bottleneck.
 \end{problem}
 
 \begin{problem}[Derive the XRY stability conjecture]
-Prove Conjecture~\ref{conj:xry_stability} rigorously from the structural
-formulas and numerical analysis of \cite{Xiao2001,OsipovRokhlinXiao},
-with explicit constants in terms of $N$, $c$, and the XRY construction
-parameters.
+Prove Conjecture~\ref{conj:xry_stability} rigorously from \cite{Xiao2001,OsipovRokhlinXiao}.
 \end{problem}
 
 \begin{problem}[Node separation and weight bounds]
-Prove Assumptions~\ref{ass:node_sep} and~\ref{ass:weights} quantitatively,
-with explicit constants in $N$ and $c$.
+Prove Assumptions~\ref{ass:node_sep} and~\ref{ass:weights} quantitatively.
 \end{problem}
 
 \begin{problem}[Critical density regime]\label{op:critical}
-Analyse frame stability for PSWF-Gauss sampling near the critical density
-$N\to(2/\pi)c$, where $\lambda_{N-1}(c)\to0$ and the Weyl argument
-of Theorem~\ref{thm:frame_stability} degenerates.
+Analyse frame stability near $N\to(2/\pi)c$.
+\end{problem}
+
+\begin{problem}[Edge regime via doubled prolate subspace]
+Since the edge obstruction is proved, investigate whether the
+doubled projector $P_{2N,2c}$ can substitute for $\PN$ in the
+quadrature compatibility argument; see Problem~5 of \cite{PaperIII}.
 \end{problem}
 
 \begin{problem}[Alternative compatible quadrature classes]
@@ -640,6 +714,13 @@ Anonymous Author,
 \emph{Frame Coercivity of Discrete Prolate Sampling Operators
 under Quadrature Compatibility: Defect Decomposition and a
 Bulk--Turning Decay Mechanism},
+preprint, 2026.
+
+\bibitem{PaperIII}
+Anonymous Author,
+\emph{PSWF Product Spectral Tail Estimates: Bulk and Off-Diagonal Regimes,
+and an Obstruction at the Spectral Edge
+(Paper~III in the Prolate--Weil Program)},
 preprint, 2026.
 
 \bibitem{OsipovRokhlinXiao}

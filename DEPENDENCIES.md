@@ -1,7 +1,43 @@
 # Logical Dependency Graph — Papers I–XVII
 
 > This file documents which results each paper imports from earlier papers.
-> Status: ✅ unconditional | ⚠️ conditional | 🔴 open/unproved
+> Status: ✅ unconditional | ⚠️ conditional | 🔴 open/unproved | ❌ disproved
+
+---
+
+## Prolate–Weil Subprogram (Papers I–III)
+
+These three papers form a self-contained sub-chain targeting the
+quadrature compatibility condition of Paper I.
+
+```
+Paper I → Paper II (companion) → Paper III (resolves Paper II's open problems partially)
+                ↑_______________________________________↑
+         (Paper II conjectures; Paper III proves/disproves them)
+```
+
+| Result exported | Source | Used by | Status |
+|---|---|---|---|
+| Frame coercivity under Assumption 3.10 | Paper I | Paper II, Paper III | ✅ |
+| Implication framework (Conj. 3.1 + XRY → Ass. 3.10) | Paper II | — | ⚠️ conditional |
+| `conj:pswf_product_tail`(i) bulk: exponential decay for `m,n ≤ γN` | Paper II | Paper III (target) | 🔴 open |
+| `conj:pswf_product_tail`(ii) off-diagonal: algebraic decay `\|m-n\| ≥ δN` | Paper II | Paper III (target) | ⚠️ conditional on Paper III Ass. 3.1 |
+| `conj:pswf_product_tail`(iii) global uniform bound over all `m,n ≤ N` | Paper II | — | ❌ **disproved** by Paper III `prop:bwdoubling` |
+| Unconditional uniform bound `\|(I-P_N)f_{mn}\| ≤ CT^{1/2}` | Paper III `thm:offdiag` | Paper II `prop:partial_compatibility`(a) | ✅ |
+| Mean spectral localization `E_{mn}[χ_k] = μ_{mn} + E_{mn}` | Paper III `prop:mean-loc` | Paper II `rem:bottleneck` | ✅ |
+| Exact IBP energy identity for commutator | Paper III `lem:ibp-exact` | Paper II `rem:bottleneck` | ✅ |
+| Explicit energy formula for `E_{mn}` | Paper III `cor:emn-explicit` | Paper II `rem:bottleneck` | ✅ |
+| Spectral lower bound `E_{mn}[χ_k] ≥ μ_{mn}/2` | Paper III `prop:spectral-lower` | Paper II `rem:bottleneck` | ✅ |
+| Edge obstruction `E_out(f_{nn}) ≥ c₀ > 0` for `n ~ N` | Paper III `prop:bwdoubling` | Paper II `conj:pswf_product_tail`(iii) | ✅ **negative dependency** |
+| Conditional algebraic decay `C_p(1+\|m-n\|)^{-p}` | Paper III `thm:offdiag-strong` | Paper II `prop:partial_compatibility`(b) | ⚠️ cond. on Paper III Ass. 3.1 |
+| Energy equidistribution `A_{mn}+B_{mn} ≈ μ_{mn}/2` | Paper III `prob:comm-refined` | Paper II bulk conjecture | 🔴 open — semiclassical character |
+
+**Key negative dependency (unusual, document explicitly):**
+Paper III `prop:bwdoubling` proves that Paper II `conj:pswf_product_tail`(iii)
+is false as stated. Paper II has been revised accordingly:
+`conj:pswf_product_tail` is now split into a proved bulk/off-diagonal part
+and a documented edge obstruction. The conditional implication of Paper II
+is now restricted to the bulk regime `m,n ≤ γN`.
 
 ---
 
@@ -94,9 +130,16 @@ XV → fold_model → XVI → XVII
 - `Σ_model(c) = o(1)` (Paper XV) ✅
 - Endpoint decay `|Φ(u;c)| = O(|u|^{-1/2})` (Paper XVI Thm endpoint) ✅
 - Abstract localization principle (Paper XII) ✅
+- Uniform off-diagonal bound `\|(I-P_N)f_{mn}\| ≤ CT^{1/2}` (Paper III) ✅
+- Mean spectral localization `E_{mn}[χ_k] = μ_{mn} + E_{mn}` (Paper III) ✅
+- Spectral lower bound `E_{mn}[χ_k] ≥ μ_{mn}/2` (Paper III) ✅
+- Edge obstruction: global uniform tail bound is false for `m,n ~ N` (Paper III) ✅
 
 ## Summary: What remains conditional or open
 
+- Bulk exponential tail bound for `f_{mn}`, `m,n ≤ γN` 🔴
+- Off-diagonal algebraic decay (conditional on Paper III Ass. 3.1) ⚠️
+- Energy equidistribution `A_{mn}+B_{mn} ≈ μ_{mn}/2` (semiclassical) 🔴
 - Bridge Theorem `H_SOT = closure(H_spec)` 🔴
 - Airy normal form uniform in c (conditional on Assumption 4.1) ⚠️
 - Uniform CFU Jacobian for PSWF (Paper XVII target) 🔴
