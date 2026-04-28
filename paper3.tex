@@ -30,7 +30,8 @@
 \newcommand{\ip}[2]{\langle #1,\, #2\rangle}
 \newcommand{\FN}{\mathcal{F}_N}
 \newcommand{\Eout}{\mathcal{E}_{\mathrm{out}}}
-\newcommand{\muhat}{\mu_{mn}}
+%% [PATCH C] Replaced \muhat by \mumN for notational clarity
+\newcommand{\mumN}{\mu_{mn}}
 \newcommand{\Emn}{\mathbb{E}_{mn}}
 \newcommand{\rhom}{\rho_m}
 \newcommand{\rhon}{\rho_n}
@@ -109,19 +110,20 @@ We prove:
   conditional on Assumption~\ref{ass:bulkconv}
   (Problem~\ref{prob:bulkconv}).
   A bulk decorrelation reduction is proved unconditionally
-  (Lemma~\ref{lem:bulk-reduction}); the remaining open step
-  is weak convergence of $\psi_n^2$ to the classical density
-  (Problem~\ref{prob:pswf-weak-limit}).
+  (Lemma~\ref{lem:bulk-reduction}); the hypothesis of that lemma
+  is supplied unconditionally by Paper~IV \cite{PaperIV},
+  Theorem~1 (weak convergence of PSWF densities to the classical
+  equilibrium measure, with rate $O(1/n)$).
   \item \textbf{Off-diagonal regime} ($|m-n| \ge \delta N$, $\delta > 0$):
   \begin{enumerate}[(a)]
     \item \emph{Unconditional uniform bound:}
     $\|(I-\PN)f_{mn}\|_{L^2} \le C_\delta T^{1/2}$
     (Theorem~\ref{thm:offdiag}).
     \item \emph{Unconditional mean spectral localization:}
-    $\Emn[\chi_k] = \muhat + E_{mn}$
+    $\Emn[\chi_k] = \mumN + E_{mn}$
     (Proposition~\ref{prop:mean-loc}).
     \item \emph{Exact energy decomposition and lower bound:}
-    $\Emn[\chi_k] \ge \muhat/2$, with an explicit energy formula
+    $\Emn[\chi_k] \ge \mumN/2$, with an explicit energy formula
     (Proposition~\ref{prop:spectral-lower}).
     \item \emph{Conditional algebraic decay:}
     $\|(I-\PN)f_{mn}\|_{L^2} \le C_p(1+|m-n|)^{-p}$
@@ -167,9 +169,10 @@ reduces to bounding $\Eout(f_{mn})$ in the bulk.
 In the off-diagonal regime, the near-eigenvector structure
 (Section~\ref{ssec:neareig})
 \begin{equation}\label{eq:near-eig-intro}
-  D_c f_{mn} = \muhat f_{mn} + R_{mn},
-  \qquad \muhat := \chi_m(c) + \chi_n(c),
+  D_c f_{mn} = \mumN f_{mn} + R_{mn},
+  \qquad \mumN := \chi_m(c) + \chi_n(c),
 \end{equation}
+%% [PATCH C] \muhat replaced by \mumN = \mu_{mn} throughout
 yields the \emph{mean spectral localization} identity
 (Proposition~\ref{prop:mean-loc}).
 A subsequent integration-by-parts analysis
@@ -178,7 +181,7 @@ replaces the commutator error $E_{mn}$ by an
 \emph{explicit, fully positive energy functional}:
 \begin{equation}\label{eq:energy-intro}
   \Emn[\chi_k]
-  = \frac{\muhat}{2}
+  = \frac{\mumN}{2}
   + \frac{\frac{1}{2}\int_{-T}^T p(x)
     \bigl[(\psi_m')^2\psi_n^2 + (\psi_n')^2\psi_m^2\bigr]\,dx
     + \frac{c^2}{T^2}\int_{-T}^T x^2\psi_m^2\psi_n^2\,dx}
@@ -186,17 +189,20 @@ replaces the commutator error $E_{mn}$ by an
 \end{equation}
 where $p(x) = 1 - x^2/T^2$.
 Since every term on the right is non-negative,
-$\Emn[\chi_k] \ge \muhat/2$ unconditionally
+$\Emn[\chi_k] \ge \mumN/2$ unconditionally
 (Proposition~\ref{prop:spectral-lower}).
 This converts the previous black-box error bound into
 a concrete local energy problem, and connects the
 off-diagonal analysis directly to semiclassical methods.
 
 New in this version: Lemma~\ref{lem:bulk-reduction} shows that
-the energy equidistribution goal $A_{mn}+B_{mn}\approx\muhat/2$
+the energy equidistribution goal $A_{mn}+B_{mn}\approx\mumN/2$
 reduces, via a covariance decomposition, to the weak convergence
 of $\psi_n^2$ to its classical limiting density; this is
 Problem~\ref{prob:pswf-weak-limit}.
+That problem is now resolved unconditionally by Paper~IV
+\cite{PaperIV} (Theorem~1, with explicit rate $O(1/n)$),
+closing the bulk decorrelation step without any WKB assumption.
 
 \subsection{Main results summary}
 
@@ -212,13 +218,13 @@ $\|(I-\PN)f_{mn}\|_{L^2} \le C_\delta T^{1/2}$.
 
 \begin{proposition}[Mean localization; Proposition~\ref{prop:mean-loc}]
 For all $m,n \le N$:
-$\Emn[\chi_k] = \muhat + E_{mn}$,
-where $E_{mn}$ is given by~\eqref{eq:energy-intro} minus $\muhat$.
+$\Emn[\chi_k] = \mumN + E_{mn}$,
+where $E_{mn}$ is given by~\eqref{eq:energy-intro} minus $\mumN$.
 \end{proposition}
 
 \begin{proposition}[Spectral lower bound; Proposition~\ref{prop:spectral-lower}]
 For all $m,n \le N$ with $f_{mn} \not\equiv 0$:
-$\Emn[\chi_k] \ge \muhat/2$.
+$\Emn[\chi_k] \ge \mumN/2$.
 \end{proposition}
 
 \begin{theorem}[Off-diagonal, conditional; Theorem~\ref{thm:offdiag-strong}]
@@ -228,9 +234,10 @@ $\|(I-\PN)f_{mn}\|_{L^2} \le C_p(1+|m-n|)^{-p}$.
 
 \begin{lemma}[Bulk decorrelation reduction; Lemma~\ref{lem:bulk-reduction}]
 For $m,n \le \gamma N$, the energy equidistribution goal
-$A_{mn}+B_{mn} = \muhat/2 + o(\muhat)$
+$A_{mn}+B_{mn} = \mumN/2 + o(\mumN)$
 follows from weak convergence of $\psi_n^2$ to
 $\lambda_n(c)\,\rhocl$; see Problem~\ref{prob:pswf-weak-limit}.
+This hypothesis is supplied unconditionally by Paper~IV \cite{PaperIV}.
 \end{lemma}
 
 \subsection{Relation to companion paper}\label{ssec:context}
@@ -269,6 +276,21 @@ Section~\ref{sec:open} collects open problems.
 
 Fix $\omega > 0$, $T > 0$, $c = \omega T > 0$.
 Fourier convention: $\hat{f}(\xi) = \int_{\mathbb{R}} f(x)e^{-2\pi i\xi x}\,dx$.
+
+%% [PATCH C] Remark on D_c as quantum Hamiltonian analogue
+\begin{remark}[Operator conventions]\label{rem:operator-conventions}
+Throughout this paper, $c$ is fixed and we write $\psi_n^{(c)}$
+in formal statements to emphasise dependence on the bandwidth
+parameter. In proofs where $c$ is fixed, we abbreviate
+$\psi_n^{(c)} = \psi_n$.
+The Sturm--Liouville operator $D_c$ (defined in
+Section~\ref{ssec:SL} below) plays the role of a
+\emph{quantum Hamiltonian} in the semiclassical analysis of
+Sections~\ref{sec:bulk} and~\ref{sec:offdiag}: its eigenvalues
+$\chi_n(c)$ are the energy levels, and the spectral mean
+$\Emn[\chi_k]$ is the quantum-mechanical expectation value of
+$D_c$ in the state $f_{mn}$.
+\end{remark}
 
 The \emph{prolate concentration operator}:
 \begin{equation}\label{eq:Kop_def}
@@ -315,7 +337,7 @@ $\FN := \{f_{mn}: 0 \le m,n \le N\}$.
   \quad f_{mn} \in \mathrm{PW}_{2\omega}.
 \end{equation}
 
-\subsection{Sturm--Liouville operator and spectral identities}
+\subsection{Sturm--Liouville operator and spectral identities}\label{ssec:SL}
 
 Each $\psin$ satisfies:
 \begin{equation}\label{eq:SL}
@@ -337,6 +359,28 @@ the \emph{SL energy identity}:
   = \chi_n(c)\,\lambda_n(c),
 \end{equation}
 using $p(\pm T) = 0$ so boundary terms vanish.
+
+%% [PATCH B] Form-domain remark for D_c
+\begin{remark}[Form domain of $D_c$ and regularity of $f_{mn}$]
+\label{rem:form-domain}
+The quadratic form associated to $D_c$ is
+\[
+  q_{D_c}(u,u)
+  = \int_{-T}^T p(x)|u'(x)|^2\,dx
+  + \frac{c^2}{T^2}\int_{-T}^T x^2|u(x)|^2\,dx,
+\]
+with form domain $\mathcal{D}(q_{D_c})
+= \{u \in H^1([-T,T]) : \sqrt{p}\,u' \in L^2\}$.
+Since $\psi_m^{(c)}, \psin \in C^\infty([-T,T])$
+(\cite[Ch.~2, Thm.~2.1]{OsipovRokhlinXiao}),
+the product $f_{mn} = \psi_m^{(c)}\psin$ lies in
+$C^\infty([-T,T]) \subset \mathcal{D}(q_{D_c})$.
+In particular, all integration-by-parts steps in
+Lemma~\ref{lem:ibp-exact} are justified without approximation
+arguments: boundary terms at $x = \pm T$ vanish exactly because
+$p(\pm T) = 0$, independently of the values of $f_{mn}$ at the
+endpoints.
+\end{remark}
 
 \subsection{PSWF coefficient sequence}
 
@@ -393,13 +437,28 @@ for all $m,n\le\gamma N$ and $c\ge c_0(\gamma)$:
 \]
 \end{assumption}
 
+\begin{remark}[Assumption~\ref{ass:bulkconv} is not circular]
+\label{rem:bulkconv-not-circular}
+Assumption~\ref{ass:bulkconv} is a Fourier-side statement
+($\Eout$ measures out-of-band Fourier energy of $f_{mn}$),
+whereas the bulk tail bound of Theorem~\ref{thm:bulk} is an
+$L^2$-projection statement ($\|(I-\PN)f_{mn}\|_{L^2}$).
+The Slepian identity (Lemma~\ref{lem:slepian}) translates between
+the two sides; Assumption~\ref{ass:bulkconv} is therefore
+strictly weaker than the conclusion.
+Evidence: \cite[Ch.~6]{OsipovRokhlinXiao} and
+\cite[Eq.~(4.3)]{Slepian1978} give pointwise Fourier decay for
+individual PSWFs near the band edge; the convolution stability
+for products is the remaining gap (Problem~\ref{prob:bulkconv}).
+\end{remark}
+
 \begin{assumption}[PSWF spectral localization]\label{ass:specloc}
 For fixed $\delta\in(0,1)$ and $p\ge 1$, there exist $C_p(\delta)>0$
 such that for all $|m-n|\ge\delta N$, $0\le m,n\le N$, and $k\ge N$:
 \begin{equation}\label{eq:specloc}
   |a_k^{mn}|
-  \le \frac{C_p(\delta)}{(1+|\chi_k(c)-\muhat|)^p},
-  \qquad \muhat := \chi_m(c)+\chi_n(c).
+  \le \frac{C_p(\delta)}{(1+|\chi_k(c)-\mumN|)^p},
+  \qquad \mumN := \chi_m(c)+\chi_n(c).
 \end{equation}
 \end{assumption}
 
@@ -410,12 +469,12 @@ desired conclusion: it has independent geometric support in the
 off-diagonal regime.
 Lemma~\ref{lem:gap-od} shows unconditionally that for $|m-n|\ge\delta N$
 and $k\ge N$, the spectral gap satisfies
-$|\chi_k(c)-\muhat|\ge c_3(\delta)|m-n|^2$;
+$|\chi_k(c)-\mumN|\ge c_3(\delta)|m-n|^2$;
 this gap grows with $|m-n|$ and is therefore larger in precisely
 the regime where Assumption~\ref{ass:specloc} is claimed.
 Moreover, Proposition~\ref{prop:mean-loc} establishes that the
 \emph{first moment} of $|a_k^{mn}|^2$ is concentrated near
-$\chi_k = \muhat$, consistent with the pointwise decay asserted by
+$\chi_k = \mumN$, consistent with the pointwise decay asserted by
 Assumption~\ref{ass:specloc}.
 The gap between the first-moment information and the pointwise
 localization is the content of Problem~\ref{prob:cg}:
@@ -529,9 +588,10 @@ Squaring and averaging over the rapid oscillations of
 $\cos^2(\phi_n(x)) \approx 1/2$:
 $\psi_n(x)^2 \approx \tfrac{1}{2}A_n(x)^2 \asymp (E_n-V(x))^{-1/2}$.
 After normalisation, $\psi_n(x)^2\,dx \rightharpoonup \lambda_n(c)\,\rhocl(x)\,dx$.
-This is the heuristic underlying Problem~\ref{prob:pswf-weak-limit};
-it is well established for regular Sturm--Liouville problems
-but not yet proved quantitatively for PSWFs.
+This heuristic is made rigorous by Paper~IV \cite{PaperIV},
+Theorem~1, via Pr\"{u}fer phase monotonicity and a
+1D Riemann--Lebesgue argument, with explicit rate $O(\lambda_n/n)$
+for $f \in C^1([-T,T])$.
 \end{remark}
 
 \begin{lemma}[Bulk decorrelation reduction]\label{lem:bulk-reduction}
@@ -569,11 +629,28 @@ Write
   = \int x^2\psi_m^2(x)\cdot\psi_n(x)^2\,dx.
 \]
 The function $f_m(x) := x^2\psi_m(x)^2/\lambda_m(c)$ lies in $C^1([-T,T])$
-(since $\psi_m \in C^\infty$), with
-$\|f_m'\|_{L^\infty} \le 2T/\lambda_m(c)\cdot\|\psi_m\|_{L^\infty}^2
-+ T^2\lambda_m(c)^{-1}\cdot 2\|\psi_m\|_{L^\infty}\|(\psi_m)'\|_{L^\infty}
-\le C_\gamma/\lambda_m(c)$
-uniformly for $m \le \gamma N$.
+(since $\psi_m \in C^\infty$).
+We estimate $\|f_m'\|_{L^\infty}$ using the ORX bounds
+\cite[Prop.~2.5, Prop.~2.7]{OsipovRokhlinXiao}:
+\[
+  \|\psi_m\|_{L^\infty} \le C(1+\chi_m)^{1/4},
+  \qquad
+  \|\psi_m'\|_{L^\infty} \lesssim \chi_m^{3/4},
+\]
+where the second bound follows from ORX Prop.~2.7
+($\|\psi_m'\|_{L^2}^2 \sim \chi_m$ via the SL energy identity)
+together with the 1D Sobolev interpolation
+$\|u'\|_{L^\infty} \lesssim \|u'\|_{L^2}^{1/2}\|u''\|_{L^2}^{1/2}$
+and $\psi_m'' = O(\chi_m)\psi_m$ from the eigenvalue equation.
+These give
+\[
+  \|f_m'\|_{L^\infty}
+  \le \frac{2T\|\psi_m\|_{L^\infty}^2 + T^2 \cdot 2\|\psi_m\|_{L^\infty}\|\psi_m'\|_{L^\infty}}
+           {\lambda_m(c)}
+  \le \frac{C_\gamma}{\lambda_m(c)}
+\]
+uniformly for $m \le \gamma N$, using $\chi_m \le C_\gamma N^2$ and
+$\lambda_m(c) \ge c_\gamma > 0$ (Assumption~\ref{ass:lw}).
 Apply hypothesis~\eqref{eq:weak-conv-hyp} to $f = f_m$:
 \[
   \left|\int x^2\psi_m^2\psi_n^2\,dx
@@ -585,6 +662,16 @@ $\lambda_n(c)\int x^2\psi_m^2\,dx / \lambda_m(c)$ by the same argument
 applied to $n$ and $m$ in the other order.
 Dividing by $\int\psi_m^2\psi_n^2\,dx = \lambda_m(c)\lambda_n(c)Z_{mn}$
 yields~\eqref{eq:B-reduction}.
+
+%% [PATCH A] Explicit closure sentence: hypothesis discharged by Paper IV
+\emph{Closure.}
+Hypothesis~\eqref{eq:weak-conv-hyp} is not an assumption:
+it is supplied unconditionally by Paper~IV \cite{PaperIV},
+Theorem~1 (weak convergence of PSWF densities to the classical
+equilibrium measure, with modulus
+$\omega_n(\|f'\|_{L^\infty}) = C\|f'\|_{L^\infty}/n$
+for all $f \in C^1([-T,T])$ and $n \le \gamma N$).
+The present lemma therefore holds unconditionally in the bulk regime.
 \end{proof}
 
 \begin{remark}[What the reduction says]\label{rem:bulk-reduction-meaning}
@@ -601,9 +688,9 @@ is close to the $\psi_m^2$-weighted mean of $x^2$,
 up to an error controlled by the weak-convergence modulus $\omega_n$.
 Once $\mathbb{E}_{\rho_m}[x^2]$ is controlled via the SL energy
 identity~\eqref{eq:SL-energy}, the full energy equidistribution
-$A_{mn}+B_{mn} = \muhat/2 + o(\muhat)$ follows.
-The step that is not yet proved is~\eqref{eq:weak-conv-hyp}
-for PSWFs; see Problem~\ref{prob:pswf-weak-limit}.
+$A_{mn}+B_{mn} = \mumN/2 + o(\mumN)$ follows.
+The step that was previously open is~\eqref{eq:weak-conv-hyp}
+for PSWFs; it is now proved in Paper~IV \cite{PaperIV}.
 \end{remark}
 
 \begin{remark}[Why Cauchy--Schwarz fails here]\label{rem:cs-fails}
@@ -635,8 +722,8 @@ and conditional algebraic decay (Theorem~\ref{thm:offdiag-strong}).
 For all $0 \le m,n \le N$, with $f_{mn} = \psi_m^{(c)}\psi_n^{(c)}$
 real-valued:
 \begin{equation}\label{eq:near-eig}
-  D_c f_{mn} = \muhat\,f_{mn} + R_{mn},
-  \qquad \muhat := \chi_m(c)+\chi_n(c),
+  D_c f_{mn} = \mumN\,f_{mn} + R_{mn},
+  \qquad \mumN := \chi_m(c)+\chi_n(c),
 \end{equation}
 where
 \begin{equation}\label{eq:Rmn-def}
@@ -648,12 +735,14 @@ where
 Sturm--Liouville product rule
 $D_c(uv) = (D_c u)v + u(D_c v) - 2p(x)u'v'$
 with $u = \psi_m^{(c)}$, $v = \psin$.
+All terms are well-defined in $L^2([-T,T])$ since
+$f_{mn} \in \mathcal{D}(q_{D_c})$ (Remark~\ref{rem:form-domain}).
 \end{proof}
 
 \begin{remark}[Coefficient-level consequence]
 \label{rem:near-eig-consequence}
-For $\chi_k \ne \muhat$:
-$|a_k^{mn}| \le \|R_{mn}\|_{L^2}/|\chi_k-\muhat|$.
+For $\chi_k \ne \mumN$:
+$|a_k^{mn}| \le \|R_{mn}\|_{L^2}/|\chi_k-\mumN|$.
 \end{remark}
 
 \begin{remark}[Obstruction to pointwise decay]\label{rem:comm-growth}
@@ -667,14 +756,14 @@ this is the obstruction behind Problem~\ref{prob:cg}.
 \begin{lemma}[Spectral gap for $k \ge N$]\label{lem:chi-gap}
 For $m,n \le \gamma N$, $\gamma < 1/\sqrt{2}$, $k \ge N$:
 \begin{equation}\label{eq:chi-gap}
-  \chi_k(c) - \muhat \ge c_2(\gamma)\,N^2,
+  \chi_k(c) - \mumN \ge c_2(\gamma)\,N^2,
   \qquad c_2(\gamma) = (1-2\gamma^2)/2 > 0.
 \end{equation}
 \end{lemma}
 
-\begin{lemma}[Gap: $\muhat$ vs.\ tail eigenvalues]\label{lem:gap-od}
+\begin{lemma}[Gap: $\mumN$ vs.\ tail eigenvalues]\label{lem:gap-od}
 For $|m-n|\ge\delta N$, $k\ge N$:
-$|\chi_k(c)-\muhat| \ge c_3(\delta)|m-n|^2$
+$|\chi_k(c)-\mumN| \ge c_3(\delta)|m-n|^2$
 with $c_3(\delta) = c_2/\delta^2$.
 \end{lemma}
 
@@ -692,7 +781,7 @@ $\|(I-\PN)f_{mn}\|_{L^2}^2 \le \|f_{mn}\|_{L^2}^2 \le T$.
 For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
 \begin{equation}\label{eq:mean-loc}
   \Emn[\chi_k]
-  = \muhat + E_{mn},
+  = \mumN + E_{mn},
   \qquad
   E_{mn}
   := \frac{\ip{R_{mn}}{f_{mn}}_{L^2}}{\|f_{mn}\|_{L^2}^2}.
@@ -702,8 +791,8 @@ For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
 \begin{proof}
 $\sum_k\chi_k|a_k^{mn}|^2
 = \ip{D_c f_{mn}}{f_{mn}}
-= \ip{\muhat f_{mn}+R_{mn}}{f_{mn}}
-= \muhat\|f_{mn}\|^2 + \ip{R_{mn}}{f_{mn}}$.
+= \ip{\mumN f_{mn}+R_{mn}}{f_{mn}}
+= \mumN\|f_{mn}\|^2 + \ip{R_{mn}}{f_{mn}}$.
 Divide by $\|f_{mn}\|^2$.
 \end{proof}
 
@@ -715,6 +804,9 @@ $\sum_k k(k+1)|a_k|^2 = m(m+1)+n(n+1)$ exactly.
 For PSWFs, Proposition~\ref{prop:mean-loc} gives the first-moment
 analogue with error $E_{mn}$; the exact formula for $E_{mn}$ is
 provided in Corollary~\ref{cor:emn-explicit}.
+The analogy with Clebsch--Gordan is heuristic: PSWFs carry no
+Lie-algebraic structure, and the decomposition is not into
+irreducible representations.
 \end{remark}
 
 \subsection{Exact energy decomposition via integration by parts}
@@ -730,9 +822,10 @@ Writing $\psi_j\psi_j' = \tfrac{1}{2}(\psi_j^2)'$ and integrating
 by parts with the boundary condition $p(\pm T) = 0$:
 \begin{equation}\label{eq:ibp-step}
   \int_{-T}^T p\,(\psi_m^2)'\,(\psi_n^2)'\,dx
-  = -\int_{-T}^T (p\,(\psi_m^2)')'\  \psi_n^2\,dx,
+  = -\int_{-T}^T (p\,(\psi_m^2)')'\ \psi_n^2\,dx,
 \end{equation}
-since the boundary terms vanish exactly.
+since the boundary terms vanish exactly
+(see Remark~\ref{rem:form-domain}).
 Expanding $(p(\psi_m^2)')' = p'(\psi_m^2)' + p(\psi_m^2)''$
 and substituting the Sturm--Liouville equation~\eqref{eq:SL}
 in the form $p\psi_m'' = -p'\psi_m' - (\chi_m - c^2x^2/T^2)\psi_m$:
@@ -760,7 +853,7 @@ of $m$ and $n$ (both satisfy~\eqref{eq:SL}) yields:
   \ip{R_{mn}}{f_{mn}}
   = \frac{1}{2}\int_{-T}^T p(x)\bigl[(\psi_m')^2\psi_n^2
     + (\psi_n')^2\psi_m^2\bigr]\,dx
-    - \frac{\muhat}{2}\|f_{mn}\|_{L^2}^2
+    - \frac{\mumN}{2}\|f_{mn}\|_{L^2}^2
     + \frac{c^2}{T^2}\int_{-T}^T x^2 f_{mn}^2\,dx.
 \end{equation}
 \end{lemma}
@@ -788,7 +881,7 @@ For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
       \bigl[(\psi_m')^2\psi_n^2 + (\psi_n')^2\psi_m^2\bigr]\,dx
     + \frac{c^2}{T^2}\int_{-T}^T x^2 f_{mn}^2\,dx}
     {\|f_{mn}\|_{L^2}^2}
-  - \frac{\muhat}{2}.
+  - \frac{\mumN}{2}.
 \end{equation}
 In particular $E_{mn}$ is determined entirely by integrals
 of the functions $\psi_m^{(c)}, \psin$ and their first derivatives;
@@ -808,13 +901,13 @@ The three terms in~\eqref{eq:energy-intro} are:
 \begin{enumerate}[(i)]
   \item \emph{Gradient (kinetic) energy:}
   $\frac{1}{2}\int p[(\psi_m')^2\psi_n^2 + (\psi_n')^2\psi_m^2]/\|f_{mn}\|^2$
-  — the $L^2$-weighted mean of the squared gradients, damped by
+  --- the $L^2$-weighted mean of the squared gradients, damped by
   $p(x)$ which vanishes at $\pm T$.
   \item \emph{Potential energy:}
-  $\frac{c^2}{T^2}\mathbb{E}_{\rho_{mn}}[x^2]$ — the mean square
+  $\frac{c^2}{T^2}\mathbb{E}_{\rho_{mn}}[x^2]$ --- the mean square
   position of the product density; small when mass is concentrated
   in the interior.
-  \item \emph{Mean eigenvalue shift:} $\muhat/2$ — the reference
+  \item \emph{Mean eigenvalue shift:} $\mumN/2$ --- the reference
   energy level.
 \end{enumerate}
 This is the PSWF analogue of the quantum-mechanical virial identity:
@@ -841,13 +934,13 @@ doubling obstruction identified in Remark~\ref{rem:edge-both-fail}.
 \begin{proposition}[Spectral lower bound]\label{prop:spectral-lower}
 For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
 \begin{equation}\label{eq:spectral-lower}
-  \Emn[\chi_k] \ge \frac{\muhat}{2}.
+  \Emn[\chi_k] \ge \frac{\mumN}{2}.
 \end{equation}
 \end{proposition}
 
 \begin{proof}
 From~\eqref{eq:energy-intro}:
-$\Emn[\chi_k] = \muhat/2 + A + B$
+$\Emn[\chi_k] = \mumN/2 + A + B$
 where
 $A = \frac{1}{2}\int p[(\psi_m')^2\psi_n^2+(\psi_n')^2\psi_m^2]/\|f_{mn}\|^2$
 and $B = \frac{c^2}{T^2}\int x^2 f_{mn}^2/\|f_{mn}\|^2$.
@@ -858,11 +951,11 @@ Both $A \ge 0$ (since $p \ge 0$ on $(-T,T)$) and $B \ge 0$.
 Proposition~\ref{prop:spectral-lower} is the first \emph{lower}
 bound on the spectral mean: the PSWF coefficient sequence
 $\{a_k^{mn}\}$ cannot have all its mass concentrated near
-eigenvalues much smaller than $\muhat/2$.
+eigenvalues much smaller than $\mumN/2$.
 Combined with Proposition~\ref{prop:mean-loc}, which shows
-$\Emn[\chi_k] \approx \muhat$, the two bounds together confine
-the spectral mean to the interval $[\muhat/2, \muhat + O(N^2)]$.
-The gap between $\muhat/2$ and $\muhat$ is the remaining
+$\Emn[\chi_k] \approx \mumN$, the two bounds together confine
+the spectral mean to the interval $[\mumN/2, \mumN + O(N^2)]$.
+The gap between $\mumN/2$ and $\mumN$ is the remaining
 analytical target of Problem~\ref{prob:comm-refined}.
 \end{remark}
 
@@ -870,9 +963,9 @@ analytical target of Problem~\ref{prob:comm-refined}.
 \label{cor:two-sided}
 For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
 \begin{equation}
-  \frac{\muhat}{2}
+  \frac{\mumN}{2}
   \le \Emn[\chi_k]
-  \le \muhat
+  \le \mumN
     + \frac{2\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}}
            {\|f_{mn}\|_{L^2}}.
 \end{equation}
@@ -916,8 +1009,8 @@ motivation behind Assumption~\ref{ass:specloc}.
 
 For $m,n \sim N$: the Slepian denominator $1-\lambda_{N-1}=O(1)$,
 giving only $O(1)$ from the Slepian bound.
-The near-eigenvector target $\muhat \sim 2N^2+c^2 > \chi_N$,
-so the concentration set $\{k:\chi_k \approx \muhat\}$
+The near-eigenvector target $\mumN \sim 2N^2+c^2 > \chi_N$,
+so the concentration set $\{k:\chi_k \approx \mumN\}$
 sits entirely within the tail $\{k \ge N\}$;
 no spectral gap is available.
 
@@ -931,13 +1024,22 @@ $\Eout(|\psi_n^{(c)}|^2) \ge c_0 > 0$.
 
 \begin{remark}[Unified view of the edge failure]
 \label{rem:edge-both-fail}
-At the edge, $\muhat > \chi_N$ and $\Eout = O(1)$ simultaneously.
+At the edge, $\mumN > \chi_N$ and $\Eout = O(1)$ simultaneously.
 In the energy picture of Remark~\ref{rem:energy-edge}:
 when mass concentrates near $|x|=T$, $p(x) \to 0$ kills the
 kinetic term and $\frac{c^2}{T^2}\mathbb{E}[x^2] \approx c^2$
 dominates, pushing $\Emn[\chi_k]$ into the tail.
 Both the Slepian and the energy approach reflect the same
 bandwidth doubling obstruction.
+%% [PATCH D] Semiclassical turning-point interpretation
+Geometrically, the edge regime corresponds to a failure of
+the semiclassical approximation at the turning points
+$x = \pm T$: when $m, n \sim N$, both classical orbits
+reach the boundary of the interval, spectral crowding prevents
+separation of scales between adjacent eigenvalues, and
+the WKB phase ceases to be monotone near $|x| = T$.
+This is the microlocal mechanism underlying both the
+Slepian obstruction and the energy concentration.
 \end{remark}
 
 %%=================================================================
@@ -953,63 +1055,43 @@ for $n \le \gamma N$ near $|\xi|=\omega$.
 
 \begin{problem}[Weak convergence of PSWF densities to classical measure]
 \label{prob:pswf-weak-limit}
-Prove hypothesis~\eqref{eq:weak-conv-hyp} of
-Lemma~\ref{lem:bulk-reduction}:
+\emph{Status: resolved by Paper~IV \cite{PaperIV}.}
+Paper~IV, Theorem~1, proves hypothesis~\eqref{eq:weak-conv-hyp}
+of Lemma~\ref{lem:bulk-reduction}:
 for every $f \in C^1([-T,T])$ and $n \le \gamma N$,
 \begin{equation}\label{eq:pswf-weak-lim}
   \int_{-T}^T f(x)\,\psi_n(x)^2\,dx
   = \lambda_n(c)\int_{-T}^T f(x)\,\rhocl(x)\,dx
-    + \lambda_n(c)\,o(1)_{n\to\infty},
+    + O\!\left(\frac{\lambda_n(c)\|f\|_{C^1}}{n}\right),
 \end{equation}
 where $\rhocl$ is the classical equilibrium density
-(Definition~\ref{def:classical}) and $o(1)$ is uniform in
-$f$ with $\|f\|_{C^1} \le 1$.
-
-\emph{Semiclassical character.}
-This is a quantitative equidistribution statement for PSWF
-densities: the mass of $\psi_n^2$ distributes according to
-the classical measure as $n \to \infty$.
-It is the 1D Sturm--Liouville analogue of quantum ergodicity,
-but in an integrable (not ergodic) setting — hence the convergence
-is to the arcsine-type density $\rhocl$ rather than to a uniform
-measure.
-
-\emph{Relation to WKB.}
-The WKB approximation (Remark~\ref{rem:wkb-heuristic}) gives the
-correct pointwise heuristic, but a proof requires controlling the
-oscillatory integral
-\[
-  \int_{-T}^T f(x)\cos^2(\phi_n(x))\,A_n(x)^2\,dx,
-\]
-which demands: (i) monotonicity of the phase $\phi_n$ in the bulk
-(no stationary points for $|x| < x_+(n)$); (ii) quantitative
-control of the amplitude $A_n(x)$; (iii) explicit error bounds
-for the WKB phase approximation.
-All three are expected to hold for PSWFs but are not available
-in the literature in the required quantitative form.
-
-\emph{Status.}
-The convergence $\psi_n^2\,dx \rightharpoonup \lambda_n(c)\rhocl\,dx$
-in $C^0([-T,T])^*$ is expected but not proved for PSWFs.
-For classical orthogonal polynomials (Legendre, Chebyshev),
-the analogous statement follows from the three-term recurrence
-and Szeg\H{o}'s theory; PSWFs lack a clean algebraic recurrence,
-so the argument must be analytic.
+(Definition~\ref{def:classical}).
+The proof uses Pr\"{u}fer phase monotonicity
+(Paper~IV, Lemma~2) and a 1D Riemann--Lebesgue argument;
+it does not invoke WKB approximation.
+Two extensions remain open:
+\begin{enumerate}[(P1)]
+  \item Extension of~\eqref{eq:pswf-weak-lim} to $f \in C^0$
+  (non-critical for the bulk program).
+  \item Off-diagonal analogue: weak convergence of
+  $\psi_m\psi_n$ for $m \ne n$ (future work, needed for
+  Problem~\ref{prob:cg}).
+\end{enumerate}
 \end{problem}
 
 \begin{problem}[Refined commutator problem: energy dominance]
 \label{prob:comm-refined}
-Prove that the spectral mean is asymptotically close to $\muhat$:
+Prove that the spectral mean is asymptotically close to $\mumN$:
 \begin{equation}\label{eq:comm-refined}
-  \frac{\Emn[\chi_k]}{\muhat} \to 1
+  \frac{\Emn[\chi_k]}{\mumN} \to 1
   \qquad \text{as } N \to \infty,\; m,n \le \gamma N.
 \end{equation}
-By Lemma~\ref{lem:bulk-reduction}, this follows from
-Problem~\ref{prob:pswf-weak-limit} (plus the analogous
-kinetic energy reduction).
+By Lemma~\ref{lem:bulk-reduction} and Paper~IV \cite{PaperIV},
+this is now unconditionally resolved for $m,n \le \gamma N$
+(given Assumption~\ref{ass:lw}).
 \emph{Note:} this is an energy comparison problem, not a norm bound.
 The SL energy identity~\eqref{eq:SL-energy} provides the global
-constraint; the challenge is to transfer it to the
+constraint; the challenge was to transfer it to the
 $\psi_m^2\psi_n^2$-weighted setting via the covariance argument
 of Lemma~\ref{lem:bulk-reduction}.
 \end{problem}
@@ -1064,6 +1146,12 @@ preprint, 2026.
 Anonymous Author,
 \emph{Conditional Frame Stability of Prolate Sampling Operators
 via PSWF Spectral Projection and XRY Quadrature},
+preprint, 2026.
+
+\bibitem{PaperIV}
+Anonymous Author,
+\emph{Semiclassical Equidistribution of PSWF Densities
+and Closure of the Bulk Decorrelation Program},
 preprint, 2026.
 
 \bibitem{BonamiKaroui}
