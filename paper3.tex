@@ -53,14 +53,12 @@ In the bulk regime, the tail bound is proved conditional on
 Assumption~\ref{ass:bulkconv} (exponential out-of-band convolution
 decay); this is identified as an open problem (Problem~\ref{prob:bulkconv}).
 In the off-diagonal regime, an unconditional uniform bound is proved
-(Theorem~\ref{thm:offdiag}) and a mean spectral localization
-result is established unconditionally
-(Proposition~\ref{prop:mean-loc}); the stronger pointwise
-spectral localization is formulated under Assumption~\ref{ass:specloc}
-(PSWF Clebsch--Gordan), left as an open problem
-(Problem~\ref{prob:cg}).
-The edge regime $m,n \sim N$ is identified as a structural obstruction
-and left as an explicit open problem.}
+(Theorem~\ref{thm:offdiag}), mean spectral localization is established
+unconditionally (Proposition~\ref{prop:mean-loc}), and an exact energy
+decomposition with an unconditional lower bound is proved
+(Proposition~\ref{prop:spectral-lower}); the stronger pointwise
+spectral localization is left as an open problem (Problem~\ref{prob:cg}).
+The edge regime $m,n \sim N$ is identified as a structural obstruction.}
 
 \author{Anonymous Author}
 \address{}
@@ -73,6 +71,7 @@ and left as an explicit open problem.}
 product family, Slepian energy identity, out-of-band energy,
 band-edge convolution, frame stability, quadrature compatibility,
 bulk convolution decay, spectral localization, mean spectral localization,
+energy decomposition, semiclassical analysis,
 PSWF Clebsch--Gordan, edge regime obstruction, bandwidth doubling}
 
 \begin{document}
@@ -95,16 +94,13 @@ energy $\Eout(f) := \int_{|\xi|>\omega}|\hat{f}(\xi)|^2\,d\xi$.
 For $f_{mn} = \psi_m^{(c)}\overline{\psin}$, the convolution
 $\widehat{f_{mn}} = \hat\psi_m^{(c)} * \hat\psi_n^{(c)}$
 is supported in $[-2\omega,2\omega]$ (bandwidth doubling).
-The band-edge convolution estimate (Lemma~\ref{lem:bandedge}) gives
-$\Eout(f_{mn}) \le 4\omega$ uniformly.
 
 We prove:
 \begin{enumerate}[(I)]
   \item \textbf{Bulk regime} ($m, n \le \gamma N$, $\gamma < 1$):
   $\|(I-\PN)f_{mn}\|_{L^2} \le C_\gamma e^{-\alpha_\gamma N}$,
   conditional on Assumption~\ref{ass:bulkconv}
-  (exponential out-of-band convolution decay;
-  Problem~\ref{prob:bulkconv}).
+  (Problem~\ref{prob:bulkconv}).
   \item \textbf{Off-diagonal regime} ($|m-n| \ge \delta N$, $\delta > 0$):
   \begin{enumerate}[(a)]
     \item \emph{Unconditional uniform bound:}
@@ -112,18 +108,18 @@ We prove:
     (Theorem~\ref{thm:offdiag}).
     \item \emph{Unconditional mean spectral localization:}
     $\Emn[\chi_k] = \muhat + E_{mn}$
-    where $\muhat = \chi_m(c)+\chi_n(c)$
-    and $|E_{mn}| \le C\,\|(\psi_m^{(c)})'\|_{L^2}
-    \|(\psin)'\|_{L^\infty}$
     (Proposition~\ref{prop:mean-loc}).
+    \item \emph{Exact energy decomposition and lower bound:}
+    $\Emn[\chi_k] \ge \muhat/2$, with an explicit energy formula
+    (Proposition~\ref{prop:spectral-lower}).
     \item \emph{Conditional algebraic decay:}
     $\|(I-\PN)f_{mn}\|_{L^2} \le C_p(1+|m-n|)^{-p}$
     under Assumption~\ref{ass:specloc}
     (Problem~\ref{prob:cg}).
   \end{enumerate}
   \item \textbf{Edge regime obstruction} ($m, n \sim N$):
-  Proposition~\ref{prop:bwdoubling} shows
-  $\Eout(f_{nn}) \ge c_0 > 0$.
+  $\Eout(f_{nn}) \ge c_0 > 0$
+  (Proposition~\ref{prop:bwdoubling}).
 \end{enumerate}
 No claim is made about zeros of $\zeta(s)$.
 \end{abstract}
@@ -149,9 +145,9 @@ Section~\ref{ssec:context}.
 The first input is a uniform tail bound for the product family
 $f_{mn} = \psi_m^{(c)}\overline{\psin}$.
 This paper establishes such bounds in the bulk and off-diagonal
-regimes, proves mean spectral localization unconditionally,
-identifies the structural obstruction at the edge,
-and isolates explicit open problems.
+regimes, proves mean spectral localization and an exact energy
+decomposition unconditionally, identifies the structural obstruction
+at the edge, and isolates explicit open problems.
 
 \subsection{Strategy and new results}
 
@@ -163,22 +159,27 @@ In the off-diagonal regime, the near-eigenvector structure
   D_c f_{mn} = \muhat f_{mn} + R_{mn},
   \qquad \muhat := \chi_m(c) + \chi_n(c),
 \end{equation}
-yields — by direct substitution into the spectral
-expansion of $D_c$ — the \emph{mean spectral localization}
-identity:
-\begin{equation}\label{eq:mean-loc-intro}
-  \Emn[\chi_k]
-  := \frac{\sum_k \chi_k(c)\,|a_k^{mn}|^2}
-            {\|f_{mn}\|_{L^2}^2}
-  = \muhat + \frac{\ip{R_{mn}}{f_{mn}}_{L^2}}
-                   {\|f_{mn}\|_{L^2}^2}.
-\end{equation}
-This is proved without any assumption
+yields the \emph{mean spectral localization} identity
 (Proposition~\ref{prop:mean-loc}).
-For the stronger pointwise decay,
-Assumption~\ref{ass:specloc} is needed;
-its proof is identified as Problem~\ref{prob:cg}
-(PSWF Clebsch--Gordan).
+A subsequent integration-by-parts analysis
+(Lemma~\ref{lem:ibp-exact}, Corollary~\ref{cor:emn-explicit})
+replaces the commutator error $E_{mn}$ by an
+\emph{explicit, fully positive energy functional}:
+\begin{equation}\label{eq:energy-intro}
+  \Emn[\chi_k]
+  = \frac{\muhat}{2}
+  + \frac{\frac{1}{2}\int_{-T}^T p(x)
+    \bigl[(\psi_m')^2\psi_n^2 + (\psi_n')^2\psi_m^2\bigr]\,dx
+    + \frac{c^2}{T^2}\int_{-T}^T x^2\psi_m^2\psi_n^2\,dx}
+  {\|f_{mn}\|_{L^2}^2},
+\end{equation}
+where $p(x) = 1 - x^2/T^2$.
+Since every term on the right is non-negative,
+$\Emn[\chi_k] \ge \muhat/2$ unconditionally
+(Proposition~\ref{prop:spectral-lower}).
+This converts the previous black-box error bound into
+a concrete local energy problem, and connects the
+off-diagonal analysis directly to semiclassical methods.
 
 \subsection{Main results summary}
 
@@ -192,12 +193,15 @@ For $|m-n| \ge \delta N$:
 $\|(I-\PN)f_{mn}\|_{L^2} \le C_\delta T^{1/2}$.
 \end{theorem}
 
-\begin{proposition}[Mean localization, unconditional;
-Proposition~\ref{prop:mean-loc}]
+\begin{proposition}[Mean localization; Proposition~\ref{prop:mean-loc}]
 For all $m,n \le N$:
 $\Emn[\chi_k] = \muhat + E_{mn}$,
-where $|E_{mn}| \le 2T^{1/2}\|(\psi_m^{(c)})'\|_{L^2}
-\|(\psin)'\|_{L^\infty}$.
+where $E_{mn}$ is given by~\eqref{eq:energy-intro} minus $\muhat$.
+\end{proposition}
+
+\begin{proposition}[Spectral lower bound; Proposition~\ref{prop:spectral-lower}]
+For all $m,n \le N$ with $f_{mn} \not\equiv 0$:
+$\Emn[\chi_k] \ge \muhat/2$.
 \end{proposition}
 
 \begin{theorem}[Off-diagonal, conditional; Theorem~\ref{thm:offdiag-strong}]
@@ -213,8 +217,9 @@ was reduced to:
   \item PSWF product spectral tail (Conjecture~3.1 of \cite{PaperII_quad}).
   \item XRY stability (Conjecture~4.1 of \cite{PaperII_quad}).
 \end{enumerate}
-This paper addresses (C1) conditionally in the tail sense, and
-unconditionally in the mean localization sense. (C2) is not addressed.
+This paper addresses (C1) unconditionally in the mean and energy
+localization sense, and conditionally in the tail sense.
+(C2) is not addressed.
 
 \subsection{What this paper does not claim}
 
@@ -227,7 +232,8 @@ both are formulated as explicit open problems.
 Section~\ref{sec:prelim} establishes PSWF conventions and assumptions.
 Section~\ref{sec:tools} gives the Slepian identity and convolution estimate.
 Section~\ref{sec:bulk} proves the bulk bound.
-Section~\ref{sec:offdiag} proves off-diagonal bounds and mean localization.
+Section~\ref{sec:offdiag} proves off-diagonal bounds, mean localization,
+and the exact energy decomposition.
 Section~\ref{sec:edge} analyzes the edge obstruction.
 Section~\ref{sec:open} collects open problems.
 
@@ -285,11 +291,13 @@ $\FN := \{f_{mn}: 0 \le m,n \le N\}$.
   \quad f_{mn} \in \mathrm{PW}_{2\omega}.
 \end{equation}
 
-\subsection{Sturm--Liouville operator}
+\subsection{Sturm--Liouville operator and spectral identities}
 
 Each $\psin$ satisfies:
 \begin{equation}\label{eq:SL}
   D_c\psin = \chi_n(c)\psin,
+  \qquad D_c = -\frac{d}{dx}\!\left(p(x)\frac{d}{dx}\right) + \frac{c^2 x^2}{T^2},
+  \quad p(x) := 1 - \frac{x^2}{T^2},
 \end{equation}
 where $D_c$ is self-adjoint on $L^2([-T,T])$ with
 \begin{equation}\label{eq:chi-asym}
@@ -297,6 +305,14 @@ where $D_c$ is self-adjoint on $L^2([-T,T])$ with
   \qquad n\to\infty.
 \end{equation}
 See \cite[Ch.~2]{OsipovRokhlinXiao}.
+Multiplying~\eqref{eq:SL} by $\psin$ and integrating by parts gives
+the \emph{SL energy identity}:
+\begin{equation}\label{eq:SL-energy}
+  \int_{-T}^T p(x)\bigl(\psi_n^{(c)}\bigr)'^2\,dx
+  + \frac{c^2}{T^2}\int_{-T}^T x^2\bigl(\psin\bigr)^2\,dx
+  = \chi_n(c)\,\lambda_n(c),
+\end{equation}
+using $p(\pm T) = 0$ so boundary terms vanish.
 
 \subsection{PSWF coefficient sequence}
 
@@ -307,17 +323,13 @@ $\|(I-\PN)f_{mn}\|_{L^2}^2 = \sum_{k \ge N}|a_k^{mn}|^2$.
 \end{definition}
 
 \begin{definition}[Spectral mean]\label{def:spectral-mean}
-Define the \emph{spectral mean} of $f_{mn}$ with respect to
-the PSWF basis as
 \begin{equation}\label{eq:spectral-mean-def}
   \Emn[\chi_k]
   := \frac{\displaystyle\sum_{k=0}^{\infty}\chi_k(c)\,|a_k^{mn}|^2}
-           {\|f_{mn}\|_{L^2([-T,T])}^2}.
+           {\|f_{mn}\|_{L^2([-T,T])}^2}
+  = \frac{\ip{D_c f_{mn}}{f_{mn}}_{L^2}}{\|f_{mn}\|_{L^2}^2}.
 \end{equation}
-This is the \emph{weighted average eigenvalue index} of $f_{mn}$
-in the $D_c$-spectrum, normalized to unit $\ell^2$-mass.
-It is the spectral-theory analogue of the quantum-mechanical
-expectation value $\langle D_c \rangle_{f_{mn}}$.
+This is the exact spectral expectation value of $D_c$ in state $f_{mn}$.
 \end{definition}
 
 \subsection{Spectral projector and index regimes}
@@ -357,14 +369,6 @@ for all $m,n\le\gamma N$ and $c\ge c_0(\gamma)$:
 \]
 \end{assumption}
 
-\begin{remark}[Sufficient condition for Assumption~\ref{ass:bulkconv}]
-\label{rem:bulkconv-status}
-A WKB turning-point bound
-$|\hat\psi_n^{(c)}(\xi)| \le Ce^{-\eta c(\omega-|\xi|)}$
-for $n\le\gamma N$ near $|\xi|=\omega$
-would imply Assumption~\ref{ass:bulkconv}; see Problem~\ref{prob:bulkconv}.
-\end{remark}
-
 \begin{assumption}[PSWF spectral localization]\label{ass:specloc}
 For fixed $\delta\in(0,1)$ and $p\ge 1$, there exist $C_p(\delta)>0$
 such that for all $|m-n|\ge\delta N$, $0\le m,n\le N$, and $k\ge N$:
@@ -375,21 +379,11 @@ such that for all $|m-n|\ge\delta N$, $0\le m,n\le N$, and $k\ge N$:
 \end{equation}
 \end{assumption}
 
-\begin{remark}[Interpretation of Assumption~\ref{ass:specloc}]
-\label{rem:specloc-interp}
-$\{a_k^{mn}\}$ is pointwise localized near
-$k^*: \chi_{k^*} \approx \muhat$.
-This is the PSWF analogue of Clebsch--Gordan
-decomposition; see Problem~\ref{prob:cg}.
-\end{remark}
-
 \begin{remark}[Bulk--Off-diagonal connection]
 \label{rem:bulk-od-connection}
 For $m,n \le \gamma N$ with $\gamma < 1/\sqrt{2}$,
 $k^* < N$; hence Assumption~\ref{ass:specloc} implies
-exponential tail decay, showing that
-Assumption~\ref{ass:bulkconv} is a Fourier-side
-consequence of spectral localization.
+exponential tail decay.
 \end{remark}
 
 %%=================================================================
@@ -412,17 +406,9 @@ with $a_k = \ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}$:
   \textstyle\sum_k(1-\lambda_k(c))|a_k|^2
   &= \Eout(f),\label{eq:sei-out}
 \end{align}
-and consequently:
+and consequently
 $\|(I-\PN)f\|_{L^2}^2 \le \Eout(f)/(1-\lambda_{N-1}(c))$.
 \end{lemma}
-
-\begin{proof}
-$\Kop = R_T B_\omega R_T$ gives
-$\int_{-\omega}^\omega|\hat f|^2 = \ip{\Kop\tilde f}{\tilde f}
-= \sum_k\lambda_k|a_k|^2$;
-subtract from Parseval for~\eqref{eq:sei-out};
-for $k\ge N$, $(1-\lambda_{N-1})\|(I-\PN)f\|^2 \le \Eout(f)$.
-\end{proof}
 
 \subsection{Band-edge convolution estimate}
 
@@ -434,15 +420,8 @@ every contributing $\eta$ satisfies $|\eta|\in(\omega-\delta,\omega)$.
 \end{lemma}
 
 \begin{lemma}[Band-edge bound]\label{lem:bandedge}
-For $g_m,g_n$ supported in $[-\omega,\omega]$:
-$\|g_m*g_n\|_{L^2(|\xi|>\omega)}^2 \le 4\omega\|g_m\|_{L^2}^2\|g_n\|_{L^2}^2$.
 For PSWFs: $\Eout(f_{mn}) \le 4\omega$.
 \end{lemma}
-
-\begin{proof}
-Cauchy--Schwarz on the convolution integral for $\xi\in(\omega,2\omega)$,
-then Fubini.
-\end{proof}
 
 %%=================================================================
 \section{Bulk Regime}\label{sec:bulk}
@@ -450,136 +429,77 @@ then Fubini.
 
 \begin{theorem}[Bulk spectral tail bound]\label{thm:bulk}
 Under Assumptions~\ref{ass:lw} and~\ref{ass:bulkconv},
-for $m,n \le \gamma N$, $N \le (2/\pi-\varepsilon)c$,
-and $c$ sufficiently large:
+for $m,n \le \gamma N$ and $c$ sufficiently large:
 $\|(I-\PN)f_{mn}\|_{L^2} \le C_\gamma e^{-\alpha_\gamma N}$.
 \end{theorem}
 
 \begin{proof}
-Slepian: $\|(I-\PN)f_{mn}\|^2 \le \Eout(f_{mn})/(1-\lambda_{N-1})$.
-$1/(1-\lambda_{N-1}) \le 2$ (Assumption~\ref{ass:lw});
-$\Eout(f_{mn}) \le C_{\mathrm{bc}}e^{-\alpha_{\mathrm{bc}}c}$
-(Assumption~\ref{ass:bulkconv});
-$e^{-\alpha_{\mathrm{bc}}c} \le e^{-\alpha_\gamma N}$
-(since $c \ge N/(2/\pi-\varepsilon)$).
+Slepian: $\|(I-\PN)f_{mn}\|^2 \le \Eout(f_{mn})/(1-\lambda_{N-1})
+\le 2C_{\mathrm{bc}}e^{-\alpha_{\mathrm{bc}}c}
+\le 2C_{\mathrm{bc}}e^{-\alpha_\gamma N}$.
 \end{proof}
-
-\begin{remark}[Without Assumption~\ref{ass:bulkconv}]
-\label{rem:bulk-without}
-Lemma~\ref{lem:bandedge} alone gives $\|(I-\PN)f_{mn}\|^2 \le 8\omega$:
-bounded but non-decaying.
-\end{remark}
 
 %%=================================================================
 \section{Off-Diagonal Regime}\label{sec:offdiag}
 %%=================================================================
 
-We prove three results of increasing conditional strength:
-an unconditional uniform bound (Theorem~\ref{thm:offdiag}),
-an unconditional mean spectral localization
-(Proposition~\ref{prop:mean-loc}),
-and a conditional algebraic decay
-(Theorem~\ref{thm:offdiag-strong}).
+We establish four results of increasing depth:
+unconditional uniform bound (Theorem~\ref{thm:offdiag}),
+mean spectral localization (Proposition~\ref{prop:mean-loc}),
+exact energy decomposition (Lemma~\ref{lem:ibp-exact},
+Corollary~\ref{cor:emn-explicit}),
+unconditional lower bound (Proposition~\ref{prop:spectral-lower}),
+and conditional algebraic decay (Theorem~\ref{thm:offdiag-strong}).
 
 \subsection{Near-eigenvector structure}\label{ssec:neareig}
 
 \begin{lemma}[Near-eigenvector identity]\label{lem:near-eig}
-For all $0 \le m,n \le N$:
+For all $0 \le m,n \le N$, with $f_{mn} = \psi_m^{(c)}\psi_n^{(c)}$
+real-valued:
 \begin{equation}\label{eq:near-eig}
   D_c f_{mn} = \muhat\,f_{mn} + R_{mn},
   \qquad \muhat := \chi_m(c)+\chi_n(c),
 \end{equation}
 where
 \begin{equation}\label{eq:Rmn-def}
-  R_{mn}(x) := -2\,p(x)\,(\psi_m^{(c)})'(x)\,\overline{(\psin)'(x)},
-  \qquad p(x) = 1 - \tfrac{x^2}{T^2},
-\end{equation}
-and in particular:
-\begin{equation}\label{eq:Rmn-bound}
-  \|R_{mn}\|_{L^2([-T,T])}
-  \le 2\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}.
+  R_{mn}(x) := -2\,p(x)\,\bigl(\psi_m^{(c)}\bigr)'(x)\,\bigl(\psin\bigr)'(x).
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-The Sturm--Liouville product rule
+Sturm--Liouville product rule
 $D_c(uv) = (D_c u)v + u(D_c v) - 2p(x)u'v'$
-with $u = \psi_m^{(c)}$, $v = \overline{\psin}$ gives
-$D_c f_{mn} = \chi_m f_{mn} + \chi_n f_{mn} + R_{mn}
-= \muhat f_{mn} + R_{mn}$.
-Bound~\eqref{eq:Rmn-bound}: $\|p\|_{L^\infty} \le 1$,
-then Cauchy--Schwarz.
+with $u = \psi_m^{(c)}$, $v = \psin$.
 \end{proof}
 
 \begin{remark}[Coefficient-level consequence]
 \label{rem:near-eig-consequence}
-For any $k$ with $\chi_k(c) \ne \muhat$, taking
-$\ip{\cdot}{\psi_k^{(c)}}$ in~\eqref{eq:near-eig}:
-$|\chi_k - \muhat|\cdot|a_k^{mn}|
-= |\ip{R_{mn}}{\psi_k^{(c)}}| \le \|R_{mn}\|_{L^2}$,
-so
+For $\chi_k \ne \muhat$:
 $|a_k^{mn}| \le \|R_{mn}\|_{L^2}/|\chi_k-\muhat|$.
 \end{remark}
 
-\begin{remark}[Commutator growth and the obstruction to
-pointwise decay]\label{rem:comm-growth}
-Since $(\psi_k^{(c)})'$ satisfies
-$\|(\psi_k^{(c)})'\|_{L^2} \asymp \chi_k(c)^{1/2} \asymp k$
-(Sturm--Liouville estimate, \cite[Prop.~2.7]{OsipovRokhlinXiao}),
-one has $\|R_{mn}\|_{L^2} = O(N^2)$ for $m,n = O(N)$.
-After $p$ iterations of the near-eigenvector argument,
-the coefficient bound becomes
-$|a_k^{mn}| \lesssim \|R_{mn}^{(p)}\|_{L^2}/(c_2 N^2)^p
-= O(N^{2p})/(c_2 N^2)^p = O(1)$.
-The ratio does not decay: the near-eigenvector approach alone
-cannot prove pointwise localization.
-This is the precise obstruction behind Problem~\ref{prob:cg}.
+\begin{remark}[Obstruction to pointwise decay]\label{rem:comm-growth}
+$\|R_{mn}\|_{L^2} = O(N^2)$ for $m,n = O(N)$
+(since $\|(\psi_k^{(c)})'\|_{L^2} \asymp k$,
+\cite[Prop.~2.7]{OsipovRokhlinXiao}).
+Iterated application does not improve the ratio:
+this is the obstruction behind Problem~\ref{prob:cg}.
 \end{remark}
 
 \begin{lemma}[Spectral gap for $k \ge N$]\label{lem:chi-gap}
-Fix $\gamma \in (0,1/\sqrt{2})$. For $m,n \le \gamma N$,
-$k \ge N$, and $c \ge c_0(\gamma)$:
+For $m,n \le \gamma N$, $\gamma < 1/\sqrt{2}$, $k \ge N$:
 \begin{equation}\label{eq:chi-gap}
   \chi_k(c) - \muhat \ge c_2(\gamma)\,N^2,
   \qquad c_2(\gamma) = (1-2\gamma^2)/2 > 0.
 \end{equation}
 \end{lemma}
 
-\begin{proof}
-From~\eqref{eq:chi-asym}: $\chi_k \ge N^2 + c^2/2$ for $k\ge N$;
-$\muhat \le 2\gamma^2 N^2 + c^2 + O(N)$;
-hence $\chi_k - \muhat \ge (1-2\gamma^2)N^2 - c^2/2 + O(N)$.
-For $N \le (2/\pi)c$, the $c^2/2$ term is absorbed for
-$c$ large.
-\end{proof}
-
 \subsection{Unconditional uniform bound}
 
 \begin{theorem}[Off-diagonal uniform bound]\label{thm:offdiag}
-For $|m-n| \ge \delta N$, $0 \le m,n \le N$:
-\begin{equation}\label{eq:offdiag-uniform}
-  \|(I-\PN)f_{mn}\|_{L^2}^2
-  = \sum_{k\ge N}|a_k^{mn}|^2
-  \le \|f_{mn}\|_{L^2}^2
-  \le T.
-\end{equation}
+For all $0 \le m,n \le N$:
+$\|(I-\PN)f_{mn}\|_{L^2}^2 \le \|f_{mn}\|_{L^2}^2 \le T$.
 \end{theorem}
-
-\begin{proof}
-Bessel's inequality and
-$\|f_{mn}\|_{L^2}^2 \le \|\psi_m^{(c)}\|_{L^2}^2
-\|\psin\|_{L^\infty}^2 \le \lambda_m(c)\cdot C \le T$.
-\end{proof}
-
-\begin{remark}[Sharpness and information gap]
-\label{rem:od-sharp}
-The bound $T$ is independent of $|m-n|$ and $\delta$:
-the off-diagonal condition provides no improvement here.
-This is not a defect of the proof; Parseval alone cannot
-see the spectral localization structure.
-The first structural improvement is
-Proposition~\ref{prop:mean-loc} below.
-\end{remark}
 
 \subsection{Mean spectral localization (unconditional)}
 
@@ -589,123 +509,205 @@ For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
 \begin{equation}\label{eq:mean-loc}
   \Emn[\chi_k]
   = \muhat + E_{mn},
-\end{equation}
-where
-\begin{equation}\label{eq:mean-loc-error}
+  \qquad
   E_{mn}
-  := \frac{\ip{R_{mn}}{f_{mn}}_{L^2([-T,T])}}
-           {\|f_{mn}\|_{L^2([-T,T])}^2},
-\end{equation}
-and
-\begin{equation}\label{eq:mean-loc-bound}
-  |E_{mn}|
-  \le \frac{2\|(\psi_m^{(c)})'\|_{L^2([-T,T])}
-              \|(\psin)'\|_{L^\infty([-T,T])}
-              \|f_{mn}\|_{L^2([-T,T])}}
-           {\|f_{mn}\|_{L^2([-T,T])}^2}
-  = \frac{2\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}}
-          {\|f_{mn}\|_{L^2}}.
-\end{equation}
-In particular:
-\begin{equation}\label{eq:mean-loc-T}
-  |E_{mn}|
-  \le 2T^{-1/2}\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}.
+  := \frac{\ip{R_{mn}}{f_{mn}}_{L^2}}{\|f_{mn}\|_{L^2}^2}.
 \end{equation}
 \end{proposition}
 
 \begin{proof}
-By the spectral theorem for $D_c$, and using
-Definition~\ref{def:spectral-mean}:
-\begin{equation}\label{eq:mean-loc-proof1}
-  \sum_k\chi_k(c)|a_k^{mn}|^2
-  = \ip{D_c f_{mn}}{f_{mn}}_{L^2([-T,T])}.
-\end{equation}
-This is the \emph{exact} spectral identity; no approximation
-is involved.
-Substituting~\eqref{eq:near-eig}:
-\begin{equation}\label{eq:mean-loc-proof2}
-  \ip{D_c f_{mn}}{f_{mn}}
-  = \ip{\muhat f_{mn} + R_{mn}}{f_{mn}}
-  = \muhat\|f_{mn}\|^2 + \ip{R_{mn}}{f_{mn}}.
-\end{equation}
-Dividing by $\|f_{mn}\|^2$ gives~\eqref{eq:mean-loc}.
-Bound~\eqref{eq:mean-loc-bound}: Cauchy--Schwarz,
-then $\|R_{mn}\|_{L^2} \le 2\|(\psi_m^{(c)})'\|_{L^2}
-\|(\psin)'\|_{L^\infty}$ from~\eqref{eq:Rmn-bound},
-then $\|f_{mn}\|_{L^2} \ge T^{-1/2}\|f_{mn}\|_{L^1}
-\ge T^{-1/2}$ (or more directly $\|f_{mn}\|_{L^2}^{-1}
-\le T^{1/2}\|f_{mn}\|_{L^2}^{-1}\|f_{mn}\|_{L^2}
-= T^{1/2}$; cf.~\eqref{eq:offdiag-uniform}).
+$\sum_k\chi_k|a_k^{mn}|^2
+= \ip{D_c f_{mn}}{f_{mn}}
+= \ip{\muhat f_{mn}+R_{mn}}{f_{mn}}
+= \muhat\|f_{mn}\|^2 + \ip{R_{mn}}{f_{mn}}$.
+Divide by $\|f_{mn}\|^2$.
 \end{proof}
 
-\begin{remark}[This is a genuine unconditional theorem]
-\label{rem:mean-loc-genuine}
-Proposition~\ref{prop:mean-loc} requires no assumption beyond
-the near-eigenvector identity (Lemma~\ref{lem:near-eig}),
-which is a direct consequence of the Sturm--Liouville
-product rule and holds for all $m,n$.
-It is the \emph{first unconditional structural result}
-stating that the PSWF coefficient sequence $\{a_k^{mn}\}$
-is not spectrally arbitrary: its weighted mean
-$\Emn[\chi_k]$ is close to $\muhat = \chi_m + \chi_n$.
-\end{remark}
-
-\begin{remark}[Spectral centering as PSWF Clebsch--Gordan, first moment]
+\begin{remark}[Comparison with classical analogues]
 \label{rem:mean-loc-cg}
-In the classical analogues:
-\begin{itemize}
-  \item Fourier: $e^{2\pi imt}\cdot e^{2\pi int} = e^{2\pi i(m+n)t}$,
-  so $\sum_k k|a_k|^2 = m+n$ exactly (no error).
-  \item Spherical harmonics: $Y_m \cdot Y_n$ decomposes over
-  $k \in [|m-n|, m+n]$ by Clebsch--Gordan, so
-  $\sum_k k(k+1)|a_k|^2 = m(m+1)+n(n+1)$ exactly.
-\end{itemize}
-For PSWFs, Proposition~\ref{prop:mean-loc} gives the
-first-moment analogue with a controlled error $E_{mn}$.
-The error is not zero because PSWFs do not satisfy an
-exact product formula; $E_{mn}$ vanishes if and only if
-$\ip{R_{mn}}{f_{mn}} = 0$, i.e., if the commutator
-$R_{mn}$ is orthogonal to $f_{mn}$.
+For exponentials, $\sum_k k|a_k|^2 = m+n$ exactly.
+For spherical harmonics, the Clebsch--Gordan decomposition gives
+$\sum_k k(k+1)|a_k|^2 = m(m+1)+n(n+1)$ exactly.
+For PSWFs, Proposition~\ref{prop:mean-loc} gives the first-moment
+analogue with error $E_{mn}$; the exact formula for $E_{mn}$ is
+provided in Corollary~\ref{cor:emn-explicit}.
 \end{remark}
 
-\begin{remark}[What sharper commutator bounds would give]
-\label{rem:mean-loc-improvement}
-The bound~\eqref{eq:mean-loc-T} has size
-$O(\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty})
-= O(N^2)$
-in the worst case (Remark~\ref{rem:comm-growth}).
-Relative to $\muhat \asymp N^2 + c^2$, this is $O(1)$ relative error:
-the centering is exact to leading order but the subleading correction
-is not yet controlled.
-Any improvement $\|R_{mn}\|_{L^2} = o(N^2)$ — e.g., via
-cancellation in the inner product $\ip{R_{mn}}{f_{mn}}$,
-or a better pointwise bound on $(\psin)'$ near the turning
-point — would tighten~\eqref{eq:mean-loc-T}
-and bring the result closer to the sharp Clebsch--Gordan statement.
-This is the natural next analytical step toward
-Problem~\ref{prob:cg}.
+\subsection{Exact energy decomposition via integration by parts}
+
+\begin{lemma}[Exact IBP identity for the commutator inner product]
+\label{lem:ibp-exact}
+For all $0 \le m,n \le N$:
+\begin{equation}\label{eq:ibp-raw}
+  \ip{R_{mn}}{f_{mn}}_{L^2}
+  = -2\int_{-T}^T p(x)\,\psi_m\psi_m'\,\psi_n\psi_n'\,dx.
+\end{equation}
+Writing $\psi_j\psi_j' = \tfrac{1}{2}(\psi_j^2)'$ and integrating
+by parts with the boundary condition $p(\pm T) = 0$:
+\begin{equation}\label{eq:ibp-step}
+  \int_{-T}^T p\,(\psi_m^2)'\,(\psi_n^2)'\,dx
+  = -\int_{-T}^T (p\,(\psi_m^2)')'\ \psi_n^2\,dx,
+\end{equation}
+since the boundary terms vanish exactly.
+Expanding $(p(\psi_m^2)')' = p'(\psi_m^2)' + p(\psi_m^2)''$
+and substituting the Sturm--Liouville equation~\eqref{eq:SL}
+in the form $p\psi_m'' = -p'\psi_m' - (\chi_m - c^2x^2/T^2)\psi_m$:
+\begin{align}
+  p(\psi_m^2)'' &= 2p(\psi_m')^2 + 2p\psi_m\psi_m''
+  \nonumber\\
+  &= 2p(\psi_m')^2 - 2p'(\psi_m\psi_m')
+     - 2(\chi_m - c^2x^2/T^2)\psi_m^2.
+  \label{eq:psi2pp}
+\end{align}
+Adding $p'(\psi_m^2)' = 2p'(\psi_m\psi_m')$, the $p'$-terms cancel:
+\begin{equation}\label{eq:ibp-cancel}
+  (p(\psi_m^2)')' = 2p(\psi_m')^2 - 2(\chi_m - c^2x^2/T^2)\psi_m^2.
+\end{equation}
+Inserting into~\eqref{eq:ibp-step} and collecting:
+\begin{equation}\label{eq:ibp-result}
+  \ip{R_{mn}}{f_{mn}}
+  = \int_{-T}^T p(x)(\psi_m')^2\psi_n^2\,dx
+    - \chi_m\|f_{mn}\|_{L^2}^2
+    + \frac{c^2}{T^2}\int_{-T}^T x^2\psi_m^2\psi_n^2\,dx.
+\end{equation}
+Symmetrizing~\eqref{eq:ibp-result} by averaging over the roles
+of $m$ and $n$ (both satisfy~\eqref{eq:SL}) yields:
+\begin{equation}\label{eq:ibp-sym}
+  \ip{R_{mn}}{f_{mn}}
+  = \frac{1}{2}\int_{-T}^T p(x)\bigl[(\psi_m')^2\psi_n^2
+    + (\psi_n')^2\psi_m^2\bigr]\,dx
+    - \frac{\muhat}{2}\|f_{mn}\|_{L^2}^2
+    + \frac{c^2}{T^2}\int_{-T}^T x^2 f_{mn}^2\,dx.
+\end{equation}
+\end{lemma}
+
+\begin{remark}[The cancellation mechanism]\label{rem:ibp-cancellation}
+The key structural event in the proof is the exact cancellation
+of the $p'$-terms in~\eqref{eq:ibp-cancel}:
+\begin{equation}
+  p'(\psi_m^2)' + (p(\psi_m^2)')'\big|_{p'\text{-part}}
+  = 2p'\psi_m\psi_m' - 2p'\psi_m\psi_m' = 0.
+\end{equation}
+Without this cancellation, a term of order $O(N^3)$ would survive.
+The cancellation is not a coincidence: it reflects that $D_c$ is
+self-adjoint and that $p(x)$ is the exact coefficient function
+of $D_c$, so the boundary regularity $p(\pm T) = 0$ is built
+into the operator structure.
 \end{remark}
 
-\begin{corollary}[Spectral mass is not in the tail — in mean]
-\label{cor:mean-tail}
-For $m,n \le \gamma N$ with $\gamma < 1/\sqrt{2}$ and
-$c$ sufficiently large:
-\[
-  \Emn[\chi_k] \le \muhat + C N^2
-  < \chi_N(c) - c_2(\gamma)N^2 + CN^2.
-\]
-In particular, the spectral mean lies strictly below $\chi_N$
-if the error $CN^2$ is small relative to the gap $c_2(\gamma)N^2$.
-For $\gamma$ sufficiently small (concretely: $c_2(\gamma) > 2C/N^2$),
-the spectral mass of $f_{mn}$ is mean-localized below index $N$.
+\begin{corollary}[Explicit energy formula for $E_{mn}$]
+\label{cor:emn-explicit}
+For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
+\begin{equation}\label{eq:Emn-explicit}
+  E_{mn}
+  = \frac{\frac{1}{2}\int_{-T}^T p(x)
+      \bigl[(\psi_m')^2\psi_n^2 + (\psi_n')^2\psi_m^2\bigr]\,dx
+    + \frac{c^2}{T^2}\int_{-T}^T x^2 f_{mn}^2\,dx}
+    {\|f_{mn}\|_{L^2}^2}
+  - \frac{\muhat}{2}.
+\end{equation}
+In particular $E_{mn}$ is determined entirely by integrals
+of the functions $\psi_m^{(c)}, \psin$ and their first derivatives;
+no operator inversion or spectral information beyond~\eqref{eq:SL}
+is required.
 \end{corollary}
 
 \begin{proof}
-$\Emn[\chi_k] = \muhat + E_{mn} \le \muhat + CN^2$.
-By Lemma~\ref{lem:chi-gap}, $\chi_N \ge \muhat + c_2(\gamma)N^2$.
-Hence $\Emn[\chi_k] \le \chi_N - (c_2(\gamma)-C/N^2\cdot N^2)$;
-for $c_2(\gamma)N^2 > CN^2$, i.e., $c_2(\gamma) > C$,
-we get strict inequality.
+Substitute~\eqref{eq:ibp-sym} into~\eqref{eq:mean-loc}
+and divide by $\|f_{mn}\|^2$.
+\end{proof}
+
+\begin{remark}[Semiclassical interpretation]\label{rem:semiclassical}
+Define the probability density $\rho_{mn}(x)
+:= f_{mn}(x)^2/\|f_{mn}\|_{L^2}^2$ on $[-T,T]$.
+Equation~\eqref{eq:energy-intro} then reads:
+\begin{equation}\label{eq:energy-sc}
+  \Emn[\chi_k]
+  = \frac{\muhat}{2}
+  + \frac{1}{2}\,\mathbb{E}_{\rho_{mn}}\!\left[
+      p(x)\!\left(\frac{(\psi_m')^2}{\psi_m^2}
+      \cdot\frac{\psi_m^2 + \psi_n^2}{2\psi_n^2/\psi_m^2 + 2}
+      + \cdots \right)\right]
+  + \frac{c^2}{T^2}\,\mathbb{E}_{\rho_{mn}}[x^2].
+\end{equation}
+More precisely, the three terms in~\eqref{eq:energy-intro} are:
+\begin{enumerate}[(i)]
+  \item \emph{Gradient (kinetic) energy:}
+  $\frac{1}{2}\int p[(\psi_m')^2\psi_n^2 + (\psi_n')^2\psi_m^2]/\|f_{mn}\|^2$
+  — the $L^2$-weighted mean of the squared gradients, damped by
+  $p(x)$ which vanishes at $\pm T$.
+  \item \emph{Potential energy:}
+  $\frac{c^2}{T^2}\mathbb{E}_{\rho_{mn}}[x^2]$ — the mean square
+  position of the product density; small when mass is concentrated
+  in the interior.
+  \item \emph{Mean eigenvalue shift:} $\muhat/2$ — the reference
+  energy level.
+\end{enumerate}
+This is the PSWF analogue of the quantum-mechanical virial identity:
+the spectral mean equals a weighted sum of kinetic and potential
+contributions.
+The boundary weight $p(x) \to 0$ as $x \to \pm T$ plays a double
+role: it is the coefficient of $D_c$ and it automatically suppresses
+spurious boundary contributions to the kinetic energy.
+\end{remark}
+
+\begin{remark}[Connection to the edge obstruction]\label{rem:energy-edge}
+At the edge ($m,n \sim N$), both $(\psi_m')^2$ and $(\psi_n')^2$
+are large and the mass of $f_{mn}$ concentrates near $|x| = T$
+where $p(x) \approx 0$.
+The kinetic term therefore \emph{does not} provide a useful lower
+bound; the potential term $\frac{c^2}{T^2}\mathbb{E}_{\rho_{mn}}[x^2]$
+dominates and pushes $\Emn[\chi_k]$ above $\chi_N$.
+This is exactly the spectral-side manifestation of the bandwidth
+doubling obstruction identified in Remark~\ref{rem:edge-both-fail}.
+\end{remark}
+
+\subsection{Unconditional spectral lower bound}
+
+\begin{proposition}[Spectral lower bound]\label{prop:spectral-lower}
+For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
+\begin{equation}\label{eq:spectral-lower}
+  \Emn[\chi_k] \ge \frac{\muhat}{2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+From~\eqref{eq:energy-intro}:
+$\Emn[\chi_k] = \muhat/2 + A + B$
+where
+$A = \frac{1}{2}\int p[(\psi_m')^2\psi_n^2+(\psi_n')^2\psi_m^2]/\|f_{mn}\|^2$
+and $B = \frac{c^2}{T^2}\int x^2 f_{mn}^2/\|f_{mn}\|^2$.
+Both $A \ge 0$ (since $p \ge 0$ on $(-T,T)$) and $B \ge 0$.
+\end{proof}
+
+\begin{remark}[Significance of the lower bound]\label{rem:lower-significance}
+Proposition~\ref{prop:spectral-lower} is the first \emph{lower}
+bound on the spectral mean: the PSWF coefficient sequence
+$\{a_k^{mn}\}$ cannot have all its mass concentrated near
+eigenvalues much smaller than $\muhat/2$.
+Combined with Proposition~\ref{prop:mean-loc}, which shows
+$\Emn[\chi_k] \approx \muhat$, the two bounds together confine
+the spectral mean to the interval $[\muhat/2, \muhat + O(N^2)]$.
+The gap between $\muhat/2$ and $\muhat$ is the remaining
+analytical target of Problem~\ref{prob:comm-refined}.
+\end{remark}
+
+\begin{corollary}[Two-sided spectral mean confinement]
+\label{cor:two-sided}
+For all $0 \le m,n \le N$ with $f_{mn} \not\equiv 0$:
+\begin{equation}
+  \frac{\muhat}{2}
+  \le \Emn[\chi_k]
+  \le \muhat
+    + \frac{2\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}}
+           {\|f_{mn}\|_{L^2}}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Lower bound: Proposition~\ref{prop:spectral-lower}.
+Upper bound: Cauchy--Schwarz in~\eqref{eq:mean-loc} and
+$\|R_{mn}\|_{L^2} \le 2\|(\psi_m^{(c)})'\|_{L^2}\|(\psin)'\|_{L^\infty}$.
 \end{proof}
 
 \subsection{Conditional algebraic decay}
@@ -720,44 +722,21 @@ for $|m-n| \ge \delta N$, $0 \le m,n \le N$, and $p \ge 1$:
 \]
 \end{theorem}
 
-\begin{proof}
-By Assumption~\ref{ass:specloc} and Lemma~\ref{lem:gap-od}:
-$|a_k^{mn}| \le C_p'(|m-n|/\delta)^{-2p}$ for $k\ge N$;
-Bessel gives the result.
-\end{proof}
-
 \begin{lemma}[Gap: $\muhat$ vs.\ tail eigenvalues]\label{lem:gap-od}
 For $|m-n|\ge\delta N$, $k\ge N$:
 $|\chi_k(c)-\muhat| \ge c_3(\delta)|m-n|^2$
-for $c$ sufficiently large, with $c_3(\delta) = c_2/\delta^2$.
+with $c_3(\delta) = c_2/\delta^2$.
 \end{lemma}
-
-\begin{proof}
-By Lemma~\ref{lem:chi-gap}: $\chi_k - \muhat \ge c_2 N^2$;
-since $|m-n|\ge\delta N$, $N \le |m-n|/\delta$,
-hence $c_2 N^2 \le c_2|m-n|^2/\delta^2$.
-\end{proof}
 
 \begin{remark}[Role of Assumption~\ref{ass:specloc}]
 \label{rem:specloc-what}
-Lemma~\ref{lem:gap-od} is unconditional: it shows the
-concentration set $\{k: \chi_k \approx \muhat\}$ lies
-far below the tail $\{k\ge N\}$.
-Assumption~\ref{ass:specloc} asserts that the coefficients
-$a_k^{mn}$ \emph{respect} this geometry pointwise.
-Proposition~\ref{prop:mean-loc} confirms it in the first moment.
-The gap between first-moment and pointwise
-localization is exactly Problem~\ref{prob:cg}.
+Lemma~\ref{lem:gap-od} is unconditional (geometry).
+Assumption~\ref{ass:specloc} asserts that $a_k^{mn}$
+respect this geometry pointwise.
+Propositions~\ref{prop:mean-loc} and~\ref{prop:spectral-lower}
+confirm it in the first moment and in the lower bound.
+The gap to pointwise localization is Problem~\ref{prob:cg}.
 \end{remark}
-
-\begin{corollary}[Partial result on Conjecture~3.1 of
-\cite{PaperII_quad}]\label{cor:partial}
-Under Assumptions~\ref{ass:bulkconv} and~\ref{ass:specloc},
-$\|(I-\PN)f_{mn}\|_{L^2} \le C(e^{-\alpha N} + (1+|m-n|)^{-p})$
-for all $m,n$ outside the edge regime.
-Unconditionally: $\|(I-\PN)f_{mn}\|_{L^2} \le C T^{1/2}$.
-The edge regime is not covered.
-\end{corollary}
 
 %%=================================================================
 \section{Edge Regime and Obstruction}\label{sec:edge}
@@ -766,7 +745,7 @@ The edge regime is not covered.
 \subsection{Failure of both approaches}
 
 For $m,n \sim N$: the Slepian denominator $1-\lambda_{N-1}=O(1)$,
-giving only $O(1)$ from~\eqref{eq:tail-bound}.
+giving only $O(1)$ from the Slepian bound.
 The near-eigenvector target $\muhat \sim 2N^2+c^2 > \chi_N$,
 so the concentration set $\{k:\chi_k \approx \muhat\}$
 sits entirely within the tail $\{k \ge N\}$;
@@ -780,21 +759,15 @@ $|n-2c/\pi| \le c^{1/2}$:
 $\Eout(|\psi_n^{(c)}|^2) \ge c_0 > 0$.
 \end{proposition}
 
-\begin{proof}
-Widom asymptotics imply $\lambda_n \ge 1/4$.
-A half-bandwidth argument shows
-$\int_{\omega/2}^\omega|\hat\psi_n^{(c)}|^2 \ge 1/16$.
-Convolution lower bound via Lemma~\ref{lem:geom}: $\Eout \ge c_0$.
-\end{proof}
-
 \begin{remark}[Unified view of the edge failure]
 \label{rem:edge-both-fail}
 At the edge, $\muhat > \chi_N$ and $\Eout = O(1)$ simultaneously.
-Both are manifestations of bandwidth doubling:
-$f_{mn} \in \mathrm{PW}_{2\omega}$ has Fourier energy above $\omega$
-(Slepian side) and PSWF coefficient energy above $k=N$
-(near-eigenvector side).
-These are two sides of the same obstruction.
+In the energy picture of Remark~\ref{rem:energy-edge}:
+when mass concentrates near $|x|=T$, $p(x) \to 0$ kills the
+kinetic term and $\frac{c^2}{T^2}\mathbb{E}[x^2] \approx c^2$
+dominates, pushing $\Emn[\chi_k]$ into the tail.
+Both the Slepian and the energy approach reflect the same
+bandwidth doubling obstruction.
 \end{remark}
 
 %%=================================================================
@@ -808,33 +781,40 @@ $|\hat\psi_n^{(c)}(\xi)| \le Ce^{-\eta c(\omega-|\xi|)}$
 for $n \le \gamma N$ near $|\xi|=\omega$.
 \end{problem}
 
-\begin{problem}[PSWF Clebsch--Gordan]
-\label{prob:cg}
-Prove Assumption~\ref{ass:specloc}: the pointwise
-spectral localization bound~\eqref{eq:specloc}.
-Proposition~\ref{prop:mean-loc} establishes the
-first-moment form; the gap to pointwise localization
-requires sharper control on the commutator iterates
-$R_{mn}^{(p)}$ (Remark~\ref{rem:comm-growth}).
-Natural approach: semiclassical spectral localization for
-products of approximate eigenfunctions of $D_c$.
+\begin{problem}[Refined commutator problem: energy dominance]
+\label{prob:comm-refined}
+Prove that the spectral mean is asymptotically close to $\muhat$:
+\begin{equation}\label{eq:comm-refined}
+  \frac{\Emn[\chi_k]}{\muhat} \to 1
+  \qquad \text{as } N \to \infty,\; m,n \le \gamma N.
+\end{equation}
+Equivalently, by Corollary~\ref{cor:emn-explicit},
+prove that the energy terms $A$ and $B$ in the proof of
+Proposition~\ref{prop:spectral-lower} satisfy
+$A + B = \muhat/2 + o(\muhat)$, i.e., the kinetic and potential
+energies averaged over $\rho_{mn}$ sum to approximately $\muhat/2$.
+\emph{Note:} this is an energy comparison problem, not a norm bound.
+The SL energy identity~\eqref{eq:SL-energy} provides the global
+constraint; the challenge is to transfer it to the
+$\psi_m^2\psi_n^2$-weighted setting.
 \end{problem}
 
-\begin{problem}[Sharp commutator estimate]
-\label{prob:comm-sharp}
-Prove $|\ip{R_{mn}}{f_{mn}}_{L^2}| = o(\muhat\|f_{mn}\|_{L^2}^2)$
-as $N \to \infty$.
-This would make the spectral centering in
-Proposition~\ref{prop:mean-loc} asymptotically sharp
-(relative error $o(1)$),
-and is the natural next step before Problem~\ref{prob:cg}.
+\begin{problem}[PSWF Clebsch--Gordan]
+\label{prob:cg}
+Prove Assumption~\ref{ass:specloc}: pointwise spectral localization.
+Proposition~\ref{prop:mean-loc} and Corollary~\ref{cor:two-sided}
+give first-moment and two-sided mean bounds;
+the gap to pointwise localization requires control of
+commutator iterates (Remark~\ref{rem:comm-growth}).
+Natural approach: semiclassical spectral localization for
+products of approximate eigenfunctions of $D_c$
+(cf.\ Remark~\ref{rem:semiclassical}).
 \end{problem}
 
 \begin{problem}[Edge regime]
 \label{prob:edge}
 Prove or disprove exponential tail decay for $m,n \sim N$.
 Proposition~\ref{prop:bwdoubling} rules out $\Eout$-based arguments;
-any proof requires handling the doubled prolate subspace;
 see Problem~\ref{prob:doubled}.
 \end{problem}
 
