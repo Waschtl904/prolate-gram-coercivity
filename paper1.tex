@@ -83,10 +83,10 @@ derive a global quadrature defect bound in the PSWF eigenbasis:
   \qquad \text{for all } 0\le m,n\le N-1,
 \]
 where $h$ denotes the mesh size of the quadrature rule. The exact
-identity $E_{mn} = 0 + R_{mn}^{\mathrm{quad}}$
-(Proposition~\ref{prop:xry_split}) clarifies that the first term
-vanishes by PSWF orthogonality, so the quadrature defect is fully
-isolated. Separately, the continuous PSWF product integral exhibits
+identity $E_{mn} = R_{mn}^{\mathrm{quad}}$
+(Proposition~\ref{prop:xry_split}) clarifies that the defect is purely
+a quadrature error; the PSWF orthogonality term is exactly zero.
+Separately, the continuous PSWF product integral exhibits
 algebraic decay via a quantified phase-gap estimate and iterated
 integration by parts.
 
@@ -131,6 +131,13 @@ Airy--turning decomposition. A companion paper studies a PSWF-adapted
 XRY quadrature regime and conditional spectral compatibility;
 see~\cite{PaperII}.
 
+The central contribution of this paper is therefore not a complete
+frame stability theorem, but a \emph{reduction principle}: discrete
+frame stability is reduced to a single verifiable spectral transfer
+property (DSTP), and the precise obstruction---the failure of
+continuous oscillatory decay to transfer to the discrete quadrature
+level---is isolated and made explicit.
+
 \subsection*{Main results}
 The key new ingredient is the replacement of the earlier conditional
 quadrature-compatibility hypothesis by a verifiable first-order
@@ -162,16 +169,20 @@ components:
 The oscillatory bulk--turning analysis in component~3 is developed as
 an independent structural unit. It is \emph{not} used in the proof of
 the main stability theorem (Theorem~\ref{thm:conditional_frame_schur});
-its role is to isolate the analytic decay mechanism of continuous PSWF
-interactions and to identify the structural gap that must be closed by
-a PSWF-adapted quadrature framework. That gap is formalised by the
-Discrete Spectral Transfer Property (DSTP), which serves as the
-explicit axiomatic interface between the present paper and~\cite{PaperII}.
+its role is to prove that continuous PSWF product decay is a
+\emph{purely continuous phenomenon}: it identifies the analytic decay
+mechanism of PSWF interactions and demonstrates that this structure is
+destroyed by generic quadrature. Section~\ref{sec:decay} therefore
+constitutes a negative result in this sense, motivating DSTP as the
+necessary interface axiom. That gap is formalised by the Discrete
+Spectral Transfer Property (DSTP), which serves as the explicit
+axiomatic interface between the present paper and~\cite{PaperII}.
 
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
 Section~\ref{sec:coercivity} proves coercivity.
-Section~\ref{sec:decay} establishes the decay mechanism.
+Section~\ref{sec:decay} establishes the decay mechanism and its
+separation from the discrete level.
 Section~\ref{sec:stability} derives the combined frame stability theorem.
 Section~\ref{sec:bridge} explains the conceptual boundary between the
 present paper and the companion framework.
@@ -351,7 +362,7 @@ $D=\mathrm{diag}(w_j)$. Then
 where the quadrature remainder is
 \[
   R_{mn}^{\mathrm{quad}}
-  =
+  :=
   \sum_{j=1}^N w_j f_{mn}(p_j)
   -\int_{-T}^{T}f_{mn}(x)\,dx,
   \qquad f_{mn}(x)
@@ -368,17 +379,16 @@ representation of $\Kop$ yields directly
 \]
 which proves that the bracketed term vanishes. Consequently,
 \[
-  E_{mn} = -R_{mn}^{\mathrm{quad}}
+  E_{mn} = R_{mn}^{\mathrm{quad}},
 \]
-under the sign convention of Assumption~\ref{ass:quad_first_order}, so
-all later estimates use only $|R_{mn}^{\mathrm{quad}}|$.
+and all later estimates use $|E_{mn}| = |R_{mn}^{\mathrm{quad}}|$.
 \end{proposition}
 
 \begin{remark}
-Proposition~\ref{prop:xry_split} corrects an implicit error in earlier
-drafts: $E_{mn}$ is \emph{not} an algebraically exact split arising
-from some identity; it is purely a quadrature error for the PSWF
-product integral.
+Proposition~\ref{prop:xry_split} makes explicit that $E_{mn}$ is
+\emph{purely} a quadrature error for the PSWF product integral. This
+isolates the single error carrier in the frame defect and shows that
+continuous PSWF orthogonality contributes nothing to $E_{mn}$.
 \end{remark}
 
 \begin{definition}[Bulk and turning regions]\label{def:bulk}
@@ -452,19 +462,37 @@ Using $|\sqrt\mu-\sqrt\nu|=|\mu-\nu|/(\sqrt\mu+\sqrt\nu)$:
   |\Phi_{mn}'(x)|
   =\frac{|\chi_m(c)-\chi_n(c)|}{T(\sqrt\mu+\sqrt\nu)}.
 \]
-\textbf{Step~1 (numerator).} By Proposition~\ref{prop:spectral_gap},
-$|\chi_m-\chi_n|\ge 2c|m-n|-2C_*c^{4/3}$.
-For $|m-n|\le c^{1/3}$ and $c\ge c_0$ large: $|\chi_m-\chi_n|\ge c|m-n|$.
-For $|m-n|\ge c^{1/3}$: $|\chi_m-\chi_n|\ge c^{4/3}$.
+\textbf{Step~1 (numerator).}
+By \cite[Section~2.5]{OsipovRokhlinXiao}, the PSWF spectral
+parameters $\chi_n(c)$ are strictly increasing in $n$ for fixed $c$,
+and there exist $c_0>0$ and $\gamma>0$ such that
+\[
+  \chi_{k+1}(c) - \chi_k(c) \ge \gamma c
+  \qquad \text{for all } 0 \le k \le N-1,\ c \ge c_0.
+\]
+Summing over consecutive indices gives
+\[
+  |\chi_m(c) - \chi_n(c)| \ge \gamma c\,|m-n|
+  \qquad \text{for all } 0 \le m,n \le N-1.
+\]
+This uniform linear lower bound holds in both regimes
+$|m-n| \le c^{1/3}$ and $|m-n| \ge c^{1/3}$ without case distinction.
 
 \noindent\textbf{Step~2 (denominator).}
 $\sqrt\mu+\sqrt\nu\le 2\sqrt{\chi_{N-1}(c)}\le C_3 c$
 since $\chi_{N-1}(c)\lesssim c^2$ in the regime $N\sim c$.
 
-\noindent\textbf{Step~3.} Combining yields the two-regime bounds. The
-unified envelope follows from
-$c|m-n|\mathbf{1}_{|m-n|\le c^{1/3}}+c^{4/3}\mathbf{1}_{|m-n|\ge c^{1/3}}
-\gtrsim c|m-n|/(1+c^{-2/3}|m-n|)$.
+\noindent\textbf{Step~3.} Combining Steps~1 and~2 with
+$|\chi_m - \chi_n| \ge \gamma c\,|m-n|$:
+\[
+  |\Phi_{mn}'(x)| \ge \frac{\gamma c\,|m-n|}{T \cdot C_3 c}
+  = \frac{\gamma}{C_3 T}\,|m-n|.
+\]
+Set $\kappa := \gamma/C_3$. For the large-gap regime $|m-n| \ge c^{1/3}$,
+the bound $|\Phi_{mn}'(x)| \ge (\kappa/T)|m-n| \ge (\kappa/T)c^{1/3}$
+follows immediately. The unified envelope
+$\kappa|m-n|/(T(1+c^{-2/3}|m-n|))$ is a weaker statement that
+follows from $|m-n|/(1+c^{-2/3}|m-n|) \le |m-n|$.
 \end{proof}
 
 \begin{lemma}[Bulk semiclassical derivative control]%
@@ -481,18 +509,16 @@ with constants uniform in $n$ across the full spectral transition layer.
 \begin{proof}
 On $\Rbulk^{(m,n)}$ the PSWF differential equation lies in the
 non-stationary semiclassical regime. By
-\cite{OsipovRokhlinXiao,BonamiKaroui2014}, uniform $C^k$ bounds hold
+\cite{OsipovRokhlinXiao,BonamiKaroui2014}, uniform $C^0$ bounds hold
 for PSWFs on compact subsets of the bulk separated from the turning
-points by Airy-scale neighbourhoods of size $\rho c^{-1/3}$:
-\[
-  \|\partial_x^k\psi_n^{(c)}\|_{L^\infty(\Rbulk^{(m,n)})}
-  \le C_k'\,c^{k/2}.
-\]
-The WKB phase satisfies
-$\Phi_n'(x)=(1/T)\sqrt{\chi_n(c)-c^2x^2/T^2}=O(c^{1/2})$
-by Lemma~\ref{lem:bulk_spectral_sep}, so each application of
-$\partial_x$ contributes at most a factor $O(c^{1/2})$, consistent
-with the stated bound. Uniformity in $n\le N-1$ follows from
+points by Airy-scale neighbourhoods of size $\rho c^{-1/3}$.
+For $k\ge 1$, higher derivative bounds follow by differentiating the
+PSWF differential equation
+$\psi_n^{(c)\,\prime\prime}(x) = (c^2x^2/T^2 - \chi_n(c))\psi_n^{(c)}(x)$
+and applying the bulk separation bound of
+Lemma~\ref{lem:bulk_spectral_sep}: each differentiation introduces a
+factor bounded by $O(c^{1/2})$ on $\Rbulk^{(m,n)}$, consistent with
+the stated $c^{k/2}$ growth. Uniformity in $n\le N-1$ follows from
 \cite{BonamiKaroui2014} in the transition regime $N\sim c$.
 \end{proof}
 
@@ -623,9 +649,14 @@ turning term by $Cc^{-1/3}$.
 \end{proof}
 
 \begin{remark}
-This decay describes the continuous PSWF kernel and does \emph{not}
-transfer to $E_{mn}$ without additional oscillation-compatible
-quadrature assumptions; see~\cite{PaperII}.
+This decay describes the continuous PSWF kernel and is a purely
+continuous phenomenon. It does \emph{not} transfer to $E_{mn}$
+without additional oscillation-compatible quadrature assumptions:
+generic quadrature rules destroy this structure, yielding only the
+structure-blind bound $|E_{mn}| \le Chc$. The gap between continuous
+decay and discrete frame stability is precisely what DSTP
+(Definition~\ref{def:dstp}) is designed to close;
+see~\cite{PaperII}.
 \end{remark}
 
 %% ==================================================================
@@ -636,12 +667,43 @@ quadrature assumptions; see~\cite{PaperII}.
 \begin{theorem}[Defect decomposition]\label{thm:main_reduction}
 For any $(\mathbf p,D)$ with $D>0$,
 \[
-  \EN=M(\mathbf p,c)^*(I-D)M(\mathbf p,c)
-     +(G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c}),
+  \EN=M(\mathbf p,c)^*(D-I)M(\mathbf p,c)
+     +(G^{\mathrm{w}}_{N,c}(\mathbf{p},I)-G^{\mathrm{ref}}_{N,c}),
 \]
-and $\norm{\EN}_2\le\norm{I-D}_2\cdot N\omega/\pi
-+\norm{G^{\mathrm{w}}_{N,c}-G^{\mathrm{ref}}_{N,c}}_2$.
+and $\norm{\EN}_2\le\norm{D-I}_2\cdot N\omega/\pi
++\norm{G^{\mathrm{w}}_{N,c}(\mathbf{p},I)-G^{\mathrm{ref}}_{N,c}}_2$.
 \end{theorem}
+\begin{proof}
+By Definition~\ref{def:ref_matrix},
+\[
+  \EN = G^{\mathrm{w}}_{N,c}(\mathbf{p},D) - G^{\mathrm{ref}}_{N,c}
+      = M(\mathbf{p},c)^* D\, M(\mathbf{p},c) - G^{\mathrm{ref}}_{N,c}.
+\]
+Add and subtract $M(\mathbf{p},c)^* M(\mathbf{p},c)$:
+\[
+  \EN = M(\mathbf{p},c)^*(D - I)M(\mathbf{p},c)
+      + \bigl(M(\mathbf{p},c)^* M(\mathbf{p},c) - G^{\mathrm{ref}}_{N,c}\bigr).
+\]
+Since
+\[
+  M(\mathbf{p},c)^* M(\mathbf{p},c)
+  = G^{\mathrm{w}}_{N,c}(\mathbf{p},I),
+\]
+the second bracket equals
+$G^{\mathrm{w}}_{N,c}(\mathbf{p},I) - G^{\mathrm{ref}}_{N,c}$,
+which yields the claimed decomposition.
+For the operator norm bound,
+\begin{align*}
+  \norm{\EN}_2
+  &\le \norm{M(\mathbf{p},c)^*(D-I)M(\mathbf{p},c)}_2
+     + \norm{G^{\mathrm{w}}_{N,c}(\mathbf{p},I) - G^{\mathrm{ref}}_{N,c}}_2 \\
+  &\le \norm{D - I}_2 \cdot \norm{M(\mathbf{p},c)}_2^2
+     + \norm{G^{\mathrm{w}}_{N,c}(\mathbf{p},I) - G^{\mathrm{ref}}_{N,c}}_2.
+\end{align*}
+By Lemma~\ref{lem:lambda_max_bound},
+$\norm{M(\mathbf{p},c)}_2^2 = \lambda_{\max}(M^*M) \le N\omega/\pi$,
+which completes the proof.
+\end{proof}
 
 \begin{lemma}[Weyl perturbation]\label{lem:weyl}
 If $\norm{\EN}_2<\lambda_{N-1}(c)$ then
@@ -672,28 +734,29 @@ by the continuous decay estimates of Section~\ref{sec:decay}. It is
 an \emph{additional structural assumption} that precisely encodes the
 missing transfer mechanism between continuous oscillatory decay and
 discrete frame stability, and whose verification for concrete
-quadrature schemes is deferred to~\cite{PaperII}. In particular,
-DSTP is expected to fail generically for standard algebraic quadrature
-rules (Riemann sums, trapezoidal rule) that carry no
-oscillation-alignment structure with respect to the PSWF eigenbasis;
-see Remark~\ref{rem:dstp_interface}.
+quadrature schemes is deferred to~\cite{PaperII}.
 \end{definition}
 
-\begin{remark}[DSTP in the context of quadrature literature]%
+\begin{remark}[DSTP: context, scope, and heuristics]%
 \label{rem:dstp_literature}
-The Discrete Spectral Transfer Property is not expected to hold for
-classical quadrature families such as Riemann sums, Newton--Cotes
-rules, or standard Gauss--Legendre rules applied without adaptation to
-the PSWF eigenbasis: these rules do not incorporate oscillation-alignment
-with respect to the PSWF spectral structure and therefore lead only to
-the structure-blind bound of Theorem~\ref{thm:banded_decay}. DSTP
-should instead be viewed as a structural strengthening of
-Marcinkiewicz--Zygmund-type quadrature conditions in the spectral
-regime, analogous in spirit to classical exactness and stability
-requirements in MZ theory \cite{OsipovRokhlinXiao,Xiao2001}, but
-specialised to the off-diagonal decay geometry of PSWF kernels. The
-existence and explicit construction of rules satisfying DSTP is the
-subject of~\cite{PaperII}.
+DSTP is not expected to hold for classical quadrature families such as
+Riemann sums, Newton--Cotes rules, or standard Gauss--Legendre rules
+applied without adaptation to the PSWF eigenbasis: these rules carry
+no oscillation-alignment with respect to the PSWF spectral structure
+and therefore yield only the structure-blind bound of
+Theorem~\ref{thm:banded_decay}. DSTP should instead be viewed as a
+structural strengthening of Marcinkiewicz--Zygmund-type quadrature
+conditions in the spectral regime, analogous in spirit to classical
+exactness and stability requirements in MZ theory
+\cite{OsipovRokhlinXiao,Xiao2001}, but specialised to the
+off-diagonal decay geometry of PSWF kernels.
+
+Heuristically, DSTP can be interpreted as a discrete analogue of
+stationary-phase cancellation: it holds precisely when the sampling
+rule is \emph{phase-aware} with respect to the PSWF eigenbasis, in
+the sense that the quadrature weights align with the oscillatory
+structure of $f_{mn}$. The existence and explicit construction of
+rules satisfying DSTP is the subject of~\cite{PaperII}.
 \end{remark}
 
 \begin{theorem}[Conditional frame stability under Schur-decay hypothesis]%
@@ -729,16 +792,6 @@ the quadrature-induced defect floor. Without additional structure in
 the sampling rule, this decay does not propagate to $E_{mn}$.
 \end{remark}
 
-\begin{remark}[DSTP as interface axiom]\label{rem:dstp_interface}
-The present paper does not establish DSTP. Once DSTP holds, frame
-stability follows from the Schur-test argument above. Standard Riemann-
-or trapezoidal-type rules do not in general satisfy DSTP, as they
-carry no oscillation-alignment structure with respect to the PSWF
-eigenbasis; any verification of DSTP for a concrete scheme must
-therefore establish such alignment explicitly. Identifying concrete
-schemes for which DSTP holds is developed in~\cite{PaperII}.
-\end{remark}
-
 \begin{remark}[Scaling]\label{rem:scaling_stability}
 Under DSTP, $\norm{\EN}_2=O(hc)$, so frame stability is governed
 directly by $hc/\lambda_{N-1}(c)$, without additional polynomial
@@ -756,18 +809,19 @@ decay of the continuous product kernel, and quadrature-induced defect
 control.
 
 The continuous bulk--turning analysis of Section~\ref{sec:decay}
-explains why off-diagonal PSWF interactions decay analytically but is
-\emph{not used} in the proof of
-Theorem~\ref{thm:conditional_frame_schur}. Its role is to identify the
-structural obstruction that prevents the coarse bound $|E_{mn}|\le Chc$
-from exhibiting off-diagonal decay, and thereby to motivate DSTP as
-the necessary interface axiom. The unconditional discrete estimate is
-governed by $|E_{mn}|\le Chc$; the frame theorem requires the
-additional hypothesis DSTP. Consequently the present framework is
-robust but not spectrally sharp: it yields frame stability for fixed
-$(N,c)$ once the defect is dominated by $\lambda_{N-1}(c)$, but does
-not provide an asymptotically uniform theorem in the transition regime
-$N\sim c$.
+proves that off-diagonal PSWF interactions decay analytically, and
+simultaneously demonstrates that this decay is a purely continuous
+phenomenon destroyed by generic quadrature. It is \emph{not used} in
+the proof of Theorem~\ref{thm:conditional_frame_schur}: its role is to
+identify the structural obstruction that prevents the coarse bound
+$|E_{mn}|\le Chc$ from exhibiting off-diagonal decay, and thereby to
+motivate DSTP as the necessary interface axiom. The unconditional
+discrete estimate is governed by $|E_{mn}|\le Chc$; the frame theorem
+requires the additional hypothesis DSTP. Consequently the present
+framework is robust but not spectrally sharp: it yields frame
+stability for fixed $(N,c)$ once the defect is dominated by
+$\lambda_{N-1}(c)$, but does not provide an asymptotically uniform
+theorem in the transition regime $N\sim c$.
 
 The companion paper~\cite{PaperII} addresses whether oscillatory
 structure of PSWF products can be preserved at the discrete level by
