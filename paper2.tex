@@ -63,9 +63,14 @@ Connes--Consani--Moscovici, trace-class operators}
 This paper continues the program initiated in \cite{PaperI}, where the
 prolate Gram form $Q^{(N)}$ was shown to be unconditionally coercive on
 the $N$-dimensional prolate subspace $V_N$, with explicit spectral
-stability under the sampling-quality condition~(T.2) of \cite{PaperI}.
-In the current Reinschrift of Paper~I, condition~(T.2) is verified
+stability under the Discrete Spectral Transfer Property (DSTP)
+of \cite{PaperI}.
+In the current Reinschrift of Paper~I, the DSTP is verified
 for random sampling and Gauss--PSWF nodes, while prime sampling is left open.
+
+For consistency with \cite{PaperI}, all references to the spectral decay
+condition formerly labelled~(T.2) in earlier drafts are replaced by the
+DSTP throughout this paper.
 
 Here we study the coupled scaling limit
 \[
@@ -74,7 +79,7 @@ Here we study the coupled scaling limit
 \]
 for sequences of prime sampling sets, under an explicit conditional
 hypothesis~\textup{(H)} asserting that the prime sets satisfy a quantitative
-version of~\textup{(T.2)} along the sequence.
+version of the DSTP along the sequence.
 
 We establish three main results.
 \begin{enumerate}[(I)]
@@ -114,12 +119,12 @@ In \cite{PaperI} the prolate Gram form
 $Q^{(N)}(f)=\sum_{j=1}^N|f(p_j)|^2$ on $V_N$ was shown to be:
 \begin{itemize}
 \item \emph{unconditionally coercive} once the sampling set is unisolvent;
-\item \emph{explicitly stable and Weil-decomposable} under the abstract
-sampling-quality condition~(T.2).
+\item \emph{explicitly stable and Weil-decomposable} under the
+Discrete Spectral Transfer Property (DSTP) of \cite{PaperI}.
 \end{itemize}
 Moreover, the present Reinschrift of Paper~I proves the relevant finite-dimensional
 results for random sampling and Gauss--PSWF nodes, but does \emph{not} prove
-condition~(T.2) for prime sampling; that issue is left open there.
+the DSTP for prime sampling; that issue is left open there.
 The purpose of the present paper is therefore to analyze the coupled limit
 \(N_k,c_k\to\infty\) in a way that cleanly separates the unconditional
 operator-theoretic structure from the conditional arithmetic input.
@@ -145,15 +150,15 @@ existence of weak-$*$ accumulation points follow by general functional analysis.
 The prime number theorem also yields the structural constraint $\omega_k\to0$
 in the prime-window regime.
 \item \emph{Arithmetic--sampling layer.} Any quantitative convergence statement for
-$\lambda_{\min}(\GVMk)$ requires a comparison estimate of type~(T.2) along the
-prime sequence. Since this is open in Paper~I, we isolate it here as an explicit
-assumption rather than importing it as a theorem.
+$\lambda_{\min}(\GVMk)$ requires a spectral comparison estimate of DSTP type
+along the prime sequence. Since this is open in Paper~I, we isolate it here
+as an explicit assumption rather than importing it as a theorem.
 \end{enumerate}
 
 \subsection{What this paper does not claim}
 
 No statement is made about zeros of $\zeta(s)$.
-We do not prove that prime sampling satisfies condition~(T.2).
+We do not prove that prime sampling satisfies the DSTP of \cite{PaperI}.
 We do not prove that the limit operator $\Gcal_\infty$ is uniquely determined,
 nor that $\operatorname{tr}(\Gcal_\infty)=1$.
 We also do not prove a Mellin-isometric embedding identifying
@@ -194,13 +199,13 @@ $Q^{(N)}(f)\geq \alpha_N^2\norm{f}_{L^2}^2$ for all $f\in V_N$, where
 $\alpha_N=\sqrt{\lambda_{\min}(\GVM)}>0$.
 \item Unconditionally, one has the continuity bound
 $Q^{(N)}(f)\leq N(\omega/\pi)\norm{f}_{L^2}^2$.
-\item Under condition~\textup{(T.2)} of \cite{PaperI}, one has the spectral stability bound
+\item Under the DSTP of \cite{PaperI}, one has the spectral stability bound
 $\lambda_{\min}(\GVM)\geq\lambda_{N-1}(c)-\varepsilon_N$.
-\item Under condition~\textup{(T.2)} of \cite{PaperI}, one has the comparison formula
+\item Under the DSTP of \cite{PaperI}, one has the comparison formula
 $Q^{(N)}(f)=\ip{\Kop f}{f}_{L^2}+R_N(f)$ with
 $|R_N(f)|\leq \varepsilon_N\norm{f}_{L^2}^2$.
 \end{enumerate}
-Moreover, in the Reinschrift of Paper~I, condition~\textup{(T.2)} is established for
+Moreover, in the Reinschrift of Paper~I, the DSTP is established for
 random sampling and Gauss--PSWF nodes, while prime sampling is left open.
 \end{theorem}
 
@@ -255,14 +260,14 @@ this is a structural feature of the scaling, not a pathology.
 Let $(N_k,c_k,\omega_k,T_k,\mathbf p_k)$ be a $\rho$-admissible prime sequence.
 We say that Assumption~\textup{(H)} holds along the sequence if there exist numbers
 $\varepsilon_{N_k}\downarrow0$ such that the prime sampling sets $\mathbf p_k$
-satisfy condition~\textup{(T.2)} of \cite{PaperI} with parameter $\varepsilon_{N_k}$
+satisfy the DSTP of \cite{PaperI} with defect level $\varepsilon_{N_k}$
 for every $k$.
 When a quantitative rate is needed, we additionally assume that
 $\varepsilon_{N_k}=o(1)$ is sufficiently strong for the specific estimate under discussion.
 \end{assumption}
 
 \begin{remark}[Why Assumption~\textup{(H)} is explicit]
-In the Reinschrift of Paper~I, prime sampling is not proved to satisfy~(T.2);
+In the Reinschrift of Paper~I, prime sampling is not proved to satisfy the DSTP;
 this is recorded there as an open problem.
 Accordingly, any use of a prime-sampling comparison estimate in the present paper
 must be conditional.
@@ -374,8 +379,9 @@ $\alpha_{N_k}:=\sqrt{\lambda_{\min}(\GVMk)}\to1$.
 Part (I) is exactly the Landau--Widom asymptotic from Remark~\ref{rem:LW},
 using only the condition $N_k/c_k\to\rho\in(0,2/\pi)$.
 
-For part (II), Assumption~\textup{(H)} provides condition~(T.2) along the sequence,
-so Theorem~\ref{thm:paperI}(III) applies at each level $k$ and yields
+For part (II), Assumption~\textup{(H)} provides the DSTP of \cite{PaperI}
+along the sequence, so Theorem~\ref{thm:paperI}(III) applies at each level $k$
+and yields
 \[
   \lambda_{\min}(\GVMk)
   \ge \lambda_{N_k-1}(c_k)-\varepsilon_{N_k}.
@@ -419,8 +425,8 @@ Part (i) is the standard diagonal trace computation:
   =\sum_{j=1}^{N_k}K_{N_k}(p_j^{(k)},p_j^{(k)}).
 \]
 Part (ii) follows from writing
-$\GVMk=G^{\mathrm{ref}}_{N_k,c_k}+E_{N_k}$ under condition~(T.2), taking traces,
-and estimating
+$\GVMk=G^{\mathrm{ref}}_{N_k,c_k}+E_{N_k}$ under the DSTP of \cite{PaperI},
+taking traces, and estimating
 $|\operatorname{tr}(E_{N_k})|\le N_k\norm{E_{N_k}}_2\le N_k\varepsilon_{N_k}$.
 \end{proof}
 
@@ -528,11 +534,11 @@ That structural step is not supplied here.
 
 \section{Open Problems}\label{sec:open}
 
-\begin{problem}[Prime sampling and condition~\textup{(T.2)}]\label{prob:primeT2}
+\begin{problem}[Prime sampling and DSTP]\label{prob:primeT2}
 Prove or disprove Assumption~\textup{(H)} for prime sampling.
 More precisely, determine whether the prime sets
-$\mathbf p_k=(2,3,5,\ldots,p_{N_k})$ satisfy the comparison estimate of Paper~I
-with an error $\varepsilon_{N_k}\to0$ in the regime $N_k/c_k\to\rho\in(0,2/\pi)$.
+$\mathbf p_k=(2,3,5,\ldots,p_{N_k})$ satisfy the DSTP of \cite{PaperI}
+with defect level $\varepsilon_{N_k}\to0$ in the regime $N_k/c_k\to\rho\in(0,2/\pi)$.
 Any unconditional coercivity theorem for prime sampling in the present scaling limit depends on this.
 \end{problem}
 
