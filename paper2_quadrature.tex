@@ -39,13 +39,16 @@
        A Conditional Implication Framework for Quadrature Compatibility}
 
 \thanks{This paper is a companion to \cite{PaperI}, where frame coercivity
-and a conditional banded decay estimate were established under an explicit
-quadrature compatibility assumption (Assumption~3.10 of \cite{PaperI}).
-The present paper does not prove that assumption outright. Instead, it
+and a conditional banded decay estimate were established under the
+Discrete Spectral Transfer Property (DSTP) of \cite{PaperI}.
+For consistency with \cite{PaperI}, the compatibility condition referred
+to as Assumption~3.10 in earlier drafts of this paper is now called the
+DSTP throughout.
+The present paper does not verify the DSTP outright. Instead, it
 organises the problem into two explicit conjectural components: a PSWF
 product spectral tail conjecture and an XRY spectral stability conjecture.
 Their combination yields a conditional verification mechanism for the
-compatibility assumption used in \cite{PaperI}.
+DSTP used in \cite{PaperI}.
 The PSWF product tail conjecture (Conjecture~\ref{conj:pswf_product_tail})
 is now known to be false as a global uniform statement;
 the edge obstruction is documented in \cite{PaperIII}.}
@@ -69,10 +72,13 @@ edge obstruction, bandwidth doubling}
 In the companion paper \cite{PaperI}, frame coercivity and a conditional
 banded decay estimate for the quadrature defect matrix $\EN$ were
 established for the prolate sampling operator on $V_{N,c}$, conditional
-on an explicit quadrature compatibility assumption (Assumption~3.10 of
-\cite{PaperI}).
+on the Discrete Spectral Transfer Property (DSTP) of \cite{PaperI}.
 
-The present paper does not verify that assumption unconditionally.
+For consistency with \cite{PaperI}, we refer to the compatibility
+condition (Assumption~3.10 in earlier drafts) as the DSTP throughout
+this paper.
+
+The present paper does not verify the DSTP unconditionally.
 Instead, for PSWF-Gauss quadrature rules of Xiao--Rokhlin--Yarvin
 \cite{Xiao2001}, it organises the compatibility problem into two explicit
 conjectural inputs. First, one needs a PSWF product spectral tail statement
@@ -87,7 +93,7 @@ one obtains the conditional defect estimate
 The edge regime $m,n\sim N$ is identified as an obstruction:
 no uniform exponential bound of this form can hold globally,
 as proved in \cite{PaperIII} via a bandwidth doubling argument.
-Consequently, the conditional implication of \cite{PaperI} applies
+Consequently, the DSTP of \cite{PaperI} is conditionally verified
 in the bulk and off-diagonal regimes under the stated inputs.
 \end{abstract}
 
@@ -104,7 +110,7 @@ for the quadrature defect matrix $\EN = \GVM - G^{\mathrm{ref}}_{N,c}$:
 \begin{enumerate}
 \item An exact identity $E_{mn} = R_{mn}^{\mathrm{quad}}$
   (pure quadrature remainder; PSWF orthogonality term vanishes exactly).
-\item A conditional banded decay estimate: under Assumption~3.10 of
+\item A conditional banded decay estimate: under the DSTP of
   \cite{PaperI},
   \[
     |E_{mn}| \le C_p(1+|m-n|)^{-p} + Cc^{-1/3}
@@ -113,13 +119,13 @@ for the quadrature defect matrix $\EN = \GVM - G^{\mathrm{ref}}_{N,c}$:
 \item A conditional frame stability theorem with explicit bounds.
 \end{enumerate}
 The open problem left by \cite{PaperI} was to identify a concrete
-quadrature class satisfying Assumption~3.10.
+quadrature class satisfying the DSTP.
 
 \subsection*{Contribution of this paper}
 
 This paper does not solve the full construction problem unconditionally.
 Its contribution is an implication framework: for XRY PSWF-Gauss quadrature,
-Assumption~3.10 of \cite{PaperI} follows from two separate conjectural
+the DSTP of \cite{PaperI} follows from two separate conjectural
 inputs, namely a PSWF product spectral tail conjecture and an XRY spectral
 stability conjecture on the relevant product family
 $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$, restricted to the bulk
@@ -146,7 +152,7 @@ analytical inputs:
 Within the present framework, these two inputs are used only through their
 combination in the deduction of the defect estimate. The technical content
 of the paper is therefore the exact implication chain from these two
-conjectural inputs to the compatibility condition of \cite{PaperI}, together
+conjectural inputs to the DSTP of \cite{PaperI}, together
 with the perturbative passage from that condition to frame stability.
 
 \subsection*{Main result}
@@ -159,7 +165,7 @@ Assumptions~\ref{ass:pswf_sup}, \ref{ass:node_sep}, and~\ref{ass:weights},
 restricted to the bulk regime $m,n\le\gamma N$.
 Then for PSWF-Gauss quadrature rules \cite{Xiao2001}, the quadrature defect
 satisfies $|E_{mn}|\le Ce^{-\alpha N}$ for all $0\le m,n\le\gamma N$.
-Consequently, Assumption~3.10 of \cite{PaperI} holds conditionally
+Consequently, the DSTP of \cite{PaperI} holds conditionally
 in the bulk and off-diagonal regimes, and the frame stability theorem
 of \cite{PaperI} applies to PSWF-Gauss sampling in those regimes.
 The edge regime $m,n\sim N$ is excluded; see part~(iii) of
@@ -175,7 +181,8 @@ This paper should be read as an implication framework (in the sense of a
 reduction between explicit analytic hypotheses) rather than a Theorem-paper
 in the traditional sense. Its purpose is to isolate the two core unresolved
 analytical components that stand between the abstract framework of
-\cite{PaperI} and a concrete verification for XRY PSWF-Gauss quadrature.
+\cite{PaperI} and a concrete verification of the DSTP for XRY PSWF-Gauss
+quadrature.
 The PSWF product-tail step and the XRY stability step are both left as
 explicit conjectural inputs. In particular, the present work is not a
 classical analysis paper deriving the conclusion from weaker previously
@@ -195,7 +202,7 @@ spectral projector. Section~\ref{sec:spectral_decay} states the PSWF-side
 conjectural input and explains the scope of the product-tail step.
 Section~\ref{sec:xry_accuracy} states the XRY spectral stability conjecture.
 Section~\ref{sec:verification} derives the conditional verification of
-Assumption~3.10. Section~\ref{sec:stability} states the conditional frame
+the DSTP. Section~\ref{sec:stability} states the conditional frame
 stability theorem. Section~\ref{sec:open} records open problems.
 
 %% ==================================================================
@@ -288,11 +295,11 @@ The family $f_{mn}=\psi_m^{(c)}\overline{\psi_n^{(c)}}$ is not known to enjoy
 any finite-dimensional closure property in the PSWF basis. Thus a uniform
 spectral-tail statement for $0\le m,n\le N\sim c$ is not a routine corollary
 of standard PSWF approximation results, but a separate open analytical
-problem — and one that is now known to have a negative answer at the edge;
+problem --- and one that is now known to have a negative answer at the edge;
 see part~(iii) below.
 \end{remark}
 
-\begin{conjecture}[PSWF product spectral tail — revised]\label{conj:pswf_product_tail}
+\begin{conjecture}[PSWF product spectral tail --- revised]\label{conj:pswf_product_tail}
 For the family
 $\mathcal{F}_N:=\{\psi_m^{(c)}\overline{\psi_n^{(c)}}:0\le m,n\le N\}$
 and the regime $N\sim c$:
@@ -354,7 +361,7 @@ measures the Fourier mass of $f_{mn}$ in $(\omega,2\omega)$.
 For edge indices this mass is bounded away from zero uniformly in $N$.
 Consequently, any argument based on the Slepian energy identity fails
 at the edge, regardless of how refined the analysis is.
-The edge regime must be handled — if at all — by entirely different methods.
+The edge regime must be handled --- if at all --- by entirely different methods.
 \end{remark}
 
 \begin{remark}[Refined bottleneck: from absence of structure to
@@ -402,8 +409,8 @@ $\|(I-\PN)f_{mn}\|\le C_p(1+|m-n|)^{-p}$ & conditional & Thm.~2 of \cite{PaperII
 \end{center}
 The unconditional $T^{1/2}$ bound does not exhibit decay in $|m-n|$
 and is therefore insufficient for the exponential defect estimate
-required by \cite{PaperI} without the additional structural input
-of Conjecture~\ref{conj:pswf_product_tail}(ii).
+required by the DSTP of \cite{PaperI} without the additional structural
+input of Conjecture~\ref{conj:pswf_product_tail}(ii).
 Any quantitative improvement toward algebraic or exponential decay
 requires either the semiclassical energy equidistribution result
 (Problem~4.2 of \cite{PaperIII}) or a direct spectral localization
@@ -423,7 +430,7 @@ cutoff. Part~(iii) of Conjecture~\ref{conj:pswf_product_tail} shows that
 this decay fails at the edge.
 \end{remark}
 
-\begin{remark}[Analytical bottleneck — updated]\label{rem:bottleneck-implication}
+\begin{remark}[Analytical bottleneck --- updated]\label{rem:bottleneck-implication}
 The overall implication chain shows that the main unresolved analytical
 difficulty is concentrated in the PSWF product spectral tail in the
 bulk regime $m,n\le\gamma N$ (Conjecture~\ref{conj:pswf_product_tail}(i))
@@ -484,14 +491,14 @@ known theorem.
 Conjectures~\ref{conj:pswf_product_tail} and~\ref{conj:xry_stability}
 isolate the two unresolved analytical inputs used in this paper.
 Accordingly, the present work should be read as an implication framework
-for the quadrature compatibility problem of \cite{PaperI}, not as an
+for the DSTP of \cite{PaperI}, not as an
 unconditional verification of that compatibility condition.
 The scope of the implication is now restricted to the bulk and off-diagonal
 regimes; the edge is excluded by Conjecture~\ref{conj:pswf_product_tail}(iii).
 \end{remark}
 
 %% ==================================================================
-\section{Conditional Verification of Assumption~3.10}\label{sec:verification}
+\section{Conditional Verification of the DSTP}\label{sec:verification}
 %% ==================================================================
 
 \begin{proposition}[Structured defect bound]\label{prop:structured_defect}
@@ -562,7 +569,7 @@ From~(b), the conditional defect estimate is
   |E_{mn}|\le C_p'(1+|m-n|)^{-p}+C e^{-\alpha N}
 \]
 in the off-diagonal regime, giving a banded-type compatibility statement
-away from the edge.
+consistent with the DSTP of \cite{PaperI}, away from the edge.
 \end{proposition}
 
 \begin{remark}[Unconditional bound is insufficient for frame stability]
@@ -570,7 +577,7 @@ away from the edge.
 The unconditional $T^{1/2}$ bound from part~(a) of
 Proposition~\ref{prop:partial_compatibility} does not exhibit decay
 in $|m-n|$ and therefore does not imply the banded structure required
-by Assumption~3.10 of \cite{PaperI}.
+by the DSTP of \cite{PaperI}.
 Frame stability in the off-diagonal regime requires the conditional
 algebraic decay of part~(b), i.e., the spectral localization input
 of Assumption~3.1 of \cite{PaperIII}.
@@ -590,7 +597,7 @@ $e^{-\alpha N}=e^{-\alpha\gamma c}$ decays faster than any power of $c$.
 \begin{remark}[Uniform domination over the index range]\label{rem:index_domination}
 For every $p\ge1$ and sufficiently large $N$, $e^{-\alpha N}\le C_p(1+N)^{-p}$.
 This is the precise sense in which an exponential bound in $N$ dominates
-the algebraic defect profile required in Assumption~3.10 of \cite{PaperI}.
+the algebraic defect profile required by the DSTP of \cite{PaperI}.
 \end{remark}
 
 \begin{theorem}[Conditional verification theorem --- bulk
@@ -603,7 +610,7 @@ For indices $m,n\le\gamma N$, every $p\ge1$, there exist $C_p,C>0$ such that
 \[
   |E_{mn}|\le C_p(1+|m-n|)^{-p}+Cc^{-1/3}.
 \]
-Hence Assumption~3.10 of \cite{PaperI} holds conditionally for
+Hence the DSTP of \cite{PaperI} holds conditionally for
 PSWF-Gauss sampling in the bulk regime.
 The edge regime $m,n\sim N$ is excluded;
 see Conjecture~\ref{conj:pswf_product_tail}(iii).
@@ -622,8 +629,8 @@ $m,n\sim N$ is excluded by the proved obstruction of
 Conjecture~\ref{conj:pswf_product_tail}(iii).
 What it provides is a precise conditional implication in the bulk:
 once Conjectures~\ref{conj:pswf_product_tail}(i) and
-\ref{conj:xry_stability} are established, the compatibility
-assumption of \cite{PaperI} follows for XRY PSWF-Gauss quadrature
+\ref{conj:xry_stability} are established, the DSTP
+of \cite{PaperI} follows for XRY PSWF-Gauss quadrature
 in the bulk regime.
 \end{remark}
 
@@ -698,12 +705,12 @@ Analyse frame stability near $N\to(2/\pi)c$.
 \begin{problem}[Edge regime via doubled prolate subspace]
 Since the edge obstruction is proved, investigate whether the
 doubled projector $P_{2N,2c}$ can substitute for $\PN$ in the
-quadrature compatibility argument; see Problem~5 of \cite{PaperIII}.
+DSTP argument; see Problem~5 of \cite{PaperIII}.
 \end{problem}
 
 \begin{problem}[Alternative compatible quadrature classes]
 Characterise quadrature rules beyond the XRY PSWF-Gauss class satisfying
-Assumption~3.10 of \cite{PaperI}.
+the DSTP of \cite{PaperI}.
 \end{problem}
 
 %% ==================================================================
