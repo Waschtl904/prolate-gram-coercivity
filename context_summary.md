@@ -13,7 +13,7 @@
 The series constructs a spectral operator whose eigenvalue distribution
 mirrors the non-trivial zeros of the Riemann zeta function (Hilbert–Pólya conjecture).
 The core object is the PSWF concentration operator and its Mellin/Fourier transform.
-Series arc: coercivity → scaling limits → spectral phase →
+Series arc: coercivity (DSTP) → scaling limits → spectral phase →
 bandwidth decay → rigorous peak-width upper bounds → crossover asymptotics
 → lower bounds + spectral-zeta connection → domain & self-adjointness (conditional framework)
 → Mosco form convergence & Friedrichs extension → spectral inclusion & density criterion
@@ -57,8 +57,13 @@ bandwidth decay → rigorous peak-width upper bounds → crossover asymptotics
 
 ## Papers I–VIII: Asymptotic Layer (FINAL)
 
-- **I:** Gram matrix coercivity, constant `~ c^{-1/2}`
-- **II:** Scaling limits, trace formula linking eigenvalues to primes
+- **I:** Gram matrix coercivity and defect decomposition;
+  introduces the **Discrete Spectral Transfer Property (DSTP)**
+  as the central reduction principle: frame stability ⇔ Schur-summable
+  defect matrix. DSTP verified for random and Gauss–PSWF sampling;
+  prime sampling left open.
+- **II:** Scaling limits, trace formula linking eigenvalues to primes;
+  conditional coercivity in the scaling limit under DSTP for prime sampling.
 - **III:** Spectral phase analysis, evidence for `c^{-1/2}` peak-width scaling
 - **IV:** No-go theorem — rules out naive bandlimited constructions
 - **V:** Barrier estimate for `t >> t_*`; numerical evidence for `Delta_eps ~ c^{-1/2}`
