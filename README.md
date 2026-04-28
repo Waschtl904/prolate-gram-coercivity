@@ -1,109 +1,114 @@
-# Prolate Gram Coercivity — Paper Series I–XVII
+# Prolate Sampling and Frame Stability
 
-> **Revised & consolidated repository** for the PSWF–Hilbert–Pólya paper series.
-> Original drafts: [`Waschtl904/prolate-primes-paper`](https://github.com/Waschtl904/prolate-primes-paper)
-> This repo contains corrected, referee-ready versions, pushed paper by paper.
-
----
-
-## Overarching Goal
-
-Construct a self-adjoint spectral operator whose eigenvalue distribution mirrors the non-trivial zeros of the Riemann zeta function (Hilbert–Pólya programme). The core object is the PSWF concentration operator and its Mellin/Fourier transform.
-
-**Series arc:**
-Coercivity → scaling limits → spectral phase → bandwidth decay → rigorous peak-width bounds → crossover asymptotics → lower bounds + spectral-zeta connection → domain & self-adjointness → Mosco form convergence & Friedrichs extension → spectral inclusion & density criterion → localization principle → completeness & coefficient stability → microlocal Lagrangian singularity transport / Airy normal form → uniform CFU stability (Paper XVII).
+This repository contains a sequence of research papers on
+sampling, frame stability, and spectral structure in
+Paley–Wiener spaces using prolate spheroidal wave functions (PSWFs).
 
 ---
 
-## Current Repository State (as of April 2026)
+## Core Idea
 
-| File | Paper | Status | Description |
-|---|---|---|---|
-| `paper1.tex` | I | ✅ pushed | Gram matrix coercivity |
-| `paper2.tex` | II | ✅ pushed | Scaling limits & trace formula |
-| `paper2_quadrature.tex` | II (ext.) | ✅ pushed | Quadrature extension to Paper II |
-| `section5_numerical_evidence.tex` | V (section) | ✅ pushed | Numerical evidence section |
-| `context_summary.md` | — | 📋 META | Full series context & open problems |
-| `DEPENDENCIES.md` | — | 📋 META | Logical dependency graph |
-| `numerics/` | — | 📁 DIR | Numerical scripts & data |
+A central concept developed in this series is the
+**Discrete Spectral Transfer Property (DSTP)**:
 
-> **Note:** Files currently in the repo are early draft versions (without `_FINAL` suffix).
-> Referee-ready `_FINAL` versions will replace them as revision is completed.
+> Discrete sampling preserves the spectral decay structure
+> of PSWF interactions, leading to Schur-summable defect matrices
+> and stable frame operators.
 
----
-
-## Planned Structure (upload in progress)
-
-Papers are pushed in order of logical independence and revision completeness:
-
-### Phase 1 — Papers I–V (most self-contained, near publication-ready)
-| File | Paper | Target Status | Description |
-|---|---|---|---|
-| `paper1_FINAL.tex` | I | 🔶 pending | Gram matrix coercivity |
-| `paper2_FINAL.tex` | II | 🔶 pending | Scaling limits & trace formula |
-| `paper3_FINAL.tex` | III | 🔶 pending | Spectral phase analysis |
-| `paper4_FINAL.tex` | IV | 🔶 pending | No-go theorem (naive constructions) |
-| `paper5_FINAL.tex` | V | 🔶 pending | Barrier estimates & numerical evidence |
-
-### Phase 2 — Papers VI–VIII (after VI→VII dependency is explicitly declared)
-| File | Paper | Target Status | Description |
-|---|---|---|---|
-| `paper6_FINAL.tex` | VI | 🔶 pending | Rigorous upper bounds (Airy profile) |
-| `paper7_FINAL.tex` | VII | 🔶 pending | Composite asymptotics in crossover zone |
-| `paper8_FINAL.tex` | VIII | 🔶 pending | Non-cancellation & sharp lower bound |
-
-### Phase 3 — Papers IX–XIII (conditional framework, ongoing revision)
-| File | Paper | Target Status | Description |
-|---|---|---|---|
-| `paper9_DRAFT.tex` | IX | 🔶 pending | Conditional framework: domain & closability |
-| `paper10_DRAFT.tex` | X | 🔶 pending | Mosco form convergence & Friedrichs extension |
-| `paper11_DRAFT.tex` | XI | 🔶 pending | Spectral structure & density criterion |
-| `paper12_DRAFT.tex` | XII | 🔶 pending | Localization principle for spectral projections |
-| `paper13_DRAFT.tex` | XIII | 🔶 pending | Completeness barrier (no-reduction theorem) |
-
-### Phase 4 — Papers XIV–XVII + fold_model (microlocal layer, after Closing Moves A+B)
-| File | Paper | Target Status | Description |
-|---|---|---|---|
-| `paper14_DRAFT.tex` | XIV | 🔶 pending | HS-norm estimates & regime decomposition |
-| `paper15_DRAFT.tex` | XV | 🔶 pending | Intermediate-regime kernel estimates |
-| `fold_model.tex` | — | 🔶 pending | Universal CFU fold-amplitude normal form |
-| `paper_xvi_draft.tex` | XVI | 🔶 pending | Lagrangian singularity transport / Airy normal form |
-| `paper_xvii.tex` | XVII | 🔶 pending | Uniform CFU stability for PSWF fold geometry |
+The main result of Paper I is a reduction principle:
+frame stability holds — with explicit bounds — provided the DSTP is satisfied.
+Papers II and II(quadrature) develop the operator-theoretic and analytic
+consequences of this principle.
 
 ---
 
-## Critical Open Problems (as of April 2026)
+## Current Contents
 
-| Problem | Front | Status |
+The repository currently contains the following working papers:
+
+| File | Description |
+|---|---|
+| `paper1.tex` | Frame coercivity and defect decomposition; introduction of DSTP |
+| `paper2.tex` | Scaling limits, trace formula, and conditional coercivity under DSTP |
+| `paper2_quadrature.tex` | XRY quadrature compatibility and conditional DSTP verification |
+| `paper3.tex` | PSWF product spectral tail estimates; edge obstruction (bandwidth doubling) |
+| `paper4_semiclassical.tex` | Semiclassical / WKB analysis; weak convergence of PSWF densities |
+| `section5_numerical_evidence.tex` | Numerical experiments supporting the analytic results |
+
+Additional files:
+
+| File | Description |
+|---|---|
+| `numerics/` | Computational experiments and scripts |
+| `DEPENDENCIES.md` | Logical dependency graph between papers |
+| `context_summary.md` | Internal working summary (AI-session context scaffold) |
+| `assumption_2_4_target.md` | Analysis of proof strategies for the remaining open assumption |
+| `PROMPT.md` | Internal prompt scaffolding |
+
+---
+
+## Relationship Between the Papers
+
+- **Paper I** establishes the core reduction: frame stability of the prolate
+  sampling operator is equivalent to a spectral defect condition (DSTP).
+  Unconditional coercivity is proved; DSTP is verified for random and
+  Gauss–PSWF sampling. Prime sampling is left open.
+
+- **Paper II** develops operator-theoretic consequences: scaling limits
+  of Gram operators, unconditional compactness, and a trace formula
+  connecting weighted Gram matrices to the prime number theorem.
+  Strong coercivity in the scaling limit is conditional on DSTP
+  holding along prime sampling sequences.
+
+- **Paper II (quadrature)** organises the problem of verifying DSTP
+  for XRY PSWF-Gauss quadrature into two explicit conjectural inputs
+  (a PSWF product spectral tail conjecture and an XRY stability conjecture).
+  The edge regime is identified as a proved obstruction (bandwidth doubling).
+
+- **Paper III** proves the edge obstruction unconditionally,
+  establishes a uniform off-diagonal bound, and provides mean spectral
+  localization results. The bulk exponential tail bound is conditional
+  on Assumption 2.4 (bulk convolution decay).
+
+- **Paper IV** provides the semiclassical input: weak convergence of
+  PSWF densities and energy equidistribution in the bulk regime,
+  closing the central open problem of Paper III in the bulk.
+
+---
+
+## Open Problems (as of April 2026)
+
+| Problem | Source | Status |
 |---|---|---|
-| `H_SOT = closure(H_spec)` (Bridge Theorem) | Operator identification | 🔴 OPEN |
-| Uniform CFU Jacobian bounds — Assumption 4.1(vi) for PSWF | Microlocal | 🔴 OPEN |
-| Explicit period `T(λ_n)` for `V(x) = x²/(1-x²)` | Classical dynamics | 🔴 OPEN |
-| Completeness of `{Φ_n^(∞)}` in L² | Spectral completeness | 🔴 OPEN |
-| Subsequence-independence of `λ_n^(∞)`, `Φ_n^(∞)` | Spectral uniqueness | 🔴 OPEN |
-| Gap lower bound `\|λ_n^(c) - λ_{n+1}^(c)\| ≥ C c^{-3/4}` | Spectral gap | 🔴 OPEN |
-| Lipschitz regularity of PSWF amplitude (Prob. 6.1, Paper XV) | HS programme | 🔴 OPEN |
-| Local Weyl law (Prob. 7.1, Paper XV) | HS programme | 🔴 OPEN |
+| DSTP for prime sampling | Paper I | 🔴 open |
+| Bulk convolution decay (Assumption 2.4) | Paper II / III | 🔴 open |
+| Off-diagonal phase separation (Paper III, Ass. 3.1) | Paper III | ⚠️ conditional |
+| C⁰ extension of PSWF density convergence | Paper IV | 🔴 open |
+| Off-diagonal analogue of Paper IV main theorem | Paper IV | 🔴 open |
+
+A full dependency and status graph is in [`DEPENDENCIES.md`](DEPENDENCIES.md).
 
 ---
 
-## Planned Next Papers
+## Series Vision (Work in Progress)
 
-- **Paper XVIII-A:** Explicit computation of `T(λ_n)` + regularity (classical action integral)
-- **Paper XVIII-B:** CFU-Jacobian Lemma as isolated elliptic FIO stability result (Hörmander-style)
+This project is part of a larger planned series investigating:
 
-> After XVIII-A and XVIII-B, Theorem XVII is formally closed.
+- semiclassical structure of PSWFs and WKB phase analysis
+- oscillation-compatible quadrature rules
+- arithmetic sampling regimes (prime sets, random sampling)
+- potential extensions toward number-theoretic spectral questions
+
+These components are under active development and
+are **not yet fully represented in this repository**.
 
 ---
 
 ## Key References
 
-- Olver (1974): *Asymptotics and Special Functions*
-- Osipov–Rokhlin–Xiao (2013): *Prolate Spheroidal Wave Functions of Order Zero*
-- Slepian–Pollak (1961): Original PSWF paper
-- Zworski (2012): *Semiclassical Analysis*, AMS
-- Hörmander (1983): *Analysis of Linear PDE I* — Ch. 7.7, 18.1–18.2, 25.1
+- Osipov–Rokhlin–Xiao (2013): *Prolate Spheroidal Wave Functions of Order Zero*, Springer
+- Slepian–Pollak (1961): Original PSWF concentration paper
+- Xiao–Rokhlin–Yarvin (2001): PSWF-Gauss quadrature
+- Connes–Consani–Moscovici (2025): arXiv:2511.22755
 - Kato (1966): *Perturbation Theory for Linear Operators*
-- Chester–Friedman–Ursell (1957): CFU steepest descent extension
-- Guillemin–Uhlmann (1981): Oscillatory integrals with singular symbols
-- CCM2025: Connes–Consani–Moscovici, arXiv:2511.22755
+- Reed–Simon (1975): *Methods of Modern Mathematical Physics, Vol. I–II*
