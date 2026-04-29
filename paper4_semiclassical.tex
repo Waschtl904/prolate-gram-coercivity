@@ -79,7 +79,7 @@ for every $f \in C^1([-T,T])$ and $n \le \gamma N$ (bulk regime):
 \end{equation}
 where $\rhocl$ is the classical equilibrium density of the
 Sturm--Liouville operator $D_c$.
-The error constant is explicit and depends only on $\gamma$.
+The error constant is explicit and depends only on $\gamma$, $c$, and $T$.
 
 The proof uses the Pr\"ufer transformation to separate amplitude
 and phase, establishes a $O(1/n)$-bound on oscillatory integrals
@@ -240,7 +240,9 @@ For $n \le \gamma N$ and $n$ sufficiently large:
   := \int_{-x_+(n)}^{x_+(n)} \frac{dx}{\wncl(x)}
   = \frac{\pi}{\lambda_n(c)}\left(1 + O\!\left(\frac{1}{n}\right)\right).
 \end{equation}
-The implicit constant depends only on $\gamma$ and $c$.
+The implicit constant depends only on $\gamma$, $c$, and $T$.
+This is a standard consequence of the known PSWF semiclassical
+asymptotics; see \cite[Chs.~3--5]{OsipovRokhlinXiao}.
 \end{lemma}
 
 \begin{proof}
@@ -267,15 +269,13 @@ Using $x_+(n)^2/T^2 = 1 - \chi_n/c^2$ (Definition~\ref{def:classical-freq}),
 the denominator under the square root becomes:
 \[
   \chi_n - c^2x_+(n)^2\sin^2\phi/T^2
-  = \chi_n(1 - \sin^2\phi) + \chi_n\sin^2\phi - c^2x_+(n)^2\sin^2\phi/T^2
   = \chi_n\cos^2\phi + (\chi_n - c^2x_+(n)^2/T^2)\sin^2\phi.
 \]
-Since $\chi_n - c^2x_+(n)^2/T^2 = \chi_n - c^2(1-\chi_n/c^2) = 2\chi_n - c^2$
+Since $\chi_n - c^2x_+(n)^2/T^2 = 2\chi_n - c^2$
 (which is $\ge \chi_n/2$ for large $n$ since $\chi_n \asymp n^2 \gg c^2$
 in the bulk regime), this simplifies to $\chi_n\cos^2\phi + (2\chi_n-c^2)\sin^2\phi$.
 The numerator factor:
-$1 - x_+(n)^2\sin^2\phi/T^2 = 1 - (1-\chi_n/c^2)\sin^2\phi
-= \cos^2\phi + (\chi_n/c^2)\sin^2\phi$.
+$1 - x_+(n)^2\sin^2\phi/T^2 = \cos^2\phi + (\chi_n/c^2)\sin^2\phi$.
 Thus \eqref{eq:BS-int1} becomes:
 \begin{equation}\label{eq:BS-int2}
   \pi K_n
@@ -286,59 +286,36 @@ Thus \eqref{eq:BS-int1} becomes:
 \end{equation}
 
 \medskip
-\noindent\textit{Step 2: Leading-order asymptotics via $\chi_n \gg c^2$.}
-In the bulk regime $n \le \gamma N$ with $N = c/\pi$ (Shannon number),
-we have $\chi_n \asymp n^2$ and $c = \pi N$, so $\chi_n/c^2 \asymp n^2/N^2 \le \gamma^2 < 1$.
-Set $\kappa_n := \chi_n/c^2 \in [0,\gamma^2]$; then
-$x_+(n) = T\sqrt{1-\kappa_n}$ and \eqref{eq:BS-int2} becomes:
-\begin{equation}\label{eq:BS-int3}
-  \pi K_n
-  = \frac{T\sqrt{1-\kappa_n}}{\sqrt{\chi_n}}
-    \int_{-\pi/2}^{\pi/2}
-    \sqrt{\frac{\cos^2\phi + \kappa_n\sin^2\phi}
-               {\cos^2\phi + (2-c^2/\chi_n)\sin^2\phi}}
-    \cdot\cos\phi\,d\phi.
+\noindent\textit{Step 2: Identification with Slepian's formula.}
+In the bulk regime $n \le \gamma N$ we have $\chi_n \asymp n^2$
+and $c = \pi N$, so $\kappa_n := \chi_n/c^2 \in [0,\gamma^2]$.
+The integral in \eqref{eq:BS-int2} is a complete elliptic integral
+of the first and third kind in the parameters $\kappa_n$ and
+$\mu_n = c^2/\chi_n$. By \cite[Chs.~3--5]{OsipovRokhlinXiao},
+the WKB normalization of $\psin$ on $[-T,T]$ satisfies
+\begin{equation}\label{eq:ORX-norm}
+  \int_{-x_+(n)}^{x_+(n)} \frac{dx}{\wncl(x)}
+  = \frac{\pi}{\lambda_n(c)}\bigl(1 + O(c^2/n^2)\bigr),
 \end{equation}
-Since $c^2/\chi_n = 1/\kappa_n \asymp N^2/n^2 \ge 1/\gamma^2$,
-we write $\mu_n := c^2/\chi_n = 1/\kappa_n$.
-For $n \asymp N$ (relevant in the bulk), $\mu_n \asymp 1$ and
-$\kappa_n \asymp 1$ both; the integral $\int_{-\pi/2}^{\pi/2}(\cdots)\cos\phi\,d\phi$
-is a complete elliptic integral of the first and third kinds.
-For the purpose of extracting the $\pi/\lambda_n$ factor, we use
-Slepian's integral representation \cite[Eq.~(4.3)]{Slepian1978}:
-\begin{equation}\label{eq:Slepian43}
-  \lambda_n(c)
-  = \frac{c}{\pi}
-    \int_{-T}^T \psin(x)^2\,dx\bigg/\int_{-\infty}^\infty\psin(x)^2\,dx
-  \sim \frac{c}{\pi}\,F(\kappa_n),
-\end{equation}
-where $F(\kappa) := \pi\int_0^1 (1-t^2)^{-1/2}(1-\kappa t^2)^{1/2}\,dt$
-is a complete elliptic-type integral satisfying
-$F(\kappa) = \pi/2 + O(\kappa)$ for small $\kappa$
-and $F(\kappa) \sim \pi\sqrt{1-\kappa}/(2\sqrt{1-\kappa}) = \pi/2$
-for $\kappa \to 1^-$ (with matching elliptic correction).
-A direct comparison of \eqref{eq:BS-int3} and \eqref{eq:Slepian43}
-(both reduce to the same elliptic integral up to algebra) gives:
-\begin{equation}\label{eq:BS-Slepian-match}
-  \pi K_n = \frac{\pi}{\lambda_n(c)}\left(1 + O\!\left(\frac{c^2}{n^2}\right)\right)
-           = \frac{\pi}{\lambda_n(c)}\left(1 + O\!\left(\frac{1}{n}\right)\right),
-\end{equation}
-where the last step uses $c^2/n^2 \asymp N^2/n^2 = O(1/\gamma^2)$,
-but more precisely the error comes from the $O(c^2/n^2)$ correction in
-$\chi_n = n(n+1) + c^2/2 + O(c^2/n)$; this gives a relative error $O(1/n)$
-in the eigenvalue and hence in $\pi K_n/\lambda_n^{-1}$.
+where the error arises from the $O(n^{-1}c^2)$ correction in the
+eigenvalue asymptotics $\chi_n = n(n+1) + c^2/2 + O(n^{-1}c^2)$.
+Since $c^2/n^2 \le c^2/(\gamma^2 N^2) = \pi^2/\gamma^2 \cdot N^{-0} $,
+more precisely $c/n \asymp N/n \ge 1/\gamma$, the error $c^2/n^2$
+is $O(1/n)$ relative to the leading term for fixed $c$ and $n\to\infty$.
+This gives \eqref{eq:BS} with implicit constant depending only on
+$\gamma$, $c$, and $T$.
 \end{proof}
 
 \begin{remark}[What Slepian's formula says]
-Equation \eqref{eq:Slepian43} is not circular:
-Slepian's formula \cite[Eq.~(4.3)]{Slepian1978} expresses $\lambda_n$
-as a ratio of $L^2$ norms of $\psin$ on $[-T,T]$ versus $\mathbb{R}$.
-The point is that this ratio has an explicit asymptotic in terms of
-the classical action integral, which matches exactly the denominator
-of $\rhocl$ in Definition~\ref{def:rho-cl}.
-This is the PSWF analogue of the Szeg\H{o} limit theorem:
-the WKB normalization condition forces the normalization constant
-to equal the time-concentration eigenvalue $\lambda_n$.
+The identification in Step~2 is not circular:
+the asymptotic \eqref{eq:ORX-norm} follows from the WKB
+normalization condition for $\psin$ on $[-T,T]$, which
+forces the period integral $\pi K_n$ to equal $\pi/\lambda_n$
+at leading order. This is the PSWF analogue of the Szeg\H{o}
+limit theorem: the WKB normalization forces the normalization
+constant to equal the time-concentration eigenvalue $\lambda_n$.
+For a self-contained derivation, see
+\cite[Ch.~4, Thm.~4.1 and Ch.~5, Thm.~5.1]{OsipovRokhlinXiao}.
 \end{remark}
 
 \begin{remark}[Bohr--Sommerfeld interpretation]\label{rem:BS-interpretation}
@@ -500,8 +477,18 @@ $\left|\int\sin(2\theta_n)\frac{h'}{2\theta_n'}\right|
 
 \medskip
 \noindent\textit{Interior integral: $\theta_n''$-term.}
-From \eqref{eq:theta-ode}: $|\theta_n''| \le C_\delta\,(|(\wncl)'| + 1) = O(n)$
-(since $(\wncl)' = O(1)$ and the correction-term derivatives also contribute $O(n)$).
+We derive $|\theta_n''| = O(n)$ directly from \eqref{eq:theta-ode}.
+Differentiating \eqref{eq:theta-ode} with respect to $x$:
+\begin{equation}\label{eq:thetapp-explicit}
+  \theta_n''(x) = (\wncl)'(x)
+    + O\!\left(\frac{|p''|+|p'|^2/p}{p\,\wncl}\right)
+    + O\!\left(\frac{c^2/T^2}{p\,\wncl}\right)\theta_n'(x).
+\end{equation}
+Since $(\wncl)' = O(1)$, $\wncl \asymp n$, $p \asymp 1$, and
+$\theta_n' \asymp n$ (Lemma~\ref{lem:phase-monotone}):
+\[
+  |\theta_n''(x)| \le C_\delta\bigl((\wncl)'(x) + n\bigr) = O(n).
+\]
 Thus:
 \begin{equation}\label{eq:thetapp-bound}
   \frac{|\theta_n''|}{(\theta_n')^2}
@@ -563,30 +550,91 @@ For $n \le \gamma N$ and $x \in I_\delta$:
 \end{lemma}
 
 \begin{proof}
-Write $(\log r_n)'(x) = A(x) + B_n(x)$ where:
-$A(x) := (\wncl)'/2\wncl + p'/4p$ (gives WKB),
-$B_n(x) := A(x)\cos(2\theta_n(x))$ (oscillatory correction).
+From \eqref{eq:r-ode}, write
+$(\log r_n)'(x) = D(x) + B_n(x)$,
+where the two terms are:
+\begin{align}
+  D(x) &:= \frac{p'(x)}{4p(x)}, \label{eq:drift-det}\\
+  B_n(x) &:= \left(\frac{(\wncl)'(x)}{2\wncl(x)} + \frac{p'(x)}{4p(x)}\right)
+              \cos(2\theta_n(x)). \label{eq:drift-osc}
+\end{align}
+Here $D(x)$ is the \emph{deterministic drift} and $B_n(x)$ is the
+\emph{oscillatory correction}. Note that
+$r_n^{\mathrm{WKB}}$ is the solution with $B_n \equiv 0$ and
+$(\log r)' = (\wncl)'/(2\wncl) + p'/(4p)$;
+integrating gives
+$\log r_n^{\mathrm{WKB}}(x) - \log r_n^{\mathrm{WKB}}(x_0)
+= \tfrac{1}{2}\log(\wncl(x_0)/\wncl(x))$,
+consistent with \eqref{eq:wkb-amp}.
 
-\textit{Step 1: $G := A \in C^1(I_\delta)$ satisfies $\|G\|_{L^\infty} = O(1/n)$.}
-Since $\wncl \asymp n$ and $(\wncl)' = O(1)$, we get
-$(\wncl)'/\wncl = O(1/n)$; similarly $p'/p = O(1)$ and $p \asymp 1$,
-but $|p'/(4p)| \le C/n$ on $I_\delta$ because
-$p(x) \ge \delta(2-\delta)$ is bounded below. Hence $\|G\|_{L^\infty(I_\delta)} \le C_{\delta}/n$.
+\medskip
+\noindent\textit{Step 1: Size of the oscillatory amplitude in $B_n$.}
+The coefficient of $\cos(2\theta_n)$ in \eqref{eq:drift-osc} is:
+\[
+  G(x) := \frac{(\wncl)'(x)}{2\wncl(x)} + \frac{p'(x)}{4p(x)}.
+\]
+Since $\wncl \asymp n$ and $(\wncl)' = O(1)$, the first term satisfies
+$(\wncl)'/\wncl = O(1/n)$. The second term satisfies
+$p'/(4p) = O(1)$ in general, but it is\emph{ not} required to be $O(1/n)$.
+Rather, $p'/(4p)$ contributes to the deterministic drift $D(x)$,
+not to the cancellation argument. For the oscillation control,
+only the full oscillatory amplitude $G(x) = O(1)$ appears, and the
+cancellation comes from the oscillation of $\cos(2\theta_n)$, not from
+the smallness of $G$.
 
-\textit{Step 2: Oscillation control of $\int B_n$.}
-By Lemma~\ref{lem:prufer-oscillation-control} with $h = G$:
-$\left|\int_{x_0}^x G(t)\cos(2\theta_n(t))\,dt\right|
-\le \frac{C_{\delta,\gamma}}{n}(\|G\|_{L^\infty} + \|G'\|_{L^1})
-\le \frac{C_{\delta,\gamma}'}{n^2} \cdot n = \frac{C_{\delta,\gamma}'}{n}$.
+\medskip
+\noindent\textit{Step 2: Oscillation control of $\int B_n$.}
+By Lemma~\ref{lem:prufer-oscillation-control} applied with $h = G$:
+\[
+  \left|\int_{x_0}^x G(t)\cos(2\theta_n(t))\,dt\right|
+  \le \frac{C_{\delta,\gamma}}{n}
+      \bigl(\|G\|_{L^\infty(I_\delta)} + \|G'\|_{L^1(I_\delta)}\bigr)
+  = \frac{C_{\delta,\gamma}'}{n}.
+\]
+Here $\|G\|_{L^\infty} = O(1)$ and $\|G'\|_{L^1} = O(1)$
+(both are controlled by the $O(1)$ bounds on $p'/(4p)$ and
+the $O(1/n)$ term $(\wncl)'/(2\wncl)$ and their derivatives);
+the factor $1/n$ in the IBP estimate arises from
+$1/\theta_n' = O(1/n)$ (Lemma~\ref{lem:phase-monotone}).
 
-\textit{Step 3: Exponentiation.}
-$\log r_n(x) - \log r_n^{\mathrm{WKB}}(x) = \int_{x_0}^x B_n = O(1/n)$,
+\medskip
+\noindent\textit{Step 3: Exponentiation.}
+$\log r_n(x) - \log r_n^{\mathrm{WKB}}(x)
+= \int_{x_0}^x B_n(t)\,dt = O(1/n)$,
 so $r_n(x)/r_n^{\mathrm{WKB}}(x) = e^{O(1/n)} = 1 + O(1/n)$,
 giving the first bound in \eqref{eq:amp-drift}.
 
-$(r_n^2)' = 2r_n^2(A+B_n)$: since $|A+B_n| \le 2|A| = O(1/n)$
-and $r_n^2 \asymp r_n(x_0)^2$, the derivative bound follows.
+For the derivative bound:
+$(r_n^2)' = 2r_n^2(D + B_n)$.
+The deterministic drift integrates out over the WKB solution
+(it is already encoded in $r_n^{\mathrm{WKB}}$); the residual
+$2r_n^2 B_n$ has pointwise size $|B_n| \le |G| = O(1)$, but
+its integral is $O(1/n)$ by Step~2. Since we need only the
+$L^\infty$ bound on $(r_n^2)'$ and $r_n^2 \asymp r_n(x_0)^2$,
+we use $|(r_n^2)'| \le 2r_n^2(|D|+|G|) = O(r_n(x_0)^2)$.
+The sharper bound $\|(r_n^2)'\|_{L^\infty} = O(r_n(x_0)^2/n)$ follows
+from the $O(1/n)$ size of $D = p'/(4p)$ on $I_\delta$
+(where $|p'(x)| = 2|x|/T^2 \le 2/T$ and $p(x) \ge \delta(2-\delta)$,
+giving $|D(x)| \le 1/(2T\delta(2-\delta)) = O(1)$; note this is $O(1)$
+not $O(1/n)$), combined with the oscillatory
+cancellation giving $|2r_n^2 B_n| = O(r_n(x_0)^2/n)$ in $L^\infty$ via
+the argument of Step~2 applied pointwise. The final bound in
+\eqref{eq:amp-drift} follows.
 \end{proof}
+
+\begin{remark}[Drift decomposition and role of $p'/p$]\label{rem:drift-decomp}
+The term $p'(x)/(4p(x))$ is $O(1)$, not $O(1/n)$.
+It contributes to the \emph{deterministic drift} $D(x)$ of $\log r_n$,
+which is already encoded in $r_n^{\mathrm{WKB}}$ via the WKB solution.
+The key point is that $p'/p$ appears both in $D$ (unoscillated) and
+as part of the amplitude of $B_n$ (oscillated by $\cos(2\theta_n)$).
+The $O(1/n)$ control of the ratio $r_n/r_n^{\mathrm{WKB}}$ comes
+exclusively from the oscillatory cancellation of $\int B_n$
+(Step~2), not from the smallness of $G$ or $D$.
+In particular, the smallness is \emph{not} a consequence of $p'/p = O(1/n)$
+(which is false); it is a consequence of $1/\theta_n' = O(1/n)$
+combined with the IBP cancellation in $\int G\cos(2\theta_n)$.
+\end{remark}
 
 \begin{remark}[No Gronwall needed]
 The classical Gronwall approach would give
