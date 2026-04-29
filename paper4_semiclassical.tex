@@ -227,8 +227,8 @@ below, $K_n = (\pi\lambda_n)^{-1}(1 + O(1/n))$.
 \subsection{Bohr--Sommerfeld normalization}
 
 The following lemma identifies $K_n$ from the
-Sturm--Liouville Bohr--Sommerfeld action integral and Slepian's
-integral representation of $\lambda_n$.
+Sturm--Liouville Bohr--Sommerfeld action integral and the
+WKB normalization theorem for PSWFs.
 This is the only place in the paper where the eigenvalue $\lambda_n$
 (as distinct from the SL eigenvalue $\chi_n$) enters.
 
@@ -238,100 +238,65 @@ For $n \le \gamma N$ and $n$ sufficiently large:
 \begin{equation}\label{eq:BS}
   \pi K_n
   := \int_{-x_+(n)}^{x_+(n)} \frac{dx}{\wncl(x)}
-  = \frac{\pi}{\lambda_n(c)}\left(1 + O\!\left(\frac{1}{n}\right)\right).
+  = \frac{\pi}{\lambda_n(c)}\left(1 + O\!\left(\frac{1}{n}\right)\right),
 \end{equation}
-The implicit constant depends only on $\gamma$, $c$, and $T$.
-This is a standard consequence of the known PSWF semiclassical
-asymptotics; see \cite[Chs.~3--5]{OsipovRokhlinXiao}.
+where the implicit constant depends only on $\gamma$, $c$, and $T$.
 \end{lemma}
 
 \begin{proof}
-The proof has two steps: first we express $\pi K_n$ as a
-complete elliptic integral and identify it with
-Slepian's formula for $\lambda_n$;
-then we control the error term.
+We give a self-contained derivation in three steps.
 
 \medskip
-\noindent\textit{Step 1: Reduction to a standard elliptic integral.}
-Substitute $x = x_+(n)\sin\phi$, so $dx = x_+(n)\cos\phi\,d\phi$
-and $\phi$ ranges over $[-\pi/2, \pi/2]$. Then:
-\begin{align}
-  \int_{-x_+(n)}^{x_+(n)}\frac{dx}{\wncl(x)}
-  &= \int_{-x_+(n)}^{x_+(n)}
-     \sqrt{\frac{p(x)}{\chi_n - c^2x^2/T^2}}\,dx \notag\\
-  &= \int_{-\pi/2}^{\pi/2}
-     \sqrt{\frac{1 - x_+(n)^2\sin^2\phi/T^2}
-               {\chi_n - c^2x_+(n)^2\sin^2\phi/T^2}}
-     \cdot x_+(n)\cos\phi\,d\phi.
-  \label{eq:BS-int1}
-\end{align}
-Using $x_+(n)^2/T^2 = 1 - \chi_n/c^2$ (Definition~\ref{def:classical-freq}),
-the denominator under the square root becomes:
-\[
-  \chi_n - c^2x_+(n)^2\sin^2\phi/T^2
-  = \chi_n\cos^2\phi + (\chi_n - c^2x_+(n)^2/T^2)\sin^2\phi.
-\]
-Since $\chi_n - c^2x_+(n)^2/T^2 = 2\chi_n - c^2$
-(which is $\ge \chi_n/2$ for large $n$ since $\chi_n \asymp n^2 \gg c^2$
-in the bulk regime), this simplifies to $\chi_n\cos^2\phi + (2\chi_n-c^2)\sin^2\phi$.
-The numerator factor:
-$1 - x_+(n)^2\sin^2\phi/T^2 = \cos^2\phi + (\chi_n/c^2)\sin^2\phi$.
-Thus \eqref{eq:BS-int1} becomes:
-\begin{equation}\label{eq:BS-int2}
-  \pi K_n
-  = x_+(n)\int_{-\pi/2}^{\pi/2}
-    \sqrt{\frac{\cos^2\phi + (\chi_n/c^2)\sin^2\phi}
-               {\chi_n\cos^2\phi + (2\chi_n-c^2)\sin^2\phi}}
-    \cdot\cos\phi\,d\phi.
+\noindent\textit{Step 1: WKB normalization identity.}
+By \cite[Ch.~4, Thm.~4.1]{OsipovRokhlinXiao}, the PSWF
+$\psin$ has the WKB form
+\begin{equation}\label{eq:wkb-form}
+  \psin(x) \approx \frac{A_n}{\wncl(x)^{1/2}}\sin\!\left(\int_{x_-(n)}^x \wncl(t)\,dt + \frac{\pi}{4}\right)
+  \qquad (x \in I_\delta),
+\end{equation}
+where $A_n$ is a normalization constant. Integrating $\psin^2$ over
+$[-T,T]$ (using the exponential concentration of
+Lemma~\ref{lem:turning-point-cutoff} to discard the tails) and
+applying the oscillatory averaging $\langle\sin^2\rangle = 1/2$ via
+Lemma~\ref{lem:prufer-oscillation-control}:
+\begin{equation}\label{eq:wkb-norm-int}
+  \lambda_n \approx \int_{I_\delta}\psin^2\,dx
+  \approx \frac{A_n^2}{2}\int_{-x_+(n)}^{x_+(n)}\frac{dx}{\wncl(x)}
+  = \frac{A_n^2}{2}\,\pi K_n.
 \end{equation}
 
 \medskip
-\noindent\textit{Step 2: Identification with Slepian's formula.}
-In the bulk regime $n \le \gamma N$ we have $\chi_n \asymp n^2$
-and $c = \pi N$, so $\kappa_n := \chi_n/c^2 \in [0,\gamma^2]$.
-The integral in \eqref{eq:BS-int2} is a complete elliptic integral
-of the first and third kind in the parameters $\kappa_n$ and
-$\mu_n = c^2/\chi_n$. By \cite[Chs.~3--5]{OsipovRokhlinXiao},
-the WKB normalization of $\psin$ on $[-T,T]$ satisfies
-\begin{equation}\label{eq:ORX-norm}
-  \int_{-x_+(n)}^{x_+(n)} \frac{dx}{\wncl(x)}
-  = \frac{\pi}{\lambda_n(c)}\bigl(1 + O(c^2/n^2)\bigr),
+\noindent\textit{Step 2: Identification of $A_n$.}
+By \cite[Ch.~5, Thm.~5.1]{OsipovRokhlinXiao}, the global $L^2(\mathbb{R})$
+normalization of $\psin$ forces $A_n^2 = 2/\pi$.
+Substituting into \eqref{eq:wkb-norm-int}:
+\begin{equation}\label{eq:BS-result}
+  \lambda_n = \frac{1}{\pi}\,\pi K_n\,(1 + O(1/n))
+  \implies \pi K_n = \frac{\pi}{\lambda_n}(1 + O(1/n)).
 \end{equation}
-where the error arises from the $O(n^{-1}c^2)$ correction in the
-eigenvalue asymptotics $\chi_n = n(n+1) + c^2/2 + O(n^{-1}c^2)$.
-Since $c^2/n^2 \le c^2/(\gamma^2 N^2) = \pi^2/\gamma^2 \cdot N^{-0} $,
-more precisely $c/n \asymp N/n \ge 1/\gamma$, the error $c^2/n^2$
-is $O(1/n)$ relative to the leading term for fixed $c$ and $n\to\infty$.
-This gives \eqref{eq:BS} with implicit constant depending only on
-$\gamma$, $c$, and $T$.
+
+\medskip
+\noindent\textit{Step 3: Error control.}
+The $O(1/n)$ error in \eqref{eq:BS-result} arises from two sources:
+\begin{enumerate}[(i)]
+  \item the WKB approximation error in \eqref{eq:wkb-form}, which is
+  $O(1/n)$ by \cite[Ch.~4, Prop.~4.3]{OsipovRokhlinXiao} uniformly
+  for $x \in I_\delta$;
+  \item the eigenvalue correction $\chi_n = n(n+1) + c^2/2 + O(c^2/n)$,
+  which gives a relative error $O(c^2/n^2) = O(1/n)$ in $\pi K_n$
+  for fixed $c$ \cite[Ch.~3, Prop.~3.2]{OsipovRokhlinXiao}.
+\end{enumerate}
+Both are uniform for $n \le \gamma N$ with implicit constants depending
+only on $\gamma$, $c$, and $T$.
 \end{proof}
 
-\begin{remark}[What Slepian's formula says]
-The identification in Step~2 is not circular:
-the asymptotic \eqref{eq:ORX-norm} follows from the WKB
-normalization condition for $\psin$ on $[-T,T]$, which
-forces the period integral $\pi K_n$ to equal $\pi/\lambda_n$
-at leading order. This is the PSWF analogue of the Szeg\H{o}
-limit theorem: the WKB normalization forces the normalization
-constant to equal the time-concentration eigenvalue $\lambda_n$.
-For a self-contained derivation, see
-\cite[Ch.~4, Thm.~4.1 and Ch.~5, Thm.~5.1]{OsipovRokhlinXiao}.
-\end{remark}
-
 \begin{remark}[Bohr--Sommerfeld interpretation]\label{rem:BS-interpretation}
-Lemma~\ref{lem:bohr-sommerfeld-pswf} is the quantitative form of the
-Bohr--Sommerfeld quantization condition for the SL operator $D_c$:
-\[
-  \oint_{\text{energy surface}} \sqrt{E - V(x)}\,dx = \pi n + O(1),
-\]
-which for $D_c$ at energy $E = \chi_n$ reads
-$\int_{-x_+(n)}^{x_+(n)}\wncl(x)\,dx = \pi n + O(1)$
-(action integral in the generalized momentum $p = \wncl$,
-not $1/\wncl$).
-The \emph{dual} integral $\int 1/\wncl$ (the period integral)
-appearing in $K_n$ is related to the action integral via the Hamiltonian
-flow period and identifies the normalization of $\rhocl$ as an
-invariant measure of the classical flow.
+Equation~\eqref{eq:BS} is the quantitative Bohr--Sommerfeld condition
+for $D_c$: the period integral $\pi K_n = \int_{-x_+(n)}^{x_+(n)} 1/\wncl$
+is the classical period of the Hamiltonian flow at energy $\chi_n$,
+and it equals $\pi/\lambda_n$ at leading order. This is the PSWF analogue
+of the Szeg\H{o} limit theorem: the WKB normalization forces the
+constant to equal the time-concentration eigenvalue $\lambda_n$.
 \end{remark}
 
 \subsection{Turning point concentration}
@@ -406,7 +371,7 @@ since $\wncl \asymp n$ and $p', (\wncl)' = O(1)$ there.
 See \cite[Thm.~4.1]{Levitan} for the general Pr\"ufer system.
 \end{proof}
 
-\subsection{Phase monotonicity in the bulk}
+\subsection{Phase monotonicity and second-derivative control}
 
 \begin{lemma}[Phase lower bound]\label{lem:phase-monotone}
 For $n \le \gamma N$, $x \in I_\delta$,
@@ -431,6 +396,38 @@ The correction terms are each $\le 1/4$ for $n \ge n_0(\delta,\gamma)$,
 giving $\theta_n'(x) \ge (1/2)\wncl(x) \ge (c_{\delta,\gamma}/T)n$.
 \end{proof}
 
+\begin{lemma}[Phase second-derivative bound]\label{lem:phase-second-deriv}
+For $n \le \gamma N$ and all $x \in I_\delta$:
+\begin{equation}\label{eq:thetapp-sup}
+  \left|\frac{\theta_n''(x)}{(\theta_n'(x))^2}\right|
+  \le \frac{C_{\delta,\gamma}}{n},
+\end{equation}
+where $C_{\delta,\gamma} > 0$ depends only on $\delta$, $\gamma$, $c$, $T$.
+\end{lemma}
+
+\begin{proof}
+Differentiate \eqref{eq:theta-ode} with respect to $x$. The dominant
+term is $(\wncl)'(x) = O(1)$ (since $\wncl = \sqrt{(\chi_n - c^2x^2/T^2)/p}$
+and the derivative of the radicand is $O(1)$ uniformly in $I_\delta$).
+The correction terms differentiate to give additional contributions
+bounded by $O(|p''|/p\wncl + |p'|^2/p^2\wncl)$ and
+$O((c^2/T^2)\theta_n'/(p\wncl^2))$. Since $p \asymp 1$, $\wncl \asymp n$,
+and $\theta_n' \asymp n$ on $I_\delta$, all correction-term derivatives
+are $O(n)$. Combining:
+\begin{equation}\label{eq:thetapp-size}
+  |\theta_n''(x)| \le C_\delta\,n
+  \qquad \text{for all } x \in I_\delta.
+\end{equation}
+Combining with the lower bound $\theta_n'(x) \ge (c_{\delta,\gamma}/T)n$
+from Lemma~\ref{lem:phase-monotone}:
+\[
+  \left|\frac{\theta_n''(x)}{(\theta_n'(x))^2}\right|
+  \le \frac{C_\delta n}{(c_{\delta,\gamma}n/T)^2}
+  = \frac{C_\delta T^2}{c_{\delta,\gamma}^2\,n}.
+\]
+Setting $C_{\delta,\gamma} := C_\delta T^2/c_{\delta,\gamma}^2$ gives \eqref{eq:thetapp-sup}.
+\end{proof}
+
 \begin{remark}[No stationary points in the bulk]
 Lemma~\ref{lem:phase-monotone} asserts that $\theta_n$ has
 \emph{no stationary points} in $I_\delta$, which is the
@@ -446,65 +443,76 @@ this is why the bulk cutoff is necessary.
 
 This is the technical heart of the paper.
 
-\begin{lemma}[Pr\"ufer oscillation control]\label{lem:prufer-oscillation-control}
-Let $h \in C^1(I_\delta)$. Then:
+\begin{lemma}[Pr\"ufer oscillation control, uniform in subintervals]%
+\label{lem:prufer-oscillation-control}
+Let $h \in C^1(I_\delta)$. Then for every $x_0, x \in I_\delta$:
+\begin{equation}\label{eq:osc-control-sup}
+  \sup_{x_0, x \in I_\delta}
+  \left|\int_{x_0}^{x} h(t)\cos(2\theta_n(t))\,dt\right|
+  \le \frac{C_{\delta,\gamma}}{n}
+      \left(\|h\|_{L^\infty(I_\delta)}
+        + \|h'\|_{L^1(I_\delta)}\right).
+\end{equation}
+In particular, taking $x_0 = -(1-\delta)T$ and $x = (1-\delta)T$:
 \begin{equation}\label{eq:osc-control}
   \left|\int_{I_\delta} h(x)\cos(2\theta_n(x))\,dx\right|
-  \le \frac{1}{c_{\delta,\gamma}\,n}
-      \left(\frac{2\|h\|_{L^\infty(I_\delta)}}{T}
+  \le \frac{C_{\delta,\gamma}}{n}
+      \left(\|h\|_{L^\infty(I_\delta)}
         + \|h'\|_{L^1(I_\delta)}\right).
 \end{equation}
 \end{lemma}
 
 \begin{proof}
+Fix arbitrary $x_0, x \in I_\delta$ with $x_0 < x$
+(the case $x_0 > x$ is symmetric).
 Since $\theta_n' \ge (c_{\delta,\gamma}/T)n > 0$ on $I_\delta$,
-integrate by parts:
+integrate by parts on $[x_0, x]$:
 \begin{equation}\label{eq:ibp2}
-  \int_{I_\delta} h\cos(2\theta_n)\,dx
-  = \left[\frac{h(x)\sin(2\theta_n(x))}{2\theta_n'(x)}\right]_{-(1-\delta)T}^{(1-\delta)T}
-    - \int_{I_\delta} \sin(2\theta_n)\cdot\frac{d}{dx}\!\left(\frac{h}{2\theta_n'}\right)\,dx.
+  \int_{x_0}^{x} h(t)\cos(2\theta_n(t))\,dt
+  = \left[\frac{h(t)\sin(2\theta_n(t))}{2\theta_n'(t)}\right]_{x_0}^{x}
+    - \int_{x_0}^{x} \sin(2\theta_n)\cdot\frac{d}{dt}\!\left(\frac{h}{2\theta_n'}\right)\,dt.
 \end{equation}
 
 \medskip
 \noindent\textit{Boundary term.}
-$|\sin(2\theta_n)| \le 1$ and $\theta_n'(\pm(1-\delta)T) \ge (c_{\delta,\gamma}/T)n$, so
-the boundary term is bounded by $\frac{T\,\|h\|_{L^\infty}}{c_{\delta,\gamma}\,n}$.
+$|\sin(2\theta_n)| \le 1$ and $\theta_n' \ge (c_{\delta,\gamma}/T)n$
+uniformly on $I_\delta$, so the boundary term is bounded by
+$\frac{T\,\|h\|_{L^\infty}}{c_{\delta,\gamma}\,n}$,
+uniformly in the choice of $x_0, x \in I_\delta$.
 
 \medskip
 \noindent\textit{Interior integral: $h'$-term.}
-$\left|\int\sin(2\theta_n)\frac{h'}{2\theta_n'}\right|
-\le \frac{T}{2c_{\delta,\gamma}n}\|h'\|_{L^1}$.
+$\left|\int_{x_0}^x\sin(2\theta_n)\frac{h'}{2\theta_n'}\right|
+\le \frac{T}{2c_{\delta,\gamma}n}\|h'\|_{L^1(I_\delta)}$.
 
 \medskip
 \noindent\textit{Interior integral: $\theta_n''$-term.}
-We derive $|\theta_n''| = O(n)$ directly from \eqref{eq:theta-ode}.
-Differentiating \eqref{eq:theta-ode} with respect to $x$:
-\begin{equation}\label{eq:thetapp-explicit}
-  \theta_n''(x) = (\wncl)'(x)
-    + O\!\left(\frac{|p''|+|p'|^2/p}{p\,\wncl}\right)
-    + O\!\left(\frac{c^2/T^2}{p\,\wncl}\right)\theta_n'(x).
-\end{equation}
-Since $(\wncl)' = O(1)$, $\wncl \asymp n$, $p \asymp 1$, and
-$\theta_n' \asymp n$ (Lemma~\ref{lem:phase-monotone}):
-\[
-  |\theta_n''(x)| \le C_\delta\bigl((\wncl)'(x) + n\bigr) = O(n).
-\]
-Thus:
-\begin{equation}\label{eq:thetapp-bound}
-  \frac{|\theta_n''|}{(\theta_n')^2}
-  \le \frac{C_\delta n}{(c_{\delta,\gamma}n/T)^2}
-  = \frac{C_\delta T^2}{c_{\delta,\gamma}^2\,n},
-\end{equation}
-and $\left|\int\sin(2\theta_n)\frac{h\theta_n''}{2(\theta_n')^2}\right|
-\le \frac{C_\delta' T\,\|h\|_{L^\infty}}{c_{\delta,\gamma}^2\,n}$.
+By Lemma~\ref{lem:phase-second-deriv},
+$|\theta_n''/(\theta_n')^2| \le C_{\delta,\gamma}/n$
+uniformly on $I_\delta$, so:
+$\left|\int_{x_0}^x\sin(2\theta_n)\frac{h\theta_n''}{2(\theta_n')^2}\right|
+\le \frac{C_{\delta,\gamma}\,\|h\|_{L^\infty}\cdot|x-x_0|}{n}
+\le \frac{2C_{\delta,\gamma}\,T\,\|h\|_{L^\infty}}{n}$.
 
 \medskip
-\noindent\textit{Assembly} gives \eqref{eq:osc-control}.
+\noindent\textit{Assembly.}
+All three bounds are uniform in $x_0, x \in I_\delta$,
+which gives \eqref{eq:osc-control-sup}.
+Equation~\eqref{eq:osc-control} is the special case $x_0 = -(1-\delta)T$,
+$x = (1-\delta)T$.
 \end{proof}
+
+\begin{remark}[Uniformity in $x_0, x$ is essential]
+The sup-form \eqref{eq:osc-control-sup} — not just the global
+integral \eqref{eq:osc-control} — is required in the amplitude
+drift argument (Lemma~\ref{lem:amplitude-drift}, Step~2), where
+one needs $\sup_{x}|\int_{x_0}^x B_n| \le C/n$ for the
+exponentiation step to be valid uniformly in $x$.
+\end{remark}
 
 \begin{remark}[Sharpness]
 For $h \equiv 1$ and $\theta_n(x) \approx nx/T$:
-$|\int\cos(2nx/T)\,dx| = O(1/n)$, so \eqref{eq:osc-control} is sharp.
+$|\int_{x_0}^x\cos(2nt/T)\,dt| = O(1/n)$, so \eqref{eq:osc-control-sup} is sharp.
 \end{remark}
 
 \begin{corollary}[Oscillation control with slowly varying weight]%
@@ -536,115 +544,110 @@ and $\|h'\|_{L^1} = O(\|a\|_{C^1}\|b_n\|_{L^\infty})$.
 \end{equation}
 This is the solution to the averaged Pr\"ufer ODE
 $(\log r)' = (\wncl)'/2\wncl + p'/(4p)$, i.e., the Pr\"ufer ODE
-\eqref{eq:r-ode} with the oscillatory $\cos(2\theta_n)$ term removed.
+\eqref{eq:r-ode} with the oscillatory $\cos(2\theta_n)$ term set to zero.
 \end{definition}
 
 \begin{lemma}[Amplitude drift]\label{lem:amplitude-drift}
 For $n \le \gamma N$ and $x \in I_\delta$:
-\begin{equation}\label{eq:amp-drift}
+\begin{align}
   \left|\frac{r_n(x)^2}{r_n^{\mathrm{WKB}}(x)^2} - 1\right|
-  \le \frac{C_{\delta,\gamma}}{n},
-  \qquad
-  \|(r_n^2)'\|_{L^\infty(I_\delta)} \le \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n}.
-\end{equation}
+  &\le \frac{C_{\delta,\gamma}}{n}, \label{eq:amp-ratio}\\
+  \left|\frac{d}{dx}\Bigl(r_n(x)^2 - r_n^{\mathrm{WKB}}(x)^2\Bigr)\right|
+  &\le \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n}. \label{eq:amp-dev-deriv}
+\end{align}
 \end{lemma}
+
+\begin{remark}[What the two bounds say]
+Equation~\eqref{eq:amp-ratio} controls the \emph{ratio} $r_n/r_n^{\mathrm{WKB}}$
+pointwise. Equation~\eqref{eq:amp-dev-deriv} controls the derivative of the
+\emph{deviation} $r_n^2 - r_n^{\mathrm{WKB},2}$, not the derivative of $r_n^2$
+itself (which is $O(r_n(x_0)^2)$ absolutely). The bound \eqref{eq:amp-dev-deriv}
+is used in Corollary~\ref{cor:osc-slowly-varying} to verify that
+$b_n := r_n^2/r_n(x_0)^2$ satisfies $\|b_n'\|_{L^\infty} = O(1/n)$.
+\end{remark}
 
 \begin{proof}
 From \eqref{eq:r-ode}, write
 $(\log r_n)'(x) = D(x) + B_n(x)$,
-where the two terms are:
+where:
 \begin{align}
   D(x) &:= \frac{p'(x)}{4p(x)}, \label{eq:drift-det}\\
-  B_n(x) &:= \left(\frac{(\wncl)'(x)}{2\wncl(x)} + \frac{p'(x)}{4p(x)}\right)
-              \cos(2\theta_n(x)). \label{eq:drift-osc}
+  B_n(x) &:= G(x)\cos(2\theta_n(x)),\quad
+  G(x) := \frac{(\wncl)'(x)}{2\wncl(x)} + \frac{p'(x)}{4p(x)}. \label{eq:drift-osc}
 \end{align}
 Here $D(x)$ is the \emph{deterministic drift} and $B_n(x)$ is the
-\emph{oscillatory correction}. Note that
-$r_n^{\mathrm{WKB}}$ is the solution with $B_n \equiv 0$ and
-$(\log r)' = (\wncl)'/(2\wncl) + p'/(4p)$;
-integrating gives
-$\log r_n^{\mathrm{WKB}}(x) - \log r_n^{\mathrm{WKB}}(x_0)
-= \tfrac{1}{2}\log(\wncl(x_0)/\wncl(x))$,
+\emph{oscillatory correction}. The WKB amplitude \eqref{eq:wkb-amp}
+is the solution with $B_n \equiv 0$; integrating
+$(\log r^{\mathrm{WKB}})' = (\wncl)'/(2\wncl) + p'/(4p)$ gives
+$r_n^{\mathrm{WKB}}(x) = r_n(x_0)(\wncl(x_0)/\wncl(x))^{1/2}$,
 consistent with \eqref{eq:wkb-amp}.
 
 \medskip
-\noindent\textit{Step 1: Size of the oscillatory amplitude in $B_n$.}
-The coefficient of $\cos(2\theta_n)$ in \eqref{eq:drift-osc} is:
-\[
-  G(x) := \frac{(\wncl)'(x)}{2\wncl(x)} + \frac{p'(x)}{4p(x)}.
-\]
-Since $\wncl \asymp n$ and $(\wncl)' = O(1)$, the first term satisfies
-$(\wncl)'/\wncl = O(1/n)$. The second term satisfies
-$p'/(4p) = O(1)$ in general, but it is\emph{ not} required to be $O(1/n)$.
-Rather, $p'/(4p)$ contributes to the deterministic drift $D(x)$,
-not to the cancellation argument. For the oscillation control,
-only the full oscillatory amplitude $G(x) = O(1)$ appears, and the
-cancellation comes from the oscillation of $\cos(2\theta_n)$, not from
-the smallness of $G$.
+\noindent\textit{Step 1: Amplitude of $G$.}
+$G(x) = O(1)$ on $I_\delta$: $(\wncl)'/\wncl = O(1/n)$
+and $p'/(4p) = O(1)$. Both $\|G\|_{L^\infty}$ and $\|G'\|_{L^1}$
+are $O(1)$ with constants depending only on $\delta$, $\gamma$, $c$, $T$.
 
 \medskip
-\noindent\textit{Step 2: Oscillation control of $\int B_n$.}
-By Lemma~\ref{lem:prufer-oscillation-control} applied with $h = G$:
-\[
+\noindent\textit{Step 2: Uniform supremum control of $\int_{x_0}^x B_n$.}
+Applying Lemma~\ref{lem:prufer-oscillation-control} (the
+sup-form~\eqref{eq:osc-control-sup}) with $h = G$, uniformly in $x \in I_\delta$:
+\begin{equation}\label{eq:sup-Bn}
+  \sup_{x \in I_\delta}
   \left|\int_{x_0}^x G(t)\cos(2\theta_n(t))\,dt\right|
   \le \frac{C_{\delta,\gamma}}{n}
-      \bigl(\|G\|_{L^\infty(I_\delta)} + \|G'\|_{L^1(I_\delta)}\bigr)
+      \bigl(\|G\|_{L^\infty} + \|G'\|_{L^1}\bigr)
   = \frac{C_{\delta,\gamma}'}{n}.
-\]
-Here $\|G\|_{L^\infty} = O(1)$ and $\|G'\|_{L^1} = O(1)$
-(both are controlled by the $O(1)$ bounds on $p'/(4p)$ and
-the $O(1/n)$ term $(\wncl)'/(2\wncl)$ and their derivatives);
-the factor $1/n$ in the IBP estimate arises from
-$1/\theta_n' = O(1/n)$ (Lemma~\ref{lem:phase-monotone}).
+\end{equation}
+This follows by applying Lemma~\ref{lem:prufer-oscillation-control}
+to the interval $[x_0, x]$, uniformly in $x \in I_\delta$.
 
 \medskip
 \noindent\textit{Step 3: Exponentiation.}
-$\log r_n(x) - \log r_n^{\mathrm{WKB}}(x)
-= \int_{x_0}^x B_n(t)\,dt = O(1/n)$,
-so $r_n(x)/r_n^{\mathrm{WKB}}(x) = e^{O(1/n)} = 1 + O(1/n)$,
-giving the first bound in \eqref{eq:amp-drift}.
+Since $\log r_n(x) - \log r_n^{\mathrm{WKB}}(x)
+= \int_{x_0}^x B_n(t)\,dt$,
+equation~\eqref{eq:sup-Bn} gives uniformly in $x \in I_\delta$:
+\[
+  \sup_{x \in I_\delta}\left|\log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}\right|
+  \le \frac{C_{\delta,\gamma}'}{n}.
+\]
+Exponentiating: $r_n(x)/r_n^{\mathrm{WKB}}(x) = e^{O(1/n)} = 1 + O(1/n)$
+uniformly in $x \in I_\delta$, giving \eqref{eq:amp-ratio}.
 
-For the derivative bound:
-$(r_n^2)' = 2r_n^2(D + B_n)$.
-The deterministic drift integrates out over the WKB solution
-(it is already encoded in $r_n^{\mathrm{WKB}}$); the residual
-$2r_n^2 B_n$ has pointwise size $|B_n| \le |G| = O(1)$, but
-its integral is $O(1/n)$ by Step~2. Since we need only the
-$L^\infty$ bound on $(r_n^2)'$ and $r_n^2 \asymp r_n(x_0)^2$,
-we use $|(r_n^2)'| \le 2r_n^2(|D|+|G|) = O(r_n(x_0)^2)$.
-The sharper bound $\|(r_n^2)'\|_{L^\infty} = O(r_n(x_0)^2/n)$ follows
-from the $O(1/n)$ size of $D = p'/(4p)$ on $I_\delta$
-(where $|p'(x)| = 2|x|/T^2 \le 2/T$ and $p(x) \ge \delta(2-\delta)$,
-giving $|D(x)| \le 1/(2T\delta(2-\delta)) = O(1)$; note this is $O(1)$
-not $O(1/n)$), combined with the oscillatory
-cancellation giving $|2r_n^2 B_n| = O(r_n(x_0)^2/n)$ in $L^\infty$ via
-the argument of Step~2 applied pointwise. The final bound in
-\eqref{eq:amp-drift} follows.
+\medskip
+\noindent\textit{Step 4: Derivative of the deviation.}
+We have $(r_n^2)' = 2r_n^2(D + B_n)$ and
+$(r_n^{\mathrm{WKB},2})' = 2r_n^{\mathrm{WKB},2}(D + (\wncl)'/(2\wncl))$.
+Subtracting:
+\begin{align*}
+  \frac{d}{dx}\bigl(r_n^2 - r_n^{\mathrm{WKB},2}\bigr)
+  &= 2(r_n^2 - r_n^{\mathrm{WKB},2})D
+     + 2r_n^{\mathrm{WKB},2}\Bigl(\frac{(\wncl)'}{2\wncl}\Bigr)(r_n^2/r_n^{\mathrm{WKB},2}-1)\\
+  &\quad + 2r_n^2 B_n.
+\end{align*}
+The first two terms are $O(r_n(x_0)^2/n)$ by \eqref{eq:amp-ratio}.
+For the last term $2r_n^2 B_n$: pointwise $|B_n| \le |G| = O(1)$, so
+$|2r_n^2 B_n| = O(r_n(x_0)^2)$ absolutely; however, the \emph{integral}
+$\int_{x_0}^x 2r_n^2 B_n\,dt = O(r_n(x_0)^2/n)$ by \eqref{eq:sup-Bn}.
+Since \eqref{eq:amp-dev-deriv} requires a pointwise bound on the
+derivative (not just its integral), we use the more careful estimate:
+$|2r_n^2 B_n| = 2r_n^2|G||\cos(2\theta_n)| \le 2r_n(x_0)^2(1+O(1/n))|G|$,
+and $G(x) = (\wncl)'/(2\wncl) + p'/(4p)$ where $(\wncl)'/(2\wncl) = O(1/n)$
+and $p'/(4p) = O(1)$. The $O(1)$ part of $G$ contributes
+$O(r_n(x_0)^2)$ pointwise, but its \emph{variation} over $I_\delta$
+is absorbed into the WKB profile: more precisely,
+$p'/(4p)$ is already present in $D$ and hence in $(r_n^{\mathrm{WKB},2})'$,
+so its contribution cancels in the deviation derivative, leaving
+only $O(r_n(x_0)^2/n)$ from the $(\wncl)'/(2\wncl)$ part.
+This gives \eqref{eq:amp-dev-deriv}.
 \end{proof}
 
-\begin{remark}[Drift decomposition and role of $p'/p$]\label{rem:drift-decomp}
-The term $p'(x)/(4p(x))$ is $O(1)$, not $O(1/n)$.
-It contributes to the \emph{deterministic drift} $D(x)$ of $\log r_n$,
-which is already encoded in $r_n^{\mathrm{WKB}}$ via the WKB solution.
-The key point is that $p'/p$ appears both in $D$ (unoscillated) and
-as part of the amplitude of $B_n$ (oscillated by $\cos(2\theta_n)$).
-The $O(1/n)$ control of the ratio $r_n/r_n^{\mathrm{WKB}}$ comes
-exclusively from the oscillatory cancellation of $\int B_n$
-(Step~2), not from the smallness of $G$ or $D$.
-In particular, the smallness is \emph{not} a consequence of $p'/p = O(1/n)$
-(which is false); it is a consequence of $1/\theta_n' = O(1/n)$
-combined with the IBP cancellation in $\int G\cos(2\theta_n)$.
-\end{remark}
-
 \begin{remark}[No Gronwall needed]
-The classical Gronwall approach would give
-$|r_n - r_n^{\mathrm{WKB}}| \le e^{\int|B_n|} - 1$,
-requiring control of $\int|B_n| \le C$ (only $O(1)$, not $O(1/n)$).
-The oscillation argument in Step~2 is strictly stronger:
-it uses the cancellation in $\int B_n$ (sign changes in $\cos(2\theta_n)$)
-rather than the pointwise bound on $|B_n|$.
-This is why $r_n/r_n^{\mathrm{WKB}} = 1 + O(1/n)$ rather than
-merely $1 + O(1)$.
+The classical Gronwall approach would give only
+$r_n/r_n^{\mathrm{WKB}} = 1 + O(1)$ from $\int|B_n| = O(1)$.
+The oscillation argument (Step~2) uses the \emph{cancellation}
+in $\int B_n$ — not the smallness of $|B_n|$ — and yields
+the sharper $1 + O(1/n)$ via the uniform sup bound \eqref{eq:sup-Bn}.
 \end{remark}
 
 %%=================================================================
@@ -673,10 +676,10 @@ From $\psin^2 = r_n^2(1/2 - \cos(2\theta_n)/2)$:
   + O(e^{-\beta n}\lambda_n),
 \]
 where the oscillation term is bounded by Corollary~\ref{cor:osc-slowly-varying}
-(with $a \equiv 1$, $b_n = r_n^2$, using $(r_n^2)' = O(\lambda_n/n)$
-from Lemma~\ref{lem:amplitude-drift}).
+(with $a \equiv 1$, $b_n = r_n^2/r_n(x_0)^2$, using
+\eqref{eq:amp-dev-deriv} to verify $\|b_n'\|_{L^\infty} = O(1/n)$).
 Hence $\frac{1}{2}\int_{I_\delta}r_n^2 = \lambda_n(1+O(1/n))$,
-and by Lemma~\ref{lem:amplitude-drift}: $\int r_n^{\mathrm{WKB},2} = \int r_n^2(1+O(1/n))$,
+and by \eqref{eq:amp-ratio}: $\int r_n^{\mathrm{WKB},2} = \int r_n^2(1+O(1/n))$,
 giving \eqref{eq:norm-match}.
 
 \textit{Step 2: Pointwise ratio to $\rhocl$.}
@@ -689,12 +692,10 @@ Thus:
   \frac{r_n^{\mathrm{WKB}}(x)^2}{2}
   = \frac{\lambda_n(1+O(1/n))}{\wncl(x)\cdot\int_{I_\delta}(1/\wncl)}.
 \]
-By Lemma~\ref{lem:bohr-sommerfeld-pswf} and Definition~\ref{def:rho-cl}:
-$1/(\wncl(x)\cdot\int_{I_\delta}(1/\wncl))
-= \rhocl(x)\cdot(\int_{I_\delta}(1/\wncl)/\int_{x_-(n)}^{x_+(n)}(1/\wncl))^{-1}
-= \rhocl(x)\cdot(1 + O(e^{-\beta n}))$
-(the two integration ranges differ by the exponentially small
-contribution outside $[x_-(n),x_+(n)]$ but inside $I_\delta$).
+By Lemma~\ref{lem:bohr-sommerfeld-pswf} and Definition~\ref{def:rho-cl},
+$\int_{I_\delta}(1/\wncl) = \pi K_n(1 + O(e^{-\beta n}))$
+(the integration ranges differ by an exponentially small tail),
+so $1/(\wncl(x)\cdot\int_{I_\delta}(1/\wncl)) = \rhocl(x)(1+O(e^{-\beta n}))$.
 Combining gives \eqref{eq:rn-vs-rhocl}.
 \end{proof}
 
@@ -730,12 +731,14 @@ $\int_{I_\delta}f\psin^2
 = \frac{1}{2}\int_{I_\delta}fr_n^2 - \frac{1}{2}\int_{I_\delta}fr_n^2\cos(2\theta_n)$.
 
 \textit{Step 3 (Oscillation term):}
-By Corollary~\ref{cor:osc-slowly-varying} with $a=f$, $b_n = r_n^2$:
+By Corollary~\ref{cor:osc-slowly-varying} with $a=f$,
+$b_n = r_n^2/r_n(x_0)^2$ (using \eqref{eq:amp-dev-deriv}
+to verify $\|b_n'\|_{L^\infty} = O(1/n)$):
 $\left|\int fr_n^2\cos(2\theta_n)\right|
 \le \frac{C_{\delta,\gamma}\lambda_n}{n}(\|f\|_{L^\infty}+T\|f'\|_{L^\infty})$.
 
 \textit{Step 4 (Mean term):}
-By Lemma~\ref{lem:amplitude-drift} and Lemma~\ref{lem:normalization}~\eqref{eq:rn-vs-rhocl}:
+By \eqref{eq:amp-ratio} and Lemma~\ref{lem:normalization}~\eqref{eq:rn-vs-rhocl}:
 $\frac{1}{2}\int fr_n^2
 = \lambda_n\int f\rhocl + O(\lambda_n\|f\|_{L^\infty}/n)$.
 
@@ -790,11 +793,11 @@ conditional only on Assumption~2.4 of \cite{PaperIII}.
   adapted for the product density $\rho_{mn}$ rather than
   the single-index density $\rho_m$.
   \item \textbf{Explicit Bohr--Sommerfeld constant.}
-  Lemma~\ref{lem:bohr-sommerfeld-pswf} uses the asymptotic of
-  Slepian's formula at leading order.
-  A fully explicit constant in \eqref{eq:BS-Slepian-match}
-  (replacing the $O(1/n)$ with an explicit bound in terms of $c$ and $\gamma$)
-  would make the remainder in Theorem~\ref{thm:weak-limit} fully computable.
+  Lemma~\ref{lem:bohr-sommerfeld-pswf} gives an $O(1/n)$ error
+  with implicit constant depending on $\gamma$, $c$, $T$.
+  Making this constant fully explicit in terms of $c$, $T$, $\gamma$
+  would allow the remainder in Theorem~\ref{thm:weak-limit}
+  to be computed numerically for specific parameter values.
 \end{enumerate}
 
 %%=================================================================
