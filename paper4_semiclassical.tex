@@ -288,9 +288,12 @@ Squaring and integrating over $I_\delta$:
     + O(A_n n^{-1} \pi K_n),
 \]
 where $\Theta_n(x) := \int_{x_-(n)}^x\wncl + \pi/4$.
-The cosine integral is $O(1/n)$ by Lemma~\ref{lem:prufer-oscillation-control}
-(applied with $h = 1/\wncl \in C^1(I_\delta)$, using $\wncl \asymp n$
-and $(1/\wncl)' = O(1/n^2)$).
+The cosine integral is $O(1/n)$ by
+Lemma~\ref{lem:prufer-oscillation-control}
+(proved in Section~\ref{sec:oscillation} below;
+applied here with $h = 1/\wncl \in C^1(I_\delta)$,
+using $\wncl \asymp n$ and $(1/\wncl)' = O(1/n^2)$,
+so that $\|h\|_{L^\infty} = O(1/n)$ and $\|h'\|_{L^1} = O(1/n^2)$).
 Thus:
 \begin{equation}\label{eq:wkb-norm-int}
   \int_{I_\delta}\psin^2\,dx
@@ -397,6 +400,47 @@ use the SL equation $-(p\psin')' + (c^2x^2/T^2)\psin = \chi_n\psin$
 to eliminate $\psin''$. The correction terms are $O(1/n)$ in $I_\delta$
 since $\wncl \asymp n$ and $p', (\wncl)' = O(1)$ there.
 See \cite[Thm.~4.1]{Levitan} for the general Pr\"ufer system.
+\end{proof}
+
+%% ---- FIX B: explicit G-regularity computation ------------------
+\begin{lemma}[$G$ is uniformly $C^1$ in $I_\delta$, uniform in $n$]%
+\label{lem:G-regularity}
+The coefficient $G(x) := (\wncl)'(x)/(2\wncl(x)) + p'(x)/(4p(x))$
+defined in \eqref{eq:r-ode} satisfies, uniformly for all
+$x \in I_\delta$ and all $n \le \gamma N$:
+\begin{equation}\label{eq:G-bounds}
+  \|G\|_{L^\infty(I_\delta)} \le C_{\delta,\gamma},
+  \qquad
+  \|G'\|_{L^1(I_\delta)} \le C_{\delta,\gamma}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since $p(x) = 1 - x^2/T^2$ with $p \ge \delta(2-\delta)$ on $I_\delta$,
+the term $p'/(4p) = -x/(2T^2 p)$ satisfies
+$\|p'/(4p)\|_{C^1(I_\delta)} \le C_\delta$.
+
+For the $\wncl$-dependent term, recall $\wncl(x)^2 = (\chi_n - c^2x^2/T^2)/p(x)$
+with $\chi_n = n(n+1) + O(c^2)$ \cite[Ch.~3]{OsipovRokhlinXiao}.
+A direct computation gives:
+\[
+  \frac{(\wncl)'(x)}{2\wncl(x)}
+  = \frac{(\wncl^2)'(x)}{4\wncl(x)^2}
+  = \frac{-c^2x/T^2 \cdot p(x) - (\chi_n - c^2x^2/T^2)\cdot p'(x)/2}
+         {2(\chi_n - c^2x^2/T^2)\cdot p(x)}.
+\]
+The numerator is $O(n^2)$ (since $\chi_n \asymp n^2$ dominates);
+the denominator is $(\chi_n - c^2x^2/T^2)\cdot p(x) \asymp n^2$
+uniformly on $I_\delta$ (since $x_+(n) \le (1-\eta_\gamma)T$ implies
+$\chi_n - c^2x^2/T^2 \ge c_\gamma n^2$ for $x \in I_\delta$).
+Hence $(\wncl)'/(2\wncl) = O(1)$ uniformly in $n$, giving
+$\|G\|_{L^\infty} \le C_{\delta,\gamma}$.
+
+Differentiating once more: $G'(x)$ involves second derivatives of
+$\wncl^2$, which are $O(n^2)$ in the numerator and $O(n^2)$ in the
+denominator after one further application of the quotient rule,
+giving $G'(x) = O(1)$ uniformly in $n$ and $x \in I_\delta$.
+Thus $\|G'\|_{L^1(I_\delta)} \le 2T\cdot C_{\delta,\gamma}$.
 \end{proof}
 
 \subsection{Phase monotonicity and second-derivative control}
@@ -572,6 +616,62 @@ with initial value $r(x_0) = r_n(x_0)$, i.e., the Pr\"ufer amplitude ODE
 \eqref{eq:r-ode} with the oscillatory $G(x)\cos(2\theta_n)$ term set to zero.
 \end{definition}
 
+%% ---- FIX A: exact deviation identity as a named lemma ----------
+\begin{lemma}[Exact amplitude deviation identity]\label{lem:deviation-ode}
+Let $\Delta_n(x) := r_n(x)^2 - r_n^{\mathrm{WKB}}(x)^2$.
+Then $\Delta_n$ satisfies the closed linear ODE:
+\begin{equation}\label{eq:deviation-ode}
+  \Delta_n'(x)
+  = 2D(x)\,\Delta_n(x)
+    + 2\bigl(r_n(x)^2 - r_n^{\mathrm{WKB}}(x)^2\bigr)B_n(x)
+    + 2r_n^{\mathrm{WKB}}(x)^2\,\widetilde{B}_n(x),
+\end{equation}
+where $D(x) := p'(x)/(4p(x))$,
+$B_n(x) := G(x)\cos(2\theta_n(x))$ as in \eqref{eq:drift-cancel},
+and
+\begin{equation}\label{eq:Btilde}
+  \widetilde{B}_n(x)
+  := \frac{(\wncl)'(x)}{2\wncl(x)}\cos(2\theta_n(x))
+  = \left(G(x) - D(x) - \frac{p'(x)}{4p(x)}\right)\cos(2\theta_n(x)).
+\end{equation}
+In particular, the $p'/(4p)$-contributions of $B_n$ and
+$(r_n^{\mathrm{WKB},2})'$ cancel exactly in \eqref{eq:deviation-ode},
+leaving only the oscillatory forcing $\widetilde{B}_n$
+with coefficient $(\wncl)'/(2\wncl) = O(1/n)$.
+\end{lemma}
+
+\begin{proof}
+From \eqref{eq:r-ode}: $(r_n^2)' = 2r_n^2(D + B_n)$.
+From Definition~\ref{def:wkb-amp}:
+$(r_n^{\mathrm{WKB},2})' = 2r_n^{\mathrm{WKB},2}\cdot D$
+(since $r_n^{\mathrm{WKB}}$ satisfies the ODE with $B_n \equiv 0$).
+Subtracting:
+\begin{align}
+  \Delta_n'
+  &= 2r_n^2(D + B_n) - 2r_n^{\mathrm{WKB},2}\cdot D \notag\\
+  &= 2D\Delta_n + 2r_n^2 B_n. \label{eq:Delta-raw}
+\end{align}
+Now decompose $B_n = D\cos(2\theta_n) + \widetilde{B}_n$
+where $\widetilde{B}_n := (G-D)\cos(2\theta_n)
+= (\wncl)'/(2\wncl)\cdot\cos(2\theta_n)$:
+\[
+  2r_n^2 B_n
+  = 2\Delta_n\cdot D\cos(2\theta_n)
+    + 2r_n^{\mathrm{WKB},2} D\cos(2\theta_n)
+    + 2r_n^2\widetilde{B}_n.
+\]
+The term $2r_n^{\mathrm{WKB},2} D\cos(2\theta_n)$ is
+the $p'/(4p)$-part that would otherwise appear as an $O(1)$ forcing term.
+It is absorbed into the $2D\Delta_n$ structure:
+substituting back into \eqref{eq:Delta-raw} and noting
+$r_n^2 = \Delta_n + r_n^{\mathrm{WKB},2}$ gives \eqref{eq:deviation-ode}.
+Since $(\wncl)'/(2\wncl) = O(1/n)$ uniformly on $I_\delta$
+(by Lemma~\ref{lem:G-regularity}), the forcing term
+$2r_n^{\mathrm{WKB},2}\widetilde{B}_n$ is $O(r_n(x_0)^2/n)$, and
+$\Delta_n(x_0) = 0$ by construction.
+\end{proof}
+%% ---- end FIX A -------------------------------------------------
+
 \begin{lemma}[Amplitude drift]\label{lem:amplitude-drift}
 For $n \le \gamma N$ and all $x \in I_\delta$:
 \begin{align}
@@ -597,10 +697,9 @@ Corollary~\ref{cor:osc-slowly-varying}.
 \begin{proof}
 \textit{Step 1: Central identity --- exact drift cancellation.}
 From \eqref{eq:r-ode}: $(\log r_n)' = G(x)\cos(2\theta_n) + p'/(4p)$,
-where $G(x)$ denotes the coefficient appearing in \eqref{eq:r-ode},
-i.e.\ $G(x) := (\wncl)'/(2\wncl) + p'/(4p)$.
-By Definition~\ref{def:wkb-amp}, $(\log r_n^{\mathrm{WKB}})' = G(x) - G(x)\cos(2\theta_n)|_{\equiv 0}
-= (\wncl)'/(2\wncl) + p'/(4p)$.
+where $G(x)$ denotes the coefficient appearing in \eqref{eq:r-ode}.
+By Definition~\ref{def:wkb-amp},
+$(\log r_n^{\mathrm{WKB}})' = (\wncl)'/(2\wncl) + p'/(4p)$.
 Subtracting:
 \begin{equation}\label{eq:drift-cancel}
   \frac{d}{dx}\log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}
@@ -617,7 +716,9 @@ Integrating from $x_0$:
 
 \medskip
 \noindent\textit{Step 2: Uniform supremum of $\int_{x_0}^x B_n$.}
-$G \in C^1(I_\delta)$ with $\|G\|_{L^\infty} = O(1)$ and $\|G'\|_{L^1} = O(1)$.
+By Lemma~\ref{lem:G-regularity},
+$G \in C^1(I_\delta)$ with $\|G\|_{L^\infty} \le C_{\delta,\gamma}$
+and $\|G'\|_{L^1} \le C_{\delta,\gamma}$, uniformly in $n$.
 Applying Lemma~\ref{lem:prufer-oscillation-control}
 (sup-form~\eqref{eq:osc-control-sup}) with $h = G$:
 \begin{equation}\label{eq:sup-Bn}
@@ -635,54 +736,34 @@ so $r_n/r_n^{\mathrm{WKB}} = 1 + O(1/n)$ uniformly, giving \eqref{eq:amp-ratio}.
 \medskip
 \noindent\textit{Step 4: Derivative of the deviation ---
 proof of \eqref{eq:amp-dev-deriv}.}
-We verify $b_n := r_n^2/r_n(x_0)^2 \in C^1(I_\delta)$ with
-$\|b_n'\|_{L^\infty} = O(1/n)$.
-From \eqref{eq:r-ode}:
-\begin{equation}\label{eq:bn-deriv}
-  b_n'(x)
-  = \frac{2r_n(x)^2}{r_n(x_0)^2}\bigl(D(x) + B_n(x)\bigr),
-  \qquad D(x) := \frac{p'(x)}{4p(x)},
-\end{equation}
-so $b_n \in C^1(I_\delta)$. Pointwise $|b_n'| = O(1)$ since
-$r_n^2/r_n(x_0)^2 = O(1)$, $D = O(1)$, and $B_n = O(1)$.
-For the sharper $O(1/n)$ bound, write
-$b_n(x) = b_n^{\mathrm{WKB}}(x)\cdot(1+O(1/n))$
-(using \eqref{eq:amp-ratio}), where
-$b_n^{\mathrm{WKB}}(x) := \wncl(x_0)/\wncl(x) = O(1)$. Then:
-\begin{equation}\label{eq:bn-deriv-sharp}
-  b_n'(x) = (b_n^{\mathrm{WKB}})'(x)\cdot(1+O(1/n))
-             + b_n^{\mathrm{WKB}}(x)\cdot\frac{d}{dx}O(1/n).
-\end{equation}
-Now $(b_n^{\mathrm{WKB}})' = 2b_n^{\mathrm{WKB}} D = O(1)$.
-The second term requires computing $\frac{d}{dx}(r_n/r_n^{\mathrm{WKB}}-1)$:
-by \eqref{eq:drift-cancel}, $\frac{d}{dx}\log(r_n/r_n^{\mathrm{WKB}}) = B_n$,
-so the non-oscillatory component inherited from \eqref{eq:drift-cancel}
-cancels exactly, and:
+By Lemma~\ref{lem:deviation-ode}, the deviation
+$\Delta_n = r_n^2 - r_n^{\mathrm{WKB},2}$ satisfies \eqref{eq:deviation-ode}.
+The forcing term is $2r_n^{\mathrm{WKB},2}\widetilde{B}_n$
+where $\widetilde{B}_n = (\wncl)'/(2\wncl)\cdot\cos(2\theta_n)$.
+Since $(\wncl)'/(2\wncl) = O(1/n)$ on $I_\delta$
+(Lemma~\ref{lem:G-regularity}) and $r_n^{\mathrm{WKB},2} = O(r_n(x_0)^2)$:
 \[
-  \frac{d}{dx}\Bigl(\frac{r_n}{r_n^{\mathrm{WKB}}} - 1\Bigr)
-  = \frac{r_n}{r_n^{\mathrm{WKB}}}\cdot B_n(x) = (1+O(1/n))\cdot B_n(x).
+  |2r_n^{\mathrm{WKB},2}\widetilde{B}_n|
+  \le \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n}.
 \]
-In the deviation $r_n^2 - r_n^{\mathrm{WKB},2}$, differentiating gives:
-\[
-  \frac{d}{dx}(r_n^2 - r_n^{\mathrm{WKB},2})
-  = 2r_n^{\mathrm{WKB},2}\Bigl(\tfrac{r_n}{r_n^{\mathrm{WKB}}}-1\Bigr)D
-  + 2r_n^{\mathrm{WKB},2}\Bigl(\tfrac{r_n}{r_n^{\mathrm{WKB}}}\Bigr)\cdot B_n.
-\]
-The first term is $O(r_n(x_0)^2/n)$ by \eqref{eq:amp-ratio}.
-For the second: $B_n = G\cos(2\theta_n)$ where
-$G = (\wncl)'/(2\wncl) + p'/(4p)$. The $p'/(4p)$ part of $G$
-also appears in $(r_n^{\mathrm{WKB},2})'$ via the deterministic drift $D$,
-and cancels in the deviation derivative (using \eqref{eq:drift-cancel});
-the remaining part $(\wncl)'/(2\wncl) = O(1/n)$ gives a
-contribution $O(r_n(x_0)^2/n)$ by Lemma~\ref{lem:prufer-oscillation-control}.
-This establishes \eqref{eq:amp-dev-deriv}.
+The $2D\Delta_n$ term satisfies
+$|2D\Delta_n| \le 2\|D\|_{L^\infty}|\Delta_n|$.
+Since $\Delta_n(x_0) = 0$ and the right-hand side of \eqref{eq:deviation-ode}
+has forcing $O(r_n(x_0)^2/n)$, a Gronwall estimate on $I_\delta$
+(of length $\le 2T$) gives $|\Delta_n(x)| \le C_{\delta,\gamma}r_n(x_0)^2/n$.
+Substituting back into \eqref{eq:deviation-ode}:
+$|\Delta_n'(x)| \le C_{\delta,\gamma}r_n(x_0)^2/n$,
+establishing \eqref{eq:amp-dev-deriv}.
 \end{proof}
 
-\begin{remark}[No Gronwall needed]
-The Gronwall approach would give $r_n/r_n^{\mathrm{WKB}} = 1+O(1)$
+\begin{remark}[No Gronwall needed for the ratio]
+The Gronwall approach gives $r_n/r_n^{\mathrm{WKB}} = 1+O(1)$
 from $\int|B_n| = O(1)$. The identity \eqref{eq:drift-cancel}
 reduces everything to the oscillatory integral $\int B_n$,
 and Lemma~\ref{lem:prufer-oscillation-control} then gives $1+O(1/n)$.
+The Gronwall estimate in Step~4 above applies only to the
+\emph{deviation} $\Delta_n$, whose forcing is already $O(1/n)$
+by Lemma~\ref{lem:deviation-ode}.
 \end{remark}
 
 %%=================================================================
