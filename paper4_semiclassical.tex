@@ -195,6 +195,12 @@ We write $\lambda_n := \lambda_n(c)$ for brevity.
 Recall that $\lambda_n(c)$ is the time-concentration eigenvalue
 (double prolate eigenvalue), related to $\chi_n(c)$ via
 Slepian's prolate equation \cite{Slepian1978}.
+We use throughout the standard normalization
+$\int_{-T}^T \psin(x)^2\,dx = \lambda_n(c)$
+(Slepian's concentration identity \cite{Slepian1978});
+the relationship to the $L^2(\mathbb{R})$-normalized convention
+used in WKB asymptotics is addressed in
+Remark~\ref{rem:norm-conventions} below.
 
 \subsection{Classical data}
 
@@ -300,10 +306,44 @@ Thus:
   = \frac{A_n^2}{2}\,\pi K_n\,\bigl(1 + O(1/n)\bigr).
 \end{equation}
 
+%% ---- FIX (A): normalization bridge remark ----------------------
+\begin{remark}[Normalization conventions]\label{rem:norm-conventions}
+Two normalizations of PSWFs are in simultaneous use:
+\begin{enumerate}[(i)]
+  \item \emph{Global normalization:}
+  $\|\psin\|_{L^2(\mathbb{R})} = 1$,
+  used in the WKB asymptotics of
+  \cite[Ch.~4--5]{OsipovRokhlinXiao}.
+  \item \emph{Time-limited normalization:}
+  $\int_{-T}^T \psin(x)^2\,dx = \lambda_n(c)$,
+  given by Slepian's concentration identity \cite{Slepian1978}.
+\end{enumerate}
+These are compatible in the bulk regime $n \le \gamma N$:
+the mass outside $[-T,T]$ is exponentially small,
+\[
+  \int_{\mathbb{R}\setminus[-T,T]} \psin(x)^2\,dx
+  = 1 - \lambda_n(c) = O(e^{-\beta_\gamma n})
+  \qquad (n \le \gamma N),
+\]
+by Lemma~\ref{lem:turning-point-cutoff}.
+Hence the WKB amplitude $A_n$ computed under
+$\|\psin\|_{L^2(\mathbb{R})}=1$ can be transferred to the
+$[-T,T]$-normalization by multiplying through $\lambda_n(c)$,
+at the cost of an exponentially small relative error
+$O(e^{-\beta_\gamma n})$,
+which is negligible compared to the $O(1/n)$ term in \eqref{eq:BS}.
+\end{remark}
+%% ---- end FIX (A) -----------------------------------------------
+
 \medskip
 \noindent\textit{Step 3: Identification of $A_n$ and error control.}
-By \cite[Ch.~5, Thm.~5.1]{OsipovRokhlinXiao}, the global $L^2(\mathbb{R})$
-normalization gives $A_n^2 = 2/\pi$.
+By \cite[Ch.~5, Thm.~5.1]{OsipovRokhlinXiao}, under the global
+normalization $\|\psin\|_{L^2(\mathbb{R})}=1$,
+the WKB amplitude satisfies $A_n^2 = 2/\pi$.
+By Remark~\ref{rem:norm-conventions}, this value remains valid
+when the integral is evaluated over $[-T,T]$ under the
+time-limited normalization, up to a relative error
+$O(e^{-\beta_\gamma n}) = O(1/n)$.
 Combining \eqref{eq:BS-bulk-norm} and \eqref{eq:wkb-norm-int}:
 \[
   \lambda_n\bigl(1 + O(e^{-\beta n})\bigr)
@@ -413,6 +453,11 @@ $x \in I_\delta$ and all $n \le \gamma N$:
   \qquad
   \|G'\|_{L^1(I_\delta)} \le C_{\delta,\gamma}.
 \end{equation}
+In particular, $(\wncl)'(x) = O(1)$ and $\wncl(x) \asymp n$
+on $I_\delta$, so the dominant term satisfies
+$(\wncl)'/(2\wncl) = O(1/n)$ uniformly in $n$;
+the full coefficient $G = O(1)$ (not $O(1/n)$) because the
+$p'/(4p) = O(1)$ term contributes at leading order.
 \end{lemma}
 
 \begin{proof}
@@ -423,26 +468,27 @@ $\|p'/(4p)\|_{C^1(I_\delta)} \le C_\delta$.
 For the $\wncl$-dependent term, recall
 $\wncl(x)^2 = (\chi_n - c^2x^2/T^2)/p(x)$
 with $\chi_n = n(n+1) + O(c^2)$ \cite[Ch.~3]{OsipovRokhlinXiao}.
-A direct computation via the quotient rule gives:
+Since $\chi_n \asymp n^2$ and, for $x \in I_\delta$,
+$\chi_n - c^2x^2/T^2 \ge c_\gamma n^2 > 0$
+(because $x_+(n) \le (1-\eta_\gamma)T$),
+we have $\wncl(x) \asymp n$ uniformly on $I_\delta$.
+Differentiating $\wncl^2$ via the quotient rule:
 \[
-  \frac{(\wncl)'(x)}{2\wncl(x)}
-  = \frac{(\wncl^2)'(x)}{4\wncl(x)^2}
-  = \frac{-c^2x/T^2\cdot p(x)
+  (\wncl)'(x)
+  = \frac{-c^2x/T^2 \cdot p(x)
           - (\chi_n - c^2x^2/T^2)\cdot p'(x)/2}
-         {2(\chi_n - c^2x^2/T^2)\cdot p(x)}.
+         {\wncl(x)\cdot p(x)} = O(1),
 \]
-Numerator: $O(n^2)$ since $\chi_n \asymp n^2$.
-Denominator: $(\chi_n - c^2x^2/T^2)\cdot p(x) \asymp n^2$
-uniformly on $I_\delta$, because $x_+(n) \le (1-\eta_\gamma)T$
-implies $\chi_n - c^2x^2/T^2 \ge c_\gamma n^2$ for all $x \in I_\delta$.
-Hence $(\wncl)'/(2\wncl) = O(1)$ uniformly in $n$,
-giving $\|G\|_{L^\infty} \le C_{\delta,\gamma}$.
+since numerator is $O(n^2)$ and denominator is $\wncl\cdot p \asymp n$.
+Hence $(\wncl)'/(2\wncl) = O(1)/n = O(1/n)$
+and $\|G\|_{L^\infty} \le C_{\delta,\gamma}$.
 
-One further differentiation: the numerator of $G'$ involves
-second derivatives of $\wncl^2$, which are $O(n^2)$;
-the denominator remains $O(n^2)$ by the same argument.
-Thus $G'(x) = O(1)$ uniformly in $n$ and $x \in I_\delta$,
-and $\|G'\|_{L^1(I_\delta)} \le 2T\cdot C_{\delta,\gamma}$.
+One further differentiation of the quotient gives
+$(\wncl)'' = O(n)$, so
+$[(\wncl)'/(2\wncl)]' = [(\wncl)''\wncl - ((\wncl)')^2]/(2\wncl^2) = O(1)$
+uniformly in $n$.
+Thus $G'(x) = O(1)$ uniformly, and
+$\|G'\|_{L^1(I_\delta)} \le 2T\cdot C_{\delta,\gamma}$.
 \end{proof}
 %% ---- end FIX B -------------------------------------------------
 
@@ -708,7 +754,9 @@ Subtracting:
   = B_n(x) := G(x)\cos(2\theta_n(x)).
 \end{equation}
 All deterministic drift terms --- in particular $D = p'/(4p) = O(1)$ ---
-cancel \emph{identically} in the ratio;
+cancel \emph{identically} in the ratio because the WKB reference
+$r_n^{\mathrm{WKB}}$ is defined precisely as the solution of the
+averaged Pr\"ufer equation (with $\cos(2\theta_n)$ term removed);
 only the purely oscillatory term $B_n$ remains.
 Integrating from $x_0$:
 \begin{equation}\label{eq:log-ratio-int}
