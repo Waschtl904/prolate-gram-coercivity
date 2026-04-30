@@ -261,7 +261,7 @@ Combining \eqref{eq:amplitude-drift} and \eqref{eq:normalization},
 We claim that for all $n \le \gamma\,\NSh$ and $x \in I_\delta$,
 \begin{equation}
 \label{eq:density-bound}
-  \rhocl(x) \le \frac{C_{\delta,\gamma}}{T}.
+  \rhocl(x) \le \frac{C_{\delta,\gamma}\,c}{T}.
 \end{equation}
 
 By definition (see \cite{PaperIV}, Definition~2.4), the
@@ -308,46 +308,41 @@ For the eigenvalue we use the standard PSWF bound
 \begin{equation}\label{eq:chi-bound}
   \chi_n(c) \le c^2 + C n^2.
 \end{equation}
-In the bulk regime $n \le \gamma\,\NSh = 2\gamma c/\pi$,
-we have $n \lesssim c$, so $n^2 \lesssim c^2$, and
-\eqref{eq:chi-bound} gives
+The bound \eqref{eq:chi-bound} is uniform in $c$:
+it reflects the correct joint scaling of the PSWF
+eigenvalues without restriction to any particular regime.
+Combining $\wcl(x) \le \sqrt{\chi_n(c)}$
+with \eqref{eq:chi-bound}:
 \begin{equation}\label{eq:wcl-upper}
-  \wcl(x) \le \sqrt{\chi_n(c)} \le C_{\delta,\gamma}\,c
-  \qquad\text{for all } x \in I_\delta.
+  \wcl(x) \le \sqrt{c^2 + Cn^2} \le C_{\delta,\gamma}(c + n)
+  \le C_{\delta,\gamma}\,c
+  \qquad\text{for all } x \in I_\delta,
 \end{equation}
-Note that \eqref{eq:chi-bound} is uniform in $c$: the bound
-exhibits the correct joint scaling in both $c$ and $n$,
-without requiring any Pr\"ufer analysis.
+where the last inequality uses $n \le \gamma\,\NSh = 2\gamma c/\pi \le c$.
 Therefore:
 \begin{equation}\label{eq:denom-lower}
   \int_{I_\delta} \frac{dt}{\wcl(t)}
   \;\ge\;
   \frac{|I_\delta|}{C_{\delta,\gamma}\,c}
-  \;\asymp\; \frac{T}{c}.
+  \;\ge\;
+  \frac{c'_{\delta,\gamma}\,T}{c}.
 \end{equation}
 
 \medskip\noindent
 \textit{Conclusion of Step 2.}
 Combining the numerator bound $1/\wcl(x) \le C_{\delta,\gamma}/n$
-with the denominator bound \eqref{eq:denom-lower}:
+with denominator bound \eqref{eq:denom-lower} and using
+$n \ge 1$:
 \[
   \rhocl(x)
   \;\le\;
   \frac{C_{\delta,\gamma}/n}{c'_{\delta,\gamma}\,T/c}
   \;=\;
-  \frac{C_{\delta,\gamma}\,c}{n T}.
+  \frac{C_{\delta,\gamma}\,c}{n\,T}
+  \;\le\;
+  \frac{C_{\delta,\gamma}\,c}{T},
 \]
-Since $n \ge 1$ and $n \le \gamma\,\NSh \asymp c$ in the
-bulk regime, the factor $c/n$ is bounded by a constant
-depending only on $\delta$ and $\gamma$, giving
-\begin{equation}\label{eq:density-bound-proof}
-  \rhocl(x) \;\le\; \frac{C_{\delta,\gamma}}{T},
-\end{equation}
-which establishes~\eqref{eq:density-bound}.
-Note that \eqref{eq:density-bound-proof} is stronger than
-the na\"ive bound $O(c/T)$: it reflects the correct
-normalization of a probability density on an interval
-of length $O(T)$, independent of the bandwidth $c$.
+establishing~\eqref{eq:density-bound}.
 
 \subsubsection*{Step 3: Summation}
 
@@ -355,18 +350,30 @@ Inserting \eqref{eq:density-bound} into
 \eqref{eq:psi-squared-bound} and summing:
 \[
   K_N(x,x)
-  \le \frac{C_{\delta,\gamma}}{T}
+  \le C_{\delta,\gamma}\,\frac{c}{T}
        \sum_{n=0}^{N-1} \lambda_n(c)
-  \le \frac{C_{\delta,\gamma}\,N}{T}
   \le C_{\delta,\gamma}\,\frac{Nc}{\pi T},
 \]
 using $\lambda_n \le 1$.
 The $O(1/n)$ corrections from \eqref{eq:psi-squared-bound}
-contribute $O(\log N/T) = o(N/T)$,
+contribute $O(c\log N/T) = o(Nc/T)$,
 completing the proof.
 \end{proof}
 
-\begin{remark}
+\begin{remark}[Scaling of the density bound]
+\label{rem:density-scaling}
+The bound \eqref{eq:density-bound} gives $\rhocl(x) = O(c/T)$,
+which is sufficient for the diagonal estimate.
+One expects the sharper pointwise scaling $\rhocl(x) = O(1/T)$,
+consistent with the normalization
+$\int_{-x_+(n)}^{x_+(n)} \rhocl(x)\,dx = 1$
+and the equidistribution on a support of length $O(T)$.
+This sharper bound would follow from a lower bound on $n$
+(e.g., $n \ge c_0 > 0$ uniformly), but is not required
+for the present argument.
+\end{remark}
+
+\begin{remark}[Relation to Landau--Widom]
 \label{rem:landau-widom}
 Proposition~\ref{prop:diagonal} recovers the classical
 Landau--Widom diagonal estimate \cite{Widom64}.
