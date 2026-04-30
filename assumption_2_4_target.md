@@ -3,16 +3,22 @@
 > **Kontext.** Die Kette
 > ```
 > Paper IV thm:weak-limit
->   → Paper III lem:bulk-reduction (Lemma 6.3)
+>   → Paper III lem:bulk-reduction (Lemma 6.3)    [geschlossen, unbedingt]
 >   → Paper III prob:comm-refined
->   → Bulk tail bound ‖(I−P_N)f_{mn}‖ ≤ Ce^{−αN}
+>   → Bulk tail bound ‖(I−P_N)f_{mn}‖ ≤ Ce^{−αN}  [braucht Ass. 2.4]
 > ```
 > ist vollständig — aber der letzte Schritt braucht:
-> **Paper II Assumption 2.4** = uniforme L²-Bound auf den Bulk-Projektionskern.
+> **Paper III Assumption 2.4** = uniforme L²-Schranke für den Out-of-band-
+> Fourier-Anteil des Projektionskerns im Bulk.
 >
 > Dieses Dokument formuliert drei explizite, beweisbare Zielgestalten.
 > Jede ist eine hinreichende Bedingung für das Programm.
 > Die einfachste (Variante A) ist wahrscheinlich direkt beweisbar.
+
+> **Hinweis zur Benennung.** In älteren Versionen wurde diese Annahme
+> als "Paper II Ass. 2.4" bezeichnet. Sie ist formal im Rahmen von Paper III
+> (Produkt-Spektral-Tail-Schätzungen) verortet. `DEPENDENCIES.md` verwendet
+> ab April 2026 konsequent "Paper III Ass. 2.4".
 
 ---
 
@@ -37,7 +43,7 @@ $$
 \text{Ass. 2.4:}\quad
 \left\| \int_{-T}^{T} K_N(x,y)\, f(y)\, dy \right\|_{L^2_\mu(\text{bulk})}
 \leq C \| f \|_{L^2([-T,T])},
-\quad \text{uniform in } N, c, \text{ bulk sector}.
+\quad \text{uniform in } N, c, \text{ Bulk-Sektor}.
 $$
 
 **Der qualitative Unterschied zu Paper IV:**
@@ -45,8 +51,18 @@ $$
 | | Paper IV | Ass. 2.4 |
 |---|---|---|
 | Aussage | für festes $f \in C^1$, punktweise | für *alle* $f \in L^2$, Operatornorm |
-| Methode | Oszillationsmittelung | Kernel-Struktur / Schur |
+| Methode | Oszillationsmittelung (Prüfer) | Kern-Struktur / Schur |
 | Natur | semiklassisch | funktionalanalytisch |
+
+**Neu verfügbare Inputs aus Paper IV** (nach Commit Paper IV, April 2026):
+
+- `lem:amplitude-drift`: $r_n^2/r_n^{\rm WKB,2} = 1 + O(1/n)$ uniform in $n \leq \gamma N$ —
+  liefert die für Schritt 1 benötigte Amplitudenabschätzung direkt.
+- `lem:normalization`: $r_n^{\rm WKB,2}/2 = \lambda_n \rho^{\rm cl} \cdot (1+O(1/n))$ —
+  liefert die Verbindung zwischen $\psi_n(x)^2$ und $\rho^{\rm cl}(x)$, die den
+  Diagonal-Bound $K_N(x,x) \lesssim N \cdot c/(\pi T)$ direkt impliziert.
+- `lem:bohr-sommerfeld-pswf`: $\pi K_n = \pi/\lambda_n \cdot (1+O(1/n))$ —
+  quantifiziert die Eigenfrequenzdichte.
 
 ---
 
@@ -69,36 +85,34 @@ $$
 ### Beweisstrategie für Lemma A
 
 **Schritt 1: Diagonal-Bound.**
-Aus Paper IV `lem:bohr-sommerfeld-pswf` und `lem:amplitude-drift`:
+Aus `lem:amplitude-drift` und `lem:normalization` (Paper IV):
 $$
-K_N(x,x) = \sum_{n=0}^{N-1} \psi_n^{(c)}(x)^2
-\leq \sum_{n=0}^{N-1} \frac{C r_n(x)^2}{1} \leq C \sum_{n=0}^{N-1} \lambda_n \rho_n^{\rm cl}(x).
+\psi_n(x)^2 = r_n(x)^2 = r_n^{\rm WKB}(x)^2 \cdot (1+O(1/n))
+= 2\lambda_n \rho^{\rm cl}(x) \cdot (1+O(1/n)),
 $$
-Mit $\rho_n^{\rm cl}(x) \sim 1/(\pi K_n \omega_n^{\rm cl}(x))$ und $K_n \sim \pi/\lambda_n$:
+also:
 $$
-K_N(x,x) \lesssim \sum_{n=0}^{N-1} \frac{\omega_n^{\rm cl}(x)}{\pi} \lesssim N \cdot \frac{c}{\pi T},
+K_N(x,x) = \sum_{n=0}^{N-1} \psi_n(x)^2
+\leq C \sum_{n=0}^{N-1} \lambda_n \rho^{\rm cl}(x)
+\lesssim N \cdot \frac{c}{\pi T},
 $$
-da $\omega_n^{\rm cl}(x) \leq c/T$ für $x \in I_\delta$. Das ist der **Landau-Widom Diagonal-Bound**.
+da $\rho^{\rm cl}(x) \leq c/(\pi T)$ für $x \in I_\delta$ (klassische Gleichgewichtsdichte).
+Das ist der **Landau-Widom Diagonal-Bound** — jetzt direkt aus Paper IV hergeleitet.
 
 **Schritt 2: Off-diagonal Decay.**
 Der CD-Kern hat die WKB-Darstellung (formal):
 $$
 K_N(x,y) \approx \sum_{n=0}^{N-1} \frac{\sin(\theta_n(x) - \theta_n(y))}{\pi(\theta_n(x) - \theta_n(y))} \cdot \frac{1}{\sqrt{p(x)p(y)}\, \omega_n^{\rm cl}},
 $$
-also ein gewichtetes Summe von Sinc-artigen Kernen.
+also eine gewichtete Summe von Sinc-artigen Kernen.
 Für $|x-y| \geq 1/n$: Abfall wie $1/|x-y|$.
 Für $|x-y| \leq 1/n$: kontrolliert durch den Diagonal-Bound.
 
 **Schritt 3: Schur-Integral.**
+Mit $|K_N(x,y)| \leq C(N/T) \cdot \min(1, (N|x-y|/c)^{-1})$:
 $$
 \int_{-T}^{T} |K_N(x,y)|\, dy
-\leq K_N(x,x)^{1/2} \cdot \left( \int_{-T}^{T} K_N(y,y)\, dy \right)^{1/2}
-= K_N(x,x)^{1/2} \cdot N^{1/2}
-$$
-Das ist zu grob (gibt $O(N)$, nicht $O(1)$).
-Besser: direktes Schur mit $|K_N(x,y)| \leq C(N/T) \cdot \min(1, (N/c|x-y|)^{-1})$:
-$$
-\int_{-T}^{T} |K_N(x,y)|\, dy \leq \frac{CN}{T} \int_0^T \min\!\left(1, \frac{1}{N|x-y|/c}\right) dy
+\leq \frac{CN}{T} \int_0^T \min\!\left(1, \frac{c}{N|x-y|}\right) dy
 \leq \frac{CN}{T} \cdot \frac{c}{N} \cdot (1 + \log(NT/c)).
 $$
 Da $c \leq \pi N_{\rm Sh}/2$ und $N \leq \gamma N_{\rm Sh}$:
@@ -107,8 +121,9 @@ $$
 $$
 
 **Fazit Variante A:** Dieser Weg ist vollständig durchführbar mit bekannten PSWF-Schranken
-aus ORX Kap. 6. Das zentrale Input ist der Diagonal-Bound
-$K_N(x,x) \leq CN\omega/\pi$, der aus dem Landau-Widom-Theorem folgt.
+aus ORX Kap. 6 sowie den neuen Lemmas aus Paper IV. Das zentrale Input ist der Diagonal-Bound
+$K_N(x,x) \leq CN\omega/\pi$, der jetzt direkt aus `lem:amplitude-drift` + `lem:normalization`
+folgt — ohne zusätzliche externe Annahmen.
 
 ### Klassischer Satz dahinter
 
@@ -133,7 +148,7 @@ $K_N(x,x) \leq CN\omega/\pi$, der aus dem Landau-Widom-Theorem folgt.
 > P_N = \mathrm{Op}(\mathbf{1}_{|\xi| \leq \omega_N^{\rm cl}(x)}) + R_N,
 > \qquad \|R_N\|_{L^2 \to L^2} \leq \frac{C_{\delta,\gamma}}{\sqrt{N}},
 > $$
-> wobei $\mathrm{Op}$ der Weyl-Quantisierung auf dem bulk-Symbol entspricht.
+> wobei $\mathrm{Op}$ der Weyl-Quantisierung auf dem Bulk-Symbol entspricht.
 
 ### Beweisstrategie für Lemma B
 
@@ -141,14 +156,19 @@ Der Operator $P_N = \chi(D_c \leq \chi_N)$ ist der Spektralprojektor des
 Sturm-Liouville-Operators $D_c$ unterhalb der $N$-ten Eigenfrequenz.
 
 - Im Bulk gilt $D_c \approx -\partial_x^2 + V_c(x)$ mit $V_c(x) = c^2x^2/T^2/(1-x^2/T^2)$.
-- Nach dem Egorov-Theorem / symbolischer Kalkül ist $P_N$ moduliert pseudodifferentiell:
+- Nach dem Egorov-Theorem / symbolischer Kalkul ist $P_N$ moduliert pseudodifferentiell:
   das Hauptsymbol ist $\mathbf{1}_{\{\xi^2 + V_c(x) \leq \chi_N\}}$,
   was genau der Bulk-Sektor $|\xi| \leq \omega_N^{\rm cl}(x)$ ist.
 - Der Rest $R_N$ kommt aus dem Turning-Point-Fehler (Airy-Korrektur)
   und ist $O(c^{-1/3})$ in Operatornorm.
 
-Das ist technisch aufwändiger als Variante A, aber liefert eine stärkere Aussage:
+Das ist technisch aufwändiger als Variante A, liefert aber eine stärkere Aussage:
 nicht nur die Operatornorm, sondern auch den funktionalen Kalkül von $P_N$.
+
+**Verbindung zu Paper IV:** Das Prüfer-ODE-Lemma (`lem:prufer-ode`) von Paper IV
+beschreibt dieselbe Turning-Point-Struktur elementar. Eine direkte Verbindung
+zum pseudodifferentiellen Kalkül wäre eine natürliche Brücke — aber nicht nötig
+für das laufende Bulk-Programm.
 
 ### Klassischer Satz dahinter
 
@@ -158,9 +178,9 @@ nicht nur die Operatornorm, sondern auch den funktionalen Kalkül von $P_N$.
 > wo $\Phi_t$ der Hamiltonfluss zu $p$ ist.
 > Angewendet auf $P = D_c$, $A = P_N$: liefert symbolische Kontrolle von $P_N$ im Bulk.
 
-**Severity für das Programm:** Diese Variante ist deutlich technischer als Variante A
-und nicht notwendig für das Bulk-Programm.
-Sie wäre relevant wenn man auch Operatornorm-Bounds für die Off-diagonal-Terme braucht.
+**Severity für das Programm:** Nicht nötig für das Bulk-Programm.
+Relevant wenn man Operatornorm-Bounds für Off-diagonal-Terme oder
+Ass. 3.1 (Paper III) angehen will — siehe letzer Abschnitt.
 
 ---
 
@@ -186,7 +206,8 @@ $$
 \| \mathrm{Op}(K_N^{\rm diag}) f \|_{L^2}^2
 \leq \left( \sup_x \int |K_N^{\rm diag}(x,y)| dy \right) \cdot \| f \|_{L^2}^2.
 $$
-Mit $K_N(x,x) \leq CN^2/c$ (Diagonal-Bound) und $|K_N(x,y)| \leq K_N(x,x)$
+Mit dem Diagonal-Bound aus Schritt 1 der Variante A
+($K_N(x,x) \leq CN^2/c$ für $x \in I_\delta$) und $|K_N(x,y)| \leq K_N(x,x)$
 für $|x-y| \leq c/N$:
 $$
 \int_{|x-y| \leq c/N} |K_N(x,y)| dy \leq K_N(x,x) \cdot \frac{2c}{N} \leq C.
@@ -216,17 +237,18 @@ $$
 | Variante | Methode | Stärke | Technischer Aufwand | Empfehlung |
 |---|---|---|---|---|
 | **A: Schur-Test** | Diagonal-Bound + Schur | $\|P_N\|_{L^2 \to L^2} \leq C$ | Niedrig | **Jetzt angehen** |
-| B: PseudoDO | Egorov-Theorem | Symbolische Kontrolle | Hoch | Für späteres Paper |
+| B: PseudoDO | Egorov-Theorem | Symbolische Kontrolle | Hoch | Für späteres Paper / Ass. 3.1 |
 | C: Kernel Splitting | Young + Slepian-Sinc | Expliziter Kern | Mittel | Alternative zu A |
 
 **Variante A ist der richtige nächste Schritt.** Alle Inputs sind bereits im Programm:
-- Diagonal-Bound $K_N(x,x) \leq CN\omega/\pi$: folgt aus Landau-Widom + Paper IV `lem:normalization`
+- Diagonal-Bound $K_N(x,x) \leq CN\omega/\pi$:
+  **jetzt direkt aus** Paper IV `lem:amplitude-drift` + `lem:normalization` **ableitbar**
 - Off-diagonal Abfall: folgt aus Sinc-Struktur des CD-Kerns (Slepian 1964)
-- Schur-Test: klassisches funktionalanalytisches Standardresultat
+- Schur-Test: klassisches funktionalanalytisches Standardresultat [Reed-Simon I, Thm. VI.23]
 
 Das würde Ass. 2.4 zu einem bewiesenen Lemma machen und die Kette
 $$
-\text{Paper IV} \Rightarrow \text{Paper III} \Rightarrow \text{Bulk tail bound (unconditional)}
+\text{Paper IV} \Rightarrow \text{Paper III lem:bulk-reduction} \Rightarrow \text{Bulk tail bound (unbedingt)}
 $$
 vollständig schließen — **ohne neue externe Annahmen**.
 
@@ -240,6 +262,12 @@ ist im symbolischen Kalkül die Separation der Hamiltonfluss-Orbits,
 die für gut-getrennte Wendepunkte $x_+(m) \neq x_+(n)$ automatisch folgt.
 Aber: das ist nicht notwendig für den Bulk-Kern — nur ein Bonus.
 
+Ein natürlicher Weg für Ass. 3.1 wäre, Paper IV's `lem:prufer-oscillation-control`
+(das Oszillationsintegral $|\int h \cos(2\theta_n)|$ für einzelnes $n$) auf
+den Differenzterm $\theta_m - \theta_n$ auszudehnen. Das ist jedoch
+**kein Blockade-Problem** für das laufende Programm.
+
 ---
 
-*Erstellt nach Commit b8b16e2 (Paper IV) und ac82ec7 (DEPENDENCIES), April 2026.*
+*Aktualisiert nach Abschluss von Paper IV und Update von DEPENDENCIES.md, April 2026.
+Benennung vereinheitlicht auf "Paper III Assumption 2.4" gemäß DEPENDENCIES.md.*
