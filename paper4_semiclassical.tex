@@ -153,6 +153,57 @@ The proof has four steps:
   relation (Lemma~\ref{lem:bohr-sommerfeld-pswf}).
 \end{enumerate}
 
+\subsection{Why not direct WKB integration?}
+%% ^^^ FIX M1: strategic defense against ``WKB repackaging'' objection ^^^
+
+A natural approach to \eqref{eq:main} would be to insert the WKB
+approximation \eqref{eq:wkb-form} directly and integrate term-by-term
+against $f$.
+However, this does \emph{not} yield the claimed $O(1/n)$ remainder,
+for a precise reason.
+
+The WKB amplitude $A_n$ in \eqref{eq:wkb-form} is a \emph{global}
+constant, determined by the normalization condition
+$\|\psin\|_{L^2(\mathbb{R})} = 1$ via \cite[Ch.~5, Thm.~5.1]{OsipovRokhlinXiao}.
+It carries no information about the \emph{spatial variation} of
+the true amplitude $r_n(x)$ along $I_\delta$.
+Squaring the WKB approximation produces the cross-term:
+\[
+  -\frac{A_n^2}{2}\int_{I_\delta} \frac{f(x)\cos(2\Theta_n(x))}{\wncl(x)}\,dx,
+\]
+which can be controlled at $O(1/n)$ by oscillatory integration
+(using $\wncl \asymp n$ and phase monotonicity).
+But the \emph{error from squaring} --- the term involving
+$\psin(x) - A_n\wncl(x)^{-1/2}\sin\Theta_n(x)$ --- is
+$O(n^{-1}\wncl(x)^{-1/2})$ pointwise \cite[Ch.~4, Prop.~4.3]{OsipovRokhlinXiao},
+and after multiplication by $f\psin$ and integration over $I_\delta$,
+contributes $O(\lambda_n/n)$ only if the amplitude is controlled
+uniformly, not just globally.
+
+More fundamentally: to control the \emph{mean} part $\frac{1}{2}\int f r_n^2$
+at $O(\lambda_n/n)$ accuracy, one must show that $r_n(x)^2/2 \approx \lambda_n\rhocl(x)$
+\emph{pointwise}, not just in $L^1$-average.
+This pointwise amplitude control cannot be read off from
+the global WKB form \eqref{eq:wkb-form} alone.
+
+The Pr\"ufer approach resolves this obstruction by replacing
+the fixed global amplitude $A_n$ with the \emph{dynamical} amplitude
+$r_n(x)$, which satisfies an explicit ODE \eqref{eq:r-ode}.
+The ratio $r_n/r_n^{\mathrm{WKB}}$ satisfies the exact identity
+\begin{equation}\label{eq:drift-cancel-intro}
+  \frac{d}{dx}\log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}
+  = G(x)\cos(2\theta_n(x)),
+\end{equation}
+in which \emph{all} deterministic drift terms --- including
+$D = p'/(4p) = O(1)$, which would otherwise prevent a $O(1/n)$ bound ---
+cancel identically.
+Only the purely oscillatory forcing $G(x)\cos(2\theta_n)$ remains,
+and this is bounded by $O(1/n)$ via
+Lemma~\ref{lem:prufer-oscillation-control}.
+The Pr\"ufer method is therefore not merely an elegant reformulation
+of standard WKB: it provides the \emph{additional spatial structure}
+that direct integration of \eqref{eq:wkb-form} cannot supply.
+
 \subsection{Relation to Paper III}
 
 The hypothesis~(6.1) of Lemma~6.3 in \cite{PaperIII} is exactly
