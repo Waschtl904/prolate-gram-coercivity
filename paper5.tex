@@ -264,15 +264,23 @@ We claim that for all $n \le \gamma\,\NSh$ and $x \in I_\delta$,
   \rhocl(x) \le \frac{C_{\delta,\gamma}\,c}{T}.
 \end{equation}
 
-By definition (see \cite{PaperIV}, Definition~2.4),
+By definition (see \cite{PaperIV}, Definition~2.4), the
+classical density takes the form
 \[
   \rhocl(x)
   = \frac{1/\wcl(x)}
     {\displaystyle\int_{-x_+(n)}^{x_+(n)}
       \frac{dt}{\wcl(t)}},
 \]
-where $\wcl(x) := \sqrt{\chi_n(c)/T^2 - c^2 x^2/T^2 + c^2}$
-is the classical frequency and $x_+(n)$ is the turning point.
+where the classical frequency is
+\begin{equation}\label{eq:wcl-def}
+  \wcl(x) := \sqrt{\chi_n(c) - V_c(x)},
+  \qquad
+  V_c(x) := c^2\!\left(1 - \frac{x^2}{T^2}\right)^{\!-1}\chi_n(c)\,
+  \frac{x^2}{T^2},
+\end{equation}
+and $x_+(n)$ is the classical turning point at which
+$\wcl(x_+(n)) = 0$.
 
 \medskip\noindent
 \textit{Step 2a: Upper bound on the numerator.}
@@ -293,20 +301,21 @@ points $\pm x_+(n)$, where $\wcl(t) \to 0$:
   \;\ge\;
   \int_{I_\delta} \frac{dt}{\wcl(t)}.
 \]
-For the upper bound on $\wcl$ needed here, we use the
-explicit formula $\wcl(x) = \sqrt{\chi_n - V_c(x)}$
-with $V_c(x) \ge 0$, which gives:
+Since $V_c(x) \ge 0$, the definition~\eqref{eq:wcl-def} gives
+the pointwise upper bound
 \begin{equation}\label{eq:wcl-upper}
-  \wcl(x) \le \sqrt{\chi_n(c)}
-  \le C_{\delta,\gamma}\,n
+  \wcl(x) \;\le\; \sqrt{\chi_n(c)}
+  \;\le\; C_{\delta,\gamma}\,n
   \qquad\text{for all } x \in I_\delta.
 \end{equation}
-The second inequality uses the Sturm--Liouville eigenvalue
-growth $\chi_n(c) \le C_{\delta,\gamma}\,n^2$, valid
-uniformly for $n \le \gamma\,\NSh$
+The second inequality uses $\chi_n(c) \le C_{\delta,\gamma}\,n^2$,
+which holds uniformly in $c$ for $n \le \gamma\,\NSh$:
+in this regime the spectrum lies in the semiclassical bulk
+and does not approach the transition region near
+$n \sim N_{\mathrm{Sh}}$, so the eigenvalue growth is
+controlled by the Sturm--Liouville asymptotics alone
 (see \cite[Ch.~4]{OsipovRokhlinXiao}).
-This bound requires no Pr\"ufer analysis;
-it is a direct consequence of spectral asymptotics.
+This bound requires no Pr\"ufer analysis.
 Combining with \eqref{eq:wcl-upper}:
 \[
   \int_{I_\delta} \frac{dt}{\wcl(t)}
@@ -325,15 +334,16 @@ Combining numerator and denominator:
   \frac{C_{\delta,\gamma}/n}{c'_{\delta,\gamma}/n}
   \;=\; C_{\delta,\gamma}.
 \]
-Since $n \le \gamma\,\NSh = 2\gamma c/\pi$, this gives
-the equivalent scaling form
+Since the bulk regime satisfies $n \sim c$ (both scale
+linearly with bandwidth),
+this constant bound takes the equivalent scaling form
 \[
   \rhocl(x)
   \;\le\; C_{\delta,\gamma}\,\frac{c}{T},
 \]
-compatible with the global trace
-$\sum_{n < N}\psi_n(x)^2 \sim Nc/T$,
-establishing~\eqref{eq:density-bound}.
+consistent with the global trace
+$\sum_{n < N}\psi_n(x)^2 \sim Nc/T$.
+This establishes~\eqref{eq:density-bound}.
 
 \subsubsection*{Step 3: Summation}
 
@@ -355,13 +365,15 @@ completing the proof.
 \label{rem:landau-widom}
 Proposition~\ref{prop:diagonal} recovers the classical
 Landau--Widom diagonal estimate \cite{Widom64}.
-The derivation is new in two respects:
-the numerator bound comes from the Pr\"ufer amplitude
-control of \cite{PaperIV} (Prüfer side),
-while the denominator bound uses only the eigenvalue
-growth $\chi_n \le Cn^2$ (spectral side).
-The two arguments are logically independent, and together
-yield explicit constants uniform in all parameters.
+The two inputs to the proof are of different nature:
+the numerator bound is a \emph{local dynamical statement},
+obtained from the Pr\"ufer amplitude flow of \cite{PaperIV},
+while the denominator bound is a \emph{global spectral statement},
+resting on the eigenvalue growth $\chi_n \le Cn^2$.
+Their combination yields the diagonal estimate without
+invoking reproducing kernel identities or the
+Landau--Widom trace formula, and with explicit constants
+that are uniform in all parameters.
 \end{remark}
 
 % =============================================================
