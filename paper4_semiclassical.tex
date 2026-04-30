@@ -300,6 +300,11 @@ Lemma~\ref{lem:prufer-oscillation-control}
 applied here with $h = 1/\wncl \in C^1(I_\delta)$,
 using $\wncl \asymp n$ and $(1/\wncl)' = O(1/n^2)$,
 so $\|h\|_{L^\infty} = O(1/n)$ and $\|h'\|_{L^1} = O(1/n^2)$).
+We note that Lemma~\ref{lem:prufer-oscillation-control} is independent
+of the present argument, as it relies only on phase monotonicity
+(Lemma~\ref{lem:phase-monotone}) and does not use the WKB
+normalization or the Bohr--Sommerfeld relation.
+%% ^^^ FIX F1: explicit logical decoupling ^^^
 Thus:
 \begin{equation}\label{eq:wkb-norm-int}
   \int_{I_\delta}\psin^2\,dx
@@ -447,7 +452,6 @@ since $\wncl \asymp n$ and $p', (\wncl)' = O(1)$ there.
 See \cite[Thm.~4.1]{Levitan} for the general Pr\"ufer system.
 \end{proof}
 
-%% ---- FIX B: explicit G-regularity computation ------------------
 \begin{lemma}[$G$ is uniformly $C^1$ on $I_\delta$, uniform in $n$]%
 \label{lem:G-regularity}
 The coefficient $G(x) := (\wncl)'(x)/(2\wncl(x)) + p'(x)/(4p(x))$
@@ -495,7 +499,6 @@ uniformly in $n$.
 Thus $G'(x) = O(1)$ uniformly, and
 $\|G'\|_{L^1(I_\delta)} \le 2T\cdot C_{\delta,\gamma}$.
 \end{proof}
-%% ---- end FIX B -------------------------------------------------
 
 \subsection{Phase monotonicity and second-derivative control}
 
@@ -782,10 +785,16 @@ Applying Lemma~\ref{lem:prufer-oscillation-control}
 
 \medskip
 \noindent\textit{Step 3: Exponentiation --- proof of \eqref{eq:amp-ratio}.}
-From \eqref{eq:log-ratio-int} and \eqref{eq:sup-Bn}:
-$\sup_{x}|\log(r_n/r_n^{\mathrm{WKB}})| \le C/n$,
-so $r_n/r_n^{\mathrm{WKB}} = 1 + O(1/n)$ uniformly,
-giving \eqref{eq:amp-ratio}.
+From \eqref{eq:log-ratio-int} and \eqref{eq:sup-Bn},
+$\sup_{x \in I_\delta}|\log(r_n(x)/r_n^{\mathrm{WKB}}(x))| \le C_{\delta,\gamma}/n$.
+Exponentiating and using $e^\varepsilon = 1 + O(\varepsilon)$
+for $|\varepsilon| \le C_{\delta,\gamma}/n$, we obtain
+%% ^^^ FIX F2: explicit exponentiation step ^^^
+\[
+  \frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)} = 1 + O\!\left(\frac{1}{n}\right)
+  \quad \text{uniformly on } I_\delta,
+\]
+and squaring gives \eqref{eq:amp-ratio}.
 
 \medskip
 \noindent\textit{Step 4: Derivative of the deviation ---
@@ -906,8 +915,18 @@ $\frac{1}{2}\int fr_n^2
 = \lambda_n\int f\rhocl + O(\lambda_n\|f\|_{L^\infty}/n)$.
 
 \textit{Step 5 (Extension to $[-T,T]$):}
-$\int_{[-T,T]\setminus I_\delta}f\rhocl
-= O(e^{-\beta n}\|f\|_{L^\infty})$.
+Since $\wncl(x)^2 = (\chi_n - c^2x^2/T^2)/p(x) < 0$ for
+$|x| > x_+(n)$ (classically forbidden region), the classical
+density $\rhocl(x) \propto 1/\wncl(x)$ decays exponentially
+there by the same barrier argument as in
+Lemma~\ref{lem:turning-point-cutoff}, applied to the classical flow.
+%% ^^^ FIX F3: explicit justification for rho_n^cl outside ^^^
+Hence:
+\[
+  \int_{[-T,T]\setminus I_\delta} f(x)\,\rhocl(x)\,dx
+  = O\!\left(e^{-\beta_\gamma n}\,\|f\|_{L^\infty}\right),
+\]
+matching the corresponding bound for $\psin^2$ from Step~1.
 
 \textit{Assembly:}
 Steps 1--5 give \eqref{eq:weak-limit}--\eqref{eq:remainder}.
