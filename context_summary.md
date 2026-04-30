@@ -1,136 +1,214 @@
-# Series Context Summary — Papers I–XVII
+# Context Summary — Prolate–Weil Program (Papers I–IV)
 
-> **Purpose:** Paste this at the top of any new AI chat before working on Paper XVII or later.
-> Provides the full logical chain without needing Papers I–XVI in full.
-> **Current working file:** `paper_xvii.tex`
+> **Purpose:** Paste this at the top of any new AI chat before working on this project.
+> Provides the full logical chain without needing Papers I–IV in full.
 > **Repo:** `Waschtl904/prolate-gram-coercivity`
-> **Last updated:** April 2026, after full GPT-referee review of all papers.
+> **Last updated:** April 30, 2026 — after full read-through and review of all four papers.
 
 ---
 
 ## Overarching Goal
 
-The series constructs a spectral operator whose eigenvalue distribution
-mirrors the non-trivial zeros of the Riemann zeta function (Hilbert–Pólya conjecture).
-The core object is the PSWF concentration operator and its Mellin/Fourier transform.
-Series arc: coercivity (DSTP) → scaling limits → spectral phase →
-bandwidth decay → rigorous peak-width upper bounds → crossover asymptotics
-→ lower bounds + spectral-zeta connection → domain & self-adjointness (conditional framework)
-→ Mosco form convergence & Friedrichs extension → spectral inclusion & density criterion
-→ localization principle for spectral projection stability
-→ completeness barrier (Paper XIII) → coefficient stability / HS-norm estimates (Papers XIV–XV)
-→ microlocal Lagrangian singularity transport / Airy normal form (Paper XVI)
-→ **uniform CFU stability for PSWF fold geometry (Paper XVII)**.
+The **Prolate–Weil Program** seeks a spectral realization of the **Weil positivity criterion**
+via the PSWF concentration operator and its associated Gram forms.
+The four papers build an explicit implication chain toward this goal,
+with full rigor about what is proved, what is conditional, and what remains open.
+
+**No claim about zeros of ζ(s) is made in any of the four papers.**
+
+---
+
+## The Four Papers
+
+| File | Title (short) | Status |
+|---|---|---|
+| `paper1.tex` | Gram Form Coercivity + DSTP | Near publication-ready |
+| `paper2.tex` | Scaling Limits, Trace Formula, Weil Connection | Near publication-ready |
+| `paper2_quadrature.tex` | XRY Quadrature Implication Framework | Implication framework (conditional) |
+| `paper3.tex` | PSWF Product Spectral Tail Estimates | Core analytic paper |
+| `paper4_semiclassical.tex` | Semiclassical Equidistribution of PSWF Densities | Most complete; fully proved |
+
+---
+
+## Overarching Logic Chain
+
+```
+Paper I (Gram coercivity, DSTP axiom)
+  ↓
+Paper II (Scaling limits, trace formula, Weil connection)
+  ↓
+Paper II_quadrature (Implication: Conj.(i)+(ii) → DSTP for XRY)
+  ↓
+Paper III (PSWF product tail bounds: bulk, off-diagonal, edge obstruction)
+  ↓
+Paper IV (Semiclassical equidistribution of ψ_n², rate O(1/n))
+  ↑
+  └── Paper IV closes prob:pswf-weak-limit from Paper III unconditionally
+```
 
 ---
 
 ## Central Notation
 
-- `Phi_n^(c)`: rescaled PSWF, `Phi_n^(c)(u) = psi_n^(c)(e^u) e^{u/2}`, `u in (-inf,0)`
-- `Phi_hat_n^(c)(t)`: Fourier–Mellin transform of `Phi_n^(c)`
-- `t_*(c,n) ~ c^{1/2}`: Fourier peak location (saddle frequency)
-- `Delta_eps(c,n)`: peak width — smallest Delta s.t. L2-mass outside `[t_*-Delta, t_*+Delta]` <= eps * total
-- `lambda_n^(c)`: Slepian concentration eigenvalue, `lambda_n^(c) in (0,1)`
-- `lambda_n^(inf)`: limit eigenvalue, `lambda_n^(inf) := lim_{c->inf} lambda_n^(c)` (Paper IX, inherited from VIII Cor 4.3)
-- `Phi_n^(inf)`: strong limit of `Phi_n^(c_k)` along fixed diagonal subsequence `c_k`; ONS property holds (Paper XI)
-- `Z_cross = {t : c^{-2/3} <= |t-t_*| <= c^{-1/3}}`: crossover zone
-- `H_c`: finite-c PSWF concentration operator, bounded self-adjoint, `||H_c|| <= 1`
-- `H_SOT` / `H_lim`: SOT-limit of H_c along `c_k`; bounded self-adjoint, `||H_SOT|| <= 1`
-- `H_spec`: spectral operator `sum_n lambda_n^(inf) <f, Phi_n^(inf)> Phi_n^(inf)`; closable, symmetric
-- `q_c`, `q_lim`: associated quadratic forms (Paper X)
-- `kappa_n^(c)`: Airy normalisation coefficient, `|kappa_n^(c)| >= c_kappa > 0` (Paper VIII)
-- `A_N^(c,(M))`, `D^(M)`: PSWF compression and diagonal reference operator (Papers XIV–XV)
-- `Sigma_model(c)`: key intermediate-regime sum (Paper XV)
-- `theta(xi)`: WKB phase; `theta'''(0) != 0` (Paper XV Lem. 4.2)
-- `Phi(u;c)`: fold amplitude with cubic WKB phase (Paper XVI)
-- `c_3(c)`: cubic WKB coefficient, `c_3(c) >= delta_0 > 0` (target of Paper XVII)
-- `C`: canonical relation, locally `{(beta, Theta'(beta;c)+u; u, beta)}` (Paper XVI)
-
-### ⚠️ Critical distinction
-
-`H_SOT` and `H_spec` are **two separate objects**:
-- `H_SOT` = SOT-limit, bounded, self-adjoint — **unconditional**
-- `H_spec` = formal spectral series — **closable and symmetric, unconditional**
-- `H_SOT = closure(H_spec)` is **Open Problem IX.7 / Paper X Bridge Theorem (conditional)** — **not proved**
+| Symbol | Meaning |
+|---|---|
+| `ψ_n^(c)` | PSWF on [-T,T] with bandwidth ω, time-bandwidth c = ωT |
+| `λ_n(c)` | Slepian concentration eigenvalue: `‖ψ_n‖²_{L²([-T,T])}` |
+| `χ_n(c)` | Sturm–Liouville eigenvalue of D_c: `χ_n ~ n(n+1) + c²/2` |
+| `K_c` | Prolate concentration operator: `R_T ∘ B_ω ∘ R_T` |
+| `G^(N)_{p,c}` | Gram matrix of PSWF-sampled form |
+| `P_N` | Orthogonal projector onto `span{ψ_0,...,ψ_{N-1}}` in L²([-T,T]) |
+| `DSTP` | Discrete Spectral Transfer Property — central axiom of Paper I |
+| `f_{mn}` | Product function: `ψ_m^(c) · ψ_n^(c)` |
+| `μ_{mn}` | Sum of SL eigenvalues: `χ_m(c) + χ_n(c)` |
+| `E_{mn}[χ_k]` | Spectral mean of D_c in state f_{mn} |
+| `ρ_n^cl(x)` | Classical equilibrium density for index n |
+| `θ_n(x)` | Prüfer phase of ψ_n (Paper IV) |
+| `r_n(x)` | Prüfer amplitude of ψ_n (Paper IV) |
+| `r_n^WKB(x)` | WKB reference amplitude (Paper IV) |
+| `Δ_n(x)` | Amplitude deviation: `r_n² - r_n^WKB²` (Paper IV) |
+| `N_Sh = 2c/π` | Shannon number (approximate number of well-concentrated PSWFs) |
 
 ---
 
-## Papers I–VIII: Asymptotic Layer (FINAL)
+## Paper I — Gram Form Coercivity and DSTP
 
-- **I:** Gram matrix coercivity and defect decomposition;
-  introduces the **Discrete Spectral Transfer Property (DSTP)**
-  as the central reduction principle: frame stability ⇔ Schur-summable
-  defect matrix. DSTP verified for random and Gauss–PSWF sampling;
-  prime sampling left open.
-- **II:** Scaling limits, trace formula linking eigenvalues to primes;
-  conditional coercivity in the scaling limit under DSTP for prime sampling.
-- **III:** Spectral phase analysis, evidence for `c^{-1/2}` peak-width scaling
-- **IV:** No-go theorem — rules out naive bandlimited constructions
-- **V:** Barrier estimate for `t >> t_*`; numerical evidence for `Delta_eps ~ c^{-1/2}`
-- **VI:** Pointwise/L2/Airy bounds — Theorem 1 defers to Paper VII (companion preprint)
-- **VII:** Peak width upper bound `Delta_eps <= C c^{-1/2}`; composite Airy–WKB
-- **VIII:** Lower bound `Delta_eps >= c_1 c^{-1/2}`; sharp two-sided; Cor 4.3 exports `|lambda_n^(c)-lambda_n^(inf)| <= C c^{-1/4}`
+**Main result:** The prolate Gram form is coercive (explicit lower bounds) provided the
+**Discrete Spectral Transfer Property (DSTP)** holds for the sampling set.
 
-## Papers IX–XIII: Functional-Analytic Layer (DRAFT)
-
-- **IX:** Conditional framework; closability of H_spec; Open Problem 7 (Bridge)
-- **X:** Mosco convergence; Friedrichs extension; Bridge conditional on Hyp.(IX.b)
-- **XI:** Spectral inclusion; eigenvalue equation (along c_k only)
-- **XII:** Localization principle (abstract, fully proved); Gap-S and SOT-Faster open
-- **XIII:** Completeness barrier — no-reduction theorem; Route C incompatibility
-
-## Papers XIV–XVII + fold_model: Microlocal Layer (DRAFT)
-
-- **XIV:** HS decomposition Sigma_near + Sigma_int + Sigma_far
-- **XV:** `Sigma_model = o(1)` (Cor. 5.3); cubic non-degeneracy confirmed (Lem. 4.2)
-- **fold_model:** Universal CFU fold-amplitude normal form; phase diagram alpha < / = / > 1/2
-- **XVI:** Lagrangian singularity transport; Airy normal form conditional on Assumption 4.1(i)–(vi); Open Problem prob:PSWF-microlocal
-- **XVII:** Proof architecture for uniform CFU stability; two missing lemmas (see below)
+- Defect decomposition: `E_{mn} = R_{mn}^quad` — the defect is purely a quadrature error.
+  The PSWF orthogonality term is **exactly zero** (not small — exactly zero).
+- First-order quadrature bound: `|E_{mn}| ≤ C · h · c`, where h is mesh width.
+- DSTP verified: for random sampling and Gauss–PSWF sampling.
+- DSTP open: for prime sampling.
 
 ---
 
-## Two Remaining Closing Moves for Paper XVII
+## Paper II — Scaling Limits, Trace Formula, Weil Connection
 
-### Closing Move A — Paper XVIII-A
-Explicit computation of classical period:
-`T(lambda_n) = ∮_{E=lambda_n} dx / sqrt(lambda_n - V(x))`
-for `V(x) = x^2/(1-x^2)`. Show `T(lambda_n) > 0` and control `partial_E T(lambda_n)`.
-This is pure elliptic integral computation — no new ideas needed.
+**Main results (all unconditional):**
+- Normalized Gram operators `G̃_k` lie in the unit ball of the trace-class space.
+  Banach–Alaoglu gives weak-* accumulation points `G_∞ ≥ 0` with `tr(G_∞) ≤ 1`.
+- Trace formula: weighted trace of `G̃_k^w` converges to 1, consistent with PNT.
+- `ω_k → 0` (bandwidth to zero) is a forced consequence of scaling with primes.
 
-### Closing Move B — Paper XVIII-B
-CFU-Jacobian Lemma: show
-`J_total = J_can * J_Airy * J_symbol = |phi'| * (1 + O(h))`
-uniform in `K_eps`, with explicit ellipticity lower bound of the symbolic factor in `S^{-1/2}_{1,0}`.
-Standard CFU / Hörmander 3.2–3.3 + Zworski Ch.12 — no new ideas needed.
+**Conditional:**
+- Strong coercivity `λ_min(G̃_k) → 1` requires DSTP for prime sampling (open).
+- Identification of `G_∞` as the Weil operator (the RH-relevant step) remains open.
 
 ---
 
-## Central Open Problems (as of April 2026)
+## Paper II_quadrature — Implication Framework for XRY
 
-| Problem | Front | Source |
+This paper is explicitly an **implication framework**, not a theorem paper.
+
+It shows:
+- **Conjecture (i)** [PSWF product tail, bulk + off-diagonal]
+  + **Conjecture (ii)** [XRY stability]
+  ⟹ DSTP for bulk/off-diagonal XRY quadrature.
+
+- The **edge regime** (m,n ~ N) is a **proved obstruction** (bandwidth doubling,
+  from Paper III prop:bwdoubling): global uniform tail bound is FALSE.
+  Conjecture (i) is therefore split: proved for bulk/off-diagonal, false globally.
+
+---
+
+## Paper III — PSWF Product Spectral Tail Estimates
+
+The central analytic paper. All results are for `f_{mn} = ψ_m · ψ_n`.
+
+| Result | Status |
+|---|---|
+| Uniform off-diagonal bound: `‖(I-P_N)f_{mn}‖ ≤ C T^{1/2}`, `|m-n| ≥ δN` | ✅ unconditional |
+| Mean spectral localization: `E_{mn}[χ_k] = μ_{mn} + E_{mn}` | ✅ unconditional |
+| IBP energy identity for commutator | ✅ unconditional |
+| Spectral lower bound: `E_{mn}[χ_k] ≥ μ_{mn}/2` | ✅ unconditional |
+| Edge obstruction: `E_out(f_{nn}) ≥ c₀ > 0` for n ~ N | ✅ unconditional (negative) |
+| Bulk decorrelation reduction (Lemma 6.3) | ✅ unconditional |
+| Bulk exponential tail bound: `‖(I-P_N)f_{mn}‖ ≤ C e^{-αN}` for m,n ≤ γN | ⚠️ cond. on Assumption 2.4 |
+| Off-diagonal algebraic decay: `≤ C_p(1+|m-n|)^{-p}` | ⚠️ cond. on Assumption 3.1 |
+
+**Key tool:** Slepian energy identity reduces the spectral tail bound to the
+out-of-band Fourier energy of f_{mn}. Bandwidth doubling: `f_{mn} ∈ PW_{2ω}`.
+
+---
+
+## Paper IV — Semiclassical Equidistribution of PSWF Densities
+
+**The most complete paper. Fully proved, no external assumptions.**
+
+**Main theorem (thm:weak-limit):** For n ≤ γN and f ∈ C¹([-T,T]):
+```
+∫f ψ_n² dx = λ_n(c) ∫f ρ_n^cl dx + R_n(f)
+|R_n(f)| ≤ (C_{δ,γ} λ_n / n) · (‖f‖_{L∞} + T‖f'‖_{L∞})
+```
+Uniform in n ≤ γN and f ∈ C¹. No microlocal machinery.
+
+**Proof structure (strict DAG, no circular dependencies):**
+1. Prüfer transform: ψ_n = r_n sin θ_n, p ψ_n' = r_n ω_n^cl cos θ_n
+2. Oscillation control (Lemma 3.1): `|∫h cos(2θ_n)| ≤ C‖h‖_{C¹}/n` via IBP,
+   using phase monotonicity `θ_n' ≥ c_{δ,γ} n` on I_δ.
+   The **sup-form** (not just the full integral) is essential for step 3.
+3. Drift cancellation identity (Step 1 of Lemma 4.2):
+   `d/dx log(r_n/r_n^WKB) = G(x)(1 + cos(2θ_n))`.
+   The D = p'/(4p) terms cancel **exactly algebraically** — not a smallness argument.
+   This reduces everything to a single oscillatory integral.
+4. Gronwall bootstrap (Step 4 of Lemma 4.2): the self-referential term
+   `2Δ_n G cos(2θ_n)` is O(1/n²), strictly smaller than the O(1/n) main term.
+5. Normalization matching via Bohr–Sommerfeld (Lemma 4.3).
+
+**Corollary (cor:bulk-program-closed):** Paper IV supplies hypothesis (6.1) of
+Paper III Lemma 6.3 (bulk decorrelation reduction) with ω_n = C_{δ,γ}/n.
+This closes the bulk program:
+```
+Paper IV thm:weak-limit
+  → Paper III lem:bulk-reduction
+  → Paper III prob:comm-refined
+  → Bulk tail bound (conditional on Assumption 2.4)
+```
+
+---
+
+## What Is Unconditionally Proved (as of April 30, 2026)
+
+- Frame coercivity under DSTP, with explicit bounds (Paper I) ✅
+- Exact defect decomposition E_{mn} = R_{mn}^quad (Paper I) ✅
+- DSTP verified for random and Gauss–PSWF sampling (Paper I) ✅
+- Compactness of normalized Gram operators in scaling limit (Paper II) ✅
+- Trace formula with PNT consistency (Paper II) ✅
+- Uniform off-diagonal bound ‖(I-P_N)f_{mn}‖ ≤ CT^{1/2} (Paper III) ✅
+- Mean spectral localization E_{mn}[χ_k] = μ_{mn} + E_{mn} (Paper III) ✅
+- Spectral lower bound E_{mn}[χ_k] ≥ μ_{mn}/2 (Paper III) ✅
+- Edge obstruction: global uniform tail bound FALSE for m,n ~ N (Paper III) ✅
+- Weak convergence of PSWF densities ψ_n² → λ_n ρ_n^cl, rate O(1/n) (Paper IV) ✅
+- Energy equidistribution A_{mn}+B_{mn} ≈ μ_{mn}/2 for m,n ≤ γN (Paper IV→III) ✅
+
+---
+
+## What Remains Open (as of April 30, 2026)
+
+| Problem | Source | Severity |
 |---|---|---|
-| `H_SOT = closure(H_spec)` | Operator identification | Paper IX OP.7 |
-| Uniform CFU Jacobian — Assumption 4.1(vi) | Microlocal | Paper XVI |
-| `T(lambda_n)` explicit for `V(x)=x²/(1-x²)` | Classical dynamics | Paper XVII |
-| Completeness of `{Phi_n^(inf)}` | Spectral completeness | Paper XI |
-| Subsequence-independence | Spectral uniqueness | Paper XI |
-| Gap lower bound | Spectral gap | Paper XII |
-| Lipschitz regularity of PSWF amplitude | HS programme | Paper XV Prob.6.1 |
-| Local Weyl law | HS programme | Paper XV Prob.7.1 |
+| Bulk convolution decay (Assumption 2.4 of Paper III) | Paper III | **Medium — next target** |
+| DSTP for prime sampling | Paper I | High |
+| Off-diagonal algebraic decay (Assumption 3.1 of Paper III) | Paper III | Medium-low |
+| Identification of G_∞ as Weil operator | Paper II | High (long-term) |
+| XRY stability conjecture (Conjecture (ii) of Paper II_quad) | Paper II_quad | Open |
+| Off-diagonal analogue of Paper IV main theorem | Paper IV P2 | Future work |
+| Paper IV extension to C⁰ test functions | Paper IV P1 | Non-critical |
+
+**The single most actionable next step:** prove Assumption 2.4 via the Schur test
+(Variante A in `assumption_2_4_target.md`). All inputs are already in the program.
+This would make the bulk tail bound `‖(I-P_N)f_{mn}‖ ≤ Ce^{-αN}` unconditional.
 
 ---
 
 ## Key References
 
-- Olver (1974): *Asymptotics and Special Functions*
-- Osipov–Rokhlin–Xiao (2013): *Prolate Spheroidal Wave Functions of Order Zero*
-- Slepian–Pollak (1961): Original PSWF paper
-- CCM2025: Connes–Consani–Moscovici, arXiv:2511.22755
-- Kato (1966): *Perturbation Theory for Linear Operators*
-- Zworski (2012): *Semiclassical Analysis*, AMS
-- Hörmander (1983): *Analysis of Linear PDE I* — Ch. 7.7, 18.1–18.2, 25.1
-- Chester–Friedman–Ursell (1957): CFU steepest descent extension
-- Guillemin–Uhlmann (1981): Oscillatory integrals with singular symbols
-- Arnold (1972): Normal forms near degenerate critical points
-- Reed–Simon (1975): *Methods of Modern Mathematical Physics, Vol. II*
-- Mosco (1969): Convergence of convex sets
+- Osipov–Rokhlin–Xiao (2013): *Prolate Spheroidal Wave Functions of Order Zero*, Springer
+- Slepian (1978): Bell Syst. Tech. J. 57, 1371–1430
+- Levitan–Sargsjan (1991): *Sturm–Liouville and Dirac Operators*, Kluwer
+- Weil (1952): positivity criterion
+- Connes–Consani–Moscovici (2025): arXiv:2511.22755
+- Widom (1964): asymptotic concentration eigenvalue bounds
+- Reed–Simon (1975): *Methods of Modern Mathematical Physics, Vol. I–II*
