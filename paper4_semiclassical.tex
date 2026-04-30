@@ -328,9 +328,12 @@ the mass outside $[-T,T]$ is exponentially small,
 by Lemma~\ref{lem:turning-point-cutoff}.
 Hence the WKB amplitude $A_n$ computed under
 $\|\psin\|_{L^2(\mathbb{R})}=1$ can be transferred to the
-$[-T,T]$-normalization by multiplying through $\lambda_n(c)$,
-at the cost of an exponentially small relative error
-$O(e^{-\beta_\gamma n})$,
+$[-T,T]$-normalization without rescaling the function:
+since $\|\psin\|_{L^2(\mathbb{R})}^2 = 1$ and
+$\int_{-T}^T \psin^2 = \lambda_n(c) = 1 + O(e^{-\beta_\gamma n})$,
+the two norms are asymptotically identical in the bulk regime,
+and $A_n$ remains valid when integrals are restricted to $[-T,T]$,
+up to a relative error $O(e^{-\beta_\gamma n})$
 which is negligible compared to the $O(1/n)$ term in \eqref{eq:BS}.
 \end{remark}
 %% ---- end FIX (A) -----------------------------------------------
@@ -341,8 +344,10 @@ By \cite[Ch.~5, Thm.~5.1]{OsipovRokhlinXiao}, under the global
 normalization $\|\psin\|_{L^2(\mathbb{R})}=1$,
 the WKB amplitude satisfies $A_n^2 = 2/\pi$.
 By Remark~\ref{rem:norm-conventions}, this value remains valid
-when the integral is evaluated over $[-T,T]$ under the
-time-limited normalization, up to a relative error
+when the integral is evaluated over $[-T,T]$: no rescaling of
+$\psin$ is performed; rather, the two normalizations are
+asymptotically identical in the bulk regime, so $A_n$ applies
+directly to the restricted integral, up to relative error
 $O(e^{-\beta_\gamma n}) = O(1/n)$.
 Combining \eqref{eq:BS-bulk-norm} and \eqref{eq:wkb-norm-int}:
 \[
@@ -666,7 +671,6 @@ with initial value $r(x_0) = r_n(x_0)$, i.e., the Pr\"ufer amplitude ODE
 \eqref{eq:r-ode} with the oscillatory $G(x)\cos(2\theta_n)$ term set to zero.
 \end{definition}
 
-%% ---- FIX A: exact deviation identity as a named lemma ----------
 \begin{lemma}[Exact amplitude deviation identity]\label{lem:deviation-ode}
 Let $\Delta_n(x) := r_n(x)^2 - r_n^{\mathrm{WKB}}(x)^2$.
 Then $\Delta_n$ satisfies the closed linear ODE:
@@ -718,7 +722,6 @@ Since $(\wncl)'/(2\wncl) = O(1/n)$ uniformly on $I_\delta$
 (Lemma~\ref{lem:G-regularity}) and $r_n^{\mathrm{WKB},2} \le C r_n(x_0)^2$,
 the forcing $2r_n^{\mathrm{WKB},2}\widetilde{B}_n = O(r_n(x_0)^2/n)$.
 \end{proof}
-%% ---- end FIX A -------------------------------------------------
 
 \begin{lemma}[Amplitude drift]\label{lem:amplitude-drift}
 For $n \le \gamma N$ and all $x \in I_\delta$:
