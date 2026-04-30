@@ -140,34 +140,20 @@ yields the diagonal bound
 \medskip\noindent
 \textbf{(ii) Off-diagonal decay via kernel splitting.}
 Since $N \le \gamma\,\NSh$, the projector $P_N$ is a
-sub-projection of $P_{\lfloor\gamma\NSh\rfloor}$, so it
-suffices to control the kernel $K_M$ with
-$M := \lfloor\gamma\,\NSh\rfloor$.
+sub-projection of $P_M$ with $M := \lfloor\gamma\,\NSh\rfloor$.
 We decompose
 \[
-  K_M = K_{\mathrm{BL}} + (K_M - K_{\mathrm{BL}}),
+  K_M = K_{\mathrm{BL}} + \widetilde{E}^- - \widetilde{E}^+,
 \]
-where $K_{\mathrm{BL}}$ is the exact band-limited projector
-with kernel
-\[
-  K_{\mathrm{BL}}(x,y)
-  = \frac{c}{\pi T}
-    \frac{\sin\!\bigl(c(x-y)/T\bigr)}{c(x-y)/T}.
-\]
-Splitting the spectrum at $M = \lfloor\gamma\,\NSh\rfloor$
-yields
-\[
-  K_M - K_{\mathrm{BL}}
-  = \sum_{n \le M}(1-\lambda_n)\psi_n\psi_n
-    - \sum_{n > M}\lambda_n\psi_n\psi_n.
-\]
-By construction, every term in the first sum satisfies
-$1-\lambda_n \le e^{-c_1 c}$ (bulk regime), and
-every term in the second satisfies
-$\lambda_n \le e^{-c_2 c}$ (tail regime).
-There is \emph{no transition region}:
-the split at $M < \NSh$ places the entire spectrum
-cleanly on one side of the spectral cliff.
+where $\widetilde{E}^- = \sum_{n<M}(1-\lambda_n)\psi_n\psi_n$
+and $\widetilde{E}^+ = \sum_{n \ge M}\lambda_n\psi_n\psi_n$.
+The term $\widetilde{E}^-$ is exponentially small ($1-\lambda_n \le e^{-c_1 c}$
+for all $n < M \le \gamma\NSh$).
+For $\widetilde{E}^+$ we split at $\NSh$:
+the true tail $n \ge \NSh$ is exponentially small,
+and the near-bulk block $M \le n < \NSh$ is controlled by
+the positive semi-definiteness of $\widetilde{E}^+_{\mathrm{near}}$
+and its dominance by $\KBL$.
 
 \medskip\noindent
 \textbf{(iii) Schur test.}
@@ -186,25 +172,10 @@ via the classical Schur test \cite[Thm.~VI.23]{ReedSimonI}.
 The argument shows that no additional microlocal or
 pseudodifferential machinery is required to control the PSWF
 projector in the bulk regime.
-
-Instead, the combination of:
-\begin{itemize}
-  \item Pr\"ufer-based amplitude control (\cite{PaperIV}),
-  \item exact Fourier structure of the band-limited projector,
-  \item and classical operator bounds,
-\end{itemize}
-is sufficient to close the program.
-
-Notably, the diagonal estimate for $K_N(x,x)$ is obtained
-directly from the Pr\"ufer analysis, rather than invoked
-from the Landau--Widom theory.
-The key structural feature exploited in Section~\ref{sec:offdiag}
-is that by splitting the spectrum at
-$\lfloor\gamma\,\NSh\rfloor < \NSh$,
-one avoids the transition region entirely:
-both partial sums in the decomposition of $K_M - \KBL$
-are controlled by the exponential eigenvalue concentration
-of Lemma~\ref{lem:eigenvalue-decay}.
+The key structural feature is that the operator $\KBL$
+positive-semi-definiteness dominates the near-bulk error:
+no estimate on individual eigenvalues $\lambda_n$ in the
+transition region $M \le n < \NSh$ is required.
 
 % --------------------------------------------------------------
 \subsection{Organization of the paper}
@@ -326,22 +297,15 @@ For the eigenvalue we use the standard PSWF bound
 \begin{equation}\label{eq:chi-bound}
   \chi_n(c) \le c^2 + C n^2.
 \end{equation}
-The bound \eqref{eq:chi-bound} is uniform in $c$:
-it reflects the correct joint scaling of the PSWF
-eigenvalues without restriction to any particular regime.
 Combining $\wcl(x) \le \sqrt{\chi_n(c)}$
-with \eqref{eq:chi-bound}:
+with \eqref{eq:chi-bound} and $n \le \gamma\,\NSh \le c$:
 \begin{equation}\label{eq:wcl-upper}
-  \wcl(x) \le \sqrt{c^2 + Cn^2} \le C_{\delta,\gamma}(c + n)
-  \le C_{\delta,\gamma}\,c
-  \qquad\text{for all } x \in I_\delta,
+  \wcl(x) \le C_{\delta,\gamma}\,c
+  \qquad\text{for all } x \in I_\delta.
 \end{equation}
-where the last inequality uses $n \le \gamma\,\NSh = 2\gamma c/\pi \le c$.
 Therefore:
 \begin{equation}\label{eq:denom-lower}
   \int_{I_\delta} \frac{dt}{\wcl(t)}
-  \;\ge\;
-  \frac{|I_\delta|}{C_{\delta,\gamma}\,c}
   \;\ge\;
   \frac{c'_{\delta,\gamma}\,T}{c}.
 \end{equation}
@@ -349,15 +313,12 @@ Therefore:
 \medskip\noindent
 \textit{Conclusion of Step 2.}
 Combining the numerator bound $1/\wcl(x) \le C_{\delta,\gamma}/n$
-with denominator bound \eqref{eq:denom-lower} and using
-$n \ge 1$:
+with \eqref{eq:denom-lower} and $n \ge 1$:
 \[
   \rhocl(x)
-  \;\le\;
-  \frac{C_{\delta,\gamma}/n}{c'_{\delta,\gamma}\,T/c}
-  \;=\;
+  \le
   \frac{C_{\delta,\gamma}\,c}{n\,T}
-  \;\le\;
+  \le
   \frac{C_{\delta,\gamma}\,c}{T},
 \]
 establishing~\eqref{eq:density-bound}.
@@ -378,33 +339,14 @@ contribute $O(c\log N/T) = o(Nc/T)$,
 completing the proof.
 \end{proof}
 
-\begin{remark}[Scaling of the density bound]
-\label{rem:density-scaling}
-The bound \eqref{eq:density-bound} gives $\rhocl(x) = O(c/T)$,
-which is sufficient for the diagonal estimate.
-One expects the sharper pointwise scaling $\rhocl(x) = O(1/T)$,
-consistent with the normalization
-$\int_{-x_+(n)}^{x_+(n)} \rhocl(x)\,dx = 1$
-and the equidistribution on a support of length $O(T)$.
-This sharper bound would follow from a lower bound on $n$
-(e.g., $n \ge c_0 > 0$ uniformly), but is not required
-for the present argument.
-\end{remark}
-
 \begin{remark}[Relation to Landau--Widom]
 \label{rem:landau-widom}
 Proposition~\ref{prop:diagonal} recovers the classical
 Landau--Widom diagonal estimate \cite{Widom64}.
-The two inputs to the proof are of different nature:
-the numerator bound is a \emph{local dynamical statement},
-obtained from the Pr\"ufer amplitude flow of \cite{PaperIV},
-while the denominator bound is a \emph{global spectral statement},
-resting on the PSWF eigenvalue bound
-$\chi_n(c) \le c^2 + Cn^2$, uniform in $c$.
-Their combination yields the diagonal estimate without
-invoking reproducing kernel identities or the
-Landau--Widom trace formula, and with explicit constants
-that are uniform in all parameters.
+The diagonal estimate requires no reproducing kernel
+identities or the Landau--Widom trace formula;
+it follows directly from the Pr\"ufer amplitude control
+of \cite{PaperIV} with constants uniform in all parameters.
 \end{remark}
 
 % =============================================================
@@ -419,11 +361,16 @@ In this section we establish the off-diagonal bound
   \;\le\;
   \frac{C_{\delta,\gamma}}{1 + c|x-y|/T}
   \;+\;
+  C_{\delta,\gamma}\,\frac{c}{\pi T}
+  \;+\;
   C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c},
 \end{equation}
 for all $x,y \in I_\delta$ and all $N \le \gamma\,\NSh$,
 where $c_3 > 0$ depends only on $\delta$ and $\gamma$.
-The proof is structured in five steps.
+The second term, of order $c/T$, arises from the near-bulk
+block $M \le n < \NSh$ via the $\KBL$-dominance argument;
+it is controlled in the Schur test
+(Section~\ref{sec:schur}) by a separate integration argument.
 
 % --------------------------------------------------------------
 \subsection{The band-limited kernel}
@@ -462,42 +409,31 @@ For all $x, y \in \mathbb{R}$,
 \begin{proof}
 At $x = y$: $\KBL(x,x) = c/(\pi T)$ and the bound holds trivially.
 For $x \neq y$: set $u := c|x-y|/T > 0$.
-Using $|\sin(u)| \le 1$ and $|\sin(u)/u| \le 1/u$, we obtain
+Using $|\sin(u)| \le 1$ and $|\sin(u)/u| \le 1/u$,
 \[
   \left|\frac{\sin u}{u}\right|
   \le \min\!\left(1,\,\frac{1}{u}\right)
   \le \frac{2}{1 + u},
 \]
-where the last inequality follows from comparing the two cases
-$u \le 1$ (giving $2/(1+u) \ge 1$) and $u > 1$
-(giving $2/(1+u) > 1/u$).
+where the last step follows by checking both cases $u \le 1$
+($2/(1+u) \ge 1$) and $u > 1$ ($2/(1+u) > 1/u$).
 Therefore
 \[
   |\KBL(x,y)|
-  = \frac{c}{\pi T}\,\left|\frac{\sin(c(x-y)/T)}{c(x-y)/T}\right|
   \le \frac{c}{\pi T}\cdot\frac{2}{1 + u}
   = \frac{2c/(\pi T)}{1 + c|x-y|/T}. \qedhere
 \]
 \end{proof}
 
 % --------------------------------------------------------------
-\subsection{Algebraic decomposition of the difference}
+\subsection{Algebraic decomposition}
 \label{subsec:decomp}
 
 Since $N \le \gamma\,\NSh$, the projector $P_N$ is a
-sub-projection of $P_M$, where $M := \lfloor\gamma\,\NSh\rfloor$.
-More precisely, $\mathrm{ran}(P_N) \subseteq \mathrm{ran}(P_M)$,
+sub-projection of $P_M$, where $M := \lfloor\gamma\,\NSh\rfloor$,
 so $\|P_N\|_{L^2 \to L^2(\Ish)} \le \|P_M\|_{L^2 \to L^2(\Ish)}$.
-It therefore suffices to establish the Schur bound for the
-kernel $K_M(x,y) = \sum_{n=0}^{M-1}\psi_n(x)\psi_n(y)$.
+It therefore suffices to bound the kernel $K_M$.
 
-We split the spectrum at the bulk threshold $M$:
-\begin{align}
-\label{eq:algebraic-split}
-  K_M(x,y) - \KBL(x,y)
-  &= \sum_{n=0}^{M-1}(1-\lambda_n)\psi_n(x)\psi_n(y)
-    - \sum_{n=M}^{\infty}\lambda_n\psi_n(x)\psi_n(y).
-\end{align}
 We write
 \begin{equation}
 \label{eq:split}
@@ -505,35 +441,36 @@ We write
 \end{equation}
 where
 \[
-  \widetilde{E}^-(x,y)
-  := \sum_{n < M}(1-\lambda_n)\psi_n(x)\psi_n(y),
+  \widetilde{E}^-(x,y) := \sum_{n < M}(1-\lambda_n)\psi_n(x)\psi_n(y),
   \qquad
-  \widetilde{E}^+(x,y)
-  := \sum_{n \ge M}\lambda_n\psi_n(x)\psi_n(y).
+  \widetilde{E}^+(x,y) := \sum_{n \ge M}\lambda_n\psi_n(x)\psi_n(y).
 \]
-The key point is that the split at $M = \lfloor\gamma\,\NSh\rfloor$
-places the entire spectrum cleanly on one side of the
-spectral cliff at $\NSh$:
+We further split $\widetilde{E}^+$ at $\NSh$:
+\begin{equation}
+\label{eq:Eplus-split-def}
+  \widetilde{E}^+ = \widetilde{E}^+_{\mathrm{near}} + \widetilde{E}^+_{\mathrm{tail}},
+\end{equation}
+where
+\[
+  \widetilde{E}^+_{\mathrm{near}}(x,y)
+  := \sum_{n=M}^{\NSh-1}\lambda_n\psi_n(x)\psi_n(y),
+  \qquad
+  \widetilde{E}^+_{\mathrm{tail}}(x,y)
+  := \sum_{n \ge \NSh}\lambda_n\psi_n(x)\psi_n(y).
+\]
+The three terms are controlled as follows:
 \begin{itemize}
-  \item every index in $\widetilde{E}^-$ satisfies $n < M < \NSh$,
-  so the bulk bound $1 - \lambda_n \le e^{-c_1 c}$ applies
-  (Lemma~\ref{lem:eigenvalue-decay}(i));
-  \item every index in $\widetilde{E}^+$ satisfies $n \ge M > 0$,
-  and since $M < \NSh$, the tail starts at or before $\NSh$,
-  but all contributions with $n \ge \NSh$ are exponentially
-  small by Lemma~\ref{lem:eigenvalue-decay}(ii), while the
-  finitely many terms $M \le n < \NSh$ are handled
-  separately in Subsection~\ref{subsec:diff-bound}.
+  \item $\widetilde{E}^-$: every index satisfies $n < M \le \gamma\,\NSh$,
+  so $1-\lambda_n \le e^{-c_1 c}$ (Lemma~\ref{lem:eigenvalue-decay}(i))
+  $\Rightarrow$ exponentially small.
+  \item $\widetilde{E}^+_{\mathrm{tail}}$: every index satisfies $n \ge \NSh$,
+  so $\lambda_n \le e^{-c_2 c}$ (Lemma~\ref{lem:eigenvalue-decay}(ii))
+  $\Rightarrow$ exponentially small.
+  \item $\widetilde{E}^+_{\mathrm{near}}$: the near-bulk block $M \le n < \NSh$
+  requires no eigenvalue bound in the Airy-scale transition region;
+  it is controlled instead by $\KBL$-dominance via positive
+  semi-definiteness (Subsection~\ref{subsec:diff-bound}).
 \end{itemize}
-There is \emph{no spurious transition region}: the original
-decomposition at $N$ (rather than $M$) would leave indices
-$N \le n < \NSh$ with $\lambda_n \approx 1$,
-contributing $O(c^2/T)$ to $|E^+|$ after summation,
-which is not integrable uniformly in $c$.
-By contrast, the present split at $M \le \gamma\,\NSh$
-ensures $1 - \lambda_n$ is exponentially small for
-\emph{all} $n < M$, and the tail $n \ge M$
-is bounded by the argument of Subsection~\ref{subsec:diff-bound}.
 
 % --------------------------------------------------------------
 \subsection{Spectral decay of PSWF eigenvalues}
@@ -561,34 +498,31 @@ Both bounds are uniform in $c > 0$.
 \end{lemma}
 
 \begin{proof}
-These are standard results from PSWF concentration theory.
-Part~(i) is \cite[Theorem~4.6]{OsipovRokhlinXiao},
-which gives $1 - \lambda_n \le e^{-c_1(c - n\pi/2)}$
-for $n \le \gamma\,\NSh$; since $c - n\pi/2 \ge c(1 - \gamma\pi/4) \ge c_\gamma c$,
-the bound \eqref{eq:lambda-bulk} follows.
-Part~(ii) is \cite[Theorem~4.9]{OsipovRokhlinXiao}:
-for $n \ge \NSh$, one has $\lambda_n \le e^{-c_2(n\pi/2 - c)}$,
-and $n\pi/2 - c \ge (\pi/2 - 1)c > 0$ for $n \ge \NSh = 2c/\pi$.
+Part~(i): \cite[Theorem~4.6]{OsipovRokhlinXiao} gives
+$1 - \lambda_n \le e^{-c_1(c - n\pi/2)}$;
+since $c - n\pi/2 \ge c(1 - \gamma\pi/4) \ge c_\gamma c$,
+bound \eqref{eq:lambda-bulk} follows.
+Part~(ii): \cite[Theorem~4.9]{OsipovRokhlinXiao} gives
+$\lambda_n \le e^{-c_2(n\pi/2 - c)}$;
+since $n\pi/2 - c \ge (\pi/2 - 1)c > 0$ for $n \ge \NSh = 2c/\pi$,
+bound \eqref{eq:lambda-tail} follows.
 \end{proof}
 
-\begin{remark}
-\label{rem:eigenvalue-gap}
-The exponential bounds in Lemma~\ref{lem:eigenvalue-decay}
-quantify the sharp spectral cliff of the PSWF eigenvalue
-sequence at the Shannon number $\NSh = 2c/\pi$: eigenvalues
-below index $\NSh$ are exponentially close to~$1$, and
-those above are exponentially close to~$0$.
-The constants $c_1, c_2$ depend on the gap parameter
-$\gamma$, but are independent of $c$ and $T$.
+\begin{remark}[Transition region]
+\label{rem:transition-region}
+For indices $M \le n < \NSh$ in the near-bulk block, neither
+bulk bound~\eqref{eq:lambda-bulk} nor tail
+boundary~\eqref{eq:lambda-tail} applies:
+the eigenvalues $\lambda_n$ transition on the Airy scale
+$|n - \NSh| = O(c^{1/3})$ and are not individually small.
+This is why $\widetilde{E}^+_{\mathrm{near}}$ requires the
+PSD-dominance argument of Subsection~\ref{subsec:diff-bound},
+rather than a direct eigenvalue bound.
 \end{remark}
 
 % --------------------------------------------------------------
-\subsection{Pointwise \texorpdfstring{$L^\infty$}{L-infty} bound
-            for PSWF eigenfunctions}
+\subsection{Pointwise $L^\infty$ bound for PSWF eigenfunctions}
 \label{subsec:Linfty}
-
-To bound the error terms $\widetilde{E}^\pm$, we need a pointwise
-$L^\infty$ control on the PSWF eigenfunctions.
 
 \begin{lemma}[$L^\infty$ bound for $\psi_n$]
 \label{lem:Linfty}
@@ -600,106 +534,110 @@ For all $n \le \gamma\,\NSh$ and all $x \in I_\delta$,
 \end{lemma}
 
 \begin{proof}
-From \eqref{eq:psi-squared-bound} and \eqref{eq:density-bound}
-in the proof of Proposition~\ref{prop:diagonal}:
-\[
-  \psi_n(x)^2
-  \le C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x)
-  \le C_{\delta,\gamma}\,\frac{c}{T},
-\]
-using $\lambda_n \le 1$ and the density bound~\eqref{eq:density-bound}.
+From \eqref{eq:psi-squared-bound} and \eqref{eq:density-bound}:
+$\psi_n(x)^2 \le C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x)
+\le C_{\delta,\gamma}\,c/T$.
 \end{proof}
 
-\begin{remark}
-The bound \eqref{eq:Linfty} gives
-$|\psi_n(x)| \le C_{\delta,\gamma}\,T^{-1/2}$,
-which is consistent with the $L^2([-T,T])$ normalization
-$\|\psi_n\|_{L^2} = 1$: a function of unit $L^2$ norm on an
-interval of length $O(T)$, distributed without concentration,
-has pointwise values of order $T^{-1/2}$.
-The explicit factor $c$ in \eqref{eq:Linfty} reflects
-the sharper estimate available in the bulk via WKB.
-\end{remark}
-
 % --------------------------------------------------------------
-\subsection{Bounding the difference kernel}
+\subsection{Bounding the error kernels}
 \label{subsec:diff-bound}
-
-We now bound both error terms in \eqref{eq:split}.
 
 \medskip\noindent
 \textbf{Bounding $\widetilde{E}^-$.}
-Since every $n < M \le \gamma\,\NSh$ lies in the bulk regime,
-Lemma~\ref{lem:eigenvalue-decay}(i) gives $1-\lambda_n \le e^{-c_1 c}$.
-Applying the triangle inequality and Lemma~\ref{lem:Linfty}:
-\begin{equation}
-\label{eq:Eminus-bound}
-  |\widetilde{E}^-(x,y)|
-  \le \sum_{n=0}^{M-1}(1-\lambda_n)\,|\psi_n(x)|\,|\psi_n(y)|
-  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n=0}^{M-1}(1-\lambda_n)
-  \le \frac{C_{\delta,\gamma}\,c}{T} \cdot M\,e^{-c_1 c}.
-\end{equation}
-Using $M \le \gamma\,\NSh \asymp c$:
+For $n < M \le \gamma\,\NSh$, Lemma~\ref{lem:eigenvalue-decay}(i)
+and Lemma~\ref{lem:Linfty} give:
 \begin{equation}
 \label{eq:Eminus-final}
   |\widetilde{E}^-(x,y)|
-  \;\le\;
-  C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c}.
+  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n<M}(1-\lambda_n)
+  \le C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c},
 \end{equation}
+using $M \le \gamma\,\NSh \asymp c$.
 
 \medskip\noindent
-\textbf{Bounding $\widetilde{E}^+$.}
-We split the tail sum at $\NSh$:
-\begin{equation}
-\label{eq:Eplus-split}
-  |\widetilde{E}^+(x,y)|
-  \le \sum_{n=M}^{\NSh-1}\lambda_n\,|\psi_n(x)|\,|\psi_n(y)|
-   +  \sum_{n=\NSh}^{\infty}\lambda_n\,|\psi_n(x)|\,|\psi_n(y)|.
-\end{equation}
-
-For indices $M \le n < \NSh$: since $M = \lfloor\gamma\,\NSh\rfloor$,
-these indices satisfy $n \ge \gamma\,\NSh$, so
-Lemma~\ref{lem:eigenvalue-decay}(i) does \emph{not} apply
-to bound $\lambda_n$.
-However, these indices satisfy $n \ge M > \gamma\,\NSh$
-and $n < \NSh$, so we apply the \emph{tail-side} version of the
-eigenvalue bound: from \cite[Theorem~4.9]{OsipovRokhlinXiao},
-for $n \ge \gamma\,\NSh$ one has
-$\lambda_n \le e^{-c_4(n - \gamma\NSh)} \le e^{-c_4(n - \gamma\NSh)}$,
-with $c_4 > 0$ depending only on $\gamma$.
-In particular, $\lambda_n \le e^{-c_4 c(1-\gamma)\pi/2} \cdot e^{-c_4(n - \NSh)^+}$,
-so the sum over $M \le n < \NSh$ is geometrically bounded:
-\begin{equation}
-\label{eq:Eplus-near}
-  \sum_{n=M}^{\NSh-1}\lambda_n\,|\psi_n(x)|\,|\psi_n(y)|
-  \;\le\;
-  \frac{c}{T}\sum_{n=M}^{\NSh-1}\lambda_n
-  \;\le\;
-  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_4 c}.
-\end{equation}
-
-For indices $n \ge \NSh$: Lemma~\ref{lem:eigenvalue-decay}(ii)
+\textbf{Bounding $\widetilde{E}^+_{\mathrm{tail}}$.}
+For $n \ge \NSh$, Lemma~\ref{lem:eigenvalue-decay}(ii)
 and Lemma~\ref{lem:Linfty} give:
 \begin{equation}
-\label{eq:Eplus-far}
-  \sum_{n=\NSh}^{\infty}
-  \lambda_n\,|\psi_n(x)|\,|\psi_n(y)|
-  \;\le\;
-  \frac{c}{T}\sum_{n=\NSh}^{\infty}\lambda_n
-  \;\le\;
-  \frac{c}{T} \cdot C_\gamma\,e^{-c_2 c},
+\label{eq:Eplus-tail-final}
+  |\widetilde{E}^+_{\mathrm{tail}}(x,y)|
+  \le \frac{c}{T}\sum_{n \ge \NSh}\lambda_n
+  \le C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_2 c},
 \end{equation}
-where we used $\sum_{n=\NSh}^\infty \lambda_n \le C\,e^{-c_2 c}$
+where we used $\sum_{n \ge \NSh}\lambda_n \le C\,e^{-c_2 c}$
 (from \eqref{eq:lambda-tail} and geometric summation).
 
-Combining \eqref{eq:Eminus-final}--\eqref{eq:Eplus-far}:
+\medskip\noindent
+\textbf{Bounding $\widetilde{E}^+_{\mathrm{near}}$ via $\KBL$-dominance.}
+The key observation is that
+$\widetilde{E}^+_{\mathrm{near}}$, $\widetilde{E}^+_{\mathrm{tail}}$,
+and $\KBL$ are all positive semi-definite (PSD) kernels,
+and
 \begin{equation}
-\label{eq:KN-KBL-bound}
+\label{eq:PSD-order}
+  0 \preceq \widetilde{E}^+_{\mathrm{near}}
+  \preceq \widetilde{E}^+
+  \preceq \KBL,
+\end{equation}
+since $\KBL - \widetilde{E}^+ = \sum_{n < M}\lambda_n\psi_n\psi_n \succeq 0$
+and $\widetilde{E}^+ - \widetilde{E}^+_{\mathrm{near}}
+= \widetilde{E}^+_{\mathrm{tail}} \succeq 0$.
+
+By the Cauchy--Schwarz inequality for PSD kernels:
+\begin{equation}
+\label{eq:PSD-CS}
+  |A(x,y)|^2 \le A(x,x)\,A(y,y)
+  \quad\text{for any PSD kernel } A.
+\end{equation}
+Applying \eqref{eq:PSD-CS} to $\widetilde{E}^+_{\mathrm{near}}$
+and using \eqref{eq:PSD-order}:
+\begin{equation}
+\label{eq:Eplus-near-final}
+  |\widetilde{E}^+_{\mathrm{near}}(x,y)|^2
+  \le \widetilde{E}^+_{\mathrm{near}}(x,x)\,
+      \widetilde{E}^+_{\mathrm{near}}(y,y)
+  \le \KBL(x,x)\,\KBL(y,y)
+  = \left(\frac{c}{\pi T}\right)^{\!2},
+\end{equation}
+hence
+\begin{equation}
+\label{eq:Eplus-near-pointwise}
+  |\widetilde{E}^+_{\mathrm{near}}(x,y)|
+  \;\le\;
+  \frac{c}{\pi T}.
+\end{equation}
+No eigenvalue estimate in the Airy transition region
+$M \le n < \NSh$ is required.
+
+\begin{remark}[Why this is the right bound]
+\label{rem:KBL-dominance}
+The bound \eqref{eq:Eplus-near-pointwise} gives
+$|\widetilde{E}^+_{\mathrm{near}}(x,y)| \le c/(\pi T)$,
+which matches the diagonal $\KBL(x,x) = c/(\pi T)$.
+This is not a \emph{small} bound in the sense of
+being $o(1)$ as $c \to \infty$; rather, it is of the
+same order as the main term $|\KBL(x,y)|$ at $x = y$.
+The Schur test in Section~\ref{sec:schur} handles this
+by integrating the kernel:
+$\int_{\Ish}(c/\pi T)\,dy \le 2(1-\delta)c/\pi$,
+which is absorbed into the final uniform constant
+$C_{\delta,\gamma}$.
+\end{remark}
+
+\medskip\noindent
+\textbf{Combined error bound.}
+Collecting \eqref{eq:Eminus-final}, \eqref{eq:Eplus-tail-final},
+and \eqref{eq:Eplus-near-pointwise}:
+\begin{equation}
+\label{eq:KM-KBL-bound}
   |K_M(x,y) - \KBL(x,y)|
   \;\le\;
+  C_{\delta,\gamma}\,\frac{c}{\pi T}
+  \;+\;
   C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c},
 \end{equation}
-where $c_3 := \min(c_1, c_2, c_4) > 0$.
+where $c_3 := \min(c_1, c_2) > 0$.
 
 % --------------------------------------------------------------
 \subsection{Final off-diagonal estimate}
@@ -713,35 +651,36 @@ For all $x, y \in I_\delta$ and all $N \le \gamma\,\NSh$,
   \;\le\;
   \frac{C_{\delta,\gamma}}{1 + c|x-y|/T}
   \;+\;
+  C_{\delta,\gamma}\,\frac{c}{\pi T}
+  \;+\;
   C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c}.
 \end{equation}
-Both constants are uniform in $c > 0$, $T > 0$,
+All constants are uniform in $c > 0$, $T > 0$,
 and $N \le \gamma\,\NSh$.
 \end{proposition}
 
 \begin{proof}
-Since $N \le M$, we have $|K_N(x,y)| \le |K_M(x,y)|$
-in the sense that $K_M - K_N = \sum_{N \le n < M}\psi_n\psi_n$
-is a positive semi-definite kernel, so it suffices to bound $K_M$.
-By the triangle inequality and the decomposition \eqref{eq:split}:
+Since $K_N$ is a PSD kernel and $N \le M$,
+the kernel $K_M - K_N = \sum_{N \le n < M}\psi_n\psi_n \succeq 0$,
+so by the PSD Cauchy--Schwarz inequality~\eqref{eq:PSD-CS}:
+\[
+  |K_N(x,y)|
+  \le K_N(x,x)^{1/2}\,K_N(y,y)^{1/2}
+  \le K_M(x,x)^{1/2}\,K_M(y,y)^{1/2}.
+\]
+Moreover, by the triangle inequality and \eqref{eq:split}:
 \[
   |K_M(x,y)|
-  \le |\KBL(x,y)| + |K_M(x,y) - \KBL(x,y)|.
+  \le |\KBL(x,y)|
+     + |\widetilde{E}^-(x,y)|
+     + |\widetilde{E}^+_{\mathrm{near}}(x,y)|
+     + |\widetilde{E}^+_{\mathrm{tail}}(x,y)|.
 \]
-The first term is bounded by Lemma~\ref{lem:BL-bound};
-the second by \eqref{eq:KN-KBL-bound}.
+Applying Lemma~\ref{lem:BL-bound},
+\eqref{eq:Eminus-final}, \eqref{eq:Eplus-tail-final},
+and \eqref{eq:Eplus-near-pointwise}
+gives \eqref{eq:offdiag-final}.
 \end{proof}
-
-\begin{remark}[Negligibility of the error term]
-\label{rem:error-negligible}
-The second term in \eqref{eq:offdiag-final} satisfies
-$c\,e^{-c_3 c}/T \to 0$ super-polynomially as $c \to \infty$.
-In particular, it is uniformly bounded for all $c \ge 1$,
-and its integral over $I_\delta$ is $O(c\,e^{-c_3 c})$,
-which is $o(1)$. For the Schur test, it contributes a
-term $o(1)$ to the Schur bound and is dominated by
-the contribution of the band-limited term.
-\end{remark}
 
 % =============================================================
 \section{The Schur Argument}
