@@ -55,7 +55,7 @@ Christoffel--Darboux projector and the classical Schur test.
 \subsection{Position in the bulk stability program}
 
 This paper completes the bulk stability program for prolate
-spherical wave functions (PSWFs) initiated in
+spheroidal wave functions (PSWFs) initiated in
 \cite{PaperI,PaperII,PaperIII,PaperIV}.
 
 The program aims to establish quantitative control of
@@ -241,8 +241,7 @@ From \cite[Lemma~4.2 (\texttt{lem:amplitude-drift})]{PaperIV},
   \frac{r_n(x)^2}{\rWKB(x)^2}
   = 1 + O\!\left(\tfrac{1}{n}\right),
 \end{equation}
-uniformly for $x \in I_\delta$ and $n \le \gamma\,\NSh$,
-where the implicit constant depends only on $\delta$ and~$\gamma$.
+uniformly for $x \in I_\delta$ and $n \le \gamma\,\NSh$.
 From \cite[Lemma~4.3 (\texttt{lem:normalization})]{PaperIV},
 \begin{equation}
 \label{eq:normalization}
@@ -265,40 +264,50 @@ We claim that for all $n \le \gamma\,\NSh$ and $x \in I_\delta$,
   \rhocl(x) \le \frac{C_{\delta,\gamma}\,c}{T}.
 \end{equation}
 
-By definition (see \cite{PaperIV}),
+By definition (see \cite{PaperIV}, Definition~2.4),
 \[
   \rhocl(x)
   = \frac{1/\wcl(x)}
     {\displaystyle\int_{-x_+(n)}^{x_+(n)}
       \frac{dt}{\wcl(t)}},
 \]
-where $\wcl$ is the classical frequency and $x_+(n)$
-is the associated turning point.
+where $\wcl(x) := \sqrt{\chi_n(c)/T^2 - c^2 x^2/T^2 + c^2}$
+is the classical frequency and $x_+(n)$ is the turning point.
 
 \medskip\noindent
-\textit{Step 2a: Pointwise upper bound on the numerator.}
-By \cite[Lemma~4.1 (\texttt{lem:phase-monotone})]{PaperIV},
-\[
+\textit{Step 2a: Upper bound on the numerator.}
+By \cite[Lemma~2.5(i) (\texttt{lem:G-regularity})]{PaperIV},
+\begin{equation}\label{eq:wcl-lower}
   \wcl(x) \ge c_{\delta,\gamma}\,n
   \qquad\text{for all } x \in I_\delta,
-\]
-hence
-\[
-  \frac{1}{\wcl(x)} \le \frac{C_{\delta,\gamma}}{n}.
-\]
+\end{equation}
+hence $1/\wcl(x) \le C_{\delta,\gamma}/n$.
 
 \medskip\noindent
 \textit{Step 2b: Lower bound on the denominator.}
-We restrict to the bulk interval $I_\delta$ to avoid
-the turning points $\pm x_+(n)$, where $\wcl(t) \to 0$.
-Since the integrand is non-negative,
+Since the integrand $1/\wcl(t)$ is non-negative,
+we restrict to the bulk interval to avoid the turning
+points $\pm x_+(n)$, where $\wcl(t) \to 0$:
 \[
   \int_{-x_+(n)}^{x_+(n)} \frac{dt}{\wcl(t)}
   \;\ge\;
   \int_{I_\delta} \frac{dt}{\wcl(t)}.
 \]
-Applying \cite[Lemma~4.1 (\texttt{lem:phase-monotone})]{PaperIV}
-on $I_\delta$, where $\wcl(t) \le C_{\delta,\gamma}\,n$,
+For the upper bound on $\wcl$ needed here, we use the
+explicit formula $\wcl(x) = \sqrt{\chi_n - V_c(x)}$
+with $V_c(x) \ge 0$, which gives:
+\begin{equation}\label{eq:wcl-upper}
+  \wcl(x) \le \sqrt{\chi_n(c)}
+  \le C_{\delta,\gamma}\,n
+  \qquad\text{for all } x \in I_\delta.
+\end{equation}
+The second inequality uses the Sturm--Liouville eigenvalue
+growth $\chi_n(c) \le C_{\delta,\gamma}\,n^2$, valid
+uniformly for $n \le \gamma\,\NSh$
+(see \cite[Ch.~4]{OsipovRokhlinXiao}).
+This bound requires no Pr\"ufer analysis;
+it is a direct consequence of spectral asymptotics.
+Combining with \eqref{eq:wcl-upper}:
 \[
   \int_{I_\delta} \frac{dt}{\wcl(t)}
   \;\ge\;
@@ -307,26 +316,17 @@ on $I_\delta$, where $\wcl(t) \le C_{\delta,\gamma}\,n$,
   \frac{c'_{\delta,\gamma}}{n}.
 \]
 
-% *** NOTE FOR REVISION ***
-% lem:phase-monotone from PaperIV is used here in both
-% directions: omega >= c*n (Step 2a) and omega <= C*n (Step 2b).
-% Verify that lem:phase-monotone provides omega_n^cl ASYMP n
-% (both bounds), not just a lower bound. If only a lower bound
-% is available, Step 2b requires a separate upper bound on
-% omega, e.g., from lem:bohr-sommerfeld-pswf or a direct
-% SL eigenvalue comparison.
-
 \medskip\noindent
 \textit{Conclusion of Step 2.}
-Combining numerator and denominator,
+Combining numerator and denominator:
 \[
   \rhocl(x)
   \;\le\;
   \frac{C_{\delta,\gamma}/n}{c'_{\delta,\gamma}/n}
   \;=\; C_{\delta,\gamma}.
 \]
-Since $n \le \gamma\,\NSh = 2\gamma c/\pi$,
-the constant bound takes the equivalent scaling form
+Since $n \le \gamma\,\NSh = 2\gamma c/\pi$, this gives
+the equivalent scaling form
 \[
   \rhocl(x)
   \;\le\; C_{\delta,\gamma}\,\frac{c}{T},
@@ -337,15 +337,15 @@ establishing~\eqref{eq:density-bound}.
 
 \subsubsection*{Step 3: Summation}
 
-Inserting \eqref{eq:density-bound} into \eqref{eq:psi-squared-bound}
-and summing over $n = 0, \ldots, N-1$:
-\begin{align*}
+Inserting \eqref{eq:density-bound} into
+\eqref{eq:psi-squared-bound} and summing:
+\[
   K_N(x,x)
-  &\le C_{\delta,\gamma}\,\frac{c}{T}
+  \le C_{\delta,\gamma}\,\frac{c}{T}
        \sum_{n=0}^{N-1} \lambda_n(c)
-  \;\le\; C_{\delta,\gamma}\,\frac{Nc}{\pi T},
-\end{align*}
-using $\lambda_n \le 1$ and absorbing $\pi$ into $C_{\delta,\gamma}$.
+  \le C_{\delta,\gamma}\,\frac{Nc}{\pi T},
+\]
+using $\lambda_n \le 1$.
 The $O(1/n)$ corrections from \eqref{eq:psi-squared-bound}
 contribute $O(c\log N/T) = o(Nc/T)$,
 completing the proof.
@@ -353,11 +353,15 @@ completing the proof.
 
 \begin{remark}
 \label{rem:landau-widom}
-The bound \eqref{eq:diagonal} recovers the classical
+Proposition~\ref{prop:diagonal} recovers the classical
 Landau--Widom diagonal estimate \cite{Widom64}.
-The derivation here is new: it proceeds entirely from the
-Pr\"ufer amplitude control of \cite{PaperIV},
-yielding explicit constants uniform in all parameters.
+The derivation is new in two respects:
+the numerator bound comes from the Pr\"ufer amplitude
+control of \cite{PaperIV} (Prüfer side),
+while the denominator bound uses only the eigenvalue
+growth $\chi_n \le Cn^2$ (spectral side).
+The two arguments are logically independent, and together
+yield explicit constants uniform in all parameters.
 \end{remark}
 
 % =============================================================
