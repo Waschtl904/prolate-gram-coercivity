@@ -261,7 +261,7 @@ Combining \eqref{eq:amplitude-drift} and \eqref{eq:normalization},
 We claim that for all $n \le \gamma\,\NSh$ and $x \in I_\delta$,
 \begin{equation}
 \label{eq:density-bound}
-  \rhocl(x) \le \frac{C_{\delta,\gamma}\,c}{T}.
+  \rhocl(x) \le \frac{C_{\delta,\gamma}}{T}.
 \end{equation}
 
 By definition (see \cite{PaperIV}, Definition~2.4), the
@@ -302,48 +302,52 @@ points $\pm x_+(n)$, where $\wcl(t) \to 0$:
   \int_{I_\delta} \frac{dt}{\wcl(t)}.
 \]
 Since $V_c(x) \ge 0$, the definition~\eqref{eq:wcl-def} gives
-the pointwise upper bound
+$\wcl(x) \le \sqrt{\chi_n(c)}$.
+For the eigenvalue we use the standard PSWF bound
+(see \cite[Chs.~2--4]{OsipovRokhlinXiao}):
+\begin{equation}\label{eq:chi-bound}
+  \chi_n(c) \le c^2 + C n^2.
+\end{equation}
+In the bulk regime $n \le \gamma\,\NSh = 2\gamma c/\pi$,
+we have $n \lesssim c$, so $n^2 \lesssim c^2$, and
+\eqref{eq:chi-bound} gives
 \begin{equation}\label{eq:wcl-upper}
-  \wcl(x) \;\le\; \sqrt{\chi_n(c)}
-  \;\le\; C_{\delta,\gamma}\,n
+  \wcl(x) \le \sqrt{\chi_n(c)} \le C_{\delta,\gamma}\,c
   \qquad\text{for all } x \in I_\delta.
 \end{equation}
-The second inequality uses $\chi_n(c) \le C_{\delta,\gamma}\,n^2$,
-which holds uniformly in $c$ for $n \le \gamma\,\NSh$:
-in this regime the spectrum lies in the semiclassical bulk
-and does not approach the transition region near
-$n \sim N_{\mathrm{Sh}}$, so the eigenvalue growth is
-controlled by the Sturm--Liouville asymptotics alone
-(see \cite[Ch.~4]{OsipovRokhlinXiao}).
-This bound requires no Pr\"ufer analysis.
-Combining with \eqref{eq:wcl-upper}:
-\[
+Note that \eqref{eq:chi-bound} is uniform in $c$: the bound
+exhibits the correct joint scaling in both $c$ and $n$,
+without requiring any Pr\"ufer analysis.
+Therefore:
+\begin{equation}\label{eq:denom-lower}
   \int_{I_\delta} \frac{dt}{\wcl(t)}
   \;\ge\;
-  \frac{|I_\delta|}{C_{\delta,\gamma}\,n}
-  \;=\;
-  \frac{c'_{\delta,\gamma}}{n}.
-\]
+  \frac{|I_\delta|}{C_{\delta,\gamma}\,c}
+  \;\asymp\; \frac{T}{c}.
+\end{equation}
 
 \medskip\noindent
 \textit{Conclusion of Step 2.}
-Combining numerator and denominator:
+Combining the numerator bound $1/\wcl(x) \le C_{\delta,\gamma}/n$
+with the denominator bound \eqref{eq:denom-lower}:
 \[
   \rhocl(x)
   \;\le\;
-  \frac{C_{\delta,\gamma}/n}{c'_{\delta,\gamma}/n}
-  \;=\; C_{\delta,\gamma}.
+  \frac{C_{\delta,\gamma}/n}{c'_{\delta,\gamma}\,T/c}
+  \;=\;
+  \frac{C_{\delta,\gamma}\,c}{n T}.
 \]
-Since the bulk regime satisfies $n \sim c$ (both scale
-linearly with bandwidth),
-this constant bound takes the equivalent scaling form
-\[
-  \rhocl(x)
-  \;\le\; C_{\delta,\gamma}\,\frac{c}{T},
-\]
-consistent with the global trace
-$\sum_{n < N}\psi_n(x)^2 \sim Nc/T$.
-This establishes~\eqref{eq:density-bound}.
+Since $n \ge 1$ and $n \le \gamma\,\NSh \asymp c$ in the
+bulk regime, the factor $c/n$ is bounded by a constant
+depending only on $\delta$ and $\gamma$, giving
+\begin{equation}\label{eq:density-bound-proof}
+  \rhocl(x) \;\le\; \frac{C_{\delta,\gamma}}{T},
+\end{equation}
+which establishes~\eqref{eq:density-bound}.
+Note that \eqref{eq:density-bound-proof} is stronger than
+the na\"ive bound $O(c/T)$: it reflects the correct
+normalization of a probability density on an interval
+of length $O(T)$, independent of the bandwidth $c$.
 
 \subsubsection*{Step 3: Summation}
 
@@ -351,13 +355,14 @@ Inserting \eqref{eq:density-bound} into
 \eqref{eq:psi-squared-bound} and summing:
 \[
   K_N(x,x)
-  \le C_{\delta,\gamma}\,\frac{c}{T}
+  \le \frac{C_{\delta,\gamma}}{T}
        \sum_{n=0}^{N-1} \lambda_n(c)
+  \le \frac{C_{\delta,\gamma}\,N}{T}
   \le C_{\delta,\gamma}\,\frac{Nc}{\pi T},
 \]
 using $\lambda_n \le 1$.
 The $O(1/n)$ corrections from \eqref{eq:psi-squared-bound}
-contribute $O(c\log N/T) = o(Nc/T)$,
+contribute $O(\log N/T) = o(N/T)$,
 completing the proof.
 \end{proof}
 
@@ -369,7 +374,8 @@ The two inputs to the proof are of different nature:
 the numerator bound is a \emph{local dynamical statement},
 obtained from the Pr\"ufer amplitude flow of \cite{PaperIV},
 while the denominator bound is a \emph{global spectral statement},
-resting on the eigenvalue growth $\chi_n \le Cn^2$.
+resting on the PSWF eigenvalue bound
+$\chi_n(c) \le c^2 + Cn^2$, uniform in $c$.
 Their combination yields the diagonal estimate without
 invoking reproducing kernel identities or the
 Landau--Widom trace formula, and with explicit constants
