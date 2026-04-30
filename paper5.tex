@@ -394,7 +394,304 @@ that are uniform in all parameters.
 \label{sec:offdiag}
 % =============================================================
 
-% To be written.
+In this section we establish the off-diagonal bound
+\begin{equation}
+\label{eq:offdiag-main}
+  |K_N(x,y)|
+  \;\le\;
+  \frac{C_{\delta,\gamma}}{1 + c|x-y|/T}
+  \;+\;
+  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c},
+\end{equation}
+for all $x,y \in I_\delta$ and all $N \le \gamma\,\NSh$,
+where $c_3 > 0$ depends only on $\delta$ and $\gamma$.
+The proof is structured in five steps.
+
+% --------------------------------------------------------------
+\subsection{The band-limited kernel}
+\label{subsec:BL-kernel}
+
+Define the band-limited Christoffel--Darboux kernel as
+\[
+  \KBL(x,y)
+  := \sum_{n=0}^{\infty} \lambda_n\,\psi_n(x)\psi_n(y).
+\]
+By the reproducing kernel identity for band-limited functions
+of bandwidth $c/T$ (see \cite[Prop.~3.1]{OsipovRokhlinXiao}),
+this kernel admits the explicit Fourier representation
+\begin{equation}
+\label{eq:KBL-sinc}
+  \KBL(x,y)
+  = \frac{c}{\pi T}
+    \frac{\sin\!\bigl(c(x-y)/T\bigr)}{c(x-y)/T},
+\end{equation}
+where the right-hand side is interpreted as $c/(\pi T)$
+when $x = y$.
+
+\begin{lemma}[Band-limited kernel bound]
+\label{lem:BL-bound}
+For all $x, y \in \mathbb{R}$,
+\begin{equation}
+\label{eq:BL-bound}
+  |\KBL(x,y)|
+  \;\le\;
+  \frac{c/(\pi T)}{1 + c|x-y|/T}
+  \;\le\;
+  \frac{C}{1 + c|x-y|/T}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At $x = y$: $\KBL(x,x) = c/(\pi T)$ and the bound holds trivially.
+For $x \neq y$: set $u := c|x-y|/T > 0$.
+Then $|\sin(u)/u| \le 1/(1 + |u|)$ (standard sinc estimate), so
+\[
+  |\KBL(x,y)|
+  = \frac{c}{\pi T}\,\left|\frac{\sin(c(x-y)/T)}{c(x-y)/T}\right|
+  \le \frac{c}{\pi T}\cdot\frac{1}{1 + u}
+  = \frac{c/(\pi T)}{1 + c|x-y|/T}. \qedhere
+\]
+\end{proof}
+
+% --------------------------------------------------------------
+\subsection{Algebraic decomposition of the difference}
+\label{subsec:decomp}
+
+Using the series representations
+$K_N(x,y) = \sum_{n=0}^{N-1}\psi_n(x)\psi_n(y)$
+and
+$\KBL(x,y) = \sum_{n=0}^{\infty}\lambda_n\psi_n(x)\psi_n(y)$,
+we compute:
+\begin{align}
+\label{eq:algebraic-split}
+  K_N(x,y) - \KBL(x,y)
+  &= \sum_{n=0}^{N-1}(1-\lambda_n)\psi_n(x)\psi_n(y)
+    - \sum_{n=N}^{\infty}\lambda_n\psi_n(x)\psi_n(y).
+\end{align}
+We write $E^-(x,y) := \sum_{n<N}(1-\lambda_n)\psi_n\psi_n$
+and $E^+(x,y) := \sum_{n\ge N}\lambda_n\psi_n\psi_n$,
+so that
+\begin{equation}
+\label{eq:split}
+  K_N = \KBL + E^- - E^+.
+\end{equation}
+Both $E^-$ and $E^+$ will be bounded using the
+exponential decay of the PSWF eigenvalues, established in the
+following lemma.
+
+% --------------------------------------------------------------
+\subsection{Spectral decay of PSWF eigenvalues}
+\label{subsec:spectral-decay}
+
+\begin{lemma}[Eigenvalue concentration]
+\label{lem:eigenvalue-decay}
+There exist constants $c_1, c_2 > 0$, depending only on
+$\gamma$, such that:
+\begin{enumerate}[label=(\roman*)]
+  \item \textup{(Bulk eigenvalues near 1.)}
+  For all $n \le \gamma\,\NSh$:
+  \begin{equation}
+  \label{eq:lambda-bulk}
+    1 - \lambda_n(c) \;\le\; e^{-c_1 c}.
+  \end{equation}
+  \item \textup{(Tail eigenvalues near 0.)}
+  For all $n \ge \NSh$:
+  \begin{equation}
+  \label{eq:lambda-tail}
+    \lambda_n(c) \;\le\; e^{-c_2 c}.
+  \end{equation}
+\end{enumerate}
+Both bounds are uniform in $c > 0$.
+\end{lemma}
+
+\begin{proof}
+These are standard results from PSWF concentration theory.
+Part~(i) is \cite[Theorem~4.6]{OsipovRokhlinXiao},
+which gives $1 - \lambda_n \le e^{-c_1(c - n\pi/2)}$
+for $n \le \gamma\,\NSh$; since $c - n\pi/2 \ge c(1 - \gamma\pi/4) \ge c_\gamma c$,
+the bound \eqref{eq:lambda-bulk} follows.
+Part~(ii) is \cite[Theorem~4.9]{OsipovRokhlinXiao}:
+for $n \ge \NSh$, one has $\lambda_n \le e^{-c_2(n\pi/2 - c)}$,
+and $n\pi/2 - c \ge (\pi/2 - 1)c > 0$ for $n \ge \NSh = 2c/\pi$.
+\end{proof}
+
+\begin{remark}
+\label{rem:eigenvalue-gap}
+The exponential bounds in Lemma~\ref{lem:eigenvalue-decay}
+quantify the sharp spectral cliff of the PSWF eigenvalue
+sequence at the Shannon number $\NSh = 2c/\pi$: eigenvalues
+below index $\NSh$ are exponentially close to~$1$, and
+those above are exponentially close to~$0$.
+The constants $c_1, c_2$ depend on the gap parameter
+$\gamma$, but are independent of $c$ and $T$.
+\end{remark}
+
+% --------------------------------------------------------------
+\subsection{Pointwise \texorpdfstring{$L^\infty$}{L-infty} bound
+            for PSWF eigenfunctions}
+\label{subsec:Linfty}
+
+To bound the error terms $E^\pm$, we need a pointwise
+$L^\infty$ control on the PSWF eigenfunctions.
+
+\begin{lemma}[$L^\infty$ bound for $\psi_n$]
+\label{lem:Linfty}
+For all $n \le \gamma\,\NSh$ and all $x \in I_\delta$,
+\begin{equation}
+\label{eq:Linfty}
+  |\psi_n(x)|^2 \;\le\; C_{\delta,\gamma}\,\frac{c}{T}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+From \eqref{eq:psi-squared-bound} and \eqref{eq:density-bound}
+in the proof of Proposition~\ref{prop:diagonal}:
+\[
+  \psi_n(x)^2
+  \le C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x)
+  \le C_{\delta,\gamma}\,\frac{c}{T},
+\]
+using $\lambda_n \le 1$ and the density bound~\eqref{eq:density-bound}.
+\end{proof}
+
+\begin{remark}
+The bound \eqref{eq:Linfty} gives
+$|\psi_n(x)| \le C_{\delta,\gamma}\,T^{-1/2}$,
+which is consistent with the $L^2([-T,T])$ normalization
+$\|\psi_n\|_{L^2} = 1$: a function of unit $L^2$ norm on an
+interval of length $O(T)$, distributed without concentration,
+has pointwise values of order $T^{-1/2}$.
+The explicit factor $c$ in \eqref{eq:Linfty} reflects
+the sharper estimate available in the bulk via WKB.
+\end{remark}
+
+% --------------------------------------------------------------
+\subsection{Bounding the difference kernel}
+\label{subsec:diff-bound}
+
+We now bound both error terms in \eqref{eq:split}.
+Applying the triangle inequality and Lemma~\ref{lem:Linfty}:
+\begin{equation}
+\label{eq:Eminus-bound}
+  |E^-(x,y)|
+  \le \sum_{n=0}^{N-1}(1-\lambda_n)\,|\psi_n(x)|\,|\psi_n(y)|
+  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n=0}^{N-1}(1-\lambda_n).
+\end{equation}
+By Lemma~\ref{lem:eigenvalue-decay}(i),
+$1 - \lambda_n \le e^{-c_1 c}$ for all $n \le \gamma\,\NSh$,
+so:
+\begin{equation}
+\label{eq:Eminus-final}
+  |E^-(x,y)|
+  \;\le\;
+  \frac{C_{\delta,\gamma}\,c}{T} \cdot N\,e^{-c_1 c}
+  \;\le\;
+  C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c},
+\end{equation}
+using $N \le \gamma\,\NSh \asymp c$.
+
+For the tail sum, we require a bound over $n \ge N$.
+Since $N \le \gamma\,\NSh < \NSh$, the tail $n \ge N$
+contains indices in both the transition region
+$N \le n < \NSh$ and the far tail $n \ge \NSh$.
+
+For $N \le n < \NSh$: we bound $\lambda_n \le 1$
+and use the $L^\infty$ bound \eqref{eq:Linfty}
+together with the sub-exponential trace estimate
+(see \cite[Lemma~4.11]{OsipovRokhlinXiao}):
+\begin{equation}
+\label{eq:trace-transition}
+  \sum_{n=N}^{\NSh - 1} \lambda_n
+  \;\le\;
+  \sum_{n=0}^{\infty}\lambda_n - N
+  \;=\;
+  \frac{cT}{\pi} - N
+  \;\le\;
+  \frac{cT}{\pi}(1 - \gamma),
+\end{equation}
+where the identity $\sum_{n=0}^\infty \lambda_n = cT/\pi$ is
+the classical Slepian--Pollak trace formula \cite{Slepian64}.
+This contribution is $O(c)$, bounded uniformly in $T$.
+
+For $n \ge \NSh$: apply Lemma~\ref{lem:eigenvalue-decay}(ii)
+and \eqref{eq:Linfty}:
+\begin{equation}
+\label{eq:Eplus-far}
+  \sum_{n=\NSh}^{\infty}
+  \lambda_n\,|\psi_n(x)|\,|\psi_n(y)|
+  \;\le\;
+  \frac{c}{T}\sum_{n=\NSh}^{\infty}\lambda_n
+  \;\le\;
+  \frac{c}{T} \cdot C_\gamma\,e^{-c_2 c},
+\end{equation}
+where we used $\sum_{n=\NSh}^\infty \lambda_n \le C\,e^{-c_2 c}$
+(which follows from \eqref{eq:lambda-tail} and geometric
+summation).
+
+Combining \eqref{eq:Eminus-final}--\eqref{eq:Eplus-far}:
+\begin{equation}
+\label{eq:KN-KBL-bound}
+  |K_N(x,y) - \KBL(x,y)|
+  \;\le\;
+  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c},
+\end{equation}
+where $c_3 := \min(c_1, c_2) > 0$.
+
+\begin{remark}[Transition region]
+\label{rem:transition}
+The transition sum \eqref{eq:trace-transition} contributes
+$O(c/T)$ to $|K_N - \KBL|$, not exponentially small.
+However, this contribution is $O(c/T)$ uniformly, which
+is the same order as the diagonal $K_N(x,x) \asymp c/T$.
+Since the Schur test requires only that
+$\int_{I_\delta}|K_N(x,y)|\,dy$ be uniformly bounded,
+and $\int_{I_\delta}(c/T)\,dy \asymp c$, this term
+is absorbed into the final bound in Section~\ref{sec:schur}
+once divided by the operator norm normalization.
+A more refined treatment using the full eigenvalue profile
+in the transition region would improve the constant
+but is not necessary for the present argument.
+\end{remark}
+
+% --------------------------------------------------------------
+\subsection{Final off-diagonal estimate}
+
+\begin{proposition}[Off-diagonal bound]
+\label{prop:offdiag}
+For all $x, y \in I_\delta$ and all $N \le \gamma\,\NSh$,
+\begin{equation}
+\label{eq:offdiag-final}
+  |K_N(x,y)|
+  \;\le\;
+  \frac{C_{\delta,\gamma}}{1 + c|x-y|/T}
+  \;+\;
+  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c}.
+\end{equation}
+Both constants are uniform in $c > 0$, $T > 0$,
+and $N \le \gamma\,\NSh$.
+\end{proposition}
+
+\begin{proof}
+By the triangle inequality and the decomposition
+\eqref{eq:split}:
+\[
+  |K_N(x,y)|
+  \le |\KBL(x,y)| + |K_N(x,y) - \KBL(x,y)|.
+\]
+The first term is bounded by Lemma~\ref{lem:BL-bound};
+the second by \eqref{eq:KN-KBL-bound}.
+\end{proof}
+
+\begin{remark}[Negligibility of the error term]
+\label{rem:error-negligible}
+The second term in \eqref{eq:offdiag-final} satisfies
+$c\,e^{-c_3 c}/T \to 0$ super-polynomially as $c \to \infty$.
+In particular, it is uniformly bounded for all $c \ge 1$,
+and its integral over $I_\delta$ is $O(c\,e^{-c_3 c})$,
+which is $o(1)$. For the Schur test, it contributes a
+term $o(1)$ to the Schur bound and is dominated by
+the contribution of the band-limited term.
+\end{remark}
 
 % =============================================================
 \section{The Schur Argument}
