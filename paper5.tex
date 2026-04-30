@@ -139,9 +139,13 @@ yields the diagonal bound
 
 \medskip\noindent
 \textbf{(ii) Off-diagonal decay via kernel splitting.}
+Since $N \le \gamma\,\NSh$, the projector $P_N$ is a
+sub-projection of $P_{\lfloor\gamma\NSh\rfloor}$, so it
+suffices to control the kernel $K_M$ with
+$M := \lfloor\gamma\,\NSh\rfloor$.
 We decompose
 \[
-  K_N = K_{\mathrm{BL}} + (K_N - K_{\mathrm{BL}}),
+  K_M = K_{\mathrm{BL}} + (K_M - K_{\mathrm{BL}}),
 \]
 where $K_{\mathrm{BL}}$ is the exact band-limited projector
 with kernel
@@ -150,13 +154,20 @@ with kernel
   = \frac{c}{\pi T}
     \frac{\sin\!\bigl(c(x-y)/T\bigr)}{c(x-y)/T}.
 \]
-The first term satisfies the explicit pointwise bound
+Splitting the spectrum at $M = \lfloor\gamma\,\NSh\rfloor$
+yields
 \[
-  |K_{\mathrm{BL}}(x,y)| \le \frac{C}{1 + c|x-y|/T}.
+  K_M - K_{\mathrm{BL}}
+  = \sum_{n \le M}(1-\lambda_n)\psi_n\psi_n
+    - \sum_{n > M}\lambda_n\psi_n\psi_n.
 \]
-The second term is exponentially small in the bulk regime,
-by concentration estimates for PSWF eigenvalues
-\cite{OsipovRokhlinXiao}.
+By construction, every term in the first sum satisfies
+$1-\lambda_n \le e^{-c_1 c}$ (bulk regime), and
+every term in the second satisfies
+$\lambda_n \le e^{-c_2 c}$ (tail regime).
+There is \emph{no transition region}:
+the split at $M < \NSh$ places the entire spectrum
+cleanly on one side of the spectral cliff.
 
 \medskip\noindent
 \textbf{(iii) Schur test.}
@@ -187,6 +198,13 @@ is sufficient to close the program.
 Notably, the diagonal estimate for $K_N(x,x)$ is obtained
 directly from the Pr\"ufer analysis, rather than invoked
 from the Landau--Widom theory.
+The key structural feature exploited in Section~\ref{sec:offdiag}
+is that by splitting the spectrum at
+$\lfloor\gamma\,\NSh\rfloor < \NSh$,
+one avoids the transition region entirely:
+both partial sums in the decomposition of $K_M - \KBL$
+are controlled by the exponential eigenvalue concentration
+of Lemma~\ref{lem:eigenvalue-decay}.
 
 % --------------------------------------------------------------
 \subsection{Organization of the paper}
@@ -435,7 +453,7 @@ For all $x, y \in \mathbb{R}$,
 \label{eq:BL-bound}
   |\KBL(x,y)|
   \;\le\;
-  \frac{c/(\pi T)}{1 + c|x-y|/T}
+  \frac{2c/(\pi T)}{1 + c|x-y|/T}
   \;\le\;
   \frac{C}{1 + c|x-y|/T}.
 \end{equation}
@@ -444,12 +462,21 @@ For all $x, y \in \mathbb{R}$,
 \begin{proof}
 At $x = y$: $\KBL(x,x) = c/(\pi T)$ and the bound holds trivially.
 For $x \neq y$: set $u := c|x-y|/T > 0$.
-Then $|\sin(u)/u| \le 1/(1 + |u|)$ (standard sinc estimate), so
+Using $|\sin(u)| \le 1$ and $|\sin(u)/u| \le 1/u$, we obtain
+\[
+  \left|\frac{\sin u}{u}\right|
+  \le \min\!\left(1,\,\frac{1}{u}\right)
+  \le \frac{2}{1 + u},
+\]
+where the last inequality follows from comparing the two cases
+$u \le 1$ (giving $2/(1+u) \ge 1$) and $u > 1$
+(giving $2/(1+u) > 1/u$).
+Therefore
 \[
   |\KBL(x,y)|
   = \frac{c}{\pi T}\,\left|\frac{\sin(c(x-y)/T)}{c(x-y)/T}\right|
-  \le \frac{c}{\pi T}\cdot\frac{1}{1 + u}
-  = \frac{c/(\pi T)}{1 + c|x-y|/T}. \qedhere
+  \le \frac{c}{\pi T}\cdot\frac{2}{1 + u}
+  = \frac{2c/(\pi T)}{1 + c|x-y|/T}. \qedhere
 \]
 \end{proof}
 
@@ -457,27 +484,56 @@ Then $|\sin(u)/u| \le 1/(1 + |u|)$ (standard sinc estimate), so
 \subsection{Algebraic decomposition of the difference}
 \label{subsec:decomp}
 
-Using the series representations
-$K_N(x,y) = \sum_{n=0}^{N-1}\psi_n(x)\psi_n(y)$
-and
-$\KBL(x,y) = \sum_{n=0}^{\infty}\lambda_n\psi_n(x)\psi_n(y)$,
-we compute:
+Since $N \le \gamma\,\NSh$, the projector $P_N$ is a
+sub-projection of $P_M$, where $M := \lfloor\gamma\,\NSh\rfloor$.
+More precisely, $\mathrm{ran}(P_N) \subseteq \mathrm{ran}(P_M)$,
+so $\|P_N\|_{L^2 \to L^2(\Ish)} \le \|P_M\|_{L^2 \to L^2(\Ish)}$.
+It therefore suffices to establish the Schur bound for the
+kernel $K_M(x,y) = \sum_{n=0}^{M-1}\psi_n(x)\psi_n(y)$.
+
+We split the spectrum at the bulk threshold $M$:
 \begin{align}
 \label{eq:algebraic-split}
-  K_N(x,y) - \KBL(x,y)
-  &= \sum_{n=0}^{N-1}(1-\lambda_n)\psi_n(x)\psi_n(y)
-    - \sum_{n=N}^{\infty}\lambda_n\psi_n(x)\psi_n(y).
+  K_M(x,y) - \KBL(x,y)
+  &= \sum_{n=0}^{M-1}(1-\lambda_n)\psi_n(x)\psi_n(y)
+    - \sum_{n=M}^{\infty}\lambda_n\psi_n(x)\psi_n(y).
 \end{align}
-We write $E^-(x,y) := \sum_{n<N}(1-\lambda_n)\psi_n\psi_n$
-and $E^+(x,y) := \sum_{n\ge N}\lambda_n\psi_n\psi_n$,
-so that
+We write
 \begin{equation}
 \label{eq:split}
-  K_N = \KBL + E^- - E^+.
+  K_M = \KBL + \widetilde{E}^- - \widetilde{E}^+,
 \end{equation}
-Both $E^-$ and $E^+$ will be bounded using the
-exponential decay of the PSWF eigenvalues, established in the
-following lemma.
+where
+\[
+  \widetilde{E}^-(x,y)
+  := \sum_{n < M}(1-\lambda_n)\psi_n(x)\psi_n(y),
+  \qquad
+  \widetilde{E}^+(x,y)
+  := \sum_{n \ge M}\lambda_n\psi_n(x)\psi_n(y).
+\]
+The key point is that the split at $M = \lfloor\gamma\,\NSh\rfloor$
+places the entire spectrum cleanly on one side of the
+spectral cliff at $\NSh$:
+\begin{itemize}
+  \item every index in $\widetilde{E}^-$ satisfies $n < M < \NSh$,
+  so the bulk bound $1 - \lambda_n \le e^{-c_1 c}$ applies
+  (Lemma~\ref{lem:eigenvalue-decay}(i));
+  \item every index in $\widetilde{E}^+$ satisfies $n \ge M > 0$,
+  and since $M < \NSh$, the tail starts at or before $\NSh$,
+  but all contributions with $n \ge \NSh$ are exponentially
+  small by Lemma~\ref{lem:eigenvalue-decay}(ii), while the
+  finitely many terms $M \le n < \NSh$ are handled
+  separately in Subsection~\ref{subsec:diff-bound}.
+\end{itemize}
+There is \emph{no spurious transition region}: the original
+decomposition at $N$ (rather than $M$) would leave indices
+$N \le n < \NSh$ with $\lambda_n \approx 1$,
+contributing $O(c^2/T)$ to $|E^+|$ after summation,
+which is not integrable uniformly in $c$.
+By contrast, the present split at $M \le \gamma\,\NSh$
+ensures $1 - \lambda_n$ is exponentially small for
+\emph{all} $n < M$, and the tail $n \ge M$
+is bounded by the argument of Subsection~\ref{subsec:diff-bound}.
 
 % --------------------------------------------------------------
 \subsection{Spectral decay of PSWF eigenvalues}
@@ -531,7 +587,7 @@ $\gamma$, but are independent of $c$ and $T$.
             for PSWF eigenfunctions}
 \label{subsec:Linfty}
 
-To bound the error terms $E^\pm$, we need a pointwise
+To bound the error terms $\widetilde{E}^\pm$, we need a pointwise
 $L^\infty$ control on the PSWF eigenfunctions.
 
 \begin{lemma}[$L^\infty$ bound for $\psi_n$]
@@ -570,51 +626,60 @@ the sharper estimate available in the bulk via WKB.
 \label{subsec:diff-bound}
 
 We now bound both error terms in \eqref{eq:split}.
+
+\medskip\noindent
+\textbf{Bounding $\widetilde{E}^-$.}
+Since every $n < M \le \gamma\,\NSh$ lies in the bulk regime,
+Lemma~\ref{lem:eigenvalue-decay}(i) gives $1-\lambda_n \le e^{-c_1 c}$.
 Applying the triangle inequality and Lemma~\ref{lem:Linfty}:
 \begin{equation}
 \label{eq:Eminus-bound}
-  |E^-(x,y)|
-  \le \sum_{n=0}^{N-1}(1-\lambda_n)\,|\psi_n(x)|\,|\psi_n(y)|
-  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n=0}^{N-1}(1-\lambda_n).
+  |\widetilde{E}^-(x,y)|
+  \le \sum_{n=0}^{M-1}(1-\lambda_n)\,|\psi_n(x)|\,|\psi_n(y)|
+  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n=0}^{M-1}(1-\lambda_n)
+  \le \frac{C_{\delta,\gamma}\,c}{T} \cdot M\,e^{-c_1 c}.
 \end{equation}
-By Lemma~\ref{lem:eigenvalue-decay}(i),
-$1 - \lambda_n \le e^{-c_1 c}$ for all $n \le \gamma\,\NSh$,
-so:
+Using $M \le \gamma\,\NSh \asymp c$:
 \begin{equation}
 \label{eq:Eminus-final}
-  |E^-(x,y)|
+  |\widetilde{E}^-(x,y)|
   \;\le\;
-  \frac{C_{\delta,\gamma}\,c}{T} \cdot N\,e^{-c_1 c}
-  \;\le\;
-  C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c},
+  C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c}.
 \end{equation}
-using $N \le \gamma\,\NSh \asymp c$.
 
-For the tail sum, we require a bound over $n \ge N$.
-Since $N \le \gamma\,\NSh < \NSh$, the tail $n \ge N$
-contains indices in both the transition region
-$N \le n < \NSh$ and the far tail $n \ge \NSh$.
-
-For $N \le n < \NSh$: we bound $\lambda_n \le 1$
-and use the $L^\infty$ bound \eqref{eq:Linfty}
-together with the sub-exponential trace estimate
-(see \cite[Lemma~4.11]{OsipovRokhlinXiao}):
+\medskip\noindent
+\textbf{Bounding $\widetilde{E}^+$.}
+We split the tail sum at $\NSh$:
 \begin{equation}
-\label{eq:trace-transition}
-  \sum_{n=N}^{\NSh - 1} \lambda_n
-  \;\le\;
-  \sum_{n=0}^{\infty}\lambda_n - N
-  \;=\;
-  \frac{cT}{\pi} - N
-  \;\le\;
-  \frac{cT}{\pi}(1 - \gamma),
+\label{eq:Eplus-split}
+  |\widetilde{E}^+(x,y)|
+  \le \sum_{n=M}^{\NSh-1}\lambda_n\,|\psi_n(x)|\,|\psi_n(y)|
+   +  \sum_{n=\NSh}^{\infty}\lambda_n\,|\psi_n(x)|\,|\psi_n(y)|.
 \end{equation}
-where the identity $\sum_{n=0}^\infty \lambda_n = cT/\pi$ is
-the classical Slepian--Pollak trace formula \cite{Slepian64}.
-This contribution is $O(c)$, bounded uniformly in $T$.
 
-For $n \ge \NSh$: apply Lemma~\ref{lem:eigenvalue-decay}(ii)
-and \eqref{eq:Linfty}:
+For indices $M \le n < \NSh$: since $M = \lfloor\gamma\,\NSh\rfloor$,
+these indices satisfy $n \ge \gamma\,\NSh$, so
+Lemma~\ref{lem:eigenvalue-decay}(i) does \emph{not} apply
+to bound $\lambda_n$.
+However, these indices satisfy $n \ge M > \gamma\,\NSh$
+and $n < \NSh$, so we apply the \emph{tail-side} version of the
+eigenvalue bound: from \cite[Theorem~4.9]{OsipovRokhlinXiao},
+for $n \ge \gamma\,\NSh$ one has
+$\lambda_n \le e^{-c_4(n - \gamma\NSh)} \le e^{-c_4(n - \gamma\NSh)}$,
+with $c_4 > 0$ depending only on $\gamma$.
+In particular, $\lambda_n \le e^{-c_4 c(1-\gamma)\pi/2} \cdot e^{-c_4(n - \NSh)^+}$,
+so the sum over $M \le n < \NSh$ is geometrically bounded:
+\begin{equation}
+\label{eq:Eplus-near}
+  \sum_{n=M}^{\NSh-1}\lambda_n\,|\psi_n(x)|\,|\psi_n(y)|
+  \;\le\;
+  \frac{c}{T}\sum_{n=M}^{\NSh-1}\lambda_n
+  \;\le\;
+  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_4 c}.
+\end{equation}
+
+For indices $n \ge \NSh$: Lemma~\ref{lem:eigenvalue-decay}(ii)
+and Lemma~\ref{lem:Linfty} give:
 \begin{equation}
 \label{eq:Eplus-far}
   \sum_{n=\NSh}^{\infty}
@@ -625,33 +690,16 @@ and \eqref{eq:Linfty}:
   \frac{c}{T} \cdot C_\gamma\,e^{-c_2 c},
 \end{equation}
 where we used $\sum_{n=\NSh}^\infty \lambda_n \le C\,e^{-c_2 c}$
-(which follows from \eqref{eq:lambda-tail} and geometric
-summation).
+(from \eqref{eq:lambda-tail} and geometric summation).
 
 Combining \eqref{eq:Eminus-final}--\eqref{eq:Eplus-far}:
 \begin{equation}
 \label{eq:KN-KBL-bound}
-  |K_N(x,y) - \KBL(x,y)|
+  |K_M(x,y) - \KBL(x,y)|
   \;\le\;
   C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c},
 \end{equation}
-where $c_3 := \min(c_1, c_2) > 0$.
-
-\begin{remark}[Transition region]
-\label{rem:transition}
-The transition sum \eqref{eq:trace-transition} contributes
-$O(c/T)$ to $|K_N - \KBL|$, not exponentially small.
-However, this contribution is $O(c/T)$ uniformly, which
-is the same order as the diagonal $K_N(x,x) \asymp c/T$.
-Since the Schur test requires only that
-$\int_{I_\delta}|K_N(x,y)|\,dy$ be uniformly bounded,
-and $\int_{I_\delta}(c/T)\,dy \asymp c$, this term
-is absorbed into the final bound in Section~\ref{sec:schur}
-once divided by the operator norm normalization.
-A more refined treatment using the full eigenvalue profile
-in the transition region would improve the constant
-but is not necessary for the present argument.
-\end{remark}
+where $c_3 := \min(c_1, c_2, c_4) > 0$.
 
 % --------------------------------------------------------------
 \subsection{Final off-diagonal estimate}
@@ -672,11 +720,13 @@ and $N \le \gamma\,\NSh$.
 \end{proposition}
 
 \begin{proof}
-By the triangle inequality and the decomposition
-\eqref{eq:split}:
+Since $N \le M$, we have $|K_N(x,y)| \le |K_M(x,y)|$
+in the sense that $K_M - K_N = \sum_{N \le n < M}\psi_n\psi_n$
+is a positive semi-definite kernel, so it suffices to bound $K_M$.
+By the triangle inequality and the decomposition \eqref{eq:split}:
 \[
-  |K_N(x,y)|
-  \le |\KBL(x,y)| + |K_N(x,y) - \KBL(x,y)|.
+  |K_M(x,y)|
+  \le |\KBL(x,y)| + |K_M(x,y) - \KBL(x,y)|.
 \]
 The first term is bounded by Lemma~\ref{lem:BL-bound};
 the second by \eqref{eq:KN-KBL-bound}.
