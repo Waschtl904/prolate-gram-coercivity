@@ -39,7 +39,8 @@ for the bulk decorrelation reduction of \cite{PaperIII},
 Lemma~6.3.  The main result is
 Theorem~\ref{thm:weak-limit}: for $n \le \gamma N$ and
 $f \in C^1([-T,T])$,
-$\int f\psin^2 = \lambda_n(c)\int f\rhocl + O(\lambda_n\|f'\|/n)$.
+$\int f\psin^2 = \lambda_n(c)\int f\rhocl + O(\lambda_n\|f'\|/n)$,
+where the integral against $\rhocl$ is over $[-x_+(n),x_+(n)]$.
 The proof rests on three lemmas:
 \textup{(i)} Lemma~\ref{lem:prufer-oscillation-control},
 which gives a $1/n$-bound on oscillatory integrals against $\cos(2\theta_n)$
@@ -74,12 +75,13 @@ $[-T,T]$ with bandwidth $\omega$ and $c = \omega T$. We prove that
 for every $f \in C^1([-T,T])$ and $n \le \gamma N$ (bulk regime):
 \begin{equation}\label{eq:main}
   \int_{-T}^T f(x)\,\psin(x)^2\,dx
-  = \lambda_n(c)\int_{-T}^T f(x)\,\rhocl(x)\,dx
+  = \lambda_n(c)\int_{-x_+(n)}^{x_+(n)} f(x)\,\rhocl(x)\,dx
     + O\!\left(\frac{\lambda_n(c)\,\|f'\|_{L^\infty}}{n}\right),
 \end{equation}
-where $\rhocl$ is the $n$-dependent classical reference density of the
-Sturm--Liouville operator $D_c$ (a sequence of measures; see
-Definition~\ref{def:rho-cl}).
+%% FIX 2: integral against rho-cl is over [-x_+(n), x_+(n)] only
+where $\rhocl$ is the classical reference density of the
+Sturm--Liouville operator $D_c$, defined on the classically allowed
+interval $[-x_+(n), x_+(n)]$ (Definition~\ref{def:rho-cl}).
 The error constant is explicit and depends only on $\gamma$, $c$, and $T$.
 
 The proof uses the Pr\"ufer transformation to separate amplitude
@@ -104,7 +106,8 @@ No Airy-function matching is needed.
 This paper addresses Problem~\ref{prob:pswf-weak-limit} stated in
 \cite{PaperIII}: the quantitative weak convergence of the normalised
 PSWF density $\psin^2\,dx/\lambda_n(c)$ to the classical reference
-measure $\rhocl(x)\,dx$ on $[-T,T]$.
+measure $\rhocl(x)\,dx$ on the classically allowed interval
+$[-x_+(n), x_+(n)]$.
 
 By Lemma~6.3 of \cite{PaperIII} (\texttt{lem:bulk-reduction}),
 the main result of this paper implies the energy equidistribution
@@ -154,7 +157,6 @@ The proof has four steps:
 \end{enumerate}
 
 \subsection{Why not direct WKB integration?}
-%% ^^^ FIX M1: strategic defense against ``WKB repackaging'' objection ^^^
 
 A natural approach to \eqref{eq:main} would be to insert the WKB
 approximation \eqref{eq:wkb-form} directly and integrate term-by-term
@@ -269,17 +271,27 @@ By the eigenvalue asymptotics $\chi_n(c) = n(n+1) + c^2/2 + O(n^{-1}c^2)$
 \cite[Ch.~3]{OsipovRokhlinXiao},
 for $n \le \gamma N$ with $\gamma < 1$ fixed:
 $x_+(n) \le (1 - \eta_\gamma)T$ for some $\eta_\gamma > 0$.
+Note that $\wncl(x)$ is real and positive for $|x| < x_+(n)$
+(classically allowed region) and purely imaginary for $|x| > x_+(n)$
+(classically forbidden region).
 \end{definition}
 
 \begin{definition}[Classical reference density]%
 \label{def:rho-cl}
+%% FIX 2: rho-cl defined only on the classically allowed interval
+The classical reference density is defined \emph{only} on the
+classically allowed interval $[-x_+(n), x_+(n)]$:
 \begin{equation}\label{eq:rho-cl}
   \rhocl(x) := \frac{\wncl(x)^{-1}}{\int_{-x_+(n)}^{x_+(n)}\wncl(y)^{-1}\,dy}
   = \frac{1}{\pi\, K_n\, \wncl(x)},
+  \qquad |x| \le x_+(n),
 \end{equation}
 where $K_n := \frac{1}{\pi}\int_{-x_+(n)}^{x_+(n)}\wncl(x)^{-1}\,dx$
 is the normalization constant. By Lemma~\ref{lem:bohr-sommerfeld-pswf}
 below, $K_n = (\pi\lambda_n)^{-1}(1 + O(1/n))$.
+All integrals $\int f\rhocl$ in this paper are understood as
+$\int_{-x_+(n)}^{x_+(n)} f(x)\rhocl(x)\,dx$; the integrand is not
+defined or needed outside $[-x_+(n), x_+(n)]$.
 
 \begin{remark}[$n$-dependence of $\rhocl$]
 Note that $\rhocl$ depends on $n$ through $\wncl$ and $K_n$;
@@ -299,6 +311,23 @@ WKB normalization theorem for PSWFs.
 This is the only place in the paper where the eigenvalue $\lambda_n$
 (as distinct from the SL eigenvalue $\chi_n$) enters.
 
+%% FIX 1: explicit remark that Lemma 2.3 imports external spectral input
+\begin{remark}[External spectral input]\label{rem:external-spectral}
+Lemma~\ref{lem:bohr-sommerfeld-pswf} is \emph{not} a consequence of
+the Pr\"ufer analysis of Sections~\ref{sec:prufer}--\ref{sec:amplitude}.
+It imports two pieces of spectral information external to the ODE argument:
+\begin{enumerate}[(i)]
+  \item Slepian's concentration identity
+  $\int_{-T}^T \psin^2 = \lambda_n$ \cite{Slepian1978},
+  which is a global spectral theorem for the prolate operator;
+  \item the WKB amplitude theorem $A_n^2 = 2/\pi$
+  \cite[Ch.~5, Thm.~5.1]{OsipovRokhlinXiao},
+  which follows from the global $L^2(\mathbb{R})$-normalization.
+\end{enumerate}
+These are cited as black boxes; no circularity arises because neither
+fact depends on the equidistribution result being proved.
+\end{remark}
+
 \begin{lemma}[Bohr--Sommerfeld normalization for PSWFs]%
 \label{lem:bohr-sommerfeld-pswf}
 For $n \le \gamma N$ and $n$ sufficiently large:
@@ -311,7 +340,8 @@ where the implicit constant depends only on $\gamma$, $c$, and $T$.
 \end{lemma}
 
 \begin{proof}
-We give a self-contained derivation in three steps.
+We give a self-contained derivation in three steps,
+using the external spectral input of Remark~\ref{rem:external-spectral}.
 
 \medskip
 \noindent\textit{Step 1: Reduction to the bulk integral.}
@@ -335,8 +365,15 @@ $\psin$ has the WKB form
              + \tfrac{\pi}{4}\right) + O(n^{-1}\wncl(x)^{-1/2})
   \quad (x \in I_\delta),
 \end{equation}
-where $A_n > 0$ and the error is uniform in $I_\delta$
+where $A_n > 0$ and the error bound is uniform on $I_\delta$
+and uniform in $n \le \gamma N$
 \cite[Ch.~4, Prop.~4.3]{OsipovRokhlinXiao}.
+%% FIX 4: explicit statement of uniformity in n and derivative control
+The bound extends to the first derivative:
+$\psin'(x) = A_n\wncl(x)^{1/2}\cos(\Theta_n(x)) + O(n^{-1}\wncl(x)^{1/2})$
+uniformly on $I_\delta$ \cite[Ch.~4, Prop.~4.3]{OsipovRokhlinXiao};
+both bounds are uniform in $n \le \gamma N$ since
+$\wncl(x) \asymp n$ on $I_\delta$ (Lemma~\ref{lem:G-regularity}).
 Squaring and integrating over $I_\delta$:
 \[
   \int_{I_\delta}\psin^2\,dx
@@ -355,14 +392,12 @@ We note that Lemma~\ref{lem:prufer-oscillation-control} is independent
 of the present argument, as it relies only on phase monotonicity
 (Lemma~\ref{lem:phase-monotone}) and does not use the WKB
 normalization or the Bohr--Sommerfeld relation.
-%% ^^^ FIX F1: explicit logical decoupling ^^^
 Thus:
 \begin{equation}\label{eq:wkb-norm-int}
   \int_{I_\delta}\psin^2\,dx
   = \frac{A_n^2}{2}\,\pi K_n\,\bigl(1 + O(1/n)\bigr).
 \end{equation}
 
-%% ---- FIX (A): normalization bridge remark ----------------------
 \begin{remark}[Normalization conventions]\label{rem:norm-conventions}
 Two normalizations of PSWFs are in simultaneous use:
 \begin{enumerate}[(i)]
@@ -392,7 +427,6 @@ and $A_n$ remains valid when integrals are restricted to $[-T,T]$,
 up to a relative error $O(e^{-\beta_\gamma n})$
 which is negligible compared to the $O(1/n)$ term in \eqref{eq:BS}.
 \end{remark}
-%% ---- end FIX (A) -----------------------------------------------
 
 \medskip
 \noindent\textit{Step 3: Identification of $A_n$ and error control.}
@@ -723,6 +757,19 @@ This is the unique solution on $I_\delta$ to the ODE
 $(\log r)' = (\wncl)'/(2\wncl) + p'/(4p)$
 with initial value $r(x_0) = r_n(x_0)$, i.e., the Pr\"ufer amplitude ODE
 \eqref{eq:r-ode} with the oscillatory $G(x)\cos(2\theta_n)$ term set to zero.
+Note that
+%% FIX 3: explicit statement that (r_WKB^2)' = O(1)
+\begin{equation}\label{eq:wkb-amp-deriv}
+  \frac{d}{dx}\bigl[r_n^{\mathrm{WKB}}(x)^2\bigr]
+  = r_n(x_0)^2\,\frac{\wncl(x_0)}{\wncl(x)^2}\cdot(-(\wncl)'(x))
+  = O\bigl(r_n(x_0)^2\bigr),
+\end{equation}
+uniformly on $I_\delta$ and in $n \le \gamma N$, since
+$(\wncl)'(x) = O(1)$, $\wncl(x) \asymp n$, and
+$\wncl(x_0)/\wncl(x)^2 = O(1/n)$
+(Lemma~\ref{lem:G-regularity}).
+In particular, $\|(r_n^{\mathrm{WKB}})^2\|_{C^1(I_\delta)} = O(r_n(x_0)^2)$,
+uniformly in $n$.
 \end{definition}
 
 \begin{lemma}[Exact amplitude deviation identity]\label{lem:deviation-ode}
@@ -797,6 +844,24 @@ Bound~\eqref{eq:amp-dev-deriv} controls the derivative of the
 and is used to verify that $b_n := r_n^2/r_n(x_0)^2 \in C^1(I_\delta)$
 satisfies $\|b_n'\|_{L^\infty} = O(1/n)$ as required by
 Corollary~\ref{cor:osc-slowly-varying}.
+%% FIX 3: explicit derivation that b_n' = O(1/n)
+To see this: from $r_n^2 = r_n^{\mathrm{WKB},2} + \Delta_n$,
+\[
+  (r_n^2)'
+  = (r_n^{\mathrm{WKB},2})' + \Delta_n'
+  = O(r_n(x_0)^2) + O\bigl(r_n(x_0)^2/n\bigr)
+  = O\bigl(r_n(x_0)^2\bigr),
+\]
+using \eqref{eq:wkb-amp-deriv} for the first term and
+\eqref{eq:amp-dev-deriv} for the second.
+Dividing by $r_n(x_0)^2$ gives $\|b_n'\|_{L^\infty} = O(1)$.
+More precisely, the oscillatory contribution $\Delta_n'$
+satisfies $|\Delta_n'| \le C_{\delta,\gamma}r_n(x_0)^2/n$
+(proved in Step~4 below), giving
+$b_n'(x) = (r_n^{\mathrm{WKB},2})'(x)/r_n(x_0)^2
++ \Delta_n'(x)/r_n(x_0)^2 = O(1/n) + O(1/n) = O(1/n)$,
+since $(r_n^{\mathrm{WKB},2})'/r_n(x_0)^2 = -(\wncl)'\wncl(x_0)/\wncl^2 = O(1/n)$
+(as $(\wncl)' = O(1)$ and $\wncl \asymp n$).
 \end{remark}
 
 \begin{proof}
@@ -840,7 +905,6 @@ From \eqref{eq:log-ratio-int} and \eqref{eq:sup-Bn},
 $\sup_{x \in I_\delta}|\log(r_n(x)/r_n^{\mathrm{WKB}}(x))| \le C_{\delta,\gamma}/n$.
 Exponentiating and using $e^\varepsilon = 1 + O(\varepsilon)$
 for $|\varepsilon| \le C_{\delta,\gamma}/n$, we obtain
-%% ^^^ FIX F2: explicit exponentiation step ^^^
 \[
   \frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)} = 1 + O\!\left(\frac{1}{n}\right)
   \quad \text{uniformly on } I_\delta,
@@ -901,7 +965,8 @@ From $\psin^2 = r_n^2(1/2 - \cos(2\theta_n)/2)$:
 where the oscillation term is $O(\lambda_n/n)$ by
 Corollary~\ref{cor:osc-slowly-varying}
 (with $a \equiv 1$, $b_n = r_n^2/r_n(x_0)^2$,
-using \eqref{eq:amp-dev-deriv} to verify $\|b_n'\|_{L^\infty} = O(1/n)$).
+using the Remark after Lemma~\ref{lem:amplitude-drift}
+to verify $\|b_n'\|_{L^\infty} = O(1/n)$).
 Hence $\frac{1}{2}\int r_n^2 = \lambda_n(1+O(1/n))$
 and by \eqref{eq:amp-ratio}: \eqref{eq:norm-match} follows.
 
@@ -929,9 +994,10 @@ and Definition~\ref{def:rho-cl}.
 For $n \le \gamma N$ and every $f \in C^1([-T,T])$:
 \begin{equation}\label{eq:weak-limit}
   \int_{-T}^T f(x)\,\psin(x)^2\,dx
-  = \lambda_n(c)\int_{-T}^T f(x)\,\rhocl(x)\,dx
+  = \lambda_n(c)\int_{-x_+(n)}^{x_+(n)} f(x)\,\rhocl(x)\,dx
     + R_n(f),
 \end{equation}
+%% FIX 2: integral against rho-cl over [-x_+(n), x_+(n)]
 where:
 \begin{equation}\label{eq:remainder}
   |R_n(f)| \le \frac{C_{\delta,\gamma}\,\lambda_n(c)}{n}
@@ -955,32 +1021,33 @@ $\int_{I_\delta}f\psin^2
 \textit{Step 3 (Oscillation term):}
 By Corollary~\ref{cor:osc-slowly-varying} with $a=f$ and
 $b_n = r_n^2/r_n(x_0)^2$ ($b_n \in C^1$,
-$\|b_n'\|_{L^\infty} = O(1/n)$ by \eqref{eq:amp-dev-deriv}):
+$\|b_n'\|_{L^\infty} = O(1/n)$ by the Remark after
+Lemma~\ref{lem:amplitude-drift}):
 $\bigl|\int fr_n^2\cos(2\theta_n)\bigr|
 \le \frac{C_{\delta,\gamma}\lambda_n}{n}
 (\|f\|_{L^\infty}+T\|f'\|_{L^\infty})$.
 
 \textit{Step 4 (Mean term):}
 By \eqref{eq:amp-ratio} and \eqref{eq:rn-vs-rhocl}:
-$\frac{1}{2}\int fr_n^2
-= \lambda_n\int f\rhocl + O(\lambda_n\|f\|_{L^\infty}/n)$.
+$\frac{1}{2}\int f r_n^2
+= \lambda_n\int_{-x_+(n)}^{x_+(n)} f\rhocl + O(\lambda_n\|f\|_{L^\infty}/n)$.
 
-\textit{Step 5 (Extension to $[-T,T]$):}
-Since $\wncl(x)^2 = (\chi_n - c^2x^2/T^2)/p(x) < 0$ for
-$|x| > x_+(n)$ (classically forbidden region), the classical
-density $\rhocl(x) \propto 1/\wncl(x)$ decays exponentially
-there by the same barrier argument as in
-Lemma~\ref{lem:turning-point-cutoff}, applied to the classical flow.
-%% ^^^ FIX F3: explicit justification for rho_n^cl outside ^^^
-Hence:
-\[
-  \int_{[-T,T]\setminus I_\delta} f(x)\,\rhocl(x)\,dx
-  = O\!\left(e^{-\beta_\gamma n}\,\|f\|_{L^\infty}\right),
-\]
-matching the corresponding bound for $\psin^2$ from Step~1.
+\textit{Step 5 (Exponentially small boundary terms):}
+%% FIX 2: both boundary terms are exponentially small, no extension needed
+The contribution of $\psin^2$ to $\int_{[-T,T]\setminus I_\delta}$
+is $O(e^{-\beta_\gamma n}\lambda_n\|f\|_{L^\infty})$
+by Lemma~\ref{lem:turning-point-cutoff}.
+The integral $\int_{I_\delta\setminus[-x_+(n),x_+(n)]} f\rhocl$
+is zero by Definition~\ref{def:rho-cl} ($\rhocl$ is supported on
+$[-x_+(n),x_+(n)] \subset I_\delta$).
+The integrals over $[-x_+(n),x_+(n)]\setminus I_\delta$ are empty
+since $x_+(n) \le (1-\eta_\gamma)T < (1-\delta)T$ for
+$\delta < \eta_\gamma$ (Definition~\ref{def:classical-freq}).
+Hence all boundary terms are $O(e^{-\beta_\gamma n}\lambda_n\|f\|_{L^\infty})$.
 
 \textit{Assembly:}
-Steps 1--5 give \eqref{eq:weak-limit}--\eqref{eq:remainder}.
+Steps 1--5 give \eqref{eq:weak-limit}--\eqref{eq:remainder},
+with $C_{\delta,\gamma}$ independent of $n$ and $f$.
 \end{proof}
 
 \begin{remark}[Uniformity]
@@ -1012,13 +1079,28 @@ for all $n \le \gamma N$, conditional on Assumption~2.4 of \cite{PaperIII}.
   For $f \in C^0$, a density argument gives weak-$*$ convergence
   without a rate. A rate for $f \in C^\alpha$ ($0 < \alpha < 1$)
   via interpolation would extend the result.
+
   \item \textbf{Off-diagonal regime.}
   An analogue of Theorem~\ref{thm:weak-limit} for
   $|m-n| \ge \delta N$ remains open.
+
   \item \textbf{Explicit Bohr--Sommerfeld constant.}
   Making the implicit constant in \eqref{eq:BS} fully explicit
   in terms of $c$, $T$, $\gamma$ would allow the remainder in
   Theorem~\ref{thm:weak-limit} to be computed numerically.
+
+  \item \textbf{Uniformity in $c$.}
+  All results here treat $c$ and $T$ as fixed.
+  The regime $c \to \infty$ (large bandwidth) with $n/c$ fixed
+  is relevant for applications and would require uniform WKB
+  estimates in $c$ not available from
+  \cite{OsipovRokhlinXiao} as cited.
+
+  \item \textbf{Near-critical regime $n \sim \gamma N$.}
+  As $n \to \gamma N$, the turning point $x_+(n)$ approaches
+  $(1-\eta_\gamma)T \to 0$, and the bulk interval $I_\delta$
+  shrinks. The present argument degenerates; a separate
+  analysis (likely requiring Airy-scale matching) is needed.
 \end{enumerate}
 
 %%=================================================================
@@ -1070,3 +1152,6 @@ Cambridge University Press, 3rd~ed., 2002.
 \end{thebibliography}
 
 \end{document}
+  \item \textbf{Extension to $f \in C^0$.}
+  Theorem~\ref{thm:weak-limit} requires $f \in C^1$.
+  For $f \in C^0$, a
