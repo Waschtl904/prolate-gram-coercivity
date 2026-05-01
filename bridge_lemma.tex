@@ -1,0 +1,399 @@
+
+% ================================================================
+% Bridge Lemma (WKB-Überdeckung / Geometrische Abdeckung)
+%
+% Dieses File kann direkt in paper5.tex als neuer Abschnitt
+% eingefügt werden. Alle Label-Präfixe beginnen mit "bridge:".
+%
+% Voraussetzungen (bereits in paper5.tex vorhanden):
+%   - Lemma lem:eigenvalue-decay  (Eigenvalue concentration)
+%   - Notation: psi_n, lambda_n, T, omega = c/T, N_Sh = 2c/pi
+%   - Zitierbar: [OsipovRokhlinXiao], insb. §4.4 (WKB forbidden zone)
+%
+% Position im Paper: nach Section 3 (Off-diagonal decay),
+%                    vor Section 4 (Schur argument).
+% ================================================================
+
+% ================================================================
+\section{The Bridge Lemma: WKB Cover and Exponential Out-of-Band
+Decay}
+\label{sec:bridge}
+% ================================================================
+
+This section proves the key energy bound that closes the connection
+between the WKB tunnel structure and the out-of-band spectral energy
+of PSWF products. It establishes Assumption~2.4 of \cite{PaperIII}
+unconditionally in the regime $\gamma < 1/2$, thereby completing the
+bulk stability program for that parameter range.
+
+% ---------------------------------------------------------------
+\subsection{Setup and statement}
+\label{subsec:bridge-setup}
+% ---------------------------------------------------------------
+
+Fix $0 < \gamma' < \gamma < 1/2$.
+For $m, n \le \gamma' N_{\mathrm{Sh}}$, define the product function
+\begin{equation}
+\label{eq:bridge:fmn}
+  f_{mn}(x) := \psi_m(x)\,\psi_n(x),
+  \qquad x \in [-T, T].
+\end{equation}
+Since each $\psi_n \in L^2(\mathbb{R})$ is $\omega$-bandlimited
+($\omega := c/T$), the product $f_{mn}$ lies in
+$L^2(\mathbb{R})$ with Fourier support in $[-2\omega, 2\omega]$.
+The \emph{out-of-band energy} of $f_{mn}$ is
+\begin{equation}
+\label{eq:bridge:Eout}
+  \mathcal{E}_{\mathrm{out}}(f_{mn})
+  := \int_{|\xi| > \omega} |\widehat{f}_{mn}(\xi)|^2\,d\xi.
+\end{equation}
+
+\begin{theorem}[Bridge Lemma: exponential out-of-band decay]
+\label{thm:bridge}
+Fix $0 < \gamma' < \gamma < 1/2$.
+There exist constants $C_{\gamma,\gamma'} > 0$ and
+$K_{\gamma,\gamma'} > 0$, depending only on $\gamma$ and $\gamma'$,
+such that for all $m, n \le \gamma'\,N_{\mathrm{Sh}}$ and all
+$c \ge 1$:
+\begin{equation}
+\label{eq:bridge:main}
+  \mathcal{E}_{\mathrm{out}}(f_{mn})
+  \;\le\;
+  C_{\gamma,\gamma'}\,e^{-K_{\gamma,\gamma'}\,c}.
+\end{equation}
+In particular, Assumption~\textup{2.4} of \cite{PaperIII}
+\textup{(ass:bulkconv)} holds unconditionally for all
+$m, n \le \gamma'\,N_{\mathrm{Sh}}$ with $\gamma' < 1/2$.
+\end{theorem}
+
+% ---------------------------------------------------------------
+\subsection{The WKB forbidden-zone pointwise bound}
+\label{subsec:bridge-wkb}
+% ---------------------------------------------------------------
+
+The geometric heart of the argument rests on a pointwise bound for
+PSWFs in their classical forbidden zone. We state this as a
+stand-alone lemma.
+
+\begin{lemma}[WKB forbidden-zone bound]
+\label{lem:bridge:wkb}
+Fix $0 < \gamma' < \gamma < 1$.
+There exist constants $C_{\gamma,\gamma'} > 0$ and
+$K_{\gamma,\gamma'} > 0$ such that for all
+$n \le \gamma'\,N_{\mathrm{Sh}}$, all $x \in [\gamma T, T]$,
+and all $c \ge 1$:
+\begin{equation}
+\label{eq:bridge:wkb}
+  |\psi_n(x)|
+  \;\le\;
+  C_{\gamma,\gamma'}\,e^{-K_{\gamma,\gamma'}\,c}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+\textbf{Step 1 (Turning point location).}
+For $n \le \gamma' N_{\mathrm{Sh}} = 2\gamma' c/\pi$,
+the WKB turning point $x_+(n)$ satisfies
+$x_+(n) \le \gamma' T$ (see
+\cite[§4.4, eq.~(4.85)]{OsipovRokhlinXiao}).
+In particular, the entire interval $[\gamma T, T]$ lies in the
+classically forbidden zone for $\psi_n$.
+
+\textbf{Step 2 (WKB action lower bound).}
+The WKB tunneling integral from $\gamma' T$ to $\gamma T$ is
+\begin{equation}
+\label{eq:bridge:I}
+  I_{\gamma,\gamma'}
+  := \int_{\gamma' T}^{\gamma T}
+     \sqrt{\frac{c^2 t^2 - \chi_n(c)\,T^2}{T^2(T^2 - t^2)}}\,
+     \frac{dt}{T}.
+\end{equation}
+Since $n \le \gamma' N_{\mathrm{Sh}}$ implies
+$\chi_n(c) \le (c\,\gamma')^2 + C\,c$ for a uniform constant $C$
+(cf.\ \cite[Theorem~2.7]{OsipovRokhlinXiao}), and since
+$c^2 t^2 \ge c^2 (\gamma' T)^2$ for $t \ge \gamma' T$,
+the integrand is bounded below uniformly:
+\begin{equation}
+\label{eq:bridge:integrand-lb}
+  \frac{c^2 t^2 - \chi_n(c)\,T^2}{T^2(T^2 - t^2)}
+  \;\ge\;
+  \frac{c^2(\gamma^2 - (\gamma')^2)T^2/2}{T^2(1-\gamma'^2)T^2}
+  \;=:\;
+  \frac{c^2\,\mu_{\gamma,\gamma'}}{T^2}
+\end{equation}
+for all $t \in [\gamma'T, \gamma T]$ and all $c$ large enough,
+where $\mu_{\gamma,\gamma'} := (\gamma^2-(\gamma')^2)/(2(1-(\gamma')^2)) > 0$.
+Therefore
+\begin{equation}
+\label{eq:bridge:I-lower}
+  I_{\gamma,\gamma'}
+  \;\ge\;
+  c\,\sqrt{\mu_{\gamma,\gamma'}}\,(\gamma - \gamma')
+  \;=:\;
+  c\,J_{\gamma,\gamma'}\;>\; 0.
+\end{equation}
+
+\textbf{Step 3 (WKB pointwise bound).}
+By the uniform WKB asymptotic for PSWF eigenfunctions in the
+forbidden zone
+\cite[Theorem~4.6, eq.~(4.131)]{OsipovRokhlinXiao},
+for $x \in [\gamma T, T - \varepsilon]$:
+\[
+  |\psi_n(x)| \;\le\;
+  C\,(1 - x^2/T^2)^{-1/4}\,
+  \exp\!\Bigl(-\int_{x_+(n)}^{x}
+    \sqrt{V_c(t)}\,dt\Bigr),
+\]
+where $V_c(t) := (c^2t^2 - \chi_n T^2)/(T^2(T^2 - t^2))$.
+The exponential factor satisfies
+\[
+  \exp\!\Bigl(-\int_{x_+(n)}^{x}\sqrt{V_c(t)}\,dt\Bigr)
+  \;\le\;
+  \exp\!\Bigl(-\int_{x_+(n)}^{\gamma T}\sqrt{V_c(t)}\,dt\Bigr)
+  \;\le\;
+  e^{-I_{\gamma,\gamma'}}
+  \;\le\;
+  e^{-c\,J_{\gamma,\gamma'}}.
+\]
+The prefactor $(1 - x^2/T^2)^{-1/4}$ is uniformly bounded on
+$[\gamma T, T - \varepsilon]$.
+Near $x = T$: the SL equation $(p(x)\psi_n')'
+= (c^2x^2/T^2 - \chi_n)\psi_n$ with $p(T) = 0$ admits the
+Frobenius analysis $\psi_n(x) = \psi_n(T) + O((T-x)^1)$,
+with $|\psi_n(T)|$ bounded via the L$^2$-concentration bound
+$\|\psi_n\|_{L^2[\gamma T, T]}^2 \le 1 - \lambda_n(c) \le e^{-c_1 c}$
+(Lemma~\ref{lem:eigenvalue-decay}(i)) together with the Sobolev
+interpolation
+$|\psi_n(T)|^2 \le C\,\|\psi_n\|_{L^2}\,\|\psi_n'\|_{L^2}$
+and the SL eigenvalue bound
+$\|\psi_n'\|_{L^2}^2 \le \chi_n \le Cc^2$.
+This gives $|\psi_n(T)| \le C\,c\,e^{-c_1 c/2}$.
+
+Combining and setting $K_{\gamma,\gamma'} :=
+\min(J_{\gamma,\gamma'},\, c_1/2)/2$:
+\[
+  |\psi_n(x)| \;\le\; C_{\gamma,\gamma'}\,e^{-K_{\gamma,\gamma'}\,c}
+  \qquad\text{for all } x \in [\gamma T, T]. \qedhere
+\]
+\end{proof}
+
+\begin{remark}[The endpoint $x = T$]
+\label{rem:bridge:endpoint}
+The SL operator is singular at $x = T$ because $p(T) = 0$.
+However, the PSWFs are smooth up to the boundary, and the
+pointwise value $\psi_n(T)$ is exponentially small: it satisfies
+$|\psi_n(T)| \le C c\,e^{-c_1 c/2}$.
+The polynomial prefactor $c$ is absorbed into the exponential
+for the purposes of the Bridge Lemma.
+\end{remark}
+
+% ---------------------------------------------------------------
+\subsection{The geometric cover argument}
+\label{subsec:bridge-geo}
+% ---------------------------------------------------------------
+
+The core structural insight connecting WKB decay to
+out-of-band Fourier energy is the following geometric lemma.
+
+\begin{lemma}[Geometric forbidden-zone cover]
+\label{lem:bridge:cover}
+Fix $0 < \gamma < 1/2$.
+Let $m, n \le \gamma N_{\mathrm{Sh}}$ and let
+$\delta \in (0, \omega)$.
+For every $x$ in the integration range $[\delta T/\omega, T]$,
+at least one of the following holds:
+\begin{enumerate}
+  \item[\textup{(I)}] $x \ge \gamma T$, so
+    $\psi_n(x)$ lies in the forbidden zone of $\psi_n$.
+  \item[\textup{(II)}] $x < \gamma T$, so
+    $T + \delta T/\omega - x \ge (1-\gamma)T > \gamma T \ge x_+(m)$,
+    hence $\psi_m(T + \delta T/\omega - x)$ lies in the
+    forbidden zone of $\psi_m$.
+\end{enumerate}
+In other words, for $\gamma < 1/2$, the two forbidden intervals
+$(\gamma T, T)$ \textup{(}for $\psi_n$\textup{)} and the
+pre-image interval $\{x : T + \delta T/\omega - x > \gamma T\} =
+(-\infty, (1-\gamma)T + \delta T/\omega)$ \textup{(}for
+$\psi_m$\textup{)} together cover all of $[\delta T/\omega, T]$.
+\end{lemma}
+
+\begin{proof}
+For any $x \in [\delta T/\omega, T]$:
+\begin{itemize}
+  \item If $x \ge \gamma T$: Case~(I) applies.
+  \item If $x < \gamma T$: then
+    $T + \delta T/\omega - x > T + 0 - \gamma T = (1-\gamma)T$.
+    Since $m \le \gamma N_{\mathrm{Sh}}$, the turning point satisfies
+    $x_+(m) \le \gamma T$.
+    Because $\gamma < 1/2$, we have $(1-\gamma) > \gamma$, so
+    \[
+      T + \delta T/\omega - x > (1-\gamma)T > \gamma T \ge x_+(m).
+    \]
+    Hence Case~(II) applies. \qedhere
+\end{itemize}
+\end{proof}
+
+\begin{remark}[Why $\gamma < 1/2$ is sharp]
+\label{rem:bridge:halfsharp}
+The condition $\gamma < 1/2$ is the exact threshold for the
+geometric cover to work.
+For $\gamma = 1/2$: the two forbidden zones meet at the single
+point $x = \gamma T = (1-\gamma)T = T/2$; the cover still holds
+but with a degenerate boundary.
+For $\gamma > 1/2$: there exists an interval
+$x \in (\gamma T, (1-\gamma)T)$ in which
+\emph{neither} factor is in its forbidden zone, and the
+cover argument fails.
+In that regime, a separate phase-cancellation argument
+(as in Paper~I) is required.
+\end{remark}
+
+% ---------------------------------------------------------------
+\subsection{Proof of the Bridge Lemma}
+\label{subsec:bridge-proof}
+% ---------------------------------------------------------------
+
+\begin{proof}[Proof of Theorem~\ref{thm:bridge}]
+By symmetry ($\mathcal{E}_{\mathrm{out}}(f_{mn}) =
+\mathcal{E}_{\mathrm{out}}(f_{nm})$) we may assume $m, n \ge 0$.
+
+\textbf{Step 1 (Convolution representation).}
+Since $\psi_m, \psi_n$ are $\omega$-bandlimited and supported on
+$[-T, T]$, the Fourier transform of $f_{mn}$ satisfies
+\[
+  \widehat{f}_{mn}(\xi)
+  = (\widehat{\psi}_m * \widehat{\psi}_n)(\xi)
+  = \int_{-\omega}^{\omega}
+    \widehat{\psi}_m(\xi - \eta)\,\widehat{\psi}_n(\eta)\,d\eta.
+\]
+For $\xi = \omega + \delta$ with $\delta \in (0, \omega)$,
+the integrand is supported on $\eta \in (\delta, \omega)$
+(since $\widehat{\psi}_n$ is supported on $[-\omega, \omega]$ and
+$\xi - \eta \in (\delta, \omega)$ requires $\eta \in (\delta, \omega)$).
+
+Using the PSWF self-duality relation
+$\widehat{\psi}_n(\eta) = (-i)^n \sqrt{\lambda_n}\,\psi_n(\eta T/\omega)$
+for $|\eta| \le \omega$
+(cf.\ \cite[§2.3, eq.~(2.37)]{OsipovRokhlinXiao}),
+and the substitution $x = \eta T/\omega$:
+\begin{equation}
+\label{eq:bridge:conv-x}
+  \widehat{f}_{mn}(\omega + \delta)
+  = (-i)^{m+n}\sqrt{\lambda_m \lambda_n}\,
+    \frac{\omega}{T}
+    \int_{\delta T/\omega}^{T}
+    \psi_m\!\bigl(T + \delta T/\omega - x\bigr)\,
+    \psi_n(x)\,dx.
+\end{equation}
+
+\textbf{Step 2 (Pointwise bound via geometric cover).}
+By Lemma~\ref{lem:bridge:cover} (with $\gamma'$ in
+Lemma~\ref{lem:bridge:wkb} chosen as $\gamma' \to \gamma$),
+for every $x \in [\delta T/\omega, T]$,
+at least one of $|\psi_n(x)|$ or
+$|\psi_m(T + \delta T/\omega - x)|$ is bounded by
+$C_{\gamma}\,e^{-K_\gamma c}$ (Lemma~\ref{lem:bridge:wkb}),
+while the other factor is bounded by $C$ (uniform $L^\infty$
+bound for PSWFs; see \cite[Corollary~4.3]{OsipovRokhlinXiao}).
+Therefore the integrand satisfies:
+\[
+  |\psi_m(T + \delta T/\omega - x)|\,|\psi_n(x)|
+  \;\le\;
+  C_\gamma\,e^{-K_\gamma c}
+  \qquad\forall\, x \in [\delta T/\omega, T].
+\]
+
+\textbf{Step 3 (Integration).}
+Integrating over $x \in [\delta T/\omega, T]$ (length $\le T$)
+and using $|\sqrt{\lambda_m \lambda_n}| \le 1$:
+\begin{equation}
+\label{eq:bridge:pointwise-xi}
+  |\widehat{f}_{mn}(\omega + \delta)|
+  \;\le\;
+  \frac{\omega}{T} \cdot T \cdot C_\gamma\,e^{-K_\gamma c}
+  = C_\gamma\,\omega\,e^{-K_\gamma c}
+  = C_\gamma\,\frac{c}{T}\,e^{-K_\gamma c}.
+\end{equation}
+By symmetry, the same bound holds for $\xi = -\omega - \delta$.
+
+\textbf{Step 4 ($\mathcal{E}_{\mathrm{out}}$ bound).}
+Integrating the squared bound over $\delta \in (0, \omega)$:
+\begin{align}
+\label{eq:bridge:Eout-final}
+  \mathcal{E}_{\mathrm{out}}(f_{mn})
+  &= 2\int_0^\omega |\widehat{f}_{mn}(\omega+\delta)|^2\,d\delta
+  \;\le\;
+  2\int_0^\omega C_\gamma^2\,\frac{c^2}{T^2}\,e^{-2K_\gamma c}\,d\delta
+  \notag\\
+  &= 2\,C_\gamma^2\,\frac{c^2}{T^2}\,\omega\,e^{-2K_\gamma c}
+  = 2\,C_\gamma^2\,\frac{c^3}{T^3}\,e^{-2K_\gamma c}.
+\end{align}
+Since $c^3 e^{-2K_\gamma c} \le e^{-(2K_\gamma - \varepsilon)c}$
+for any $\varepsilon > 0$ and $c$ large enough, setting
+$K_{\gamma,\gamma'} := K_\gamma - \varepsilon/2$ yields
+\begin{equation}
+  \mathcal{E}_{\mathrm{out}}(f_{mn})
+  \;\le\;
+  C_{\gamma,\gamma'}\,e^{-K_{\gamma,\gamma'}\,c},
+\end{equation}
+which is \eqref{eq:bridge:main}. \qed
+\end{proof}
+
+% ---------------------------------------------------------------
+\subsection{Consequences for the bulk stability program}
+\label{subsec:bridge-consequences}
+% ---------------------------------------------------------------
+
+\begin{corollary}[ass:bulkconv is proved for $\gamma < 1/2$]
+\label{cor:bridge:bulkconv}
+For all $0 < \gamma < 1/2$, Assumption~\textup{ass:bulkconv}
+of \cite{PaperIII} holds unconditionally:
+\[
+  \mathcal{E}_{\mathrm{out}}(f_{mn}) \le C_\gamma\,e^{-\alpha_\gamma c}
+  \qquad \text{for all } m,n \le \gamma N_{\mathrm{Sh}},
+\]
+with $\alpha_\gamma = K_{\gamma,\gamma'} > 0$ for any
+$\gamma' \in (\gamma/2,\gamma)$.
+By \cite[Theorem~3.2 (thm:bulk)]{PaperIII}, the uniform
+spectral tail bound
+\[
+  \|(I - P_N)f_{mn}\|_{L^2} \le C_\gamma\,e^{-\alpha_\gamma' N}
+\]
+follows unconditionally for all $m,n,N \le \gamma N_{\mathrm{Sh}}$
+and $\gamma < 1/2$.
+\end{corollary}
+
+\begin{remark}[Separation of mechanisms]
+\label{rem:bridge:separation}
+The Bridge Lemma uses only two ingredients:
+\begin{enumerate}
+\item[(i)] WKB tunneling: $|\psi_n(x)| \le C e^{-Kc}$ in the
+  forbidden zone.
+\item[(ii)] Geometric cover: the two forbidden zones together
+  cover the full convolution interval for $\gamma < 1/2$.
+\end{enumerate}
+In particular, \emph{no phase cancellation} (integration by
+parts, stationary phase, or off-diagonal index decay in $|m-n|$)
+is used.
+The off-diagonal structure $|E_{mn}| \le C(1+|m-n|)^{-p}$
+required for DSTP in \cite{PaperI} is a strictly additional
+statement, established there by a separate phase-gap mechanism.
+The Bridge Lemma proves only the energy bound; DSTP requires the
+index-dependent oscillation control of \cite{PaperI}.
+\end{remark}
+
+\begin{remark}[Extension to $\gamma \ge 1/2$]
+\label{rem:bridge:extension}
+For $\gamma \ge 1/2$, the geometric cover fails: there exist
+points $x \in (\gamma T, (1-\gamma)T)$ at which both
+$\psi_n(x)$ and $\psi_m(T-x)$ are in the oscillatory regime.
+In that zone, one expects cancellation from the WKB phase
+$\Phi_{mn}(x) = \phi_m(x_0 - x) \pm \phi_n(x)$, which oscillates
+at a rate governed by the index difference $|m-n|$ and the
+spectral parameters $\chi_m, \chi_n$.
+This leads to the stationary-phase / integration-by-parts
+approach, which we do not pursue here.
+Whether the exponential bound
+$\mathcal{E}_{\mathrm{out}}(f_{mn}) \le C e^{-\alpha c}$
+extends to $\gamma \in [1/2, 1)$ remains open.
+\end{remark}
