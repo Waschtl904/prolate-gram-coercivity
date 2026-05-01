@@ -79,7 +79,7 @@ reducing frame analysis to simultaneous control of a weighted-frame
 defect and a quadrature defect. Assuming a standard first-order
 quadrature consistency estimate, we derive
 \[
-  |E_{mn}| \le C\,h c
+  |E_{mn}| \le C\,hc
   \qquad \text{for all } 0\le m,n\le N-1.
 \]
 The exact identity $E_{mn} = R_{mn}^{\mathrm{quad}}$
@@ -148,12 +148,10 @@ The proof architecture has four components:
   yields $|E_{mn}|\le Chc$.
 \end{enumerate}
 
-% ---- FIX 1: DSTP necessity remark --------------------------------
-\begin{remark}[Necessity of DSTP]
-\label{rem:dstp_necessity}
+\begin{remark}[Necessity of DSTP]\label{rem:dstp_necessity}
 DSTP is not merely sufficient for the main theorem; it is
 \emph{necessary} in the following sense: any quadrature rule for
-which $\|E_{N,c}\|_2 = o(hc \cdot N)$ must satisfy a condition of
+which $\|E_{N,c}\|_2 = o(hc\cdot N)$ must satisfy a condition of
 DSTP type, since the structure-blind bound $|E_{mn}|\le Chc$
 (Theorem~\ref{thm:banded_decay}) is sharp for generic rules
 (Remark~\ref{rem:ax5_independence}). DSTP is therefore the minimal
@@ -161,7 +159,6 @@ additional condition that separates stability from instability at
 operator level. It is a non-uniform spectral localisation condition
 in the PSWF eigenbasis, not a sampling density condition.
 \end{remark}
-% ------------------------------------------------------------------
 
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
@@ -196,7 +193,6 @@ $c=\omega T$, $V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,
 fix $\gamma_0\in(0,\tfrac{1}{4})$. The \emph{bulk sector} is
 $\mathcal{B}:=\{0\le k\le\gamma_0 N_{\mathrm{Sh}}\}$.
 
-% ---- FIX 3: gamma_0 scaling clarification ------------------------
 Throughout this paper, $\gamma_0\in(0,\tfrac{1}{4})$ is fixed
 independently of $c$ and $N$. All constants depending on $\gamma_0$
 are uniform as $c\to\infty$ with $\gamma_0$ held fixed.
@@ -204,7 +200,6 @@ The scaling $N\sim c$ means $N/N_{\mathrm{Sh}}\to\pi/2$; the bulk
 sector then satisfies $|\mathcal{B}|=\lfloor\gamma_0
 N_{\mathrm{Sh}}\rfloor\sim 2\gamma_0 c/\pi$, growing linearly in $c$
 with fixed proportion $\gamma_0$.
-% ------------------------------------------------------------------
 
 \subsection{Frame operator and defect matrix}
 
@@ -260,13 +255,13 @@ The linear term $2c(m-n)/\pi$ dominates for $\gamma_0<\tfrac{1}{4}$:
 \[
   |\chi_m-\chi_n|
   \ge\frac{c}{\pi}|m-n|
-     \underbrace{(2-4\gamma_0-o(1))}_{\ge 1 \text{ for }c\ge c_0}
+     \underbrace{(2-4\gamma_0-o(1))}_{\ge 1\text{ for }c\ge c_0}
   \ge\frac{c}{\pi}|m-n|.
 \]
 Hence in Regime~(A):
 \[
-  |\chi_m-\chi_n| \ge \kappa_1^{(A)}\,c\,|m-n|,
-  \qquad \kappa_1^{(A)} := \frac{1}{\pi}.
+  |\chi_m-\chi_n|\ge\kappa_1^{(A)}\,c\,|m-n|,
+  \qquad\kappa_1^{(A)}:=\frac{1}{\pi}.
 \]
 
 \noindent\textbf{Regime~(B): near base, $\min(m,n)<c^{1/2}$.}
@@ -274,22 +269,20 @@ Here $m,n\le c^{1/2}$, so $m+n+1\le 2c^{1/2}+1$. The remainder
 $c^2/\min(m,n)>c^{3/2}$ can dominate the linear-in-$c$ term, so
 the Regime~(A) bound fails. However, the quadratic term alone gives
 \[
-  |\chi_m-\chi_n| \ge |m-n|,
+  |\chi_m-\chi_n|\ge|m-n|,
 \]
 and therefore:
 \[
-  |\chi_m-\chi_n| \ge \kappa_1^{(B)}\,|m-n|,
-  \qquad \kappa_1^{(B)} := 1.
+  |\chi_m-\chi_n|\ge\kappa_1^{(B)}\,|m-n|,
+  \qquad\kappa_1^{(B)}:=1.
 \]
 
-% ---- FIX 2: explicit kappa_1 uniformisation ----------------------
-\smallskip
 \noindent\textbf{Uniform constant.}
 Setting
 \[
-  \kappa_1 := \min\!\bigl(\kappa_1^{(A)},\,\kappa_1^{(B)}\bigr)
-            = \min\!\Bigl(\tfrac{1}{\pi},\,1\Bigr)
-            = \tfrac{1}{\pi},
+  \kappa_1:=\min\!\bigl(\kappa_1^{(A)},\,\kappa_1^{(B)}\bigr)
+           =\min\!\Bigl(\tfrac{1}{\pi},\,1\Bigr)
+           =\tfrac{1}{\pi},
 \]
 both regimes satisfy
 \begin{equation}\label{eq:chi_gap}
@@ -305,7 +298,6 @@ constant $C_p$ in that lemma is therefore the same for both regimes.
 No pointwise Lipschitz condition on $n\mapsto\chi_n$ is used;
 \eqref{eq:chi_gap} is a direct algebraic consequence of the two-term
 expansion.
-% ------------------------------------------------------------------
 \end{proposition}
 
 \begin{lemma}[Uniform discrete--continuous bulk bridge]%
@@ -345,8 +337,8 @@ $n\in\mathcal{B}$ and $x\in I_\delta:=[-(1-\delta)T,(1-\delta)T]$:
 \item \textup{(Discrete--continuous scaling bridge)}
   The map $n\mapsto\chi_n(c)$ satisfies
   \[
-    \Delta\chi_n := \chi_{n+1}(c)-\chi_n(c)
-    = 2n+2+\frac{2c}{\pi}
+    \Delta\chi_n:=\chi_{n+1}(c)-\chi_n(c)
+    =2n+2+\frac{2c}{\pi}
       +O\!\left(\frac{c^2}{n^2}\right),
   \]
   which is the \emph{exact discrete analogue} of the continuous
@@ -409,23 +401,59 @@ $f\mapsto(f(p_1),\dots,f(p_N))$ is injective on $V_{N,c}$.
 Every $f\in\PW$ is entire of exponential type; if it vanishes on a set
 with a limit point, then $f\equiv 0$.
 \end{lemma}
+\begin{proof}
+$\PW$ embeds into the Bernstein space $B_\omega^\infty$ of entire
+functions of exponential type $\omega$ \cite[Ch.~6]{BonamiKaroui};
+the claim is the standard identity theorem for such functions.
+\end{proof}
 
 \begin{proposition}[MZ lower bound implies unisolvence]%
 \label{prop:mz_unisolvent}
 A weighted frame with lower bound $A>0$ is unisolvent.
 \end{proposition}
+\begin{proof}
+Suppose $f\in V_{N,c}$ satisfies $f(p_j)=0$ for all $j$.
+Then $\sum_j w_j|f(p_j)|^2=0$, so the lower frame bound gives
+$A\norm{f}^2\le 0$, hence $f=0$. Thus the evaluation map is injective.
+\end{proof}
 
 \begin{proposition}[Random sampling]\label{prop:random}
 Let $p_1,\dots,p_N$ be i.i.d.\ absolutely continuous on $[-T,T]$.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
 \end{proposition}
 \begin{proof}
-$\det M(\mathbf{p},c)$ is real-analytic and non-identically zero.
+$\det M(\mathbf{p},c)$ is a real-analytic function of $(p_1,\dots,p_N)$
+and is non-identically zero (it is non-zero for any Chebyshev-type
+configuration). Since the distribution of $\mathbf{p}$ is absolutely
+continuous, $\det M(\mathbf{p},c)=0$ has probability zero.
 \end{proof}
 
 \begin{lemma}[Pointwise RKHS bound]\label{lem:upper}
 $|f(x)|^2\le(\omega/\pi)\norm{f}_{L^2}^2$ for all $f\in\PW$.
 \end{lemma}
+\begin{proof}
+By the reproducing kernel property,
+$f(x)=\langle f, K_{\PW}(\cdot,x)\rangle$ and
+$\norm{K_{\PW}(\cdot,x)}_{L^2}^2=K_{\PW}(x,x)=\omega/\pi$.
+Cauchy--Schwarz gives $|f(x)|^2\le(\omega/\pi)\norm{f}_{L^2}^2$.
+\end{proof}
+
+\begin{lemma}[Operator norm bound]\label{lem:lambda_max_bound}
+$\lambda_{\max}(G^{\mathrm{w}}_{N,c})\le N\omega/\pi$.
+\end{lemma}
+\begin{proof}
+For any $\mathbf{a}\in\mathbb{C}^N$ with $\norm{\mathbf{a}}=1$,
+set $f=\sum_n a_n\psi_n^{(c)}\in V_{N,c}$. Then
+\[
+  \mathbf{a}^*G^{\mathrm{w}}_{N,c}\mathbf{a}
+  =\sum_j w_j|f(p_j)|^2
+  \le\frac{\omega}{\pi}\norm{f}_{L^2}^2\sum_j w_j
+  \le\frac{\omega}{\pi}\cdot N\cdot\frac{2T}{N}
+  \cdot\norm{f}_{L^2}^2,
+\]
+using Lemma~\ref{lem:upper} pointwise and $\sum_j w_j=2T$,
+$\norm{f}_{L^2}^2=1$. This gives $\lambda_{\max}\le N\omega/\pi$.
+\end{proof}
 
 \begin{theorem}[Frame coercivity]\label{thm:coercivity}
 If $\mathbf{p}$ is unisolvent and $D=I$,
@@ -436,10 +464,17 @@ If $\mathbf{p}$ is unisolvent and $D=I$,
   \qquad\forall f\in V_{N,c}.
 \]
 \end{theorem}
-
-\begin{lemma}[Operator norm bound]\label{lem:lambda_max_bound}
-$\lambda_{\max}(G^{\mathrm{w}}_{N,c})\le N\omega/\pi$.
-\end{lemma}
+\begin{proof}
+The upper bound follows from Lemma~\ref{lem:lambda_max_bound}.
+For the lower bound: since $\mathbf{p}$ is unisolvent,
+$M(\mathbf{p},c)$ has full column rank $N$, so
+$G^{\mathrm{w}}_{N,c}=M^*M$ is positive definite with
+$\lambda_{\min}(\GVM)>0$. Then
+$\QM(f)=\mathbf{a}^*G^{\mathrm{w}}_{N,c}\mathbf{a}
+\ge\lambda_{\min}(\GVM)\norm{\mathbf{a}}^2
+=\lambda_{\min}(\GVM)\norm{f}_{L^2}^2$,
+where $\mathbf{a}$ is the coefficient vector of $f$ in the PSWF basis.
+\end{proof}
 
 %% ==================================================================
 \section{Quadrature decomposition and oscillatory decay}\label{sec:decay}
@@ -485,7 +520,7 @@ $n\in\mathcal{B}$ since $\chi_n(c)<c^2$ there
 For $x\in\Rbulk^{(m,n)}$ and $k\in\{m,n\}$:
 \[
   \left|\chi_k(c)-\frac{c^2x^2}{T^2}\right|\ge\delta_0 c^{2/3},
-  \qquad \delta_0:=\rho^2/T^2.
+  \qquad\delta_0:=\rho^2/T^2.
 \]
 \end{lemma}
 \begin{proof}
@@ -534,7 +569,7 @@ $O(c^{1/3})$ and the argument fails; that regime is excluded
 throughout Section~\ref{sec:decay}.
 \end{remark}
 
-\begin{lemma}[c-uniform amplitude derivative control]%
+\begin{lemma}[$c$-uniform amplitude derivative control]%
 \label{lem:amplitude_control}
 The Pr\"ufer amplitude $r_n(x)$ of $\psi_n^{(c)}$ satisfies, for
 $x\in\Rbulk^{(m,n)}$ and all $k\ge 0$:
@@ -603,7 +638,8 @@ Integration over $\Rbulk^{(m,n)}\subset[-T,T]$
 
 \textbf{Boundary terms.}
 At $x\in\partial\Rbulk^{(m,n)}$, the Olver matching gives
-$|a_{mn}(x)|\le C_\infty^2$ and $|(\Phi_{mn}')^{-1}|\le T/(\kappa|m-n|)$,
+$|a_{mn}(x)|\le C_\infty^2$ and
+$|(\Phi_{mn}')^{-1}|\le T/(\kappa|m-n|)$,
 so the boundary contribution is $O(T/|m-n|)^1$ and is absorbed into
 the $p=1$ bound.
 \end{proof}
@@ -657,7 +693,7 @@ $|E_{mn}|\le Chc$ for all $0\le m,n\le N-1$.
 \end{theorem}
 \begin{proof}
 $|E_{mn}|=|R_{mn}^{\mathrm{quad}}|
-\le C_Q h\int|f'_{mn}|\le C_QChc$.
+\le C_Q h\int_{-T}^T|f'_{mn}|\,dx\le C_QChc$.
 \end{proof}
 
 \begin{lemma}[Continuous bulk--turning decay]%
@@ -706,12 +742,14 @@ If $\norm{\EN}_2<\lambda_{N-1}(c)$ then
 $\lambda_{\min}(G^{\mathrm{w}}_{N,c})
 \ge\lambda_{N-1}(c)-\norm{\EN}_2>0$.
 \end{lemma}
+\begin{proof}
+Weyl's inequality: eigenvalues of $G^{\mathrm{ref}}_{N,c}+\EN$
+interlace those of $G^{\mathrm{ref}}_{N,c}$ up to $\norm{\EN}_2$.
+\end{proof}
 
 \begin{definition}[DSTP]\label{def:dstp}
-The following condition is the concrete realisation of the abstract
-interface hypothesis \textup{AX5}: the rule $\{(p_j,w_j)\}$
-satisfies the \emph{Discrete Spectral Transfer Property} on $V_{N,c}$
-if there exist $C>0$, $p>1$ such that
+The rule $\{(p_j,w_j)\}$ satisfies the \emph{Discrete Spectral
+Transfer Property} on $V_{N,c}$ if there exist $C>0$, $p>1$ such that
 \[
   |E_{mn}|\le Chc\,(1+|m-n|)^{-p}
   \qquad\forall\,0\le m,n\le N-1.
@@ -733,81 +771,66 @@ to the off-diagonal decay geometry of PSWF kernels.
 
 \begin{remark}[Non-reducibility of \textup{DSTP} --- constructive witness]
 \label{rem:ax5_independence}
-DSTP (Definition~\ref{def:dstp}) is the concrete realisation of the
-abstract interface hypothesis \textup{AX5}: while \textup{AX1--AX4}
-control the \emph{analytic} structure of the system (symbol class,
-spectral gaps, quadrature order, uniform PSWF bounds), DSTP controls
-the \emph{geometric} compatibility of the discretisation.
-The two layers are logically independent within this framework,
-as the following constructive witness shows.
+While \textup{AX1--AX4} control the \emph{analytic} structure of the
+system (symbol class, spectral gaps, quadrature order, uniform PSWF
+bounds), DSTP controls the \emph{geometric} compatibility of the
+discretisation. The two layers are logically independent within this
+framework, as the following constructive witness shows.
 
 \smallskip
 \noindent\textbf{Witness rule.}
-Let $\{p_j = -T + 2Tj/N\}_{j=1}^N$ be the equidistant Riemann rule
-with weights $w_j = 2T/N$ and mesh $h = 2T/N$.
+Let $\{p_j=-T+2Tj/N\}_{j=1}^N$ be the equidistant Riemann rule
+with weights $w_j=2T/N$ and mesh $h=2T/N$.
 This rule satisfies:
 \begin{enumerate}[(i)]
-\item \textup{AX3} (first-order quadrature consistency,
-  Assumption~\ref{ass:quad_first_order}), with $C_Q = 1$;
+\item \textup{AX3} (Assumption~\ref{ass:quad_first_order}),
+  with $C_Q=1$;
 \item \textup{AX4} (uniform PSWF bounds \cite{BonamiKaroui2014}),
   since $\|\psi_n^{(c)}\|_{L^\infty}$ and
-  $\|(\psi_n^{(c)})'\|_{L^\infty}$ are intrinsic to the PSWFs and
-  independent of the node locations;
-\item \textup{AX1--AX2} (symbol class and spectral gap), which are
-  consequences of \cite{PaperIV,OsipovRokhlinXiao} alone.
+  $\|(\psi_n^{(c)})'\|_{L^\infty}$ are independent of node locations;
+\item \textup{AX1--AX2} (symbol class and spectral gap), from
+  \cite{PaperIV,OsipovRokhlinXiao} alone.
 \end{enumerate}
 
 \smallskip
 \noindent\textbf{Spectral concentration of $f_{mn}$.}
-Since $\hat{f}_{mn} = \hat{\psi}_m^{(c)} \ast \hat{\psi}_n^{(c)}$
-(convolution theorem), and each factor $\hat{\psi}_k^{(c)}$ is
-exponentially concentrated on $[-\omega/\pi, \omega/\pi]$
-\cite{BonamiKaroui}, the convolution is exponentially concentrated
-on $[-2\omega/\pi, 2\omega/\pi] = [-4c/T, 4c/T]$:
+Since $\hat{f}_{mn}=\hat{\psi}_m^{(c)}\ast\hat{\psi}_n^{(c)}$
+and each $\hat{\psi}_k^{(c)}$ is exponentially concentrated on
+$[-\omega/\pi,\omega/\pi]$ \cite{BonamiKaroui}, the convolution
+satisfies
 \[
-  \int_{|\xi| > 4c/T} |\hat{f}_{mn}(\xi)|^2\,d\xi \le C e^{-\alpha c},
+  \int_{|\xi|>4c/T}|\hat{f}_{mn}(\xi)|^2\,d\xi\le Ce^{-\alpha c},
 \]
-with $\alpha, C > 0$ independent of $m, n, c$.
-In particular, $\hat{f}_{mn}(k/h) = O(e^{-\alpha c})$ for $|k| \ge 2$,
-since $2/h \sim 2N/(2T) \ge 2c/T \cdot (2/\pi) > 4c/T$ for
-$N = \lfloor 2c/\pi\rfloor$.
-Hence the aliasing sum is dominated by the $k = 1$ term.
+with $\alpha,C>0$ independent of $m,n,c$.
+In particular $\hat{f}_{mn}(k/h)=O(e^{-\alpha c})$ for $|k|\ge 2$,
+so the aliasing sum is dominated by the $k=1$ term.
 
 \smallskip
 \noindent\textbf{DSTP fails.}
 By the Poisson summation formula,
+$h\sum_j f_{mn}(p_j)=\int_{-T}^T f_{mn}\,dx+\sum_{k\ne 0}\hat{f}_{mn}(k/h)$.
+Since $1/h\sim c/(2T)$ lies within the spectral concentration band
+$[0,4c/T]$, the $k=1$ term is not exponentially small.
+Accumulating over off-diagonal pairs:
 \[
-  h\sum_{j=1}^N f_{mn}(p_j)
-  = \int_{-T}^T f_{mn}\,dx
-  + \sum_{k \ne 0} \hat{f}_{mn}(k/h).
+  \sum_{m\ne n}|E_{mn}^{\mathrm{Riemann}}|^2
+  \ge\sum_{m\ne n}|\hat{f}_{mn}(1/h)|^2-O(N^2e^{-\alpha c})
+  \ge c_0(hc)^2N,
 \]
-Since $1/h \sim c/(2T)$ lies strictly within the spectral
-concentration band $[0, 4c/T]$ of $\hat{f}_{mn}$, the $k=1$
-aliasing term is not exponentially small.
-Accumulating over all off-diagonal pairs,
-\[
-  \sum_{m \ne n} |E_{mn}^{\mathrm{Riemann}}|^2
-  \;\ge\; \sum_{m \ne n} |\hat{f}_{mn}(1/h)|^2 - O(N^2 e^{-\alpha c})
-  \;\ge\; c_0\,(hc)^2 N,
-\]
-with $c_0 > 0$ independent of $c \ge c_0$. Therefore:
+therefore
 \[
   \|E_{N,c}^{\mathrm{Riemann}}\|_2
-  \;\ge\; \frac{\|E_{N,c}^{\mathrm{Riemann}}\|_F}{\sqrt{N}}
-  \;\ge\; c_0^{1/2}\,hc,
+  \ge\frac{\|E_{N,c}^{\mathrm{Riemann}}\|_F}{\sqrt{N}}
+  \ge c_0^{1/2}hc,
 \]
-with no decay in $|m-n|$, so DSTP fails for all $p > 0$.
+with no decay in $|m-n|$, so DSTP fails for all $p>0$.
 
 \smallskip
 \noindent\textbf{Structural interpretation.}
-The failure of DSTP for the Riemann rule is not a consequence of
-low approximation order or insufficient regularity.
-\textup{AX1--AX4} together supply $c$-uniform amplitude control,
-spectral gaps, quadrature consistency, and PSWF bounds --- yet none
-of these encodes geometric compatibility between the node set
-$\{p_j\}$ and the oscillatory eigenstructure of $V_{N,c}$.
-DSTP is not an estimate of higher order; it is a condition of a
-different type entirely:
+\textup{AX1--AX4} supply $c$-uniform amplitude control, spectral gaps,
+quadrature consistency, and PSWF bounds --- yet none encodes geometric
+compatibility between $\{p_j\}$ and the oscillatory eigenstructure
+of $V_{N,c}$.
 \begin{quotation}
   \noindent\textit{DSTP is not an estimate. It is a spectral
   incompatibility condition: the aliasing frequency of the sampling
@@ -815,26 +838,21 @@ different type entirely:
   product kernel.}
 \end{quotation}
 This places DSTP in the same logical category as spectral exactness
-conditions in Gauss quadrature, sampling compatibility in the
-Shannon--Nyquist theorem, and frame reconstruction axioms in
-non-uniform sampling theory --- none of which follow from regularity
-bounds alone.
+in Gauss quadrature, sampling compatibility in the Shannon--Nyquist
+theorem, and frame reconstruction axioms in non-uniform sampling
+theory --- none of which follow from regularity bounds alone.
 
 \smallskip
-\noindent\textbf{Minimality of the axiom system.}
-DSTP is not ``stronger'' than \textup{AX1--AX4}; it is
-\emph{orthogonal} to them, in the sense of logical independence
-of admissible discretisation classes within this framework,
-not linear-algebraic orthogonality:
-\textup{AX1--AX4} admit any sampling geometry consistent with
-regularity and approximation order; DSTP selects those geometries
-compatible with the spectral structure of $V_{N,c}$.
-No combination of analytic bounds implies geometric compatibility,
-and the Riemann-rule witness shows that the converse also fails:
-a rule may satisfy all of \textup{AX1--AX4} and fail DSTP.
+\noindent\textbf{Minimality.}
+DSTP is \emph{orthogonal} to \textup{AX1--AX4} in the sense of
+logical independence of admissible discretisation classes within
+this framework, not linear-algebraic orthogonality.
+The Riemann-rule witness shows a rule may satisfy all of
+\textup{AX1--AX4} and fail DSTP; no combination of analytic bounds
+implies geometric compatibility.
 The axiom system $\{\textup{AX1},\dots,\textup{AX4},\textup{DSTP}\}$
-is therefore minimal in the sense of logical independence:
-no axiom is derivable from the remaining ones within this framework.
+is therefore minimal: no axiom is derivable from the remaining ones
+within this framework.
 
 Verification of DSTP for PSWF-adapted (XRY/Gauss--PSWF) quadrature
 schemes is the content of~\cite{PaperIIquad}.
@@ -843,7 +861,7 @@ schemes is the content of~\cite{PaperIIquad}.
 \begin{theorem}[Conditional frame stability]%
 \label{thm:conditional_frame_schur}
 Let Assumption~\ref{ass:quad_first_order} and DSTP hold with $N\sim c$,
-$p>1$. If $Chc\,\zeta(p)<\lambda_{N-1}(c)$
+$p>1$. If $Chc\,\zeta(p)<\lambda_{N-1}(c)$,
 where $\zeta(p):=\sum_{k\in\mathbb{Z}}(1+|k|)^{-p}<\infty$, then
 $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds
 \begin{align*}
@@ -851,24 +869,21 @@ $\{(p_j,w_j)\}$ is a weighted frame for $V_{N,c}$ with bounds
   B(N,c)&:=\lambda_0(c)+Chc\,\zeta(p).
 \end{align*}
 This result is optimal conditional on DSTP: no stronger conclusion
-is possible from first-order quadrature consistency alone, and the
-theorem cannot be upgraded to an unconditional stability theorem
-without a DSTP-type oscillatory transfer structure.
+is possible from first-order quadrature consistency alone.
 \end{theorem}
 \begin{proof}
 DSTP and the Schur test give
-$\norm{\EN}_2\le Chc\,\zeta(p)$, which is $c$-independent once
-$hc$ is fixed. Apply Lemma~\ref{lem:weyl}.
+$\norm{\EN}_2\le Chc\,\zeta(p)$.
+Apply Lemma~\ref{lem:weyl}.
 \end{proof}
 
 \begin{remark}[Asymptotic scope]\label{rem:asymptotic_scope}
 The frame condition $Chc\,\zeta(p)<\lambda_{N-1}(c)$ requires
 $h\ll\lambda_{N-1}(c)/c$. Since $\lambda_{N-1}(c)\sim e^{-\alpha c}$
 for $N\sim c$ \cite{BonamiKaroui}, this demands exponentially small
-mesh size in the transition regime. This is not a defect of the
-present argument but reflects the intrinsic difficulty of the PSWF
-spectral edge; it is recorded here as the fundamental quantitative
-obstruction.
+mesh size in the transition regime. This reflects the intrinsic
+difficulty of the PSWF spectral edge and is recorded as the
+fundamental quantitative obstruction.
 \end{remark}
 
 \begin{corollary}\label{cor:fixed_param_scope}
@@ -890,12 +905,14 @@ by generic quadrature. It is not used in the proof of
 Theorem~\ref{thm:conditional_frame_schur}; its role is to motivate
 DSTP as the necessary interface axiom.
 
-Three mechanisms are cleanly separated: (1)~continuous PSWF
-orthogonality (exact, Proposition~\ref{prop:xry_split}); (2)~oscillatory
-decay of the continuous kernel (Lemma~\ref{lem:bulk_decay_continuous},
-bulk sector only); (3)~quadrature-induced defect (structure-blind
-$|E_{mn}|\le Chc$, global). The companion paper~\cite{PaperIIquad}
-addresses whether DSTP holds for PSWF-adapted quadrature schemes.
+Three mechanisms are cleanly separated:
+(1)~continuous PSWF orthogonality (exact,
+Proposition~\ref{prop:xry_split});
+(2)~oscillatory decay of the continuous kernel
+(Lemma~\ref{lem:bulk_decay_continuous}, bulk sector only);
+(3)~quadrature-induced defect (structure-blind $|E_{mn}|\le Chc$,
+global). The companion paper~\cite{PaperIIquad} addresses whether
+DSTP holds for PSWF-adapted quadrature schemes.
 
 %% ==================================================================
 \section{Open problems}\label{sec:open}
