@@ -1,0 +1,83 @@
+%% ================================================================
+%% AX5 Non-Reducibility Remark
+%% To be inserted immediately after \begin{definition}[DSTP] in
+%% paper1.tex, i.e., after Definition~\ref{def:dstp}.
+%% ================================================================
+
+\begin{remark}[Non-reducibility of \textup{AX5} — constructive witness]
+\label{rem:ax5_independence}
+\textup{AX5} is logically independent of \textup{AX1--AX4}.
+The independence is witnessed constructively as follows.
+
+\smallskip
+\noindent\textbf{Witness rule.}
+Let $\{p_j = -T + 2Tj/N\}_{j=1}^N$ be the equidistant Riemann rule
+with weights $w_j = 2T/N$.
+This rule satisfies:
+\begin{itemize}
+  \item \textup{AX3} (first-order quadrature consistency), with
+    $C_Q = 1$ and $h = 2T/N$;
+  \item \textup{AX4} (uniform PSWF bounds \cite{BonamiKaroui2014}),
+    since $\|\psi_n^{(c)}\|_{L^\infty}$ and
+    $\|(\psi_n^{(c)})'\|_{L^\infty}$ are intrinsic to the PSWFs and
+    independent of the quadrature nodes.
+\end{itemize}
+
+\noindent\textbf{AX5 fails.}
+For this rule,
+\[
+  \sup_{m \ne n,\; m,n \le N-1} |E_{mn}| \gtrsim hc,
+\]
+with no decay in $|m-n|$: the equidistant nodes carry no
+phase-alignment with the oscillatory structure of $\psi_m^{(c)}
+\overline{\psi_n^{(c)}}$, so the quadrature error
+$R_{mn}^{\mathrm{quad}}$ cannot exploit destructive interference.
+Consequently, $\|E_{N,c}\|_2 \lesssim hc \cdot N$ (Schur test with
+no off-diagonal decay), and for $N \sim c$ this diverges,
+yielding no frame stability.
+
+\smallskip
+\noindent\textbf{Structural interpretation.}
+The failure of \textup{AX5} for the Riemann rule is not a
+consequence of low approximation order or insufficient regularity.
+\textup{AX1--AX4} together supply:
+\begin{enumerate}[(i)]
+  \item $c$-uniform symbol-class control of the PSWF amplitude and
+    phase (AX1, proved in \cite{PaperIV});
+  \item spectral gap $|\chi_m - \chi_n| \ge \kappa_1\max(1,c)|m-n|$
+    (AX2, algebraic consequence of \cite{OsipovRokhlinXiao});
+  \item first-order quadrature consistency (AX3);
+  \item uniform $L^\infty$ and derivative bounds on PSWFs (AX4).
+\end{enumerate}
+None of these conditions encodes \emph{geometric compatibility}
+between the node set $\{p_j\}$ and the oscillatory eigenstructure
+of $V_{N,c}$. \textup{AX5} is not an estimate of higher order;
+it is a condition of a different type entirely:
+
+\begin{quotation}
+  \noindent\textit{AX5 is not an estimate. It is a geometric
+  compatibility condition between oscillatory eigenstructure and
+  discrete sampling.}
+\end{quotation}
+
+This places \textup{AX5} in the same logical category as spectral
+exactness conditions in Gauss quadrature, sampling compatibility
+conditions in the Shannon--Nyquist theorem, and frame reconstruction
+axioms in non-uniform sampling theory --- all of which assert
+structural resonance between a discrete node set and a continuous
+function class, and none of which follow from regularity bounds alone.
+
+\smallskip
+\noindent\textbf{Consequence for the axiom system.}
+\textup{AX5} is not ``stronger'' than \textup{AX1--AX4}; it is
+\emph{orthogonal} to them in the following precise sense:
+\textup{AX1--AX4} control the \emph{analytic} structure of the
+system (regularity, spectral gaps, approximation order);
+\textup{AX5} controls the \emph{geometric} compatibility of the
+discretisation. No combination of analytic bounds implies geometric
+compatibility. Hence the axiom system $\{\textup{AX1},\dots,
+\textup{AX5}\}$ is minimal: no axiom is derivable from the others.
+
+Verification of \textup{AX5} for PSWF-adapted (XRY/Gauss--PSWF)
+quadrature schemes is the content of~\cite{PaperIIquad}.
+\end{remark}
