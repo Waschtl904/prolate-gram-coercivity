@@ -148,16 +148,17 @@ The proof architecture has four components:
   yields $|E_{mn}|\le Chc$.
 \end{enumerate}
 
+%% FIX 5: DSTP necessity — abgeschwächt auf "within this proof architecture"
 \begin{remark}[Necessity of DSTP]\label{rem:dstp_necessity}
-DSTP is not merely sufficient for the main theorem; it is
-\emph{necessary} in the following sense: any quadrature rule for
-which $\|E_{N,c}\|_2 = o(hc\cdot N)$ must satisfy a condition of
-DSTP type, since the structure-blind bound $|E_{mn}|\le Chc$
-(Theorem~\ref{thm:banded_decay}) is sharp for generic rules
-(Remark~\ref{rem:ax5_independence}). DSTP is therefore the minimal
-additional condition that separates stability from instability at
-operator level. It is a non-uniform spectral localisation condition
-in the PSWF eigenbasis, not a sampling density condition.
+DSTP is necessary \emph{within this proof architecture}: any
+Schur-summable decay estimate of the form
+$|E_{mn}|\le Chc(1+|m-n|)^{-p}$ must encode a condition of DSTP
+type, since the structure-blind bound (Theorem~\ref{thm:banded_decay})
+is sharp for generic rules (Remark~\ref{rem:ax5_independence}).
+Whether every stable scheme must satisfy DSTP or an equivalent
+condition is an open question; see Section~\ref{sec:open}.
+DSTP is a non-uniform spectral localisation condition in the PSWF
+eigenbasis, not a sampling density condition.
 \end{remark}
 
 \subsection*{Organisation}
@@ -298,6 +299,15 @@ constant $C_p$ in that lemma is therefore the same for both regimes.
 No pointwise Lipschitz condition on $n\mapsto\chi_n$ is used;
 \eqref{eq:chi_gap} is a direct algebraic consequence of the two-term
 expansion.
+
+%% FIX 2: Regime B deliberate non-sharpness declaration
+The bound in Regime~(B) is deliberately non-sharp: for $n\ll c$ one
+has $\chi_n\sim n(n+1)$, giving a stronger gap, but the coarser bound
+$|\chi_m-\chi_n|\ge|m-n|$ suffices for all subsequent arguments and
+avoids case analysis at the spectral base.
+There exists $c_0>0$ such that for all $c\ge c_0$ the bound
+\eqref{eq:chi_gap} holds uniformly across both regimes, eliminating
+any boundary issue at small $c$.
 \end{proposition}
 
 \begin{lemma}[Uniform discrete--continuous bulk bridge]%
@@ -410,7 +420,7 @@ the claim is the standard identity theorem for such functions.
 \begin{proposition}[MZ lower bound implies unisolvence]%
 \label{prop:mz_unisolvent}
 A weighted frame with lower bound $A>0$ is unisolvent.
-\end{proposition}
+\end{proposition>
 \begin{proof}
 Suppose $f\in V_{N,c}$ satisfies $f(p_j)=0$ for all $j$.
 Then $\sum_j w_j|f(p_j)|^2=0$, so the lower frame bound gives
@@ -420,7 +430,7 @@ $A\norm{f}^2\le 0$, hence $f=0$. Thus the evaluation map is injective.
 \begin{proposition}[Random sampling]\label{prop:random}
 Let $p_1,\dots,p_N$ be i.i.d.\ absolutely continuous on $[-T,T]$.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
-\end{proposition}
+\end{proposition>
 \begin{proof}
 $\det M(\mathbf{p},c)$ is a real-analytic function of $(p_1,\dots,p_N)$
 and is non-identically zero (it is non-zero for any Chebyshev-type
@@ -433,7 +443,7 @@ $|f(x)|^2\le(\omega/\pi)\norm{f}_{L^2}^2$ for all $f\in\PW$.
 \end{lemma}
 \begin{proof}
 By the reproducing kernel property,
-$f(x)=\langle f, K_{\PW}(\cdot,x)\rangle$ and
+$f(x)=\langle f,K_{\PW}(\cdot,x)\rangle$ and
 $\norm{K_{\PW}(\cdot,x)}_{L^2}^2=K_{\PW}(x,x)=\omega/\pi$.
 Cauchy--Schwarz gives $|f(x)|^2\le(\omega/\pi)\norm{f}_{L^2}^2$.
 \end{proof}
@@ -492,9 +502,18 @@ where $\mathbf{a}$ is the coefficient vector of $f$ in the PSWF basis.
 where $R_{mn}^{\mathrm{quad}}:=\sum_j w_j f_{mn}(p_j)
 -\int_{-T}^T f_{mn}\,dx$ and
 $f_{mn}:=\psi_m^{(c)}\overline{\psi_n^{(c)}}$.
-The bracketed term vanishes by self-adjointness of $\Kop$ and the
-eigenrelation $\Kop\psi_n^{(c)}=\lambda_n(c)\psi_n^{(c)}$.
-Hence $E_{mn}=R_{mn}^{\mathrm{quad}}$ exactly.
+%% FIX 1: explicit eigenrelation step
+Since $\{\psi_n^{(c)}\}$ are orthonormal in $L^2(\mathbb{R})$ and
+satisfy $\Kop\psi_n^{(c)}=\lambda_n(c)\psi_n^{(c)}$, taking the
+$L^2(\mathbb{R})$-inner product with $\psi_m^{(c)}$ gives
+\[
+  \int_{-T}^{T}\psi_m^{(c)}\overline{\psi_n^{(c)}}\,dx
+  =\langle\psi_m^{(c)},\Kop\psi_n^{(c)}\rangle_{L^2(\mathbb{R})}
+  =\lambda_n(c)\langle\psi_m^{(c)},\psi_n^{(c)}\rangle_{L^2(\mathbb{R})}
+  =\lambda_n(c)\delta_{mn},
+\]
+so the bracketed term vanishes exactly, and
+$E_{mn}=R_{mn}^{\mathrm{quad}}$ is a pure quadrature error.
 \end{proposition}
 
 \begin{definition}[Bulk and turning regions]\label{def:bulk}
@@ -522,7 +541,7 @@ For $x\in\Rbulk^{(m,n)}$ and $k\in\{m,n\}$:
   \left|\chi_k(c)-\frac{c^2x^2}{T^2}\right|\ge\delta_0 c^{2/3},
   \qquad\delta_0:=\rho^2/T^2.
 \]
-\end{lemma}
+\end{lemma>
 \begin{proof}
 $\chi_k-c^2x^2/T^2=(c^2/T^2)(x_k^*-x)(x_k^*+x)$; on
 $\Rbulk^{(m,n)}$ both factors $\ge\rho c^{-1/3}$ by
@@ -555,10 +574,18 @@ valid uniformly across Regimes~(A) and~(B) with $\kappa_1=1/\pi$.
   =\frac{\kappa_1}{C_\nu T}|m-n|
   =:\frac{\kappa}{T}|m-n|.
 \]
-The factor $c$ cancels exactly; $\kappa=\kappa_1/C_\nu$ is independent
-of $c$ and of which regime applies. The IBP argument
-(Lemma~\ref{lem:ibp_uniform}) depends only on positivity of $\kappa$,
-not on its precise value.
+The factor $c$ cancels exactly; $\kappa=\kappa_1/C_\nu$ is
+independent of $c$ and of which regime applies.
+
+%% FIX 3: non-sharp denominator declaration
+The upper bound $\sqrt{\mu}+\sqrt{\nu}\le C_\nu c$ uses
+$\chi_k\le C_{\gamma_0}c^2$ for $k\in\mathcal{B}$, which is coarse
+for $n\ll c$ (where $\sqrt{\chi_n}\sim n\ll c$). This
+non-sharpness is intentional: a tighter bound would yield a larger
+$\kappa$ but is not needed, since only positivity of $\kappa$ is
+used in the IBP argument (Lemma~\ref{lem:ibp_uniform}).
+The IBP argument depends only on positivity of $\kappa$, not on
+its precise value.
 \end{proof}
 
 \begin{remark}[Bulk restriction]
@@ -601,10 +628,10 @@ $a_{mn}=r_m\overline{r_n}$ follows by the product rule.
 \begin{remark}[Why no $c^{k/2}$ appears]
 Lemma~\ref{lem:amplitude_control} separates the oscillatory factor
 $e^{i\theta_n}$ from the amplitude $r_n$. All $c$-dependence resides
-in the phase $\theta_n'(x)\asymp c/T$; once this factor is
-absorbed by the IBP operator $L=(i\Phi_{mn}')^{-1}\partial_x$,
-the remaining amplitude chain is $c$-free. The erroneous appearance
-of $c^{k/2}$ in earlier drafts arose from differentiating
+in the phase $\theta_n'(x)\asymp c/T$; once this factor is absorbed
+by the IBP operator $L=(i\Phi_{mn}')^{-1}\partial_x$, the remaining
+amplitude chain is $c$-free. The erroneous appearance of $c^{k/2}$
+in earlier drafts arose from differentiating
 $\psi_n^{(c)}=r_n\sin\theta_n$ without first separating phase from
 amplitude.
 \end{remark}
@@ -618,14 +645,17 @@ For every $p\ge 1$:
 \]
 with constants independent of $m,n\in\mathcal{B}$, $m\ne n$,
 $c\ge c_0$, and $p\le p_0$.
-
-Boundary terms at $\partial\Rbulk^{(m,n)}$ are point evaluations
-at the Airy interface; they are bounded via the uniform asymptotic
-matching of \cite[Ch.~11]{Olver1974}, which ensures continuity of
-amplitude estimates across $\partial\Rbulk^{(m,n)}$.
 \end{lemma}
 \begin{proof}
-\textbf{Structure.}
+%% FIX 4: explicit regularity of Phi' and well-definedness of L
+Since $\Phi_{mn}'(x)=(\chi_m-\chi_n)/[T(\sqrt{\mu}+\sqrt{\nu})]$
+and $\sqrt{\mu}+\sqrt{\nu}$ is bounded away from zero on
+$\Rbulk^{(m,n)}$ by Lemma~\ref{lem:bulk_spectral_sep}, the function
+$\Phi_{mn}'$ is $C^\infty$ on $\Rbulk^{(m,n)}$ and
+$(\Phi_{mn}')^{-1}$ is bounded; hence $L$ and its adjoint $L^*$
+are well-defined bounded operators on $C^\infty(\Rbulk^{(m,n)})$.
+
+\noindent\textbf{Structure.}
 By induction, $(L^*)^p a_{mn}$ is a linear combination of
 $\partial_x^k a_{mn}/(\Phi_{mn}')^\ell$, $k\le p$, $\ell\le p$.
 Each such term is bounded by
@@ -636,7 +666,7 @@ denominator ($\kappa$ uniform across both regimes).
 Integration over $\Rbulk^{(m,n)}\subset[-T,T]$
 (length $\le 2T$) gives the $L^1$ bound.
 
-\textbf{Boundary terms.}
+\noindent\textbf{Boundary terms.}
 At $x\in\partial\Rbulk^{(m,n)}$, the Olver matching gives
 $|a_{mn}(x)|\le C_\infty^2$ and
 $|(\Phi_{mn}')^{-1}|\le T/(\kappa|m-n|)$,
@@ -808,7 +838,8 @@ so the aliasing sum is dominated by the $k=1$ term.
 \smallskip
 \noindent\textbf{DSTP fails.}
 By the Poisson summation formula,
-$h\sum_j f_{mn}(p_j)=\int_{-T}^T f_{mn}\,dx+\sum_{k\ne 0}\hat{f}_{mn}(k/h)$.
+$h\sum_j f_{mn}(p_j)=\int_{-T}^T f_{mn}\,dx
++\sum_{k\ne 0}\hat{f}_{mn}(k/h)$.
 Since $1/h\sim c/(2T)$ lies within the spectral concentration band
 $[0,4c/T]$, the $k=1$ term is not exponentially small.
 Accumulating over off-diagonal pairs:
@@ -846,10 +877,9 @@ theory --- none of which follow from regularity bounds alone.
 \noindent\textbf{Minimality.}
 DSTP is \emph{orthogonal} to \textup{AX1--AX4} in the sense of
 logical independence of admissible discretisation classes within
-this framework, not linear-algebraic orthogonality.
-The Riemann-rule witness shows a rule may satisfy all of
-\textup{AX1--AX4} and fail DSTP; no combination of analytic bounds
-implies geometric compatibility.
+this framework. The Riemann-rule witness shows a rule may satisfy
+all of \textup{AX1--AX4} and fail DSTP; no combination of analytic
+bounds implies geometric compatibility.
 The axiom system $\{\textup{AX1},\dots,\textup{AX4},\textup{DSTP}\}$
 is therefore minimal: no axiom is derivable from the remaining ones
 within this framework.
@@ -951,6 +981,15 @@ Sharpen Proposition~\ref{prop:spectral_gap} Regime~(B)
 ($\min(m,n)<c^{1/2}$) to obtain uniform $c$-dependence at the
 spectral base; the current bound $|\chi_m-\chi_n|\ge|m-n|$ is
 $c$-independent but not $c$-enhanced.
+\end{problem}
+
+\begin{problem}[Universal necessity of DSTP]
+Determine whether every quadrature rule yielding a stable frame for
+$V_{N,c}$ (in the sense of Definition~\ref{def:framestable}) must
+satisfy DSTP or an equivalent spectral compatibility condition.
+The constructive witness of Remark~\ref{rem:ax5_independence} shows
+sufficiency of \textup{AX1--AX4} is not enough; a converse
+characterisation remains open.
 \end{problem}
 
 %% ==================================================================
