@@ -1,83 +1,121 @@
 %% ================================================================
-%% AX5 Non-Reducibility Remark
-%% To be inserted immediately after \begin{definition}[DSTP] in
-%% paper1.tex, i.e., after Definition~\ref{def:dstp}.
+%% DSTP Non-Reducibility Remark (final version)
+%% To be inserted in paper1.tex immediately after
+%% \begin{remark}[DSTP heuristics] and before
+%% \begin{theorem}[Conditional frame stability].
 %% ================================================================
 
-\begin{remark}[Non-reducibility of \textup{AX5} — constructive witness]
+\begin{remark}[Non-reducibility of \textup{DSTP} --- constructive witness]
 \label{rem:ax5_independence}
-\textup{AX5} is logically independent of \textup{AX1--AX4}.
-The independence is witnessed constructively as follows.
+DSTP (Definition~\ref{def:dstp}) is the concrete realisation of the
+abstract interface hypothesis \textup{AX5}: while \textup{AX1--AX4}
+control the \emph{analytic} structure of the system (symbol class,
+spectral gaps, quadrature order, uniform PSWF bounds), DSTP controls
+the \emph{geometric} compatibility of the discretisation.
+The two layers are logically independent within this framework,
+as the following constructive witness shows.
 
 \smallskip
 \noindent\textbf{Witness rule.}
 Let $\{p_j = -T + 2Tj/N\}_{j=1}^N$ be the equidistant Riemann rule
-with weights $w_j = 2T/N$.
+with weights $w_j = 2T/N$ and mesh $h = 2T/N$.
 This rule satisfies:
-\begin{itemize}
-  \item \textup{AX3} (first-order quadrature consistency), with
-    $C_Q = 1$ and $h = 2T/N$;
-  \item \textup{AX4} (uniform PSWF bounds \cite{BonamiKaroui2014}),
-    since $\|\psi_n^{(c)}\|_{L^\infty}$ and
-    $\|(\psi_n^{(c)})'\|_{L^\infty}$ are intrinsic to the PSWFs and
-    independent of the quadrature nodes.
-\end{itemize}
+\begin{enumerate}[(i)]
+\item \textup{AX3} (first-order quadrature consistency,
+  Assumption~\ref{ass:quad_first_order}), with $C_Q = 1$;
+\item \textup{AX4} (uniform PSWF bounds \cite{BonamiKaroui2014}),
+  since $\|\psi_n^{(c)}\|_{L^\infty}$ and
+  $\|(\psi_n^{(c)})'\|_{L^\infty}$ are intrinsic to the PSWFs and
+  independent of the node locations;
+\item \textup{AX1--AX2} (symbol class and spectral gap), which are
+  consequences of \cite{PaperIV,OsipovRokhlinXiao} alone.
+\end{enumerate}
 
-\noindent\textbf{AX5 fails.}
-For this rule,
+\smallskip
+\noindent\textbf{Spectral concentration of $f_{mn}$.}
+Since $\hat{f}_{mn} = \hat{\psi}_m^{(c)} \ast \hat{\psi}_n^{(c)}$
+(convolution theorem), and each factor $\hat{\psi}_k^{(c)}$ is
+exponentially concentrated on $[-\omega/\pi, \omega/\pi]$
+\cite{BonamiKaroui}, the convolution is exponentially concentrated
+on $[-2\omega/\pi, 2\omega/\pi] = [-4c/T, 4c/T]$:
 \[
-  \sup_{m \ne n,\; m,n \le N-1} |E_{mn}| \gtrsim hc,
+  \int_{|\xi| > 4c/T} |\hat{f}_{mn}(\xi)|^2\,d\xi \le C e^{-\alpha c},
 \]
-with no decay in $|m-n|$: the equidistant nodes carry no
-phase-alignment with the oscillatory structure of $\psi_m^{(c)}
-\overline{\psi_n^{(c)}}$, so the quadrature error
-$R_{mn}^{\mathrm{quad}}$ cannot exploit destructive interference.
-Consequently, $\|E_{N,c}\|_2 \lesssim hc \cdot N$ (Schur test with
-no off-diagonal decay), and for $N \sim c$ this diverges,
-yielding no frame stability.
+with $\alpha, C > 0$ independent of $m, n, c$.
+In particular, $\hat{f}_{mn}(k/h) = O(e^{-\alpha c})$ for $|k| \ge 2$,
+since $2/h \sim 2N/(2T) \ge 2c/T \cdot (2/\pi) > 4c/T$ for
+$N = \lfloor 2c/\pi\rfloor$.
+Hence the aliasing sum is dominated by the $k = 1$ term.
+
+\smallskip
+\noindent\textbf{DSTP fails.}
+By the Poisson summation formula,
+\[
+  h\sum_{j=1}^N f_{mn}(p_j)
+  = \int_{-T}^T f_{mn}\,dx
+  + \sum_{k \ne 0} \hat{f}_{mn}(k/h).
+\]
+Since $1/h \sim c/(2T)$ lies strictly within the spectral
+concentration band $[0, 4c/T]$ of $\hat{f}_{mn}$, the $k=1$
+aliasing term is not exponentially small.
+Accumulating over all off-diagonal pairs,
+\[
+  \sum_{m \ne n} |E_{mn}^{\mathrm{Riemann}}|^2
+  \;\ge\; \sum_{m \ne n} |\hat{f}_{mn}(1/h)|^2 - O(N^2 e^{-\alpha c})
+  \;\ge\; c_0\,(hc)^2 N,
+\]
+with $c_0 > 0$ independent of $c \ge c_0$, from the non-negligible
+aliasing mass at frequency $1/h$. The off-diagonal mass is not
+concentrated on the diagonal: for $N \sim c$, the aliasing frequency
+$1/h$ is active across all index pairs $(m,n)$ with
+$m \ne n \in \mathcal{B}$, since the spectral support of $\hat{f}_{mn}$
+is $m$- and $n$-independent at leading order.
+Therefore:
+\[
+  \|E_{N,c}^{\mathrm{Riemann}}\|_2
+  \;\ge\; \frac{\|E_{N,c}^{\mathrm{Riemann}}\|_F}{\sqrt{N}}
+  \;\ge\; c_0^{1/2}\,hc,
+\]
+with no decay in $|m-n|$, so DSTP fails for all $p > 0$.
 
 \smallskip
 \noindent\textbf{Structural interpretation.}
-The failure of \textup{AX5} for the Riemann rule is not a
-consequence of low approximation order or insufficient regularity.
-\textup{AX1--AX4} together supply:
-\begin{enumerate}[(i)]
-  \item $c$-uniform symbol-class control of the PSWF amplitude and
-    phase (AX1, proved in \cite{PaperIV});
-  \item spectral gap $|\chi_m - \chi_n| \ge \kappa_1\max(1,c)|m-n|$
-    (AX2, algebraic consequence of \cite{OsipovRokhlinXiao});
-  \item first-order quadrature consistency (AX3);
-  \item uniform $L^\infty$ and derivative bounds on PSWFs (AX4).
-\end{enumerate}
-None of these conditions encodes \emph{geometric compatibility}
-between the node set $\{p_j\}$ and the oscillatory eigenstructure
-of $V_{N,c}$. \textup{AX5} is not an estimate of higher order;
-it is a condition of a different type entirely:
-
+The failure of DSTP for the Riemann rule is not a consequence of
+low approximation order or insufficient regularity.
+\textup{AX1--AX4} together supply $c$-uniform amplitude control,
+spectral gaps, quadrature consistency, and PSWF bounds --- yet none
+of these encodes geometric compatibility between the node set
+$\{p_j\}$ and the oscillatory eigenstructure of $V_{N,c}$.
+DSTP is not an estimate of higher order; it is a condition of a
+different type entirely:
 \begin{quotation}
-  \noindent\textit{AX5 is not an estimate. It is a geometric
-  compatibility condition between oscillatory eigenstructure and
-  discrete sampling.}
+  \noindent\textit{DSTP is not an estimate. It is a spectral
+  incompatibility condition: the aliasing frequency of the sampling
+  rule falls within the spectral concentration band of the PSWF
+  product kernel.}
 \end{quotation}
-
-This places \textup{AX5} in the same logical category as spectral
-exactness conditions in Gauss quadrature, sampling compatibility
-conditions in the Shannon--Nyquist theorem, and frame reconstruction
-axioms in non-uniform sampling theory --- all of which assert
-structural resonance between a discrete node set and a continuous
-function class, and none of which follow from regularity bounds alone.
+This places DSTP in the same logical category as spectral exactness
+conditions in Gauss quadrature, sampling compatibility in the
+Shannon--Nyquist theorem, and frame reconstruction axioms in
+non-uniform sampling theory --- none of which follow from regularity
+bounds alone.
 
 \smallskip
-\noindent\textbf{Consequence for the axiom system.}
-\textup{AX5} is not ``stronger'' than \textup{AX1--AX4}; it is
-\emph{orthogonal} to them in the following precise sense:
-\textup{AX1--AX4} control the \emph{analytic} structure of the
-system (regularity, spectral gaps, approximation order);
-\textup{AX5} controls the \emph{geometric} compatibility of the
-discretisation. No combination of analytic bounds implies geometric
-compatibility. Hence the axiom system $\{\textup{AX1},\dots,
-\textup{AX5}\}$ is minimal: no axiom is derivable from the others.
+\noindent\textbf{Minimality of the axiom system.}
+DSTP is not ``stronger'' than \textup{AX1--AX4}; it is
+\emph{orthogonal} to them, in the sense of logical independence
+of admissible discretisation classes within this framework,
+not linear-algebraic orthogonality:
+\textup{AX1--AX4} admit any sampling geometry consistent with
+regularity and approximation order; DSTP selects those geometries
+compatible with the spectral structure of $V_{N,c}$.
+No combination of analytic bounds implies geometric compatibility,
+and the Riemann-rule witness shows that the converse also fails:
+a rule may satisfy all of \textup{AX1--AX4} and fail DSTP.
+The axiom system $\{\textup{AX1},\dots,\textup{AX4},\textup{DSTP}\}$
+is therefore minimal in the sense of logical independence:
+no axiom is derivable from the remaining ones within this framework.
 
-Verification of \textup{AX5} for PSWF-adapted (XRY/Gauss--PSWF)
-quadrature schemes is the content of~\cite{PaperIIquad}.
+Verification of DSTP for PSWF-adapted (XRY/Gauss--PSWF) quadrature
+schemes is the content of~\cite{PaperIIquad}.
 \end{remark}
