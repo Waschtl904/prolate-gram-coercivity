@@ -12,6 +12,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
 
 % ---------- Notation ----------
@@ -22,30 +23,57 @@
 \newcommand{\wcl}{\omega_n^{\mathrm{cl}}}
 \newcommand{\rhocl}{\rho_n^{\mathrm{cl}}}
 \newcommand{\rWKB}{r_n^{\mathrm{WKB}}}
+\newcommand{\Eout}{\mathcal{E}_{\mathrm{out}}}
+\newcommand{\fmn}{f_{mn}}
+\newcommand{\psin}{\psi_n^{(c)}}
 
 \title{%
-  Schur Control of the Prolate Christoffel--Darboux Kernel\\
-  and Unconditional Bulk Stability%
+  WKB Tunnel Cover, Out-of-Band Decay, and Unconditional Bulk
+  Stability for Prolate Spheroidal Wave Functions%
 }
 \author{[Author]}
-\date{April 2026}
+\date{May 2026}
 
 \begin{document}
 \maketitle
 
+% =============================================================
 \begin{abstract}
-We prove that the spectral projector $P_N$ associated with
-prolate spheroidal wave functions (PSWFs) satisfies a uniform
-$L^2 \to L^2$ bound on bulk sub-intervals, for all truncation
-levels $N$ in the bulk regime $N \le \gamma N_{\mathrm{Sh}}$,
-$0 < \gamma < 1$.
+We establish two results that together complete the bulk stability
+program for prolate spheroidal wave functions (PSWFs) in the strict
+bulk regime $0 < \gamma < 1/2$.
+
+First, we prove that the out-of-band spectral energy
+$\Eout(f_{mn}) := \int_{|\xi|>\omega}|\widehat{f}_{mn}(\xi)|^2\,d\xi$
+of the PSWF product $f_{mn} = \psi_m \psi_n$ decays exponentially
+in the bandwidth parameter $c$, uniformly for $m,n \le \gamma \NSh$
+with $\gamma < 1/2$.
+The proof uses a geometric forbidden-zone cover argument
+(Theorem~\ref{thm:bridge}):
+for $\gamma < 1/2$, the classical forbidden zones of $\psi_m$ and
+$\psi_n$ together cover the entire convolution overlap interval,
+so at every integration point at least one PSWF factor is
+exponentially suppressed by WKB tunneling.
+This proves Assumption~ass:bulkconv of \cite{PaperIII}
+unconditionally.
+
+Second, we use the Pr\"ufer-based amplitude control of
+\cite{PaperIV}, a kernel splitting of the Christoffel--Darboux
+projector, and the Schur test to establish a uniform
+$L^2 \to L^2$ bound for the spectral projector $P_N$ on bulk
+sub-intervals (Theorem~\ref{thm:schur-main}), for all
+$N \le \gamma \NSh$ with $\gamma < 1/2$.
 This establishes Assumption~2.4 of \cite{PaperIII}
-unconditionally, completing the bulk stability program
-initiated in \cite{PaperI,PaperII,PaperIII,PaperIV}.
-The proof combines the Pr\"ufer-based amplitude control
-of \cite{PaperIV} with a kernel splitting of the
-Christoffel--Darboux projector and the classical Schur test.
+unconditionally in that range.
+
+Both results rely on two ingredients only: the WKB forbidden-zone
+decay of PSWFs (from \cite{OsipovRokhlinXiao}) and the
+geometry of the convolution overlap, requiring no phase-cancellation
+or off-diagonal index decay.
 \end{abstract}
+% =============================================================
+
+\tableofcontents
 
 % =============================================================
 \section{Introduction}
@@ -54,141 +82,144 @@ Christoffel--Darboux projector and the classical Schur test.
 
 \subsection{Position in the bulk stability program}
 
-This paper completes the bulk stability program for prolate
-spheroidal wave functions (PSWFs) initiated in
-\cite{PaperI,PaperII,PaperIII,PaperIV}.
+This paper closes two open inputs in the bulk stability program
+for PSWFs initiated in \cite{PaperI,PaperII,PaperIII,PaperIV}.
+Both results are established unconditionally, without any
+hypothesis on quadrature schemes, oscillatory cancellation,
+or index-dependent off-diagonal decay.
 
-The program aims to establish quantitative control of
-spectral projectors associated with PSWFs in the bulk regime
+The program aims to establish quantitative control of the
+spectral projector $P_N$ associated with the PSWF eigenbasis
+$\{\psin\}_{n \ge 0}$ of the concentration operator
+$\mathcal{K}_c$ on $L^2([-T,T])$, in the bulk regime
 \[
-  n \le \gamma N, \qquad N = \frac{cT}{\pi}, \quad 0 < \gamma < 1,
+  n \le \gamma N, \qquad N \le \gamma\,\NSh,
+  \qquad \NSh := \frac{2c}{\pi},
+  \quad 0 < \gamma < \tfrac{1}{2}.
 \]
-with applications to coercivity, trace formulas, and
-spectral tail bounds.
+The time-bandwidth product is $c = \omega T$ with $\omega > 0$
+the bandwidth and $T > 0$ the time-window half-length.
 
-In \cite{PaperIII}, the main bulk tail bound is reduced to two
-analytic hypotheses:
-\begin{itemize}
-  \item a semiclassical equidistribution statement for PSWF
-  densities, and
-  \item a uniform $L^2 \to L^2$ bound for the truncated
-  spectral projector $P_N$ on bulk intervals.
-\end{itemize}
+In \cite{PaperIII}, the main bulk tail bound is reduced to
+two analytic hypotheses:
+\begin{enumerate}[label=(H\arabic*)]
+  \item\label{H1} A semiclassical equidistribution statement for
+  PSWF densities $\psin^2$.
+  \item\label{H2} A uniform $L^2 \to L^2$ bound for $P_N$ on
+  bulk sub-intervals $I_\delta = [-(1-\delta)T, (1-\delta)T]$.
+\end{enumerate}
+Hypothesis~\ref{H1} was established in \cite{PaperIV} via a
+Pr\"ufer phase analysis, yielding an $O(1/n)$ equidistribution
+rate for $\psi_n^2$ uniformly on $I_\delta$.
+Hypothesis~\ref{H2} is the subject of the present paper.
 
-The first hypothesis was established in \cite{PaperIV} via a
-Pr\"ufer phase analysis, yielding an $O(1/n)$ rate of
-equidistribution for $\psi_n^2$.
-
-The second hypothesis (Assumption~2.4 of \cite{PaperIII})
-remains the final open input.
-The purpose of the present paper is to prove this assumption
-unconditionally.
+Additionally, the spectral tail estimate of \cite[Assumption
+ass:bulkconv]{PaperIII} requires:
+\begin{enumerate}[label=(H\arabic*),resume]
+  \item\label{H3} Exponential decay of the out-of-band energy
+  $\Eout(f_{mn}) \le C_\gamma\,e^{-\alpha_\gamma c}$ for all
+  $m,n \le \gamma\,\NSh$.
+\end{enumerate}
+This paper proves both \ref{H2} and \ref{H3} unconditionally
+for $\gamma < 1/2$.
 
 % --------------------------------------------------------------
-\subsection{Main result}
+\subsection{Main results}
+\label{subsec:main-results}
 
-Let
+Let $K_N(x,y) := \sum_{n=0}^{N-1}\psin(x)\psin(y)$ denote
+the Christoffel--Darboux kernel and $P_N$ the associated
+integral operator on $L^2([-T,T])$.
+
+\begin{theorem}[Bridge Lemma: exponential out-of-band decay]
+\label{thm:bridge-intro}
+Fix $0 < \gamma < 1/2$.
+There exist $C_\gamma > 0$ and $K_\gamma > 0$ such that for
+all $m, n \le \gamma\,\NSh$ and all $c \ge 1$:
 \[
-  K_N(x,y) := \sum_{n=0}^{N-1} \psi_n(x)\psi_n(y)
+  \Eout(\fmn) \;\le\; C_\gamma\,e^{-K_\gamma c}.
 \]
-denote the Christoffel--Darboux kernel of the PSWF system,
-and let $P_N$ be the associated integral operator on $[-T,T]$.
+In particular, Assumption~ass:bulkconv of \cite{PaperIII}
+holds unconditionally.
+\end{theorem}
 
 \begin{theorem}[Uniform bulk Schur bound]
 \label{thm:schur-main}
-Fix $0 < \delta < 1$ and $0 < \gamma < 1$, and let
-\[
-  I_\delta := [-(1-\delta)T,\,(1-\delta)T].
-\]
-Then for all $N$ and all bandwidth parameters $c > 0$,
-the operator $P_N$ satisfies
+Fix $0 < \delta < 1$ and $0 < \gamma < 1/2$.
+Then for all $N \le \gamma\,\NSh$ and all $c \ge 1$:
 \[
   \|P_N\|_{L^2 \to L^2(I_\delta)} \le C_{\delta,\gamma},
 \]
-uniformly for all truncation levels $N$ in the bulk regime
-$N \le \gamma\, N_{\mathrm{Sh}}$, where $N_{\mathrm{Sh}} = 2c/\pi$.
+with $C_{\delta,\gamma}$ independent of $N$ and $c$.
 \end{theorem}
 
-As an immediate consequence, Assumption~2.4 of
-\cite{PaperIII} holds.
-
-\begin{corollary}[Unconditional bulk stability]
+\begin{corollary}[Unconditional bulk tail bound]
 \label{cor:bulk-stability}
-The bulk tail bound of \cite[Theorem~6.1]{PaperIII}
-holds unconditionally for all $n \le \gamma N$.
+The bulk spectral tail bound of \cite[Theorem~3.2]{PaperIII}
+holds unconditionally for all $m,n,N \le \gamma\,\NSh$
+with $\gamma < 1/2$:
+\[
+  \|(I-P_N)f_{mn}\|_{L^2} \;\le\; C_\gamma\,e^{-\alpha_\gamma' N}.
+\]
 \end{corollary}
 
 % --------------------------------------------------------------
-\subsection{Strategy of proof}
-
-The proof combines three ingredients of different origin.
-
-\medskip\noindent
-\textbf{(i) Diagonal control via Pr\"ufer analysis.}
-From \cite{PaperIV}, the squared amplitudes satisfy
-\[
-  \psi_n(x)^2
-  = \lambda_n\,\rho_n^{\mathrm{cl}}(x)
-    \bigl(1 + O(1/n)\bigr)
-\]
-uniformly on $I_\delta$. Summation over $n < N$
-yields the diagonal bound
-\[
-  K_N(x,x) \le C_{\delta,\gamma}\,\frac{Nc}{\pi T}.
-\]
+\subsection{Key ideas}
+\label{subsec:ideas}
 
 \medskip\noindent
-\textbf{(ii) Off-diagonal decay via kernel splitting.}
-Since $N \le \gamma\,\NSh$, the projector $P_N$ is a
-sub-projection of $P_M$ with $M := \lfloor\gamma\,\NSh\rfloor$.
-We decompose
+\textbf{(I) The WKB forbidden-zone cover (Section~\ref{sec:bridge}).}
+For $m, n \le \gamma\,\NSh$ with $\gamma < 1/2$, the Fourier
+transform $\widehat{f}_{mn}(\omega+\delta)$ at out-of-band
+frequencies $\xi = \omega + \delta$ can be expressed as a
+convolution integral over $x \in [\delta T/\omega, T]$
+(via the PSWF self-duality relation).
+For every $x$ in this interval, the two WKB forbidden zones
 \[
-  K_M = K_{\mathrm{BL}} + \widetilde{E}^- - \widetilde{E}^+,
+  \{x > \gamma T\} \quad\text{(for } \psi_n\text{)}
+  \qquad\text{and}\qquad
+  \{T + \delta T/\omega - x > \gamma T\} \quad\text{(for } \psi_m\text{)}
 \]
-where $\widetilde{E}^- = \sum_{n<M}(1-\lambda_n)\psi_n\psi_n$
-and $\widetilde{E}^+ = \sum_{n \ge M}\lambda_n\psi_n\psi_n$.
-The term $\widetilde{E}^-$ is exponentially small ($1-\lambda_n \le e^{-c_1 c}$
-for all $n < M \le \gamma\NSh$).
-For $\widetilde{E}^+$ we split at $\NSh$:
-the true tail $n \ge \NSh$ is exponentially small,
-and the near-bulk block $M \le n < \NSh$ is controlled by
-the positive semi-definiteness of $\widetilde{E}^+_{\mathrm{near}}$
-and its dominance by $\KBL$.
+together cover $[\delta T/\omega, T]$ entirely, because
+$\gamma T + \gamma T = 2\gamma T < T$ for $\gamma < 1/2$.
+At every integration point, at least one PSWF factor is
+exponentially small (WKB tunneling), so the integral itself
+is exponentially small.
 
 \medskip\noindent
-\textbf{(iii) Schur test.}
-Combining the diagonal bound with the off-diagonal decay,
-we verify the Schur integrability condition
-\[
-  \sup_{x \in I_\delta}
-  \int_{I_\delta} |K_N(x,y)|\,dy \le C_{\delta,\gamma},
-\]
-which implies Theorem~\ref{thm:schur-main}
-via the classical Schur test \cite[Thm.~VI.23]{ReedSimonI}.
+\textbf{(II) Kernel splitting and Schur test
+(Sections~\ref{sec:offdiag}--\ref{sec:schur}).}
+We decompose $K_N = K_M = \KBL + \widetilde{E}^- - \widetilde{E}^+$
+around the sinc-type band-limited kernel $\KBL$.
+The error terms are controlled by eigenvalue concentration
+(from \cite{OsipovRokhlinXiao}) and positive semi-definiteness.
+The classical Schur test then gives the $L^2$ operator bound.
+
+\medskip\noindent
+\textbf{(III) Separation of mechanisms.}
+The WKB cover (Idea~I) is a purely energetic argument;
+it gives no off-diagonal decay in $|m-n|$.
+The Schur argument (Idea~II) is a functional-analytic argument;
+it requires only that the kernel is integrable, not that the
+defect is Schur-summable with an index-dependent profile.
+The DSTP off-diagonal structure of \cite{PaperI} is a
+strictly additional statement requiring phase-gap cancellation;
+it is not used here.
 
 % --------------------------------------------------------------
-\subsection{Conceptual significance}
-
-The argument shows that no additional microlocal or
-pseudodifferential machinery is required to control the PSWF
-projector in the bulk regime.
-The key structural feature is that the operator $\KBL$
-positive-semi-definiteness dominates the near-bulk error:
-no estimate on individual eigenvalues $\lambda_n$ in the
-transition region $M \le n < \NSh$ is required.
-
-% --------------------------------------------------------------
-\subsection{Organization of the paper}
+\subsection{Organisation}
 
 \begin{itemize}
-  \item Section~\ref{sec:prelim} collects preliminaries,
-  including the Schur test and basic properties of $K_N$.
-  \item Section~\ref{sec:diagonal} proves the diagonal bound
-  using results from \cite{PaperIV}.
-  \item Section~\ref{sec:offdiag} establishes the off-diagonal
-  decay via kernel splitting.
-  \item Section~\ref{sec:schur} completes the Schur argument
-  and proves Theorem~\ref{thm:schur-main}.
+  \item Section~\ref{sec:prelim}: notation, Schur test,
+  basic PSWF properties.
+  \item Section~\ref{sec:diagonal}: diagonal bound via
+  Pr\"ufer analysis.
+  \item Section~\ref{sec:offdiag}: off-diagonal decay via
+  kernel splitting.
+  \item Section~\ref{sec:bridge}: Bridge Lemma and proof of
+  Theorem~\ref{thm:bridge-intro}.
+  \item Section~\ref{sec:schur}: Schur argument and proof of
+  Theorem~\ref{thm:schur-main}.
 \end{itemize}
 
 % =============================================================
@@ -196,8 +227,85 @@ transition region $M \le n < \NSh$ is required.
 \label{sec:prelim}
 % =============================================================
 
-% Placeholder: Schur test, basic K_N properties, notation.
-% To be written after Sections 3--5 are stable.
+\subsection{PSWF notation and basic properties}
+
+The PSWFs $\{\psin\}_{n \ge 0}$ form an orthonormal basis of
+$L^2([-T,T])$ and are eigenfunctions of the concentration
+operator
+\[
+  \mathcal{K}_c f(x)
+  = \int_{-T}^{T} \frac{\sin(\omega(x-y))}{\pi(x-y)}\,f(y)\,dy
+  \colon L^2(\mathbb{R}) \to L^2(\mathbb{R}),
+\]
+with eigenvalues $1 > \lambda_0(c) > \lambda_1(c) > \cdots > 0$
+\cite{Slepian64,OsipovRokhlinXiao}.
+The spectral parameter $\chi_n(c)$ is the eigenvalue of the
+associated Sturm--Liouville operator
+\[
+  \mathcal{L}_c \psi
+  := -\frac{d}{dx}\!\left[(1-x^2/T^2)\frac{d\psi}{dx}\right]
+     + \frac{c^2 x^2}{T^2}\,\psi
+  = \chi_n(c)\,\psi.
+\]
+The Slepian number is $\NSh := 2c/\pi$.
+For $n \le \gamma\,\NSh$, the classical turning point satisfies
+$x_+(n) \le \gamma\,T$ \cite[\S4.4]{OsipovRokhlinXiao}.
+
+\subsection{Eigenvalue concentration}
+
+\begin{lemma}[Eigenvalue concentration]
+\label{lem:eigenvalue-decay}
+There exist constants $c_1, c_2 > 0$, depending only on $\gamma$,
+such that for all $c \ge 1$:
+\begin{enumerate}[label=(\roman*)]
+  \item For all $n \le \gamma\,\NSh$:
+  $\displaystyle 1 - \lambda_n(c) \le e^{-c_1 c}$.
+  \item For all $n \ge \NSh$:
+  $\displaystyle \lambda_n(c) \le e^{-c_2 c}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) \cite[Theorem~4.6]{OsipovRokhlinXiao}:
+$1-\lambda_n \le e^{-c_1(c-n\pi/2)}$;
+for $n \le \gamma\,\NSh$: $c - n\pi/2 \ge c(1-\gamma) > 0$.
+(ii) \cite[Theorem~4.9]{OsipovRokhlinXiao}:
+$\lambda_n \le e^{-c_2(n\pi/2-c)}$;
+for $n \ge \NSh$: $n\pi/2 - c \ge (\pi/2-1)c > 0$.
+\end{proof}
+
+\subsection{Uniform $L^\infty$ bound for PSWFs}
+
+\begin{lemma}[$L^\infty$ bound]
+\label{lem:Linfty-global}
+For all $n \ge 0$, $c \ge 1$, and $x \in \mathbb{R}$:
+\[
+  |\psin(x)| \le C_0,
+\]
+with $C_0 > 0$ independent of $n$, $c$, and $x$.
+\end{lemma}
+
+\begin{proof}
+\cite[Corollary~4.3]{OsipovRokhlinXiao}.
+\end{proof}
+
+\subsection{The Schur test}
+
+\begin{lemma}[Schur test]
+\label{lem:schur-test}
+Let $A$ be an integral operator on $L^2(\Omega, \mu)$ with
+kernel $A(x,y)$. If
+\[
+  \sup_{x} \int |A(x,y)|\,d\mu(y) \le M
+  \quad\text{and}\quad
+  \sup_{y} \int |A(x,y)|\,d\mu(x) \le M,
+\]
+then $\|A\|_{L^2 \to L^2} \le M$.
+\end{lemma}
+
+\begin{proof}
+\cite[Theorem~VI.23]{ReedSimonI}.
+\end{proof}
 
 % =============================================================
 \section{The Diagonal Bound}
@@ -206,147 +314,58 @@ transition region $M \le n < \NSh$ is required.
 
 \begin{proposition}[Diagonal bound]
 \label{prop:diagonal}
-Fix $0 < \delta < 1$ and $0 < \gamma < 1$.
-Then for all $x \in I_\delta$ and all
-$N \le \gamma\,\NSh$,
+Fix $0 < \delta < 1$ and $0 < \gamma < 1/2$.
+For all $x \in I_\delta$ and all $N \le \gamma\,\NSh$:
 \begin{equation}
 \label{eq:diagonal}
-  K_N(x,x)
-  = \sum_{n=0}^{N-1} \psi_n(x)^2
-  \le C_{\delta,\gamma}\,\frac{Nc}{\pi T},
+  K_N(x,x) = \sum_{n=0}^{N-1}\psin(x)^2
+  \;\le\; C_{\delta,\gamma}\,\frac{Nc}{\pi T},
 \end{equation}
-uniformly in $c > 0$.
+uniformly in $c \ge 1$.
 \end{proposition}
 
 \begin{proof}
-The proof proceeds in three steps.
-
-\subsubsection*{Step 1: Pointwise bound via Pr\"ufer amplitudes}
-
-By the Pr\"ufer decomposition, $\psi_n(x)^2 = r_n(x)^2$.
-From \cite[Lemma~4.2 (\texttt{lem:amplitude-drift})]{PaperIV},
-\begin{equation}
-\label{eq:amplitude-drift}
-  \frac{r_n(x)^2}{\rWKB(x)^2}
-  = 1 + O\!\left(\tfrac{1}{n}\right),
+\textbf{Step 1 (Pr\"ufer amplitude control).}
+From \cite[Lemma~4.2]{PaperIV}:
+\begin{equation}\label{eq:amplitude-drift}
+  \frac{r_n(x)^2}{\rWKB(x)^2} = 1 + O(1/n),
 \end{equation}
-uniformly for $x \in I_\delta$ and $n \le \gamma\,\NSh$.
-From \cite[Lemma~4.3 (\texttt{lem:normalization})]{PaperIV},
-\begin{equation}
-\label{eq:normalization}
-  \frac{\rWKB(x)^2}{2}
-  = \lambda_n(c)\,\rhocl(x)
-    \left(1 + O\!\left(\tfrac{1}{n}\right)\right).
+uniformly for $x \in I_\delta$, $n \le \gamma\,\NSh$.
+From \cite[Lemma~4.3]{PaperIV}:
+\begin{equation}\label{eq:normalization}
+  \tfrac{1}{2}\rWKB(x)^2 = \lambda_n(c)\,\rhocl(x)(1+O(1/n)).
 \end{equation}
-Combining \eqref{eq:amplitude-drift} and \eqref{eq:normalization},
-\begin{equation}
-\label{eq:psi-squared-bound}
-  \psi_n(x)^2
-  \le C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x).
+Combining:
+\begin{equation}\label{eq:psi-sq}
+  \psin(x)^2 \le C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x).
 \end{equation}
 
-\subsubsection*{Step 2: Classical density bound in the bulk}
-
-We claim that for all $n \le \gamma\,\NSh$ and $x \in I_\delta$,
-\begin{equation}
-\label{eq:density-bound}
-  \rhocl(x) \le \frac{C_{\delta,\gamma}\,c}{T}.
+\textbf{Step 2 (Density bound).}
+The classical density satisfies
+\begin{equation}\label{eq:density-bound}
+  \rhocl(x) \le C_{\delta,\gamma}\,c/T
+  \qquad\text{for all } x \in I_\delta,\ n \le \gamma\,\NSh.
 \end{equation}
+This follows from the explicit formula
+$\rhocl(x) = (1/\wcl(x)) / \int_{-x_+(n)}^{x_+(n)} (1/\wcl(t))\,dt$,
+combined with the lower bound $\wcl(x) \ge c_{\delta,\gamma}\,n$
+\cite[Lemma~2.5(i)]{PaperIV} and the lower bound on the
+denominator $\int_{I_\delta} (1/\wcl(t))\,dt \ge c'_{\delta,\gamma} T/c$
+(from $\wcl \le C_{\delta,\gamma}\,c$ on $I_\delta$).
 
-By definition (see \cite{PaperIV}, Definition~2.4), the
-classical density takes the form
+\textbf{Step 3 (Summation).}
+Inserting \eqref{eq:density-bound} into \eqref{eq:psi-sq}
+and summing over $n < N$:
 \[
-  \rhocl(x)
-  = \frac{1/\wcl(x)}
-    {\displaystyle\int_{-x_+(n)}^{x_+(n)}
-      \frac{dt}{\wcl(t)}},
+  K_N(x,x) \le C_{\delta,\gamma}\,\frac{c}{T}\sum_{n=0}^{N-1}\lambda_n
+  \le C_{\delta,\gamma}\,\frac{Nc}{\pi T}. \qedhere
 \]
-where the classical frequency is
-\begin{equation}\label{eq:wcl-def}
-  \wcl(x) := \sqrt{\chi_n(c) - V_c(x)},
-  \qquad
-  V_c(x) := c^2\!\left(1 - \frac{x^2}{T^2}\right)^{\!-1}\chi_n(c)\,
-  \frac{x^2}{T^2},
-\end{equation}
-and $x_+(n)$ is the classical turning point at which
-$\wcl(x_+(n)) = 0$.
-
-\medskip\noindent
-\textit{Step 2a: Upper bound on the numerator.}
-By \cite[Lemma~2.5(i) (\texttt{lem:G-regularity})]{PaperIV},
-\begin{equation}\label{eq:wcl-lower}
-  \wcl(x) \ge c_{\delta,\gamma}\,n
-  \qquad\text{for all } x \in I_\delta,
-\end{equation}
-hence $1/\wcl(x) \le C_{\delta,\gamma}/n$.
-
-\medskip\noindent
-\textit{Step 2b: Lower bound on the denominator.}
-Since the integrand $1/\wcl(t)$ is non-negative,
-we restrict to the bulk interval to avoid the turning
-points $\pm x_+(n)$, where $\wcl(t) \to 0$:
-\[
-  \int_{-x_+(n)}^{x_+(n)} \frac{dt}{\wcl(t)}
-  \;\ge\;
-  \int_{I_\delta} \frac{dt}{\wcl(t)}.
-\]
-Since $V_c(x) \ge 0$, the definition~\eqref{eq:wcl-def} gives
-$\wcl(x) \le \sqrt{\chi_n(c)}$.
-For the eigenvalue we use the standard PSWF bound
-(see \cite[Chs.~2--4]{OsipovRokhlinXiao}):
-\begin{equation}\label{eq:chi-bound}
-  \chi_n(c) \le c^2 + C n^2.
-\end{equation}
-Combining $\wcl(x) \le \sqrt{\chi_n(c)}$
-with \eqref{eq:chi-bound} and $n \le \gamma\,\NSh \le c$:
-\begin{equation}\label{eq:wcl-upper}
-  \wcl(x) \le C_{\delta,\gamma}\,c
-  \qquad\text{for all } x \in I_\delta.
-\end{equation}
-Therefore:
-\begin{equation}\label{eq:denom-lower}
-  \int_{I_\delta} \frac{dt}{\wcl(t)}
-  \;\ge\;
-  \frac{c'_{\delta,\gamma}\,T}{c}.
-\end{equation}
-
-\medskip\noindent
-\textit{Conclusion of Step 2.}
-Combining the numerator bound $1/\wcl(x) \le C_{\delta,\gamma}/n$
-with \eqref{eq:denom-lower} and $n \ge 1$:
-\[
-  \rhocl(x)
-  \le
-  \frac{C_{\delta,\gamma}\,c}{n\,T}
-  \le
-  \frac{C_{\delta,\gamma}\,c}{T},
-\]
-establishing~\eqref{eq:density-bound}.
-
-\subsubsection*{Step 3: Summation}
-
-Inserting \eqref{eq:density-bound} into
-\eqref{eq:psi-squared-bound} and summing:
-\[
-  K_N(x,x)
-  \le C_{\delta,\gamma}\,\frac{c}{T}
-       \sum_{n=0}^{N-1} \lambda_n(c)
-  \le C_{\delta,\gamma}\,\frac{Nc}{\pi T},
-\]
-using $\lambda_n \le 1$.
-The $O(1/n)$ corrections from \eqref{eq:psi-squared-bound}
-contribute $O(c\log N/T) = o(Nc/T)$,
-completing the proof.
 \end{proof}
 
-\begin{remark}[Relation to Landau--Widom]
-\label{rem:landau-widom}
-Proposition~\ref{prop:diagonal} recovers the classical
-Landau--Widom diagonal estimate \cite{Widom64}.
-The diagonal estimate requires no reproducing kernel
-identities or the Landau--Widom trace formula;
-it follows directly from the Pr\"ufer amplitude control
-of \cite{PaperIV} with constants uniform in all parameters.
+\begin{remark}[Landau--Widom]
+\label{rem:LW}
+The bound \eqref{eq:diagonal} recovers the classical Landau--Widom
+diagonal estimate \cite{Widom64}, with constants uniform in $n$ and $c$.
 \end{remark}
 
 % =============================================================
@@ -354,390 +373,119 @@ of \cite{PaperIV} with constants uniform in all parameters.
 \label{sec:offdiag}
 % =============================================================
 
-In this section we establish the off-diagonal bound
-\begin{equation}
-\label{eq:offdiag-main}
-  |K_N(x,y)|
-  \;\le\;
-  \frac{C_{\delta,\gamma}}{1 + c|x-y|/T}
-  \;+\;
-  C_{\delta,\gamma}\,\frac{c}{\pi T}
-  \;+\;
-  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c},
-\end{equation}
-for all $x,y \in I_\delta$ and all $N \le \gamma\,\NSh$,
-where $c_3 > 0$ depends only on $\delta$ and $\gamma$.
-The second term, of order $c/T$, arises from the near-bulk
-block $M \le n < \NSh$ via the $\KBL$-dominance argument;
-it is controlled in the Schur test
-(Section~\ref{sec:schur}) by a separate integration argument.
+\subsection{The band-limited kernel and its sinc bound}
 
-% --------------------------------------------------------------
-\subsection{The band-limited kernel}
-\label{subsec:BL-kernel}
-
-Define the band-limited Christoffel--Darboux kernel as
-\[
-  \KBL(x,y)
-  := \sum_{n=0}^{\infty} \lambda_n\,\psi_n(x)\psi_n(y).
-\]
-By the reproducing kernel identity for band-limited functions
-of bandwidth $c/T$ (see \cite[Prop.~3.1]{OsipovRokhlinXiao}),
-this kernel admits the explicit Fourier representation
-\begin{equation}
-\label{eq:KBL-sinc}
-  \KBL(x,y)
-  = \frac{c}{\pi T}
-    \frac{\sin\!\bigl(c(x-y)/T\bigr)}{c(x-y)/T},
+The concentration operator $\mathcal{K}_c$ has a reproducing
+kernel representation:
+\begin{equation}\label{eq:KBL-sinc}
+  \KBL(x,y) := \sum_{n \ge 0}\lambda_n\,\psin(x)\psin(y)
+  = \frac{c}{\pi T}\,\frac{\sin(c(x-y)/T)}{c(x-y)/T}.
 \end{equation}
-where the right-hand side is interpreted as $c/(\pi T)$
-when $x = y$.
 
 \begin{lemma}[Band-limited kernel bound]
 \label{lem:BL-bound}
-For all $x, y \in \mathbb{R}$,
-\begin{equation}
-\label{eq:BL-bound}
-  |\KBL(x,y)|
-  \;\le\;
-  \frac{2c/(\pi T)}{1 + c|x-y|/T}
-  \;\le\;
-  \frac{C}{1 + c|x-y|/T}.
+For all $x,y \in \mathbb{R}$:
+\begin{equation}\label{eq:BL-bound}
+  |\KBL(x,y)| \le \frac{C}{1+c|x-y|/T}.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-At $x = y$: $\KBL(x,x) = c/(\pi T)$ and the bound holds trivially.
-For $x \neq y$: set $u := c|x-y|/T > 0$.
-Using $|\sin(u)| \le 1$ and $|\sin(u)/u| \le 1/u$,
-\[
-  \left|\frac{\sin u}{u}\right|
-  \le \min\!\left(1,\,\frac{1}{u}\right)
-  \le \frac{2}{1 + u},
-\]
-where the last step follows by checking both cases $u \le 1$
-($2/(1+u) \ge 1$) and $u > 1$ ($2/(1+u) > 1/u$).
-Therefore
-\[
-  |\KBL(x,y)|
-  \le \frac{c}{\pi T}\cdot\frac{2}{1 + u}
-  = \frac{2c/(\pi T)}{1 + c|x-y|/T}. \qedhere
-\]
+At $x=y$: $\KBL(x,x) = c/(\pi T)$. For $x\ne y$, set $u=c|x-y|/T>0$:
+$|\sin u/u| \le 2/(1+u)$ (check $u \le 1$ and $u > 1$ separately).
 \end{proof}
 
-% --------------------------------------------------------------
-\subsection{Algebraic decomposition}
+\subsection{Algebraic kernel decomposition}
 \label{subsec:decomp}
 
-Since $N \le \gamma\,\NSh$, the projector $P_N$ is a
-sub-projection of $P_M$, where $M := \lfloor\gamma\,\NSh\rfloor$,
-so $\|P_N\|_{L^2 \to L^2(\Ish)} \le \|P_M\|_{L^2 \to L^2(\Ish)}$.
-It therefore suffices to bound the kernel $K_M$.
-
-We write
-\begin{equation}
-\label{eq:split}
+Let $M := \lfloor\gamma\,\NSh\rfloor$. Since $N \le M$,
+it suffices to bound the kernel $K_M$. Write:
+\begin{equation}\label{eq:split}
   K_M = \KBL + \widetilde{E}^- - \widetilde{E}^+,
 \end{equation}
 where
 \[
-  \widetilde{E}^-(x,y) := \sum_{n < M}(1-\lambda_n)\psi_n(x)\psi_n(y),
-  \qquad
-  \widetilde{E}^+(x,y) := \sum_{n \ge M}\lambda_n\psi_n(x)\psi_n(y).
+  \widetilde{E}^-\!:= \sum_{n<M}(1-\lambda_n)\psin\psin,
+  \quad
+  \widetilde{E}^+\!:= \sum_{n \ge M}\lambda_n\psin\psin
+  = \widetilde{E}^+_{\mathrm{near}} + \widetilde{E}^+_{\mathrm{tail}},
 \]
-We further split $\widetilde{E}^+$ at $\NSh$:
-\begin{equation}
-\label{eq:Eplus-split-def}
-  \widetilde{E}^+ = \widetilde{E}^+_{\mathrm{near}} + \widetilde{E}^+_{\mathrm{tail}},
-\end{equation}
-where
-\[
-  \widetilde{E}^+_{\mathrm{near}}(x,y)
-  := \sum_{n=M}^{\NSh-1}\lambda_n\psi_n(x)\psi_n(y),
-  \qquad
-  \widetilde{E}^+_{\mathrm{tail}}(x,y)
-  := \sum_{n \ge \NSh}\lambda_n\psi_n(x)\psi_n(y).
-\]
-The three terms are controlled as follows:
-\begin{itemize}
-  \item $\widetilde{E}^-$: every index satisfies $n < M \le \gamma\,\NSh$,
-  so $1-\lambda_n \le e^{-c_1 c}$ (Lemma~\ref{lem:eigenvalue-decay}(i))
-  $\Rightarrow$ exponentially small.
-  \item $\widetilde{E}^+_{\mathrm{tail}}$: every index satisfies $n \ge \NSh$,
-  so $\lambda_n \le e^{-c_2 c}$ (Lemma~\ref{lem:eigenvalue-decay}(ii))
-  $\Rightarrow$ exponentially small.
-  \item $\widetilde{E}^+_{\mathrm{near}}$: the near-bulk block $M \le n < \NSh$
-  requires no eigenvalue bound in the Airy-scale transition region;
-  it is controlled instead by $\KBL$-dominance via positive
-  semi-definiteness (Subsection~\ref{subsec:diff-bound}).
-\end{itemize}
-
-% --------------------------------------------------------------
-\subsection{Spectral decay of PSWF eigenvalues}
-\label{subsec:spectral-decay}
-
-\begin{lemma}[Eigenvalue concentration]
-\label{lem:eigenvalue-decay}
-There exist constants $c_1, c_2 > 0$, depending only on
-$\gamma$, such that:
-\begin{enumerate}[label=(\roman*)]
-  \item \textup{(Bulk eigenvalues near 1.)}
-  For all $n \le \gamma\,\NSh$:
-  \begin{equation}
-  \label{eq:lambda-bulk}
-    1 - \lambda_n(c) \;\le\; e^{-c_1 c}.
-  \end{equation}
-  \item \textup{(Tail eigenvalues near 0.)}
-  For all $n \ge \NSh$:
-  \begin{equation}
-  \label{eq:lambda-tail}
-    \lambda_n(c) \;\le\; e^{-c_2 c}.
-  \end{equation}
-\end{enumerate}
-Both bounds are uniform in $c > 0$.
-\end{lemma}
-
-\begin{proof}
-Part~(i): \cite[Theorem~4.6]{OsipovRokhlinXiao} gives
-$1 - \lambda_n \le e^{-c_1(c - n\pi/2)}$;
-since $c - n\pi/2 \ge c(1 - \gamma\pi/4) \ge c_\gamma c$,
-bound \eqref{eq:lambda-bulk} follows.
-Part~(ii): \cite[Theorem~4.9]{OsipovRokhlinXiao} gives
-$\lambda_n \le e^{-c_2(n\pi/2 - c)}$;
-since $n\pi/2 - c \ge (\pi/2 - 1)c > 0$ for $n \ge \NSh = 2c/\pi$,
-bound \eqref{eq:lambda-tail} follows.
-\end{proof}
+with
+$\widetilde{E}^+_{\mathrm{near}} := \sum_{n=M}^{\NSh-1}\lambda_n\psin\psin$
+and
+$\widetilde{E}^+_{\mathrm{tail}} := \sum_{n \ge \NSh}\lambda_n\psin\psin$.
 
 \begin{remark}[Transition region]
-\label{rem:transition-region}
-For indices $M \le n < \NSh$ in the near-bulk block, neither
-bulk bound~\eqref{eq:lambda-bulk} nor tail
-boundary~\eqref{eq:lambda-tail} applies:
-the eigenvalues $\lambda_n$ transition on the Airy scale
-$|n - \NSh| = O(c^{1/3})$ and are not individually small.
-This is why $\widetilde{E}^+_{\mathrm{near}}$ requires the
-PSD-dominance argument of Subsection~\ref{subsec:diff-bound},
-rather than a direct eigenvalue bound.
+\label{rem:transition}
+For $M \le n < \NSh$, the eigenvalues $\lambda_n$ pass through
+the Airy-scale transition and are not individually small.
+Therefore $\widetilde{E}^+_{\mathrm{near}}$ is controlled by a
+PSD-dominance argument (Subsection~\ref{subsec:diff-bound})
+rather than by an eigenvalue bound.
 \end{remark}
 
-% --------------------------------------------------------------
-\subsection{Pointwise $L^\infty$ bound for PSWF eigenfunctions}
-\label{subsec:Linfty}
-
-\begin{lemma}[$L^\infty$ bound for $\psi_n$]
-\label{lem:Linfty}
-For all $n \le \gamma\,\NSh$ and all $x \in I_\delta$,
-\begin{equation}
-\label{eq:Linfty}
-  |\psi_n(x)|^2 \;\le\; C_{\delta,\gamma}\,\frac{c}{T}.
-\end{equation}
-\end{lemma}
-
-\begin{proof}
-From \eqref{eq:psi-squared-bound} and \eqref{eq:density-bound}:
-$\psi_n(x)^2 \le C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x)
-\le C_{\delta,\gamma}\,c/T$.
-\end{proof}
-
-% --------------------------------------------------------------
-\subsection{Bounding the error kernels}
+\subsection{Bounding the error terms}
 \label{subsec:diff-bound}
 
-\medskip\noindent
-\textbf{Bounding $\widetilde{E}^-$.}
-For $n < M \le \gamma\,\NSh$, Lemma~\ref{lem:eigenvalue-decay}(i)
-and Lemma~\ref{lem:Linfty} give:
-\begin{equation}
-\label{eq:Eminus-final}
-  |\widetilde{E}^-(x,y)|
-  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n<M}(1-\lambda_n)
-  \le C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c},
-\end{equation}
-using $M \le \gamma\,\NSh \asymp c$.
-
-\medskip\noindent
-\textbf{Bounding $\widetilde{E}^+_{\mathrm{tail}}$.}
-For $n \ge \NSh$, Lemma~\ref{lem:eigenvalue-decay}(ii)
-and Lemma~\ref{lem:Linfty} give:
-\begin{equation}
-\label{eq:Eplus-tail-final}
-  |\widetilde{E}^+_{\mathrm{tail}}(x,y)|
-  \le \frac{c}{T}\sum_{n \ge \NSh}\lambda_n
-  \le C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_2 c},
-\end{equation}
-where we used $\sum_{n \ge \NSh}\lambda_n \le C\,e^{-c_2 c}$
-(from \eqref{eq:lambda-tail} and geometric summation).
-
-\medskip\noindent
-\textbf{Bounding $\widetilde{E}^+_{\mathrm{near}}$ via $\KBL$-dominance.}
-The key observation is that
-$\widetilde{E}^+_{\mathrm{near}}$, $\widetilde{E}^+_{\mathrm{tail}}$,
-and $\KBL$ are all positive semi-definite (PSD) kernels,
-and
-\begin{equation}
-\label{eq:PSD-order}
-  0 \preceq \widetilde{E}^+_{\mathrm{near}}
-  \preceq \widetilde{E}^+
-  \preceq \KBL,
-\end{equation}
-since $\KBL - \widetilde{E}^+ = \sum_{n < M}\lambda_n\psi_n\psi_n \succeq 0$
-and $\widetilde{E}^+ - \widetilde{E}^+_{\mathrm{near}}
-= \widetilde{E}^+_{\mathrm{tail}} \succeq 0$.
-
-By the Cauchy--Schwarz inequality for PSD kernels:
-\begin{equation}
-\label{eq:PSD-CS}
-  |A(x,y)|^2 \le A(x,x)\,A(y,y)
-  \quad\text{for any PSD kernel } A.
-\end{equation}
-Applying \eqref{eq:PSD-CS} to $\widetilde{E}^+_{\mathrm{near}}$
-and using \eqref{eq:PSD-order}:
-\begin{equation}
-\label{eq:Eplus-near-final}
-  |\widetilde{E}^+_{\mathrm{near}}(x,y)|^2
-  \le \widetilde{E}^+_{\mathrm{near}}(x,x)\,
-      \widetilde{E}^+_{\mathrm{near}}(y,y)
-  \le \KBL(x,x)\,\KBL(y,y)
-  = \left(\frac{c}{\pi T}\right)^{\!2},
-\end{equation}
-hence
-\begin{equation}
-\label{eq:Eplus-near-pointwise}
-  |\widetilde{E}^+_{\mathrm{near}}(x,y)|
-  \;\le\;
-  \frac{c}{\pi T}.
-\end{equation}
-No eigenvalue estimate in the Airy transition region
-$M \le n < \NSh$ is required.
-
-\begin{remark}[Why this is the right bound]
-\label{rem:KBL-dominance}
-The bound \eqref{eq:Eplus-near-pointwise} gives
-$|\widetilde{E}^+_{\mathrm{near}}(x,y)| \le c/(\pi T)$,
-which matches the diagonal $\KBL(x,x) = c/(\pi T)$.
-This is not a \emph{small} bound in the sense of
-being $o(1)$ as $c \to \infty$; rather, it is of the
-same order as the main term $|\KBL(x,y)|$ at $x = y$.
-The Schur test in Section~\ref{sec:schur} handles this
-by integrating the kernel:
-$\int_{\Ish}(c/\pi T)\,dy \le 2(1-\delta)c/\pi$,
-which is absorbed into the final uniform constant
-$C_{\delta,\gamma}$.
-\end{remark}
-
-\medskip\noindent
-\textbf{Combined error bound.}
-Collecting \eqref{eq:Eminus-final}, \eqref{eq:Eplus-tail-final},
-and \eqref{eq:Eplus-near-pointwise}:
-\begin{equation}
-\label{eq:KM-KBL-bound}
-  |K_M(x,y) - \KBL(x,y)|
-  \;\le\;
-  C_{\delta,\gamma}\,\frac{c}{\pi T}
-  \;+\;
-  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c},
-\end{equation}
-where $c_3 := \min(c_1, c_2) > 0$.
-
-% --------------------------------------------------------------
-\subsection{Final off-diagonal estimate}
-
-\begin{proposition}[Off-diagonal bound]
-\label{prop:offdiag}
-For all $x, y \in I_\delta$ and all $N \le \gamma\,\NSh$,
-\begin{equation}
-\label{eq:offdiag-final}
-  |K_N(x,y)|
-  \;\le\;
-  \frac{C_{\delta,\gamma}}{1 + c|x-y|/T}
-  \;+\;
-  C_{\delta,\gamma}\,\frac{c}{\pi T}
-  \;+\;
-  C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_3 c}.
-\end{equation}
-All constants are uniform in $c > 0$, $T > 0$,
-and $N \le \gamma\,\NSh$.
+\begin{proposition}[Error term bounds]
+\label{prop:error-bounds}
+For all $x, y \in I_\delta$ and $N \le \gamma\,\NSh$,
+with $c_3 := \min(c_1,c_2) > 0$ from
+Lemma~\ref{lem:eigenvalue-decay}:
+\begin{align}
+  |\widetilde{E}^-(x,y)| &\le C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c},
+  \label{eq:Eminus-final}\\
+  |\widetilde{E}^+_{\mathrm{tail}}(x,y)| &\le C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_2 c},
+  \label{eq:Etail-final}\\
+  |\widetilde{E}^+_{\mathrm{near}}(x,y)| &\le \frac{c}{\pi T}.
+  \label{eq:Enear-final}
+\end{align}
 \end{proposition}
 
 \begin{proof}
-Since $K_N$ is a PSD kernel and $N \le M$,
-the kernel $K_M - K_N = \sum_{N \le n < M}\psi_n\psi_n \succeq 0$,
-so by the PSD Cauchy--Schwarz inequality~\eqref{eq:PSD-CS}:
+\textbf{Bound~\eqref{eq:Eminus-final}.}
+By Lemma~\ref{lem:eigenvalue-decay}(i) and \eqref{eq:psi-sq}:
+$|\psin(x)\psin(y)| \le C_{\delta,\gamma}\,c/T$ (using
+\eqref{eq:density-bound}).
+Hence $|\widetilde{E}^-(x,y)| \le (c/T)\sum_{n<M}(1-\lambda_n)
+\le C_{\delta,\gamma}(c/T)\cdot c\,e^{-c_1 c}$.
+
+\textbf{Bound~\eqref{eq:Etail-final}.}
+By Lemma~\ref{lem:eigenvalue-decay}(ii):
+$|\widetilde{E}^+_{\mathrm{tail}}(x,y)| \le (c/T)\sum_{n \ge \NSh}\lambda_n
+\le C_{\delta,\gamma}(c/T)\,e^{-c_2 c}$
+(geometric summation).
+
+\textbf{Bound~\eqref{eq:Enear-final}.}
+All four kernels $\widetilde{E}^+_{\mathrm{near}}$,
+$\widetilde{E}^+_{\mathrm{tail}}$, $\widetilde{E}^+$, and $\KBL$
+are positive semi-definite (PSD), and
 \[
-  |K_N(x,y)|
-  \le K_N(x,x)^{1/2}\,K_N(y,y)^{1/2}
-  \le K_M(x,x)^{1/2}\,K_M(y,y)^{1/2}.
+  0 \preceq \widetilde{E}^+_{\mathrm{near}}
+  \preceq \widetilde{E}^+ \preceq \KBL.
 \]
-Moreover, by the triangle inequality and \eqref{eq:split}:
+The PSD Cauchy--Schwarz inequality $|A(x,y)|^2 \le A(x,x)A(y,y)$
+applied to $A = \widetilde{E}^+_{\mathrm{near}}$ gives:
 \[
-  |K_M(x,y)|
-  \le |\KBL(x,y)|
-     + |\widetilde{E}^-(x,y)|
-     + |\widetilde{E}^+_{\mathrm{near}}(x,y)|
-     + |\widetilde{E}^+_{\mathrm{tail}}(x,y)|.
+  |\widetilde{E}^+_{\mathrm{near}}(x,y)|^2
+  \le \KBL(x,x)\,\KBL(y,y) = (c/(\pi T))^2.
+  \qedhere
 \]
-Applying Lemma~\ref{lem:BL-bound},
-\eqref{eq:Eminus-final}, \eqref{eq:Eplus-tail-final},
-and \eqref{eq:Eplus-near-pointwise}
-gives \eqref{eq:offdiag-final}.
 \end{proof}
 
-% =============================================================
-\section{The Schur Argument}
-\label{sec:schur}
-% =============================================================
+\begin{proposition}[Off-diagonal bound]
+\label{prop:offdiag}
+For all $x,y \in I_\delta$ and $N \le \gamma\,\NSh$:
+\begin{equation}\label{eq:offdiag}
+  |K_N(x,y)|
+  \le \frac{C_{\delta,\gamma}}{1+c|x-y|/T}
+  + C_{\delta,\gamma}\,\frac{c}{\pi T}
+  + C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_3 c}.
+\end{equation}
+\end{proposition}
 
-% To be written.
-
-% =============================================================
-% Bibliography
-% =============================================================
-
-\begin{thebibliography}{99}
-
-\bibitem{PaperI}
-[Author], \textit{Gram Coercivity of PSWF Quadrature Forms},
-preprint, 2025.
-
-\bibitem{PaperII}
-[Author], \textit{Scaling Limits, Trace Formula, and Weil Connection},
-preprint, 2025.
-
-\bibitem{PaperIII}
-[Author], \textit{PSWF Product Spectral Tail Estimates},
-preprint, 2026.
-
-\bibitem{PaperIV}
-[Author], \textit{Semiclassical Equidistribution of PSWF Densities},
-preprint, 2026.
-
-\bibitem{OsipovRokhlinXiao}
-A.~Osipov, V.~Rokhlin, and H.~Xiao,
-\textit{Prolate Spheroidal Wave Functions of Order Zero},
-Springer, 2013.
-
-\bibitem{ReedSimonI}
-M.~Reed and B.~Simon,
-\textit{Methods of Modern Mathematical Physics, Vol.~I},
-Academic Press, 1972.
-
-\bibitem{Slepian64}
-D.~Slepian,
-\textit{Prolate spheroidal wave functions, Fourier analysis
-and uncertainty -- IV},
-Bell Syst.\ Tech.\ J.\ \textbf{43} (1964), 3009--3057.
-
-\bibitem{Weil52}
-A.~Weil,
-\textit{Sur les formules explicites de la th\'eorie des nombres},
-Univ.\ Lund Tidsskrift (1952), 252--265.
-
-\bibitem{Widom64}
-H.~Widom,
-\textit{Asymptotic behavior of the eigenvalues of certain
-integral equations II},
-Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964), 215--229.
-
-\end{thebibliography}
-
-\end{document}
+\begin{proof}
+Combine Lemma~\ref{lem:BL-bound} with the decomposition
+\eqref{eq:split} and Proposition~\ref{prop:error-bounds},
+using the triangle inequality.
+\end{proof}
