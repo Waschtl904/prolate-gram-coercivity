@@ -287,7 +287,7 @@ $n\in\mathcal{B}$ and $x\in I_\delta:=[-(1-\delta)T,(1-\delta)T]$:
   $\chi_k\le C\gamma_0^2 c^2$ on $\mathcal{B}$ gives
   $\sqrt{\chi_k}\le C\gamma_0 c$).
 \item \textup{(Amplitude derivative control, c-uniform)}
-  The Prüfer amplitude satisfies $r_n(x)=O(1)$ uniformly,
+  The Pr\"ufer amplitude satisfies $r_n(x)=O(1)$ uniformly,
   and its $k$-th derivative obeys
   $\|\partial_x^k r_n\|_{L^\infty(I_\delta)}\le C_k$
   with $C_k$ independent of $n\in\mathcal{B}$ and $c\ge c_0$,
@@ -318,7 +318,7 @@ $\omega_n^{\mathrm{cl}}(x)^2=c^2(1-x^2/T^2)+\chi_n/T^2\ge\chi_n/T^2
 $\sqrt\mu+\sqrt\nu\le 2\max(\sqrt{\chi_m},\sqrt{\chi_n})\le C\gamma_0 c
 \le C_\nu c$ since $m,n\in\mathcal{B}$ implies $\chi_k\le C_{\gamma_0}c^2$.
 (iv): see \cite[Lemma~2.4, Lemma~3.5]{PaperIV}, which establishes
-uniform $C^k$ control of the Prüfer amplitude on $I_\delta$, with all
+uniform $C^k$ control of the Pr\"ufer amplitude on $I_\delta$, with all
 constants depending on $\delta$, $\gamma_0$, $k$ but not on $c$.
 (v): subtract consecutive instances of the two-term formula in
 Proposition~\ref{prop:spectral_gap}.
@@ -366,7 +366,7 @@ A weighted frame with lower bound $A>0$ is unisolvent.
 \begin{proposition}[Random sampling]\label{prop:random}
 Let $p_1,\dots,p_N$ be i.i.d.\ absolutely continuous on $[-T,T]$.
 Then $\mathbf{p}$ is unisolvent for $V_{N,c}$ almost surely.
-\end{proposition}
+\end{proposition>
 \begin{proof}
 $\det M(\mathbf{p},c)$ is real-analytic and non-identically zero.
 \end{proof}
@@ -488,7 +488,7 @@ throughout Section~\ref{sec:decay}.
 
 \begin{lemma}[c-uniform amplitude derivative control]%
 \label{lem:amplitude_control}
-The Prüfer amplitude $r_n(x)$ of $\psi_n^{(c)}$ satisfies, for
+The Pr\"ufer amplitude $r_n(x)$ of $\psi_n^{(c)}$ satisfies, for
 $x\in\Rbulk^{(m,n)}$ and all $k\ge 0$:
 \[
   \|\partial_x^k r_n\|_{L^\infty(\Rbulk^{(m,n)})}\le C_k,
@@ -596,7 +596,7 @@ There exists $C_Q>0$ such that for all $f\in W^{1,1}([-T,T])$:
 
 \begin{lemma}[Derivative bound]\label{lem:derivative_bound}
 $\int_{-T}^T|f'_{mn}|\,dx\le Cc$, uniformly in $m,n,c$.
-\end{lemma}
+\end{lemma>
 \begin{proof}
 $|f'_{mn}|\le|\psi_m'||\psi_n|+|\psi_m||\psi_n'|\le 2C_0C_1 c$
 by \cite{BonamiKaroui2014}.
@@ -678,6 +678,72 @@ Gauss--Legendre rules, which carry no phase-alignment with the PSWF
 eigenbasis. It is a structural strengthening of MZ-type conditions,
 analogous in spirit to spectral exactness requirements, specialised
 to the off-diagonal decay geometry of PSWF kernels.
+\end{remark}
+
+\begin{remark}[Non-reducibility of \textup{DSTP} --- constructive witness]
+\label{rem:ax5_independence}
+DSTP is logically independent of the remaining axioms
+\textup{AX1--AX4} (symbol class, spectral asymptotics, quadrature
+consistency, uniform PSWF bounds). The independence is witnessed
+constructively as follows.
+
+\smallskip
+\noindent\textbf{Witness rule.}
+Let $\{p_j = -T + 2Tj/N\}_{j=1}^N$ be the equidistant Riemann rule
+with weights $w_j = 2T/N$.
+This rule satisfies Assumption~\ref{ass:quad_first_order} (with
+$C_Q = 1$, $h = 2T/N$) and the uniform PSWF bounds of
+\cite{BonamiKaroui2014}, since both conditions are intrinsic to the
+PSWFs and independent of the node locations.
+
+\smallskip
+\noindent\textbf{DSTP fails.}
+For this rule,
+\[
+  \sup_{m \ne n,\; m,n \le N-1} |E_{mn}| \gtrsim hc,
+\]
+with no decay in $|m-n|$: the equidistant nodes carry no
+phase-alignment with the oscillatory structure of
+$\psi_m^{(c)}\overline{\psi_n^{(c)}}$, so $R_{mn}^{\mathrm{quad}}$
+cannot exploit destructive interference.
+Consequently, $\|E_{N,c}\|_2 \lesssim hc \cdot N$
+(Schur test with no off-diagonal decay), and for $N \sim c$ this
+diverges, yielding no frame stability from
+Theorem~\ref{thm:conditional_frame_schur}.
+
+\smallskip
+\noindent\textbf{Structural interpretation.}
+The failure of DSTP for the Riemann rule is not a consequence of low
+approximation order or insufficient regularity. The symbol-class
+control (AX1), spectral gap (AX2), quadrature consistency (AX3), and
+uniform PSWF bounds (AX4) together supply no information about
+\emph{geometric compatibility} between the node set $\{p_j\}$ and the
+oscillatory eigenstructure of $V_{N,c}$. DSTP is not an estimate of
+higher order; it is a condition of a different type entirely:
+
+\begin{quotation}
+  \noindent\textit{DSTP is not an estimate. It is a geometric
+  compatibility condition between oscillatory eigenstructure and
+  discrete sampling.}
+\end{quotation}
+
+This places DSTP in the same logical category as spectral exactness
+conditions in Gauss quadrature, sampling compatibility in the
+Shannon--Nyquist theorem, and frame reconstruction axioms in
+non-uniform sampling theory --- all of which assert structural
+resonance between a discrete node set and a continuous function
+class, and none of which follow from regularity bounds alone.
+
+\smallskip
+\noindent\textbf{Minimality.}
+DSTP is not ``stronger'' than AX1--AX4; it is \emph{orthogonal} to
+them: AX1--AX4 control the \emph{analytic} structure of the system
+(regularity, spectral gaps, approximation order); DSTP controls the
+\emph{geometric} compatibility of the discretisation. No combination
+of analytic bounds implies geometric compatibility. The axiom system
+is therefore minimal: no axiom is derivable from the others.
+Verification of DSTP for PSWF-adapted (XRY/Gauss--PSWF) quadrature
+schemes is the content of~\cite{PaperIIquad}.
 \end{remark}
 
 \begin{theorem}[Conditional frame stability]%
