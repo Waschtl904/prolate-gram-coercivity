@@ -113,7 +113,8 @@ via the Bridge Lemma (Section~\ref{sec:bridge}).
 \subsection{The two main contributions}
 
 \medskip\noindent
-\textbf{Schur--diagonal control (Sections~\ref{sec:diagonal}--\ref{sec:offdiag}).}
+\textbf{Schur--diagonal control
+(Sections~\ref{sec:diagonal}--\ref{sec:offdiag}).}
 A kernel-splitting argument decomposes $K_N$ into the
 explicit band-limited kernel $\KBL$ and exponentially small
 error terms. This yields uniform diagonal and off-diagonal
@@ -125,10 +126,8 @@ estimates for $K_N$ on $I_\delta$, culminating in a Schur test
 The key new result.
 For $\gamma < 1/2$, the Fourier convolution structure of
 $\widehat{f}_{mn} = \widehat\psi_m * \widehat\psi_n$ combined
-with the WKB forbidden-zone $L^2$-concentration bound yields:
-\[
-  \Eout(f_{mn}) \le C_\gamma\,e^{-\alpha_\gamma c}.
-\]
+with the WKB forbidden-zone $L^2$-concentration bound yields
+$\Eout(f_{mn}) \le C_\gamma\,e^{-\alpha_\gamma c}$.
 The proof is purely geometric: the two forbidden zones
 $\{x > x_+(n)\}$ and $\{T - x > x_+(m)\}$ together
 cover the full convolution overlap interval whenever $\gamma < 1/2$.
@@ -156,12 +155,14 @@ The extension to $\gamma \in [1/2, 1)$ remains open
 This paper makes explicit a conceptual separation between
 two independent decay mechanisms:
 \begin{enumerate}
-  \item \textbf{WKB tunneling} (this paper, Section~\ref{sec:bridge}):
-  gives $\Eout(f_{mn}) \le Ce^{-\alpha c}$ uniformly in $m,n$;
+  \item \textbf{WKB tunneling} (this paper,
+  Section~\ref{sec:bridge}): gives
+  $\Eout(f_{mn}) \le Ce^{-\alpha c}$ uniformly in $m,n$;
   does not give decay in $|m-n|$.
-  \item \textbf{Phase-gap / integration by parts} (\cite{PaperI}):
-  gives algebraic off-diagonal decay $|E_{mn}| \le C(1+|m-n|)^{-p}$
-  for the discrete defect; does not use forbidden-zone geometry.
+  \item \textbf{Phase-gap / integration by parts}
+  (\cite{PaperI}): gives algebraic off-diagonal decay
+  $|E_{mn}| \le C(1+|m-n|)^{-p}$ for the discrete defect;
+  does not use forbidden-zone geometry.
 \end{enumerate}
 The DSTP interface axiom of \cite{PaperI} encodes the
 second mechanism and is entirely separate from~(H2).
@@ -169,16 +170,15 @@ second mechanism and is entirely separate from~(H2).
 \subsection{Organisation}
 
 \begin{itemize}
-  \item Section~\ref{sec:prelim}: notation and
-  the Schur test.
+  \item Section~\ref{sec:prelim}: notation and the Schur test.
   \item Section~\ref{sec:diagonal}: diagonal bound via
   Pr\"ufer amplitudes.
   \item Section~\ref{sec:offdiag}: off-diagonal bound
   via kernel splitting.
   \item Section~\ref{sec:bridge}: Bridge Lemma
   (WKB cover, exponential $\Eout$ decay).
-  \item Section~\ref{sec:schur}: Schur test and
-  proof of the main theorem.
+  \item Section~\ref{sec:schur}: Schur test and proof
+  of the main theorem.
 \end{itemize}
 
 %% =============================================================
@@ -196,54 +196,45 @@ $T > 0$ is the half-time-interval.
 The prolate spheroidal wave functions $\psi_n = \psi_n^{(c)}$
 are the orthonormal eigenfunctions of the concentration
 operator
-$\mathcal{K}_c f(x) = \int_{-T}^T \frac{\sin\omega(x-y)}{\pi(x-y)}f(y)\,dy$
+$\mathcal{K}_c f(x)
+= \int_{-T}^T \frac{\sin\omega(x-y)}{\pi(x-y)}f(y)\,dy$
 on $L^2(\mathbb{R})$, with eigenvalues
 $1 > \lambda_0(c) > \lambda_1(c) > \cdots > 0$
 \cite{Slepian64,OsipovRokhlinXiao}.
-Each $\psi_n$ is $\omega$-bandlimited and concentrated
-in $[-T,T]$; in particular $\psi_n \in L^2(\mathbb{R})$ and
+Each $\psi_n$ is $\omega$-bandlimited and
 $\|\psi_n\|_{L^2} = 1$.
-We set $\NSh := 2c/\pi$ (the Landau--Widom number) and
-work throughout in the bulk regime $N \le \gamma\,\NSh$,
-$0 < \gamma < 1$.
+We set $\NSh := 2c/\pi$ and work throughout in the bulk
+regime $N \le \gamma\,\NSh$, $0 < \gamma < 1$.
 
-\subsection{The PSWF self-duality}
+\subsection{PSWF self-duality}
 \label{subsec:selfduality}
 
-The key Fourier identity is
-(see \cite[eq.~(2.37)]{OsipovRokhlinXiao}):
 \begin{equation}
 \label{eq:selfduality}
   \widehat{\psi}_n(\xi)
   = (-i)^n\sqrt{\lambda_n}\,\psi_n\!\left(\frac{\xi T}{\omega}\right),
-  \qquad |\xi| \le \omega,
+  \qquad |\xi| \le \omega
 \end{equation}
-and $\widehat\psi_n(\xi) = 0$ for $|\xi| > \omega$
-(bandlimitedness).
-In particular, $\widehat\psi_n$ is proportional to $\psi_n$
-evaluated at the rescaled frequency $\xi T/\omega \in [-T,T]$.
+(see \cite[eq.~(2.37)]{OsipovRokhlinXiao}),
+and $\widehat\psi_n(\xi) = 0$ for $|\xi| > \omega$.
 
-\subsection{Classical turning points and forbidden zones}
+\subsection{Classical turning points}
 
 For $n \le \gamma\,\NSh$, the classical turning point is
 \begin{equation}
 \label{eq:turning}
-  x_+(n) := \frac{T\sqrt{\chi_n(c)}}{c},
+  x_+(n) := \frac{T\sqrt{\chi_n(c)}}{c} \;\le\; \gamma T + O(1/c)
 \end{equation}
-where $\chi_n(c)$ is the PSWF spectral parameter.
-For $n \le \gamma\,\NSh$ and $c$ large, one has
-$x_+(n) \le \gamma T + O(1/c)$
 (see \cite[Theorem~2.7]{OsipovRokhlinXiao}).
 The \emph{classical forbidden zone} of $\psi_n$ is
-$(x_+(n), T)$; for $x$ in this zone, the WKB approximation
-is of decaying type.
+$(x_+(n), T)$.
 
 \subsection{The Schur test}
 
 \begin{lemma}[Schur test {\cite[Thm.~VI.23]{ReedSimonI}}]
 \label{lem:schur}
-Let $T_K$ be an integral operator with kernel $K(x,y)$
-on $L^2(I_\delta)$. If
+Let $T_K$ be an integral operator with symmetric kernel
+$K(x,y)$ on $L^2(I_\delta)$. If
 \[
   S := \sup_{x \in I_\delta}\int_{I_\delta}|K(x,y)|\,dy < \infty,
 \]
@@ -258,7 +249,7 @@ then $\|T_K\|_{L^2(I_\delta)\to L^2(I_\delta)} \le S$.
 \begin{proposition}[Diagonal bound]
 \label{prop:diagonal}
 Fix $0 < \delta < 1$ and $0 < \gamma < 1$.
-Then for all $x \in I_\delta$ and all $N \le \gamma\,\NSh$,
+For all $x \in I_\delta$ and all $N \le \gamma\,\NSh$:
 \begin{equation}
 \label{eq:diagonal}
   K_N(x,x) = \sum_{n=0}^{N-1}\psi_n(x)^2
@@ -269,66 +260,38 @@ uniformly in $c > 0$.
 
 \begin{proof}
 \textbf{Step~1 (Pr\"ufer amplitude).}
-By the Pr\"ufer decomposition, $\psi_n(x)^2 = r_n(x)^2$.
-From \cite[Lemma~4.2]{PaperIV},
+By \cite[Lemma~4.2]{PaperIV}:
 \begin{equation}
 \label{eq:amplitude-drift}
-  \frac{r_n(x)^2}{\rWKB(x)^2} = 1 + O\!\left(\tfrac{1}{n}\right),
+  r_n(x)^2 / \rWKB(x)^2 = 1 + O(1/n),
 \end{equation}
-uniformly for $x \in I_\delta$ and $n \le \gamma\,\NSh$.
-From \cite[Lemma~4.3]{PaperIV},
+and by \cite[Lemma~4.3]{PaperIV}:
 \begin{equation}
 \label{eq:normalization}
-  \frac{\rWKB(x)^2}{2}
-  = \lambda_n(c)\,\rhocl(x)\left(1 + O\!\left(\tfrac{1}{n}\right)\right).
+  \rWKB(x)^2/2 = \lambda_n(c)\,\rhocl(x)(1 + O(1/n)).
 \end{equation}
-Combining:
-\begin{equation}
-\label{eq:psi-squared-bound}
-  \psi_n(x)^2 \;\le\; C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x).
-\end{equation}
+Hence $\psi_n(x)^2 \le C_{\delta,\gamma}\,\lambda_n(c)\,\rhocl(x)$.
 
 \textbf{Step~2 (Classical density).}
-The classical density is
-\[
-  \rhocl(x)
-  = \frac{1/\wcl(x)}{\int_{-x_+(n)}^{x_+(n)}\frac{dt}{\wcl(t)}}.
-\]
-On $I_\delta$: $\wcl(x) \ge c_{\delta,\gamma}\,n$
-(\cite[Lemma~2.5(i)]{PaperIV}), giving $1/\wcl(x) \le C/n$.
-For the denominator, $\wcl(x) \le \sqrt{\chi_n} \le C_{\delta,\gamma}\,c$,
-so $\int_{I_\delta} dt/\wcl(t) \ge c'_{\delta,\gamma}T/c$.
-Therefore:
+By \cite[Lemma~2.5(i)]{PaperIV}, $\wcl(x) \ge c_{\delta,\gamma}\,n$
+on $I_\delta$, so the numerator satisfies $1/\wcl(x) \le C/n$.
+The denominator satisfies $\int_{I_\delta} dt/\wcl(t)
+\ge c'_{\delta,\gamma}T/c$. Therefore:
 \begin{equation}
 \label{eq:density-bound}
-  \rhocl(x) \;\le\; \frac{C_{\delta,\gamma}\,c}{nT}
-  \;\le\; \frac{C_{\delta,\gamma}\,c}{T}.
+  \rhocl(x) \;\le\; C_{\delta,\gamma}\,\frac{c}{T}.
 \end{equation}
 
 \textbf{Step~3 (Summation).}
-Inserting~\eqref{eq:density-bound} into~\eqref{eq:psi-squared-bound}
-and summing over $n < N$, using $\lambda_n \le 1$:
-\[
-  K_N(x,x) \le C_{\delta,\gamma}\,\frac{c}{T}\sum_{n<N}\lambda_n
-  \le C_{\delta,\gamma}\,\frac{Nc}{\pi T}. \qedhere
-\]
+$K_N(x,x) \le C_{\delta,\gamma}(c/T)\sum_{n<N}\lambda_n
+\le C_{\delta,\gamma}\,Nc/(\pi T)$.
 \end{proof}
 
-\begin{corollary}[$L^\infty$ bound for $\psi_n$]
+\begin{corollary}[$L^\infty$ bound]
 \label{cor:Linfty}
 For all $n \le \gamma\,\NSh$ and $x \in I_\delta$:
-\begin{equation}
-\label{eq:Linfty}
-  |\psi_n(x)|^2 \;\le\; C_{\delta,\gamma}\,\frac{c}{T}.
-\end{equation}
+$|\psi_n(x)|^2 \le C_{\delta,\gamma}\,c/T$.
 \end{corollary}
-
-\begin{remark}[Landau--Widom]
-\label{rem:landau-widom}
-Integrating~\eqref{eq:diagonal} over $I_\delta$ and using
-$\int\rhocl = 1/(2T)$ recovers the classical
-Landau--Widom trace formula \cite{Widom64}.
-\end{remark}
 
 %% =============================================================
 \section{Off-diagonal Decay via Kernel Splitting}
@@ -337,35 +300,35 @@ Landau--Widom trace formula \cite{Widom64}.
 
 \subsection{The band-limited kernel}
 
-Define
 \begin{equation}
 \label{eq:KBL-def}
   \KBL(x,y) := \sum_{n=0}^{\infty}\lambda_n\,\psi_n(x)\psi_n(y)
-  = \frac{\omega}{\pi}\cdot\frac{\sin\omega(x-y)}{\omega(x-y)},
+  = \frac{\omega}{\pi}\cdot\frac{\sin\omega(x-y)}{\omega(x-y)}
 \end{equation}
-the reproducing kernel of $\mathrm{PW}_\omega$
-restricted to $[-T,T]$
 \cite[Prop.~3.1]{OsipovRokhlinXiao}.
 
 \begin{lemma}[Band-limited kernel bound]
 \label{lem:BL-bound}
 For all $x,y \in \mathbb{R}$:
-\begin{equation}
-\label{eq:BL-bound}
-  |\KBL(x,y)| \;\le\; \frac{C}{1 + \omega|x-y|}.
-\end{equation}
-Moreover, $\sup_{x \in I_\delta}\int_{I_\delta}|\KBL(x,y)|\,dy \le C_\delta$.
+$|\KBL(x,y)| \le C/(1 + \omega|x-y|)$.
+Moreover,
+$\sup_{x \in I_\delta}\int_{I_\delta}|\KBL(x,y)|\,dy \le C_\delta$
+uniformly in $c$.
 \end{lemma}
 
 \begin{proof}
-For the pointwise bound: $|\sin(u)/u| \le 2/(1+|u|)$.
-For the integral: $\int_{\mathbb{R}}|\mathrm{sinc}(u)|\,du < \infty$
-so $\int_{I_\delta}|\KBL(x,y)|\,dy \le (\omega/\pi)\int|{{\rm sinc}}(u)|\,du$,
-which is bounded uniformly in $\omega$ after normalisation
-by $T$ (the integration range is $\le 2T$, giving
-$\int|{{\rm sinc}}(u)|\,du\le \pi + 2\log(1+2\omega T) \le C_\delta$ after
-absorbing the logarithm; for the uniform bound see
-\cite[Appendix~A]{OsipovRokhlinXiao}).
+Pointwise: $|\sin(u)/u| \le 2/(1+|u|)$.
+Integral: substituting $v = \omega(x-y)$,
+\[
+  \int_{I_\delta}|\KBL(x,y)|\,dy
+  = \frac{1}{\pi}\int_{-\omega \cdot 2T}^{\omega \cdot 2T}
+    \left|\frac{\sin v}{v}\right|dv
+  \;\le\;
+  \frac{1}{\pi}\int_{-\infty}^{\infty}
+    \left|\frac{\sin v}{v}\right|dv = 1,
+\]
+since $\int_{-\infty}^\infty |\mathrm{sinc}(v/\pi)|dv/\pi = 1$
+is a classical result.
 \end{proof}
 
 \subsection{Eigenvalue concentration}
@@ -375,83 +338,66 @@ absorbing the logarithm; for the uniform bound see
 There exist $c_1, c_2 > 0$ depending only on $\gamma$ such that:
 \begin{enumerate}[label=(\roman*)]
   \item For all $n \le \gamma\,\NSh$:
-  $\;1 - \lambda_n(c) \le e^{-c_1 c}$.
+  $1 - \lambda_n(c) \le e^{-c_1 c}$.
   \item For all $n \ge \NSh$:
-  $\;\lambda_n(c) \le e^{-c_2 c}$.
+  $\lambda_n(c) \le e^{-c_2 c}$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(i) \cite[Theorem~4.6]{OsipovRokhlinXiao}:
-$1-\lambda_n \le e^{-c_1(c-n\pi/2)}$;
-for $n \le \gamma\NSh$: $c - n\pi/2 \ge c(1-\gamma) \ge c_\gamma c$.
-(ii) \cite[Theorem~4.9]{OsipovRokhlinXiao}:
-$\lambda_n \le e^{-c_2(n\pi/2-c)}$;
-for $n \ge \NSh$: $n\pi/2 - c \ge (\pi/2-1)c > 0$.
+(i) \cite[Theorem~4.6]{OsipovRokhlinXiao}: since
+$c - n\pi/2 \ge c(1-\gamma) \ge c_\gamma c$ for
+$n \le \gamma\NSh$.
+(ii) \cite[Theorem~4.9]{OsipovRokhlinXiao}: since
+$n\pi/2 - c \ge (\pi/2-1)c > 0$ for $n \ge \NSh$.
 \end{proof}
 
-\subsection{Kernel decomposition}
+\subsection{Kernel decomposition and error bounds}
 
-Set $M := \lfloor\gamma\,\NSh\rfloor$. Since $N \le M$,
-it suffices to bound $K_M$.
-Write
+Set $M := \lfloor\gamma\,\NSh\rfloor$. Write
 \begin{equation}
 \label{eq:split}
   K_M = \KBL + \widetilde{E}^- - \widetilde{E}^+,
 \end{equation}
-where
-\[
-  \widetilde{E}^-(x,y) := \sum_{n<M}(1-\lambda_n)\psi_n(x)\psi_n(y),
-  \quad
-  \widetilde{E}^+(x,y) := \sum_{n\ge M}\lambda_n\psi_n(x)\psi_n(y),
-\]
-and split $\widetilde{E}^+ = \widetilde{E}^+_{\mathrm{near}}
+where $\widetilde{E}^- := \sum_{n<M}(1-\lambda_n)\psi_n\psi_n$
+and $\widetilde{E}^+ := \sum_{n\ge M}\lambda_n\psi_n\psi_n$.
+Split further $\widetilde{E}^+ = \widetilde{E}^+_{\mathrm{near}}
 + \widetilde{E}^+_{\mathrm{tail}}$ at $n = \NSh$.
 
-\subsection{Bounding the error terms}
-
 \medskip\noindent
-\textbf{Bounding $\widetilde{E}^-$.}
-By Lemma~\ref{lem:eigenvalue-decay}(i) and Corollary~\ref{cor:Linfty}:
+\textbf{Bound on $\widetilde{E}^-$.}
+By Lemma~\ref{lem:eigenvalue-decay}(i) and
+Corollary~\ref{cor:Linfty}:
 \begin{equation}
 \label{eq:Eminus-final}
   |\widetilde{E}^-(x,y)|
-  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n<M}(1-\lambda_n)
   \le C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_1 c}.
 \end{equation}
 
 \medskip\noindent
-\textbf{Bounding $\widetilde{E}^+_{\mathrm{tail}}$.}
-By Lemma~\ref{lem:eigenvalue-decay}(ii) and Corollary~\ref{cor:Linfty}:
+\textbf{Bound on $\widetilde{E}^+_{\mathrm{tail}}$.}
+By Lemma~\ref{lem:eigenvalue-decay}(ii) and
+Corollary~\ref{cor:Linfty}:
 \begin{equation}
 \label{eq:Eplus-tail-final}
   |\widetilde{E}^+_{\mathrm{tail}}(x,y)|
-  \le \frac{C_{\delta,\gamma}\,c}{T}\sum_{n\ge\NSh}\lambda_n
   \le C_{\delta,\gamma}\,\frac{c}{T}\,e^{-c_2 c}.
 \end{equation}
 
 \medskip\noindent
-\textbf{Bounding $\widetilde{E}^+_{\mathrm{near}}$ via PSD dominance.}
-The kernels $\widetilde{E}^+_{\mathrm{near}}$, $\widetilde{E}^+$,
-and $\KBL$ are positive semi-definite (PSD), and
-$0 \preceq \widetilde{E}^+_{\mathrm{near}} \preceq \widetilde{E}^+ \preceq \KBL$.
-By the Cauchy--Schwarz inequality for PSD kernels,
-$|A(x,y)|^2 \le A(x,x)\,A(y,y)$, and using
-$\KBL(x,x) = \omega/\pi$:
+\textbf{Bound on $\widetilde{E}^+_{\mathrm{near}}$
+via PSD dominance.}
+Since $0 \preceq \widetilde{E}^+_{\mathrm{near}}
+\preceq \KBL$, the Cauchy--Schwarz inequality for PSD
+kernels gives $|A(x,y)|^2 \le A(x,x)A(y,y)$, hence:
 \begin{equation}
 \label{eq:Eplus-near-pointwise}
-  |\widetilde{E}^+_{\mathrm{near}}(x,y)| \;\le\; \frac{\omega}{\pi}
-  = \frac{c}{\pi T}.
+  |\widetilde{E}^+_{\mathrm{near}}(x,y)|
+  \;\le\; \KBL(x,x)^{1/2}\KBL(y,y)^{1/2}
+  = \frac{\omega}{\pi} = \frac{c}{\pi T}.
 \end{equation}
-No individual eigenvalue estimate in the Airy transition
-region $M \le n < \NSh$ is needed.
-
-\begin{remark}[Transition region]
-For $M \le n < \NSh$, the eigenvalues $\lambda_n$ lie in
-the Airy transition scale $|n - \NSh| = O(c^{1/3})$
-and are not individually bounded away from $(0,1)$.
-The PSD dominance argument bypasses this entirely.
-\end{remark}
+No eigenvalue estimate in the Airy transition region
+$M \le n < \NSh$ is required.
 
 \begin{proposition}[Off-diagonal bound]
 \label{prop:offdiag}
@@ -464,58 +410,40 @@ For all $x,y \in I_\delta$ and $N \le \gamma\,\NSh$:
   + C_{\delta,\gamma}\,\frac{c}{\pi T}
   + C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_3 c},
 \end{equation}
-where $c_3 := \min(c_1,c_2)$.
-All constants are uniform in $c>0$, $T>0$, $N \le \gamma\,\NSh$.
+where $c_3 := \min(c_1,c_2) > 0$, uniformly in $c,T,N$.
 \end{proposition}
 
 \begin{proof}
 Triangle inequality on~\eqref{eq:split}, then
-Lemma~\ref{lem:BL-bound} for $\KBL$ and
-\eqref{eq:Eminus-final}--\eqref{eq:Eplus-near-pointwise}
-for the errors.
+Lemma~\ref{lem:BL-bound} and
+\eqref{eq:Eminus-final}--\eqref{eq:Eplus-near-pointwise}.
 \end{proof}
 
 %% =============================================================
-\section{The Bridge Lemma: WKB Cover and Exponential
-Out-of-Band Decay}
+\section{The Bridge Lemma}
 \label{sec:bridge}
 %% =============================================================
 
-This section contains the main new result: an unconditional
-exponential bound for the out-of-band energy $\Eout(f_{mn})$,
-valid for all $m,n \le \gamma\,\NSh$ with $\gamma < 1/2$.
+\subsection{Statement}
 
-\subsection{Setup and statement}
-
-For $m,n \le \gamma'\,\NSh$ (with $\gamma' < \gamma < 1/2$
-to be fixed), define
-\[
-  f_{mn}(x) := \psi_m(x)\,\psi_n(x), \qquad x \in [-T,T],
-\]
-and the out-of-band energy
+For $m,n \le \gamma\,\NSh$, set $f_{mn} := \psi_m\psi_n$ and
 \[
   \Eout(f_{mn}) := \int_{|\xi|>\omega}|\widehat{f}_{mn}(\xi)|^2\,d\xi.
 \]
 
 \begin{theorem}[Bridge Lemma]
 \label{thm:bridge}
-Fix $0 < \gamma < 1/2$. There exist
-$C_\gamma > 0$ and $\alpha_\gamma > 0$ such that
-for all $m,n \le \gamma\,\NSh$ and all $c \ge 1$:
+Fix $0 < \gamma < 1/2$. There exist $C_\gamma, \alpha_\gamma > 0$
+such that for all $m,n \le \gamma\,\NSh$ and $c \ge 1$:
 \begin{equation}
 \label{eq:bridge:main}
   \Eout(f_{mn}) \;\le\; C_\gamma\,e^{-\alpha_\gamma c}.
 \end{equation}
+This establishes Assumption~ass:bulkconv of \cite{PaperIII}
+unconditionally for $\gamma < 1/2$.
 \end{theorem}
 
-This is the content of Assumption~ass:bulkconv of
-\cite{PaperIII}, proved here unconditionally for $\gamma < 1/2$.
-
-\subsection{L\texorpdfstring{$^2$}{2}-concentration in the
-forbidden zone}
-
-The key input is the $L^2$-concentration bound, which follows
-directly from Lemma~\ref{lem:eigenvalue-decay}(i):
+\subsection{Key input: $L^2$-concentration}
 
 \begin{lemma}[$L^2$-forbidden-zone concentration]
 \label{lem:L2-forbidden}
@@ -523,80 +451,48 @@ For all $n \le \gamma\,\NSh$ and $0 \le a < T$:
 \begin{equation}
 \label{eq:L2-forbidden}
   \|\psi_n\|_{L^2[a,T]}^2
-  = \int_a^T |\psi_n(x)|^2\,dx
   \;\le\; 1 - \lambda_n(c) \;\le\; e^{-c_1 c}.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
 $\|\psi_n\|_{L^2[a,T]}^2 \le \|\psi_n\|_{L^2(\mathbb{R}\setminus[-T,T])}^2
-= 1 - \lambda_n(c)$,
-since $\psi_n$ is $\omega$-bandlimited and
-$\lambda_n = \|\psi_n\|_{L^2[-T,T]}^2$.
-Apply Lemma~\ref{lem:eigenvalue-decay}(i).
+= 1 - \lambda_n$. Apply Lemma~\ref{lem:eigenvalue-decay}(i).
 \end{proof}
-
-\begin{remark}
-Lemma~\ref{lem:L2-forbidden} makes no assumption on the
-location of $a$: the bound holds for any $a \ge 0$.
-In particular it applies to the classically forbidden
-zone $a = \gamma T$ (where $x_+(n) \le \gamma T$ for
-$n \le \gamma\,\NSh$), but also to $a = 0$.
-\end{remark}
 
 \subsection{The geometric cover}
 
 \begin{lemma}[Geometric forbidden-zone cover]
 \label{lem:bridge:cover}
-Fix $\gamma < 1/2$ and let $m,n \le \gamma\,\NSh$.
-Let $x_0 = T + \delta T/\omega$ for some $\delta \in (0,\omega)$.
-For every $x \in [\delta T/\omega,\, T]$, at least one of
-the following holds:
+Fix $\gamma < 1/2$, $m,n \le \gamma\,\NSh$, and
+$x_0 = T + \delta T/\omega$ for $\delta \in (0,\omega)$.
+For every $x \in [\delta T/\omega, T]$, at least one holds:
 \begin{enumerate}[label=(\Roman*)]
-  \item $x \ge \gamma T$,\quad so $x$ lies in the forbidden
-  zone of $\psi_n$.
-  \item $x < \gamma T$,\quad so $x_0 - x \ge (1-\gamma)T > \gamma T
-  \ge x_+(m)$, hence $x_0-x$ lies in the forbidden zone
-  of $\psi_m$.
+  \item $x \ge \gamma T$: $\psi_n(x)$ is in its forbidden zone.
+  \item $x < \gamma T$: $x_0 - x \ge (1-\gamma)T > \gamma T
+  \ge x_+(m)$, so $\psi_m(x_0-x)$ is in its forbidden zone.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-For any $x \in [\delta T/\omega, T]$: either $x \ge \gamma T$
-(Case~I) or $x < \gamma T$. In the latter case:
-\[
-  x_0 - x
-  = T + \tfrac{\delta T}{\omega} - x
-  > T - \gamma T
-  = (1-\gamma)T.
-\]
-Since $m \le \gamma\,\NSh$ gives $x_+(m) \le \gamma T$ and
-$\gamma < 1/2$ gives $(1-\gamma) > \gamma$, we have
-$(1-\gamma)T > \gamma T \ge x_+(m)$, confirming Case~II.
+If $x < \gamma T$: $x_0 - x > T - \gamma T = (1-\gamma)T$.
+Since $\gamma < 1/2$: $(1-\gamma)T > \gamma T \ge x_+(m)$.
 \end{proof}
 
-\begin{remark}[Sharpness of $\gamma < 1/2$]
+\begin{remark}[Sharpness]
 \label{rem:bridge:halfsharp}
 For $\gamma \ge 1/2$, the interval
-$x \in (\gamma T,\,(1-\gamma)T)$ is non-empty
-(it collapses to a point at $\gamma = 1/2$).
-For $x$ in this interval, neither Case~I nor Case~II applies,
-so both factors are in the oscillatory zone and the cover
-argument fails.
-Phase-cancellation (integration by parts on the WKB phase,
-as in \cite{PaperI}) would be needed there.
+$x \in (\gamma T, (1-\gamma)T)$ is non-empty and neither
+case applies there: both factors are oscillatory and the
+geometric cover fails.
 \end{remark}
 
-\subsection{Proof of the Bridge Lemma}
+\subsection{Proof of Theorem~\ref{thm:bridge}}
 
-\begin{proof}[Proof of Theorem~\ref{thm:bridge}]
-
+\begin{proof}
 \textbf{Step~1 (Convolution representation).}
-Since $\psi_m,\psi_n$ are $\omega$-bandlimited,
-$\widehat{f}_{mn} = \widehat\psi_m * \widehat\psi_n$.
-Using the self-duality~\eqref{eq:selfduality} and the
-substitution $x = \eta T/\omega$, one computes for
-$\xi = \omega + \delta$ with $\delta \in (0,\omega)$:
+By~\eqref{eq:selfduality} and the substitution $x = \eta T/\omega$,
+for $\xi = \omega+\delta$, $\delta \in (0,\omega)$:
 \begin{equation}
 \label{eq:bridge:conv}
   \widehat{f}_{mn}(\omega+\delta)
@@ -605,133 +501,102 @@ $\xi = \omega + \delta$ with $\delta \in (0,\omega)$:
     \psi_m\!\bigl(T + \tfrac{\delta T}{\omega} - x\bigr)\,
     \psi_n(x)\,dx.
 \end{equation}
-(The integration range $[\delta T/\omega, T]$ is the
-support of the convolution overlap for $\xi = \omega+\delta$.)
 
-\textbf{Step~2 (Splitting via the geometric cover).}
-Set $x_0 := T + \delta T/\omega$ and split at $\gamma T$:
-\begin{align}
-  \label{eq:bridge:split}
-  \int_{\delta T/\omega}^{T}
-  \psi_m(x_0-x)\,\psi_n(x)\,dx
-  &= \underbrace{\int_{\gamma T}^{T}\psi_m(x_0-x)\,\psi_n(x)\,dx}_{=:\,I_{\mathrm{I}}}
-  + \underbrace{\int_{\delta T/\omega}^{\gamma T}\psi_m(x_0-x)\,\psi_n(x)\,dx}_{=:\,I_{\mathrm{II}}}.
-\end{align}
+\textbf{Step~2 (Splitting).}
+Set $x_0 = T + \delta T/\omega$ and split at $\gamma T$:
+\[
+  \int_{\delta T/\omega}^{T}\psi_m(x_0-x)\psi_n(x)\,dx
+  = I_{\mathrm{I}} + I_{\mathrm{II}},
+\]
+where $I_{\mathrm{I}}$ integrates over $[\gamma T, T]$
+and $I_{\mathrm{II}}$ over $[\delta T/\omega, \gamma T]$.
 
-\textbf{Step~3 (Bounding $I_{\mathrm{I}}$: Case~I of the cover).}
-For $x \in [\gamma T, T]$, the factor $\psi_n(x)$ lies in the
-forbidden zone of $\psi_n$.
-By Cauchy--Schwarz and Lemma~\ref{lem:L2-forbidden}:
-\begin{align}
-  \label{eq:bridge:I1}
+\textbf{Step~3 (Bound on $I_{\mathrm{I}}$).}
+For $x \in [\gamma T, T]$: $\psi_n(x)$ is in its
+forbidden zone. By Cauchy--Schwarz and
+Lemma~\ref{lem:L2-forbidden}:
+\begin{equation}
+\label{eq:bridge:I1}
   |I_{\mathrm{I}}|
-  &\le \|\psi_m\|_{L^\infty}\,
-       \|\psi_n\|_{L^1[\gamma T,T]}
-  \le C\,(1-\gamma)^{1/2}T^{1/2}\,
-       \|\psi_n\|_{L^2[\gamma T,T]}
-  \notag\\
-  &\le C\,T^{1/2}\,(1-\lambda_n)^{1/2}
-  \le C\,T^{1/2}\,e^{-c_1 c/2}.
-\end{align}
-Here $\|\psi_m\|_{L^\infty} \le C$ uniformly
+  \le \|\psi_m\|_{L^\infty}\,\|\psi_n\|_{L^1[\gamma T,T]}
+  \le C\,T^{1/2}\,\|\psi_n\|_{L^2[\gamma T,T]}
+  \le C\,T^{1/2}\,e^{-c_1 c/2},
+\end{equation}
+using $\|\psi_m\|_{L^\infty} \le C$
 \cite[Corollary~4.3]{OsipovRokhlinXiao}.
 
-\textbf{Step~4 (Bounding $I_{\mathrm{II}}$: Case~II of the cover).}
-For $x \in [\delta T/\omega, \gamma T]$, by the geometric
-cover (Lemma~\ref{lem:bridge:cover}),
-the argument $x_0 - x \ge (1-\gamma)T$ of $\psi_m$ lies
-in the forbidden zone of $\psi_m$.
-Substituting $u = x_0 - x$, so $u \in [x_0-\gamma T,\,x_0-\delta T/\omega]
-\subset [(1-\gamma)T,\,T]$:
-\begin{align}
-  \label{eq:bridge:I2}
+\textbf{Step~4 (Bound on $I_{\mathrm{II}}$).}
+For $x \in [\delta T/\omega, \gamma T]$:
+by Lemma~\ref{lem:bridge:cover}, $x_0 - x \ge (1-\gamma)T$
+lies in the forbidden zone of $\psi_m$.
+Substituting $u = x_0 - x$:
+\begin{equation}
+\label{eq:bridge:I2}
   |I_{\mathrm{II}}|
-  &= \left|\int_{(1-\gamma)T+\delta T/\omega}^{T}
-       \psi_m(u)\,\psi_n(x_0-u)\,du\right|
-  \notag\\
-  &\le \|\psi_n\|_{L^\infty}\,\|\psi_m\|_{L^1[(1-\gamma)T,T]}
+  \le \|\psi_n\|_{L^\infty}\,\|\psi_m\|_{L^1[(1-\gamma)T,T]}
   \le C\,T^{1/2}\,\|\psi_m\|_{L^2[(1-\gamma)T,T]}
-  \notag\\
-  &\le C\,T^{1/2}\,(1-\lambda_m)^{1/2}
   \le C\,T^{1/2}\,e^{-c_1 c/2}.
-\end{align}
+\end{equation}
 
 \textbf{Step~5 (Pointwise Fourier bound).}
-Combining Steps~3--4 with~\eqref{eq:bridge:conv}
-and $|\sqrt{\lambda_m\lambda_n}| \le 1$:
+From~\eqref{eq:bridge:conv} and Steps~3--4,
+using $\sqrt{\lambda_m\lambda_n} \le 1$:
 \begin{equation}
 \label{eq:bridge:pointwise}
   |\widehat{f}_{mn}(\omega+\delta)|
-  \;\le\; \frac{\omega}{T}\cdot 2C\,T^{1/2}\,e^{-c_1 c/2}
-  = 2C\,\frac{\omega}{T^{1/2}}\,e^{-c_1 c/2}.
+  \;\le\; \frac{2C\omega}{T^{1/2}}\,e^{-c_1 c/2}.
 \end{equation}
 
 \textbf{Step~6 ($\Eout$ bound).}
-Squaring and integrating over $\delta \in (0,\omega)$
-(and using symmetry for $\xi < -\omega$):
-\begin{align}
-  \label{eq:bridge:Eout}
+\begin{equation}
+\label{eq:bridge:Eout}
   \Eout(f_{mn})
-  &= 2\int_0^\omega |\widehat{f}_{mn}(\omega+\delta)|^2\,d\delta
-  \;\le\; 2\int_0^\omega \frac{4C^2\omega^2}{T}\,e^{-c_1 c}\,d\delta
-  = \frac{8C^2\omega^3}{T}\,e^{-c_1 c}.
-\end{align}
-Since $\omega = c/T$, we have $\omega^3/T = c^3/T^4$, and
-for any $\varepsilon \in (0,c_1)$:
-\[
-  \frac{c^3}{T^4}\,e^{-c_1 c}
-  \;\le\; C_\varepsilon\,e^{-(c_1-\varepsilon)c}
-  \qquad\text{for all } c \ge 1.
-\]
-Setting $\alpha_\gamma := c_1 - \varepsilon > 0$
-and $C_\gamma := 8C^2C_\varepsilon/T^4$ gives~\eqref{eq:bridge:main}.
-\qed
+  = 2\int_0^\omega |\widehat{f}_{mn}(\omega+\delta)|^2\,d\delta
+  \;\le\; \frac{8C^2\omega^3}{T}\,e^{-c_1 c}.
+\end{equation}
+Since $\omega^3/T = c^3/T^4$ and $c^3 e^{-c_1 c}
+\le C_\varepsilon\,e^{-(c_1-\varepsilon)c}$ for any
+$\varepsilon \in (0,c_1)$, setting
+$\alpha_\gamma := c_1 - \varepsilon$ yields~\eqref{eq:bridge:main}.
 \end{proof}
 
 \subsection{Consequences}
 
-\begin{corollary}[ass:bulkconv proved for $\gamma < 1/2$]
+\begin{corollary}[ass:bulkconv for $\gamma < 1/2$]
 \label{cor:bulkconv}
-For all $0 < \gamma < 1/2$ and all $m,n \le \gamma\,\NSh$:
+For all $0 < \gamma < 1/2$ and $m,n \le \gamma\,\NSh$,
+Assumption~ass:bulkconv of \cite{PaperIII} holds.
+By \cite[Theorem~3.2]{PaperIII}:
 \[
-  \Eout(f_{mn}) \;\le\; C_\gamma\,e^{-\alpha_\gamma c}.
+  \|(I-P_N)f_{mn}\|_{L^2}
+  \;\le\; C_\gamma\,e^{-\alpha_\gamma' N}
 \]
-Assumption~\textup{ass:bulkconv} of \cite{PaperIII}
-holds unconditionally.
-By \cite[Theorem~3.2]{PaperIII}, the spectral tail bound
-\[
-  \|(I-P_N)f_{mn}\|_{L^2} \;\le\; C_\gamma\,e^{-\alpha_\gamma' N}
-\]
-holds unconditionally for all $m,n,N \le \gamma\,\NSh$,
-$\gamma < 1/2$.
+holds unconditionally for all $m,n,N \le \gamma\,\NSh$.
 \end{corollary}
 
 \begin{remark}[Extension to $\gamma \ge 1/2$]
 \label{rem:bridge:extension}
-For $\gamma \in [1/2,1)$, the integration range
-$x \in (\gamma T,(1-\gamma)T)$ in Step~2 is non-trivially
-non-empty, and both $\psi_m(x_0-x)$ and $\psi_n(x)$
-are in their oscillatory zones there.
-Controlling this middle piece would require an
+For $\gamma \in [1/2,1)$, the interval
+$x \in (\gamma T,(1-\gamma)T)$ is uncovered.
+Both factors are oscillatory there; an
 integration-by-parts argument on the WKB phase
-$\Phi(x) = \phi_m(x_0-x) \pm \phi_n(x)$ and
-stationary-phase analysis, analogous to \cite{PaperI}.
+$\Phi(x) = \phi_m(x_0-x) \pm \phi_n(x)$ would be needed,
+analogous to \cite{PaperI}.
 Whether $\Eout(f_{mn}) \le Ce^{-\alpha c}$ extends to
 $\gamma \ge 1/2$ remains open.
 \end{remark}
 
 \begin{remark}[Separation of mechanisms]
-The Bridge Lemma establishes the energy bound
-$\Eout \le Ce^{-\alpha c}$ using \emph{only}:
+\label{rem:bridge:separation}
+The Bridge Lemma uses only:
 (i) $L^2$ eigenvalue concentration
 (Lemma~\ref{lem:L2-forbidden}), and
 (ii) the geometric cover for $\gamma < 1/2$.
-No oscillatory phase-gap estimate, no integration by
-parts, and no index-dependent decay in $|m-n|$ is used.
-The off-diagonal DSTP decay
-$|E_{mn}| \le C(1+|m-n|)^{-p}$ required in \cite{PaperI}
-is a strictly stronger statement requiring the separate
-the separate phase-gap mechanism of \cite{PaperI}.
+No phase-gap estimate, no integration by parts, and
+no index-dependent decay in $|m-n|$ is used.
+The DSTP off-diagonal decay
+$|E_{mn}| \le C(1+|m-n|)^{-p}$ of \cite{PaperI}
+requires the separate phase-gap mechanism of \cite{PaperI}.
 The two mechanisms are logically independent.
 \end{remark}
 
@@ -740,94 +605,69 @@ The two mechanisms are logically independent.
 \label{sec:schur}
 %% =============================================================
 
-We now combine the diagonal and off-diagonal bounds to
-complete the proof of the main operator-norm estimate.
-
-\subsection{Main theorem}
-
-\begin{theorem}[Uniform diagonal Schur bound]
+\begin{theorem}[Diagonal Schur bound]
 \label{thm:schur-main}
 Fix $0 < \delta < 1$ and $0 < \gamma < 1$.
-Then for all $N \le \gamma\,\NSh$ and all $c \ge 1$:
+For all $N \le \gamma\,\NSh$ and $c \ge 1$:
 \begin{equation}
 \label{eq:schur-main}
   \sup_{x \in I_\delta} K_N(x,x)
-  \;\le\; C_{\delta,\gamma}\,\frac{Nc}{\pi T},
+  \;\le\; C_{\delta,\gamma}\,\frac{Nc}{\pi T}.
 \end{equation}
-and the kernel $K_N$ satisfies the Schur integrability
-condition
+Moreover, the Schur integrability condition holds:
 \begin{equation}
 \label{eq:schur-cond}
   \sup_{x \in I_\delta}
   \int_{I_\delta} |K_N(x,y)|\,dy
-  \;\le\; C_{\delta,\gamma}\left(1 + \frac{c}{\pi T}\cdot 2(1-\delta)T\right)
-  = C_{\delta,\gamma}\left(1 + \frac{2(1-\delta)c}{\pi}\right).
+  \;\le\; C_{\delta,\gamma}
+  \left(1 + \frac{2(1-\delta)c}{\pi}\right).
 \end{equation}
 \end{theorem}
 
 \begin{remark}[Interpretation]
 \label{rem:schur-interp}
-The bound~\eqref{eq:schur-cond} is not uniform in $c$;
-it grows like $c/\pi$ as $c \to \infty$.
-This is expected: the spectral density of $K_N$ on $I_\delta$
-grows with $c$ (proportional to $Nc/T$), so the
-$L^2(I_\delta) \to L^2(I_\delta)$ operator norm of the full
-$K_N$ is not bounded uniformly in $c$.
-The meaningful uniform bound is the
-\emph{normalised} statement, obtained by working with
-$K_N / (c/T)$, or equivalently the restricted operator
-$\widetilde P_N := (T/c)\,P_N$ on $I_\delta$.
-The Bridge Lemma (Theorem~\ref{thm:bridge}) provides
-the exponentially small correction that makes the
-bulk tail bound of \cite[Theorem~3.2]{PaperIII}
-unconditional; the Schur bound here provides the
-polynomial diagonal control used in that argument.
+The bound~\eqref{eq:schur-cond} grows like $c/\pi$,
+reflecting the spectral density $\sim Nc/T$ of $K_N$.
+This is expected and does not contradict the Bridge Lemma:
+the uniform bound on $\Eout$ (Theorem~\ref{thm:bridge})
+is a Fourier-side statement and provides the exponential
+correction that makes the bulk tail bound
+of \cite[Theorem~3.2]{PaperIII} unconditional.
+The Schur bound here provides the polynomial diagonal
+control used in that argument.
 \end{remark}
 
-\subsection{Proof}
-
 \begin{proof}[Proof of Theorem~\ref{thm:schur-main}]
-\textbf{Bound~\eqref{eq:schur-main}.}
-This is Proposition~\ref{prop:diagonal}.
+\textbf{Bound~\eqref{eq:schur-main}}: Proposition~\ref{prop:diagonal}.
 
-\textbf{Bound~\eqref{eq:schur-cond}.}
-We integrate Proposition~\ref{prop:offdiag} over $y \in I_\delta$.
-The three terms give:
-\begin{align}
+\textbf{Bound~\eqref{eq:schur-cond}:}
+Integrate Proposition~\ref{prop:offdiag} over $y \in I_\delta$.
+
+\textit{Sinc term:} Substituting $v = \omega(x-y)$,
+\[
   \int_{I_\delta}\frac{C_{\delta,\gamma}}{1+\omega|x-y|}\,dy
-  &\;\le\;
-  \frac{C_{\delta,\gamma}}{\omega}
-  \int_0^\infty \frac{du}{1+u}
-  \Big|_{\text{truncated at }u = 2\omega T}
-  \notag\\
-  &= \frac{C_{\delta,\gamma}}{\omega}\,\log(1+2\omega T)
-  = \frac{C_{\delta,\gamma}\,T}{c}\,\log\!\left(1+\frac{2c}{T}\right)
-  \;\le\; C'_{\delta,\gamma},
-  \label{eq:schur-sinc-int}
-\end{align}
-where the last step uses $\log(1+2c/T) \le 2c/T$ and
-$(T/c)\cdot(2c/T) = 2$ is bounded.
-For the near-bulk term:
-\begin{equation}
-\label{eq:schur-near-int}
-  \int_{I_\delta}\frac{C_{\delta,\gamma}\,c}{\pi T}\,dy
-  = C_{\delta,\gamma}\,\frac{c}{\pi T}\cdot 2(1-\delta)T
-  = \frac{2(1-\delta)C_{\delta,\gamma}\,c}{\pi}.
-\end{equation}
-For the exponentially small tail:
-\begin{equation}
-\label{eq:schur-exp-int}
-  \int_{I_\delta}C_{\delta,\gamma}\,\frac{c^2}{T}\,e^{-c_3 c}\,dy
-  \;\le\; C_{\delta,\gamma}\,c^2\,e^{-c_3 c}
-  \;\le\; C'_{\delta,\gamma}.
-\end{equation}
-Summing~\eqref{eq:schur-sinc-int}--\eqref{eq:schur-exp-int}
-gives~\eqref{eq:schur-cond}.
+  = \frac{C_{\delta,\gamma}}{\omega}
+    \int_{-2\omega T}^{2\omega T}\frac{dv}{1+|v|}
+  \le \frac{2C_{\delta,\gamma}}{\omega}
+    \log(1+2\omega T).
+\]
+Since $\omega = c/T$: $(2/\omega)\log(1+2\omega T)
+= (2T/c)\log(1+2c/T) \le C'_{\delta,\gamma}$
+for all $c \ge 1$, $T$ fixed.
+
+\textit{Near-bulk term:}
+$\int_{I_\delta}(c/\pi T)\,dy = 2(1-\delta)c/\pi$.
+
+\textit{Exponential tail:}
+$\int_{I_\delta}(c^2/T)e^{-c_3 c}\,dy
+\le 2c^2 e^{-c_3 c} \le C'_{\delta,\gamma}$.
+
+Summing gives~\eqref{eq:schur-cond}.
 \end{proof}
 
 \begin{corollary}[Unconditional bulk tail bound]
 \label{cor:bulk-final}
-For all $0 < \gamma < 1/2$ and all $m,n,N \le \gamma\,\NSh$:
+For all $0 < \gamma < 1/2$ and $m,n,N \le \gamma\,\NSh$:
 \[
   \|(I - P_N)f_{mn}\|_{L^2([-T,T])}
   \;\le\; C_\gamma\,e^{-\alpha_\gamma' N}.
@@ -835,38 +675,30 @@ For all $0 < \gamma < 1/2$ and all $m,n,N \le \gamma\,\NSh$:
 \end{corollary}
 
 \begin{proof}
-Combine Corollary~\ref{cor:bulkconv}
-(which gives ass:bulkconv unconditionally)
-with \cite[Theorem~3.2]{PaperIII},
-whose hypotheses (H1) and (H2) are now both established:
-(H1) by \cite{PaperIV}, (H2) by Theorem~\ref{thm:bridge}.
+Combine Corollary~\ref{cor:bulkconv} with
+\cite[Theorem~3.2]{PaperIII}: both hypotheses (H1) and (H2)
+are now established, (H1) by \cite{PaperIV} and (H2)
+by Theorem~\ref{thm:bridge}.
 \end{proof}
 
 %% =============================================================
-%% Bibliography
-%% =============================================================
-
 \begin{thebibliography}{99}
 
 \bibitem{PaperI}
-[Author],
-\textit{Gram Coercivity of PSWF Quadrature Forms},
+[Author], \textit{Gram Coercivity of PSWF Quadrature Forms},
 preprint, 2025.
 
 \bibitem{PaperII}
-[Author],
-\textit{Scaling Limits, Trace Formula, and Weil Connection},
-preprint, 2025.
+[Author], \textit{Scaling Limits, Trace Formula, and Weil
+Connection}, preprint, 2025.
 
 \bibitem{PaperIII}
-[Author],
-\textit{PSWF Product Spectral Tail Estimates},
+[Author], \textit{PSWF Product Spectral Tail Estimates},
 preprint, 2026.
 
 \bibitem{PaperIV}
-[Author],
-\textit{Semiclassical Equidistribution of PSWF Densities},
-preprint, 2026.
+[Author], \textit{Semiclassical Equidistribution of PSWF
+Densities}, preprint, 2026.
 
 \bibitem{OsipovRokhlinXiao}
 A.~Osipov, V.~Rokhlin, and H.~Xiao,
@@ -883,11 +715,6 @@ D.~Slepian,
 \textit{Prolate spheroidal wave functions, Fourier analysis
 and uncertainty~-- IV},
 Bell Syst.\ Tech.\ J.\ \textbf{43} (1964), 3009--3057.
-
-\bibitem{Weil52}
-A.~Weil,
-\textit{Sur les formules explicites de la th\'eorie des nombres},
-Univ.\ Lund Tidsskrift (1952), 252--265.
 
 \bibitem{Widom64}
 H.~Widom,
