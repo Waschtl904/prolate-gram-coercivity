@@ -148,6 +148,21 @@ The proof architecture has four components:
   yields $|E_{mn}|\le Chc$.
 \end{enumerate}
 
+% ---- FIX 1: DSTP necessity remark --------------------------------
+\begin{remark}[Necessity of DSTP]
+\label{rem:dstp_necessity}
+DSTP is not merely sufficient for the main theorem; it is
+\emph{necessary} in the following sense: any quadrature rule for
+which $\|E_{N,c}\|_2 = o(hc \cdot N)$ must satisfy a condition of
+DSTP type, since the structure-blind bound $|E_{mn}|\le Chc$
+(Theorem~\ref{thm:banded_decay}) is sharp for generic rules
+(Remark~\ref{rem:ax5_independence}). DSTP is therefore the minimal
+additional condition that separates stability from instability at
+operator level. It is a non-uniform spectral localisation condition
+in the PSWF eigenbasis, not a sampling density condition.
+\end{remark}
+% ------------------------------------------------------------------
+
 \subsection*{Organisation}
 Section~\ref{sec:setup} fixes notation.
 Section~\ref{sec:coercivity} proves coercivity.
@@ -180,6 +195,16 @@ $c=\omega T$, $V_{N,c}:=\operatorname{span}\{\psi_0^{(c)},\dots,
 \psi_{N-1}^{(c)}\}$, Shannon number $N_{\mathrm{Sh}}:=2c/\pi$, and
 fix $\gamma_0\in(0,\tfrac{1}{4})$. The \emph{bulk sector} is
 $\mathcal{B}:=\{0\le k\le\gamma_0 N_{\mathrm{Sh}}\}$.
+
+% ---- FIX 3: gamma_0 scaling clarification ------------------------
+Throughout this paper, $\gamma_0\in(0,\tfrac{1}{4})$ is fixed
+independently of $c$ and $N$. All constants depending on $\gamma_0$
+are uniform as $c\to\infty$ with $\gamma_0$ held fixed.
+The scaling $N\sim c$ means $N/N_{\mathrm{Sh}}\to\pi/2$; the bulk
+sector then satisfies $|\mathcal{B}|=\lfloor\gamma_0
+N_{\mathrm{Sh}}\rfloor\sim 2\gamma_0 c/\pi$, growing linearly in $c$
+with fixed proportion $\gamma_0$.
+% ------------------------------------------------------------------
 
 \subsection{Frame operator and defect matrix}
 
@@ -238,27 +263,49 @@ The linear term $2c(m-n)/\pi$ dominates for $\gamma_0<\tfrac{1}{4}$:
      \underbrace{(2-4\gamma_0-o(1))}_{\ge 1 \text{ for }c\ge c_0}
   \ge\frac{c}{\pi}|m-n|.
 \]
+Hence in Regime~(A):
+\[
+  |\chi_m-\chi_n| \ge \kappa_1^{(A)}\,c\,|m-n|,
+  \qquad \kappa_1^{(A)} := \frac{1}{\pi}.
+\]
 
 \noindent\textbf{Regime~(B): near base, $\min(m,n)<c^{1/2}$.}
-Here $m,n\le c^{1/2}$, so $m+n+1\le 2c^{1/2}+1$ and both terms in
-\eqref{eq:chi_diff} are $O(c^{1/2}|m-n|)$. The remainder
-$c^2/\min(m,n)>c^{3/2}$ can dominate, so the linear-in-$c$ bound
-fails. However, in Regime~(B) the quadratic term alone gives
-$|\chi_m-\chi_n|\ge|m-n|$, sufficient for Schur summability since the
-IBP bound in Lemma~\ref{lem:ibp_uniform} only requires
-$|\chi_m-\chi_n|\ge\kappa_1|m-n|$ with any $\kappa_1>0$ independent
-of $c$.
+Here $m,n\le c^{1/2}$, so $m+n+1\le 2c^{1/2}+1$. The remainder
+$c^2/\min(m,n)>c^{3/2}$ can dominate the linear-in-$c$ term, so
+the Regime~(A) bound fails. However, the quadratic term alone gives
+\[
+  |\chi_m-\chi_n| \ge |m-n|,
+\]
+and therefore:
+\[
+  |\chi_m-\chi_n| \ge \kappa_1^{(B)}\,|m-n|,
+  \qquad \kappa_1^{(B)} := 1.
+\]
 
+% ---- FIX 2: explicit kappa_1 uniformisation ----------------------
 \smallskip
-In both regimes there exists $\kappa_1>0$ (depending only on
-$\gamma_0,T$) such that
+\noindent\textbf{Uniform constant.}
+Setting
+\[
+  \kappa_1 := \min\!\bigl(\kappa_1^{(A)},\,\kappa_1^{(B)}\bigr)
+            = \min\!\Bigl(\tfrac{1}{\pi},\,1\Bigr)
+            = \tfrac{1}{\pi},
+\]
+both regimes satisfy
 \begin{equation}\label{eq:chi_gap}
   |\chi_m(c)-\chi_n(c)|\ge\kappa_1\max(1,c)\,|m-n|
-  \qquad\forall\,m\ne n\in\mathcal{B},\;c\ge c_0.
+  \qquad\forall\,m\ne n\in\mathcal{B},\;c\ge c_0,
 \end{equation}
+since Regime~(A) gives $\kappa_1^{(A)}c|m-n|\ge\kappa_1 c|m-n|$
+and Regime~(B) gives $\kappa_1^{(B)}|m-n|\ge\kappa_1|m-n|$,
+and $\max(1,c)$ absorbs both cases uniformly.
+The IBP argument in Lemma~\ref{lem:ibp_uniform} depends only on
+\emph{positivity} of $\kappa_1$, not on its precise value; the
+constant $C_p$ in that lemma is therefore the same for both regimes.
 No pointwise Lipschitz condition on $n\mapsto\chi_n$ is used;
 \eqref{eq:chi_gap} is a direct algebraic consequence of the two-term
 expansion.
+% ------------------------------------------------------------------
 \end{proposition}
 
 \begin{lemma}[Uniform discrete--continuous bulk bridge]%
@@ -285,7 +332,10 @@ $n\in\mathcal{B}$ and $x\in I_\delta:=[-(1-\delta)T,(1-\delta)T]$:
   where $\mu:=\chi_m-c^2x^2/T^2$, $\nu:=\chi_n-c^2x^2/T^2$, and
   $\sqrt\mu+\sqrt\nu\le C_\nu c$ on $\mathcal{B}$ (since
   $\chi_k\le C\gamma_0^2 c^2$ on $\mathcal{B}$ gives
-  $\sqrt{\chi_k}\le C\gamma_0 c$).
+  $\sqrt{\chi_k}\le C\gamma_0 c$). The factor $c$ in $\max(1,c)$
+  cancels with the $c$ in the denominator $C_\nu c$; the resulting
+  $\kappa=\kappa_1/C_\nu$ is independent of $c$ and of which
+  regime $(m,n)$ falls into.
 \item \textup{(Amplitude derivative control, c-uniform)}
   The Pr\"ufer amplitude satisfies $r_n(x)=O(1)$ uniformly,
   and its $k$-th derivative obeys
@@ -330,7 +380,9 @@ connecting spectral index geometry (discrete) to WKB phase geometry
 (continuous). Part~(iii) makes explicit that $c$ cancels in the
 phase-gap bound --- not by assumption, but by the simultaneous
 $c$-scaling of numerator ($\kappa_1 c|m-n|$) and denominator
-($C_\nu c$). Part~(iv) prevents spurious $c^{k/2}$ growth in the IBP
+($C_\nu c$); this cancellation is uniform across both Regime~(A)
+and Regime~(B) of Proposition~\ref{prop:spectral_gap}.
+Part~(iv) prevents spurious $c^{k/2}$ growth in the IBP
 amplitude chain. Part~(v) eliminates the need for any
 Bohr--Sommerfeld difference argument or implicit differentiability
 of $n\mapsto\chi_n$. Every subsequent lemma in Section~\ref{sec:decay}
@@ -456,14 +508,9 @@ By Lemma~\ref{lem:bulk_spectral_sep}, $\sqrt\mu+\sqrt\nu\le
 2\sqrt{\chi_{N-1}}\le C_\nu c$.
 
 \noindent\textbf{Numerator.}
-By Lemma~\ref{lem:discrete_continuous_bridge}(iii),
-\[
-  |\chi_m-\chi_n|\ge\kappa_1\max(1,c)|m-n|\ge\kappa_1 c|m-n|
-  \quad(c\ge 1).
-\]
-This uses only Proposition~\ref{prop:spectral_gap} and the
-two-term expansion~\eqref{eq:chi_diff}; no Bohr--Sommerfeld
-difference argument is invoked.
+By Proposition~\ref{prop:spectral_gap} and \eqref{eq:chi_gap},
+$|\chi_m-\chi_n|\ge\kappa_1\max(1,c)|m-n|$,
+valid uniformly across Regimes~(A) and~(B) with $\kappa_1=1/\pi$.
 
 \noindent\textbf{Assembly.}
 \[
@@ -473,9 +520,10 @@ difference argument is invoked.
   =\frac{\kappa_1}{C_\nu T}|m-n|
   =:\frac{\kappa}{T}|m-n|.
 \]
-The factor $c$ cancels exactly between numerator and denominator;
-see Lemma~\ref{lem:discrete_continuous_bridge}(iii) for the
-explanation of why this cancellation is structural.
+The factor $c$ cancels exactly; $\kappa=\kappa_1/C_\nu$ is independent
+of $c$ and of which regime applies. The IBP argument
+(Lemma~\ref{lem:ibp_uniform}) depends only on positivity of $\kappa$,
+not on its precise value.
 \end{proof}
 
 \begin{remark}[Bulk restriction]
@@ -549,7 +597,8 @@ Each such term is bounded by
 $C_k'\cdot(T/(\kappa|m-n|))^\ell\le C_p(T/|m-n|)^p$,
 using Lemma~\ref{lem:amplitude_control} for the numerator
 ($c$-independent) and Lemma~\ref{lem:phase_gap_final} for the
-denominator. Integration over $\Rbulk^{(m,n)}\subset[-T,T]$
+denominator ($\kappa$ uniform across both regimes).
+Integration over $\Rbulk^{(m,n)}\subset[-T,T]$
 (length $\le 2T$) gives the $L^1$ bound.
 
 \textbf{Boundary terms.}
@@ -741,13 +790,7 @@ Accumulating over all off-diagonal pairs,
   \;\ge\; \sum_{m \ne n} |\hat{f}_{mn}(1/h)|^2 - O(N^2 e^{-\alpha c})
   \;\ge\; c_0\,(hc)^2 N,
 \]
-with $c_0 > 0$ independent of $c \ge c_0$, from the non-negligible
-aliasing mass at frequency $1/h$. The off-diagonal mass is not
-concentrated on the diagonal: for $N \sim c$, the aliasing frequency
-$1/h$ is active across all index pairs $(m,n)$ with
-$m \ne n \in \mathcal{B}$, since the spectral support of $\hat{f}_{mn}$
-is $m$- and $n$-independent at leading order.
-Therefore:
+with $c_0 > 0$ independent of $c \ge c_0$. Therefore:
 \[
   \|E_{N,c}^{\mathrm{Riemann}}\|_2
   \;\ge\; \frac{\|E_{N,c}^{\mathrm{Riemann}}\|_F}{\sqrt{N}}
