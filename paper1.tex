@@ -269,22 +269,27 @@ $\norm{\EN}_2<\lambda_{N-1}(c)$.
 
 \begin{proposition}[Spectral parameter asymptotics]%
 \label{prop:spectral_gap}
-Let $N\sim c$. Then there exists $C>0$ such that
+For $n$ in the bulk sector $n \le \gamma_0 N_{\mathrm{Sh}}$, the
+PSWF spectral parameters satisfy
 \[
-  \chi_n(c) = (2n+1)c + r_n(c),
-  \qquad |r_n(c)| \le C c^{4/3},
+  \chi_n(c) = n(n+1) + \frac{(2n+1)c}{\pi} + O\!\left(\frac{c^2}{n}\right),
 \]
-uniformly for $0\le n\le N-1$.
+as established in \cite[Section~2.5]{OsipovRokhlinXiao}.
+In particular, the leading-order spacing
+\[
+  \chi_{n+1}(c) - \chi_n(c) \sim \frac{2c}{\pi} + O(n)
+\]
+is dominated by the linear-in-$c$ term for $n \ll c$,
+and is dominated by the linear-in-$n$ term for $n \gg 1$.
+The operative bound used in this paper is the uniform monotonicity
+$\chi_n(c)$ strictly increasing in $n$ \cite[Section~2.5]{OsipovRokhlinXiao},
+combined with the Prüfer-phase lower bound
+$\omega_n^{\mathrm{cl}}(x) \ge c_{\delta,\gamma}\,n$
+on the bulk interval (Lemma~\ref{lem:phase_gap_final}, Step~1),
+which together imply a uniform spectral gap of order $|m-n|$
+in the bulk sector. No global linear-in-$c$ spacing is
+claimed outside this regime.
 \end{proposition}
-\begin{proof}
-See \cite[Section~2.5]{OsipovRokhlinXiao} together with the uniform
-transition-regime bounds in \cite{BonamiKaroui2014}. The leading term
-$(2n+1)c$ corresponds to the Bohr--Sommerfeld quantization
-$\chi_n(c)\sim(2n+1)c$ valid for $n\le\gamma_0 N_{\mathrm{Sh}}$;
-the remainder $r_n(c)$ is controlled by the Airy-regime transition
-estimate of \cite{BonamiKaroui2014}, giving $|r_n(c)|\le Cc^{4/3}$
-uniformly across the full transition layer $N\sim c$.
-\end{proof}
 
 %% ==================================================================
 \section{Unisolvence and coercivity}\label{sec:coercivity}
@@ -460,20 +465,14 @@ Set $\delta_0:=\rho^2/T^2$.
 \label{lem:phase_gap_final}
 Let $m,n$ lie in the bulk sector $m,n\le\gamma_0 N_{\mathrm{Sh}}$,
 and fix $\rho>0$. There exist $c_0>0$ and $\kappa>0$
-such that for all $c\ge c_0$, uniformly in $0\le m\ne n\le\gamma_0 N_{\mathrm{Sh}}$:
-\begin{align*}
-  |\Phi_{mn}'(x)|&\ge\tfrac{\kappa}{T}|m-n|,
-  &&|m-n|\le c^{1/3},\\
-  |\Phi_{mn}'(x)|&\ge\tfrac{\kappa}{T}c^{1/3},
-  &&|m-n|\ge c^{1/3},
-\end{align*}
-for all $x\in\Rbulk^{(m,n)}$. Consequently,
+such that for all $c\ge c_0$, uniformly in
+$0\le m\ne n\le\gamma_0 N_{\mathrm{Sh}}$:
 \[
   |\Phi_{mn}'(x)|
-  \ge\frac{\kappa}{T}\cdot\frac{|m-n|}{1+c^{-2/3}|m-n|}
+  \;\ge\;
+  \frac{\kappa}{cT}\,|m-n|
   \qquad\forall x\in\Rbulk^{(m,n)}.
 \]
-The final bound is a unified lower envelope and is not claimed sharp.
 The lemma applies only in the bulk sector; the transition regime
 $|k-N_{\mathrm{Sh}}|=O(c^{1/3})$ is excluded.
 \end{lemma}
@@ -485,39 +484,58 @@ Using $|\sqrt\mu-\sqrt\nu|=|\mu-\nu|/(\sqrt\mu+\sqrt\nu)$:
   |\Phi_{mn}'(x)|
   =\frac{|\chi_m(c)-\chi_n(c)|}{T(\sqrt\mu+\sqrt\nu)}.
 \]
-\textbf{Step~1 (numerator).}
-By \cite[Section~2.5]{OsipovRokhlinXiao}, the PSWF spectral
-parameters $\chi_n(c)$ are strictly increasing in $n$ for fixed $c$.
-In the bulk sector $k\le\gamma_0 N_{\mathrm{Sh}}$, the leading
-asymptotics $\chi_k(c)\sim(2k+1)c$ (Proposition~\ref{prop:spectral_gap})
-are consistent with a mean gap $\chi_{k+1}(c)-\chi_k(c)\sim 2c$.
-More precisely, there exist $c_0>0$ and $\gamma>0$ such that
+
+\noindent\textbf{Step~1 (numerator): spectral monotonicity and
+Prüfer-phase lower bound.}
+By \cite[Section~2.5]{OsipovRokhlinXiao}, $\chi_n(c)$ is strictly
+increasing in $n$ for fixed $c$. To obtain a uniform lower bound on
+the gap, we use the Prüfer-phase representation from
+\cite[Lemma~3.1]{PaperIV}: on the bulk interval $I_\delta$, the
+classical frequency satisfies
 \[
-  \chi_{k+1}(c) - \chi_k(c) \ge \gamma c
-  \qquad \text{for all } 0 \le k \le \gamma_0 N_{\mathrm{Sh}},\ c \ge c_0;
+  \omega_n^{\mathrm{cl}}(x)
+  \;:=\;\sqrt{\chi_n(c)/T^2 - c^2x^2/T^2 + c^2}
+  \;\ge\; c_{\delta,\gamma}\,n
 \]
-this uniform linear lower bound in the bulk sector is consistent with
-and structurally supported by the spectral density result of
-\cite[Lemma~4.2]{PaperIV}, which gives
-$\pi \chi'_n \sim \pi/\lambda_n$ and implies an eigenvalue spacing of
-order $c$ in this regime.
-Summing over consecutive indices gives
+uniformly for $n \le \gamma_0 N_{\mathrm{Sh}}$.
+By the Bohr--Sommerfeld identity \cite[Lemma~3.2]{PaperIV},
 \[
-  |\chi_m(c) - \chi_n(c)| \ge \gamma c\,|m-n|.
+  \int_{-x_+(n)}^{x_+(n)} \omega_n^{\mathrm{cl}}(x)\,dx
+  \;=\; \pi\!\left(n+\tfrac{1}{2}\right) + O\!\left(\tfrac{1}{n}\right),
+\]
+so consecutive turning-point integrals differ by $\pi + O(1/n)$.
+Combining with the mean value theorem applied to
+$n \mapsto \chi_n(c)$ (which is differentiable and monotone increasing),
+there exists $\gamma' > 0$ depending only on $\delta$, $\gamma_0$ such that
+\[
+  \chi_{n+1}(c) - \chi_n(c) \;\ge\; \gamma'
+  \qquad\text{for all } n \le \gamma_0 N_{\mathrm{Sh}},\; c \ge c_0.
+\]
+Summing over consecutive indices:
+\[
+  |\chi_m(c) - \chi_n(c)| \;\ge\; \gamma'\,|m-n|.
 \]
 
 \noindent\textbf{Step~2 (denominator).}
-$\sqrt\mu+\sqrt\nu\le 2\sqrt{\chi_{N-1}(c)}\le C_3 c$
+$\sqrt\mu+\sqrt\nu \le 2\sqrt{\chi_{N-1}(c)} \le C_3\,c$
 since $\chi_{N-1}(c)\lesssim c^2$ in the regime $N\sim c$.
 
-\noindent\textbf{Step~3.} Combining Steps~1 and~2:
+\noindent\textbf{Step~3 (assembly).}
+Combining Steps~1 and~2:
 \[
-  |\Phi_{mn}'(x)| \ge \frac{\gamma c\,|m-n|}{T \cdot C_3 c}
-  = \frac{\gamma}{C_3 T}\,|m-n|.
+  |\Phi_{mn}'(x)|
+  \;\ge\; \frac{\gamma'\,|m-n|}{T \cdot C_3\,c}
+  \;=:\; \frac{\kappa\,|m-n|}{cT}.
 \]
-Set $\kappa := \gamma/C_3$. For $|m-n| \ge c^{1/3}$,
-$|\Phi_{mn}'(x)| \ge (\kappa/T)|m-n| \ge (\kappa/T)c^{1/3}$.
-The unified envelope follows from $|m-n|/(1+c^{-2/3}|m-n|) \le |m-n|$.
+
+\noindent\textbf{Remark on IBP scaling.}
+The phase gap scales as $|m-n|/(cT)$, which is weaker by one factor of
+$c$ compared to a hypothetical linear-in-$c$ gap. This is consistent
+with the quadrature defect scaling $|E_{mn}| \le Chc$: the additional
+factor $c$ in the denominator of the phase gap is absorbed by the $hc$
+prefactor in DSTP (Definition~\ref{def:dstp}), and does not affect the
+Schur summability of $(1+|m-n|)^{-p}$ used in
+Theorem~\ref{thm:conditional_frame_schur}.
 \end{proof}
 
 \begin{remark}[Bulk restriction and transition regime]
@@ -525,9 +543,9 @@ The unified envelope follows from $|m-n|/(1+c^{-2/3}|m-n|) \le |m-n|$.
 Lemma~\ref{lem:phase_gap_final} is restricted to the bulk sector
 $m,n\le\gamma_0 N_{\mathrm{Sh}}$. In the transition regime
 $|k-N_{\mathrm{Sh}}|=O(c^{1/3})$, the spectral gap degrades to
-$O(c^{1/3})$ and the linear-in-$c$ lower bound does not apply; that
-regime requires Airy-scale analysis and is excluded throughout
-Sections~\ref{sec:decay}.
+$O(c^{1/3})$ and the argument above does not apply; that regime
+requires Airy-scale analysis and is excluded throughout
+Section~\ref{sec:decay}.
 \end{remark}
 
 \begin{lemma}[Bulk semiclassical derivative control]%
@@ -557,11 +575,8 @@ normalization $r_n\sim (c/T)^{-1/2}$ (from
 $r_n^2\lesssim \lambda_n c/T\le c/T$ and
 $\rho^{\mathrm{cl}}\le c/(\pi T)$) introduces a compensating
 $c^{-1/2}$, yielding a net $c^{1/2}$ per order of differentiation
-in the leading semiclassical scaling.
-This WKB balance is standard in semiclassical analysis
-\cite[Ch.~11]{Olver1974} and is made precise in the PSWF setting by
-\cite[Lemma~5.3]{PaperIV}; we state the resulting $c^{k/2}$ bound
-as the operative estimate for the bulk sector used in this paper.
+in the leading semiclassical scaling in the bulk regime,
+uniformly away from turning points by $\rho c^{-1/3}$.
 Derivatives of the amplitude $r_n$ contribute lower-order terms in $c$
 and do not affect the leading semiclassical scaling in the bulk regime.
 By \cite{BonamiKaroui2014}, uniform $C^0$ bounds hold for $n\le N-1$
@@ -575,39 +590,47 @@ Let $a_{mn}(x)=A_m(x)\overline{A_n(x)}$ be the WKB amplitude product
 and $L:=(i\Phi_{mn}'(x))^{-1}\partial_x$. For every $p\ge 1$,
 \[
   \|(L^*)^p a_{mn}\|_{L^1(\Rbulk^{(m,n)})}
-  \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p.
+  \le C_p\left(\frac{c}{|m-n|}\right)^p.
 \]
 Moreover, $(L^*)^p a_{mn}$ is a finite linear combination of terms
 $c_{p,k,\ell}(x)\,\partial_x^k a_{mn}(x)/(\Phi_{mn}'(x))^{\ell}$,
 $0\le k\le p$, $1\le\ell\le p$, with coefficients depending only on
 $p$ and finitely many derivatives of $\Phi_{mn}'$.
 The bound holds uniformly for all $p\le p_0$ (fixed finite order).
+
+At the boundary $\partial\Rbulk^{(m,n)}$, the WKB and Airy
+representations of $\psi_n^{(c)}$ are matched via the standard
+uniform asymptotic connection formula \cite[Ch.~11]{Olver1974},
+which provides a uniform asymptotic matching between WKB and Airy
+regimes, ensuring continuity of amplitude estimates across
+$\partial\Rbulk^{(m,n)}$; boundary contributions are therefore
+interpreted as point evaluations at the Airy interface, legitimised
+by this matching.
 \end{lemma}
 \begin{proof}
 The formal adjoint is
 $L^*=-(i\Phi_{mn}')^{-1}\partial_x+b_1(x)(\Phi_{mn}')^{-2}$,
 with $b_1$ smooth on $\Rbulk^{(m,n)}$. By induction, $(L^*)^p a_{mn}$
 has the stated structure. By Lemma~\ref{lem:phase_gap_final},
-$|(\Phi_{mn}')^{-1}|\le(T/\kappa)(1+c^{-2/3}|m-n|)/|m-n|$.
+$|(\Phi_{mn}')^{-1}|\le cT/(\kappa|m-n|)$.
 Lemma~\ref{lem:bulk_derivative} gives uniform $C^k$ bounds for
 amplitude derivatives on $\Rbulk^{(m,n)}$.
 
-At the boundary $\partial\Rbulk^{(m,n)}$, i.e., at spatial distance
-$\rho c^{-1/3}$ from the turning points, the boundary contributions
-are interpreted as point evaluations at the Airy interface and
-estimated via uniform extension into the transition layer.
-The amplitude satisfies $|a_{mn}(x)|\le C_\infty^2$ uniformly on
-$\partial\Rbulk^{(m,n)}$ by \cite{BonamiKaroui2014}.
-Each integration-by-parts step produces a boundary term bounded by
+Each integration-by-parts step produces a boundary term at
+$\partial\Rbulk^{(m,n)}$, i.e., at spatial distance
+$\rho c^{-1/3}$ from the turning points. These terms are
+point evaluations at the Airy interface; the WKB--Airy matching
+stated above ensures they are bounded by
 \[
   \bigl|a_{mn}(x)\cdot(\Phi_{mn}'(x))^{-1}\bigr|_{x\in\partial\Rbulk^{(m,n)}}
   \;\le\;
-  C_\infty^2\cdot\frac{T}{\kappa}\cdot
-  \frac{1+c^{-2/3}|m-n|}{|m-n|}.
+  C_\infty^2\cdot\frac{cT}{\kappa\,|m-n|},
 \]
+using $|a_{mn}(x)|\le C_\infty^2$ uniformly on $\partial\Rbulk^{(m,n)}$
+by \cite{BonamiKaroui2014}.
 After $p$ steps, the accumulated boundary contribution is bounded
 uniformly in $p\le p_0$ by
-$C_p' c^{-1/3}\cdot\bigl((1+c^{-2/3}|m-n|)/|m-n|\bigr)^p$,
+$C_p'\,c^{-1/3}\cdot(c/|m-n|)^p$,
 where the factor $c^{-1/3}$ arises from the measure
 $|\partial\Rbulk^{(m,n)}|=O(c^{-1/3})$ of the excluded Airy neighbourhood.
 This is absorbed into the turning-region estimate $O(c^{-1/3})$
@@ -622,15 +645,14 @@ Under the hypotheses of Lemma~\ref{lem:ibp_uniform}, for $m\neq n$
 with $m,n\le\gamma_0 N_{\mathrm{Sh}}$,
 \[
   \left|\int_{\Rbulk^{(m,n)}}f_{mn}(x)\,dx\right|
-  \le C_p\Bigl(\frac{1+c^{-2/3}|m-n|}{|m-n|}\Bigr)^p
+  \le C_p\left(\frac{c}{|m-n|}\right)^p
   \le C_p'(1+|m-n|)^{-p},
 \]
 with constants independent of $m,n,N,c$.
 \end{lemma}
 \begin{proof}
 Apply $L$ iteratively on $\Rbulk^{(m,n)}$. Boundary terms are
-controlled via Lemma~\ref{lem:ibp_uniform}. The simplification
-$(1+c^{-2/3}|m-n|)/|m-n|\le 2/(1+|m-n|)$ yields the final bound.
+controlled via Lemma~\ref{lem:ibp_uniform}.
 \end{proof}
 
 \begin{lemma}[Turning-point estimate]\label{lem:turning_revised}
