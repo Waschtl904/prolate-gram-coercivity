@@ -110,8 +110,7 @@ The proof has four layers, executed in Sections
   using the monotonicity $\theta_n' \ge cn > 0$ on $I_\delta$.
   \item \textbf{Amplitude drift} (Section~\ref{sec:amplitude}):
   show $r_n^2/r_n^{\mathrm{WKB},2} = 1 + O(1/n)$ via the drift
-  cancellation identity, with bootstrap closure for the
-  self-referential term.
+  cancellation identity and a direct Gronwall estimate.
   \item \textbf{Main theorem} (Section~\ref{sec:weaklimit}):
   assemble the above to obtain the rate-$O(1/n)$
   equidistribution.
@@ -536,9 +535,10 @@ uniformly on $I_\delta$
 All $p'/(4p)$-contributions cancel exactly as a consequence
 of the definition of $r_n^{\mathrm{WKB}}$,
 leaving only the oscillatory forcing $\widetilde{B}_n$
-with coefficient $O(1/n)$ and the self-referential term
+with coefficient $O(1/n)$ and the linear term
 $2\Delta_n G\cos(2\theta_n)$,
-which is controlled by the bootstrap argument in
+whose coefficient satisfies $|G| \le C_{\delta,\gamma}/n$
+and is controlled directly by the Gronwall argument in
 Lemma~\ref{lem:amplitude-drift}, Step~4.
 \end{lemma}
 
@@ -566,10 +566,7 @@ Collecting the $r_n^{\mathrm{WKB},2}$ terms:
   + (\wncl)'/(2\wncl)\bigr]
   = 2r_n^{\mathrm{WKB},2}\,\widetilde{B}_n,
 \]
-with $\widetilde{B}_n$ as in \eqref{eq:Btilde-def},
-and the remaining term $2\Delta_n G\cos(2\theta_n)$
-is the self-referential contribution
-controlled in Lemma~\ref{lem:amplitude-drift}, Step~4.
+with $\widetilde{B}_n$ as in \eqref{eq:Btilde-def}.
 The $D = p'/(4p)$ terms from both sides cancel exactly,
 leaving \eqref{eq:deviation-ode}.
 \end{proof}
@@ -674,57 +671,53 @@ $r_n(x)/r_n^{\mathrm{WKB}}(x) = 1 + O(1/n)$
 uniformly on $I_\delta$,
 and squaring gives \eqref{eq:amp-ratio}.
 
-\textit{Step 4: Gronwall estimate, bootstrap closure,
-and proof of \eqref{eq:amp-dev-deriv}.}
+\textit{Step 4: Gronwall bound and proof of
+\eqref{eq:amp-dev-deriv}.}
 By Lemma~\ref{lem:deviation-ode}, $\Delta_n$ satisfies
 \eqref{eq:deviation-ode} with
-$|2D| \le C_\delta$,
-$|\widetilde{B}_n| \le C_{\delta,\gamma}/n$,
-$|G| \le C_{\delta,\gamma}/n$,
-and $\Delta_n(x_0) = 0$.
-The forcing term
+$|2D(x)| \le C_{\delta,\gamma} = O(1)$,
+$|G(x)| \le C_{\delta,\gamma}/n$,
+$|\widetilde{B}_n(x)| \le C_{\delta,\gamma}/n$,
+and $r_n^{\mathrm{WKB}}(x)^2 \le C_{\delta,\gamma}\,r_n(x_0)^2$.
+The forcing satisfies
 $|2r_n^{\mathrm{WKB},2}\widetilde{B}_n|
-\le C_{\delta,\gamma}r_n(x_0)^2/n$.
-A Gronwall estimate on $I_\delta$
-(length $\le 2T$, $\Delta_n(x_0) = 0$) yields:
-\begin{equation}\label{eq:Delta-gronwall}
-  |\Delta_n(x)| \le \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n}
-  \qquad \text{for all } x \in I_\delta.
-\end{equation}
+\le C_{\delta,\gamma}\,r_n(x_0)^2/n$.
+The full coefficient of $\Delta_n$ in
+\eqref{eq:deviation-ode} is
+$A(x) := 2D(x) + 2G(x)\cos(2\theta_n(x)) = O(1)$,
+since $|D(x)| \le C_{\delta,\gamma}$ and
+$|G(x)| \le C_{\delta,\gamma}/n$.
 
-We now verify bootstrap consistency:
-the term $2\Delta_n G\cos(2\theta_n)$ in
-\eqref{eq:deviation-ode} is self-referential,
-since it involves $\Delta_n$ itself.
-Applying Lemma~\ref{lem:prufer-oscillation-control}
-to the integrated form of this term,
-with $h = \Delta_n G/r_n(x_0)^2 \in C^1(I_\delta)$
-and using \eqref{eq:Delta-gronwall} together with
-Lemma~\ref{lem:G-regularity}(iii),(iv):
-\[
-  \|h\|_{L^\infty(I_\delta)}
-  \le \frac{C_{\delta,\gamma}}{n}
-      \cdot \frac{C_{\delta,\gamma}}{n}
-  = \frac{C_{\delta,\gamma}}{n^2},
-  \qquad
-  \|h'\|_{L^1(I_\delta)} \le \frac{C_{\delta,\gamma}}{n^2}.
-\]
-Hence:
-\begin{equation}\label{eq:bootstrap-check}
-  \left|\int_{I_\delta}
-    \Delta_n(t)\,G(t)\cos(2\theta_n(t))\,dt\right|
-  \le \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n^2}
-  = o\!\left(\frac{r_n(x_0)^2}{n}\right).
+Since $r_n^{\mathrm{WKB}}(x_0) = r_n(x_0)$ by
+\eqref{eq:wkb-amp}, we have:
+\begin{equation}\label{eq:Delta-init}
+  \Delta_n(x_0) = r_n(x_0)^2 - r_n^{\mathrm{WKB}}(x_0)^2 = 0.
 \end{equation}
-This yields a contraction at the level of the error term:
-the self-referential contribution \eqref{eq:bootstrap-check}
-is strictly dominated by the main $O(r_n(x_0)^2/n)$ forcing.
-In particular, no circular reasoning arises
-in the Gronwall step \eqref{eq:Delta-gronwall}.
+The equation \eqref{eq:deviation-ode} therefore takes the
+form $\Delta_n' = A(x)\Delta_n + F(x)$ with
+$\Delta_n(x_0) = 0$ and
+$|F(x)| \le C_{\delta,\gamma}\,r_n(x_0)^2/n$.
+Applying the Gronwall--Bellman inequality
+\cite[Ch.~1]{Bellman1943} with $A(x) = O(1)$ and
+$|I_\delta| \le 2T$:
+\begin{equation}\label{eq:Delta-gronwall}
+  |\Delta_n(x)|
+  \le \int_{x_0}^x \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n}
+      \cdot e^{C_{\delta,\gamma}(x-t)}\,dt
+  \le \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n}
+      \cdot 2T \cdot e^{2C_{\delta,\gamma} T}
+  =: \frac{C_{\delta,\gamma}'\,r_n(x_0)^2}{n}
+\end{equation}
+for all $x \in I_\delta$, where
+$C_{\delta,\gamma}' := 2T\,e^{2C_{\delta,\gamma}T} = O(1)$.
+No smallness of the Gronwall exponent is required:
+$e^{2C_{\delta,\gamma}T} = O(1)$ suffices since
+$T$ is fixed.
 Substituting \eqref{eq:Delta-gronwall} back into
 \eqref{eq:deviation-ode} and using
 $|2\Delta_n G\cos(2\theta_n)|
-\le C_{\delta,\gamma}r_n(x_0)^2/n^2$
+\le C_{\delta,\gamma}'\,r_n(x_0)^2/n \cdot C_{\delta,\gamma}/n
+= O(r_n(x_0)^2/n^2)$
 establishes \eqref{eq:amp-dev-deriv}.
 \end{proof}
 
@@ -733,12 +726,12 @@ Steps~1--3 require no Gronwall argument:
 the identity \eqref{eq:drift-final} reduces
 $\log(r_n/r_n^{\mathrm{WKB}})$ to a single oscillatory
 integral, controlled by one application of IBP.
-Step~4 applies Gronwall only to $\Delta_n$,
-whose forcing is $O(1/n)$ by
-Lemma~\ref{lem:deviation-ode},
-and closes the bootstrap via \eqref{eq:bootstrap-check},
-which shows the self-referential term is $O(1/n^2)$,
-strictly smaller than the main $O(1/n)$ bound.
+Step~4 applies Gronwall to $\Delta_n$ with zero initial
+condition \eqref{eq:Delta-init}, zero-initial-data forcing
+$F = O(r_n(x_0)^2/n)$, and Gronwall coefficient $A = O(1)$.
+The self-referential term $2\Delta_n G\cos(2\theta_n)$ is
+absorbed into $A(x)\Delta_n$ and contributes only at order
+$O(r_n(x_0)^2/n^2)$, strictly below the main $O(1/n)$ bound.
 \end{remark}
 
 %%=================================================================
@@ -1027,6 +1020,12 @@ Anonymous Author,
 Off-Diagonal Regimes, and an Obstruction at the
 Spectral Edge},
 preprint, 2026.
+
+\bibitem{Bellman1943}
+R.~Bellman,
+\textit{The stability of solutions of linear differential
+equations},
+Duke Math.\ J.\ \textbf{10} (1943), 643--647.
 
 \bibitem{Levitan}
 B.~M.~Levitan and I.~S.~Sargsjan,
