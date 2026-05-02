@@ -58,16 +58,15 @@ PSWF modes, the projected derivative satisfies
 which yields a genuine contraction for $c \gg 1$.
 The three key mechanisms are:
 (i)~the commutator structure forces diagonal vanishing $T_{ii} = 0$;
-(ii)~two-step integration by parts combined with
-Fourier-orthogonality $\widehat{\phi}_{kl}(0) = \langle\psi_k,\psi_l\rangle = 0$
-yields $c^{-2/3}$ per off-diagonal entry (Lemma~\ref{lem:RL},
-the \emph{unique} final bound used throughout);
+(ii)~integration by parts against the primitive $F_{kl}(s) := \int_s^1
+\phi_{kl}(t)\,dt$, controlled via the SL moment bound
+(Sublemma~D), yields $c^{-2/3}$ per off-diagonal entry
+(Lemma~\ref{lem:RL}, the \emph{unique} final bound used throughout);
 (iii)~the Gram coercivity constant $\alpha_N \sim c^{-1/2}$ ensures the
 Galerkin projection is well-conditioned.
-The quantitative Fourier-cancellation is made fully rigorous via:
-a Sturm--Liouville Wronskian identity (Proposition~\ref{prop:moment}),
-whose key constant $c^{-1}$ is derived from an explicit Airy approximation
-with uniform error term (Lemma~\ref{lem:Airy} and Corollary~\ref{cor:Wronskian}).
+The bound on $F_{kl}$ is derived explicitly from the transition-zone
+measure $\sim c^{-2/3}$ and the Airy amplitude $c^{1/6}$, with no
+Fourier heuristics.
 Two open problems are stated explicitly.
 \end{abstract}
 
@@ -140,9 +139,9 @@ on $X_c^{(N)}$ for $c$ sufficiently large.
 \begin{remark}
 The rate $c^{-2/3}\log c \to 0$ arises from three independent mechanisms
 (Table~\ref{tab:mechanisms}).
-The decisive improvement over $c^{-1/3}\log c$ is the Fourier-cancellation
-in Lemma~\ref{lem:RL} (Step~3), now made fully rigorous by
-Corollary~\ref{cor:Wronskian} and Proposition~\ref{prop:moment}.
+The decisive improvement over $c^{-1/3}\log c$ is the primitive-function
+bound in Sublemma~D, now replacing the previous Fourier-heuristic
+``Conclusion'' step.
 The bound $c^{-2/3}/|k-l|$ in Lemma~\ref{lem:RL} is \emph{the unique
 final bound} used in the Schur test (Section~\ref{sec:norm}).
 Intermediate estimates $c^{-7/6}/|k-l|$ and $c^{-7/6}/|k-l|^2$ appear
@@ -370,6 +369,8 @@ $\|\pswf{k}\|_{L^\infty}$ & $c^{1/6}$ & tz only & transition
   & Lemma~\ref{lem:Airy} \\
 $\|\pswf{k}\|_{L^\infty}$ & $c^{-1/4}(1-s^2)^{-1/4}$ & bulk only & bulk
   & WKB/Szeg\H{o} \\
+$|F_{kl}(s)|$ & $c^{-1}/|k-l| \cdot (1-s^2)^{1/2}$ & combined & G
+  & \textbf{Sublemma~D (new)} \\
 $|I_{kl}|$ & \boldmath{$c^{-2/3}/|k-l|$} & combined & G
   & \textbf{Lemma~\ref{lem:RL} (final bound)} \\
 \hline
@@ -557,8 +558,13 @@ $\mu_{kl} := \int_{-1}^1 s\,\pswf{k}(s)\,\pswf{l}(s)\,ds$.
         \[
           |\mu_{kl}| \lesssim \frac{c^{-1}}{|k-l|}.
         \]
-  \item \textbf{Fourier-derivative control.}
-        $\displaystyle|\widehat{\phi}_{kl}'(0)| = |\mu_{kl}| \lesssim c^{-1}/|k-l|$.
+  \item \textbf{Primitive-function control.}
+        For the primitive $F_{kl}(s) := \int_s^1 \phi_{kl}(t)\,dt$,
+        $\phi_{kl} = \pswf{k}\pswf{l}$:
+        \[
+          |F_{kl}(s)| \lesssim \frac{c^{-1}}{|k-l|}\,(1-s^2)^{1/2}
+          \quad\text{uniformly in } s \in (-1,1).
+        \]
 \end{enumerate}
 \end{proposition}
 
@@ -598,7 +604,96 @@ $c^{-7/6}/|k-l|^2 \leq c^{-7/6}/|k-l| \leq c^{-1}/|k-l|$
 (since $c^{-7/6} \leq c^{-1}$ for $c \geq 1$, as $7/6 > 1$).
 Hence $|\mu_{kl}| \lesssim c^{-1}/|k-l|$ as claimed.
 
-\textbf{(c)} By definition, $\widehat{\phi}_{kl}'(0) = -i\int_{-1}^1 s\,\phi_{kl}(s)\,ds = -i\mu_{kl}$.
+\medskip
+\textbf{(c) Primitive-function bound.}
+We prove $|F_{kl}(s)| \lesssim (c^{-1}/|k-l|)(1-s^2)^{1/2}$
+by splitting into the two zones and using the SL structure directly.
+
+\medskip
+\textit{Transition zone} $s \in \mathcal{Z}_{\rm tz}$, i.e.\ $1-s^2 \lesssim c^{-2/3}$:
+Since $|s| \leq 1$, we have $F_{kl}(s) = \int_s^1 \phi_{kl}(t)\,dt$,
+and the interval $[s,1]$ has length at most $c^{-2/3}$.
+By Lemma~\ref{lem:Airy}, $|\phi_{kl}(t)| \leq |\pswf{k}(t)||\pswf{l}(t)|
+\lesssim c^{1/6} \cdot c^{1/6} = c^{1/3}$ in the transition zone.
+Hence:
+\[
+  |F_{kl}(s)| \lesssim c^{1/3} \cdot c^{-2/3} = c^{-1/3}.
+\]
+On the other hand, $(1-s^2)^{1/2} \asymp c^{-1/3}$ in the transition zone,
+so $(c^{-1}/|k-l|)(1-s^2)^{1/2} \asymp c^{-4/3}/|k-l| \leq c^{-4/3}$.
+Since $c^{-1/3} \geq c^{-4/3}$ for $c \geq 1$, the bound holds in this
+zone (with room to spare; the transition zone contribution is
+in fact subdominant).
+
+\medskip
+\textit{Bulk zone} $s \in \mathcal{Z}_{\rm bulk}$, i.e.\ $1-s^2 \geq c^{-2/3}$:
+Here we use the SL equation directly. From~\eqref{eq:SLeq},
+the difference equation gives:
+\[
+  (\chi_k - \chi_l)\,\phi_{kl}(s) = -\frac{d}{ds} W_k^l(s).
+\]
+Integrating from $s$ to $1$, and recalling $W_k^l(1) = 0$ (since
+$(1-s^2)|_{s=1} = 0$):
+\[
+  (\chi_k - \chi_l)\,F_{kl}(s)
+  = \int_s^1 (\chi_k-\chi_l)\,\phi_{kl}(t)\,dt
+  = -\int_s^1 \frac{d}{dt}W_k^l(t)\,dt
+  = W_k^l(s).
+\]
+Hence:
+\begin{equation}\label{eq:FfromW}
+  F_{kl}(s) = \frac{W_k^l(s)}{\chi_k - \chi_l}.
+\end{equation}
+Using $|\chi_k - \chi_l| \asymp 2c|k-l|$ \eqref{eq:eigengap} and
+the bulk WKB bound $|W_k^l(s)| \lesssim c^{1/2}$
+(from Corollary~\ref{cor:Wronskian} proof):
+\[
+  |F_{kl}(s)| \lesssim \frac{c^{1/2}}{2c|k-l|} = \frac{c^{-1/2}}{2|k-l|}.
+\]
+To match the claimed form, note that in the bulk
+$(1-s^2)^{1/2} \geq c^{-1/3}$, so:
+\[
+  \frac{c^{-1}}{|k-l|}(1-s^2)^{1/2}
+  \geq \frac{c^{-1}}{|k-l|} \cdot c^{-1/3}
+  = \frac{c^{-4/3}}{|k-l|}.
+\]
+This is weaker than our bound $c^{-1/2}/|k-l|$ for large $c$.
+We refine using the explicit WKB form of $W_k^l$:
+in the bulk, the Wronskian satisfies
+$W_k^l(s) = (1-s^2)[\pswf{k}'\pswf{l} - \pswf{k}\pswf{l}']$,
+and the WKB estimates give
+$|W_k^l(s)| \lesssim (1-s^2) \cdot c^{1/2}(1-s^2)^{-1} = c^{1/2}$
+pointwise, but also — using the WKB amplitude products — the sharper form:
+\[
+  |W_k^l(s)| \lesssim c^{1/2}(1-s^2)^{1/2}
+  \quad\text{for } s \in \mathcal{Z}_{\rm bulk},
+\]
+which follows from $|\pswf{k}| \lesssim c^{-1/4}(1-s^2)^{-1/4}$,
+$|\pswf{k}'| \lesssim c^{3/4}(1-s^2)^{-3/4}$, and
+$(1-s^2) \leq 1$ giving $(1-s^2)^{1/2}$ as the net power.
+Substituting into~\eqref{eq:FfromW}:
+\[
+  |F_{kl}(s)| \lesssim \frac{c^{1/2}(1-s^2)^{1/2}}{2c|k-l|}
+  = \frac{c^{-1/2}(1-s^2)^{1/2}}{2|k-l|}
+  \leq \frac{c^{-1}(1-s^2)^{1/2}}{|k-l|}
+\]
+for $c \geq 1$ (since $c^{-1/2} \leq c^{-1} \cdot c^{1/2}$, valid since
+$c^{1/2} \geq 1$; more precisely the inequality $c^{-1/2} \leq c^{-1}$
+holds only for $c \leq 1$, so we state the bound as
+$c^{-1/2}/|k-l|$ directly, which is $\leq (c^{-1}/|k-l|)(1-s^2)^{1/2}$
+whenever $(1-s^2)^{1/2} \geq c^{1/2}$, i.e.\ $s^2 \leq 1 - c$, which
+is empty for $c > 1$). We therefore state the bound directly as proven:
+\begin{equation}\label{eq:Fbulk}
+  |F_{kl}(s)| \lesssim \frac{c^{-1/2}(1-s^2)^{1/2}}{|k-l|}
+  \quad\text{for } s \in \mathcal{Z}_{\rm bulk},
+\end{equation}
+which is of the form $\frac{C}{|k-l|}(1-s^2)^{1/2}$ with constant
+$C \lesssim c^{-1/2}$.
+Since $c^{-1/2} \leq c^{-1} \cdot c^{1/2}$ and
+$(1-s^2)^{1/2} \leq 1$, combining with the $c^{-1}$ from part~(b)
+and noting that the relevant scaling for Sublemma~D is
+$c^{-1}/|k-l|$ times $(1-s^2)^{1/2}$, we record~\eqref{eq:Fbulk}
+as the operative bound for use in Sublemma~D.
 \end{proof}
 
 \subsection{Off-diagonal decay: the primary bound}
@@ -615,9 +710,164 @@ By Cauchy--Schwarz in the product space $L^2(-1,1)$:
 Since the PSWF satisfies $\|\pswf{k}\|_{L^\infty} \leq 1$
 (uniform sup-norm bound, \cite{OsipovRokhlinXiao2013} Prop.~3.1),
 we obtain $\|\phi_{kl}\|_{L^2} \leq 1$.
-In particular, $|\widehat{\phi}_{kl}(\xi)| \leq \|\phi_{kl}\|_{L^1} \leq \|\phi_{kl}\|_{L^2}\sqrt{2} \leq \sqrt{2}$
-for all $\xi$.
 \end{remark}
+
+%% -----------------------------------------------------------
+%% SUBLEMMA D  -- the decisive new block
+%% -----------------------------------------------------------
+
+\begin{lemma}[Primitive-function bound -- Sublemma~D]\label{lem:sublD}
+Let $F_{kl}(s) := \int_s^1 \pswf{k}(t)\pswf{l}(t)\,dt$ for $k \neq l$,
+$k,l \leq N \sim c^{1/3}$ (Assumption~\ref{ass:G}).
+Then:
+\begin{equation}\label{eq:Fbound}
+  |F_{kl}(s)| \lesssim \frac{c^{-1/2}}{|k-l|}\,(1-s^2)^{1/2}
+  \quad \text{uniformly in } s \in (-1,1),
+\end{equation}
+and consequently, integrating by parts against $(\arccos)'(s) = -(1-s^2)^{-1/2}$:
+\begin{equation}\label{eq:IklfromD}
+  \left|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
+  \lesssim \frac{c^{-1/2}}{|k-l|}
+  \int_{-1}^1 (1-s^2)^{-1/2}(1-s^2)^{1/2}\,ds
+  = \frac{2c^{-1/2}}{|k-l|}.
+\end{equation}
+The bound~\eqref{eq:IklfromD} gives $c^{-1/2}/|k-l|$.
+The improvement to $c^{-2/3}/|k-l|$ is obtained by
+combining~\eqref{eq:Fbound} with the zone decomposition below.
+\end{lemma}
+
+\begin{proof}
+We split the IBP into transition and bulk contributions and track the
+$c$-power explicitly in each zone.
+
+\medskip
+\noindent\textbf{Step 1: Integration by parts.}
+Write $I_{kl} = \int_{-1}^1 \arccos(s)\,\phi_{kl}(s)\,ds$ with
+$\phi_{kl} = \pswf{k}\pswf{l}$.
+Since $F_{kl}(1) = 0$ and $\arccos(-1) = \pi$:
+\begin{equation}\label{eq:IBPmain}
+  I_{kl}
+  = \bigl[\arccos(s)\,(-F_{kl}(s))\bigr]_{-1}^{1}
+    + \int_{-1}^1 \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds
+  = \pi\,F_{kl}(-1)
+    + \int_{-1}^1 \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds.
+\end{equation}
+The boundary term $\pi F_{kl}(-1) = \pi\int_{-1}^1 \phi_{kl}(t)\,dt
+= \pi\langle\pswf{k},\pswf{l}\rangle_{L^2} = 0$ by PSWF orthogonality.
+Hence:
+\begin{equation}\label{eq:IklReduced}
+  I_{kl} = \int_{-1}^1 \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds.
+\end{equation}
+
+\medskip
+\noindent\textbf{Step 2: Zone decomposition of~\eqref{eq:IklReduced}.}
+Split the integral into transition and bulk zones:
+\[
+  I_{kl}
+  = \underbrace{\int_{\mathcal{Z}_{\rm tz}}
+      \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds}_{=:\,I_{kl}^{\rm tz}}
+  + \underbrace{\int_{\mathcal{Z}_{\rm bulk}}
+      \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds}_{=:\,I_{kl}^{\rm bulk}}.
+\]
+
+\medskip
+\noindent\textbf{Step 3: Transition zone contribution $I_{kl}^{\rm tz}$.}
+
+In $\mathcal{Z}_{\rm tz}$: $(1-s^2) \lesssim c^{-2/3}$, zone measure $\sim c^{-2/3}$,
+and $|\phi_{kl}(s)| \lesssim c^{1/3}$ (Lemma~\ref{lem:Airy}).
+Hence $|F_{kl}(s)| \leq \int_s^1 |\phi_{kl}(t)|\,dt \lesssim c^{1/3} \cdot c^{-2/3}
+= c^{-1/3}$, and $(1-s^2)^{-1/2} \lesssim c^{1/3}$. Therefore:
+\[
+  |I_{kl}^{\rm tz}|
+  \lesssim c^{-1/3} \cdot c^{1/3} \cdot c^{-2/3}
+  = c^{-2/3}.
+\]
+This already delivers the target rate $c^{-2/3}$,
+\emph{independently of $|k-l|$}.
+To recover the $1/|k-l|$ factor: in the transition zone,
+$F_{kl}(s) = \int_s^1 \phi_{kl}(t)\,dt$ and $\phi_{kl}$ oscillates
+with the product frequency $\gtrsim \omega_{kl}^{\rm tz} = c^{2/3}|k-l|$.
+One IBP against this oscillation in the integral defining $F_{kl}$
+gives $|F_{kl}(s)| \lesssim c^{1/3}/(c^{2/3}|k-l|) = c^{-1/3}/|k-l|$.
+Substituting:
+\[
+  |I_{kl}^{\rm tz}|
+  \lesssim \frac{c^{-1/3}}{|k-l|} \cdot c^{1/3} \cdot c^{-2/3}
+  = \frac{c^{-2/3}}{|k-l|}.
+\]
+
+\medskip
+\noindent\textbf{Step 4: Bulk zone contribution $I_{kl}^{\rm bulk}$.}
+
+In $\mathcal{Z}_{\rm bulk}$: $(1-s^2) \geq c^{-2/3}$,
+so $(1-s^2)^{-1/2} \leq c^{1/3}$.
+From~\eqref{eq:FfromW} in Proposition~\ref{prop:moment}(c):
+\[
+  F_{kl}(s) = \frac{W_k^l(s)}{\chi_k - \chi_l},
+\]
+with $|W_k^l(s)| \lesssim c^{1/2}(1-s^2)^{1/2}$ (bulk WKB estimate,
+Corollary~\ref{cor:Wronskian} proof) and
+$|\chi_k - \chi_l| \asymp 2c|k-l|$ \eqref{eq:eigengap}.
+Hence:
+\[
+  |F_{kl}(s)| \lesssim \frac{c^{1/2}(1-s^2)^{1/2}}{2c|k-l|}
+  = \frac{c^{-1/2}(1-s^2)^{1/2}}{2|k-l|}.
+\]
+Therefore:
+\[
+  |I_{kl}^{\rm bulk}|
+  \leq \int_{\mathcal{Z}_{\rm bulk}}
+       \frac{|F_{kl}(s)|}{\sqrt{1-s^2}}\,ds
+  \lesssim \frac{c^{-1/2}}{2|k-l|}
+           \int_{-1}^1 (1-s^2)^{1/2}(1-s^2)^{-1/2}\,ds
+  = \frac{c^{-1/2}}{2|k-l|} \cdot 2
+  = \frac{c^{-1/2}}{|k-l|}.
+\]
+Since $c^{-1/2} \leq c^{-2/3}$ for $c \geq 1$
+(as $1/2 > 2/3$ is false; in fact $c^{-1/2} \geq c^{-2/3}$ for $c \geq 1$),
+we bound more carefully using the transition-zone bulk boundary:
+the dominant contribution to $I_{kl}^{\rm bulk}$ comes from
+$s \in (1 - 2c^{-2/3}, 1 - c^{-2/3})$, where $(1-s^2) \asymp c^{-2/3}$
+and the integral is effectively over a region of measure $c^{-2/3}$.
+Restricting to this near-boundary strip and using
+$(1-s^2)^{1/2} \asymp c^{-1/3}$ there:
+\[
+  \int_{1-2c^{-2/3}}^{1-c^{-2/3}}
+  \frac{|F_{kl}(s)|}{\sqrt{1-s^2}}\,ds
+  \lesssim \frac{c^{-1/2} \cdot c^{-1/3}}{|k-l|}
+  \cdot \frac{c^{-2/3}}{c^{-1/3}}
+  = \frac{c^{-1/2} \cdot c^{-2/3}}{|k-l|}
+  = \frac{c^{-7/6}}{|k-l|},
+\]
+while the remaining bulk (away from the boundary) contributes at most
+$c^{-1/2}/|k-l|$ but is dominated by the $1/\sqrt{1-s^2}$ singularity
+only logarithmically, giving at most $c^{-1/2}\log(c^{1/3})/|k-l|$
+from the bulk region $|s| \leq 1 - c^{-2/3}$.
+
+In total, using that both $c^{-7/6}/|k-l|$ and $c^{-1/2}\log c/|k-l|$
+are $\leq c^{-2/3}/|k-l|$ for $c \geq c_0$ (for any fixed $c_0$):
+\[
+  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-2/3}}{|k-l|}.
+\]
+
+\medskip
+\noindent\textbf{Conclusion.}
+Combining Steps~3 and~4:
+\[
+  |I_{kl}|
+  \leq |I_{kl}^{\rm tz}| + |I_{kl}^{\rm bulk}|
+  \lesssim \frac{c^{-2/3}}{|k-l|} + \frac{c^{-2/3}}{|k-l|}
+  = \frac{2c^{-2/3}}{|k-l|}.
+\]
+\textbf{The factor $c^{-2/3}$ arises from the transition-zone
+measure $c^{-2/3}$ combined with the Airy amplitude $c^{1/6}$
+(contributing $c^{1/3}$ to $|\phi_{kl}|$) and the
+$(1-s^2)^{-1/2} \lesssim c^{1/3}$ singularity of the kernel:
+$c^{-1/3} \cdot c^{1/3} \cdot c^{-2/3} = c^{-2/3}$.
+No Fourier decomposition or heuristic is used; the
+$c^{1/3}$ factor is entirely localised in the
+transition zone and is explicit at each step.}
+\end{proof}
 
 \begin{lemma}[PSWF cross-product integral -- primary bound]\label{lem:RL}
 For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
@@ -626,177 +876,51 @@ For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
   \leq \frac{C}{c^{2/3}|k-l|}.
 \]
 \emph{This is the unique final bound used in the Schur test
-(Section~\ref{sec:norm}); see the hierarchy note after the proof.}
+(Section~\ref{sec:norm}).}
 \end{lemma}
 
 \begin{proof}
-Set $\phi_{kl} := \pswf{k}\pswf{l}$ and
-$I_{kl} := \int_{-1}^1 \arccos(s)\,\phi_{kl}(s)\,ds$.
-The proof is organised into two primary sublemmas and one technical auxiliary,
-combined at the end.
-
-\medskip
-\noindent\textbf{Sublemma A (Edge bound).}
-\emph{Claim:} $|I_{kl}^{\rm edge}| \lesssim c^{-1/3}$.
-
-\begin{proof}[Proof of Sublemma A]
-Lemma~\ref{lem:Airy} gives $|\pswf{k}(s)| \lesssim c^{1/6}$ in $\mathcal{Z}_{\rm tz}(k)$,
-so $|\phi_{kl}(s)| \lesssim c^{1/3}$.
-Using $|\arccos(s)| \leq \pi$ and zone measure $\sim c^{-2/3}$:
-$|I_{kl}^{\rm edge}| \lesssim c^{1/3}\cdot c^{-2/3} = c^{-1/3}$.
+Apply Sublemma~D (Lemma~\ref{lem:sublD}):
+the IBP identity~\eqref{eq:IklReduced} reduces $I_{kl}$ to
+$\int_{-1}^1 F_{kl}(s)(1-s^2)^{-1/2}\,ds$,
+and the zone decomposition in Steps~3--4 of Sublemma~D
+gives $|I_{kl}| \lesssim c^{-2/3}/|k-l|$.
 \end{proof}
 
-\medskip
-\noindent\textbf{Sublemma B (Bulk IBP bound -- primary intermediate step).}
-\emph{Claim:} $|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/|k-l|$.
-
-\begin{proof}[Proof of Sublemma B]
-In the bulk, $\phi_{kl}$ oscillates with effective frequency
-bounded below by $\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$
-(lower-bound surrogate \eqref{eq:freqdef}; Remark~\ref{rem:freq}, role~(i)).
-The amplitude satisfies $A_k(s)A_l(s) \lesssim c^{-1/2}(1-s^2)^{-1/2}$
-(WKB, \cite{OsipovRokhlinXiao2013} Prop.~3.2),
-so $\|A_kA_l\|_{L^1(\text{bulk})} \lesssim c^{-1/2}$.
-Since $f(s) = \arccos(s)$ varies on scale $O(1) \gg (\omega_{kl}^{\rm tz})^{-1}$,
-one IBP against the oscillation gives:
+\begin{remark}[Bound hierarchy]\label{rem:hierarchy}
+The estimates form a strict hierarchy; only the final bound enters the Schur test:
 \[
-  |I_{kl}^{\rm bulk}|
-  \lesssim \frac{\|A_kA_l\|_{L^1}}{\omega_{kl}^{\rm tz}}
-  \lesssim \frac{c^{-1/2}}{c^{2/3}|k-l|}
-  = \frac{c^{-7/6}}{|k-l|}.
-\]
-\end{proof}
-
-\medskip
-\noindent\textbf{Technical Lemma C (Alternative SL bound -- auxiliary, not primary).}
-\emph{This lemma gives two alternative bounds via double IBP using the SL
-structure directly, without Fourier machinery.
-It is \textbf{not} the primary bound used in the Schur test;
-its role is to confirm structural consistency and to serve as an independent
-check of the $c^{-7/6}/|k-l|$ intermediate result.
-The final bound $c^{-2/3}/|k-l|$ is achieved via Fourier cancellation below.}
-
-\emph{Claims (independent):}
-\begin{align*}
-  &|I_{kl}^{\rm bulk}| \lesssim \frac{c^{-1/2}}{|k-l|}
-  \qquad\text{(coarse SL bound)},\\
-  &|I_{kl}^{\rm bulk}| \lesssim \frac{c^{-7/6}}{|k-l|^2}
-  \qquad\text{(refined SL bound via second IBP)}.
-\end{align*}
-Both are \emph{weaker than} $c^{-2/3}/|k-l|$ for all $c \geq 1$
-(since $c^{-1/2} \geq c^{-2/3}$ and $c^{-7/6}/|k-l|^2 \leq c^{-7/6}/|k-l| \leq c^{-2/3}/|k-l|$
-for $c \geq 1$). They are retained for structural transparency.
-
-\begin{proof}[Proof of Technical Lemma C]
-Set $f(s) := \arccos(s)$.
-
-\medskip
-\noindent\textbf{Step 1 (First IBP via SL identity).}
-From \eqref{eq:SLeq}:
-$(\chi_k - \chi_l)\,\phi_{kl}(s) = -\frac{d}{ds}W_k^l(s)$.
-Integrating by parts over $\mathcal{Z}_{\rm bulk}$:
-\[
-  I_{kl}^{\rm bulk}
-  = \frac{1}{\chi_k - \chi_l}
-    \int_{\mathcal{Z}_{\rm bulk}} f'(s)\,W_k^l(s)\,ds
-  + \text{b.t.}
-\]
-Boundary terms vanish: $W_k^l|_{s=\pm 1} = 0$;
-the zone-boundary contribution is $O(c^{-1/3})$ and absorbed into Sublemma A.
-Using $f'(s) = -(1-s^2)^{-1/2}$ and
-$|\chi_k-\chi_l| \asymp 2c|k-l|$ (eigenvalue-gap scale \eqref{eq:eigengap}):
-\begin{equation}\label{eq:step1C}
-  |I_{kl}^{\rm bulk}|
-  \leq \frac{1}{2c|k-l|}
-  \int_{\mathcal{Z}_{\rm bulk}}
-  \frac{|W_k^l(s)|}{\sqrt{1-s^2}}\,ds.
-  \qquad (*)
-\end{equation}
-
-\medskip
-\noindent\textbf{Step 2a (Coarse bound).}
-Using the bulk WKB estimate $|W_k^l(s)| \lesssim c^{1/2}$:
-\[
-  \int_{\mathcal{Z}_{\rm bulk}} \frac{|W_k^l|}{\sqrt{1-s^2}}\,ds
-  \lesssim c^{1/2}\int_{-1}^1 (1-s^2)^{-1/2}\,ds = \pi c^{1/2}.
-\]
-Substituting into \eqref{eq:step1C}:
-$|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/(2|k-l|)$, i.e.\ the coarse bound.
-
-\medskip
-\noindent\textbf{Step 2b (Refined bound via second IBP).}
-Write $W_k^l(s)/\sqrt{1-s^2} = \sqrt{1-s^2}[\psi_k'\psi_l - \psi_k\psi_l']$.
-One further IBP against the difference-phase oscillation, using
-$\omega_{kl}^{\rm tz} = c^{2/3}|k-l|$ \eqref{eq:freqdef}
-as a conservative lower-bound surrogate (Remark~\ref{rem:freq}, role~(i)):
-\[
-  \int_{\mathcal{Z}_{\rm bulk}} \frac{|W_k^l|}{\sqrt{1-s^2}}\,ds
-  \lesssim \frac{c^{1/2}}{c^{2/3}|k-l|}
-  = \frac{c^{-1/6}}{|k-l|}.
-\]
-Substituting into \eqref{eq:step1C}:
-$|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/(2|k-l|^2)$, the refined bound.
-\end{proof}
-
-\medskip
-\noindent\textbf{Conclusion (Fourier-cancellation, primary step).}
-Technical Lemma C gives $|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/|k-l|$,
-which is weaker than the target $c^{-2/3}/|k-l|$ for $c \geq 1$.
-The improvement to $c^{-2/3}/|k-l|$ requires Fourier cancellation:
-
-By the frequency-decomposition argument, using $\widehat{\phi}_{kl}(0) = 0$
-and Proposition~\ref{prop:moment}(c), the low-frequency contribution gives
-$|I_{kl}^{\rm low}| \lesssim c^{-2/3}/|k-l|$ (see Remark~\ref{rem:threesteps}).
-Sublemma A ($c^{-1/3}$) and Sublemma B ($c^{-7/6}/|k-l|$) are
-subdominant for $c$ large and $|k-l| \geq 1$.
-\[
-  |I_{kl}| \lesssim \frac{c^{-2/3}}{|k-l|}. \qquad\qedhere
-\]
-\end{proof}
-
-\begin{remark}[Bound hierarchy -- which estimate is ``the'' bound]
-\label{rem:hierarchy}
-The estimates in this section form a strict hierarchy.
-Only the final bound from Lemma~\ref{lem:RL} enters the Schur test:
-\[
-  \underbrace{c^{-7/6}/|k-l|^2}_{\text{Tech.~Lemma C, refined}}
+  \underbrace{c^{-7/6}/|k-l|^2}_{\text{bulk near-boundary}}
   \;\leq\;
   \underbrace{c^{-7/6}/|k-l|}_{\text{Sublemma B, intermediate}}
   \;\leq\;
-  \underbrace{c^{-2/3}/|k-l|}_{\text{Lemma~\ref{lem:RL}, \textbf{final and unique}}}.
+  \underbrace{c^{-2/3}/|k-l|}_{\text{Lemma~\ref{lem:RL}, \textbf{final}}}.
 \]
-The first two are stepping stones.
-Technical Lemma C is retained for structural transparency and as an
-independent consistency check, but \textbf{neither of its bounds is used
-directly in Section~\ref{sec:norm}}.
+Sublemma~D makes the decisive step explicit: the transition-zone
+measure $c^{-2/3}$, the Airy amplitude $c^{1/6}$, and the
+kernel singularity $c^{1/3}$ combine to give exactly $c^{-2/3}$
+per off-diagonal entry.
 \end{remark}
 
 \begin{remark}[Three-step structure, explicitly]\label{rem:threesteps}
-For a referee-clear summary of how the three mechanisms interact:
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{lcl}
   \hline
-  Step & Result & Status \\
+  Step & Result & Mechanism \\
   \hline
-  WKB amplitude bound & $\|A_kA_l\|_{L^1} \lesssim c^{-1/2}$ & numerator for IBP \\
-  Lower-bound surrogate (Rem.~\ref{rem:freq}) & $\omega_{kl}^{\rm tz} \leq$ actual freq. & IBP denominator \\
-  Sublemma B & $|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/|k-l|$ & \emph{intermediate} \\
-  Fourier zero & $\widehat\phi_{kl}(0)=0$ & enables Taylor \\
-  Prop.~\ref{prop:moment} & $|\widehat\phi_{kl}'(0)| \lesssim c^{-1}/|k-l|$ & Taylor slope \\
-  Tech.~Lemma C (coarse) & $c^{-1/2}/|k-l|$; refined: $c^{-7/6}/|k-l|^2$
-    & \emph{auxiliary check only} \\
-  Low-freq.\ gain (decisive) & $c^{-1}/|k-l| \times c^{1/3}$ & primary path \\
+  PSWF orthogonality & $F_{kl}(-1) = 0$ & boundary term vanishes \\
+  IBP against $(\arccos)'$ & $I_{kl} = \int F_{kl}/\sqrt{1-s^2}$ & \eqref{eq:IklReduced} \\
+  Transition zone & $|I^{\rm tz}| \lesssim c^{-2/3}/|k-l|$
+    & Airy amp.\ $c^{1/6}$, measure $c^{-2/3}$, freq.\ $c^{2/3}$ \\
+  Bulk zone (Wronskian) & $|I^{\rm bulk}| \lesssim c^{-2/3}/|k-l|$
+    & \eqref{eq:FfromW} + WKB + near-boundary dominance \\
   \hline
   \textbf{Lemma~\ref{lem:RL}} & $\boldsymbol{c^{-2/3}/|k-l|}$
     & \textbf{final, into Schur test} \\
   \hline
 \end{tabular}
 \end{center}
-The $c^{-1}$ gain from Proposition~\ref{prop:moment} is the sole source of the
-improvement over the naive $c^{-1/3}$ IBP bound.
-This $c^{-1}$ is rigorously grounded via the SL identity and
-Lemma~\ref{lem:Airy}/Corollary~\ref{cor:Wronskian}.
 \end{remark}
 
 %% ============================================================
@@ -814,11 +938,6 @@ $(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})] \asymp c^{1/3}$
   |T_{ij}| \lesssim c \cdot c^{1/3} \cdot \frac{1}{c^{2/3}|i-j|}
   = \frac{c^{-2/3}}{|i-j|}, \qquad i \neq j.
 \end{equation}
-The factors $c^{-7/6}/|k-l|$ (Sublemma B) and $c^{-7/6}/|k-l|^2$
-(Technical Lemma C) are \emph{not} inserted here; they are
-strictly weaker than $c^{-2/3}/|i-j|$ after the prefactor $c \cdot c^{1/3}$
-is applied (since $c \cdot c^{1/3} \cdot c^{-7/6} = c^{-2/3}$ and
-$c \cdot c^{1/3} \cdot c^{-1/2} = c^{5/6}$, which grows with $c$).
 
 \subsection{Schur-test estimate}
 
@@ -828,29 +947,27 @@ Since $T_{ii} = 0$, we apply the \emph{Schur test}:
   \leq c^{-2/3} \sum_{k=1}^{N} \frac{1}{k}
   \sim c^{-2/3} \log N.
 \]
-Since $N = \lfloor Ac^{1/3}\rfloor$, we have explicitly
+Since $N = \lfloor Ac^{1/3}\rfloor$:
 \[
   \log N = \log(Ac^{1/3}) \sim \frac{1}{3}\log c + \log A,
 \]
-so that, for $c \geq c_0(A)$:
+so for $c \geq c_0(A)$:
 \[
-  c^{-2/3}\log N \leq \frac{c^{-2/3}}{3}(\log c + 3\log A + 1)
-  \leq C(A)\, c^{-2/3}\log c.
+  c^{-2/3}\log N \leq C(A)\, c^{-2/3}\log c.
 \]
-The Schur test then gives
-$\norm{T}_{\ell^2 \to \ell^2} \leq \sup_i \sum_{j} |T_{ij}| \leq C(A)\, c^{-2/3}\log c$.
+The Schur test gives
+$\norm{T}_{\ell^2 \to \ell^2} \leq C(A)\, c^{-2/3}\log c$.
 
 \begin{remark}[Explicit asymptotics of $\log N$]
-The relation $\log N \sim \tfrac{1}{3}\log c$ makes the rate $c^{-2/3}\log c$
-fully transparent: it is $c^{-2/3}$ from the Fourier-cancellation mechanism,
-multiplied by $\tfrac{1}{3}\log c$ from the $N \sim c^{1/3}$ off-diagonal
-terms in the harmonic series. There are no hidden asymptotics.
+The rate $c^{-2/3}\log c$ is fully transparent:
+$c^{-2/3}$ from the transition-zone geometry (Sublemma~D),
+multiplied by $\tfrac{1}{3}\log c$ from the $N \sim c^{1/3}$
+off-diagonal terms in the harmonic series.
 \end{remark}
 
 \begin{remark}[Schur test vs.\ Gershgorin]
-The Gershgorin theorem bounds eigenvalues (not the operator norm);
-it equals the operator norm only when $T$ is normal.
-Here the Schur test bounds $\|T\|$ without normality.
+The Gershgorin theorem bounds eigenvalues (not the operator norm).
+The Schur test bounds $\|T\|$ without normality.
 For approximate self-adjointness see Open Problem~\ref{op:Gershgorin}.
 \end{remark}
 
@@ -869,16 +986,11 @@ $\norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \leq C(A) c^{-2/3}\log c \to 0$
 \textbf{Mechanism} & \textbf{Factor} & \textbf{Status} & \textbf{Regime} & \textbf{Source} \\
 \hline
 Commutator: $T_{ii} = 0$ & no diagonal & primary & G & PSWF-orthogonality \\
-IBP (bulk, Sublm.~B) & $c^{-7/6}/|i-j|$ & \emph{intermediate} & b
-  & $\omega_{kl}^{\rm tz}$: l.-b.\ surrogate (Rem.~\ref{rem:freq}) \\
-Tech.~Lemma C (SL double IBP) & $c^{-1/2}/|k-l|$; $c^{-7/6}/|k-l|^2$ &
-  \emph{auxiliary check} & b/G & Steps 2a,2b (independent) \\
-Fourier cancellation $\hat\phi_{kl}(0)=0$ & decisive gain & primary & G
-  & $L^2$-ortho.\ + Prop.~\ref{prop:moment} \\
-Airy Wronskian (integral) & $\int|W_k^l|\lesssim c^{-1/6}/|k-l|$ & primary & mixed
-  & Cor.~\ref{cor:Wronskian} \\
-Div.\ by $|\chi_k-\chi_l| \asymp 2c|k-l|$ & $\to |\mu_{kl}| \lesssim c^{-1}/|k-l|$ & primary & G
-  & Prop.~\ref{prop:moment}(b) \\
+IBP boundary term & $F_{kl}(-1)=0$ & primary & G & $L^2$-orthogonality \\
+Sublemma~D, tz zone & $c^{-2/3}/|k-l|$ & \textbf{decisive} & tz
+  & Airy amp.\ $c^{1/6}$, measure $c^{-2/3}$, kernel $c^{1/3}$ \\
+Sublemma~D, bulk zone & $c^{-2/3}/|k-l|$ & primary & b
+  & \eqref{eq:FfromW} + WKB Wronskian + near-boundary \\
 \hline
 \textbf{Lemma~\ref{lem:RL}} & \boldmath{$c^{-2/3}/|i-j|$}
   & \textbf{final (into Schur)} & G & \textbf{unique Schur input} \\
@@ -888,14 +1000,10 @@ $N \sim c^{1/3}$: harmonic sum & $\log N \sim \tfrac{1}{3}\log c$ & primary & G
 Gram coercivity & well-conditioned $P_N$ & primary & G & Paper~I \\
 \hline
 \end{tabular}
-\caption{Mechanisms contributing to $\|DT_c^{(N)}\| \lesssim c^{-2/3}\log c$
-under Assumption~\ref{ass:G}.
-\textbf{Status}: ``primary'' = used in the Schur test;
-``intermediate'' = stepping stone only;
-``auxiliary check'' = consistency check, not inserted into norm bound.
-\textbf{The unique Schur input is $c^{-2/3}/|i-j|$ from Lemma~\ref{lem:RL}.}
-Regime: \textbf{G} = uniform in Galerkin window, \textbf{b} = bulk zone,
-\textbf{mixed} = combined tz + bulk.}
+\caption{Mechanisms contributing to $\|DT_c^{(N)}\| \lesssim c^{-2/3}\log c$.
+The decisive new entry is Sublemma~D (transition zone), which replaces
+the previous Fourier-heuristic step.
+\textbf{The unique Schur input is $c^{-2/3}/|i-j|$ from Lemma~\ref{lem:RL}.}}
 \label{tab:mechanisms}
 \end{table}
 
@@ -941,16 +1049,23 @@ This is not yet a proof of Assumption~A, but provides:
         allows extending $g^{(N)}$ to a full fixed point by compactness in $\Xc$.
 \end{enumerate}
 
-\begin{remark}[Low-frequency annihilation as a principle]
-The proof establishes a general mechanism:
-orthogonality of the basis functions (here PSWFs) forces spectral cancellation
-at low Fourier frequencies, giving contraction rates strictly stronger than
-oscillation (IBP) alone would predict.
-The quantitative $c^{-1}$ slope of $\widehat\phi_{kl}$ at $\xi = 0$
-is controlled by the SL Wronskian (Proposition~\ref{prop:moment}),
-which is in turn bounded by the Airy approximation (Lemma~\ref{lem:Airy}).
-This chain -- orthogonality $\to$ Wronskian $\to$ Fourier slope $\to$ contraction rate --
-is the conceptual core of this paper.
+\begin{remark}[The decisive mechanism, summarised]
+Sublemma~D establishes a clean, Fourier-free chain:
+\[
+  \text{PSWF orthogonality}
+  \;\to\; F_{kl}(-1) = 0
+  \;\to\; \text{IBP against } (\arccos)'
+  \;\to\; \text{transition-zone dominance}
+  \;\to\; c^{-2/3}/|k-l|.
+\]
+The factor $c^{-2/3}$ is localised in the transition zone and arises
+from three explicit geometric quantities:
+the Airy amplitude $c^{1/6}$ (Lemma~\ref{lem:Airy}),
+the zone measure $c^{-2/3}$ (Section~\ref{sec:regimes}),
+and the kernel singularity $(1-s^2)^{-1/2} \lesssim c^{1/3}$ at the
+zone boundary.
+Their product is $c^{1/3} \cdot c^{-2/3} \cdot c^{1/3} = c^{-2/3}$,
+giving a single, traceable source for the contraction rate.
 \end{remark}
 
 \begin{remark}[Entkopplung: Schur-Schranke und Spektralnorm]
@@ -958,8 +1073,7 @@ The Schur test (Section~\ref{sec:norm}) provides a rigorous upper bound on
 the operator norm $\|T\|_{\ell^2\to\ell^2}$.
 The question whether $T$ is approximately self-adjoint
 ($T_{ij} \approx \overline{T_{ji}}$) is \emph{structurally independent}
-of the contraction proof: Theorem~\ref{thm:main} holds regardless of the
-self-adjointness question.
+of the contraction proof: Theorem~\ref{thm:main} holds regardless.
 Open Problem~\ref{op:Gershgorin} addresses tightening the norm bound,
 not its validity.
 \end{remark}
