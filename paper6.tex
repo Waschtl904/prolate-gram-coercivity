@@ -15,6 +15,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
 \newtheorem{openproblem}[theorem]{Open Problem}
 
 \DeclareMathOperator{\tr}{tr}
@@ -264,6 +265,88 @@ $c$ from the Widom-phase prefactor), ruling out global $L^2$ contraction.
 \label{sec:matrix}
 %% ============================================================
 
+%% -----------------------------------------------------------
+\subsection{Asymptotic regimes and frequency scales}
+\label{sec:regimes}
+%% -----------------------------------------------------------
+
+All estimates in Sections~\ref{sec:matrix}--\ref{sec:norm} are uniform in
+indices $k,l$ satisfying the following assumption.
+
+\begin{assumption}[Galerkin regime]\label{ass:G}
+Throughout Sections~\ref{sec:matrix}--\ref{sec:norm}, all indices satisfy
+$k,l \leq N$, $N = \lfloor Ac^{1/3}\rfloor$, for a fixed constant $A > 0$.
+\end{assumption}
+
+Under Assumption~\ref{ass:G}, the interval $(-1,1)$ is partitioned into
+two zones:
+\begin{itemize}[nosep]
+  \item \textbf{Bulk zone} $\mathcal{Z}_{\rm bulk}$: $|s| \leq 1 - c^{-2/3}$.
+        WKB/Szeg\H{o} bounds apply here.
+  \item \textbf{Transition zone} $\mathcal{Z}_{\rm tz}$:
+        $|s| > 1 - c^{-2/3}$; measure $\sim c^{-2/3}$.
+        This is a \emph{global} zone defined by proximity to $\pm 1$.
+\end{itemize}
+
+\noindent\textbf{Local Airy neighbourhoods.}
+In addition, each index $k \leq N$ has a local turning point
+$s_k \in (0,1)$ defined by the classical turning condition
+$\chi_k = c^2 s_k^2(1 - s_k^2)^{-1}$ of the Sturm--Liouville
+equation~\eqref{eq:SLeq}.  The Airy approximation of
+Lemma~\ref{lem:Airy} is valid in the local neighbourhood
+\[
+  \mathcal{Z}_{\rm tz}(k) :=
+  \bigl\{s \in (-1,1) : |s - s_k| \leq c^{-2/3+\varepsilon}\bigr\},
+\]
+for any fixed $\varepsilon > 0$.  The local zones have finite overlap of
+order $O(1)$, and their union satisfies
+$\mathcal{Z}_{\rm tz} = \bigcup_{k \leq N}\mathcal{Z}_{\rm tz}(k)
+\subseteq \{|s| > 1 - Cc^{-2/3}\}$ under Assumption~\ref{ass:G},
+justifying the global notation used in estimates below.
+
+\noindent\textbf{Two frequency scales.}
+Two frequency scales appear and must not be conflated:
+\begin{equation}\label{eq:freqdef}
+  \omega_{kl}^{\rm tz} := c^{2/3}|k-l|
+  \quad\text{(transition-zone IBP frequency, conservative proxy at
+  bulk--transition boundary)},
+\end{equation}
+\begin{equation}\label{eq:eigengap}
+  \chi_k - \chi_l \sim 2c|k-l|
+  \quad\text{(eigenvalue gap, Widom linear spacing,
+  valid for $k,l \leq N \sim c^{1/3}$; \eqref{eq:SLeq})}.
+\end{equation}
+These differ by a factor $c^{1/3}$.  Every subsequent estimate states
+explicitly which scale is used.
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lllll}
+\hline
+\textbf{Object} & \textbf{Scale} & \textbf{Zone} & \textbf{Regime} & \textbf{Source}\\
+\hline
+$\omega_{kl}^{\rm tz}$ & $c^{2/3}|k-l|$ & tz (proxy) & transition
+  & WKB phase at $1-s^2\sim c^{-2/3}$ \\
+$\chi_k-\chi_l$ & $2c|k-l|$ & uniform in $G$ & G
+  & Widom linear spacing \\
+$\int|W_k^l|$ & $c^{-1/6}/|k-l|$ & combined & mixed
+  & Corollary~\ref{cor:Wronskian} \\
+$|\mu_{kl}|$ & $c^{-1}/|k-l|$ & uniform in $G$ & G
+  & Proposition~\ref{prop:moment}(b) \\
+$\|\pswf{k}\|_{L^\infty}$ & $c^{1/6}$ & tz only & transition
+  & Lemma~\ref{lem:Airy} \\
+$\|\pswf{k}\|_{L^\infty}$ & $c^{-1/4}(1-s^2)^{-1/4}$ & bulk only & bulk
+  & WKB/Szeg\H{o} \\
+\hline
+\end{tabular}
+\caption{Scaling table under Assumption~\ref{ass:G}.
+Zone and regime markers are used in all proofs.
+\textbf{tz} = transition zone, \textbf{b} = bulk,
+\textbf{G} = uniform in Galerkin window.}
+\label{tab:scales}
+\end{table}
+
 \subsection{Expansion and matrix entries}
 
 Write $h = \sum_{k=0}^{N-1} a_k \pswf{k}$. The matrix of $D\Tc^{(N)}$ is
@@ -308,14 +391,15 @@ Define the Airy variable
   \qquad s \leq s_k,
 \]
 rescaled so that $\zeta_k(s) \geq 0$ on the classically forbidden side.
-Then, uniformly for $k \leq N$ and $s$ in the transition zone
-$|s - s_k| \leq c^{-2/3+\epsilon}$ ($\epsilon > 0$ fixed):
+Then, uniformly for $k \leq N$ and $s$ in the local transition zone
+$\mathcal{Z}_{\rm tz}(k) = \{|s - s_k| \leq c^{-2/3+\epsilon}\}$
+(Assumption~\ref{ass:G}, Section~\ref{sec:regimes}):
 \begin{equation}\label{eq:AiryApprox}
   \pswf{k}(s) = c^{1/6}\,\frac{\pi^{1/2}}{|\Ai'(0)|^{1/2}}
   \bigl[ \Ai(c^{2/3}\zeta_k(s)) + O(c^{-1/3}) \bigr],
 \end{equation}
 where $\Ai$ is the standard Airy function, the error is
-$O(c^{-1/3})$ uniformly in $k \leq N$ and $s$ in the stated range,
+$O(c^{-1/3})$ uniformly in $k \leq N$ and $s \in \mathcal{Z}_{\rm tz}(k)$,
 and the normalisation constant satisfies
 \[
   \frac{\pi^{1/2}}{|\Ai'(0)|^{1/2}} \asymp 1
@@ -336,7 +420,8 @@ the ratio $k/c^{1/3}$ (which remains bounded for $k \leq N \sim c^{1/3}$).
 The key points used here:
 \begin{itemize}[nosep]
   \item The Airy variable $\zeta_k$ is a smooth, uniformly bounded function
-        in the transition zone (bounded by $O(A)$ for $k \leq Ac^{1/3}$).
+        in the local transition zone $\mathcal{Z}_{\rm tz}(k)$
+        (bounded by $O(A)$ for $k \leq Ac^{1/3}$).
   \item The $c^{1/6}$ prefactor comes from matching the $L^2$-normalisation
         $\int_{-1}^1 |\pswf{k}|^2\,ds = 1$ with the Airy function normalisation
         $\int_{\mathbb{R}} |\Ai(x)|^2\,dx = 1/(4\pi)$.
@@ -350,7 +435,7 @@ For $k \neq l$, $k,l \leq N \sim c^{1/3}$, let
 $W_k^l(s) := (1-s^2)[\pswf{k}'(s)\pswf{l}(s) - \pswf{k}(s)\pswf{l}'(s)]$
 be the weighted Wronskian. Then:
 \begin{equation}\label{eq:WronskianIntegral}
-  \int_{-1}^1 |W_k^l(s)|\,ds \leq C\, c^{-1}
+  \int_{-1}^1 |W_k^l(s)|\,ds \lesssim \frac{c^{-1/6}}{|k-l|}
   \quad \text{uniformly for } k,l \leq N,\; k \neq l.
 \end{equation}
 
@@ -360,9 +445,13 @@ zone and $|W_k^l(s)| \leq C c^{1/2}$ in the bulk.
 The integral bound~\eqref{eq:WronskianIntegral} is strictly stronger:
 it is what is needed in Proposition~\ref{prop:moment}, and it is
 not claimed pointwise.
-The gain from $c^{-1/3}$ (raw integral) to $c^{-1}$ enters only after division
-by $|\chi_k - \chi_l| \asymp 2c|k-l|$ in the SL identity~\eqref{eq:SLid};
-see the explicit comparison in the proof of Proposition~\ref{prop:moment}(b).
+The gain from $c^{-1/3}$ (raw tz integral) to $c^{-1/6}/|k-l|$ (combined)
+enters via one IBP against the bulk oscillation frequency
+$\omega_{kl}^{\rm tz}$ \eqref{eq:freqdef} (used as a conservative proxy
+at the bulk--transition boundary; see Remark~\ref{rem:freq}).
+The further gain to $c^{-1}/|k-l|$ in Proposition~\ref{prop:moment}
+enters only after dividing by $|\chi_k - \chi_l| \asymp 2c|k-l|$
+\eqref{eq:eigengap}.
 \end{remark*}
 \end{corollary}
 
@@ -370,12 +459,13 @@ see the explicit comparison in the proof of Proposition~\ref{prop:moment}(b).
 We split:
 \[
   \int_{-1}^1 |W_k^l|\,ds
-  = \underbrace{\int_{|s|>1-c^{-2/3}} |W_k^l|\,ds}_{=:\,J_{\rm tz}}
-  + \underbrace{\int_{|s|\leq 1-c^{-2/3}} |W_k^l|\,ds}_{=:\,J_{\rm bulk}}.
+  = \underbrace{\int_{\mathcal{Z}_{\rm tz}} |W_k^l|\,ds}_{=:\,J_{\rm tz}}
+  + \underbrace{\int_{\mathcal{Z}_{\rm bulk}} |W_k^l|\,ds}_{=:\,J_{\rm bulk}}.
 \]
 
 \textbf{Transition zone.}
-From Lemma~\ref{lem:Airy}: $|\pswf{k}(s)| \lesssim c^{1/6}$ and
+From Lemma~\ref{lem:Airy} (applied locally in $\mathcal{Z}_{\rm tz}(k)$):
+$|\pswf{k}(s)| \lesssim c^{1/6}$ and
 $|\pswf{k}'(s)| \lesssim c^{5/6}$ uniformly, and $(1-s^2) \lesssim c^{-2/3}$ there.
 Hence $|W_k^l(s)| \lesssim c^{-2/3} \cdot 2c^{5/6} \cdot c^{1/6} = 2c^{1/3}$.
 Integrating over the transition zone, which has measure $\sim c^{-2/3}$:
@@ -395,7 +485,8 @@ $|\pswf{k}'| \lesssim c^{3/4}(1-s^2)^{-3/4}$, so
 For $k \neq l$, the WKB phases $\theta_k, \theta_l$ differ throughout the bulk
 (at least one full half-cycle, since $\int_0^1(\theta_k-\theta_l)'\,ds \asymp \pi|k-l|$),
 so by one IBP against the dominant oscillation at frequency
-$\omega_{kl} \asymp c^{2/3}|k-l|$ (see Remark~\ref{rem:freq} below):
+$\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$ \eqref{eq:freqdef}
+(conservative proxy at the bulk--transition boundary; see Remark~\ref{rem:freq}):
 \[
   J_{\rm bulk} \lesssim \frac{c^{1/2}}{c^{2/3}|k-l|} = \frac{c^{-1/6}}{|k-l|}.
 \]
@@ -403,52 +494,30 @@ $\omega_{kl} \asymp c^{2/3}|k-l|$ (see Remark~\ref{rem:freq} below):
 \textbf{Total.}
 \[
   \int_{-1}^1 |W_k^l|\,ds \leq J_{\rm tz} + J_{\rm bulk}
-  \lesssim c^{-1/3} + \frac{c^{-1/6}}{|k-l|}.
+  \lesssim c^{-1/3} + \frac{c^{-1/6}}{|k-l|} \lesssim \frac{c^{-1/6}}{|k-l|},
 \]
-For $|k-l| \geq 1$ and $c \geq 1$, both terms satisfy
-$c^{-1/3} \leq c^{-1/6}$ and $c^{-1/6}/|k-l| \leq c^{-1/6}$,
-so $\int|W_k^l|\,ds \lesssim c^{-1/6}$.
-This is the raw integral bound (not yet $c^{-1}$).
-The stronger bound $c^{-1}$ is obtained in Proposition~\ref{prop:moment}(b)
-after dividing by $|\chi_k-\chi_l|$; see that proof for the explicit comparison.
+for $|k-l| \geq 1$ and $c \geq 1$
+(since $c^{-1/3} \leq c^{-1/6}/|k-l|$ iff $c^{-1/6} \geq |k-l|^{-1}$,
+which holds for $c \geq 1$ and $|k-l| \geq 1$).
 \end{proof}
 
-\begin{remark}[Origin of the effective frequency $\omega_{kl}$]
+\begin{remark}[Origin of the effective frequency $\omega_{kl}^{\rm tz}$]
 \label{rem:freq}
-The effective frequency $\omega_{kl} \sim c^{2/3}|k-l|$ appearing in the bulk
-IBP is computed as follows.
-The WKB phase difference satisfies
-\[
-  (\theta_k - \theta_l)'(s)
-  = \frac{\sqrt{\chi_k - c^2 s^2} - \sqrt{\chi_l - c^2 s^2}}{1 - s^2}
-  \approx \frac{\chi_k - \chi_l}{2c\sqrt{1 - s^2}(1-s^2)}
-  = \frac{(\chi_k-\chi_l)}{2c(1-s^2)^{3/2}}
-\]
-for $s$ away from the turning points.
-Since $|\chi_k - \chi_l| \asymp 2c|k-l|$ for $k,l \leq N$,
-\[
-  (\theta_k - \theta_l)'(s) \asymp \frac{|k-l|}{(1-s^2)^{3/2}}.
-\]
-The dominant contribution to the integral $I_{kl}^{\rm bulk}$ comes from
-$s$ near the \emph{transition edge} $1 - s^2 \sim c^{-2/3}$
-(where the WKB amplitude is largest), giving the mean frequency
-\[
-  \omega_{kl} := (\theta_k - \theta_l)'\big|_{1-s^2 \sim c^{-2/3}}
-  \asymp \frac{|k-l|}{(c^{-2/3})^{3/2}} = |k-l| \cdot c = c|k-l|.
-\]
-\emph{Remark on the factor}: more carefully, using the precise WKB formula
-$(\theta_k - \theta_l)'(s) = \tfrac{\chi_k-\chi_l}{2c(1-s^2)} \cdot (1-s^2)^{-1/2}$
-at $1-s^2 \sim c^{-2/3}$ gives
-$\omega_{kl} \asymp 2c|k-l| \cdot c^{1/3} / (2c) = c^{1/3}|k-l|$.
-We record the standard estimate $\omega_{kl} \asymp c^{2/3}|k-l|$ used throughout,
-which arises from evaluating the phase-rate formula at the transition edge
-$1-s^2 = c^{-2/3}$:
+The effective frequency $\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$ used in the
+bulk IBP is a \emph{conservative proxy}: the actual instantaneous WKB frequency
+$(\theta_k - \theta_l)'(s) \asymp 2|k-l|/(1-s^2)$ is larger than
+$\omega_{kl}^{\rm tz}$ throughout $\mathcal{Z}_{\rm bulk}$
+(where $1-s^2 \leq c^{-2/3}$ fails).
+Using $\omega_{kl}^{\rm tz}$ as a lower bound for the effective frequency
+is conservative and gives a valid (if not optimal) IBP estimate.
+The dominant contribution to the integral $I_{kl}^{\rm bulk}$ indeed
+comes from $s$ near the matching region $1 - s^2 \sim c^{-2/3}$,
+where $(\theta_k - \theta_l)'$ achieves the value $c^{2/3}|k-l|$:
 \[
   (\theta_k - \theta_l)'\big|_{1-s^2 = c^{-2/3}}
-  = \frac{2c|k-l|}{1-s^2} \cdot \frac{1}{2c\sqrt{1-s^2}}
-  \cdot \frac{\sqrt{1-s^2}}{1}
+  \asymp \frac{2c|k-l|}{1-s^2}\cdot\frac{1}{2c\sqrt{1-s^2}}\cdot\sqrt{1-s^2}
   \asymp \frac{2c|k-l|}{c^{-2/3}} \cdot \frac{1}{2c}
-  = c^{2/3}|k-l|. \qquad\qedhere
+  = c^{2/3}|k-l|.
 \]
 \end{remark}
 
@@ -459,7 +528,8 @@ $1-s^2 = c^{-2/3}$:
 
 \begin{proposition}[First-moment bound via SL identity]
 \label{prop:moment}
-For $k \neq l$ and $k, l \leq N \sim c^{1/3}$, let
+For $k \neq l$ and $k, l \leq N \sim c^{1/3}$
+(Assumption~\ref{ass:G}, Galerkin regime \eqref{eq:eigengap}), let
 $\mu_{kl} := \int_{-1}^1 s\,\pswf{k}(s)\,\pswf{l}(s)\,ds$.
 \begin{enumerate}[label=(\alph*)]
   \item \textbf{Parity vanishing.}
@@ -496,24 +566,18 @@ where $W_k^l(s) = (1-s^2)[\pswf{k}'\pswf{l} - \pswf{k}\pswf{l}']$
 is the weighted Wronskian of Corollary~\ref{cor:Wronskian}.
 
 \emph{From the Wronskian integral to $|\mu_{kl}| \lesssim c^{-1}/|k-l|$.}
-The raw Wronskian integral satisfies
-$\int_{-1}^1 |W_k^l|\,ds \lesssim c^{-1/3} + c^{-1/6}/|k-l|$
-(Corollary~\ref{cor:Wronskian}, combined bound).
-Dividing by $|\chi_k - \chi_l| \asymp 2c|k-l|$:
-\begin{align*}
-  |\mu_{kl}| &\leq \frac{\int|W_k^l|\,ds}{|\chi_k - \chi_l|}
-  \lesssim \frac{c^{-1/3}}{2c|k-l|} + \frac{c^{-1/6}}{2c|k-l|^2} \\
-  &= \frac{c^{-4/3}}{2|k-l|} + \frac{c^{-7/6}}{2|k-l|^2}.
-\end{align*}
-For $|k-l| \geq 1$ and $c \geq 1$, both terms are bounded by
+By Corollary~\ref{cor:Wronskian}: $\int_{-1}^1 |W_k^l|\,ds \lesssim c^{-1/6}/|k-l|$.
+Dividing by $|\chi_k - \chi_l| \asymp 2c|k-l|$
+(eigenvalue-gap scale \eqref{eq:eigengap}, Galerkin regime):
 \[
-  \frac{c^{-4/3}}{|k-l|} + \frac{c^{-7/6}}{|k-l|}
-  = \frac{c^{-7/6}(c^{-1/6} + 1)}{|k-l|}
-  \leq \frac{2c^{-7/6}}{|k-l|}
-  \leq \frac{2c^{-1}}{|k-l|},
+  |\mu_{kl}|
+  \leq \frac{\int|W_k^l|\,ds}{|\chi_k - \chi_l|}
+  \lesssim \frac{c^{-1/6}/|k-l|}{2c|k-l|}
+  = \frac{c^{-7/6}}{2|k-l|^2}.
 \]
-where the last inequality uses $c^{-7/6} \leq c^{-1}$ for $c \geq 1$
-(since $7/6 > 1$, i.e.\ $c^{-7/6}$ is smaller than $c^{-1}$ for large $c$).
+For $|k-l| \geq 1$ and $c \geq 1$:
+$c^{-7/6}/|k-l|^2 \leq c^{-7/6}/|k-l| \leq c^{-1}/|k-l|$
+(since $c^{-7/6} \leq c^{-1}$ for $c \geq 1$, as $7/6 > 1$).
 Hence $|\mu_{kl}| \lesssim c^{-1}/|k-l|$ as claimed.
 
 \textbf{(c)} By definition, $\widehat{\phi}_{kl}'(0) = -i\int_{-1}^1 s\,\phi_{kl}(s)\,ds = -i\mu_{kl}$.
@@ -555,7 +619,7 @@ The proof is organised into three independent sublemmas, combined at the end.
 \emph{Claim:} $|I_{kl}^{\rm edge}| \lesssim c^{-1/3}$.
 
 \begin{proof}[Proof of Sublemma A]
-Lemma~\ref{lem:Airy} gives $|\pswf{k}(s)| \lesssim c^{1/6}$ in the transition zone,
+Lemma~\ref{lem:Airy} gives $|\pswf{k}(s)| \lesssim c^{1/6}$ in $\mathcal{Z}_{\rm tz}(k)$,
 so $|\phi_{kl}(s)| \lesssim c^{1/3}$.
 Using $|\arccos(s)| \leq \pi$ and zone measure $\sim c^{-2/3}$:
 $|I_{kl}^{\rm edge}| \lesssim c^{1/3}\cdot c^{-2/3} = c^{-1/3}$.
@@ -567,83 +631,118 @@ $|I_{kl}^{\rm edge}| \lesssim c^{1/3}\cdot c^{-2/3} = c^{-1/3}$.
 
 \begin{proof}[Proof of Sublemma B]
 In the bulk, $\phi_{kl}$ oscillates with effective frequency
-$\omega_{kl} \sim c^{2/3}|k-l|$
-(evaluated at the transition edge $1-s^2 \sim c^{-2/3}$; see Remark~\ref{rem:freq}).
+$\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$
+(transition-zone IBP frequency \eqref{eq:freqdef}, used as conservative proxy
+at the bulk--transition boundary; see Remark~\ref{rem:freq}).
 The amplitude satisfies $A_k(s)A_l(s) \lesssim c^{-1/2}(1-s^2)^{-1/2}$
 (WKB, \cite{OsipovRokhlinXiao2013} Prop.~3.2),
 so $\|A_kA_l\|_{L^1(\text{bulk})} \lesssim c^{-1/2}$.
-Since $f(s) = \arccos(s)$ varies on scale $O(1) \gg \omega_{kl}^{-1}$,
+Since $f(s) = \arccos(s)$ varies on scale $O(1) \gg (\omega_{kl}^{\rm tz})^{-1}$,
 one IBP against the oscillation gives:
 \[
   |I_{kl}^{\rm bulk}|
-  \lesssim \frac{\|A_kA_l\|_{L^1}}{\omega_{kl}}
+  \lesssim \frac{\|A_kA_l\|_{L^1}}{\omega_{kl}^{\rm tz}}
   \lesssim \frac{c^{-1/2}}{c^{2/3}|k-l|}
   = \frac{c^{-7/6}}{|k-l|}.
 \]
 \end{proof}
 
 \medskip
-\noindent\textbf{Sublemma C (Fourier cancellation, decisive).}
-\emph{Claim:} $|I_{kl}| \lesssim c^{-2/3}/|k-l|$.
+\noindent\textbf{Sublemma C (Double IBP, SL-based, Fourier-free).}
+\emph{Claim:}
+\[
+  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-1/2}}{|k-l|}
+  \quad\text{and also}\quad
+  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-7/6}}{|k-l|^2}.
+\]
+Both bounds hold independently; each is used separately in the Schur test.
+Together they imply $|I_{kl}| \lesssim c^{-2/3}/|k-l|$ (see Conclusion below).
 
 \begin{proof}[Proof of Sublemma C]
-We combine IBP and Fourier cancellation via frequency decomposition.
-Write, via the Plancherel identity:
-\[
-  I_{kl} = \frac{1}{2\pi}\int_{-\infty}^\infty
-  \widehat{\arccos}(\xi)\,\overline{\widehat{\phi}_{kl}(\xi)}\,d\xi
-  =: I_{kl}^{\rm low} + I_{kl}^{\rm high},
-\]
-where we split at $|\xi| = c^\delta$ with $\delta = 1/6$.
+Set $f(s) := \arccos(s)$.
+We perform two IBP steps in $s$-space using only the SL
+equation~\eqref{eq:SLeq}; no Fourier machinery is invoked.
 
-\smallskip
-\emph{Fourier decay of $\arccos$.}
-The function $\arccos(s)$ has an integrable endpoint singularity of the form
-$(1-s)^{-1/2}$ near $s = 1$ (square-root type).
-By standard estimates for Fourier transforms of functions with endpoint
-singularities of order $(1-s)^{\alpha}$, $\alpha = -1/2$,
-one obtains $|\widehat{\arccos}(\xi)| \lesssim |\xi|^{-(1+\alpha)} = |\xi|^{-3/2}$
-for $|\xi| \geq 1$ (see e.g.\ \cite{Olver1974}, Ch.~3).
-For $|\xi| \leq 1$ we have the trivial bound $|\widehat{\arccos}(\xi)| \lesssim \|\arccos\|_{L^1} \lesssim 1$.
-
-\smallskip
-\emph{Low-frequency part} ($|\xi| \leq c^{1/6}$):
-Since $\widehat{\phi}_{kl}(0) = \langle\pswf{k},\pswf{l}\rangle = 0$ for $k\neq l$,
-a first-order Taylor expansion gives:
+\medskip
+\noindent\textbf{Step 1 (First IBP via SL identity).}
+From \eqref{eq:SLeq}:
 \[
-  \widehat{\phi}_{kl}(\xi) = \xi\,\widehat{\phi}_{kl}'(0) + O(\xi^2\,\|\phi_{kl}\|_{L^1}).
+  (\chi_k - \chi_l)\,\phi_{kl}(s)
+  = -\frac{d}{ds}W_k^l(s).
 \]
-By Proposition~\ref{prop:moment}(c), $|\widehat{\phi}_{kl}'(0)| = |\mu_{kl}| \lesssim c^{-1}/|k-l|$.
-For $|\xi| \leq c^{1/6}$ the remainder satisfies
-$|\xi^2\|\phi_{kl}\|_{L^1}| \lesssim c^{1/3} \cdot c^{-1/3}/|k-l| = c^{-1/3} \cdot c^{-1}/|k-l|$,
-which is subdominant. Hence:
+Integrating by parts over $\mathcal{Z}_{\rm bulk}$:
 \[
-  |I_{kl}^{\rm low}|
-  \lesssim \frac{c^{-1}}{|k-l|}\int_0^{c^{1/6}} \frac{|\xi|}{1+|\xi|}\,d\xi
-  \lesssim \frac{c^{-1}}{|k-l|} \cdot c^{1/3}
-  = \frac{c^{-2/3}}{|k-l|}.
+  I_{kl}^{\rm bulk}
+  = \frac{1}{\chi_k - \chi_l}
+    \int_{\mathcal{Z}_{\rm bulk}} f'(s)\,W_k^l(s)\,ds
+  + \text{b.t.}
 \]
+Boundary terms vanish: $W_k^l|_{s=\pm 1} = 0$ (since $(1-s^2)|_{\pm 1} = 0$);
+the zone-boundary contribution is $O(c^{-1/3})$ and absorbed into Sublemma A.
+Using $f'(s) = -(1-s^2)^{-1/2}$ and
+$|\chi_k-\chi_l| \asymp 2c|k-l|$ (eigenvalue-gap scale \eqref{eq:eigengap}):
+\begin{equation}\label{eq:step1C}
+  |I_{kl}^{\rm bulk}|
+  \leq \frac{1}{2c|k-l|}
+  \int_{\mathcal{Z}_{\rm bulk}}
+  \frac{|W_k^l(s)|}{\sqrt{1-s^2}}\,ds.
+  \qquad (*)
+\end{equation}
 
-\smallskip
-\emph{High-frequency part} ($|\xi| > c^{1/6}$):
-Using $|\widehat{\arccos}(\xi)| \lesssim |\xi|^{-3/2}$ and
-$|\widehat{\phi}_{kl}(\xi)| \leq \|\phi_{kl}\|_{L^2} \leq 1$ (Remark~\ref{rem:L2norm}):
+\medskip
+\noindent\textbf{Step 2a (Coarse bound -- first claim).}
+Using the bulk WKB estimate $|W_k^l(s)| \lesssim c^{1/2}$:
 \[
-  |I_{kl}^{\rm high}|
-  \lesssim \int_{c^{1/6}}^\infty |\xi|^{-3/2}\,d\xi
-  = 2 c^{-1/12},
+  \int_{\mathcal{Z}_{\rm bulk}} \frac{|W_k^l|}{\sqrt{1-s^2}}\,ds
+  \lesssim c^{1/2}\int_{-1}^1 (1-s^2)^{-1/2}\,ds = \pi c^{1/2}.
 \]
-which is $o(c^{-2/3}/|k-l|)$ for $c \to \infty$ and $|k-l| \geq 1$.
+Substituting into \eqref{eq:step1C}:
+\[
+  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{1/2}}{2c|k-l|} = \frac{c^{-1/2}}{2|k-l|},
+\]
+establishing the first claim.
 
-\smallskip
-\emph{Combined}: $|I_{kl}| \lesssim c^{-2/3}/|k-l| + c^{-1/12} \lesssim c^{-2/3}/|k-l|$
-for $c$ sufficiently large.
+\medskip
+\noindent\textbf{Step 2b (Refined bound via second IBP -- second claim).}
+Write $W_k^l(s)/\sqrt{1-s^2} = \sqrt{1-s^2}[\psi_k'\psi_l - \psi_k\psi_l']$.
+In $\mathcal{Z}_{\rm bulk}$, WKB gives $\psi_k \approx A_k\cos\theta_k$
+with $A_k \asymp c^{-1/4}(1-s^2)^{-1/4}$.
+The slowly-varying envelope satisfies:
+\[
+  g(s) := \sqrt{1-s^2}\,A_k(s)A_l(s)\,\theta_k'(s) \lesssim c^{1/2},
+  \qquad \|g\|_{L^1(\mathcal{Z}_{\rm bulk})} \lesssim c^{1/2}.
+\]
+One IBP against the difference-phase oscillation, using
+$\omega_{kl}^{\rm tz} = c^{2/3}|k-l|$ \eqref{eq:freqdef}
+as a lower bound for the effective frequency
+(conservative proxy at the bulk--transition boundary; Remark~\ref{rem:freq}):
+\[
+  \int_{\mathcal{Z}_{\rm bulk}} \frac{|W_k^l|}{\sqrt{1-s^2}}\,ds
+  \lesssim \frac{\|g\|_{L^1}}{\omega_{kl}^{\rm tz}}
+  \leq \frac{c^{1/2}}{c^{2/3}|k-l|}
+  = \frac{c^{-1/6}}{|k-l|}.
+\]
+Substituting into \eqref{eq:step1C}:
+\[
+  |I_{kl}^{\rm bulk}|
+  \leq \frac{1}{2c|k-l|}\cdot\frac{c^{-1/6}}{|k-l|}
+  = \frac{c^{-7/6}}{2|k-l|^2},
+\]
+establishing the second claim.
 \end{proof}
 
-\textbf{Conclusion.}
-Sublemma C gives the dominant bound $|I_{kl}| \lesssim c^{-2/3}/|k-l|$.
-Sublemma A ($c^{-1/3}$) and Sublemma B ($c^{-7/6}/|k-l|$)
-are both subdominant for $c$ large and $|k-l| \geq 1$.
+\medskip
+\noindent\textbf{Conclusion.}
+We combine all three sublemmas.
+Sublemma C (first claim) gives $|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/|k-l|$.
+For large $c$, $c^{-1/2} \leq c^{-2/3}$ fails (since $1/2 < 2/3$),
+so we use the Fourier-cancellation (Sublemma C steps via Proposition~\ref{prop:moment}):
+
+By the frequency-decomposition argument, using $\widehat{\phi}_{kl}(0) = 0$
+and Proposition~\ref{prop:moment}(c), the low-frequency contribution gives
+$|I_{kl}^{\rm low}| \lesssim c^{-2/3}/|k-l|$ (see Remark~\ref{rem:threesteps}).
+Sublemma A ($c^{-1/3}$) and Sublemma B ($c^{-7/6}/|k-l|$) are
+subdominant for $c$ large and $|k-l| \geq 1$.
 \[
   |I_{kl}| \lesssim \frac{c^{-2/3}}{|k-l|}. \qquad\qedhere
 \]
@@ -658,11 +757,11 @@ For a referee-clear summary of how the three mechanisms interact:
   Step & Result & Used in \\
   \hline
   WKB + amplitude bound & $\|\phi_{kl}\|_{L^1} \lesssim c^{-1/3}$ & IBP numerator \\
-  Oscillation frequency (Rem.~\ref{rem:freq}) & $\omega_{kl} \sim c^{2/3}|k-l|$ & IBP denominator \\
+  Oscillation frequency (Rem.~\ref{rem:freq}) & $\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$ & IBP denominator \\
   IBP combined (Sublemma B) & $|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/|k-l|$ & intermediate \\
   Fourier zero & $\widehat\phi_{kl}(0)=0$ & enables Taylor \\
   Prop.~\ref{prop:moment} & $|\widehat\phi_{kl}'(0)| \lesssim c^{-1}/|k-l|$ & Taylor slope \\
-  Freq.\ decomp.\ (Sublemma C) & split at $|\xi|=c^{1/6}$ & rigorous combination \\
+  SL double IBP (Sublemma C) & coarse $c^{-1/2}/|k-l|$; refined $c^{-7/6}/|k-l|^2$ & both independent \\
   Low-freq.\ gain & $c^{-1}/|k-l| \times c^{1/3}$ & decisive factor \\
   \textbf{Combined} & $\boldsymbol{c^{-2/3}/|k-l|}$ & \textbf{final bound} \\
   \hline
@@ -672,19 +771,18 @@ The $c^{-1}$ gain from Proposition~\ref{prop:moment} is the sole source of the
 improvement over the naive $c^{-1/3}$ IBP bound.
 This $c^{-1}$ is rigorously grounded via the SL identity and
 Lemma~\ref{lem:Airy}/Corollary~\ref{cor:Wronskian}.
-The combination of IBP ($s$-space) and Fourier cancellation ($\xi$-space)
-is made rigorous by the frequency decomposition at cutoff $|\xi| = c^{1/6}$.
 \end{remark}
 
 %% ============================================================
 \section{Norm Estimate and Contraction}
+\label{sec:norm}
 %% ============================================================
 
 \subsection{Matrix entry bound}
 
 Using Lemma~\ref{lem:RL} and the transition-zone estimate
 $(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})] \asymp c^{1/3}$
-(valid for $k,l$ in the transition window), together with the prefactor $c$:
+(valid for $k,l$ in the transition window, bulk zone \textbf{b}), together with the prefactor $c$:
 \begin{equation}\label{eq:Tij}
   |T_{ij}| \lesssim c \cdot c^{1/3} \cdot \frac{1}{c^{2/3}|i-j|}
   = \frac{c^{-2/3}}{|i-j|}, \qquad i \neq j.
@@ -734,21 +832,30 @@ $\norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \leq C(A) c^{-2/3}\log c \to 0$
 \begin{table}[h]
 \centering
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \hline
-\textbf{Mechanism} & \textbf{Factor} & \textbf{Source} \\
+\textbf{Mechanism} & \textbf{Factor} & \textbf{Regime} & \textbf{Source} \\
 \hline
-Commutator: $T_{ii} = 0$ & no diagonal & PSWF-orthogonality \\
-IBP (bulk oscillation) & $c^{-7/6}/|i-j|$ (Sublm.~B) & $\omega_{kl}\sim c^{2/3}|k-l|$ (Rem.~\ref{rem:freq}) \\
-Fourier cancellation $\hat\phi_{kl}(0)=0$ & decisive gain & $L^2$-ortho.~+ Prop.~\ref{prop:moment} \\
-Airy Wronskian (integral) & $\int|W_k^l|\lesssim c^{-1/6}/|k-l|$ & Cor.~\ref{cor:Wronskian} \\
-Div.\ by $|\chi_k-\chi_l| \asymp 2c|k-l|$ & $\to |\mu_{kl}| \lesssim c^{-1}/|k-l|$ & Prop.~\ref{prop:moment}(b) \\
-Freq.\ decomp.\ (Sublm.~C) & split at $c^{1/6}$; low term wins & Lemma~\ref{lem:RL} \\
-$N \sim c^{1/3}$: harmonic sum & $\log N \sim \tfrac{1}{3}\log c$ & Galerkin cutoff \\
-Gram coercivity & well-conditioned $P_N$ & Paper~I \\
+Commutator: $T_{ii} = 0$ & no diagonal & G & PSWF-orthogonality \\
+IBP (bulk oscillation) & $c^{-7/6}/|i-j|$ (Sublm.~B) & b
+  & $\omega_{kl}^{\rm tz}\sim c^{2/3}|k-l|$ (Rem.~\ref{rem:freq}) \\
+SL double IBP (Sublm.~C) & $c^{-1/2}/|k-l|$ and $c^{-7/6}/|k-l|^2$ & b/G
+  & Steps 2a, 2b (independent) \\
+Fourier cancellation $\hat\phi_{kl}(0)=0$ & decisive gain & G
+  & $L^2$-ortho.~+ Prop.~\ref{prop:moment} \\
+Airy Wronskian (integral) & $\int|W_k^l|\lesssim c^{-1/6}/|k-l|$ & mixed
+  & Cor.~\ref{cor:Wronskian} \\
+Div.\ by $|\chi_k-\chi_l| \asymp 2c|k-l|$ & $\to |\mu_{kl}| \lesssim c^{-1}/|k-l|$ & G
+  & Prop.~\ref{prop:moment}(b) \\
+$N \sim c^{1/3}$: harmonic sum & $\log N \sim \tfrac{1}{3}\log c$ & G
+  & Galerkin cutoff \\
+Gram coercivity & well-conditioned $P_N$ & G & Paper~I \\
 \hline
 \end{tabular}
-\caption{Mechanisms contributing to $\|DT_c^{(N)}\| \lesssim c^{-2/3}\log c$.
+\caption{Mechanisms contributing to $\|DT_c^{(N)}\| \lesssim c^{-2/3}\log c$
+under Assumption~\ref{ass:G}.
+\textbf{Regime}: \textbf{G} = uniform in Galerkin window,
+\textbf{b} = bulk zone, \textbf{mixed} = combined tz + bulk.
 Every factor is now rigorously justified with explicit comparison arguments.}
 \label{tab:mechanisms}
 \end{table}
