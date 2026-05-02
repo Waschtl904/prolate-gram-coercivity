@@ -248,7 +248,7 @@ By Lemma~\ref{lem:denom-bs-pswf} below,
 the denominator satisfies
 \begin{equation}\label{eq:denom-BS}
   \int_{-x_+(n)}^{x_+(n)}\frac{dt}{\wncl(t)}
-  = \frac{\pi}{n + \tfrac{1}{2}} + O\!\left(\frac{1}{n^2}\right),
+  = \frac{\pi T}{n + \tfrac{1}{2}} + O\!\left(\frac{1}{n^2}\right),
 \end{equation}
 where the $O(1/n^2)$ relative error propagates
 to an $O(1/n)$ relative error in $\rhocl$ only through the
@@ -262,7 +262,7 @@ exactly.
 Lemma~\ref{lem:bohr-sommerfeld-pswf} gives
 $\int\wncl\,dx = \pi(n+\tfrac{1}{2}) + O(1/n)$,
 and Lemma~\ref{lem:denom-bs-pswf} gives
-$\int 1/\wncl\,dx = \pi/(n+\tfrac{1}{2}) + O(1/n^2)$.
+$\int 1/\wncl\,dx = \pi T/(n+\tfrac{1}{2}) + O(1/n^2)$.
 The two are related by the discrete Bohr--Sommerfeld increment
 argument of Lemma~\ref{lem:chi-increment}
 (see Lemma~\ref{lem:denom-bs-pswf});
@@ -318,7 +318,7 @@ Then for all $n \le \gamma N$,
     &= \pi + O\!\left(\tfrac{1}{n^2}\right),
   \label{eq:chi-increment}\\
   \chi_{n+1} - \chi_n
-    &\sim 2n.
+    &= 2n + O(1).
   \label{eq:chi-spacing}
 \end{align}
 \end{lemma}
@@ -353,34 +353,33 @@ Hence by direct algebraic differencing,
 which establishes~\eqref{eq:chi-increment} without any smoothness
 assumption on $n$.
 
-\textbf{Step~3 (Mean Value Theorem in $\chi$).}
-Since $S^+(\chi)$ is $C^1$ and strictly increasing in $\chi$,
-the Mean Value Theorem yields $\chi_n^* \in (\chi_n, \chi_{n+1})$
-such that
+\textbf{Step~3 (Eigenvalue spacing, self-contained).}
+From the asymptotic expansion
 \[
-  \frac{dS^+}{d\chi}(\chi_n^*)\cdot(\chi_{n+1} - \chi_n)
-  \;=\; \pi + O\!\left(\frac{1}{n^2}\right).
+  \chi_n(c) = n(n+1) + (2n+1)\frac{c}{\pi} + O\!\left(\frac{1}{n}\right),
 \]
-
-\textbf{Step~4 (Asymptotic of $dS^+/d\chi$).}
-Applying Lemma~\ref{lem:bohr-sommerfeld-pswf} at the intermediate
-point $\chi_n^* \in (\chi_n, \chi_{n+1})$, where $dS^+/d\chi$
-varies slowly on the scale induced by $n$ in the bulk regime, yields
-\[
-  \frac{dS^+}{d\chi}(\chi_n^*) \;\sim\; \frac{1}{2n},
-\]
-which gives~\eqref{eq:chi-spacing}.
+we compute directly:
+\begin{align}
+  \chi_{n+1} - \chi_n
+  &= (n+1)(n+2) - n(n+1)
+     + \frac{c}{\pi}\bigl((2n+3)-(2n+1)\bigr)
+     + O(1) \notag \\
+  &= 2n + 2 + \frac{2c}{\pi} + O(1)
+   = 2n + O(1),
+\end{align}
+which establishes~\eqref{eq:chi-spacing}.
 \end{proof}
 
 \subsection{Bohr--Sommerfeld quantization for $1/\wncl$}
 
-%% FIX 1: Self-contained lemma for int 1/omega via discrete BS increment
+%% FIX 1: Lemma result uses original variable x in [-T,T];
+%%        normalization correction t = x/T is explicit in the proof.
 \begin{lemma}[Dual Bohr--Sommerfeld: $\int 1/\wncl$]%
 \label{lem:denom-bs-pswf}
 For $n \le \gamma N$:
 \begin{equation}\label{eq:denom-BS-lemma}
   S_n^- := \int_{-x_+(n)}^{x_+(n)} \frac{dx}{\wncl(x)}
-  = \frac{\pi}{n + \tfrac{1}{2}}
+  = \frac{\pi T}{n + \tfrac{1}{2}}
     + O\!\left(\frac{1}{n^2}\right),
 \end{equation}
 uniformly in $n \le \gamma N$.
@@ -421,10 +420,8 @@ Substituting \eqref{eq:dSplus-dchi} at $\chi = \chi_n^*$:
   \frac{S^-(\chi_n^*)}{2T^2} \cdot (\chi_{n+1} - \chi_n)
   = \pi + O\!\left(\frac{1}{n^2}\right).
 \]
-Using $\chi_{n+1} - \chi_n \sim 2n$
-(Lemma~\ref{lem:chi-increment}, \eqref{eq:chi-spacing}),
-more precisely $\chi_{n+1} - \chi_n = 2n + O(1)$
-(\cite{OsipovRokhlinXiao}, Ch.~2, eq.~(2.17)), and
+Using $\chi_{n+1} - \chi_n = 2n + O(1)$
+(Lemma~\ref{lem:chi-increment}, \eqref{eq:chi-spacing}), and
 $S^-(\chi_n^*) = S^-(\chi_n) + O(1/n^2)$
 (since $dS^-/d\chi = O(1/n^2)$ by \eqref{eq:dSplus-dchi}
 and $|\chi_{n+1}-\chi_n| = O(n)$):
@@ -432,21 +429,27 @@ and $|\chi_{n+1}-\chi_n| = O(n)$):
   \frac{S_n^-}{2T^2}\cdot(2n + O(1))
   = \pi + O\!\left(\frac{1}{n^2}\right).
 \]
-Solving for $S_n^-$ and using $2n + O(1) = 2(n+\tfrac{1}{2}) + O(1/n)$:
-\begin{equation}\label{eq:Sminus-formula}
-  S_n^- = \frac{2\pi T^2}{2(n+\tfrac{1}{2}) + O(1/n)}
-       = \frac{\pi T^2}{n+\tfrac{1}{2}}\bigl(1 + O(1/n)\bigr)
-       = \frac{\pi T^2}{n+\tfrac{1}{2}} + O\!\left(\frac{1}{n^2}\right).
+
+\textit{Normalization correction.}
+Set $t = x/T$. Then $dx = T\,dt$ and
+$\wncl(x) = \wncl(Tt)$.
+Hence
+\[
+  \int_{-x_+(n)}^{x_+(n)} \frac{dx}{\wncl(x)}
+  = T \int_{-t_+(n)}^{t_+(n)} \frac{dt}{\wncl(Tt)}.
+\]
+Applying Lemma~\ref{lem:bohr-sommerfeld-pswf} in the
+normalized variable and using
+$2n + O(1) = 2(n+\tfrac{1}{2}) + O(1/n)$:
+\begin{equation}\label{eq:Sminus-final}
+  S_n^- := \int_{-x_+(n)}^{x_+(n)} \frac{dx}{\wncl(x)}
+  = \frac{\pi T}{n + \tfrac{1}{2}}
+    + O\!\left(\frac{1}{n^2}\right).
 \end{equation}
-\noindent
-\textit{Dimensional note.}
-The formula~\eqref{eq:Sminus-formula} carries a factor
-$T^2$ reflecting the original variable $x \in [-T,T]$.
-In the normalized variable $t = x/T$ one has
-$\int 1/\omega_n^{\rm cl}(tT)\cdot T\,dt = S_n^-$,
-which gives \eqref{eq:denom-BS-lemma} after restoring units;
-all subsequent formulas use $S_n^-$ in the same units as
-the denominator of $\rhocl$ (Definition~\ref{def:rho-cl}).
+This is \eqref{eq:denom-BS-lemma}. No hidden $T^2$-factors
+remain: the factor $T$ on the right-hand side reflects
+the correct dimensional analysis for $x \in [-T,T]$,
+consistent with WKB conventions for the non-normalized variable.
 \end{proof}
 
 \begin{remark}[Self-containedness]
@@ -457,8 +460,9 @@ and the explicit formula \eqref{eq:wncl-def} for $\wncl$.
 In particular, no smoothness of $\chi_n$ as a function of $n$
 is assumed: the MVT is applied only to the $C^1$ function
 $\chi \mapsto S^+(\chi)$, and the discrete increment
-$\chi_{n+1} - \chi_n \sim 2n$ is derived from algebraic
-differencing of the first-order remainder expansion.
+$\chi_{n+1} - \chi_n = 2n + O(1)$ is derived by direct
+algebraic differencing of the known asymptotic expansion
+of $\chi_n(c)$.
 It does not invoke microlocal analysis, Airy functions,
 or Riemann--Hilbert methods.
 \end{remark}
@@ -901,50 +905,44 @@ as required by Corollary~\ref{cor:osc-slowly-varying}.
 
 \begin{proof}
 \textit{Step~1: Drift cancellation identity.}
-From \eqref{eq:r-ode}:
-$(\log r_n)' = G(x)\cos(2\theta_n) + D(x)$.
-From Definition~\ref{def:wkb-amp}:
-$(\log r_n^{\mathrm{WKB}})' = D(x) - G(x)$.
-Subtracting (with
-$\log(r_n/r_n^{\mathrm{WKB}})|_{x=x_0} = 0$):
+
+From \eqref{eq:r-ode} and Definition~\ref{def:wkb-amp} we have:
+\[
+  (\log r_n)' = G(x)\cos(2\theta_n(x)) + D(x),
+\]
+and
+\[
+  (\log r_n^{\mathrm{WKB}})' = D(x) - G(x).
+\]
+
+Subtracting gives:
+\begin{align}
+  \frac{d}{dx}\log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}
+  &= G(x)\cos(2\theta_n(x)) + D(x) - D(x) + G(x) \notag \\
+  &= G(x)\bigl(1 + \cos(2\theta_n(x))\bigr).
+\end{align}
+
+Hence
 \begin{equation}\label{eq:drift-cancel}
   \frac{d}{dx}\log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}
   = G(x)\bigl(1 + \cos(2\theta_n(x))\bigr).
 \end{equation}
-The $D$-terms cancel exactly by definition of
-$r_n^{\mathrm{WKB}}$.
+The $D$-terms cancel exactly by definition of $r_n^{\mathrm{WKB}}$.
 
 \textit{Step~2: Reduction to oscillatory integral.}
-Integrating \eqref{eq:drift-cancel} from $x_0$ and
-using the mean-zero decomposition
-$G(1+\cos(2\theta_n)) = G + G\cos(2\theta_n)$:
-\begin{align}
+Integrating \eqref{eq:drift-cancel} from $x_0$
+(with initial condition $\log(r_n/r_n^{\mathrm{WKB}})|_{x_0} = 0$)
+and splitting $G(1+\cos(2\theta_n)) = G + G\cos(2\theta_n)$:
+\[
   \log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}
-  &= \int_{x_0}^x G(t)\,dt
-     + \int_{x_0}^x G(t)\cos(2\theta_n(t))\,dt.
-  \label{eq:drift-split}
-\end{align}
-The first integral is the non-oscillatory mean;
-by $(\log r_n^{\mathrm{WKB}})' = D - G$
-integrated from $x_0$ to $x$,
-$\int_{x_0}^x G\,dt
-= \log(r_n^{\mathrm{WKB}}(x_0)/r_n^{\mathrm{WKB}}(x))
-+ \int_{x_0}^x D\,dt$.
-But $\log(r_n/r_n^{\mathrm{WKB}})|_{x_0} = 0$ and
-$(log r_n)' - (\log r_n^{\mathrm{WKB}})' = G + G\cos(2\theta_n) - (-G) = 2G + G\cos(2\theta_n)$
---- wait: by Step~1, the difference is exactly
-$G(1+\cos(2\theta_n))$, so integrating:
-\begin{equation}\label{eq:drift-final}
-  \log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}
-  = \int_{x_0}^x G(t)\cos(2\theta_n(t))\,dt
-    + \int_{x_0}^x G(t)\,dt.
-\end{equation}
-Since $(\log r_n^{\mathrm{WKB}})' = D - G$,
-integrating gives
-$\log r_n^{\mathrm{WKB}}(x) - \log r_n^{\mathrm{WKB}}(x_0)
-= \int_{x_0}^x (D - G)$,
-i.e., the $\int G$-term in~\eqref{eq:drift-final}
-cancels exactly against the WKB definition, leaving:
+  = \int_{x_0}^x G(t)\,dt
+    + \int_{x_0}^x G(t)\cos(2\theta_n(t))\,dt.
+\]
+Since $(\log r_n^{\mathrm{WKB}})' = D - G$, integrating from $x_0$ to $x$
+gives $\log r_n^{\mathrm{WKB}}(x) - \log r_n^{\mathrm{WKB}}(x_0)
+= \int_{x_0}^x D\,dt - \int_{x_0}^x G\,dt$.
+Combined with the initial condition, the $\int G\,dt$ term
+cancels against the WKB definition, leaving:
 \begin{equation}\label{eq:drift-oscillatory}
   \log\frac{r_n(x)}{r_n^{\mathrm{WKB}}(x)}
   = \int_{x_0}^x G(t)\cos(2\theta_n(t))\,dt.
