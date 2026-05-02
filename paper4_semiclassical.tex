@@ -40,9 +40,11 @@ Densities via Pr\"ufer Phase Analysis}
 %%=================================================================
 \begin{abstract}
 We prove that the squared densities $\psin^2$ of the prolate
-spheroidal wave functions (PSWFs) equidistribute against the
-classical density $\rhocl$ on $[-T,T]$ at a rate $O(1/n)$
-for all $n \le \gamma N$, where $N = cT/\pi$ is the Shannon number.
+spheroidal wave functions (PSWFs) satisfy a uniform semiclassical
+approximation against the classical density $\rhocl_n$ on $[-T,T]$
+at a rate $O(1/n)$ for all $n \le \gamma N$, where $N = cT/\pi$
+is the Shannon number and the asymptotic regime is $N \to \infty$
+(equivalently $c \to \infty$ with $T$ fixed).
 The proof uses Pr\"ufer phase analysis, integration by parts for
 the oscillatory terms, and an explicit drift cancellation identity
 that reduces the amplitude deviation to a single oscillatory
@@ -84,17 +86,29 @@ ingredient in the bulk tail bound program developed in
 \subsection{Main result (informal)}
 
 For $n$ in the bulk regime $n \le \gamma N$, the squared density
-$\psin^2$, when renormalized by $\lambda_n(c)$, converges weakly
-to the classical equilibrium density
+$\psin^2$, when renormalized by $\lambda_n(c)$, satisfies the
+uniform semiclassical approximation against the classical
+reference density
 \[
-  \rhocl(x) =
-  \frac{1}{\pi\sqrt{x_+(n)^2 - x^2}}
-  \cdot \frac{1}{\int_{-x_+(n)}^{x_+(n)}
-                  \frac{dt}{\sqrt{x_+(n)^2-t^2}}},
+  \rhocl_n(x) =
+  \frac{1/\wncl(x)}{\int_{-x_+(n)}^{x_+(n)}
+                  dt/\wncl(t)},
   \quad |x| < x_+(n),
 \]
 at rate $O(1/n)$, uniformly over $C^1$ test functions and
 $n \le \gamma N$.
+
+\begin{remark}[Nature of the result]\label{rem:not-weak-conv}
+Theorem~\ref{thm:weak-limit} is \emph{not} a convergence theorem
+in the sense of weak convergence to a fixed limiting measure.
+Instead, it is a \emph{uniform semiclassical matching principle}
+between the spectral density $\psin^2$ and the $n$-dependent
+classical reference density $\rhocl_n$.
+In particular, $\rhocl_n$ depends on $n$ through the turning
+point $x_+(n)$ and should be understood as the
+\emph{local semiclassical matching density} for index $n$,
+not a fixed target distribution.
+\end{remark}
 
 \subsection{Strategy of proof}
 
@@ -181,25 +195,44 @@ potential-theoretic or Riemann--Hilbert techniques.
 
 \subsection{Parameters and bulk regime}
 
-Throughout, $c, T > 0$ are fixed, $N := cT/\pi$ is the Shannon
-number, and $0 < \gamma < 1$ is a fixed bulk parameter.
+Throughout, $c, T > 0$ are fixed reference values,
+$N := cT/\pi$ is the Shannon number, and
+$0 < \gamma < 1$ is a fixed bulk parameter.
 We write $n \le \gamma N$ for the bulk regime.
+
+%%------------------------------------------------------------------
+%% FIX 1: Asymptotic regime — explicit scaling limit
+%%------------------------------------------------------------------
+\subsection{Asymptotic regime}\label{subsec:regime}
+
+Throughout the paper we work in the semiclassical bulk regime
+\begin{equation}\label{eq:semiclassical-regime}
+  N \to \infty,
+  \qquad \gamma \in (0,1)\ \text{fixed},
+  \qquad n \le \gamma N,
+\end{equation}
+where $N = cT/\pi$.
+Equivalently, this corresponds to the semiclassical limit
+\[
+  c \to \infty \quad \text{with } T > 0\ \text{fixed},
+\]
+so that the bandwidth parameter $c$ acts as the large parameter
+of the problem.
+
+All estimates of the form $O(1/n)$ are therefore understood
+in the joint limit $n, N \to \infty$ with $n/N \le \gamma < 1$.
+In particular, all constants are uniform in this regime and
+depend only on $\delta$, $\gamma$, $c$, and $T$
+(with $c$ viewed as the scaling parameter generating the limit).
 
 %% FIX 2: Uniformity semantics made explicit
 \begin{remark}[Meaning of uniformity]\label{rem:uniformity}
 All bounds stated as $O(\cdot)$ or $\le C_{\delta,\gamma}(\cdots)$
-hold \emph{uniformly for all $n \le \gamma N$}.
-This means: the constants $C_{\delta,\gamma}$, $c_{\delta,\gamma}$
+hold \emph{uniformly for all $n \le \gamma N$} in the regime
+\eqref{eq:semiclassical-regime}.
+The constants $C_{\delta,\gamma}$, $c_{\delta,\gamma}$
 depend only on $\delta$, $\gamma$, $c$, $T$, and are independent
 of the individual value of $n$.
-In particular, $n$ satisfies $1 \le n \le \gamma N = \gamma cT/\pi$,
-so $n$ is bounded above by a constant depending only on
-$\gamma$, $c$, $T$;
-since $n \le \gamma N$, all polynomial factors in $n$ are
-uniformly bounded in terms of $(\delta, \gamma, c, T)$ alone
-throughout the bulk regime and may be absorbed into
-$C_{\delta,\gamma,c,T}$ without altering the
-$O(1/n)$-rate.
 We write $C_{\delta,\gamma}$ throughout as shorthand
 for constants that may also depend on the fixed parameters
 $c$ and $T$.
@@ -238,12 +271,15 @@ for all $n \le \gamma N$.
 
 \begin{definition}[Classical density]\label{def:rho-cl}
 \begin{equation}\label{eq:rho-cl}
-  \rhocl(x) :=
+  \rhocl_n(x) :=
   \frac{1/\wncl(x)}{\int_{-x_+(n)}^{x_+(n)} dt/\wncl(t)},
   \quad x \in [-x_+(n), x_+(n)].
 \end{equation}
-The normalization $\int_{-x_+(n)}^{x_+(n)}\rhocl(x)\,dx = 1$
+The normalization $\int_{-x_+(n)}^{x_+(n)}\rhocl_n(x)\,dx = 1$
 holds by definition.
+Note that $\rhocl_n$ depends on $n$ through the turning point
+$x_+(n)$; it is the \emph{local semiclassical matching density}
+for index $n$, not a fixed target distribution.
 By Lemma~\ref{lem:denom-bs-pswf} below,
 the denominator satisfies
 \begin{equation}\label{eq:denom-BS}
@@ -251,10 +287,10 @@ the denominator satisfies
   = \frac{\pi T}{n + \tfrac{1}{2}} + O\!\left(\frac{1}{n^2}\right),
 \end{equation}
 where the $O(1/n^2)$ relative error propagates
-to an $O(1/n)$ relative error in $\rhocl$ only through the
+to an $O(1/n)$ relative error in $\rhocl_n$ only through the
 normalization constant; no mass is lost in the cutoff
 $I_\delta \to [-x_+(n),x_+(n)]$ since
-$\mathrm{supp}\,\rhocl = [-x_+(n),x_+(n)] \subset I_\delta$
+$\mathrm{supp}\,\rhocl_n = [-x_+(n),x_+(n)] \subset I_\delta$
 exactly.
 \end{definition}
 
@@ -285,6 +321,15 @@ $\delta$, $\gamma$, $c$, $T$.
 Under stronger regularity assumptions on $\chi_n(c)$
 the error can be sharpened to $O(1/n^2)$;
 see \cite{OsipovRokhlinXiao}, Ch.~4, Thm.~4.7.
+
+\emph{External input:} The WKB quantization result
+\eqref{eq:BS} is imported from
+\cite{OsipovRokhlinXiao}, Ch.~4, Thm.~4.7,
+which is the authoritative reference for PSWF semiclassical
+asymptotics. All subsequent results in this paper use only
+the stated $O(1/n)$ bound as a black-box input;
+no microlocal analysis, Airy-function matching, or
+Riemann--Hilbert methods are reproduced here.
 \end{lemma}
 
 \begin{proof}
@@ -730,6 +775,38 @@ and $\|h'\|_{L^1} \le 2T(\|a'\|_{L^\infty}\|b_n\|_{L^\infty}
 Apply Lemma~\ref{lem:prufer-oscillation-control}.
 \end{proof}
 
+%%------------------------------------------------------------------
+%% FIX 3: Oscillation–Gronwall link remark
+%%------------------------------------------------------------------
+\begin{remark}[Integration of oscillatory control into amplitude dynamics]
+\label{rem:osc-gronwall-link}
+Lemma~\ref{lem:prufer-oscillation-control} provides a uniform
+bound of the form
+\[
+  \left|
+    \int_{x_0}^{x} G(t)\cos(2\theta_n(t))\,dt
+  \right|
+  \le \frac{C_{\delta,\gamma}}{n},
+  \qquad \forall\, x \in I_\delta.
+\]
+In the amplitude deviation equation~\eqref{eq:deviation-ode},
+this estimate controls the oscillatory forcing term in the sense
+that
+\[
+  \left|
+    \int_{x_0}^{x} \widetilde{B}_n(t)\,dt
+  \right|
+  \le \frac{C_{\delta,\gamma}}{n}.
+\]
+Consequently, the amplitude equation fits into a Gronwall-type
+stability framework with forcing of size $O(1/n)$ and a
+coefficient whose integral over $I_\delta$ is $O(1)$.
+This ensures that the oscillatory cancellation established in
+Section~\ref{sec:oscillation} propagates directly into the
+Gronwall estimate in Lemma~\ref{lem:amplitude-drift},
+yielding a uniform $O(1/n)$ control of the amplitude deviation.
+\end{remark}
+
 %%=================================================================
 \section{Amplitude Control}\label{sec:amplitude}
 %%=================================================================
@@ -1011,7 +1088,10 @@ which establishes \eqref{eq:amp-dev-deriv}.
 \begin{remark}[Structure of the proof]
 Steps~1--3 require no Gronwall:
 \eqref{eq:drift-oscillatory} reduces
-$\log(r_n/r_n^{\mathrm{WKB}})$ to a single oscillatory integral.
+$\log(r_n/r_n^{\mathrm{WKB}})$ to a single oscillatory integral,
+controlled by Lemma~\ref{lem:prufer-oscillation-control}
+(see Remark~\ref{rem:osc-gronwall-link} for the explicit link
+between the oscillation estimate and the Gronwall framework).
 Step~4 applies an integral comparison estimate
 (Gronwall--Bellman with zero initial data)
 with $O(1/n)$ forcing and an exponential factor bounded by
@@ -1032,7 +1112,7 @@ For $n \le \gamma N$:
   &= \lambda_n\left(1 + O\!\left(\frac{1}{n}\right)\right),
   \label{eq:norm-match}\\
   \frac{r_n^{\mathrm{WKB}}(x)^2}{2}
-  &= \lambda_n\,\rhocl(x)
+  &= \lambda_n\,\rhocl_n(x)
      \left(1 + O\!\left(\frac{1}{n}\right)\right).
   \label{eq:rn-vs-rhocl}
 \end{align}
@@ -1061,7 +1141,7 @@ Hence $\tfrac{1}{2}\int_{I_\delta}r_n^2
 = \lambda_n(1+O(1/n))$
 and \eqref{eq:amp-ratio} gives \eqref{eq:norm-match}.
 
-\textit{Step~2: Pointwise ratio to $\rhocl$.}
+\textit{Step~2: Pointwise ratio to $\rhocl_n$.}
 From \eqref{eq:wkb-amp}:
 $r_n^{\mathrm{WKB}}(x)^2 = r_n(x_0)^2\,\wncl(x_0)/\wncl(x)$.
 Integrating over $I_\delta$ and using \eqref{eq:norm-match}
@@ -1071,11 +1151,11 @@ Definition~\ref{def:rho-cl}:
   \frac{r_n^{\mathrm{WKB}}(x)^2}{2}
   = \frac{\lambda_n(1+O(1/n))}
          {\wncl(x)\cdot S_n^-}
-  = \lambda_n\,\rhocl(x)(1+O(1/n)).
+  = \lambda_n\,\rhocl_n(x)(1+O(1/n)).
 \]
 No mass is lost in the cutoff
 $I_\delta \to [-x_+(n),x_+(n)]$,
-since $\mathrm{supp}\,\rhocl = [-x_+(n),x_+(n)]
+since $\mathrm{supp}\,\rhocl_n = [-x_+(n),x_+(n)]
 \subset I_\delta$ exactly.
 \end{proof}
 
@@ -1083,13 +1163,17 @@ since $\mathrm{supp}\,\rhocl = [-x_+(n),x_+(n)]
 \section{Proof of the Main Theorem}\label{sec:weaklimit}
 %%=================================================================
 
-\begin{theorem}[Semiclassical equidistribution]%
+%%------------------------------------------------------------------
+%% FIX 2: Theorem reformulated as semiclassical matching principle
+%%------------------------------------------------------------------
+\begin{theorem}[Semiclassical expectation asymptotics]%
 \label{thm:weak-limit}
-For $n \le \gamma N$ and every $f \in C^1([-T,T])$:
+For $n \le \gamma N$ (in the regime~\eqref{eq:semiclassical-regime})
+and every $f \in C^1([-T,T])$:
 \begin{equation}\label{eq:weak-limit}
   \int_{-T}^T f(x)\,\psin(x)^2\,dx
   = \lambda_n(c)
-    \int_{-x_+(n)}^{x_+(n)} f(x)\,\rhocl(x)\,dx
+    \int_{-x_+(n)}^{x_+(n)} f(x)\,\rhocl_n(x)\,dx
     + R_n(f),
 \end{equation}
 where:
@@ -1100,6 +1184,12 @@ where:
 \end{equation}
 The constant $C_{\delta,\gamma}$ depends only on
 $\delta$, $\gamma$, $c$, $T$, not on $n$ or $f$.
+
+This is a \emph{uniform semiclassical matching principle}:
+for each fixed $f \in C^1$, the spectral integral
+$\int f \psin^2$ is approximated by
+$\lambda_n \int f \rhocl_n$ with explicit rate $O(\lambda_n/n)$,
+uniform over the bulk regime $n \le \gamma N$.
 \end{theorem}
 
 \begin{proof}
@@ -1123,14 +1213,14 @@ Corollary~\ref{cor:osc-slowly-varying} gives:
 \[
   \left|\int_{I_\delta}fr_n^2\cos(2\theta_n)\right|
   \le \frac{C_{\delta,\gamma}\lambda_n(\|f\|_{L^\infty}
-            + T\|f'\|_{L^\infty})}{n}.
+            + T\|f'|_{L^\infty})}{n}.
 \]
 
 \textit{Step~4 (Mean term).}
 By \eqref{eq:amp-ratio} and \eqref{eq:rn-vs-rhocl}:
-$r_n^2 = 2\lambda_n\rhocl(1+O(1/n))$, so
+$r_n^2 = 2\lambda_n\rhocl_n(1+O(1/n))$, so
 $\tfrac{1}{2}\int_{I_\delta}fr_n^2
-= \lambda_n\int_{-x_+(n)}^{x_+(n)}f\rhocl
+= \lambda_n\int_{-x_+(n)}^{x_+(n)}f\rhocl_n
 + O(\lambda_n\|f\|_{L^\infty}/n)$.
 
 \textit{Step~5 (Exponential remainder).}
