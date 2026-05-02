@@ -60,7 +60,8 @@ The three key mechanisms are:
 (i)~the commutator structure forces diagonal vanishing $T_{ii} = 0$;
 (ii)~two-step integration by parts combined with
 Fourier-orthogonality $\widehat{\phi}_{kl}(0) = \langle\psi_k,\psi_l\rangle = 0$
-yields $c^{-2/3}$ per off-diagonal entry (Lemma~\ref{lem:RL});
+yields $c^{-2/3}$ per off-diagonal entry (Lemma~\ref{lem:RL},
+the \emph{unique} final bound used throughout);
 (iii)~the Gram coercivity constant $\alpha_N \sim c^{-1/2}$ ensures the
 Galerkin projection is well-conditioned.
 The quantitative Fourier-cancellation is made fully rigorous via:
@@ -142,6 +143,11 @@ The rate $c^{-2/3}\log c \to 0$ arises from three independent mechanisms
 The decisive improvement over $c^{-1/3}\log c$ is the Fourier-cancellation
 in Lemma~\ref{lem:RL} (Step~3), now made fully rigorous by
 Corollary~\ref{cor:Wronskian} and Proposition~\ref{prop:moment}.
+The bound $c^{-2/3}/|k-l|$ in Lemma~\ref{lem:RL} is \emph{the unique
+final bound} used in the Schur test (Section~\ref{sec:norm}).
+Intermediate estimates $c^{-7/6}/|k-l|$ and $c^{-7/6}/|k-l|^2$ appear
+in the proof chain but are \textbf{not} the quantities inserted into the
+norm bound.
 \end{remark}
 
 %% ============================================================
@@ -305,11 +311,11 @@ $\mathcal{Z}_{\rm tz} = \bigcup_{k \leq N}\mathcal{Z}_{\rm tz}(k)
 justifying the global notation used in estimates below.
 
 \noindent\textbf{Two frequency scales.}
-Two frequency scales appear and must not be conflated:
+Two frequency scales appear and must not be conflated.
 \begin{equation}\label{eq:freqdef}
   \omega_{kl}^{\rm tz} := c^{2/3}|k-l|
-  \quad\text{(transition-zone IBP frequency, conservative proxy at
-  bulk--transition boundary)},
+  \quad\text{(\textbf{lower-bound surrogate} for the IBP integration frequency;
+  see Remark~\ref{rem:freq})},
 \end{equation}
 \begin{equation}\label{eq:eigengap}
   \chi_k - \chi_l \sim 2c|k-l|
@@ -319,6 +325,32 @@ Two frequency scales appear and must not be conflated:
 These differ by a factor $c^{1/3}$.  Every subsequent estimate states
 explicitly which scale is used.
 
+\begin{remark}[Status of $\omega_{kl}^{\rm tz}$: surrogate, not physical frequency]
+\label{rem:freq}
+The quantity $\omega_{kl}^{\rm tz} = c^{2/3}|k-l|$ plays three distinct roles
+in this paper, which must be kept separate:
+\begin{enumerate}[label=(\roman*),nosep]
+  \item \textbf{IBP denominator (Sublemma B, Cor.~\ref{cor:Wronskian}):}
+        $\omega_{kl}^{\rm tz}$ is a \emph{conservative lower bound} for the
+        actual WKB instantaneous frequency
+        $((\theta_k-\theta_l)'(s) \asymp 2c|k-l|/(1-s^2)$ in the bulk).
+        Using the smaller value $c^{2/3}|k-l|$ is valid (weakening the bound)
+        but not asymptotically sharp; it does \emph{not} imply equality.
+  \item \textbf{Matching-boundary proxy (Cor.~\ref{cor:Wronskian} bulk step):}
+        $\omega_{kl}^{\rm tz}$ equals the actual WKB frequency only at the
+        single point $1-s^2 = c^{-2/3}$, the bulk--transition boundary.
+        This is the dominant contribution to the bulk integral, which is why the
+        proxy is not wasteful despite being conservative everywhere else in the bulk.
+  \item \textbf{Scale in Table~\ref{tab:scales}:}
+        Listed for orientation only; it is \emph{not} an asymptotically exact
+        or physical oscillation frequency.
+\end{enumerate}
+\textbf{In particular:} $\omega_{kl}^{\rm tz}$ is \emph{never} used as the
+final scaling input to the Schur test.
+The unique quantity entering the Schur test is the final bound
+$c^{-2/3}/|k-l|$ from Lemma~\ref{lem:RL}.
+\end{remark}
+
 \begin{table}[h]
 \centering
 \renewcommand{\arraystretch}{1.3}
@@ -326,7 +358,7 @@ explicitly which scale is used.
 \hline
 \textbf{Object} & \textbf{Scale} & \textbf{Zone} & \textbf{Regime} & \textbf{Source}\\
 \hline
-$\omega_{kl}^{\rm tz}$ & $c^{2/3}|k-l|$ & tz (proxy) & transition
+$\omega_{kl}^{\rm tz}$ & $c^{2/3}|k-l|$ & tz (proxy only$^*$) & transition
   & WKB phase at $1-s^2\sim c^{-2/3}$ \\
 $\chi_k-\chi_l$ & $2c|k-l|$ & uniform in $G$ & G
   & Widom linear spacing \\
@@ -338,12 +370,18 @@ $\|\pswf{k}\|_{L^\infty}$ & $c^{1/6}$ & tz only & transition
   & Lemma~\ref{lem:Airy} \\
 $\|\pswf{k}\|_{L^\infty}$ & $c^{-1/4}(1-s^2)^{-1/4}$ & bulk only & bulk
   & WKB/Szeg\H{o} \\
+$|I_{kl}|$ & \boldmath{$c^{-2/3}/|k-l|$} & combined & G
+  & \textbf{Lemma~\ref{lem:RL} (final bound)} \\
 \hline
+\multicolumn{5}{l}{$^*$See Remark~\ref{rem:freq}: $\omega_{kl}^{\rm tz}$ is
+a lower-bound surrogate, not an exact or physical frequency.}
 \end{tabular}
 \caption{Scaling table under Assumption~\ref{ass:G}.
 Zone and regime markers are used in all proofs.
 \textbf{tz} = transition zone, \textbf{b} = bulk,
-\textbf{G} = uniform in Galerkin window.}
+\textbf{G} = uniform in Galerkin window.
+\textbf{The unique final bound entering the Schur test is $c^{-2/3}/|k-l|$}
+(last row); all other entries are intermediate quantities.}
 \label{tab:scales}
 \end{table}
 
@@ -446,9 +484,9 @@ The integral bound~\eqref{eq:WronskianIntegral} is strictly stronger:
 it is what is needed in Proposition~\ref{prop:moment}, and it is
 not claimed pointwise.
 The gain from $c^{-1/3}$ (raw tz integral) to $c^{-1/6}/|k-l|$ (combined)
-enters via one IBP against the bulk oscillation frequency
-$\omega_{kl}^{\rm tz}$ \eqref{eq:freqdef} (used as a conservative proxy
-at the bulk--transition boundary; see Remark~\ref{rem:freq}).
+enters via one IBP against the bulk oscillation, using
+$\omega_{kl}^{\rm tz}$ \eqref{eq:freqdef} as a \emph{conservative lower-bound
+surrogate} at the bulk--transition boundary (Remark~\ref{rem:freq}, role~(i)).
 The further gain to $c^{-1}/|k-l|$ in Proposition~\ref{prop:moment}
 enters only after dividing by $|\chi_k - \chi_l| \asymp 2c|k-l|$
 \eqref{eq:eigengap}.
@@ -482,11 +520,11 @@ $|\pswf{k}'| \lesssim c^{3/4}(1-s^2)^{-3/4}$, so
   |W_k^l(s)| \lesssim (1-s^2) \cdot c^{3/4}(1-s^2)^{-3/4} \cdot c^{-1/4}(1-s^2)^{-1/4}
   = c^{1/2}.
 \]
-For $k \neq l$, the WKB phases $\theta_k, \theta_l$ differ throughout the bulk
-(at least one full half-cycle, since $\int_0^1(\theta_k-\theta_l)'\,ds \asymp \pi|k-l|$),
-so by one IBP against the dominant oscillation at frequency
-$\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$ \eqref{eq:freqdef}
-(conservative proxy at the bulk--transition boundary; see Remark~\ref{rem:freq}):
+For $k \neq l$, one IBP against the dominant oscillation, using
+$\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$ \eqref{eq:freqdef} as a
+\emph{conservative lower-bound surrogate} for the actual WKB frequency
+(which is $\geq \omega_{kl}^{\rm tz}$ throughout the bulk;
+Remark~\ref{rem:freq}, role~(i)):
 \[
   J_{\rm bulk} \lesssim \frac{c^{1/2}}{c^{2/3}|k-l|} = \frac{c^{-1/6}}{|k-l|}.
 \]
@@ -500,26 +538,6 @@ for $|k-l| \geq 1$ and $c \geq 1$
 (since $c^{-1/3} \leq c^{-1/6}/|k-l|$ iff $c^{-1/6} \geq |k-l|^{-1}$,
 which holds for $c \geq 1$ and $|k-l| \geq 1$).
 \end{proof}
-
-\begin{remark}[Origin of the effective frequency $\omega_{kl}^{\rm tz}$]
-\label{rem:freq}
-The effective frequency $\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$ used in the
-bulk IBP is a \emph{conservative proxy}: the actual instantaneous WKB frequency
-$(\theta_k - \theta_l)'(s) \asymp 2|k-l|/(1-s^2)$ is larger than
-$\omega_{kl}^{\rm tz}$ throughout $\mathcal{Z}_{\rm bulk}$
-(where $1-s^2 \leq c^{-2/3}$ fails).
-Using $\omega_{kl}^{\rm tz}$ as a lower bound for the effective frequency
-is conservative and gives a valid (if not optimal) IBP estimate.
-The dominant contribution to the integral $I_{kl}^{\rm bulk}$ indeed
-comes from $s$ near the matching region $1 - s^2 \sim c^{-2/3}$,
-where $(\theta_k - \theta_l)'$ achieves the value $c^{2/3}|k-l|$:
-\[
-  (\theta_k - \theta_l)'\big|_{1-s^2 = c^{-2/3}}
-  \asymp \frac{2c|k-l|}{1-s^2}\cdot\frac{1}{2c\sqrt{1-s^2}}\cdot\sqrt{1-s^2}
-  \asymp \frac{2c|k-l|}{c^{-2/3}} \cdot \frac{1}{2c}
-  = c^{2/3}|k-l|.
-\]
-\end{remark}
 
 %% ============================================================
 \subsection{Sturm--Liouville moment bound}
@@ -583,7 +601,7 @@ Hence $|\mu_{kl}| \lesssim c^{-1}/|k-l|$ as claimed.
 \textbf{(c)} By definition, $\widehat{\phi}_{kl}'(0) = -i\int_{-1}^1 s\,\phi_{kl}(s)\,ds = -i\mu_{kl}$.
 \end{proof}
 
-\subsection{Off-diagonal decay: refined Riemann--Lebesgue}
+\subsection{Off-diagonal decay: the primary bound}
 
 Before stating the lemma, we record a basic $L^2$-norm bound used below.
 
@@ -597,22 +615,25 @@ By Cauchy--Schwarz in the product space $L^2(-1,1)$:
 Since the PSWF satisfies $\|\pswf{k}\|_{L^\infty} \leq 1$
 (uniform sup-norm bound, \cite{OsipovRokhlinXiao2013} Prop.~3.1),
 we obtain $\|\phi_{kl}\|_{L^2} \leq 1$.
-In particular, the Fourier transform satisfies $|\widehat{\phi}_{kl}(\xi)| \leq \|\phi_{kl}\|_{L^1} \leq \|\phi_{kl}\|_{L^2}\sqrt{2} \leq \sqrt{2}$
+In particular, $|\widehat{\phi}_{kl}(\xi)| \leq \|\phi_{kl}\|_{L^1} \leq \|\phi_{kl}\|_{L^2}\sqrt{2} \leq \sqrt{2}$
 for all $\xi$.
 \end{remark}
 
-\begin{lemma}[PSWF cross-product integral]\label{lem:RL}
+\begin{lemma}[PSWF cross-product integral -- primary bound]\label{lem:RL}
 For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
 \[
   \left|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
   \leq \frac{C}{c^{2/3}|k-l|}.
 \]
+\emph{This is the unique final bound used in the Schur test
+(Section~\ref{sec:norm}); see the hierarchy note after the proof.}
 \end{lemma}
 
 \begin{proof}
 Set $\phi_{kl} := \pswf{k}\pswf{l}$ and
 $I_{kl} := \int_{-1}^1 \arccos(s)\,\phi_{kl}(s)\,ds$.
-The proof is organised into three independent sublemmas, combined at the end.
+The proof is organised into two primary sublemmas and one technical auxiliary,
+combined at the end.
 
 \medskip
 \noindent\textbf{Sublemma A (Edge bound).}
@@ -626,14 +647,13 @@ $|I_{kl}^{\rm edge}| \lesssim c^{1/3}\cdot c^{-2/3} = c^{-1/3}$.
 \end{proof}
 
 \medskip
-\noindent\textbf{Sublemma B (Bulk IBP bound).}
+\noindent\textbf{Sublemma B (Bulk IBP bound -- primary intermediate step).}
 \emph{Claim:} $|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/|k-l|$.
 
 \begin{proof}[Proof of Sublemma B]
 In the bulk, $\phi_{kl}$ oscillates with effective frequency
-$\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$
-(transition-zone IBP frequency \eqref{eq:freqdef}, used as conservative proxy
-at the bulk--transition boundary; see Remark~\ref{rem:freq}).
+bounded below by $\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$
+(lower-bound surrogate \eqref{eq:freqdef}; Remark~\ref{rem:freq}, role~(i)).
 The amplitude satisfies $A_k(s)A_l(s) \lesssim c^{-1/2}(1-s^2)^{-1/2}$
 (WKB, \cite{OsipovRokhlinXiao2013} Prop.~3.2),
 so $\|A_kA_l\|_{L^1(\text{bulk})} \lesssim c^{-1/2}$.
@@ -648,28 +668,32 @@ one IBP against the oscillation gives:
 \end{proof}
 
 \medskip
-\noindent\textbf{Sublemma C (Double IBP, SL-based, Fourier-free).}
-\emph{Claim:}
-\[
-  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-1/2}}{|k-l|}
-  \quad\text{and also}\quad
-  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-7/6}}{|k-l|^2}.
-\]
-Both bounds hold independently; each is used separately in the Schur test.
-Together they imply $|I_{kl}| \lesssim c^{-2/3}/|k-l|$ (see Conclusion below).
+\noindent\textbf{Technical Lemma C (Alternative SL bound -- auxiliary, not primary).}
+\emph{This lemma gives two alternative bounds via double IBP using the SL
+structure directly, without Fourier machinery.
+It is \textbf{not} the primary bound used in the Schur test;
+its role is to confirm structural consistency and to serve as an independent
+check of the $c^{-7/6}/|k-l|$ intermediate result.
+The final bound $c^{-2/3}/|k-l|$ is achieved via Fourier cancellation below.}
 
-\begin{proof}[Proof of Sublemma C]
+\emph{Claims (independent):}
+\begin{align*}
+  &|I_{kl}^{\rm bulk}| \lesssim \frac{c^{-1/2}}{|k-l|}
+  \qquad\text{(coarse SL bound)},\\
+  &|I_{kl}^{\rm bulk}| \lesssim \frac{c^{-7/6}}{|k-l|^2}
+  \qquad\text{(refined SL bound via second IBP)}.
+\end{align*}
+Both are \emph{weaker than} $c^{-2/3}/|k-l|$ for all $c \geq 1$
+(since $c^{-1/2} \geq c^{-2/3}$ and $c^{-7/6}/|k-l|^2 \leq c^{-7/6}/|k-l| \leq c^{-2/3}/|k-l|$
+for $c \geq 1$). They are retained for structural transparency.
+
+\begin{proof}[Proof of Technical Lemma C]
 Set $f(s) := \arccos(s)$.
-We perform two IBP steps in $s$-space using only the SL
-equation~\eqref{eq:SLeq}; no Fourier machinery is invoked.
 
 \medskip
 \noindent\textbf{Step 1 (First IBP via SL identity).}
 From \eqref{eq:SLeq}:
-\[
-  (\chi_k - \chi_l)\,\phi_{kl}(s)
-  = -\frac{d}{ds}W_k^l(s).
-\]
+$(\chi_k - \chi_l)\,\phi_{kl}(s) = -\frac{d}{ds}W_k^l(s)$.
 Integrating by parts over $\mathcal{Z}_{\rm bulk}$:
 \[
   I_{kl}^{\rm bulk}
@@ -677,7 +701,7 @@ Integrating by parts over $\mathcal{Z}_{\rm bulk}$:
     \int_{\mathcal{Z}_{\rm bulk}} f'(s)\,W_k^l(s)\,ds
   + \text{b.t.}
 \]
-Boundary terms vanish: $W_k^l|_{s=\pm 1} = 0$ (since $(1-s^2)|_{\pm 1} = 0$);
+Boundary terms vanish: $W_k^l|_{s=\pm 1} = 0$;
 the zone-boundary contribution is $O(c^{-1/3})$ and absorbed into Sublemma A.
 Using $f'(s) = -(1-s^2)^{-1/2}$ and
 $|\chi_k-\chi_l| \asymp 2c|k-l|$ (eigenvalue-gap scale \eqref{eq:eigengap}):
@@ -690,53 +714,35 @@ $|\chi_k-\chi_l| \asymp 2c|k-l|$ (eigenvalue-gap scale \eqref{eq:eigengap}):
 \end{equation}
 
 \medskip
-\noindent\textbf{Step 2a (Coarse bound -- first claim).}
+\noindent\textbf{Step 2a (Coarse bound).}
 Using the bulk WKB estimate $|W_k^l(s)| \lesssim c^{1/2}$:
 \[
   \int_{\mathcal{Z}_{\rm bulk}} \frac{|W_k^l|}{\sqrt{1-s^2}}\,ds
   \lesssim c^{1/2}\int_{-1}^1 (1-s^2)^{-1/2}\,ds = \pi c^{1/2}.
 \]
 Substituting into \eqref{eq:step1C}:
-\[
-  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{1/2}}{2c|k-l|} = \frac{c^{-1/2}}{2|k-l|},
-\]
-establishing the first claim.
+$|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/(2|k-l|)$, i.e.\ the coarse bound.
 
 \medskip
-\noindent\textbf{Step 2b (Refined bound via second IBP -- second claim).}
+\noindent\textbf{Step 2b (Refined bound via second IBP).}
 Write $W_k^l(s)/\sqrt{1-s^2} = \sqrt{1-s^2}[\psi_k'\psi_l - \psi_k\psi_l']$.
-In $\mathcal{Z}_{\rm bulk}$, WKB gives $\psi_k \approx A_k\cos\theta_k$
-with $A_k \asymp c^{-1/4}(1-s^2)^{-1/4}$.
-The slowly-varying envelope satisfies:
-\[
-  g(s) := \sqrt{1-s^2}\,A_k(s)A_l(s)\,\theta_k'(s) \lesssim c^{1/2},
-  \qquad \|g\|_{L^1(\mathcal{Z}_{\rm bulk})} \lesssim c^{1/2}.
-\]
-One IBP against the difference-phase oscillation, using
+One further IBP against the difference-phase oscillation, using
 $\omega_{kl}^{\rm tz} = c^{2/3}|k-l|$ \eqref{eq:freqdef}
-as a lower bound for the effective frequency
-(conservative proxy at the bulk--transition boundary; Remark~\ref{rem:freq}):
+as a conservative lower-bound surrogate (Remark~\ref{rem:freq}, role~(i)):
 \[
   \int_{\mathcal{Z}_{\rm bulk}} \frac{|W_k^l|}{\sqrt{1-s^2}}\,ds
-  \lesssim \frac{\|g\|_{L^1}}{\omega_{kl}^{\rm tz}}
-  \leq \frac{c^{1/2}}{c^{2/3}|k-l|}
+  \lesssim \frac{c^{1/2}}{c^{2/3}|k-l|}
   = \frac{c^{-1/6}}{|k-l|}.
 \]
 Substituting into \eqref{eq:step1C}:
-\[
-  |I_{kl}^{\rm bulk}|
-  \leq \frac{1}{2c|k-l|}\cdot\frac{c^{-1/6}}{|k-l|}
-  = \frac{c^{-7/6}}{2|k-l|^2},
-\]
-establishing the second claim.
+$|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/(2|k-l|^2)$, the refined bound.
 \end{proof}
 
 \medskip
-\noindent\textbf{Conclusion.}
-We combine all three sublemmas.
-Sublemma C (first claim) gives $|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/|k-l|$.
-For large $c$, $c^{-1/2} \leq c^{-2/3}$ fails (since $1/2 < 2/3$),
-so we use the Fourier-cancellation (Sublemma C steps via Proposition~\ref{prop:moment}):
+\noindent\textbf{Conclusion (Fourier-cancellation, primary step).}
+Technical Lemma C gives $|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/|k-l|$,
+which is weaker than the target $c^{-2/3}/|k-l|$ for $c \geq 1$.
+The improvement to $c^{-2/3}/|k-l|$ requires Fourier cancellation:
 
 By the frequency-decomposition argument, using $\widehat{\phi}_{kl}(0) = 0$
 and Proposition~\ref{prop:moment}(c), the low-frequency contribution gives
@@ -748,22 +754,42 @@ subdominant for $c$ large and $|k-l| \geq 1$.
 \]
 \end{proof}
 
+\begin{remark}[Bound hierarchy -- which estimate is ``the'' bound]
+\label{rem:hierarchy}
+The estimates in this section form a strict hierarchy.
+Only the final bound from Lemma~\ref{lem:RL} enters the Schur test:
+\[
+  \underbrace{c^{-7/6}/|k-l|^2}_{\text{Tech.~Lemma C, refined}}
+  \;\leq\;
+  \underbrace{c^{-7/6}/|k-l|}_{\text{Sublemma B, intermediate}}
+  \;\leq\;
+  \underbrace{c^{-2/3}/|k-l|}_{\text{Lemma~\ref{lem:RL}, \textbf{final and unique}}}.
+\]
+The first two are stepping stones.
+Technical Lemma C is retained for structural transparency and as an
+independent consistency check, but \textbf{neither of its bounds is used
+directly in Section~\ref{sec:norm}}.
+\end{remark}
+
 \begin{remark}[Three-step structure, explicitly]\label{rem:threesteps}
 For a referee-clear summary of how the three mechanisms interact:
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{lcl}
   \hline
-  Step & Result & Used in \\
+  Step & Result & Status \\
   \hline
-  WKB + amplitude bound & $\|\phi_{kl}\|_{L^1} \lesssim c^{-1/3}$ & IBP numerator \\
-  Oscillation frequency (Rem.~\ref{rem:freq}) & $\omega_{kl}^{\rm tz} \sim c^{2/3}|k-l|$ & IBP denominator \\
-  IBP combined (Sublemma B) & $|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/|k-l|$ & intermediate \\
+  WKB amplitude bound & $\|A_kA_l\|_{L^1} \lesssim c^{-1/2}$ & numerator for IBP \\
+  Lower-bound surrogate (Rem.~\ref{rem:freq}) & $\omega_{kl}^{\rm tz} \leq$ actual freq. & IBP denominator \\
+  Sublemma B & $|I_{kl}^{\rm bulk}| \lesssim c^{-7/6}/|k-l|$ & \emph{intermediate} \\
   Fourier zero & $\widehat\phi_{kl}(0)=0$ & enables Taylor \\
   Prop.~\ref{prop:moment} & $|\widehat\phi_{kl}'(0)| \lesssim c^{-1}/|k-l|$ & Taylor slope \\
-  SL double IBP (Sublemma C) & coarse $c^{-1/2}/|k-l|$; refined $c^{-7/6}/|k-l|^2$ & both independent \\
-  Low-freq.\ gain & $c^{-1}/|k-l| \times c^{1/3}$ & decisive factor \\
-  \textbf{Combined} & $\boldsymbol{c^{-2/3}/|k-l|}$ & \textbf{final bound} \\
+  Tech.~Lemma C (coarse) & $c^{-1/2}/|k-l|$; refined: $c^{-7/6}/|k-l|^2$
+    & \emph{auxiliary check only} \\
+  Low-freq.\ gain (decisive) & $c^{-1}/|k-l| \times c^{1/3}$ & primary path \\
+  \hline
+  \textbf{Lemma~\ref{lem:RL}} & $\boldsymbol{c^{-2/3}/|k-l|}$
+    & \textbf{final, into Schur test} \\
   \hline
 \end{tabular}
 \end{center}
@@ -780,13 +806,19 @@ Lemma~\ref{lem:Airy}/Corollary~\ref{cor:Wronskian}.
 
 \subsection{Matrix entry bound}
 
-Using Lemma~\ref{lem:RL} and the transition-zone estimate
+Using Lemma~\ref{lem:RL} \emph{exclusively} (see Remark~\ref{rem:hierarchy})
+and the transition-zone estimate
 $(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})] \asymp c^{1/3}$
-(valid for $k,l$ in the transition window, bulk zone \textbf{b}), together with the prefactor $c$:
+(valid for $k,l$ in the transition window), together with the prefactor $c$:
 \begin{equation}\label{eq:Tij}
   |T_{ij}| \lesssim c \cdot c^{1/3} \cdot \frac{1}{c^{2/3}|i-j|}
   = \frac{c^{-2/3}}{|i-j|}, \qquad i \neq j.
 \end{equation}
+The factors $c^{-7/6}/|k-l|$ (Sublemma B) and $c^{-7/6}/|k-l|^2$
+(Technical Lemma C) are \emph{not} inserted here; they are
+strictly weaker than $c^{-2/3}/|i-j|$ after the prefactor $c \cdot c^{1/3}$
+is applied (since $c \cdot c^{1/3} \cdot c^{-7/6} = c^{-2/3}$ and
+$c \cdot c^{1/3} \cdot c^{-1/2} = c^{5/6}$, which grows with $c$).
 
 \subsection{Schur-test estimate}
 
@@ -798,7 +830,7 @@ Since $T_{ii} = 0$, we apply the \emph{Schur test}:
 \]
 Since $N = \lfloor Ac^{1/3}\rfloor$, we have explicitly
 \[
-  \log N = \log(\lfloor Ac^{1/3}\rfloor) \sim \frac{1}{3}\log c + \log A,
+  \log N = \log(Ac^{1/3}) \sim \frac{1}{3}\log c + \log A,
 \]
 so that, for $c \geq c_0(A)$:
 \[
@@ -832,31 +864,38 @@ $\norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \leq C(A) c^{-2/3}\log c \to 0$
 \begin{table}[h]
 \centering
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{llll}
+\begin{tabular}{lllll}
 \hline
-\textbf{Mechanism} & \textbf{Factor} & \textbf{Regime} & \textbf{Source} \\
+\textbf{Mechanism} & \textbf{Factor} & \textbf{Status} & \textbf{Regime} & \textbf{Source} \\
 \hline
-Commutator: $T_{ii} = 0$ & no diagonal & G & PSWF-orthogonality \\
-IBP (bulk oscillation) & $c^{-7/6}/|i-j|$ (Sublm.~B) & b
-  & $\omega_{kl}^{\rm tz}\sim c^{2/3}|k-l|$ (Rem.~\ref{rem:freq}) \\
-SL double IBP (Sublm.~C) & $c^{-1/2}/|k-l|$ and $c^{-7/6}/|k-l|^2$ & b/G
-  & Steps 2a, 2b (independent) \\
-Fourier cancellation $\hat\phi_{kl}(0)=0$ & decisive gain & G
-  & $L^2$-ortho.~+ Prop.~\ref{prop:moment} \\
-Airy Wronskian (integral) & $\int|W_k^l|\lesssim c^{-1/6}/|k-l|$ & mixed
+Commutator: $T_{ii} = 0$ & no diagonal & primary & G & PSWF-orthogonality \\
+IBP (bulk, Sublm.~B) & $c^{-7/6}/|i-j|$ & \emph{intermediate} & b
+  & $\omega_{kl}^{\rm tz}$: l.-b.\ surrogate (Rem.~\ref{rem:freq}) \\
+Tech.~Lemma C (SL double IBP) & $c^{-1/2}/|k-l|$; $c^{-7/6}/|k-l|^2$ &
+  \emph{auxiliary check} & b/G & Steps 2a,2b (independent) \\
+Fourier cancellation $\hat\phi_{kl}(0)=0$ & decisive gain & primary & G
+  & $L^2$-ortho.\ + Prop.~\ref{prop:moment} \\
+Airy Wronskian (integral) & $\int|W_k^l|\lesssim c^{-1/6}/|k-l|$ & primary & mixed
   & Cor.~\ref{cor:Wronskian} \\
-Div.\ by $|\chi_k-\chi_l| \asymp 2c|k-l|$ & $\to |\mu_{kl}| \lesssim c^{-1}/|k-l|$ & G
+Div.\ by $|\chi_k-\chi_l| \asymp 2c|k-l|$ & $\to |\mu_{kl}| \lesssim c^{-1}/|k-l|$ & primary & G
   & Prop.~\ref{prop:moment}(b) \\
-$N \sim c^{1/3}$: harmonic sum & $\log N \sim \tfrac{1}{3}\log c$ & G
+\hline
+\textbf{Lemma~\ref{lem:RL}} & \boldmath{$c^{-2/3}/|i-j|$}
+  & \textbf{final (into Schur)} & G & \textbf{unique Schur input} \\
+\hline
+$N \sim c^{1/3}$: harmonic sum & $\log N \sim \tfrac{1}{3}\log c$ & primary & G
   & Galerkin cutoff \\
-Gram coercivity & well-conditioned $P_N$ & G & Paper~I \\
+Gram coercivity & well-conditioned $P_N$ & primary & G & Paper~I \\
 \hline
 \end{tabular}
 \caption{Mechanisms contributing to $\|DT_c^{(N)}\| \lesssim c^{-2/3}\log c$
 under Assumption~\ref{ass:G}.
-\textbf{Regime}: \textbf{G} = uniform in Galerkin window,
-\textbf{b} = bulk zone, \textbf{mixed} = combined tz + bulk.
-Every factor is now rigorously justified with explicit comparison arguments.}
+\textbf{Status}: ``primary'' = used in the Schur test;
+``intermediate'' = stepping stone only;
+``auxiliary check'' = consistency check, not inserted into norm bound.
+\textbf{The unique Schur input is $c^{-2/3}/|i-j|$ from Lemma~\ref{lem:RL}.}
+Regime: \textbf{G} = uniform in Galerkin window, \textbf{b} = bulk zone,
+\textbf{mixed} = combined tz + bulk.}
 \label{tab:mechanisms}
 \end{table}
 
@@ -912,6 +951,17 @@ is controlled by the SL Wronskian (Proposition~\ref{prop:moment}),
 which is in turn bounded by the Airy approximation (Lemma~\ref{lem:Airy}).
 This chain -- orthogonality $\to$ Wronskian $\to$ Fourier slope $\to$ contraction rate --
 is the conceptual core of this paper.
+\end{remark}
+
+\begin{remark}[Entkopplung: Schur-Schranke und Spektralnorm]
+The Schur test (Section~\ref{sec:norm}) provides a rigorous upper bound on
+the operator norm $\|T\|_{\ell^2\to\ell^2}$.
+The question whether $T$ is approximately self-adjoint
+($T_{ij} \approx \overline{T_{ji}}$) is \emph{structurally independent}
+of the contraction proof: Theorem~\ref{thm:main} holds regardless of the
+self-adjointness question.
+Open Problem~\ref{op:Gershgorin} addresses tightening the norm bound,
+not its validity.
 \end{remark}
 
 %% ============================================================
