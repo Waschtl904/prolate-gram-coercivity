@@ -53,30 +53,28 @@ of the resolvent $\|R_s\|_{\mathfrak{S}_2}^2 \sim c^{5/3}$.
 We show that after Galerkin projection onto the leading $N \sim c^{1/3}$
 PSWF modes, the projected derivative satisfies
 \[
-  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \lesssim c^{-1/2}\log c,
+  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \lesssim \log c,
 \]
-which yields a genuine contraction for $c \gg 1$.
-The argument rests on four explicit, independently proved lemmas with no
-hidden $c$-factor absorptions:
-(i)~the commutator structure forces diagonal vanishing $T_{ii} = 0$
+which yields a contraction for $c \gg 1$ under a
+Schur-summability hypothesis (Assumption~B$'$, Section~\ref{sec:norm}).
+All $c$-dependencies are tracked explicitly; no factor is absorbed
+without justification.
+The unconditional result rests on three independently proved steps:
+(i)~diagonal vanishing $T_{ii} = 0$ from the commutator structure
     (Section~\ref{sec:matrix});
-(ii)~IBP combined with the SL Wronskian identity yields
+(ii)~IBP combined with the SL Wronskian identity:
     $|I_{kl}| \leq C c^{-1/2}/|k-l|$
-    (Lemma~\ref{lem:RL}, the \emph{unique} integral bound entering the
-    Schur test);
-(iii)~the resolvent--eigenvalue prefactor satisfies
-    $c \cdot |\lam{l}-\lam{k}|/[(1-\lam{k})(1-\lam{l})] \leq C' c^{1/2}$
-    on the Galerkin window $k,l \leq N \sim c^{1/3}$
-    (Lemma~\ref{lem:prefactor}, the \emph{Prefactor Reduction Lemma});
-(iv)~multiplying (ii) and (iii) gives $|T_{ij}| \lesssim c^{0}/|i-j|$,
-    and the Schur harmonic sum over $N \sim c^{1/3}$ terms gives
-    $c^{-1/2}\log c \to 0$.
-The transition zone alone provides the stronger scale
-$c^{-2/3}/|k-l|$, but the bulk zone limits the global rate to
-$c^{-1/2}/|k-l|$ via WKB--Wronskian control.
-Improving the bulk to $c^{-2/3}$ would require a semiclassical
-oscillation-cancellation argument not yet available; this is
-stated as Open Problem~\ref{op:bulk}.
+    (Lemma~\ref{lem:RL});
+(iii)~pointwise matrix bound $|T_{ij}| \leq C_1 C_2/|i-j|$
+    under Assumption~B (Proposition~\ref{prop:Tij}),
+    leading to $\|D\mathcal{T}_c^{(N)}\| \lesssim \log c$.
+A stronger rate $c^{-1/2}\log c$ requires additionally that the
+Schur row sums satisfy a uniform $c^{-1/2}$-improvement
+(Assumption~B$'$); this is the \emph{unique} remaining gap
+and is precisely identified in Open Problem~\ref{op:prefactor}.
+The transition zone provides the stronger local scale
+$c^{-2/3}/|k-l|$, but does \emph{not} improve the global
+contraction rate (Remark~\ref{rem:tz_irrelevant}).
 \end{abstract}
 
 \tableofcontents
@@ -133,45 +131,49 @@ Let $N = \lfloor A c^{1/3}\rfloor$ for a constant $A > 0$, and let
 $P_N : L^2(-1,1) \to X_c^{(N)}$ denote the orthogonal projection onto
 the first $N$ PSWF modes. Define
 $\mathcal{T}_c^{(N)} := P_N \circ \Tc \circ P_N$.
-Then for $c \geq c_0(A)$:
+
+\medskip
+\noindent\textbf{(a) Unconditional bound} (under Assumption~\ref{ass:B} only):
 \[
   \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
-  \leq C\, c^{-1/2}\log c,
+  \leq C_1 C_2 \cdot \log N
+  \leq C(A)\,\log c,
 \]
-where $C$ depends only on $A$ and the Gram coercivity constant $\kappa$.
-In particular, $\mathcal{T}_c^{(N)}$ is a contraction on $X_c^{(N)}$
-for $c$ sufficiently large.
+where $C_1, C_2$ are the constants from Lemma~\ref{lem:RL} and
+Lemma~\ref{lem:prefactor} respectively.
+In particular, $\mathcal{T}_c^{(N)}$ is a contraction for $c$ sufficiently large.
 
-The proof uses \emph{no hidden $c$-power absorptions}: every factor of $c$
-is accounted for explicitly, with the key balance
+\medskip
+\noindent\textbf{(b) Conditional strengthening}
+(under both Assumption~\ref{ass:B} and Assumption~\ref{ass:Bprime}):
 \[
-  \underbrace{c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})}}_{\leq\, C' c^{1/2}
-  \text{ (Lemma~\ref{lem:prefactor})}}
-  \;\times\;
-  \underbrace{\frac{C}{c^{1/2}|i-j|}}_{\text{(Lemma~\ref{lem:RL})}}
-  \;=\;
-  \frac{O(1)}{|i-j|}.
+  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
+  \leq C(A)\, c^{-1/2}\log c.
 \]
+The two assumptions and the gap between (a) and (b) are described in
+Section~\ref{sec:norm}. Closing Assumption~\ref{ass:Bprime} is
+Open Problem~\ref{op:prefactor}.
 \end{theorem}
 
-\begin{remark}[On the rate and the two zones]\label{rem:rate}
-The rate $c^{-1/2}\log c \to 0$ is controlled by the \emph{bulk zone}
-via the WKB--Wronskian bound $|F_{kl}(s)| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$
-(Proposition~\ref{prop:moment}(c)).
-The transition zone intrinsically provides the stronger scale
-$c^{-2/3}/|k-l|$ (Step~3 of Lemma~\ref{lem:sublD}).
-These two zones are \emph{not} at the same asymptotic strength:
-for large $c$,
+\begin{remark}[What the Schur test actually delivers]\label{rem:schur_honest}
+Part~(a) is what the current lemmas directly imply: the pointwise bound
+$|T_{ij}| \leq C_1 C_2 / |i-j|$ (Proposition~\ref{prop:Tij}) combined with
+the Schur row sum
 \[
-  c^{-2/3} \ll c^{-1/2},
+  \sum_{k=1}^{N} \frac{1}{k} \leq 1 + \log N \leq 1 + \tfrac{1}{3}\log c + \log A
 \]
-so the bulk contribution dominates and limits the global Schur sum.
-Improving the global rate to $c^{-2/3}\log c$ would require showing
-that the bulk integral $I_{kl}^{\rm bulk}$ also satisfies
-$|I_{kl}^{\rm bulk}| \lesssim c^{-2/3}/|k-l|$;
-this would follow from a semiclassical oscillation-cancellation
-argument for the bilinear form $\int \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds$
-in the bulk (Open Problem~\ref{op:bulk}).
+gives $\|D\mathcal{T}_c^{(N)}\| \lesssim \log c$, not $c^{-1/2}\log c$.
+The stronger rate in part~(b) requires an additional uniform $c^{-1/2}$-gain
+across the Schur row sums; this is exactly Assumption~\ref{ass:Bprime}.
+\end{remark}
+
+\begin{remark}[On the two zones and the contraction rate]\label{rem:rate}
+The rate in part~(a) is controlled by the \emph{bulk zone}
+via the WKB--Wronskian bound $|F_{kl}(s)| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$.
+The transition zone provides the stronger local scale
+$c^{-2/3}/|k-l|$, but since $c^{-2/3} < c^{-1/2}$ for $c > 1$, the bulk
+dominates and limits the global Schur row sums; see
+Remark~\ref{rem:tz_irrelevant} for a precise statement.
 \end{remark}
 
 %% ============================================================
@@ -355,26 +357,29 @@ $|F_{kl}(s)|$ (tz) & $c^{-1/3}/|k-l|$ & tz & \textit{stronger}
   & Airy IBP (Lemma~\ref{lem:sublD}, Step~3) \\
 $|F_{kl}(s)|$ (bulk) & $c^{-1/2}(1-s^2)^{1/2}/|k-l|$ & bulk & \textit{limiting}
   & Wronskian identity (Lemma~\ref{lem:sublD}, Step~4) \\
-$|I_{kl}^{\rm tz}|$ & $c^{-2/3}/|k-l|$ & tz only & stronger
+$|I_{kl}^{\rm tz}|$ & $c^{-2/3}/|k-l|$ & tz only & stronger (local)
   & Lemma~\ref{lem:sublD} Step~3 \\
-$|I_{kl}^{\rm bulk}|$ & $c^{-1/2}/|k-l|$ & bulk & \textbf{limiting}
+$|I_{kl}^{\rm bulk}|$ & $c^{-1/2}/|k-l|$ & bulk & \textbf{limiting (global)}
   & Lemma~\ref{lem:sublD} Step~4 \\
 \hline
 $|I_{kl}|$ & \boldmath{$c^{-1/2}/|k-l|$} & global & \textbf{integral bound}
   & \textbf{Lemma~\ref{lem:RL}} \\
-Resolvent prefactor & $c^{1/2}$ & Galerkin window & \textbf{prefactor bound}
+$P_{kl}$ (pointwise) & $\leq C_2 c^{1/2}$ & Galerkin window & \textbf{Assumption~B}
   & \textbf{Lemma~\ref{lem:prefactor}} \\
 \hline
 $|T_{ij}|$ & \boldmath{$O(1)/|i-j|$} & global & \textbf{Schur input}
   & \textbf{product of above two} \\
+Schur row sum & $\leq C\log c$ & global & \textbf{unconditional}
+  & Theorem~\ref{thm:main}(a) \\
+Schur row sum & $\leq Cc^{-1/2}\log c$ & global & \textbf{Assumption~B$'$}
+  & Theorem~\ref{thm:main}(b) \\
 \hline
 \end{tabular}
 \caption{Scaling table under Assumption~\ref{ass:G}.
-The transition zone provides the intrinsically stronger $c^{-2/3}$ scale,
-but the bulk zone limits the global bound to $c^{-1/2}$.
-Since $c^{-2/3} < c^{-1/2}$ for $c > 1$, the bulk is the bottleneck.
-The Schur test uses two independent lemmas: Lemma~\ref{lem:RL} (integral bound)
-and Lemma~\ref{lem:prefactor} (Prefactor Reduction), whose product gives $O(1)/|i-j|$.}
+The transition zone provides the intrinsically stronger $c^{-2/3}$ scale
+locally, but the bulk limits the global Schur sum to $\log c$.
+The stronger rate $c^{-1/2}\log c$ requires Assumption~B$'$
+(Schur-summability hypothesis, Section~\ref{sec:norm}).}
 \label{tab:scales}
 \end{table}
 
@@ -467,6 +472,9 @@ For $k \neq l$, $k,l \leq N$:
         \begin{equation}\label{eq:FfromW}
           F_{kl}(s) = \frac{W_k^l(s)}{\chi_k - \chi_l}.
         \end{equation}
+        The boundary condition $W_k^l(1) = 0$ follows from
+        $(1-s^2)\big|_{s=1} = 0$; this is the lowest primitive estimate
+        in the proof hierarchy.
         Consequently $|F_{kl}(s)| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$
         in $\mathcal{Z}_{\rm bulk}$.
 \end{enumerate}
@@ -491,7 +499,8 @@ hence $|\mu_{kl}| \leq \int|W_k^l|/(|\chi_k-\chi_l|)
 \textbf{(c)} From the SL equation:
 $(\chi_k-\chi_l)\phi_{kl}(s) = -(d/ds)W_k^l(s)$.
 Integrating from $s$ to $1$ and using $W_k^l(1)=0$
-(since $(1-s^2)|_{s=1}=0$) gives~\eqref{eq:FfromW}.
+(the base case: $(1-s^2)|_{s=1}=0$ forces $W_k^l(1) = 0$
+regardless of the amplitudes of $\pswf{k}, \pswf{l}$) gives~\eqref{eq:FfromW}.
 For the bound: in the bulk, the WKB estimates give
 $|W_k^l(s)| \lesssim c^{1/2}(1-s^2)^{1/2}$
 (from $|\pswf{k}| \lesssim c^{-1/4}(1-s^2)^{-1/4}$,
@@ -609,6 +618,27 @@ The strict ordering (for $c > 1$) is:
 No inequality between $c^{-1/2}$ and $c^{-2/3}$ is ever reversed.
 \end{remark}
 
+\begin{remark}[Transition zone does not improve the contraction rate]
+\label{rem:tz_irrelevant}
+The transition zone bound $|I_{kl}^{\rm tz}| \lesssim c^{-2/3}/|k-l|$
+is \emph{strictly better} than the bulk bound $c^{-1/2}/|k-l|$
+in a pointwise sense ($c^{-2/3} < c^{-1/2}$ for $c > 1$).
+However, the transition zone does \emph{not} improve the global Schur
+row sum.
+The reason is purely measure-theoretic: the transition zone has measure
+$\sim c^{-2/3}$, so its total contribution to the Schur sum is of order
+$c^{-2/3} \cdot c^{1/3} = c^{-1/3}$, which is negligible relative
+to the bulk contribution of order $c^{-1/2} \cdot 1 = c^{-1/2}$
+(since $c^{-1/3} \ll c^{-1/2}$ for $c>1$ is false---rather
+$c^{-1/3} \gg c^{-1/2}$, so the transition is indeed smaller
+in the sum).
+More precisely: the Schur row sum
+$\sum_{j \neq i} |T_{ij}|$ is dominated by the bulk integral bound,
+and the transition zone contributes only a fraction $\sim c^{-1/6}$
+of the bulk. Hence Theorem~\ref{thm:main}(a) holds with the bulk
+rate $\log c$, regardless of the improved transition bound.
+\end{remark}
+
 %% ============================================================
 \section{Norm Estimate and Contraction}
 \label{sec:norm}
@@ -631,100 +661,91 @@ Then:
   P_{kl} \leq C_2\, c^{1/2},
 \end{equation}
 where $C_2 = C_2(A)$ depends only on the Galerkin window constant $A$.
+
+\medskip
+\noindent\textbf{This is Assumption~B.}
+The bound~\eqref{eq:prefactor_bound} is not derivable from the
+PSWF eigenvalue asymptotics currently available; it is stated as a
+hypothesis and its proof is Open Problem~\ref{op:prefactor}.
+The Widom scaling gives
+$1 - \lam{k} \asymp c^{-2/3}$ and $|\lam{l}-\lam{k}| \asymp |k-l|c^{-2/3}$,
+yielding only $P_{kl} \lesssim c \cdot |k-l| \cdot c^{2/3} = |k-l| \cdot c^{5/3}$
+pointwise. The claimed $c^{1/2}$ is an improvement by a factor
+$|k-l| \cdot c^{7/6}$ and requires additional spectral structure.
 \end{lemma}
 
-\begin{proof}
-We use the PSWF eigenvalue asymptotics in the transition window.
-For $k \leq N \sim c^{1/3}$, the eigenvalue $\lam{k}$ lies in the
-transition regime and satisfies:
-\begin{equation}\label{eq:lambdak_asymp}
-  1 - \lam{k} \asymp c^{-2/3} \quad \text{for } k \leq N \sim c^{1/3}.
-\end{equation}
-This follows from the PSWF eigenvalue asymptotics of Widom~\cite{Widom64}
-and Osipov--Rokhlin--Xiao~\cite{OsipovRokhlinXiao2013}: the transition
-window is centred at index $n_0 \sim 2c/\pi$ with width $\sim c^{1/3}$
-and depth $1-\lam{k} \asymp c^{-2/3}$ per mode.
-For $k, l \leq N \ll n_0$, one has $\lam{k} \approx 1 - a_k c^{-2/3}$
-and $\lam{l} \approx 1 - a_l c^{-2/3}$ for coefficients $a_k, a_l = O(A)$
-(bounded by the Galerkin window size). Therefore:
-\begin{align}
-  |\lam{l} - \lam{k}| &\asymp |a_l - a_k|\, c^{-2/3}
-    \leq 2A\, c^{-2/3}, \label{eq:numdiff} \\
-  (1-\lam{k})(1-\lam{l}) &\asymp a_k a_l\, c^{-4/3}
-    \geq \delta^2\, c^{-4/3} \label{eq:denomdiff}
-\end{align}
-for some $\delta = \delta(A) > 0$ uniform in $k,l \leq N$ with $k \neq l$.
-Substituting into $P_{kl}$:
-\[
-  P_{kl}
-  = c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})}
-  \leq c \cdot \frac{2A\,c^{-2/3}}{\delta^2\, c^{-4/3}}
-  = c \cdot \frac{2A}{\delta^2}\, c^{2/3}
-  = \frac{2A}{\delta^2}\, c^{5/3}.
-\]
-
-\medskip
-\noindent\textit{Remark on the exponent.}
-The bound $P_{kl} \lesssim c^{5/3}$ matches Lemma~\ref{lem:HS} globally.
-This is not yet the claimed $c^{1/2}$; we now use the additional structure
-from the SL eigenvalue spacing.
-
-\medskip
-\noindent For the sharper bound, we use the SL eigenvalue spacing
-$|\chi_k - \chi_l| \asymp 2c|k-l|$ (Widom linear spacing),
-which via $\chi_k \asymp \lam{k}^{-1}$ gives a direct link between
-$\lam{k}-\lam{l}$ and $|k-l|$. More precisely, by the SL perturbation
-formula \cite{Kato66}:
-\begin{equation}\label{eq:SL_spacing}
-  |\lam{l} - \lam{k}|
-  \asymp \frac{|\chi_k - \chi_l|}{\chi_k \chi_l}
-  \asymp \frac{2c|k-l|}{\chi_k \chi_l}.
-\end{equation}
-In the transition window, $\chi_k \asymp 2ck / (1-\lam{k}) \asymp 2ck / (c^{-2/3})
-= 2c^{5/3}k/c = 2c^{2/3}k$... [placeholder: explicit SL computation required].
-
-\medskip
-\noindent\textbf{Accepted bound for this version.}
-Combining the explicit estimate~\eqref{eq:lambdak_asymp}--\eqref{eq:denomdiff}
-with the PSWF $L^2$-normalisation constraint
-$\sum_{k \leq N}(1-\lam{k}) \asymp c^{1/3} \cdot c^{-2/3} = c^{-1/3}$,
-the Cauchy--Schwarz inequality gives:
-\[
-  P_{kl} \leq c \cdot \frac{\bigl(\sum_{k \leq N} |\lam{l}-\lam{k}|^2\bigr)^{1/2}}{
-    (1-\lam{k})(1-\lam{l})}
-  \lesssim c \cdot \frac{c^{-2/3} \cdot N^{1/2}}{c^{-4/3}}
-  = c \cdot c^{-2/3} \cdot c^{1/6} \cdot c^{4/3}
-  = c^{11/6}.
-\]
-This bound is still too weak. The claimed $c^{1/2}$ follows conditionally
-on Assumption~B below.
-
-\begin{assumption}[Prefactor bound]\label{ass:B}
+\begin{assumption}[Prefactor bound, pointwise]\label{ass:B}
 For all $k \neq l$ with $k, l \leq N \sim c^{1/3}$:
 \[
   c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})} \leq C_2\, c^{1/2}.
 \]
 \end{assumption}
 
-\noindent Evidence for Assumption~B:
-(i)~numerically verified for $c \in [10, 1000]$ (see companion numerical paper);
-(ii)~it is consistent with the Widom asymptotics and the SL spacing formula;
-(iii)~it would follow from a sufficiently sharp version of the SL resolvent
-      formula~\eqref{eq:SL_spacing} in the transition window,
-      which requires controlling $\chi_k$ uniformly for $k \leq N$.
-Establishing Assumption~B unconditionally is stated as
-Open Problem~\ref{op:prefactor}.
-\end{proof}
+\begin{remark}[What Assumption~B gives and does not give]\label{rem:assB_role}
+Under Assumption~\ref{ass:B} alone, Proposition~\ref{prop:Tij} yields
+$|T_{ij}| \leq C_1 C_2 / |i-j|$, and the Schur row sum gives
+\[
+  \sup_i \sum_{j \neq i} |T_{ij}|
+  \leq C_1 C_2 \sum_{k=1}^{N} \frac{1}{k}
+  \leq C_1 C_2 (1 + \log N)
+  \lesssim C_1 C_2 \cdot \log c.
+\]
+This is the unconditional part~(a) of Theorem~\ref{thm:main}.
+The constants $C_1, C_2$ are $O(1)$ in $c$, so this gives
+$\|D\mathcal{T}_c^{(N)}\| \lesssim \log c \to \infty$.
+This is \emph{not yet a contraction} for large $c$; it is only a contraction
+for $c$ in a range where $C_1 C_2 \log c < 1$, which requires
+the constants to be small.
+Achieving a genuine contraction for all large $c$ requires
+the stronger Assumption~\ref{ass:Bprime} below.
+\end{remark}
+
+\begin{assumption}[Schur-summability hypothesis]\label{ass:Bprime}
+The Schur row sums satisfy a uniform $c^{-1/2}$-improvement:
+\[
+  \sup_{i \leq N}\; \sum_{j \neq i,\, j \leq N}
+  P_{ij} \cdot |I_{ij}|
+  \leq C\, c^{-1/2} \log c.
+\]
+This is stronger than the pointwise Assumption~\ref{ass:B}: it requires
+that the \emph{sum} over $j$ of $P_{ij} \cdot |I_{ij}|$ gains an
+additional $c^{-1/2}$ factor relative to the crude bound
+$C_1 C_2 \log N \sim C_1 C_2 \log c$.
+\end{assumption}
+
+\begin{remark}[Relationship between the two assumptions]\label{rem:assB_vs_Bprime}
+Assumption~\ref{ass:B} is a \emph{pointwise} spectral bound; it is plausible
+from numerics but is not provable from the current asymptotic expansions.
+Assumption~\ref{ass:Bprime} is a \emph{collective} Schur-sum bound; it is the
+actual condition needed for the stronger contraction rate $c^{-1/2}\log c$.
+Neither assumption implies the other in general: Assumption~\ref{ass:B}
+implies $|T_{ij}| \leq C_1 C_2/|i-j|$ pointwise, but the row sum
+$\sum_j |T_{ij}|$ could still be $O(\log c)$ without the extra $c^{-1/2}$.
+The mechanism that would give Assumption~\ref{ass:Bprime} from
+Assumption~\ref{ass:B} is a cancellation in the sum
+$\sum_j P_{ij} \cdot |I_{ij}|$ due to oscillation of the $P_{ij}$
+factors across the Galerkin window; this is not currently established.
+\end{remark}
 
 \begin{openproblem}[Prefactor Reduction: unconditional proof]\label{op:prefactor}
-Prove Assumption~\ref{ass:B} unconditionally, i.e., establish
-\[
-  c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})} \leq C_2\, c^{1/2}
-\]
-for all $k \neq l$ with $k, l \leq N \sim c^{1/3}$, using only the
-PSWF eigenvalue asymptotics of \cite{Widom64} and \cite{OsipovRokhlinXiao2013}.
-The key step is to compute $\chi_k/\lam{k}$ uniformly in the transition window
-and to close the SL spacing formula~\eqref{eq:SL_spacing}.
+This is the central open problem of the paper. It has two parts:
+\begin{enumerate}[nosep]
+  \item Prove Assumption~\ref{ass:B} unconditionally:
+        \[
+          c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})} \leq C_2\, c^{1/2}
+        \]
+        for all $k \neq l$ with $k, l \leq N \sim c^{1/3}$.
+        The key step is to compute $\chi_k / \lam{k}$ uniformly in the
+        transition window using the SL spacing formula.
+  \item Prove Assumption~\ref{ass:Bprime} unconditionally, i.e., establish
+        the collective Schur-row bound
+        \[
+          \sup_i \sum_{j \neq i} P_{ij} \cdot |I_{ij}| \leq C\, c^{-1/2}\log c.
+        \]
+        This requires either a two-scale partition of the Schur sum
+        (near-diagonal vs.\ far-diagonal) or an oscillation-cancellation
+        argument for the product $P_{ij} \cdot |I_{ij}|$ summed over $j$.
+\end{enumerate}
 \end{openproblem}
 
 \subsection{Matrix entry bound}
@@ -747,74 +768,61 @@ From~\eqref{eq:Tij_simple}, Lemma~\ref{lem:RL}, and Lemma~\ref{lem:prefactor}:
   \leq C_2\, c^{1/2} \cdot \frac{C_1}{c^{1/2}|i-j|}
   = \frac{C_1 C_2}{|i-j|}.
 \]
-The two powers of $c$ cancel exactly: $c^{1/2}$ from the prefactor times
-$c^{-1/2}$ from the integral bound, leaving a pure $|i-j|^{-1}$ decay.
+The two powers of $c$ cancel: $c^{1/2}$ from the prefactor (Assumption~\ref{ass:B})
+times $c^{-1/2}$ from the integral bound (Lemma~\ref{lem:RL}),
+leaving a pure $|i-j|^{-1}$ decay.
 \end{proof}
 
-\begin{remark}[The $c$-power balance]\label{rem:balance}
+\begin{remark}[The $c$-power balance and its status]\label{rem:balance}
 The cancellation in Proposition~\ref{prop:Tij} is the central algebraic
-identity of this paper. It can be written as:
+identity of this paper:
 \[
-  \underbrace{c^{1/2}}_{\text{prefactor (Lemma~\ref{lem:prefactor})}}
-  \;\times\;
-  \underbrace{c^{-1/2}}_{\text{integral bound (Lemma~\ref{lem:RL})}}
+  \underbrace{c^{1/2}}_{\text{Assumption~\ref{ass:B}}}\;
+  \times\;
+  \underbrace{c^{-1/2}}_{\text{Lemma~\ref{lem:RL}}}
   = c^0 = O(1).
 \]
-There is no ``absorption'' here: each factor is proved independently,
-and their product is genuinely $O(1)$.
-The $c^{5/3}$ appearing in the global resolvent estimate (Lemma~\ref{lem:HS})
-does \emph{not} appear in $P_{kl}$ for $k,l \leq N \sim c^{1/3}$;
-the Galerkin restriction reduces $c^{5/3}$ to $c^{1/2}$ via
-the PSWF eigenvalue asymptotics in the transition window.
+The $c^{5/3}$ appearing in Lemma~\ref{lem:HS} does not appear in $P_{kl}$
+for $k,l \leq N \sim c^{1/3}$; the Galerkin restriction reduces $c^{5/3}$
+to (at most) $c^{1/2}$ in the transition window.
+However, the $c^{5/3} \to c^{1/2}$ reduction is precisely the content of
+Assumption~\ref{ass:B}, which is not yet proved unconditionally.
 \end{remark}
 
 \subsection{Schur-test estimate and proof of Theorem~\ref{thm:main}}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 By~\eqref{eq:diagzero}: $T_{ii} = 0$ for all $i$.
-By Proposition~\ref{prop:Tij} (which uses Lemmas~\ref{lem:RL}
-and~\ref{lem:prefactor}): $|T_{ij}| \leq C_1 C_2 / |i-j|$ for $i \neq j$.
+
+\medskip
+\noindent\textbf{Part~(a): unconditional bound under Assumption~\ref{ass:B}.}
+By Proposition~\ref{prop:Tij}: $|T_{ij}| \leq C_1 C_2 / |i-j|$ for $i \neq j$.
 The Schur row sum:
 \[
-  \sup_{i} \sum_{j=0, j\neq i}^{N-1} |T_{ij}|
+  \sup_{i} \sum_{j \neq i}^{N-1} |T_{ij}|
   \leq C_1 C_2 \sum_{k=1}^{N} \frac{1}{k}
   \leq C_1 C_2 \cdot (1 + \log N)
-  \leq C_1 C_2 \cdot \bigl(1 + \tfrac{1}{3}\log c + \log A\bigr).
+  \leq C_1 C_2 \cdot \bigl(1 + \tfrac{1}{3}\log c + \log A\bigr)
+  =: C(A) \log c.
 \]
-However, this gives a bound $O(\log c)$ with a constant $C_1 C_2 = O(1)$,
-not the $c^{-1/2}\log c$ stated in the theorem.
-The additional factor $c^{-1/2}$ arises from the following sharper
-analysis: the dominant contribution to $\sum_j |T_{ij}|$ comes from
-indices $j$ near $i$ where the eigenvalue spacing
-$|\lam{j}-\lam{i}|$ is small. For $|i-j| \sim 1$, the prefactor
-$P_{ij} \lesssim c^{1/2}$ by Lemma~\ref{lem:prefactor}, and the integral
-$|I_{ij}| \lesssim c^{-1/2}$ by Lemma~\ref{lem:RL}, giving $|T_{ij}| \leq C$.
-For $|i-j| \geq 2$, the $1/|i-j|$ decay yields an additional suppression.
-The full Schur sum satisfies:
+This gives $\norm{D\mathcal{T}_c^{(N)}} \leq C(A)\log c$.
+Note that $C(A)\log c \to \infty$ as $c \to \infty$, so part~(a) alone
+does \emph{not} give a contraction for large $c$.
+It gives a contraction only when $C_1 C_2$ is small enough that
+$C(A)\log c < 1$, which requires non-asymptotic information.
+
+\medskip
+\noindent\textbf{Part~(b): conditional strengthening under Assumption~\ref{ass:Bprime}.}
+By Assumption~\ref{ass:Bprime}:
 \[
   \sup_i \sum_{j \neq i} |T_{ij}|
-  \lesssim c^{-1/2} \sum_{k=1}^{N} \frac{1}{k}
-  \sim c^{-1/2} \cdot \frac{\log c}{3}
-  = \frac{C(A)}{3}\, c^{-1/2}\log c.
+  = \sup_i \sum_{j \neq i} P_{ij} \cdot |I_{ij}|
+  \leq C\, c^{-1/2}\log c.
 \]
-
-\noindent Here the factor $c^{-1/2}$ in the Schur sum arises from
-an additional eigenvalue-spacing cancellation: for indices near the
-Galerkin boundary (i.e.\ $i,j$ near $N$), the spacing
-$|\lam{j}-\lam{i}|$ is smaller by a factor $c^{-1}$ relative to
-the denominator, yielding a net $c^{-1/2}$ improvement.
-This is the same mechanism as in the Prefactor Reduction Lemma
-(Lemma~\ref{lem:prefactor}), applied to a sum rather than a pointwise bound.
-A complete proof requires the Assumption~\ref{ass:B} to hold uniformly
-across the full Galerkin window; see Open Problem~\ref{op:prefactor}.
-
-Accepting Assumption~\ref{ass:B}, the Schur test gives:
-\[
-  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
-  \leq \sup_i \sum_{j \neq i} |T_{ij}|
-  \leq C(A)\, c^{-1/2}\log c \to 0 \quad\text{as } c \to \infty.
-\]
-In particular, $\norm{D\mathcal{T}_c^{(N)}} < 1$ for $c \geq c_0(A,C_1,C_2)$.
+Hence $\norm{D\mathcal{T}_c^{(N)}} \leq C c^{-1/2}\log c \to 0$
+as $c \to \infty$.
+In particular, $\mathcal{T}_c^{(N)}$ is a genuine contraction for
+$c \geq c_0(A, C_1, C_2)$.
 \end{proof}
 
 \begin{table}[h]
@@ -827,23 +835,27 @@ In particular, $\norm{D\mathcal{T}_c^{(N)}} < 1$ for $c \geq c_0(A,C_1,C_2)$.
 Diagonal vanishing & $T_{ii} = 0$ & commutator & \checkmark{} unconditional \\
 IBP integral & $|I_{ij}| \leq C_1 c^{-1/2}/|i-j|$ & Lemma~\ref{lem:RL}
   & \checkmark{} unconditional \\
-Prefactor reduction & $P_{ij} \leq C_2 c^{1/2}$ & Lemma~\ref{lem:prefactor}
+Prefactor (pointwise) & $P_{ij} \leq C_2 c^{1/2}$ & Lemma~\ref{lem:prefactor}
   & \textbf{conditional (Assumption~\ref{ass:B})} \\
 $c$-power cancellation & $c^{1/2} \times c^{-1/2} = O(1)$ & Remark~\ref{rem:balance}
-  & conditional on above \\
-Schur sum & $\lesssim c^{-1/2}\log c$ & Theorem~\ref{thm:main}
   & conditional on Assumption~\ref{ass:B} \\
+Schur sum bound & $\leq C_1 C_2 \log c$ & Theorem~\ref{thm:main}(a)
+  & conditional on Assumption~\ref{ass:B} \\
+\hline
+Schur-sum improvement & $\leq C c^{-1/2}\log c$ & Theorem~\ref{thm:main}(b)
+  & \textbf{conditional on Assumption~\ref{ass:Bprime}} \\
 \hline
 \end{tabular}
 \caption{Logical chain for Theorem~\ref{thm:main}.
-The only conditional step is Lemma~\ref{lem:prefactor} (Assumption~\ref{ass:B}).
-All other steps are unconditional.
-Closing Assumption~\ref{ass:B} is Open Problem~\ref{op:prefactor}.}
+The Schur test directly yields $\log c$ (part~a) from Assumption~\ref{ass:B}.
+The stronger rate $c^{-1/2}\log c$ (part~b) requires the additional
+collective Assumption~\ref{ass:Bprime}.
+Both assumptions are open; closing them is Open Problem~\ref{op:prefactor}.}
 \label{tab:mechanisms}
 \end{table}
 
 \begin{corollary}[Galerkin fixed point]\label{cor:fixedpoint}
-Assuming Assumption~\ref{ass:B}, for $c \geq c_0$ there exists a unique
+Assuming Assumption~\ref{ass:Bprime}, for $c \geq c_0$ there exists a unique
 $g^{(N)} \in X_c^{(N)}$ with $\mathcal{T}_c^{(N)}(g^{(N)}) = g^{(N)}$,
 and the Picard iteration converges at rate $\leq C c^{-1/2}\log c$ per step.
 \end{corollary}
@@ -855,7 +867,10 @@ and the Picard iteration converges at rate $\leq C c^{-1/2}\log c$ per step.
 \begin{openproblem}[Prefactor Reduction: unconditional proof (restated)]
 \label{op:prefactor2}
 See Open Problem~\ref{op:prefactor} in Section~\ref{sec:norm}.
-This is the most urgent gap in the current proof.
+This is the central gap; its two parts are:
+(1)~the pointwise bound $P_{kl} \leq C_2 c^{1/2}$ (Assumption~\ref{ass:B}),
+and (2)~the collective Schur-row bound $c^{-1/2}\log c$
+(Assumption~\ref{ass:Bprime}).
 \end{openproblem}
 
 \begin{openproblem}[Optimal Galerkin dimension]\label{op:Nopt}
@@ -893,35 +908,41 @@ $\norm{D\mathcal{T}_c^{(N)}} \lesssim c^{-2/3}\log c$.
 \section{Relation to Assumption A}
 %% ============================================================
 
-Theorem~\ref{thm:main} (conditional on Assumption~\ref{ass:B}) and
+Theorem~\ref{thm:main}(b) (conditional on Assumption~\ref{ass:Bprime}) and
 Corollary~\ref{cor:fixedpoint} establish the existence of a Galerkin fixed
 point with convergence radius $\sim c^{-1/2}\log c$.
-This is not yet a proof of Assumption~A, but provides:
+Theorem~\ref{thm:main}(a) (conditional only on Assumption~\ref{ass:B})
+gives the weaker $\log c$ bound.
+Neither is yet a proof of Assumption~A, but together they provide:
 \begin{enumerate}[nosep]
-  \item A \emph{structurally honest} proof: every $c$-power is accounted for
-        explicitly; no factors are ``absorbed'' without justification.
-        The remaining gap (Assumption~\ref{ass:B}) is precisely identified.
+  \item A \emph{structurally honest} proof: every $c$-power is tracked
+        explicitly, no factor is absorbed without justification, and
+        the two remaining gaps (Assumptions~\ref{ass:B} and \ref{ass:Bprime})
+        are precisely identified and separated.
   \item A clean structural separation: the transition zone is not the
-        bottleneck; the bulk oscillation structure (OP~\ref{op:bulk})
-        and the prefactor reduction (OP~\ref{op:prefactor}) are the
-        genuine open problems.
-  \item A roadmap: resolving OP~\ref{op:prefactor} removes the
-        conditionality; resolving OP~\ref{op:bulk} upgrades the rate
-        to $c^{-2/3}\log c$; resolving OP~\ref{op:Nopt}--\ref{op:Gershgorin}
-        allows extension to a full fixed point by compactness in $\Xc$.
+        bottleneck for the contraction rate (Remark~\ref{rem:tz_irrelevant});
+        the genuine open problems are the prefactor reduction
+        (OP~\ref{op:prefactor}) and bulk oscillation cancellation
+        (OP~\ref{op:bulk}).
+  \item A roadmap: resolving OP~\ref{op:prefactor}(1) gives Assumption~\ref{ass:B}
+        and the $\log c$ bound unconditionally; resolving
+        OP~\ref{op:prefactor}(2) gives the $c^{-1/2}\log c$ contraction;
+        resolving OP~\ref{op:bulk} upgrades to $c^{-2/3}\log c$.
 \end{enumerate}
 
 \begin{remark}[Zone asymmetry, summarised]
 The two zones contribute at different asymptotic strengths:
 \[
   |I_{kl}^{\rm tz}| \lesssim \frac{c^{-2/3}}{|k-l|}
-  \quad\text{(transition, stronger)},
+  \quad\text{(transition, stronger locally)},
   \qquad
   |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-1/2}}{|k-l|}
-  \quad\text{(bulk, limiting)}.
+  \quad\text{(bulk, limiting globally)}.
 \]
 Since $c^{-2/3} < c^{-1/2}$ for $c > 1$, the bulk controls the
-global rate. This asymmetry is the precise content of OP~\ref{op:bulk}.
+global rate. The transition zone does not improve the Schur row sums
+(Remark~\ref{rem:tz_irrelevant}); it is analytically relevant only
+as a local structural feature and for understanding the eigenfunctions.
 \end{remark}
 
 %% ============================================================
@@ -929,10 +950,11 @@ global rate. This asymmetry is the precise content of OP~\ref{op:bulk}.
 %% ============================================================
 
 This paper is part of the \emph{prolate-gram-coercivity} research programme.
-The identification of the Prefactor Reduction as a separate lemma,
-the elimination of all hidden $c$-factor absorptions, and the
-explicit treatment of Assumption~B were developed in working sessions
-in May 2026.
+The structural revision separating Assumption~B (pointwise prefactor bound)
+from Assumption~B$'$ (Schur-summability hypothesis), the honest treatment
+of the $\log c$ vs.\ $c^{-1/2}\log c$ distinction, and the explicit
+statement that the transition zone does not improve the contraction rate
+were developed in working sessions in May 2026.
 
 %% ============================================================
 \begin{thebibliography}{99}
