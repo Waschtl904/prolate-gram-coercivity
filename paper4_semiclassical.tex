@@ -183,8 +183,13 @@ potential-theoretic or Riemann--Hilbert techniques.
 Throughout, $c, T > 0$ are fixed, $N := cT/\pi$ is the Shannon
 number, and $0 < \gamma < 1$ is a fixed bulk parameter.
 We write $n \le \gamma N$ for the bulk regime.
-All constants $C_{\delta,\gamma}$, $c_{\delta,\gamma}$ depend
-only on $\delta$, $\gamma$, $c$, $T$.
+%% FIX 1: constants explicitly depend on delta, gamma, c, T
+All constants $C_{\delta,\gamma,c,T}$, $c_{\delta,\gamma,c,T}$
+depend only on $\delta$, $\gamma$, $c$, $T$, and are independent
+of $n$ and of the test function $f$.
+For brevity we write $C_{\delta,\gamma}$ throughout, with the
+understanding that $c$ and $T$ are always fixed parameters
+on which all constants may depend.
 
 \subsection{Turning points and classical frequency}
 
@@ -424,7 +429,7 @@ $|\cdot| \le \frac{T}{2c_{\delta,\gamma}n}\|h'\|_{L^1(I_\delta)}$.
 
 \textit{$\theta_n''$-term:}
 By Lemma~\ref{lem:phase-second-deriv},
-$|\theta_n''/(\theta_n')^2| \le C_{\delta,\gamma}/n^2$, so
+$|\theta_n''|/(\theta_n')^2 \le C_{\delta,\gamma}/n^2$, so
 $|\cdot| \le 2TC_{\delta,\gamma}\|h\|_{L^\infty}/n^2$.
 
 All three bounds are uniform in $x_0, x \in I_\delta$,
@@ -558,20 +563,46 @@ so $r_n(x)^2 \le e^{2K_{\delta,\gamma}}r_n(x_0)^2
 =: C_{\delta,\gamma}\,r_n(x_0)^2$,
 which is \eqref{eq:amp-comp}.
 
-\textit{Step~2: Global $L^2$ lower bound.}
+%% FIX 2: Existence of J made explicit with formal construction
+\textit{Step~2: Global $L^2$ lower bound via explicit $J$.}
 Since $\theta_n' \ge (c_{\delta,\gamma}/T)n$
 (Lemma~\ref{lem:phase-lower}),
 the phase $\theta_n$ increases by at least
-$c_{\delta,\gamma}n|I_\delta|/T \ge 2c_{\delta,\gamma}nT/T
-= 2c_{\delta,\gamma}n$
-over $I_\delta$.
-Hence $\theta_n$ traverses at least $\lfloor c_{\delta,\gamma}n/\pi\rfloor$
-complete periods on $I_\delta$,
-each of length $\pi/\theta_n' \le \pi T/(c_{\delta,\gamma}n)$.
-In each complete period there is a subinterval of length
-$\ge \pi T/(2c_{\delta,\gamma}n)$
-on which $\sin^2\theta_n \ge 1/4$.
-Pick any one such subinterval $J \subset I_\delta$.
+$c_{\delta,\gamma}n|I_\delta|/T \ge 2c_{\delta,\gamma}n$
+over $I_\delta$,
+so $\theta_n$ traverses at least
+$M := \lfloor c_{\delta,\gamma}n/\pi\rfloor \ge 1$
+complete periods on $I_\delta$ for $n \ge n_0(\delta,\gamma)$.
+
+Each such period has length $\pi/\theta_n'(x) \le \pi T/(c_{\delta,\gamma}n)$
+at any $x$ in that period.
+On each interval of length $\pi/\theta_n'$ over which $\theta_n$
+increases by exactly $\pi$, the function $\sin^2\theta_n$ equals
+$1/4$ at exactly two interior points (where $\theta_n \equiv \pi/6$
+and $\theta_n \equiv 5\pi/6 \pmod{\pi}$), and satisfies
+$\sin^2\theta_n \ge 1/4$ on the middle third of the period.
+Concretely, fix any complete period $[a,b] \subset I_\delta$
+with $\theta_n(b) - \theta_n(a) = \pi$.
+The subinterval
+\[
+  J := \theta_n^{-1}\!\left(
+         \theta_n(a) + \tfrac{\pi}{6},\;
+         \theta_n(a) + \tfrac{5\pi}{6}
+       \right) \subset [a,b]
+\]
+is well-defined (since $\theta_n$ is strictly increasing),
+satisfies $\sin^2\theta_n(x) \ge 1/4$ for all $x \in J$, and has
+length:
+\[
+  |J| = \int_{\theta_n(a)+\pi/6}^{\theta_n(a)+5\pi/6}
+        \frac{d\theta}{\theta_n'(\theta_n^{-1}(\theta))}
+      \ge \frac{2\pi/3}{\sup_{I_\delta}\theta_n'}
+      \ge \frac{2\pi/3}{\,C_{\delta,\gamma}n\,}
+      =: \frac{c_{\delta,\gamma}'}{n},
+\]
+using $\theta_n' \le C_{\delta,\gamma}n$ on $I_\delta$
+(which follows from Lemma~\ref{lem:G-regularity}(i)
+and \eqref{eq:theta-ode}).
 By \eqref{eq:amp-comp}:
 $\psin^2 = r_n^2\sin^2\theta_n
 \ge r_n^2/4 \ge r_n(x_0)^2/(4C_{\delta,\gamma})$
@@ -582,17 +613,20 @@ Therefore:
   = \int_{-T}^T\psin^2
   \ge \int_J\psin^2
   \ge \frac{|J|\,r_n(x_0)^2}{4C_{\delta,\gamma}}
-  = \frac{\pi T}{8c_{\delta,\gamma}^2 n}
-    \cdot\frac{r_n(x_0)^2}{C_{\delta,\gamma}}.
+  \ge \frac{c_{\delta,\gamma}'}{n}
+     \cdot\frac{r_n(x_0)^2}{4C_{\delta,\gamma}}.
 \]
 Rearranging:
-$r_n(x_0)^2
-\le \frac{8c_{\delta,\gamma}^2 C_{\delta,\gamma} n}{\pi T}
-   \cdot\lambda_n
-=: C_{\delta,\gamma}'\,\lambda_n$
-(note $n \le \gamma N = \gamma cT/\pi$,
-so the factor of $n$ is absorbed into $C_{\delta,\gamma}'$),
-which is \eqref{eq:pointwise-lambda}.
+\[
+  r_n(x_0)^2
+  \le \frac{4C_{\delta,\gamma}}{c_{\delta,\gamma}'}\cdot
+      n\cdot\lambda_n.
+\]
+Since $n \le \gamma N = \gamma cT/\pi$,
+the factor of $n$ is uniformly bounded by $\gamma cT/\pi$,
+and is absorbed into the constant
+$C_{\delta,\gamma,c,T} := 4C_{\delta,\gamma}\gamma cT/(\pi c_{\delta,\gamma}')$,
+giving \eqref{eq:pointwise-lambda}.
 \end{proof}
 
 \begin{remark}[Non-circularity of Lemma~\ref{lem:pointwise-control}]
@@ -602,6 +636,9 @@ and the $L^2$-normalization $\int\psin^2 = \lambda_n$.
 It does \emph{not} use
 Lemmas~\ref{lem:amplitude-drift} or~\ref{lem:normalization},
 nor Theorem~\ref{thm:weak-limit}.
+The explicit construction of $J$ via the inverse function
+$\theta_n^{-1}$ is valid since $\theta_n$ is strictly
+increasing on $I_\delta$ (Lemma~\ref{lem:phase-lower}).
 \end{remark}
 
 \begin{lemma}[Amplitude drift]\label{lem:amplitude-drift}
@@ -679,9 +716,13 @@ forcing $|F(x)| := |2r_n^{\mathrm{WKB},2}\widetilde{B}_n|
 \le C_{\delta,\gamma}\,r_n(x_0)^2/n$
 (using $r_n^{\mathrm{WKB}}(x)^2 \le C_{\delta,\gamma}\,r_n(x_0)^2$
 from \eqref{eq:wkb-amp} and Lemma~\ref{lem:G-regularity}(i)),
-and coefficient
-$A(x) := 2D(x) + 2G(x)\cos(2\theta_n(x)) = O(1)$
-(since $|D| \le C_{\delta,\gamma}$ and $|G| \le C_{\delta,\gamma}/n$).
+and Gronwall coefficient
+$A(x) := 2D(x) + 2G(x)\cos(2\theta_n(x))$.
+Here $|D| \le C_{\delta,\gamma}$ (Lemma~\ref{lem:G-regularity}(v))
+dominates, giving $A(x) = O(1)$ uniformly on $I_\delta$;
+the oscillatory term $2G\cos(2\theta_n)$ is of size $O(1/n)$
+and does not affect the exponential growth factor in Gronwall,
+which is governed by $D(x)$ alone.
 By Lemma~\ref{lem:pointwise-control}:
 $r_n(x_0)^2 \le C_{\delta,\gamma}\,\lambda_n$.
 Applying Gronwall--Bellman \cite{Bellman1943}
@@ -711,7 +752,8 @@ the drift cancellation identity~\eqref{eq:drift-final}
 reduces $\log(r_n/r_n^{\mathrm{WKB}})$ to a single
 oscillatory integral, controlled by one IBP.
 Step~4 applies Gronwall to $\Delta_n$ with zero initial
-data, $O(1/n)$ forcing, and $O(1)$ Gronwall coefficient.
+data, $O(1/n)$ forcing, and $O(1)$ Gronwall coefficient
+(governed by $D$, not by the oscillatory $G$-term).
 The self-referential term contributes at order $O(1/n^2)$
 only, strictly below the main bound.
 \end{remark}
@@ -742,12 +784,16 @@ Using $\sin^2\theta_n = \tfrac{1}{2} - \tfrac{1}{2}\cos(2\theta_n)$:
     - \frac{1}{2}\int_{I_\delta}r_n^2\cos(2\theta_n)
     + O(e^{-\beta n}\lambda_n).
 \]
+%% FIX 3: Explicit citation of Corollary 3.3
 Set $b_n := r_n^2/r_n(x_0)^2$.
 By \eqref{eq:amp-ratio}: $\|b_n\|_{L^\infty} \le C$.
 By Remark~\ref{rem:two-bounds}: $\|b_n'\|_{L^\infty} = O(1/n)$.
-By Corollary~\ref{cor:osc-slowly-varying} with $a \equiv 1$:
+We apply Corollary~\ref{cor:osc-slowly-varying}
+with $a \equiv 1$ and $b_n = r_n^2/r_n(x_0)^2$
+(noting $\|a\|_{C^1} = 1$ trivially):
 \[
   \left|\int_{I_\delta}r_n^2\cos(2\theta_n)\right|
+  = r_n(x_0)^2\left|\int_{I_\delta}b_n\cos(2\theta_n)\right|
   \le \frac{C_{\delta,\gamma}\,r_n(x_0)^2}{n}
   \le \frac{C_{\delta,\gamma}\,\lambda_n}{n},
 \]
@@ -823,10 +869,18 @@ Set $a = f$, $b_n = r_n^2/r_n(x_0)^2$.
 By Remark~\ref{rem:two-bounds}:
 $\|b_n\|_{L^\infty} \le C$,
 $\|b_n'\|_{L^\infty} = O(1/n)$.
-Corollary~\ref{cor:osc-slowly-varying} gives:
-$|\int_{I_\delta}fr_n^2\cos(2\theta_n)|
-\le C_{\delta,\gamma}\lambda_n(\|f\|_{L^\infty}
-    + T\|f'\|_{L^\infty})/n$.
+We apply Corollary~\ref{cor:osc-slowly-varying}
+with $a = f$ and $b_n = r_n^2/r_n(x_0)^2$:
+\[
+  \left|\int_{I_\delta}fr_n^2\cos(2\theta_n)\right|
+  = r_n(x_0)^2\left|\int_{I_\delta}fb_n\cos(2\theta_n)\right|
+  \le \frac{C_{\delta,\gamma}\,r_n(x_0)^2
+            \,\|f\|_{C^1}}{n}
+  \le \frac{C_{\delta,\gamma}\lambda_n(\|f\|_{L^\infty}
+            + T\|f'\|_{L^\infty})}{n},
+\]
+using Lemma~\ref{lem:pointwise-control}~\eqref{eq:pointwise-lambda}
+in the last step.
 
 \textit{Step~4 (Mean term).}
 By \eqref{eq:amp-ratio} and \eqref{eq:rn-vs-rhocl}:
