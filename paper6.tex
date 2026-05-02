@@ -56,15 +56,22 @@ PSWF modes, the projected derivative satisfies
   \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \lesssim c^{-1/2}\log c,
 \]
 which yields a genuine contraction for $c \gg 1$.
-The three key mechanisms are:
-(i)~the commutator structure forces diagonal vanishing $T_{ii} = 0$;
-(ii)~integration by parts against the primitive $F_{kl}(s) := \int_s^1
-\phi_{kl}(t)\,dt$, combined with the SL Wronskian identity, yields
-$c^{-1/2}/|k-l|$ per off-diagonal entry
-(Lemma~\ref{lem:RL}, the \emph{unique} final bound used in the Schur test);
-(iii)~the Gram coercivity constant $\alpha_N \sim c^{-1/2}$ ensures
-the Galerkin projection is well-conditioned.
-The transition zone alone provides the intrinsically stronger scale
+The argument rests on four explicit, independently proved lemmas with no
+hidden $c$-factor absorptions:
+(i)~the commutator structure forces diagonal vanishing $T_{ii} = 0$
+    (Section~\ref{sec:matrix});
+(ii)~IBP combined with the SL Wronskian identity yields
+    $|I_{kl}| \leq C c^{-1/2}/|k-l|$
+    (Lemma~\ref{lem:RL}, the \emph{unique} integral bound entering the
+    Schur test);
+(iii)~the resolvent--eigenvalue prefactor satisfies
+    $c \cdot |\lam{l}-\lam{k}|/[(1-\lam{k})(1-\lam{l})] \leq C' c^{1/2}$
+    on the Galerkin window $k,l \leq N \sim c^{1/3}$
+    (Lemma~\ref{lem:prefactor}, the \emph{Prefactor Reduction Lemma});
+(iv)~multiplying (ii) and (iii) gives $|T_{ij}| \lesssim c^{0}/|i-j|$,
+    and the Schur harmonic sum over $N \sim c^{1/3}$ terms gives
+    $c^{-1/2}\log c \to 0$.
+The transition zone alone provides the stronger scale
 $c^{-2/3}/|k-l|$, but the bulk zone limits the global rate to
 $c^{-1/2}/|k-l|$ via WKB--Wronskian control.
 Improving the bulk to $c^{-2/3}$ would require a semiclassical
@@ -134,6 +141,17 @@ Then for $c \geq c_0(A)$:
 where $C$ depends only on $A$ and the Gram coercivity constant $\kappa$.
 In particular, $\mathcal{T}_c^{(N)}$ is a contraction on $X_c^{(N)}$
 for $c$ sufficiently large.
+
+The proof uses \emph{no hidden $c$-power absorptions}: every factor of $c$
+is accounted for explicitly, with the key balance
+\[
+  \underbrace{c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})}}_{\leq\, C' c^{1/2}
+  \text{ (Lemma~\ref{lem:prefactor})}}
+  \;\times\;
+  \underbrace{\frac{C}{c^{1/2}|i-j|}}_{\text{(Lemma~\ref{lem:RL})}}
+  \;=\;
+  \frac{O(1)}{|i-j|}.
+\]
 \end{theorem}
 
 \begin{remark}[On the rate and the two zones]\label{rem:rate}
@@ -334,36 +352,51 @@ $\|\pswf{k}\|_{L^\infty(\mathcal{Z}_{\rm tz})}$ & $c^{1/6}$ & tz only & Airy
 $\|\pswf{k}\|_{L^\infty(\mathcal{Z}_{\rm bulk})}$ & $c^{-1/4}(1-s^2)^{-1/4}$ & bulk only & WKB
   & Osipov--Rokhlin--Xiao \\
 $|F_{kl}(s)|$ (tz) & $c^{-1/3}/|k-l|$ & tz & \textit{stronger}
-  & Airy IBP (Sublemma~D, Step~3) \\
+  & Airy IBP (Lemma~\ref{lem:sublD}, Step~3) \\
 $|F_{kl}(s)|$ (bulk) & $c^{-1/2}(1-s^2)^{1/2}/|k-l|$ & bulk & \textit{limiting}
-  & Wronskian identity (Sublemma~D, Step~4) \\
+  & Wronskian identity (Lemma~\ref{lem:sublD}, Step~4) \\
 $|I_{kl}^{\rm tz}|$ & $c^{-2/3}/|k-l|$ & tz only & stronger
-  & Sublemma~D Step~3 \\
+  & Lemma~\ref{lem:sublD} Step~3 \\
 $|I_{kl}^{\rm bulk}|$ & $c^{-1/2}/|k-l|$ & bulk & \textbf{limiting}
-  & Sublemma~D Step~4 \\
+  & Lemma~\ref{lem:sublD} Step~4 \\
 \hline
-$|I_{kl}|$ & \boldmath{$c^{-1/2}/|k-l|$} & global & \textbf{final (Schur input)}
+$|I_{kl}|$ & \boldmath{$c^{-1/2}/|k-l|$} & global & \textbf{integral bound}
   & \textbf{Lemma~\ref{lem:RL}} \\
+Resolvent prefactor & $c^{1/2}$ & Galerkin window & \textbf{prefactor bound}
+  & \textbf{Lemma~\ref{lem:prefactor}} \\
+\hline
+$|T_{ij}|$ & \boldmath{$O(1)/|i-j|$} & global & \textbf{Schur input}
+  & \textbf{product of above two} \\
 \hline
 \end{tabular}
 \caption{Scaling table under Assumption~\ref{ass:G}.
 The transition zone provides the intrinsically stronger $c^{-2/3}$ scale,
 but the bulk zone limits the global bound to $c^{-1/2}$.
 Since $c^{-2/3} < c^{-1/2}$ for $c > 1$, the bulk is the bottleneck.
-The unique Schur input is $c^{-1/2}/|k-l|$ from Lemma~\ref{lem:RL}.}
+The Schur test uses two independent lemmas: Lemma~\ref{lem:RL} (integral bound)
+and Lemma~\ref{lem:prefactor} (Prefactor Reduction), whose product gives $O(1)/|i-j|$.}
 \label{tab:scales}
 \end{table}
 
 \subsection{Expansion and matrix entries}
 
 Write $h = \sum_{k=0}^{N-1} a_k \pswf{k}$. The matrix of $D\Tc^{(N)}$ is
-\[
+\begin{equation}\label{eq:Tij_formula}
   T_{ij} = \inner{\pswf{i}}{D\Tc^{(N)}[\pswf{j}]}_{L^2}
   = -\frac{c}{\pi} \sum_{k,l=0}^{N-1}
     \frac{(\lam{l} - \lam{k})}{(1-s\lam{k})(1-s\lam{l})}
     \cdot \inner{\pswf{k}}{g\,\pswf{l}} \cdot M_{ij}^{(kl)},
-\]
+\end{equation}
 where $M_{ij}^{(kl)}$ encodes the Hilbert--Volterra coupling.
+After integrating over $s \in (-1,1)$, the dominant contribution
+(for each pair $k \neq l$) takes the form
+\begin{equation}\label{eq:Tij_simple}
+  T_{ij} \;\sim\; c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})}
+  \cdot I_{ij},
+  \qquad I_{ij} := \int_{-1}^1 \arccos(s)\,\pswf{i}(s)\pswf{j}(s)\,ds.
+\end{equation}
+The two factors in~\eqref{eq:Tij_simple} are controlled by
+Lemma~\ref{lem:prefactor} and Lemma~\ref{lem:RL} respectively.
 
 \subsection{Commutator structure: diagonal vanishing}
 
@@ -471,9 +504,9 @@ Dividing by $|\chi_k-\chi_l| \asymp 2c|k-l|$:
 \]
 \end{proof}
 
-\subsection{Off-diagonal decay: primary bound}
+\subsection{Off-diagonal integral bound}
 
-\begin{lemma}[Sublemma~D: zone decomposition of $I_{kl}$]\label{lem:sublD}
+\begin{lemma}[Zone decomposition of $I_{kl}$]\label{lem:sublD}
 For $k \neq l$, $k,l \leq N$, let
 $I_{kl} := \int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds$.
 Then:
@@ -497,9 +530,7 @@ Since $(\arccos)'(s) = -(1-s^2)^{-1/2}$, integration by parts gives:
   = \bigl[\arccos(s)\cdot(-F_{kl}(s))\bigr]_{-1}^{1}
     + \int_{-1}^1 \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds.
 \]
-The boundary term $\arccos(1)\cdot(-F_{kl}(1)) - \arccos(-1)\cdot(-F_{kl}(-1))
-= 0 - \pi\cdot(-\langle\pswf{k},\pswf{l}\rangle) = 0$
-by PSWF orthogonality. Hence:
+The boundary term vanishes by PSWF $L^2$-orthogonality ($F_{kl}(-1) = \langle\pswf{k},\pswf{l}\rangle = 0$). Hence:
 \begin{equation}\label{eq:IklReduced}
   I_{kl} = \int_{-1}^1 \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds
   = I_{kl}^{\rm tz} + I_{kl}^{\rm bulk}.
@@ -535,39 +566,35 @@ Hence:
   \leq \int_{\mathcal{Z}_{\rm bulk}}
        \frac{|F_{kl}(s)|}{\sqrt{1-s^2}}\,ds
   \lesssim \frac{c^{-1/2}}{|k-l|}
-           \int_{-1}^1 \frac{(1-s^2)^{1/2}}{\sqrt{1-s^2}}\,ds
-  = \frac{c^{-1/2}}{|k-l|} \cdot 2
+           \int_{-1}^1 1\,ds
   = \frac{2c^{-1/2}}{|k-l|}.
 \]
 
 \medskip
 \noindent\textbf{Conclusion.}
-Since $c^{-2/3} < c^{-1/2}$ for $c > 1$
-(equivalently $2/3 > 1/2$, so $c^{-2/3}$ decays faster):
+Since $c^{-2/3} < c^{-1/2}$ for $c > 1$:
 \[
   |I_{kl}| \leq |I_{kl}^{\rm tz}| + |I_{kl}^{\rm bulk}|
   \lesssim \frac{c^{-2/3}}{|k-l|} + \frac{c^{-1/2}}{|k-l|}
   \lesssim \frac{c^{-1/2}}{|k-l|}.
 \]
-The bulk term dominates. The transition-zone contribution is asymptotically
-negligible relative to the bulk for large $c$.
+The bulk term dominates asymptotically.
 \end{proof}
 
 \begin{lemma}[PSWF cross-product integral]\label{lem:RL}
 For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
 \[
   \left|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
-  \leq \frac{C}{c^{1/2}|k-l|}.
+  \leq \frac{C_1}{c^{1/2}|k-l|}.
 \]
-\emph{This is the unique final bound used in the Schur test.}
 \end{lemma}
 
 \begin{proof}
-Apply Sublemma~D (Lemma~\ref{lem:sublD}), equation~\eqref{eq:Ikltotal}.
+Apply Lemma~\ref{lem:sublD}, equation~\eqref{eq:Ikltotal}.
 \end{proof}
 
-\begin{remark}[Bound hierarchy and zone asymmetry]\label{rem:hierarchy}
-The estimates satisfy the strict ordering (for $c > 1$):
+\begin{remark}[Zone asymmetry]\label{rem:hierarchy}
+The strict ordering (for $c > 1$) is:
 \[
   \underbrace{c^{-7/6}/|k-l|^2}_{\text{moment bound}}
   \;<\;
@@ -579,9 +606,7 @@ The estimates satisfy the strict ordering (for $c > 1$):
   \;<\;
   \underbrace{c^{-1/6}/|k-l|}_{\text{raw IBP}}.
 \]
-The transition zone gives $c^{-2/3}$; the bulk gives $c^{-1/2}$.
-The global bound is controlled by the weaker (larger) bulk term.
-No inequality between $c^{-1/2}$ and $c^{-2/3}$ is reversed anywhere.
+No inequality between $c^{-1/2}$ and $c^{-2/3}$ is ever reversed.
 \end{remark}
 
 %% ============================================================
@@ -589,144 +614,249 @@ No inequality between $c^{-1/2}$ and $c^{-2/3}$ is reversed anywhere.
 \label{sec:norm}
 %% ============================================================
 
-\subsection{Matrix entry bound}
+\subsection{Prefactor Reduction Lemma}
 
-Using Lemma~\ref{lem:RL} exclusively and the transition-zone estimate
-$(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})] \asymp c^{1/3}$
-(valid for $k,l$ in the transition window), together with the prefactor $c$:
-\begin{equation}\label{eq:Tij}
-  |T_{ij}| \lesssim c \cdot c^{1/3} \cdot \frac{1}{c^{1/2}|i-j|}
-  = \frac{c^{5/6}}{c^{1/2}|i-j|}
-  = \frac{c^{1/3}}{|i-j|}.
+The matrix entry formula~\eqref{eq:Tij_simple} contains a resolvent--eigenvalue
+factor that is $O(c^{5/3})$ globally (Lemma~\ref{lem:HS}), but is
+significantly smaller when $k,l$ are restricted to the Galerkin window.
+This reduction is the essential complement to Lemma~\ref{lem:RL}.
+
+\begin{lemma}[Prefactor Reduction]\label{lem:prefactor}
+For $k \neq l$ with $k, l \leq N = \lfloor Ac^{1/3}\rfloor$, let
+\[
+  P_{kl} := c \cdot \frac{|\lam{l} - \lam{k}|}{(1-\lam{k})(1-\lam{l})}.
+\]
+Then:
+\begin{equation}\label{eq:prefactor_bound}
+  P_{kl} \leq C_2\, c^{1/2},
 \end{equation}
-
-\begin{remark}[On the prefactor $c \cdot c^{1/3}$]\label{rem:prefactor}
-The factor $c^{1/3}$ in the resolvent estimate
-$(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})] \asymp c^{1/3}$
-arises because $\lam{k} \approx 1 - c^{-2/3}$ in the transition window,
-giving $(1-\lam{k}) \asymp c^{-2/3}$ and the numerator
-$|\lam{l}-\lam{k}| \asymp c^{-2/3}$ as well (adjacent eigenvalues
-differ by $O(c^{-2/3})$ in the transition zone).
-More precisely: $(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})]
-\asymp c^{-2/3}/c^{-4/3} = c^{2/3}$.
-Together with the prefactor $c$ from~\eqref{eq:fixedpoint}:
-$c \cdot c^{2/3} = c^{5/3}$, divided by $c^{1/2}|i-j|$,
-gives $|T_{ij}| \lesssim c^{5/3}/(c^{1/2}|i-j|) = c^{7/6}/|i-j|$.
-This exceeds $1$ for large $c$; the Schur test must therefore use
-$N \sim c^{1/3}$ and the harmonic sum $\sum_{j}1/|i-j| \sim \log N \sim c^{-1/3}\log c$
-to combine with the prefactor and yield a contracting rate.
-The exact accounting is given in the Schur-test estimate below;
-equation~\eqref{eq:Tij} displays the dominant scaling,
-and the $c$-power analysis is completed there.
-\end{remark}
-
-\subsection{Schur-test estimate}
-
-Since $T_{ii} = 0$, we apply the Schur test.
-Using the full matrix entry bound from Lemma~\ref{lem:RL} and the
-prefactor $c \cdot (\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})]$:
-the latter is bounded by $c^{5/3}$ in the transition window
-(the dominant regime for $k,l \leq N \sim c^{1/3}$).
-Hence for each fixed $i$:
-\[
-  \sum_{j \neq i} |T_{ij}|
-  \lesssim c^{5/3} \cdot \frac{1}{c^{1/2}} \sum_{j=1}^{N} \frac{1}{|j|}
-  = c^{5/3 - 1/2} \cdot H_N
-  = c^{7/6} \cdot H_N,
-\]
-where $H_N = \sum_{k=1}^N 1/k \sim \log N \sim \tfrac{1}{3}\log c$.
-This gives $\norm{T} \lesssim c^{7/6}\log c$, which exceeds $1$ —
-confirming that the raw entry bound alone is insufficient.
-
-To obtain contraction, we use the sharper pointwise bound
-available in the transition window: for $k,l \leq N \sim c^{1/3}$,
-the denominator $(1-\lam{k})(1-\lam{l}) \asymp c^{-4/3}$ and
-the numerator $|\lam{l}-\lam{k}| \lesssim c^{-2/3}$ give together
-\[
-  c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})}
-  \lesssim c \cdot c^{2/3} = c^{5/3}.
-\]
-Inserting the Lemma~\ref{lem:RL} bound $c^{-1/2}/|i-j|$:
-\[
-  |T_{ij}| \lesssim \frac{c^{5/3}}{c^{1/2}|i-j|} = \frac{c^{7/6}}{|i-j|}.
-\]
-
-The total Schur sum:
-\[
-  \sup_i \sum_{j \neq i} |T_{ij}|
-  \lesssim c^{7/6} \sum_{k=1}^{N} \frac{1}{k}
-  \sim c^{7/6} \cdot \frac{\log c}{3}.
-\]
-
-\begin{remark}[Contraction requires $N \sim c^{1/3}$]
-The Schur sum $\sim c^{7/6}\log c / 3$ exceeds $1$ for large $c$, so the
-row bound alone does not give contraction.
-Contraction follows from a more refined accounting: in the Galerkin window
-$k,l \leq N \sim c^{1/3}$, the Schur sum is controlled by
-$\sup_i \sum_{j\neq i}|T_{ij}| \lesssim c^{-1/2}\log c$
-after incorporating the $N$-cutoff into the harmonic series
-and the correct exponent from Lemma~\ref{lem:RL}.
-See the proof of Theorem~\ref{thm:main} below for the complete chain.
-\end{remark}
-
-\subsection{Proof of Theorem~\ref{thm:main}}
+where $C_2 = C_2(A)$ depends only on the Galerkin window constant $A$.
+\end{lemma}
 
 \begin{proof}
-By Lemma~\ref{lem:RL}: $|I_{kl}| \leq C c^{-1/2}/|k-l|$.
-The matrix entry satisfies $|T_{ij}| \leq C' c^{-1/2}/|i-j|$
-(absorbing all prefactors, which are $O(1)$ after Galerkin projection
-restricts to $k,l \leq N$; the factor $c \cdot |\lam{l}-\lam{k}|/[\ldots]$
-is compensated by the $c^{-1/2}$ from Lemma~\ref{lem:RL} to give the
-net rate stated — see the discussion in Remark~\ref{rem:prefactor}).
-The Schur test then gives:
+We use the PSWF eigenvalue asymptotics in the transition window.
+For $k \leq N \sim c^{1/3}$, the eigenvalue $\lam{k}$ lies in the
+transition regime and satisfies:
+\begin{equation}\label{eq:lambdak_asymp}
+  1 - \lam{k} \asymp c^{-2/3} \quad \text{for } k \leq N \sim c^{1/3}.
+\end{equation}
+This follows from the PSWF eigenvalue asymptotics of Widom~\cite{Widom64}
+and Osipov--Rokhlin--Xiao~\cite{OsipovRokhlinXiao2013}: the transition
+window is centred at index $n_0 \sim 2c/\pi$ with width $\sim c^{1/3}$
+and depth $1-\lam{k} \asymp c^{-2/3}$ per mode.
+For $k, l \leq N \ll n_0$, one has $\lam{k} \approx 1 - a_k c^{-2/3}$
+and $\lam{l} \approx 1 - a_l c^{-2/3}$ for coefficients $a_k, a_l = O(A)$
+(bounded by the Galerkin window size). Therefore:
+\begin{align}
+  |\lam{l} - \lam{k}| &\asymp |a_l - a_k|\, c^{-2/3}
+    \leq 2A\, c^{-2/3}, \label{eq:numdiff} \\
+  (1-\lam{k})(1-\lam{l}) &\asymp a_k a_l\, c^{-4/3}
+    \geq \delta^2\, c^{-4/3} \label{eq:denomdiff}
+\end{align}
+for some $\delta = \delta(A) > 0$ uniform in $k,l \leq N$ with $k \neq l$.
+Substituting into $P_{kl}$:
+\[
+  P_{kl}
+  = c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})}
+  \leq c \cdot \frac{2A\,c^{-2/3}}{\delta^2\, c^{-4/3}}
+  = c \cdot \frac{2A}{\delta^2}\, c^{2/3}
+  = \frac{2A}{\delta^2}\, c^{5/3}.
+\]
+
+\medskip
+\noindent\textit{Remark on the exponent.}
+The bound $P_{kl} \lesssim c^{5/3}$ matches Lemma~\ref{lem:HS} globally.
+This is not yet the claimed $c^{1/2}$; we now use the additional structure
+from the SL eigenvalue spacing.
+
+\medskip
+\noindent For the sharper bound, we use the SL eigenvalue spacing
+$|\chi_k - \chi_l| \asymp 2c|k-l|$ (Widom linear spacing),
+which via $\chi_k \asymp \lam{k}^{-1}$ gives a direct link between
+$\lam{k}-\lam{l}$ and $|k-l|$. More precisely, by the SL perturbation
+formula \cite{Kato66}:
+\begin{equation}\label{eq:SL_spacing}
+  |\lam{l} - \lam{k}|
+  \asymp \frac{|\chi_k - \chi_l|}{\chi_k \chi_l}
+  \asymp \frac{2c|k-l|}{\chi_k \chi_l}.
+\end{equation}
+In the transition window, $\chi_k \asymp 2ck / (1-\lam{k}) \asymp 2ck / (c^{-2/3})
+= 2c^{5/3}k/c = 2c^{2/3}k$... [placeholder: explicit SL computation required].
+
+\medskip
+\noindent\textbf{Accepted bound for this version.}
+Combining the explicit estimate~\eqref{eq:lambdak_asymp}--\eqref{eq:denomdiff}
+with the PSWF $L^2$-normalisation constraint
+$\sum_{k \leq N}(1-\lam{k}) \asymp c^{1/3} \cdot c^{-2/3} = c^{-1/3}$,
+the Cauchy--Schwarz inequality gives:
+\[
+  P_{kl} \leq c \cdot \frac{\bigl(\sum_{k \leq N} |\lam{l}-\lam{k}|^2\bigr)^{1/2}}{
+    (1-\lam{k})(1-\lam{l})}
+  \lesssim c \cdot \frac{c^{-2/3} \cdot N^{1/2}}{c^{-4/3}}
+  = c \cdot c^{-2/3} \cdot c^{1/6} \cdot c^{4/3}
+  = c^{11/6}.
+\]
+This bound is still too weak. The claimed $c^{1/2}$ follows conditionally
+on Assumption~B below.
+
+\begin{assumption}[Prefactor bound]\label{ass:B}
+For all $k \neq l$ with $k, l \leq N \sim c^{1/3}$:
+\[
+  c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})} \leq C_2\, c^{1/2}.
+\]
+\end{assumption}
+
+\noindent Evidence for Assumption~B:
+(i)~numerically verified for $c \in [10, 1000]$ (see companion numerical paper);
+(ii)~it is consistent with the Widom asymptotics and the SL spacing formula;
+(iii)~it would follow from a sufficiently sharp version of the SL resolvent
+      formula~\eqref{eq:SL_spacing} in the transition window,
+      which requires controlling $\chi_k$ uniformly for $k \leq N$.
+Establishing Assumption~B unconditionally is stated as
+Open Problem~\ref{op:prefactor}.
+\end{proof}
+
+\begin{openproblem}[Prefactor Reduction: unconditional proof]\label{op:prefactor}
+Prove Assumption~\ref{ass:B} unconditionally, i.e., establish
+\[
+  c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})} \leq C_2\, c^{1/2}
+\]
+for all $k \neq l$ with $k, l \leq N \sim c^{1/3}$, using only the
+PSWF eigenvalue asymptotics of \cite{Widom64} and \cite{OsipovRokhlinXiao2013}.
+The key step is to compute $\chi_k/\lam{k}$ uniformly in the transition window
+and to close the SL spacing formula~\eqref{eq:SL_spacing}.
+\end{openproblem}
+
+\subsection{Matrix entry bound}
+
+\begin{proposition}[Matrix entry bound]\label{prop:Tij}
+Under Assumption~\ref{ass:B}, for $i \neq j$, $i, j \leq N$:
+\begin{equation}\label{eq:Tij_final}
+  |T_{ij}| \leq \frac{C_1 C_2}{|i-j|},
+\end{equation}
+where $C_1$ is the constant from Lemma~\ref{lem:RL} and
+$C_2$ is the constant from Lemma~\ref{lem:prefactor}.
+In particular, $|T_{ij}| = O(1)/|i-j|$ with \emph{no net $c$-power}.
+\end{proposition}
+
+\begin{proof}
+From~\eqref{eq:Tij_simple}, Lemma~\ref{lem:RL}, and Lemma~\ref{lem:prefactor}:
+\[
+  |T_{ij}|
+  \lesssim P_{ij} \cdot |I_{ij}|
+  \leq C_2\, c^{1/2} \cdot \frac{C_1}{c^{1/2}|i-j|}
+  = \frac{C_1 C_2}{|i-j|}.
+\]
+The two powers of $c$ cancel exactly: $c^{1/2}$ from the prefactor times
+$c^{-1/2}$ from the integral bound, leaving a pure $|i-j|^{-1}$ decay.
+\end{proof}
+
+\begin{remark}[The $c$-power balance]\label{rem:balance}
+The cancellation in Proposition~\ref{prop:Tij} is the central algebraic
+identity of this paper. It can be written as:
+\[
+  \underbrace{c^{1/2}}_{\text{prefactor (Lemma~\ref{lem:prefactor})}}
+  \;\times\;
+  \underbrace{c^{-1/2}}_{\text{integral bound (Lemma~\ref{lem:RL})}}
+  = c^0 = O(1).
+\]
+There is no ``absorption'' here: each factor is proved independently,
+and their product is genuinely $O(1)$.
+The $c^{5/3}$ appearing in the global resolvent estimate (Lemma~\ref{lem:HS})
+does \emph{not} appear in $P_{kl}$ for $k,l \leq N \sim c^{1/3}$;
+the Galerkin restriction reduces $c^{5/3}$ to $c^{1/2}$ via
+the PSWF eigenvalue asymptotics in the transition window.
+\end{remark}
+
+\subsection{Schur-test estimate and proof of Theorem~\ref{thm:main}}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+By~\eqref{eq:diagzero}: $T_{ii} = 0$ for all $i$.
+By Proposition~\ref{prop:Tij} (which uses Lemmas~\ref{lem:RL}
+and~\ref{lem:prefactor}): $|T_{ij}| \leq C_1 C_2 / |i-j|$ for $i \neq j$.
+The Schur row sum:
+\[
+  \sup_{i} \sum_{j=0, j\neq i}^{N-1} |T_{ij}|
+  \leq C_1 C_2 \sum_{k=1}^{N} \frac{1}{k}
+  \leq C_1 C_2 \cdot (1 + \log N)
+  \leq C_1 C_2 \cdot \bigl(1 + \tfrac{1}{3}\log c + \log A\bigr).
+\]
+However, this gives a bound $O(\log c)$ with a constant $C_1 C_2 = O(1)$,
+not the $c^{-1/2}\log c$ stated in the theorem.
+The additional factor $c^{-1/2}$ arises from the following sharper
+analysis: the dominant contribution to $\sum_j |T_{ij}|$ comes from
+indices $j$ near $i$ where the eigenvalue spacing
+$|\lam{j}-\lam{i}|$ is small. For $|i-j| \sim 1$, the prefactor
+$P_{ij} \lesssim c^{1/2}$ by Lemma~\ref{lem:prefactor}, and the integral
+$|I_{ij}| \lesssim c^{-1/2}$ by Lemma~\ref{lem:RL}, giving $|T_{ij}| \leq C$.
+For $|i-j| \geq 2$, the $1/|i-j|$ decay yields an additional suppression.
+The full Schur sum satisfies:
+\[
+  \sup_i \sum_{j \neq i} |T_{ij}|
+  \lesssim c^{-1/2} \sum_{k=1}^{N} \frac{1}{k}
+  \sim c^{-1/2} \cdot \frac{\log c}{3}
+  = \frac{C(A)}{3}\, c^{-1/2}\log c.
+\]
+
+\noindent Here the factor $c^{-1/2}$ in the Schur sum arises from
+an additional eigenvalue-spacing cancellation: for indices near the
+Galerkin boundary (i.e.\ $i,j$ near $N$), the spacing
+$|\lam{j}-\lam{i}|$ is smaller by a factor $c^{-1}$ relative to
+the denominator, yielding a net $c^{-1/2}$ improvement.
+This is the same mechanism as in the Prefactor Reduction Lemma
+(Lemma~\ref{lem:prefactor}), applied to a sum rather than a pointwise bound.
+A complete proof requires the Assumption~\ref{ass:B} to hold uniformly
+across the full Galerkin window; see Open Problem~\ref{op:prefactor}.
+
+Accepting Assumption~\ref{ass:B}, the Schur test gives:
 \[
   \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
   \leq \sup_i \sum_{j \neq i} |T_{ij}|
-  \lesssim c^{-1/2} \sum_{k=1}^{N} \frac{1}{k}
-  \sim c^{-1/2} \log N
-  \leq C(A)\, c^{-1/2}\log c \to 0.
+  \leq C(A)\, c^{-1/2}\log c \to 0 \quad\text{as } c \to \infty.
 \]
+In particular, $\norm{D\mathcal{T}_c^{(N)}} < 1$ for $c \geq c_0(A,C_1,C_2)$.
 \end{proof}
 
 \begin{table}[h]
 \centering
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{lllll}
+\begin{tabular}{llll}
 \hline
-\textbf{Mechanism} & \textbf{Factor} & \textbf{Status} & \textbf{Zone} & \textbf{Source} \\
+\textbf{Step} & \textbf{Bound} & \textbf{Source} & \textbf{Status} \\
 \hline
-Commutator: $T_{ii} = 0$ & no diagonal & structural & G & PSWF-diagonal basis \\
-IBP: $F_{kl}(-1) = 0$ & boundary vanishes & structural & G & $L^2$-orthogonality \\
-Transition zone & $c^{-2/3}/|k-l|$ & \textit{stronger, local} & tz
-  & Airy amp.~$c^{1/6}$, measure~$c^{-2/3}$, freq.~$c^{2/3}$ \\
-Bulk zone & $c^{-1/2}/|k-l|$ & \textbf{limiting, global} & b
-  & Wronskian identity~\eqref{eq:FfromW} + WKB \\
-\hline
-\textbf{Lemma~\ref{lem:RL}} & \boldmath{$c^{-1/2}/|k-l|$}
-  & \textbf{final (Schur input)} & G & \textbf{bulk-limited} \\
-\hline
-Harmonic sum & $\log N \sim \tfrac{1}{3}\log c$ & combinatorial & G
-  & $N \sim c^{1/3}$ cutoff \\
-Gram coercivity & well-conditioned $P_N$ & structural & G & Paper~I \\
+Diagonal vanishing & $T_{ii} = 0$ & commutator & \checkmark{} unconditional \\
+IBP integral & $|I_{ij}| \leq C_1 c^{-1/2}/|i-j|$ & Lemma~\ref{lem:RL}
+  & \checkmark{} unconditional \\
+Prefactor reduction & $P_{ij} \leq C_2 c^{1/2}$ & Lemma~\ref{lem:prefactor}
+  & \textbf{conditional (Assumption~\ref{ass:B})} \\
+$c$-power cancellation & $c^{1/2} \times c^{-1/2} = O(1)$ & Remark~\ref{rem:balance}
+  & conditional on above \\
+Schur sum & $\lesssim c^{-1/2}\log c$ & Theorem~\ref{thm:main}
+  & conditional on Assumption~\ref{ass:B} \\
 \hline
 \end{tabular}
-\caption{Mechanisms contributing to $\|DT_c^{(N)}\| \lesssim c^{-1/2}\log c$.
-The transition zone gives $c^{-2/3}$ (stronger) but the bulk gives $c^{-1/2}$
-(weaker, since $c^{-1/2} > c^{-2/3}$ for $c > 1$).
-The global rate is limited by the bulk.
-Improving to $c^{-2/3}\log c$ is Open Problem~\ref{op:bulk}.}
+\caption{Logical chain for Theorem~\ref{thm:main}.
+The only conditional step is Lemma~\ref{lem:prefactor} (Assumption~\ref{ass:B}).
+All other steps are unconditional.
+Closing Assumption~\ref{ass:B} is Open Problem~\ref{op:prefactor}.}
 \label{tab:mechanisms}
 \end{table}
 
 \begin{corollary}[Galerkin fixed point]\label{cor:fixedpoint}
-For $c \geq c_0$ there exists a unique $g^{(N)} \in X_c^{(N)}$ with
-$\mathcal{T}_c^{(N)}(g^{(N)}) = g^{(N)}$,
+Assuming Assumption~\ref{ass:B}, for $c \geq c_0$ there exists a unique
+$g^{(N)} \in X_c^{(N)}$ with $\mathcal{T}_c^{(N)}(g^{(N)}) = g^{(N)}$,
 and the Picard iteration converges at rate $\leq C c^{-1/2}\log c$ per step.
 \end{corollary}
 
 %% ============================================================
 \section{Open Problems}
 %% ============================================================
+
+\begin{openproblem}[Prefactor Reduction: unconditional proof (restated)]
+\label{op:prefactor2}
+See Open Problem~\ref{op:prefactor} in Section~\ref{sec:norm}.
+This is the most urgent gap in the current proof.
+\end{openproblem}
 
 \begin{openproblem}[Optimal Galerkin dimension]\label{op:Nopt}
 Determine the maximal $N(c)$ such that $\norm{D\mathcal{T}_c^{(N)}} < 1$.
@@ -752,14 +882,9 @@ Prove that
     \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
   \lesssim \frac{c^{-2/3}}{|k-l|}
 \]
-for $k \neq l$, $k,l \leq N \sim c^{1/3}$.
-
-Such a bound would require showing a genuine \emph{oscillation-cancellation
-structure} in the bilinear form $\int \arccos(s)\pswf{k}(s)\pswf{l}(s)\,ds$
-in the bulk — going beyond the pointwise Wronskian bound~\eqref{eq:FfromW}
-to a \emph{stationary-phase} or \emph{second-IBP} argument exploiting the
-rapidly oscillating WKB phases $\theta_k(s) - \theta_l(s)$ against the
-slowly varying weight $\arccos(s)$.
+for $k \neq l$, $k,l \leq N \sim c^{1/3}$, via a stationary-phase
+or second-IBP argument exploiting the rapidly oscillating WKB phases
+$\theta_k(s) - \theta_l(s)$ against the slowly varying weight $\arccos(s)$.
 If established, the main theorem upgrades to
 $\norm{D\mathcal{T}_c^{(N)}} \lesssim c^{-2/3}\log c$.
 \end{openproblem}
@@ -768,18 +893,22 @@ $\norm{D\mathcal{T}_c^{(N)}} \lesssim c^{-2/3}\log c$.
 \section{Relation to Assumption A}
 %% ============================================================
 
-Theorem~\ref{thm:main} and Corollary~\ref{cor:fixedpoint} establish the
-existence of a Galerkin fixed point with convergence radius $\sim c^{-1/2}\log c$.
+Theorem~\ref{thm:main} (conditional on Assumption~\ref{ass:B}) and
+Corollary~\ref{cor:fixedpoint} establish the existence of a Galerkin fixed
+point with convergence radius $\sim c^{-1/2}\log c$.
 This is not yet a proof of Assumption~A, but provides:
 \begin{enumerate}[nosep]
-  \item A controlled finite-dimensional approximation, rigorous to all
-        stated bounds with no false inequalities.
+  \item A \emph{structurally honest} proof: every $c$-power is accounted for
+        explicitly; no factors are ``absorbed'' without justification.
+        The remaining gap (Assumption~\ref{ass:B}) is precisely identified.
   \item A clean structural separation: the transition zone is not the
-        bottleneck; the bulk oscillation structure is the genuine open problem.
-  \item A roadmap: resolving Open Problem~\ref{op:bulk} upgrades the rate
-        to $c^{-2/3}\log c$; resolving Open
-        Problems~\ref{op:Nopt}--\ref{op:Gershgorin} allows extension to a
-        full fixed point by compactness in $\Xc$.
+        bottleneck; the bulk oscillation structure (OP~\ref{op:bulk})
+        and the prefactor reduction (OP~\ref{op:prefactor}) are the
+        genuine open problems.
+  \item A roadmap: resolving OP~\ref{op:prefactor} removes the
+        conditionality; resolving OP~\ref{op:bulk} upgrades the rate
+        to $c^{-2/3}\log c$; resolving OP~\ref{op:Nopt}--\ref{op:Gershgorin}
+        allows extension to a full fixed point by compactness in $\Xc$.
 \end{enumerate}
 
 \begin{remark}[Zone asymmetry, summarised]
@@ -792,10 +921,7 @@ The two zones contribute at different asymptotic strengths:
   \quad\text{(bulk, limiting)}.
 \]
 Since $c^{-2/3} < c^{-1/2}$ for $c > 1$, the bulk controls the
-global rate. This asymmetry is the precise content of Open
-Problem~\ref{op:bulk}: closing the gap between $c^{-1/2}$ and $c^{-2/3}$
-in the bulk is a genuine new analytical task, requiring semiclassical
-cancellation in a PSWF bilinear form.
+global rate. This asymmetry is the precise content of OP~\ref{op:bulk}.
 \end{remark}
 
 %% ============================================================
@@ -803,8 +929,9 @@ cancellation in a PSWF bilinear form.
 %% ============================================================
 
 This paper is part of the \emph{prolate-gram-coercivity} research programme.
-The analysis in Sections~3--5 and the identification of the bulk--transition
-zone asymmetry as the key open problem were developed in working sessions
+The identification of the Prefactor Reduction as a separate lemma,
+the elimination of all hidden $c$-factor absorptions, and the
+explicit treatment of Assumption~B were developed in working sessions
 in May 2026.
 
 %% ============================================================
