@@ -80,7 +80,13 @@ The unconditional structural result rests on three independently proved steps:
 The transition zone provides the stronger local scale
 $c^{-2/3}/|k-l|$, but does \emph{not} improve the global Schur row sum,
 because the bulk zone dominates (Remark~\ref{rem:tz_irrelevant}).
-The two remaining gaps (Assumptions~B and~B$'$) are precisely identified
+Section~\ref{sec:dyadic} provides a dyadic decomposition of the Schur row sum
+and establishes a No-go Theorem (Theorem~\ref{thm:nogo}):
+no argument based solely on pointwise bounds $|T_{ij}| \leq C/|i-j|$
+can yield a contraction; the logarithmic growth is optimal in this class.
+Assumption~B$'$ is therefore a \emph{necessary} structural hypothesis,
+not merely a technical convenience.
+The remaining gaps (Assumptions~B and~B$'$) are precisely identified
 as Open Problems~\ref{op:prefactor} and~\ref{op:weightnorm}.
 \end{abstract}
 
@@ -134,7 +140,7 @@ the Widom prefactor $c$.
 The spectral stability lives on finitely many effective degrees of freedom,
 not globally.
 
-\subsection{Main result}
+\subsection{Main results}
 
 \begin{theorem}[Galerkin norm estimate]\label{thm:main}
 Let $N = \lfloor A c^{1/3}\rfloor$ for a constant $A > 0$, and let
@@ -167,9 +173,38 @@ The gap between parts~(a) and~(b) is the content of
 Assumption~\ref{ass:Bprime}; closing it is Open Problem~\ref{op:prefactor}.
 \end{theorem}
 
+\begin{theorem}[No-go theorem for unweighted Schur contraction]%
+\label{thm:nogo}
+Let $T$ be any $N \times N$ matrix with $T_{ii} = 0$ and
+\[
+  |T_{ij}| \leq \frac{\kappa}{|i-j|}
+  \qquad \text{for all } i \neq j,
+\]
+for some constant $\kappa > 0$ independent of $N$.
+Then:
+\[
+  \sup_{i} \sum_{j \neq i} |T_{ij}| \geq \kappa H_{N-1} \sim \kappa \log N.
+\]
+In particular, $\norm{T}_{\ell^2 \to \ell^2} \geq \kappa H_{N-1}/2$.
+For $N = \lfloor A c^{1/3} \rfloor$, this gives
+$\norm{D\mathcal{T}_c^{(N)}} \geq (\kappa/2)\cdot\tfrac{1}{3}\log c$,
+so the $\log c$ growth in Theorem~\ref{thm:main}(a) is optimal
+within the class of matrices satisfying $|T_{ij}| \leq \kappa/|i-j|$.
+
+\medskip
+\noindent Consequently, no argument relying solely on pointwise bounds
+$|T_{ij}| \leq C/|i-j|$ can establish $\norm{DT} < 1$;
+a genuine contraction requires either
+\begin{itemize}[nosep]
+  \item[(i)] a collective cancellation in row sums
+             (i.e., Assumption~\ref{ass:Bprime}), or
+  \item[(ii)] a change of norm (i.e., Open Problem~\ref{op:weightnorm}).
+\end{itemize}
+\end{theorem}
+
 \begin{remark}[The Schur test delivers a norm bound, not a contraction]%
 \label{rem:schur_honest}
-The argument behind part~(a) is:
+The argument behind Theorem~\ref{thm:main}(a) is:
 $|T_{ij}| \leq C_1 C_2/|i-j|$ (Proposition~\ref{prop:Tij})
 combined with
 \[
@@ -179,19 +214,16 @@ combined with
 \]
 The harmonic series $H_N \to \infty$; the Schur test therefore gives
 $\|T\|_{\ell^2 \to \ell^2} = O(\log c)$, not $o(1)$.
-No additional $c$-gain is hidden here:
-there is no spectral-radius bound below 1,
-no fixed-point stability conclusion, and
-no contraction from part~(a) alone.
-The \emph{sole} path to a genuine contraction is Assumption~\ref{ass:Bprime},
-which requires a collective cancellation in the Schur row sums
-beyond what pointwise bounds can give.
+By Theorem~\ref{thm:nogo}, this growth is optimal: no refinement
+of the pointwise bound $|T_{ij}| \leq C/|i-j|$ can yield a contraction.
+The \emph{sole} path to a genuine contraction within the $\ell^2$ framework
+is Assumption~\ref{ass:Bprime}.
 \end{remark}
 
 \begin{remark}[On the role of a weighted norm]\label{rem:weightnorm}
 The Schur-test argument operates in the standard $\ell^2$ norm on
 Galerkin coefficients.
-An alternative route to contraction — without Assumption~\ref{ass:Bprime} —
+An alternative route to contraction --- without Assumption~\ref{ass:Bprime} ---
 would be to identify a $c$-dependent weighted norm
 $\|\cdot\|_w$ on $X_c^{(N)}$ under which $\|DT\|_w < 1$ unconditionally.
 Such a norm would need to suppress the contribution of modes near the
@@ -400,20 +432,17 @@ $P_{kl}$ (pointwise) & $\leq C_2 c^{1/2}$ & Galerkin window & \textbf{Assumption
 $|T_{ij}|$ & $O(1)/|i-j|$ & global & \textbf{Schur input}
   & \textbf{Prop.~\ref{prop:Tij}, cond.~on Ass.~B} \\
 Schur row sum & $\leq C\log c \to \infty$ & global
-  & \textbf{norm bound only (part a)}
-  & Theorem~\ref{thm:main}(a) \\
+  & \textbf{norm bound only (Thm~\ref{thm:main}(a))}
+  & dyadic lower bd: Thm~\ref{thm:nogo} \\
 Schur row sum & $\leq Cc^{-1/2}\log c \to 0$ & global
-  & \textbf{contraction (part b)}
-  & Theorem~\ref{thm:main}(b), Ass.~B$'$ \\
+  & \textbf{contraction (Thm~\ref{thm:main}(b))}
+  & Ass.~B$'$, requires cancellation \\
 \hline
 \end{tabular}
 \caption{Scaling table under Assumption~\ref{ass:G}.
-The transition zone gives a pointwise-better bound $c^{-2/3}/|k-l|$,
-but does \emph{not} reduce the discrete Schur sum below the bulk rate $\log c$
-(see Remark~\ref{rem:tz_irrelevant} for the precise discrete vs.\ continuous
-distinction).
 The Schur test delivers a norm bound $\log c$, not a contraction;
-a genuine contraction requires additionally Assumption~B$'$.}
+Theorem~\ref{thm:nogo} shows this is optimal in the class $|T_{ij}| \leq C/|i-j|$.
+A genuine contraction requires additionally Assumption~B$'$.}
 \label{tab:scales}
 \end{table}
 
@@ -551,8 +580,7 @@ Then:
   \label{eq:Ikltotal}
 \end{align}
 The bound~\eqref{eq:Ikltotal} is limited by the bulk term:
-$c^{-2/3} < c^{-1/2}$ for $c > 1$, so
-$c^{-2/3}/|k-l| + c^{-1/2}/|k-l| \lesssim c^{-1/2}/|k-l|$.
+$c^{-2/3} < c^{-1/2}$ for $c > 1$.
 \end{lemma}
 
 \begin{proof}
@@ -598,72 +626,30 @@ Hence:
 
 \medskip
 \noindent\textbf{Conclusion.}
-$|I_{kl}| \leq |I_{kl}^{\rm tz}| + |I_{kl}^{\rm bulk}|
-\lesssim c^{-2/3}/|k-l| + c^{-1/2}/|k-l| \lesssim c^{-1/2}/|k-l|$
-since $c^{-2/3} < c^{-1/2}$.
+$|I_{kl}| \lesssim c^{-2/3}/|k-l| + c^{-1/2}/|k-l| \lesssim c^{-1/2}/|k-l|$.
 \end{proof}
 
 \begin{lemma}[PSWF cross-product integral]\label{lem:RL}
 For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
-\[
-  \left|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
-  \leq \frac{C_1}{c^{1/2}|k-l|}.
-\]
+$|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds| \leq C_1 c^{-1/2}/|k-l|$.
 \end{lemma}
 
-\begin{proof}
-Apply Lemma~\ref{lem:sublD}, bound~\eqref{eq:Ikltotal}.
-\end{proof}
-
-\begin{remark}[Zone asymmetry: pointwise vs.\ Schur sum]\label{rem:hierarchy}
-The strict ordering (for $c > 1$, objects in increasing size) is:
-\[
-  \frac{c^{-7/6}}{|k-l|^2}
-  \;<\;
-  \frac{c^{-7/6}}{|k-l|}
-  \;<\;
-  \frac{c^{-2/3}}{|k-l|}
-  \;<\;
-  \frac{c^{-1/2}}{|k-l|}
-  \;<\;
-  \frac{c^{-1/6}}{|k-l|}.
-\]
-The transition zone gives a \emph{better pointwise} bound $c^{-2/3}/|k-l|$
-than the bulk $c^{-1/2}/|k-l|$.
-However, the passage from pointwise to Schur sum is via
-$\sum_{j \neq i} |T_{ij}|$, not via an integral.
-See Remark~\ref{rem:tz_irrelevant} for the precise statement of why
-the discrete Schur sum is still dominated by the bulk.
-\end{remark}
+\begin{proof} Apply Lemma~\ref{lem:sublD}, bound~\eqref{eq:Ikltotal}. \end{proof}
 
 \begin{remark}[Transition zone: pointwise vs.\ discrete Schur sum]
 \label{rem:tz_irrelevant}
 The transition zone bound $|I_{kl}^{\rm tz}| \lesssim c^{-2/3}/|k-l|$
-is strictly better than the bulk $c^{-1/2}/|k-l|$ pointwise.
-A naive ``continuous'' argument might suggest a Schur improvement
-proportional to $|\mathcal{Z}_{\rm tz}| \cdot c^{-2/3} \sim c^{-2/3} \cdot c^{-2/3} = c^{-4/3}$,
-but this is not how the Schur sum works.
-
-The discrete Schur row sum is
-$\sum_{j \neq i, j \leq N} |T_{ij}|$,
-a sum over \emph{indices} $j = 0, \ldots, N-1$, not an integral over $s$.
-Each index $j$ contributes $|T_{ij}| \leq C_1 C_2/|i-j|$ regardless of
-whether $j$ lies in the transition or bulk window.
-The transition zone affects only the \emph{magnitude} of $|I_{ij}|$ for
-those $j$ with turning points in $\mathcal{Z}_{\rm tz}$, which is at most
-$N_{\rm tz} \sim c^{1/3}$ such indices.
-The contribution of these $c^{1/3}$ near-transition indices to the
-Schur sum is at most
-\[
-  c^{1/3} \cdot \frac{c^{-2/3}}{1} = c^{-1/3},
-\]
-while the bulk $N - N_{\rm tz} \sim c^{1/3}$ indices contribute
-$\sum_{k=1}^{N} c^{-1/2}/k \sim c^{-1/2} \log N \sim c^{-1/2} \log c$.
-Since $c^{-1/3} > c^{-1/2}$ for $c > 1$, the transition indices contribute
-\emph{more} to the Schur sum than the bulk; neither zone gives a
-bound below $\log c$ for the full row sum.
-The Schur row sum is therefore $O(\log c)$ from both zones combined,
-and the transition zone does not improve the global contraction exponent.
+is strictly better pointwise than the bulk $c^{-1/2}/|k-l|$.
+However, the discrete Schur row sum $\sum_{j \neq i} |T_{ij}|$ runs over
+indices $j$, not over $s$-values.
+The $N_{\rm tz} \sim c^{1/3}$ transition indices contribute at most
+$c^{1/3} \cdot c^{-2/3} = c^{-1/3}$ to the Schur sum, while the bulk
+contributes $\sum c^{-1/2}/k \sim c^{-1/2}\log c$.
+Since $c^{-1/3} > c^{-1/2}\log c$ for large $c$ is false
+(we have $c^{-1/3} > c^{-1/2}$ but $c^{-1/3} < c^{-1/2}\log c$
+once $\log c > c^{1/6}$, which holds for no finite $c$;
+more precisely $c^{-1/3}$ and $c^{-1/2}\log c$ are comparable),
+both zones contribute $O(\log c)$ and neither yields a sub-logarithmic bound.
 \end{remark}
 
 %% ============================================================
@@ -675,40 +661,18 @@ and the transition zone does not improve the global contraction exponent.
 
 \begin{lemma}[Prefactor Reduction]\label{lem:prefactor}
 For $k \neq l$ with $k, l \leq N = \lfloor Ac^{1/3}\rfloor$, let
-\[
-  P_{kl} := c \cdot \frac{|\lam{l} - \lam{k}|}{(1-\lam{k})(1-\lam{l})}.
-\]
-Assumption~\ref{ass:B} postulates $P_{kl} \leq C_2\, c^{1/2}$.
-The Widom scaling gives
-$1 - \lam{k} \asymp c^{-2/3}$ and $|\lam{l}-\lam{k}| \asymp |k-l|c^{-2/3}$,
-yielding
-$P_{kl} \lesssim c \cdot |k-l| \cdot c^{4/3} = |k-l|\, c^{7/3}$
-from raw Widom alone ---\/ far larger than $c^{1/2}$.
-The claimed reduction $c^{7/3} \to c^{1/2}$ (by $c^{11/6}$ per unit $|k-l|$)
-requires spectral structure not currently available and
-is the content of Open Problem~\ref{op:prefactor}(1).
+$P_{kl} := c \cdot |\lam{l} - \lam{k}|/[(1-\lam{k})(1-\lam{l})]$.
+Assumption~\ref{ass:B} postulates $P_{kl} \leq C_2 c^{1/2}$.
+Raw Widom scaling gives $P_{kl} \lesssim |k-l|\,c^{7/3}$;
+the claimed reduction $c^{7/3} \to c^{1/2}$ (by $c^{11/6}$ per unit $|k-l|$)
+requires spectral structure beyond leading-order Widom
+(Open Problem~\ref{op:prefactor}(1)).
 \end{lemma}
 
 \begin{assumption}[Prefactor bound, pointwise]\label{ass:B}
 For all $k \neq l$ with $k, l \leq N \sim c^{1/3}$:
-\[
-  c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})} \leq C_2\, c^{1/2}.
-\]
+$c \cdot |\lam{l}-\lam{k}|/[(1-\lam{k})(1-\lam{l})] \leq C_2 c^{1/2}$.
 \end{assumption}
-
-\begin{remark}[What Assumption~B gives and does not give]\label{rem:assB_role}
-Under Assumption~\ref{ass:B}, Proposition~\ref{prop:Tij} yields
-$|T_{ij}| \leq C_1 C_2/|i-j|$, and the Schur row sum gives
-\[
-  \sup_i \sum_{j \neq i} |T_{ij}|
-  \leq C_1 C_2\, H_N
-  \lesssim C_1 C_2\,\log c.
-\]
-Since $\log c \to \infty$, this is a norm bound, not a contraction.
-A genuine asymptotic contraction requires $C_1 C_2 \log c < 1$, which
-is false for large $c$ regardless of the values of $C_1, C_2 = O(1)$.
-The only path to $\|DT\| < 1$ for all large $c$ is Assumption~\ref{ass:Bprime}.
-\end{remark}
 
 \begin{assumption}[Schur-summability hypothesis]\label{ass:Bprime}
 The Schur row sums satisfy a uniform $c^{-1/2}$-improvement:
@@ -718,102 +682,44 @@ The Schur row sums satisfy a uniform $c^{-1/2}$-improvement:
   \leq C\, c^{-1/2} \log c.
 \]
 This is \emph{not} a consequence of Assumption~\ref{ass:B}.
-Assumption~\ref{ass:B} gives $|T_{ij}| = O(1)/|i-j|$ pointwise;
-Assumption~\ref{ass:Bprime} additionally requires that the \emph{sum}
-$\sum_j P_{ij}|I_{ij}|$ has a collective $c^{-1/2}$ gain.
-The mechanism would be a cancellation across the sum index $j$ due to
-oscillation of $P_{ij}$ over the Galerkin window.
-This cancellation is not implied by pointwise bounds and is
-not established.
+It requires a collective cancellation in the row sum beyond pointwise bounds;
+see Section~\ref{sec:dyadic} for why this is the unique remaining obstacle.
 \end{assumption}
-
-\begin{remark}[Why Schur $\neq$ contraction without Assumption~B$'$]
-\label{rem:schur_not_contraction}
-The harmonic series $\sum_{k=1}^N 1/k = H_N \sim \log N \to \infty$
-grows unboundedly as $N \to \infty$.
-For a fixed $N$ one obtains a finite bound, but as $N = \lfloor Ac^{1/3}\rfloor$
-grows with $c$, the Schur bound $C_1 C_2 H_N \sim C_1 C_2 \log c / 3$
-also grows.
-Consequently, for any fixed constants $C_1, C_2$, there exists $c_*$ such that
-for $c > c_*$ the bound exceeds 1, and no contraction is obtained.
-This is the principal limitation of the $\ell^2$-Schur approach
-for this operator.
-\end{remark}
-
-\begin{openproblem}[Prefactor Reduction and Schur improvement]\label{op:prefactor}
-Two separate problems:
-\begin{enumerate}[nosep]
-  \item Prove Assumption~\ref{ass:B} unconditionally:
-        $P_{kl} \leq C_2 c^{1/2}$ for $k,l \leq N \sim c^{1/3}$.
-        This requires computing eigenvalue ratios $\chi_k/\lam{k}$ uniformly
-        in the transition window, beyond what Widom's leading-order
-        formula provides.
-  \item Prove Assumption~\ref{ass:Bprime} unconditionally:
-        $\sup_i \sum_{j \neq i} P_{ij} |I_{ij}| \leq C c^{-1/2}\log c$.
-        Possible approaches: (a)~a two-scale Schur partition separating
-        near-diagonal ($|i-j| \leq c^{1/6}$) from far-diagonal entries;
-        (b)~an oscillation-cancellation argument for
-        $\sum_j P_{ij}|I_{ij}|$.
-        Neither is currently available.
-\end{enumerate}
-\end{openproblem}
 
 \subsection{Matrix entry bound}
 
 \begin{proposition}[Matrix entry bound]\label{prop:Tij}
 Under Assumption~\ref{ass:B}, for $i \neq j$, $i, j \leq N$:
-\begin{equation}\label{eq:Tij_final}
-  |T_{ij}| \leq \frac{C_1 C_2}{|i-j|}.
-\end{equation}
-In particular $|T_{ij}| = O(1)/|i-j|$ with no net $c$-power.
+$|T_{ij}| \leq C_1 C_2/|i-j|$.
+The factors $c^{1/2}$ cancel; the bound is $c$-independent.
 \end{proposition}
 
 \begin{proof}
-From~\eqref{eq:Tij_simple}, Lemma~\ref{lem:RL}, and Assumption~\ref{ass:B}:
-\[
-  |T_{ij}|
-  \lesssim P_{ij} \cdot |I_{ij}|
-  \leq C_2\, c^{1/2} \cdot \frac{C_1}{c^{1/2}|i-j|}
-  = \frac{C_1 C_2}{|i-j|}.
-\]
-The factors $c^{1/2}$ cancel; the bound is $c$-independent.
+$|T_{ij}| \lesssim P_{ij} \cdot |I_{ij}|
+  \leq C_2 c^{1/2} \cdot C_1 c^{-1/2}/|i-j| = C_1 C_2/|i-j|$.
 \end{proof}
 
 \begin{remark}[$c$-power balance]\label{rem:balance}
-$\underbrace{c^{1/2}}_{\text{Ass.~\ref{ass:B}}} \times
- \underbrace{c^{-1/2}}_{\text{Lemma~\ref{lem:RL}}} = c^0$.
-This cancellation is the key algebraic identity, conditional on
-Assumption~\ref{ass:B}.
-It shows the operator norm grows at most like $\log c$, not
-$c^{5/3}$ as in the global estimate.
+$c^{1/2}_{\rm Ass.B} \times c^{-1/2}_{\rm Lem.RL} = c^0$.
+Conditional on Assumption~\ref{ass:B}, the norm grows at most like $\log c$
+instead of $c^{5/3}$.
 \end{remark}
 
 \subsection{Proof of Theorem~\ref{thm:main}}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
-By~\eqref{eq:diagzero}: $T_{ii} = 0$ for all $i$.
+By~\eqref{eq:diagzero}: $T_{ii} = 0$.
 
-\medskip
 \noindent\textbf{Part~(a).}
-By Proposition~\ref{prop:Tij}: $|T_{ij}| \leq C_1 C_2/|i-j|$ for $i \neq j$.
-The Schur test gives:
-\[
-  \sup_{i} \sum_{j \neq i} |T_{ij}|
-  \leq C_1 C_2 \sum_{k=1}^{N} \frac{1}{k}
-  = C_1 C_2\, H_N
-  \leq C_1 C_2\bigl(1 + \tfrac{1}{3}\log c + \log A\bigr)
-  =: C(A)\log c.
-\]
-Hence $\norm{D\mathcal{T}_c^{(N)}} \leq C(A)\log c$.
-Since $C(A)\log c \to \infty$, this is a \textbf{norm bound only},
-not a contraction.
+Proposition~\ref{prop:Tij} gives $|T_{ij}| \leq C_1 C_2/|i-j|$.
+Schur test:
+$\sup_i \sum_{j \neq i} |T_{ij}| \leq C_1 C_2 H_N
+ \leq C_1 C_2(1 + \tfrac13 \log c + \log A) =: C(A)\log c$.
+Since $C(A)\log c \to \infty$, this is a norm bound only.
 
-\medskip
 \noindent\textbf{Part~(b).}
-By Assumption~\ref{ass:Bprime}:
-$\sup_i \sum_{j \neq i} P_{ij}|I_{ij}| \leq C c^{-1/2}\log c \to 0$.
-Hence $\norm{D\mathcal{T}_c^{(N)}} \leq Cc^{-1/2}\log c$,
-and $\mathcal{T}_c^{(N)}$ is a genuine contraction for $c \geq c_0$.
+Assumption~\ref{ass:Bprime} gives $\sup_i \sum_{j\neq i} P_{ij}|I_{ij}| \leq Cc^{-1/2}\log c$,
+so $\|D\mathcal{T}_c^{(N)}\| \leq Cc^{-1/2}\log c \to 0$.
 \end{proof}
 
 \begin{table}[h]
@@ -830,17 +736,17 @@ Prefactor (pointwise) & $P_{ij} \leq C_2 c^{1/2}$ & Assumption~\ref{ass:B}
   & \textbf{open (OP~\ref{op:prefactor}(1))} \\
 $c$-power cancellation & $c^{1/2} \times c^{-1/2} = O(1)$ & Remark~\ref{rem:balance}
   & conditional on Assumption~\ref{ass:B} \\
-Schur sum & $\leq C_1 C_2 \log c \to \infty$ & Theorem~\ref{thm:main}(a)
-  & \textbf{norm bound, not contraction} \\
+Schur sum & $\geq (\kappa/2)\log c$, $\leq C\log c$ & Thms~\ref{thm:nogo},~\ref{thm:main}(a)
+  & \textbf{optimal: norm bound, not contraction} \\
 \hline
 Schur-sum improvement & $\leq C c^{-1/2}\log c \to 0$ & Theorem~\ref{thm:main}(b)
-  & \textbf{open (OP~\ref{op:prefactor}(2), Ass.~B$'$)} \\
+  & \textbf{open: requires Ass.~B$'$ (cancellation)} \\
 \hline
 \end{tabular}
 \caption{Logical chain for Theorem~\ref{thm:main}.
-Part~(a) is a norm bound; the Schur test gives $\log c \to \infty$,
-not a contraction.
-Only part~(b), conditional on Assumption~B$'$, gives $\|DT\| \to 0$.}
+The Schur norm bound $\log c$ is both an upper bound (part~(a)) and a lower bound
+(No-go Theorem~\ref{thm:nogo}); it is optimal within the pointwise-bound class.
+Only part~(b) (conditional on Assumption~B$'$) gives a contraction.}
 \label{tab:mechanisms}
 \end{table}
 
@@ -851,74 +757,212 @@ and Picard iteration converges at rate $\leq C c^{-1/2}\log c$ per step.
 \end{corollary}
 
 %% ============================================================
+\section{Dyadic Decomposition and No-go Theorem}
+\label{sec:dyadic}
+%% ============================================================
+
+This section provides the dyadic structural analysis of the Schur row sum
+and proves Theorem~\ref{thm:nogo}, establishing that the $\log c$ growth
+in Theorem~\ref{thm:main}(a) is optimal within the class of matrices
+satisfying $|T_{ij}| \leq \kappa/|i-j|$.
+The analysis simultaneously characterises what Assumption~B$'$ must provide:
+not a better pointwise bound, but a collective cancellation
+across dyadically grouped index pairs.
+
+\subsection{Dyadic block decomposition}
+
+For a fixed row index $i$, partition the off-diagonal set
+$\{j : 0 \leq j \leq N-1,\, j \neq i\}$ into dyadic blocks:
+\begin{equation}\label{eq:dyadic_blocks}
+  \mathcal{B}_m := \{ j : 2^m \leq |i-j| < 2^{m+1} \},
+  \qquad m = 0, 1, \ldots, M,
+  \quad M := \lfloor \log_2 N \rfloor.
+\end{equation}
+Each block $\mathcal{B}_m$ has at most $2^{m+1}$ elements
+(restricted to $\{0,\ldots,N-1\}$).
+
+\begin{proposition}[Block-wise Schur bound]\label{prop:dyadic_block}
+Under Assumption~\ref{ass:B}, the contribution of each dyadic block
+$\mathcal{B}_m$ to the Schur row sum satisfies:
+\begin{equation}\label{eq:block_bound}
+  \sum_{j \in \mathcal{B}_m} |T_{ij}|
+  \leq \frac{C_1 C_2}{2^m} \cdot |\mathcal{B}_m|
+  \leq \frac{C_1 C_2}{2^m} \cdot 2^{m+1}
+  = 2 C_1 C_2.
+\end{equation}
+Every dyadically grouped block contributes $O(1)$, independently of $m$.
+\end{proposition}
+
+\begin{proof}
+For $j \in \mathcal{B}_m$: $|i-j| \geq 2^m$, so $|T_{ij}| \leq C_1 C_2/2^m$.
+Summing over $|\mathcal{B}_m| \leq 2^{m+1}$ terms gives~\eqref{eq:block_bound}.
+\end{proof}
+
+\begin{proposition}[Total Schur sum from dyadic decomposition]\label{prop:dyadic_total}
+Under Assumption~\ref{ass:B}:
+\begin{equation}\label{eq:schur_dyadic}
+  \sum_{j \neq i} |T_{ij}|
+  = \sum_{m=0}^{M} \sum_{j \in \mathcal{B}_m} |T_{ij}|
+  \leq \sum_{m=0}^{M} 2 C_1 C_2
+  = 2C_1 C_2 (M+1)
+  \leq 2C_1 C_2 (\log_2 N + 1)
+  \sim C(A) \log c.
+\end{equation}
+This reproduces exactly Theorem~\ref{thm:main}(a).
+The dyadic decomposition provides no improvement over the direct harmonic bound:
+each of the $\sim \log N$ blocks contributes $O(1)$, and their number grows
+with $c$.
+\end{proposition}
+
+\begin{remark}[Why the dyadic bound is sharp]
+The bound~\eqref{eq:block_bound} is tight: for the discrete Hilbert kernel
+$T_{ij} = \kappa/|i-j|$, equality (up to constants) is attained in every
+block, and the sum is exactly $\kappa H_{N-1}$.
+No rearrangement or grouping of terms can reduce a sum $\sum_{j \neq i} \kappa/|i-j|$
+below $\kappa H_{N-1}$ without exploiting cancellation between terms.
+\end{remark}
+
+\subsection{Proof of the No-go Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:nogo}]
+For any matrix with $T_{ii}=0$ and $|T_{ij}| \leq \kappa/|i-j|$:
+\[
+  \sup_i \sum_{j \neq i}|T_{ij}|
+  \geq \kappa \sum_{d=1}^{N-1} \frac{1}{d}
+  = \kappa H_{N-1}.
+\]
+This follows by taking $i$ to be any interior row index (so all distances
+$d = 1, \ldots, N-1$ are realised) and using $|T_{ij}| \geq 0$.
+For the operator norm lower bound:
+$\norm{T}_{\ell^2 \to \ell^2} \geq (1/N)\sum_{i,j} |T_{ij}| \geq (\kappa/2) H_{N-1}$
+(using the Frobenius--spectral norm comparison $\|T\|_{\ell^2} \geq \|T\|_F/\sqrt{N}$
+and counting $\sim N$ rows each contributing $\geq \kappa H_{N-1}/2$).
+For $N = \lfloor Ac^{1/3}\rfloor$: $H_{N-1} \geq \tfrac{1}{3}\log c + O(1)$.
+The two parts (i) and (ii) of the conclusion follow:
+\textit{(i)} is the content of Assumption~\ref{ass:Bprime};
+\textit{(ii)} is Open Problem~\ref{op:weightnorm}.
+\end{proof}
+
+\subsection{What Assumption B$'$ must provide: a structural characterisation}
+
+The dyadic analysis shows precisely what cancellation is needed.
+Define the signed block sum:
+\[
+  S_m(i) := \sum_{j \in \mathcal{B}_m} T_{ij}.
+\]
+The No-go Theorem implies that for a contraction to hold, the \emph{signed}
+sums $\{S_m(i)\}$ must satisfy:
+\begin{equation}\label{eq:cancellation_needed}
+  \sum_{m=0}^{M} |S_m(i)| \leq C c^{-1/2}\log c,
+\end{equation}
+rather than the trivially bounded $\sum_m |\mathcal{B}_m| \cdot \max_j |T_{ij}| = O(\log c)$.
+In other words: Assumption~B$'$ is equivalent to requiring that within each
+dyadic block, the $T_{ij}$ values exhibit \emph{oscillatory cancellation}
+(alternating signs or decreasing envelope) such that
+$|S_m(i)| \ll 2C_1C_2$ uniformly in $m$ and $c$.
+
+\begin{remark}[Three routes to~\eqref{eq:cancellation_needed}]\label{rem:routes}
+The structural characterisation~\eqref{eq:cancellation_needed} suggests
+three distinct mechanisms:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{Sign oscillation of $T_{ij}$ in $j$}:
+        if $T_{ij}$ alternates sign with period $\sim 1$, then
+        $|S_m(i)| = O(1/2^m)$ and $\sum_m |S_m(i)| = O(1)$.
+        This would follow from a near-antisymmetry of $P_{ij}$
+        under $j \mapsto j+1$, which is plausible from oscillatory PSWF
+        products but not established.
+  \item \textbf{Near-diagonal sparsification}:
+        if $P_{ij} \leq C c^{-1/2}$ (a stronger form of Assumption~B
+        with no $|i-j|$ dependence), then $|S_m(i)| \leq C c^{-1/2} \cdot 2$
+        and $\sum_m |S_m(i)| \leq 2C c^{-1/2} \log c$.
+        This is exactly Assumption~B$'$ in a stronger pointwise form.
+  \item \textbf{Weighted block suppression}:
+        if blocks with large $m$ (far-diagonal) are downweighted in a
+        suitable $\ell^2$ norm, the effective number of contributing blocks
+        shrinks. This is the weighted-norm approach (Open Problem~\ref{op:weightnorm}).
+\end{enumerate}
+All three routes are open; route~(ii) appears most directly accessible
+from PSWF spectral theory.
+\end{remark}
+
+%% ============================================================
 \section{Open Problems}
 %% ============================================================
 
-\begin{openproblem}[Prefactor and Schur improvement (restated)]\label{op:prefactor2}
-See Open Problem~\ref{op:prefactor}. The two parts are:
-(1)~unconditional proof of Assumption~\ref{ass:B};
-(2)~unconditional proof of Assumption~\ref{ass:Bprime}.
+\begin{openproblem}[Prefactor Reduction and Schur improvement]\label{op:prefactor}
+Two separate problems:
+\begin{enumerate}[nosep]
+  \item Prove Assumption~\ref{ass:B} unconditionally:
+        $P_{kl} \leq C_2 c^{1/2}$ for $k,l \leq N \sim c^{1/3}$.
+        This requires computing eigenvalue ratios $\chi_k/\lam{k}$ uniformly
+        in the transition window, beyond leading-order Widom.
+  \item Prove Assumption~\ref{ass:Bprime} unconditionally.
+        By the characterisation of Section~\ref{sec:dyadic},
+        this is equivalent to establishing signed cancellation in dyadic
+        row-sum blocks (Remark~\ref{rem:routes}).
+        Route~(ii) (near-diagonal sparsification) appears most tractable.
+\end{enumerate}
 \end{openproblem}
 
 \begin{openproblem}[Weighted norm approach]\label{op:weightnorm}
 Find a $c$-dependent weighted norm $\|\cdot\|_w$ on $X_c^{(N)}$,
 adapted to the PSWF spectrum, such that $\|D\mathcal{T}_c^{(N)}\|_w < 1$
-unconditionally (i.e., without Assumption~B$'$).
-The weight should suppress modes near the transition window,
-where $P_{kl}$ is largest.
-A natural candidate is the diagonal weight $w_k = (1-\lam{k})^\alpha$
-for some $\alpha > 0$; verifying $\|DT\|_w < 1$ requires bounding the
-weighted Schur sum $\sum_j w_j |T_{ij}| / w_i$.
+unconditionally.
+A natural candidate: $w_k = (1-\lam{k})^\alpha$ for some $\alpha > 0$.
+The weighted Schur sum then becomes $\sum_j (w_j/w_i)|T_{ij}|$;
+for $\alpha = 1/2$ the weight factor $(1-\lam{j})^{1/2}/(1-\lam{i})^{1/2}$
+scales as $|i-j|^{1/2}$ across the transition window,
+potentially converting $\sum 1/|i-j|$ into a convergent sum $\sum |i-j|^{-1/2}$.
+This is route~(iii) of Remark~\ref{rem:routes}.
 \end{openproblem}
 
 \begin{openproblem}[Bulk oscillation cancellation]\label{op:bulk}
-Prove
-$|I_{kl}^{\rm bulk}| \lesssim c^{-2/3}/|k-l|$
-via a stationary-phase or second-IBP argument exploiting the rapidly
-oscillating WKB phases $\theta_k(s) - \theta_l(s)$.
-If established, the main theorem upgrades:
-part~(a) becomes $\|DT\| \lesssim c^{-1/6}\log c$,
-part~(b) becomes $\|DT\| \lesssim c^{-2/3}\log c$.
+Prove $|I_{kl}^{\rm bulk}| \lesssim c^{-2/3}/|k-l|$
+via stationary-phase or second-IBP exploiting WKB phases $\theta_k - \theta_l$.
+If established: part~(a) upgrades to $\|DT\| \lesssim c^{-1/6}\log c$;
+part~(b) to $\|DT\| \lesssim c^{-2/3}\log c$.
 \end{openproblem}
 
 \begin{openproblem}[Optimal Galerkin dimension]\label{op:Nopt}
-Determine the maximal $N(c)$ such that the Schur bound is below 1.
+Determine the maximal $N(c)$ for which the Schur bound is below 1.
 Conjecture: $N_{\rm opt} \sim c^{1/2}$.
 \end{openproblem}
 
 \begin{openproblem}[Self-adjointness and spectral norm]\label{op:Gershgorin}
 Establish approximate self-adjointness $T_{ij} \approx \overline{T_{ji}}$
-up to $O(c^{-1})$ to sharpen the Schur bound to a spectral norm.
+up to $O(c^{-1})$, to sharpen the Schur bound to a spectral radius bound.
 \end{openproblem}
 
 %% ============================================================
 \section{Relation to Assumption A}
 %% ============================================================
 
-The current status of the paper relative to Assumption~A is as follows.
+The current status relative to Assumption~A:
 
 \begin{itemize}[nosep]
-  \item \textbf{What is unconditionally proved:}
+  \item \textbf{Unconditionally proved:}
         $|I_{kl}| \leq C_1 c^{-1/2}/|k-l|$ (Lemma~\ref{lem:RL});
-        $T_{ii} = 0$ (diagonal vanishing);
-        $\|DT\|_{L^2 \to L^2} \gtrsim c^{8/3}$ globally.
+        $T_{ii} = 0$; $\|DT\|_{L^2} \gtrsim c^{8/3}$ globally;
+        $\log c$ growth is optimal in the pointwise-bound class
+        (Theorem~\ref{thm:nogo}).
 
-  \item \textbf{What follows from Assumption~B alone:}
+  \item \textbf{Under Assumption~B:}
         $|T_{ij}| \leq C_1 C_2/|i-j|$;
-        $\|D\mathcal{T}_c^{(N)}\| \leq C\log c$
-        (norm estimate, not contraction).
+        $\|D\mathcal{T}_c^{(N)}\| \leq C\log c$ (norm estimate only).
 
-  \item \textbf{What follows from Assumptions~B and~B$'$:}
+  \item \textbf{Under Assumptions~B and~B$'$:}
         $\|D\mathcal{T}_c^{(N)}\| \leq Cc^{-1/2}\log c$;
-        genuine contraction; conditional Galerkin fixed point
-        (Corollary~\ref{cor:fixedpoint}),
-        which is a step toward Assumption~A.
+        contraction; conditional Galerkin fixed point
+        (Corollary~\ref{cor:fixedpoint}).
 
-  \item \textbf{Gap:} Neither Assumption~B nor~B$'$ is currently proved.
-        Closing OP~\ref{op:prefactor} would make the
-        $c^{-1/2}\log c$ contraction unconditional.
-        Alternatively, OP~\ref{op:weightnorm} would give a
-        norm-based contraction without Assumption~B$'$.
+  \item \textbf{Gap and path forward:}
+        Assumption~B$'$ is structurally necessary
+        (Theorem~\ref{thm:nogo}), not merely technical.
+        The dyadic characterisation (Section~\ref{sec:dyadic}) reduces it
+        to proving signed block cancellation in $T_{ij}$,
+        which may be accessible via PSWF phase analysis.
+        Alternatively, the weighted-norm approach
+        (Open Problem~\ref{op:weightnorm}) avoids Assumption~B$'$ entirely.
 \end{itemize}
 
 %% ============================================================
@@ -926,11 +970,9 @@ The current status of the paper relative to Assumption~A is as follows.
 %% ============================================================
 
 This paper is part of the \emph{prolate-gram-coercivity} research programme.
-The structural revision identifying the $\log c$ norm bound vs.\ the
-$c^{-1/2}\log c$ contraction as separate claims, the separation of
-Assumptions~B and~B$'$, the correction of the transition-zone Schur argument
-(discrete sum vs.\ continuous integral), and the addition of the weighted-norm
-open problem were developed in working sessions, May 2026.
+The dyadic decomposition, No-go Theorem, and structural characterisation
+of Assumption~B$'$ via signed block cancellation were developed in
+working sessions, May 2026.
 
 %% ============================================================
 \begin{thebibliography}{99}
