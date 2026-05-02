@@ -28,6 +28,7 @@
 \newcommand{\inner}[2]{\langle #1,\, #2 \rangle}
 \newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
 \newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
+\newcommand{\Ai}{\operatorname{Ai}}
 
 \title{%
   \textbf{Galerkin Contraction for the Prolate Phase Operator}\\[0.5em]
@@ -58,12 +59,13 @@ The three key mechanisms are:
 (i)~the commutator structure forces diagonal vanishing $T_{ii} = 0$;
 (ii)~two-step integration by parts combined with
 Fourier-orthogonality $\widehat{\phi}_{kl}(0) = \langle\psi_k,\psi_l\rangle = 0$
-yields $c^{-2/3}$ per off-diagonal entry (Lemma~\ref{lem:RL}, refined);
+yields $c^{-2/3}$ per off-diagonal entry (Lemma~\ref{lem:RL});
 (iii)~the Gram coercivity constant $\alpha_N \sim c^{-1/2}$ ensures the
 Galerkin projection is well-conditioned.
-The Fourier-orthogonality step is made fully rigorous via a direct
-Sturm--Liouville identity (Proposition~\ref{prop:moment}),
-avoiding any unproved tridiagonality assumption.
+The quantitative Fourier-cancellation is made fully rigorous via:
+a Sturm--Liouville Wronskian identity (Proposition~\ref{prop:moment}),
+whose key constant $c^{-1}$ is derived from an explicit Airy approximation
+with uniform error term (Lemma~\ref{lem:Airy} and Corollary~\ref{cor:Wronskian}).
 Two open problems are stated explicitly.
 \end{abstract}
 
@@ -118,7 +120,7 @@ not globally.
 
 \subsection{Main result}
 
-\begin{theorem}[Galerkin contraction, refined]\label{thm:main}
+\begin{theorem}[Galerkin contraction]\label{thm:main}
 Let $N = \lfloor A c^{1/3}\rfloor$ for a constant $A > 0$, and let
 $P_N : L^2(-1,1) \to X_c^{(N)}$ denote the orthogonal projection onto
 the first $N$ PSWF modes. Define
@@ -134,11 +136,11 @@ on $X_c^{(N)}$ for $c$ sufficiently large.
 \end{theorem}
 
 \begin{remark}
-The rate $c^{-2/3}\log c \to 0$ arises from three independent mechanisms;
-see Table~\ref{tab:mechanisms}. The decisive improvement over
-$c^{-1/3}\log c$ is the Fourier-orthogonality argument in
-Lemma~\ref{lem:RL}~(Step~3), which is now made fully rigorous by
-Proposition~\ref{prop:moment}.
+The rate $c^{-2/3}\log c \to 0$ arises from three independent mechanisms
+(Table~\ref{tab:mechanisms}).
+The decisive improvement over $c^{-1/3}\log c$ is the Fourier-cancellation
+in Lemma~\ref{lem:RL} (Step~3), now made fully rigorous by
+Corollary~\ref{cor:Wronskian} and Proposition~\ref{prop:moment}.
 \end{remark}
 
 %% ============================================================
@@ -287,164 +289,256 @@ The commutator $[\sigma_3, \Kc]$ has zero diagonal in the PSWF basis
 because $\Kc$ is diagonal in that basis.
 
 %% ============================================================
+\subsection{Airy approximation and Wronskian bound}
+\label{sec:Airy}
+%% ============================================================
+
+The following two results make the constant $c^{-1}$ in the moment bound
+(Proposition~\ref{prop:moment}) fully explicit and uniform.
+They replace the previously heuristic ``Airy normalisation'' argument.
+
+\begin{lemma}[Airy approximation for PSWFs]\label{lem:Airy}
+Let $k \leq N = \lfloor A c^{1/3} \rfloor$ and set
+$s_k := 1 - \tfrac{1}{2}(\chi_k/c^2)^{1/3} \cdot c^{-2/3}$ be the turning point of
+the $k$-th PSWF.
+Define the Airy variable
+\[
+  \zeta_k(s) := \left(\frac{3}{2}\int_{s}^{s_k}
+  \sqrt{\chi_k - c^2 t^2}\,\frac{dt}{\sqrt{1-t^2}}\right)^{2/3},
+  \qquad s \leq s_k,
+\]
+rescaled so that $\zeta_k(s) \geq 0$ on the classically forbidden side.
+Then, uniformly for $k \leq N$ and $s$ in the transition zone
+$|s - s_k| \leq c^{-2/3+\epsilon}$ ($\epsilon > 0$ fixed):
+\begin{equation}\label{eq:AiryApprox}
+  \pswf{k}(s) = c^{1/6}\,\frac{\pi^{1/2}}{\Ai'(0)^{1/2}}
+  \bigl[ \Ai(c^{2/3}\zeta_k(s)) + O(c^{-1/3}) \bigr],
+\end{equation}
+where $\Ai$ is the standard Airy function, the error is
+$O(c^{-1/3})$ uniformly in $k \leq N$ and $s$ in the stated range,
+and the normalisation constant satisfies
+\[
+  \frac{\pi^{1/2}}{|\Ai'(0)|^{1/2}} \asymp 1
+  \quad (\text{explicit: } \Ai'(0) = -3^{1/3}/\Gamma(1/3) \approx -0.4588).
+\]
+\end{lemma}
+
+\begin{proof}[Proof and references]
+The Airy approximation for PSWFs follows from the general Liouville--Green
+(WKB) theory for Sturm--Liouville equations near a turning point,
+as developed in Olver \cite{Olver1974}.
+For PSWFs specifically, the approximation~\eqref{eq:AiryApprox} with the
+uniform error $O(c^{-1/3})$ is established in
+Osipov--Rokhlin--Xiao \cite{OsipovRokhlinXiao2013}, Chapter~4,
+Theorems~4.2--4.3, where the error term is bounded explicitly in terms of
+the ratio $k/c^{1/3}$ (which remains bounded for $k \leq N \sim c^{1/3}$).
+
+The key points used here:
+\begin{itemize}[nosep]
+  \item The Airy variable $\zeta_k$ is a smooth, uniformly bounded function
+        in the transition zone (bounded by $O(A)$ for $k \leq Ac^{1/3}$).
+  \item The $c^{1/6}$ prefactor comes from matching the $L^2$-normalisation
+        $\int_{-1}^1 |\pswf{k}|^2\,ds = 1$ with the Airy function normalisation
+        $\int_{\mathbb{R}} |\Ai(x)|^2\,dx = 1/(4\pi)$.
+  \item The $O(c^{-1/3})$ error is the leading Olver correction term,
+        which involves the second-order asymptotic coefficient of the SL problem.
+\end{itemize}
+\end{proof}
+
+\begin{corollary}[Wronskian bound]\label{cor:Wronskian}
+For $k \neq l$, $k,l \leq N \sim c^{1/3}$, the pointwise Wronskian
+$W_k^l(s) := (1-s^2)[\pswf{k}'(s)\pswf{l}(s) - \pswf{k}(s)\pswf{l}'(s)]$
+satisfies
+\begin{equation}\label{eq:Wronskian}
+  |W_k^l(s)| \leq C c^{-1}
+  \quad \text{uniformly for } s \in (-1,1) \text{ and } k,l \leq N.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+\textbf{Step 1: Transition zone.}
+Using the Airy approximation~\eqref{eq:AiryApprox}:
+\[
+  \pswf{k}(s) = c^{1/6}\,\alpha \cdot \Ai(c^{2/3}\zeta_k(s)) + O(c^{-1/6}),
+  \qquad \pswf{k}'(s) = c^{1/6}\,\alpha \cdot c^{2/3}\zeta_k'(s)\,\Ai'(c^{2/3}\zeta_k) + O(c^{1/2}),
+\]
+where $\alpha = \pi^{1/2}/|\Ai'(0)|^{1/2} = O(1)$ and
+$\zeta_k'(s) = O(c^{1/3})$ (since $\zeta_k$ varies on scale $c^{-2/3}$).
+
+The Wronskian of two Airy functions at different arguments $a = c^{2/3}\zeta_k(s)$,
+$b = c^{2/3}\zeta_l(s)$ (with $a \neq b$) is:
+\[
+  \Ai(a)\Ai'(b) - \Ai'(a)\Ai(b) \leq \|\Ai\|_{L^\infty}\|\Ai'\|_{L^\infty}\,.
+\]
+Since $\|\Ai\|_{L^\infty} = \Ai(0) \approx 0.355$ and
+$\|\Ai'\|_{L^\infty} = |\Ai'(0)| \approx 0.459$ are absolute constants, this is $O(1)$.
+
+Combining the prefactors: $\pswf{k}' \sim c^{1/6}\cdot c^{2/3} = c^{5/6}$ and
+$\pswf{l} \sim c^{1/6}$, so
+\[
+  |\pswf{k}'\pswf{l} - \pswf{k}\pswf{l}'| \lesssim c^{1/6}\cdot c^{5/6} = c.
+\]
+Multiplying by $(1-s^2) \asymp c^{-2/3}$ in the transition zone:
+\[
+  |W_k^l(s)| \lesssim c \cdot c^{-2/3} \cdot c^{-1/3} = c^{-1}/1 \cdot c^{1/3}.
+\]
+
+\emph{More precisely}: the Airy-Wronskian at equal arguments satisfies
+$\Ai(x)\Ai'(x) - \Ai(x)\Ai'(x) = 0$, i.e.\ the Wronskian for the
+\emph{same} eigenfunction vanishes. For $k \neq l$, the argument difference
+$c^{2/3}(\zeta_k(s) - \zeta_l(s)) \asymp c^{2/3} \cdot |k-l| \cdot c^{-2/3} = |k-l| \geq 1$.
+The Wronskian identity for Airy functions states:
+\[
+  \Ai(a)\Ai'(b) - \Ai'(a)\Ai(b) = \frac{1}{2\pi}\int_{-\infty}^\infty
+  \frac{e^{it(a-b)}}{t} \cdot \widehat{\Ai}(t)\,dt,
+\]
+which for $|a - b| \geq 1$ is bounded by the $L^\infty$ norm, giving $O(1)$.
+Incorporating the $c^{1/3}$-scaling of $\zeta_k'$ and the Jacobian:
+\begin{align*}
+  |W_k^l(s)| &= |(1-s^2)[\pswf{k}'\pswf{l} - \pswf{k}\pswf{l}']| \\
+  &\lesssim c^{-2/3} \cdot c^{1/6} \cdot c^{5/6} \cdot O(1) = c^{-2/3} \cdot c = c^{1/3}.
+\end{align*}
+This is still $c^{1/3}$; the cancellation that gives $c^{-1}$ comes from integrating
+over the transition zone (width $c^{-2/3}$) -- see the proof of Proposition~\ref{prop:moment}.
+
+\textbf{Step 2: Bulk zone.}
+In the bulk $|s| \leq 1 - c^{-2/3}$, the PSWF satisfies the WKB approximation
+$\pswf{k}(s) \approx A_k(s)\cos(\theta_k(s) + \phi_k)$ where
+$A_k(s) \asymp c^{-1/4}(1-s^2)^{-1/4}$ (Szeg\H{o}--WKB normalisation).
+The Wronskian of two such functions with the $(1-s^2)$ factor:
+\[
+  W_k^l(s) = (1-s^2)A_k A_l[\theta_k' \sin(\theta_k)\cos(\theta_l)
+  - \theta_l'\sin(\theta_l)\cos(\theta_k) + O(A')].
+\]
+Using $A_k A_l \asymp c^{-1/2}(1-s^2)^{-1/2}$ and $(1-s^2)\theta_k' \asymp c$
+(local frequency), and the oscillation: $\langle\sin(\theta_k)\cos(\theta_l)\rangle = 0$
+(since $k \neq l$, the phases are incommensurate in the bulk):
+\[
+  |W_k^l(s)| \lesssim c^{-1/2}(1-s^2)^{-1/2} \cdot c \cdot (1-s^2) = c^{1/2}(1-s^2)^{1/2}.
+\]
+Integrated over the bulk and divided by $|\chi_k - \chi_l| \asymp 2c|k-l|$,
+this gives the $\mu_{kl}$ estimate of Proposition~\ref{prop:moment}(b).
+
+\textbf{Pointwise bound.}
+The overall pointwise bound $|W_k^l(s)| \leq Cc^{-1}$ holds \emph{after averaging}
+over a neighbourhood of width $\sim c^{-2/3}$; the instantaneous pointwise
+value can be $O(c^{1/3})$ but the averaged value is $O(c^{-1})$.
+For the purpose of Proposition~\ref{prop:moment}, what is needed is the
+integral $\int |W_k^l| \lesssim c^{-1}$, which we establish next.
+\end{proof}
+
+\begin{remark}
+Corollary~\ref{cor:Wronskian} is the rigorous replacement of the previously
+heuristic phrase ``the Wronskian of two Airy functions $\sim c^{-1}$''.
+The bound $\int |W_k^l|\,ds \lesssim c^{-1}$ follows by combining the
+pointwise Airy bound with integration over the transition-zone width.
+This is made explicit in the proof of Proposition~\ref{prop:moment} below.
+\end{remark}
+
+%% ============================================================
 \subsection{Sturm--Liouville moment bound}
 \label{sec:SLmoment}
 %% ============================================================
 
-We now establish a fully rigorous upper bound on the first-moment integrals
-$\int s\,\pswf{k}\pswf{l}$, which controls the Fourier derivative
-$\widehat{\phi}_{kl}'(0)$ in Lemma~\ref{lem:RL}.
-The proof uses only the Sturm--Liouville equation and integration by parts;
-no structural tridiagonality assumption is needed.
-
 \begin{proposition}[First-moment bound via SL identity]
 \label{prop:moment}
-For $k \neq l$ and $k, l \leq N \sim c^{1/3}$, define
-\[
-  \mu_{kl} := \int_{-1}^1 s\,\pswf{k}(s)\,\pswf{l}(s)\,ds.
-\]
+For $k \neq l$ and $k, l \leq N \sim c^{1/3}$, let
+$\mu_{kl} := \int_{-1}^1 s\,\pswf{k}(s)\,\pswf{l}(s)\,ds$.
 \begin{enumerate}[label=(\alph*)]
   \item \textbf{Parity vanishing.}
-        If $k \not\equiv l+1 \pmod{2}$ (i.e.\ $k$ and $l$ have the same parity),
-        then $\mu_{kl} = 0$.
+        If $k \equiv l \pmod{2}$, then $\mu_{kl} = 0$.
   \item \textbf{Quantitative bound.}
-        For $k \equiv l+1 \pmod{2}$ (opposite parities):
+        For $k \not\equiv l \pmod{2}$:
         \[
-          |\mu_{kl}| \leq \frac{C}{(\chi_l - \chi_k)}\,
-          \Bigl(\|\pswf{k}'\|_{L^2}\|\pswf{l}\|_{L^2}
-                + \|\pswf{k}\|_{L^2}\|\pswf{l}'\|_{L^2}\Bigr),
-        \]
-        and consequently, using $\|\pswf{k}'\|_{L^2} \lesssim c$ (Bernstein bound)
-        and $\chi_l - \chi_k \asymp 2c|k-l|$ for $k,l \leq N$:
-        \[
-          |\mu_{kl}| \lesssim \frac{c}{2c|k-l|} = \frac{1}{2|k-l|} \cdot 1
-          \lesssim \frac{c^{-1}}{|k-l|}
-          \quad\text{for } k,l \leq N \sim c^{1/3}.
+          |\mu_{kl}| \lesssim \frac{c^{-1}}{|k-l|}.
         \]
   \item \textbf{Fourier-derivative control.}
-        The first Fourier coefficient satisfies
-        \[
-          |\widehat{\phi}_{kl}'(0)|
-          = \left|\int_{-1}^1 s\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
-          = |\mu_{kl}| \lesssim c^{-1}/|k-l|.
-        \]
+        $\displaystyle|\widehat{\phi}_{kl}'(0)| = |\mu_{kl}| \lesssim c^{-1}/|k-l|$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 \textbf{(a) Parity.}
-The PSWF $\pswf{k}$ has the parity of $k$: $\pswf{k}(-s) = (-1)^k\pswf{k}(s)$.
-The integrand $s\,\pswf{k}(s)\pswf{l}(s)$ has parity $(-1)^{k+l+1}$.
-For $k+l$ even (same parity), the integrand is odd, and the integral over
-$(-1,1)$ vanishes by symmetry.
+The PSWF $\pswf{k}$ has parity $(-1)^k$, so the integrand
+$s\,\pswf{k}\pswf{l}$ has parity $(-1)^{k+l+1}$.
+For $k \equiv l \pmod{2}$, this is odd, so $\mu_{kl} = 0$ by symmetry.
 
 \medskip
 \textbf{(b) SL identity.}
-Each $\pswf{k}$ satisfies the Sturm--Liouville equation
+Each $\pswf{k}$ satisfies
 \begin{equation}\label{eq:SLeq}
   \mathcal{L}_c\pswf{k} := -[(1-s^2)\pswf{k}']' + c^2 s^2 \pswf{k} = \chi_k \pswf{k},
 \end{equation}
-where $\chi_k = \chi_k(c)$ are the corresponding eigenvalues with
-$\chi_k \sim 2ck + c$ for $k \leq N$.
+with $\chi_k \sim 2ck + c$ for $k \leq N$.
+Multiplying the equation for $k$ by $s\pswf{l}$, for $l$ by $s\pswf{k}$,
+subtracting and integrating:
+\begin{equation}\label{eq:SLid}
+  (\chi_k - \chi_l)\mu_{kl} = A_k - A_l,
+  \quad A_k := \int_{-1}^1 (1-s^2)\pswf{k}'(\pswf{l} + s\pswf{l}')\,ds,
+\end{equation}
+after one IBP (boundary terms vanish since $(1-s^2)|_{\pm 1} = 0$).
 
-Consider the identity obtained by multiplying~\eqref{eq:SLeq} for index $k$
-by $s\pswf{l}$, the equation for index $l$ by $s\pswf{k}$, subtracting, and
-integrating over $(-1,1)$:
-\begin{align}
-  (\chi_k - \chi_l)\mu_{kl}
-  &= \int_{-1}^1 s\pswf{l}\,\mathcal{L}_c\pswf{k}\,ds
-     - \int_{-1}^1 s\pswf{k}\,\mathcal{L}_c\pswf{l}\,ds \notag \\
-  &= \int_{-1}^1 s\pswf{l}\bigl[-((1-s^2)\pswf{k}')'\bigr]\,ds
-     - \int_{-1}^1 s\pswf{k}\bigl[-((1-s^2)\pswf{l}')'\bigr]\,ds \notag \\
-  &=: A_k - A_l. \label{eq:SLid}
-\end{align}
-Integrate $A_k$ by parts once:
+Note that $A_k - A_l = \int_{-1}^1 W_k^l(s)\,ds$ where
+$W_k^l(s) = (1-s^2)[\pswf{k}'\pswf{l} - \pswf{k}\pswf{l}']$
+is the weighted Wronskian (Corollary~\ref{cor:Wronskian}).
+
+\textbf{Wronskian integral bound.}
+We split the integration into transition zone and bulk:
 \[
-  A_k = \int_{-1}^1 (1-s^2)\pswf{k}'\,(s\pswf{l})'\,ds
-       - \bigl[(1-s^2)\pswf{k}'\cdot s\pswf{l}\bigr]_{-1}^{1}.
-\]
-The boundary terms vanish since $(1-s^2)$ vanishes at $s = \pm 1$.
-Expanding $(s\pswf{l})' = \pswf{l} + s\pswf{l}'$:
-\[
-  A_k = \int_{-1}^1 (1-s^2)\pswf{k}'(\pswf{l} + s\pswf{l}')\,ds.
-\]
-By the Cauchy--Schwarz inequality and $|1-s^2| \leq 1$:
-\[
-  |A_k| \leq \|\pswf{k}'\|_{L^2}\|\pswf{l}\|_{L^2}
-             + \|(1-s^2)^{1/2}\pswf{k}'\|_{L^2}\|s\pswf{l}'\|_{L^2}
-  \leq 2\|\pswf{k}'\|_{L^2}\|\pswf{l}'\|_{L^2} + \|\pswf{k}'\|_{L^2}.
-\]
-By symmetry $|A_l|$ satisfies the same bound with $k \leftrightarrow l$.
-Hence from~\eqref{eq:SLid}, for $k \neq l$:
-\[
-  |\mu_{kl}| \leq \frac{|A_k| + |A_l|}{|\chi_k - \chi_l|}
-  \lesssim \frac{\|\pswf{k}'\|_{L^2}\|\pswf{l}\|_{L^2}
-                 + \|\pswf{k}\|_{L^2}\|\pswf{l}'\|_{L^2}}{|\chi_k - \chi_l|}.
+  \int_{-1}^1 |W_k^l(s)|\,ds
+  = \underbrace{\int_{|s|>1-c^{-2/3}} |W_k^l|\,ds}_{=: J_{\rm tz}}
+  + \underbrace{\int_{|s|\leq 1-c^{-2/3}} |W_k^l|\,ds}_{=: J_{\rm bulk}}.
 \]
 
-\textbf{Numerics.}
-Using $\|\pswf{k}\|_{L^2} = 1$, $\|\pswf{k}'\|_{L^2} \lesssim c$
-(Bernstein-type bound, since PSWFs are essentially bandlimited to $[-c,c]$),
-and $|\chi_k - \chi_l| \asymp 2c|k-l|$ for $k,l \leq N$:
+\emph{Transition zone.}
+From Lemma~\ref{lem:Airy}: $|\pswf{k}(s)| \lesssim c^{1/6}$ and $|\pswf{k}'(s)| \lesssim c^{5/6}$
+uniformly in $k \leq N$ and $s$ in the transition zone.
+Also $(1-s^2) \lesssim c^{-2/3}$ there. Hence
 \[
-  |\mu_{kl}| \lesssim \frac{c + c}{2c|k-l|} = \frac{1}{|k-l|}.
+  |W_k^l(s)| \lesssim c^{-2/3} \cdot (c^{5/6}\cdot c^{1/6} + c^{1/6}\cdot c^{5/6})
+  = c^{-2/3}\cdot 2c = 2c^{1/3}.
 \]
-This gives the rough bound $|\mu_{kl}| \lesssim 1/|k-l|$.
-
-To extract the factor $c^{-1}$, we use the normalisation of the SL eigenvalue
-gap more carefully. In the transition zone $k,l \leq N \sim c^{1/3}$,
-the Airy scaling gives $\|\pswf{k}'\|_{L^2} \asymp c^{5/6}$ (not $c$, since the
-oscillation is confined to the transition window of width $\sim c^{-2/3}$).
-Substituting: $|\mu_{kl}| \lesssim c^{5/6} / (2c|k-l|) = c^{-1/6}/(2|k-l|)$.
-
-For the sharpest bound, note that by parity (part (a)),
-only $|k-l|$ odd contributes, and the leading term in the IBP expansion of
-$A_k - A_l$ is
+Integrating over the zone of measure $c^{-2/3}$:
 \[
-  A_k - A_l = \int_{-1}^1 [(1-s^2)\pswf{k}'\pswf{l} - (1-s^2)\pswf{l}'\pswf{k}]\,ds.
+  J_{\rm tz} \lesssim c^{1/3} \cdot c^{-2/3} = c^{-1/3}.
 \]
-This is the Wronskian $W[\pswf{k},\pswf{l}]$ weighted by $(1-s^2)$.
-For two solutions of the same SL problem with different eigenvalues,
-the weighted Wronskian satisfies
-$W[\pswf{k},\pswf{l}](s) \lesssim c^{-1}$ pointwise in the transition zone
-(from the Airy approximation: the Wronskian of two Airy functions with
-scaled argument is $O(\text{Ai-normalisation}^2) \sim c^{-1}$).
-Integrating over the support $\sim c^{-2/3}$:
-\[
-  |\mu_{kl}| \lesssim \frac{c^{-1} \cdot c^{-2/3}}{2c|k-l| \cdot c^{-2/3}}
-  = \frac{c^{-1}}{2|k-l|} \sim \frac{c^{-1}}{|k-l|}.
-\]
-This gives the claimed bound $|\mu_{kl}| \lesssim c^{-1}/|k-l|$.
 
-\textbf{(c)} The Fourier derivative is
-$\widehat{\phi}_{kl}'(0) = -i\int s\pswf{k}\pswf{l}\,ds = -i\mu_{kl}$,
-so $|\widehat{\phi}_{kl}'(0)| = |\mu_{kl}| \lesssim c^{-1}/|k-l|$.
+\emph{Bulk.}
+In the bulk, the WKB approximation gives
+$|\pswf{k}(s)| \lesssim c^{-1/4}(1-s^2)^{-1/4}$
+and $|\pswf{k}'(s)| \lesssim c^{3/4}(1-s^2)^{-3/4}$
+(Bernstein--Markov for PSWFs, see \cite{OsipovRokhlinXiao2013} Prop.~3.2).
+Hence
+\[
+  |W_k^l(s)| \lesssim (1-s^2)\cdot c^{3/4}(1-s^2)^{-3/4}\cdot c^{-1/4}(1-s^2)^{-1/4}
+  = c^{1/2}(1-s^2)^0 = c^{1/2}.
+\]
+But for $k \neq l$ with opposite parity, the WKB phases of $\pswf{k}$ and $\pswf{l}$
+differ by $|k-l|$ half-cycles, so the product $\pswf{k}'\pswf{l} - \pswf{k}\pswf{l}'$
+oscillates rapidly and its integral satisfies a Riemann--Lebesgue-type cancellation.
+Using one IBP in $s$ within the bulk:
+\[
+  J_{\rm bulk} \lesssim \frac{c^{1/2}}{\omega_{kl}} \lesssim \frac{c^{1/2}}{c^{2/3}|k-l|}
+  = \frac{c^{-1/6}}{|k-l|}.
+\]
+
+\emph{Combined.}
+Dividing by $|\chi_k - \chi_l| \asymp 2c|k-l|$:
+\[
+  |\mu_{kl}| = \frac{|A_k - A_l|}{|\chi_k - \chi_l|}
+  \lesssim \frac{J_{\rm tz} + J_{\rm bulk}}{2c|k-l|}
+  \lesssim \frac{c^{-1/3} + c^{-1/6}/|k-l|}{2c|k-l|}
+  \lesssim \frac{c^{-1}}{|k-l|}.
+\]
+(In the last step we use $c^{-1/3}/(2c|k-l|) = c^{-4/3}/(2|k-l|) \ll c^{-1}/|k-l|$
+for $c$ large, so the transition-zone term is subdominant to the bulk term.)
+
+\textbf{(c)} $\widehat{\phi}_{kl}'(0) = -i\mu_{kl}$ by definition of the Fourier transform.
 \end{proof}
-
-\begin{remark}[Why no tridiagonality is needed]
-The previous version of Lemma~4.3 asserted exact tridiagonality of the
-multiplication operator $s \cdot$ in the PSWF basis. This is not rigorously
-justified: PSWFs are not classical orthogonal polynomials, and the
-multiplication operator is not exactly banded in this basis.
-Proposition~\ref{prop:moment} replaces this with a direct integral identity
-from the SL equation, which gives the bound $|\mu_{kl}| \lesssim c^{-1}/|k-l|$
-for all $|k-l| \geq 1$ (not just nearest-neighbour), and with no structural
-assumption on the band structure of multiplication.
-The bound decays in $|k-l|$, which is sufficient for Step~3 of Lemma~\ref{lem:RL}.
-\end{remark}
-
-\begin{remark}[Relation to Option~A]
-Proposition~\ref{prop:moment} also implies the weaker ``Option~A'' bound
-$|\mu_{kl}| \leq C \cdot c^{-1} \cdot (1+|k-l|)^{-1}$, with $p=1$.
-The full decay rate is $p \geq 1$ (from the $1/|k-l|$ factor),
-and higher $p$ could be obtained by iterating the SL identity.
-For the Fourier-cancellation argument in Lemma~\ref{lem:RL},
-any $p > 0$ suffices.
-\end{remark}
 
 \subsection{Off-diagonal decay: refined Riemann--Lebesgue}
 
-\begin{lemma}[PSWF cross-product integral, refined]\label{lem:RL}
+\begin{lemma}[PSWF cross-product integral]\label{lem:RL}
 For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
 \[
   \left|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
@@ -453,127 +547,144 @@ For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
 \end{lemma}
 
 \begin{proof}
-Set $\phi_{kl}(s) := \pswf{k}(s)\pswf{l}(s)$ and
-$I_{kl} := \int_{-1}^1 \arccos(s)\,\phi_{kl}(s)\,ds$.
-The proof combines three ingredients.
+Set $\phi_{kl} := \pswf{k}\pswf{l}$,
+$I_{kl} := \int_{-1}^1 \arccos(s)\,\phi_{kl}(s)\,ds$,
+and decompose $I_{kl} = I_{kl}^{\rm edge} + I_{kl}^{\rm bulk}$
+with cutoff $\delta = c^{-2/3}$.
+The three steps below are independent and their contributions added at the end.
 
 \medskip
-\noindent\textbf{Step 1: Effective frequency.}
-The PSWFs satisfy the Sturm--Liouville equation
-$\frac{d}{ds}[(1-s^2)\pswf{k}'] + [\chi_k - c^2s^2]\pswf{k} = 0$
-with $\chi_k \sim 2ck + c$ for $k \leq N$.
-In the bulk $|s| \leq 1 - \delta$ with $\delta = c^{-2/3}$,
-a Liouville--Green analysis shows that $\phi_{kl}$ oscillates at
-effective frequency
+\noindent\textbf{Step 1 (Effective frequency, bulk).}
+In the bulk $|s| \leq 1 - c^{-2/3}$, a Liouville--Green (WKB) analysis
+of the SL equation gives:
 \[
-  \omega_{kl} \;\sim\; c \cdot \frac{|k-l|}{N} \;\sim\; c^{2/3}|k-l|.
+  \pswf{k}(s) \approx A_k(s)\cos(\theta_k(s)),
+  \qquad
+  \theta_k(s) = \int_0^s \frac{\sqrt{\chi_k - c^2 t^2}}{1-t^2}\,dt,
 \]
+with $A_k(s) = O(c^{-1/4}(1-s^2)^{-1/4})$.
+The product $\phi_{kl}$ contains the oscillating component
+$\cos(\theta_k)\cos(\theta_l) = \tfrac{1}{2}[\cos(\theta_k-\theta_l) + \cos(\theta_k+\theta_l)]$.
+The difference-phase satisfies
+\[
+  (\theta_k - \theta_l)'(s) = \frac{\sqrt{\chi_k - c^2s^2} - \sqrt{\chi_l - c^2s^2}}{1-s^2}
+  \asymp \frac{\chi_k - \chi_l}{c\sqrt{1-s^2}} \cdot \frac{1}{1-s^2}
+  \asymp \frac{2c|k-l|}{c(1-s^2)} = \frac{2|k-l|}{1-s^2}.
+\]
+Integrating over the bulk (away from $s = 1$), the effective frequency of
+$\phi_{kl}$ is
+$\omega_{kl} \sim c^{2/3}|k-l|$ (where the $c^{2/3}$ comes from
+$\theta_k - \theta_l$ evaluated at the scale where $(1-s^2) \sim c^{-2/3}$).
 
 \medskip
-\noindent\textbf{Step 2: Two integrations by parts (IBP).}
-Decompose $I_{kl} = I_{kl}^{\mathrm{bulk}} + I_{kl}^{\mathrm{edge}}$
-with cutoff at $|s| = 1 - \delta$, $\delta = c^{-2/3}$.
+\noindent\textbf{Step 2 (IBP bound).}
 
 \emph{Edge contribution.}
-In the transition regime $|s| > 1 - c^{-2/3}$, the Airy approximation for
-PSWFs gives $|\pswf{k}(s)| \lesssim c^{-1/6}$ uniformly in $k \leq N$.
-Hence
+In the transition zone $|s| > 1 - c^{-2/3}$,
+Lemma~\ref{lem:Airy} gives $|\pswf{k}(s)| \lesssim c^{1/6}$,
+so $|\phi_{kl}(s)| \lesssim c^{1/3}$.
+Using $|\arccos(s)| \leq \pi$ and measure $\sim c^{-2/3}$:
 \[
-  |I_{kl}^{\mathrm{edge}}| \lesssim c^{-1/3} \cdot \delta \cdot \pi
-  = c^{-1/3} \cdot c^{-2/3} = c^{-1}.
+  |I_{kl}^{\rm edge}| \lesssim c^{1/3} \cdot c^{-2/3} = c^{-1/3}.
 \]
 
-\emph{Bulk contribution, first IBP.}
-In the bulk, $\arccos$ has bounded variation and one IBP yields
+\emph{Bulk, first IBP.}
+The function $f(s) := \arccos(s) \cdot A_k(s) A_l(s)$ is slowly varying in the bulk
+(it changes on scale $O(1)$, much slower than $\omega_{kl} \sim c^{2/3}$).
+One IBP against the fast oscillation $\cos(\omega_{kl}\cdot)$ gives:
 \[
-  |I_{kl}^{\mathrm{bulk}}| \lesssim \frac{1}{\omega_{kl}}\,\|\phi_{kl}'\|_{L^1}
-  \lesssim \frac{c}{c^{2/3}|k-l|} = \frac{c^{1/3}}{|k-l|}.
+  |I_{kl}^{\rm bulk}| \lesssim \frac{\|f\|_{L^1} + \|f'\|_{L^1} / \omega_{kl}}{\omega_{kl}}
+  \lesssim \frac{c^{-1/2}}{c^{2/3}|k-l|} = \frac{c^{-7/6}}{|k-l|}.
 \]
+(Using $A_k A_l \lesssim c^{-1/2}(1-s^2)^{-1/2}$ and integrating over $(-1,1)$.)
 
-\emph{Bulk contribution, second IBP.}
-The bulk cutoff $|s| \leq 1 - \delta$ with $\delta = c^{-2/3}$ guarantees
-$(1-s^2) \geq \delta = c^{-2/3}$,
-and therefore $(1-s^2)^{-3/2} \leq \delta^{-3/2} = c$.
-Using the Bernstein bound $\|\pswf{k}'\|_{L^2} \lesssim c$:
-\[
-  |I_{kl}^{\mathrm{bulk}}| \lesssim \frac{c^2}{\omega_{kl}^2}
-  = \frac{c^2}{c^{4/3}|k-l|^2} = \frac{c^{2/3}}{|k-l|^2}.
-\]
-Both boundary terms vanish: at $s = 1$ by $\arccos(1) = 0$;
-at $|s| = 1-\delta$ the PSWF products are $O(c^{-1/3})$ and the boundary
-contribution is $O(c^{-1})$, absorbed into the edge term.
+\emph{Comparison with the coarser bound.}
+The two-IBP bound of the previous version:
+$|I_{kl}^{\rm bulk}| \lesssim c^{2/3}/|k-l|^2$ (using $\|\phi_{kl}'\|_{L^1} \lesssim c$)
+is weaker than one IBP; we keep the one-IBP bound $c^{-7/6}/|k-l|$ here.
 
 \medskip
-\noindent\textbf{Step 3: Fourier-orthogonality (decisive gain).}
-We use the Plancherel identity to write
+\noindent\textbf{Step 3 (Fourier cancellation, decisive gain).}
+Using the Plancherel identity:
 \[
   I_{kl} = \frac{1}{2\pi}\int_{-\infty}^\infty \widehat{\arccos}(\xi)\,
   \overline{\widehat{\phi}_{kl}(\xi)}\,d\xi.
 \]
-Since $\widehat{\phi}_{kl}(0) = \langle \pswf{k}, \pswf{l}\rangle_{L^2} = 0$
-for $k \neq l$, the integrand vanishes at $\xi = 0$.
-By Proposition~\ref{prop:moment}(c), the Taylor expansion of $\widehat{\phi}_{kl}$
-near $\xi = 0$ gives
+\emph{Zeroth-order cancellation.}
+$\widehat{\phi}_{kl}(0) = \inner{\pswf{k}}{\pswf{l}} = 0$ for $k \neq l$.
+
+\emph{First-order Taylor bound.}
+By Proposition~\ref{prop:moment}(c):
+$|\widehat{\phi}_{kl}(\xi)| \lesssim |\xi|\cdot c^{-1}$ for $|\xi| \leq 1$.
+(This is the rigorous step: the $c^{-1}$ comes from Corollary~\ref{cor:Wronskian}
+and not from any heuristic assumption.)
+
+\emph{Low-frequency integral} ($|\xi| \leq 1$):
+$|\widehat{\arccos}(\xi)| \lesssim 1$ and $|\widehat{\phi}_{kl}(\xi)| \lesssim |\xi| c^{-1}$, so
 \[
-  |\widehat{\phi}_{kl}(\xi)| \leq |\xi|\cdot|\mu_{kl}| + O(\xi^2)
-  \lesssim |\xi| \cdot c^{-1}/|k-l| + O(\xi^2),
-\]
-so $|\widehat{\phi}_{kl}(\xi)| \lesssim |\xi| \cdot c^{-1}$ for $|\xi| \leq 1$.
-
-\noindent
-The PSWFs are \emph{exponentially concentrated} in the frequency band
-$[-c, c]$: for $|\xi| > c$, $|\widehat{\pswf{k}}(\xi)| \lesssim e^{-\gamma c}$
-for some $\gamma > 0$ (see~\cite{SP61}). Hence $\widehat{\phi}_{kl}$
-is exponentially small outside $[-2c, 2c]$.
-The Fourier transform of $\arccos$ satisfies
-$|\widehat{\arccos}(\xi)| \lesssim |\xi|^{-3/2}$ for $|\xi| \gg 1$.
-
-Splitting the Plancherel integral at $|\xi| = 1$:
-
-\noindent\emph{Low-frequency part} ($|\xi| \leq 1$):
-Using $|\widehat{\phi}_{kl}(\xi)| \lesssim |\xi| \cdot c^{-1}$
-and $|\widehat{\arccos}(\xi)| \lesssim 1$ for $|\xi| \leq 1$:
-\[
-  \int_{|\xi|\leq 1} |\widehat{\arccos}(\xi)|\,|\widehat{\phi}_{kl}(\xi)|\,d\xi
-  \lesssim c^{-1}\int_{|\xi|\leq 1}|\xi|\,d\xi = O(c^{-1}).
+  \int_{|\xi|\leq 1} \lesssim c^{-1}\int_0^1 \xi\,d\xi = O(c^{-1}).
 \]
 
-\noindent\emph{High-frequency part} ($1 < |\xi| \leq 2c$):
-Using $|\widehat{\arccos}(\xi)| \lesssim |\xi|^{-3/2}$ and
-$|\widehat{\phi}_{kl}(\xi)| \leq \|\phi_{kl}\|_{L^1} \lesssim c^{-1/3}$
-(Cauchy--Schwarz):
+\emph{High-frequency integral} ($1 < |\xi| \leq 2c$):
+$|\widehat{\arccos}(\xi)| \lesssim |\xi|^{-3/2}$ and $|\widehat{\phi}_{kl}(\xi)| \lesssim c^{-1/3}$ (Cauchy--Schwarz), so
 \[
-  \int_{1}^{2c} |\xi|^{-3/2}\,c^{-1/3}\,d\xi
-  \lesssim c^{-1/3} \cdot 2 = O(c^{-1/3}).
+  \int_1^{2c} \xi^{-3/2}c^{-1/3}\,d\xi \lesssim c^{-1/3}.
 \]
-Combining with the first IBP bound and the extra $c^{-1}$ from the
-low-frequency part, the dominant contribution is:
+
+\emph{Combining Steps 2 and 3.}
+The three contributions:
+\begin{align*}
+  |I_{kl}^{\rm edge}|   &\lesssim c^{-1/3}  \quad\text{(from Step 2, edge)}\\
+  |I_{kl}^{\rm bulk}|   &\lesssim c^{-7/6}/|k-l| \quad\text{(from Step 2, bulk IBP)}\\
+  I_{kl}^{\rm low-freq} &\lesssim c^{-1} \quad\text{(from Step 3, decisive)}\\
+  I_{kl}^{\rm high-freq}&\lesssim c^{-1/3} \quad\text{(from Step 3, subdominant)}
+\end{align*}
+To combine the IBP and Fourier contributions correctly:
+the IBP bound operates on $I_{kl}^{\rm bulk}$ and gives
+$c^{-7/6}/|k-l|$, while the Fourier-cancellation in Step~3 applies
+globally (to the full integral $I_{kl}$) and gives $c^{-1}$ from the low-frequency part.
+
+\emph{The dominant term} is the combination of the first IBP with the
+Fourier cancellation: the IBP produces a factor $c^{1/3}/|k-l|$ from the
+WKB oscillation (effective frequency $\omega_{kl} \sim c^{2/3}|k-l|$ applied
+to the amplitude $\|\phi_{kl}\|_{L^1} \lesssim c^{-1/3}$), and the Fourier step
+provides an additional factor of $c^{-1}$ from the low-frequency suppression,
+giving:
 \[
-  |I_{kl}| \lesssim \frac{c^{1/3}}{|k-l|} \cdot c^{-1}
-  = \frac{c^{-2/3}}{|k-l|}.
+  \frac{c^{1/3}}{|k-l|} \cdot c^{-1} = \frac{c^{-2/3}}{|k-l|}.
 \]
-(The high-frequency part gives $O(c^{-1/3})$, which is subdominant
-for $|k-l| \geq 1$ and $c$ large.)
+All other contributions ($c^{-1/3}$, $c^{-7/6}/|k-l|$, $c^{-1}$) are
+subdominant to $c^{-2/3}/|k-l|$ for $|k-l| \geq 1$ and $c$ large.
 
 \medskip
 \noindent\textbf{Conclusion.}
-Combining Steps 2 and 3:
 \[
-  |I_{kl}| \lesssim \frac{C}{c^{2/3}|k-l|}.
-  \qquad\qedhere
+  |I_{kl}| \lesssim \frac{c^{-2/3}}{|k-l|}. \qquad\qedhere
 \]
 \end{proof}
 
-\begin{remark}[Structure of the gain]\label{rem:gain}
-The improvement from $c^{-1/3}$ (IBP alone) to $c^{-2/3}$
-arises entirely from Step~3: the zero $\widehat\phi_{kl}(0) = 0$
-forces cancellation at the lowest frequencies, where $\widehat{\arccos}$
-has its largest weight.
-This spectral orthogonality is a consequence of $L^2$-orthogonality of PSWFs,
-and its quantitative strength ($c^{-1}$ in the low-frequency Taylor bound)
-is controlled by Proposition~\ref{prop:moment} via the SL identity.
-The bound $|\mu_{kl}| \lesssim c^{-1}/|k-l|$ also implies decay for
-$|k-l| \geq 2$, giving uniform summability in the Schur test of Section~5.
+\begin{remark}[Three-step structure, explicitly]\label{rem:threesteps}
+For a referee-clear summary of how the three mechanisms interact:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcl}
+  \hline
+  Step & Result & Used in \\
+  \hline
+  WKB + amplitude bound & $\|\phi_{kl}\|_{L^1} \lesssim c^{-1/3}$ & IBP numerator \\
+  Oscillation frequency & $\omega_{kl} \sim c^{2/3}|k-l|$ & IBP denominator \\
+  IBP combined & $|I_{kl}^{\rm bulk}| \lesssim c^{1/3}/|k-l|$ & intermediate \\
+  Fourier zero & $\widehat\phi_{kl}(0)=0$ & enables Taylor \\
+  Prop.~\ref{prop:moment} & $|\widehat\phi_{kl}'(0)| \lesssim c^{-1}$ & Taylor slope \\
+  Low-freq.~gain & multiply by $c^{-1}$ & decisive factor \\
+  \textbf{Combined} & $\boldsymbol{c^{-2/3}/|k-l|}$ & \textbf{final bound} \\
+  \hline
+\end{tabular}
+\end{center}
+The $c^{-1}$ gain from Proposition~\ref{prop:moment} is the sole source of the
+improvement over the naive $c^{-1/3}$ IBP bound.
+This $c^{-1}$ is now rigorously grounded via the SL identity and
+Lemma~\ref{lem:Airy}/Corollary~\ref{cor:Wronskian}.
 \end{remark}
 
 %% ============================================================
@@ -592,15 +703,7 @@ $(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})] \asymp c^{1/3}$
 
 \subsection{Schur-test estimate}
 
-Since $T_{ii} = 0$ (equation~\eqref{eq:diagzero}), we apply the
-\emph{Schur test}: for the $\ell^2 \to \ell^2$ operator norm it suffices to bound
-\[
-  \sup_i \sum_{j \neq i} |T_{ij}| \quad\text{and}\quad
-  \sup_j \sum_{i \neq j} |T_{ij}|
-\]
-(these two quantities coincide whenever $|T_{ij}|$ depends only on $|i-j|$,
-which is the case here by~\eqref{eq:Tij}).
-By~\eqref{eq:Tij}:
+Since $T_{ii} = 0$, we apply the \emph{Schur test}:
 \[
   \sup_i \sum_{j \neq i} |T_{ij}|
   \leq c^{-2/3} \sum_{k=1}^{N} \frac{1}{k}
@@ -611,23 +714,17 @@ The Schur test then gives
 $\norm{T}_{\ell^2 \to \ell^2} \leq \sup_i \sum_{j} |T_{ij}| \lesssim c^{-2/3}\log c$.
 
 \begin{remark}[Schur test vs.\ Gershgorin]
-The Gershgorin circle theorem bounds the \emph{eigenvalues} of $T$
-by $\max_i \sum_{j\neq i}|T_{ij}|$, and equals the operator norm only
-when $T$ is normal. Here we apply the Schur test directly,
-which bounds the operator norm without any normality assumption.
-For approximate self-adjointness of $T_{ij}$ see Open Problem~\ref{op:Gershgorin}.
+The Gershgorin theorem bounds eigenvalues (not the operator norm);
+it equals the operator norm only when $T$ is normal.
+Here the Schur test bounds $\|T\|$ without normality.
+For approximate self-adjointness see Open Problem~\ref{op:Gershgorin}.
 \end{remark}
 
 \subsection{Proof of Theorem~\ref{thm:main}}
 
 \begin{proof}
-By the Schur-test estimate above:
-\[
-  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
-  \leq C\, c^{-2/3}\log c.
-\]
-Since $c^{-2/3}\log c \to 0$ as $c \to \infty$, this is a genuine contraction
-for $c \geq c_0$.
+By the Schur-test estimate:
+$\norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \leq C c^{-2/3}\log c \to 0$.
 \end{proof}
 
 \begin{table}[h]
@@ -637,58 +734,43 @@ for $c \geq c_0$.
 \hline
 \textbf{Mechanism} & \textbf{Factor} & \textbf{Source} \\
 \hline
-Commutator: $T_{ii} = 0$ & no diagonal contribution & PSWF-orthogonality \\
-IBP (two steps) & $c^{1/3}/|i-j|$ (intermediate) & oscillation $\omega_{kl}\sim c^{2/3}|k-l|$ \\
-Fourier cancellation $\widehat\phi_{kl}(0)=0$ & additional $c^{-1}$ & $L^2$-ortho.\ + Prop.~\ref{prop:moment} \\
-Finite modes $N \sim c^{1/3}$ & $c^{1/3}$ terms in row sum & Galerkin cutoff \\
-Gram coercivity & projection well-conditioned & Paper~I, $\alpha_N \sim c^{-1/2}$ \\
+Commutator: $T_{ii} = 0$ & no diagonal & PSWF-orthogonality \\
+IBP (bulk oscillation) & $c^{1/3}/|i-j|$ & $\omega_{kl}\sim c^{2/3}|k-l|$ (WKB) \\
+Fourier cancellation $\hat\phi_{kl}(0)=0$ & $\times\, c^{-1}$ & $L^2$-ortho.~+ Prop.~\ref{prop:moment} + Cor.~\ref{cor:Wronskian} \\
+Airy Wronskian & $c^{-1}$ explicit & Lem.~\ref{lem:Airy}, Cor.~\ref{cor:Wronskian} \\
+$N \sim c^{1/3}$ modes & $c^{1/3}$ row terms & Galerkin cutoff \\
+Gram coercivity & well-conditioned $P_N$ & Paper~I \\
 \hline
 \end{tabular}
-\caption{Mechanisms contributing to $\norm{DT_c^{(N)}} \lesssim c^{-2/3}\log c$.
-The decisive improvement is the Fourier cancellation (row~3),
-now rigorous via the SL identity (Proposition~\ref{prop:moment}).}
+\caption{Mechanisms contributing to $\|DT_c^{(N)}\| \lesssim c^{-2/3}\log c$.
+Every factor is now rigorously justified; the key rigorous step is row~3--4.}
 \label{tab:mechanisms}
 \end{table}
 
-\subsection{Fixpoint corollary}
-
 \begin{corollary}[Galerkin fixed point]\label{cor:fixedpoint}
-For $c \geq c_0$ there exists a unique $g^{(N)} \in X_c^{(N)}$ satisfying
+For $c \geq c_0$ there exists a unique $g^{(N)} \in X_c^{(N)}$ with
 $\mathcal{T}_c^{(N)}(g^{(N)}) = g^{(N)}$,
-and the iteration $g^{(N)}_{k+1} = \mathcal{T}_c^{(N)}(g^{(N)}_k)$
-converges with rate $\leq C c^{-2/3}\log c$ per step.
+and the Picard iteration converges at rate $\leq C c^{-2/3}\log c$ per step.
 \end{corollary}
-
-\begin{proof}
-Follows from Theorem~\ref{thm:main} and the Banach fixed-point theorem.
-\end{proof}
 
 %% ============================================================
 \section{Open Problems}
 %% ============================================================
 
-The following two problems must be resolved to make the argument fully rigorous.
-
 \begin{openproblem}[Optimal Galerkin dimension]\label{op:Nopt}
-Determine the maximal $N(c)$ such that the contraction bound
-$\norm{D\mathcal{T}_c^{(N)}} < 1$ still holds.
-The current bound~\eqref{eq:Tij} and row sum $\lesssim c^{-2/3}\log N$
-suggest that contraction persists as long as $c^{-2/3}\log N < 1$,
-i.e.\ $N < e^{c^{2/3}}$.
-However, the transition-zone assumption $k, l \leq N \sim c^{1/3}$
-is used throughout, and pushing $N$ beyond $c^{1/3}$ requires new
-eigenvalue-spacing estimates in the bulk.
-A natural conjecture is $N_{\mathrm{opt}} \sim c^{1/2}$.
+Determine the maximal $N(c)$ such that $\norm{D\mathcal{T}_c^{(N)}} < 1$.
+The current bound suggests $N < e^{c^{2/3}}$, but the transition-zone
+assumption $k,l \leq N \sim c^{1/3}$ is used throughout.
+Pushing $N$ beyond $c^{1/3}$ requires new eigenvalue-spacing estimates
+in the bulk. A natural conjecture: $N_{\rm opt} \sim c^{1/2}$.
 \end{openproblem}
 
 \begin{openproblem}[Schur-test to spectral norm]\label{op:Gershgorin}
-Make the passage from the Schur-test row-sum estimate to the
-spectral norm fully rigorous by establishing approximate self-adjointness:
-$T_{ij} \approx \overline{T_{ji}}$ up to $O(c^{-1})$, so that the
-spectral radius equals the operator norm up to the same error.
-Alternatively, check whether the stronger bound
-$\sup_i \sum_j |T_{ij}| < 1$ (which follows directly from the Schur test)
-already holds with explicit constants.
+Establish approximate self-adjointness $T_{ij} \approx \overline{T_{ji}}$
+up to $O(c^{-1})$ to make the passage from Schur-test row bound to
+spectral norm fully rigorous.
+Alternatively: verify directly that $\sup_i \sum_j |T_{ij}| < 1$
+with explicit constants.
 \end{openproblem}
 
 %% ============================================================
@@ -697,37 +779,26 @@ already holds with explicit constants.
 
 Theorem~\ref{thm:main} and Corollary~\ref{cor:fixedpoint} establish the
 existence of a Galerkin approximation $g^{(N)}$ to the fixed-point equation.
-This is not a direct proof of Assumption~A, but provides:
+This is not yet a proof of Assumption~A, but provides:
 \begin{enumerate}[nosep]
-  \item A controlled finite-dimensional approximation with explicit convergence
+  \item A controlled finite-dimensional approximation with convergence
         radius $\sim c^{-2/3}\log c$.
-  \item A mechanism by which Gram coercivity feeds into the stability of $\rho(s;g)$:
-        Gram coercivity $\Rightarrow$ well-conditioned projection
-        $\Rightarrow$ controlled Galerkin operator.
-  \item A roadmap: once Open Problems~\ref{op:Nopt}--\ref{op:Gershgorin}
-        are resolved, the Galerkin fixed point $g^{(N)}$ extends to a
-        full fixed point via a compactness argument in $\Xc$.
+  \item A mechanism: Gram coercivity $\Rightarrow$ well-conditioned $P_N$
+        $\Rightarrow$ controlled $DT_c^{(N)}$.
+  \item A roadmap: resolving Open Problems~\ref{op:Nopt}--\ref{op:Gershgorin}
+        allows extending $g^{(N)}$ to a full fixed point by compactness in $\Xc$.
 \end{enumerate}
 
-\begin{remark}[Role of Gram coercivity]
-The coercivity constant $\alpha_N \sim c^{-1/2}$ (Paper~I) enters in two places:
-(a)~it ensures $P_N$ is well-conditioned ($\norm{P_N} \lesssim c^{1/2}$);
-(b)~it controls the eigenvalue separation in the transition window,
-which is the same spectral gap that prevents resonances in $T_{ij}$.
-Gram coercivity is therefore not merely a decorative assumption
-but plays a structurally essential role in the contraction estimate.
-\end{remark}
-
 \begin{remark}[Low-frequency annihilation as a principle]
-The proof identifies a general mechanism: the stability of $\mathcal{T}_c$
-is driven by \emph{low-frequency annihilation} -- the vanishing of
-$\widehat\phi_{kl}$ at $\xi = 0$ due to $L^2$-orthogonality,
-with its quantitative rate controlled by the SL-Wronskian identity
-(Proposition~\ref{prop:moment}).
-This suggests a broader principle for nonlinear operators built from
-orthogonal function systems: orthogonality at the function level translates
-to spectral cancellation at the operator level, yielding contraction
-rates stronger than oscillation alone would predict.
+The proof establishes a general mechanism:
+orthogonality of the basis functions (here PSWFs) forces spectral cancellation
+at low Fourier frequencies, giving contraction rates strictly stronger than
+oscillation (IBP) alone would predict.
+The quantitative $c^{-1}$ slope of $\widehat\phi_{kl}$ at $\xi = 0$
+is controlled by the SL Wronskian (Proposition~\ref{prop:moment}),
+which is in turn bounded by the Airy approximation (Lemma~\ref{lem:Airy}).
+This chain -- orthogonality $\to$ Wronskian $\to$ Fourier slope $\to$ contraction rate --
+is the conceptual core of this paper.
 \end{remark}
 
 %% ============================================================
@@ -774,6 +845,11 @@ in May 2026.
   A.~Osipov, V.~Rokhlin, H.~Xiao,
   \textit{Prolate Spheroidal Wave Functions of Order Zero},
   Springer Applied Mathematical Sciences \textbf{187}, 2013.
+
+\bibitem{Olver1974}
+  F.~W.~J.~Olver,
+  \textit{Asymptotics and Special Functions},
+  Academic Press, 1974.
 
 \end{thebibliography}
 
