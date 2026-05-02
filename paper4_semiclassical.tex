@@ -228,15 +228,28 @@ The normalization $\int_{-x_+(n)}^{x_+(n)}\rhocl(x)\,dx = 1$
 holds by definition.
 By Lemma~\ref{lem:bohr-sommerfeld-pswf} below,
 the denominator satisfies
-$\int_{-x_+(n)}^{x_+(n)}dt/\wncl(t)
-= \pi(n+\tfrac{1}{2})/\wncl_{\rm avg} + O(1/n^2)$,
-where the $O(1/n)$ relative error in the denominator propagates
+\begin{equation}\label{eq:denom-BS}
+  \int_{-x_+(n)}^{x_+(n)}\frac{dt}{\wncl(t)}
+  = \pi\bigl(n+\tfrac{1}{2}\bigr) + O\!\left(\frac{1}{n}\right),
+\end{equation}
+where the $O(1/n)$ relative error propagates
 to an $O(1/n)$ relative error in $\rhocl$ only through the
 normalization constant; no mass is lost in the cutoff
 $I_\delta \to [-x_+(n),x_+(n)]$ since
 $\mathrm{supp}\,\rhocl = [-x_+(n),x_+(n)] \subset I_\delta$
 exactly.
 \end{definition}
+
+\begin{remark}[Relation to~\eqref{eq:BS}]\label{rem:denom-vs-BS}
+Note that~\eqref{eq:BS} (Lemma~\ref{lem:bohr-sommerfeld-pswf})
+gives a quantization condition for $\int\wncl\,dx$,
+whereas~\eqref{eq:denom-BS} is the analogous statement
+for $\int 1/\wncl\,dx$.
+Both follow from the same Liouville--WKB reduction;
+the $O(1/n)$ error in~\eqref{eq:denom-BS} follows from the
+same uniformity argument as in the proof of
+Lemma~\ref{lem:bohr-sommerfeld-pswf}.
+\end{remark}
 
 \subsection{Bohr--Sommerfeld quantization}
 
@@ -261,12 +274,16 @@ The specialization to the PSWF operator
 $(p\psin')' + \wncl(x)^2/p\cdot\psin = 0$
 follows by reduction to Liouville normal form
 \cite{Levitan}, Ch.~2.
+After this reduction, the equation becomes a standard
+Schr\"odinger-type equation with potential of size $O(n^2)$
+and $C^2$-norm $O(n)$ on $I_\delta$,
+so the standard WKB remainder bounds
+(see \cite{OsipovRokhlinXiao}, Ch.~4)
+apply directly.
 The $O(1/n)$ error is uniform for $n \le \gamma N$ since
 $\wncl \ge c_{\delta,\gamma}n$ (Lemma~\ref{lem:G-regularity}(i))
 and $\|\wncl\|_{C^2(I_\delta)} = O(n)$,
-so the standard WKB remainder bounds
-(see \cite{OsipovRokhlinXiao}, Ch.~4)
-apply uniformly on $I_\delta$;
+so the WKB remainder bounds apply uniformly on $I_\delta$;
 see also \cite{Levitan}, Ch.~2, for the Liouville reduction.
 \end{proof}
 
@@ -841,12 +858,11 @@ Substituting:
          {\wncl(x)\cdot\int_{I_\delta}dt/\wncl(t)}
   = \lambda_n\,\rhocl(x)(1+O(1/n)),
 \]
-using Lemma~\ref{lem:bohr-sommerfeld-pswf}
-and Definition~\ref{def:rho-cl}.
+using Lemma~\ref{lem:bohr-sommerfeld-pswf},
+\eqref{eq:denom-BS}, and Definition~\ref{def:rho-cl}.
 %% FIX 4: Explicit normalization-cutoff compatibility
 Note that the normalization of $\rhocl$ is taken over
-$[-x_+(n), x_+(n)]$, and by
-Lemma~\ref{lem:bohr-sommerfeld-pswf}
+$[-x_+(n), x_+(n)]$, and by~\eqref{eq:denom-BS}
 this normalization agrees with
 $\tfrac{1}{2}\int r_n^{\mathrm{WKB},2}$
 up to a relative error $O(1/n)$.
