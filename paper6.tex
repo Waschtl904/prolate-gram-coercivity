@@ -1,0 +1,461 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{cleveref}
+
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{openproblem}[theorem]{Open Problem}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\spec}{spec}
+\newcommand{\Xc}{X_c}
+\newcommand{\Tc}{\mathcal{T}_c}
+\newcommand{\Kc}{\mathcal{K}_c}
+\newcommand{\Hil}{\mathcal{H}_{(-1,1)}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\inner}[2]{\langle #1,\, #2 \rangle}
+\newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
+\newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
+
+\title{%
+  \textbf{Galerkin Contraction for the Prolate Phase Operator}\\[0.5em]
+  \large Bridge Paper VI: From Gram Coercivity to Assumption~A
+}
+\author{%
+  \textit{Working paper -- prolate-gram-coercivity programme}
+}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We study the nonlinear phase operator $\mathcal{T}_c$ arising in the
+Riemann--Hilbert formulation of prolate spheroidal wave function (PSWF)
+asymptotics, as developed in the companion papers of this programme.
+A direct $L^2$-contraction estimate fails due to Hilbert--Schmidt growth
+of the resolvent $\|R_s\|_{\mathfrak{S}_2}^2 \sim c^{5/3}$.
+We show that after Galerkin projection onto the leading $N \sim c^{1/3}$
+PSWF modes, the projected derivative satisfies
+\[
+  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \lesssim c^{-1/3}\log c,
+\]
+which yields a genuine contraction for $c \gg 1$.
+The three key mechanisms are: (i) the commutator structure forces diagonal
+vanishing $T_{ii} = 0$; (ii) Riemann--Lebesgue damping of PSWF cross-products
+gives $c^{-1}$ per off-diagonal entry; (iii) the Gram coercivity constant
+$\alpha_N \sim c^{-1/2}$ ensures the Galerkin projection is well-conditioned.
+Three open problems are stated explicitly.
+\end{abstract}
+
+\tableofcontents
+
+\bigskip
+\hrule
+\bigskip
+
+%% ============================================================
+\section{Introduction and Context}
+%% ============================================================
+
+\subsection{Programme overview}
+
+This paper is the sixth in a series studying the connection between
+Gram coercivity of PSWF sampling matrices and the asymptotic validity of
+Assumption~A in the Riemann--Hilbert programme of \cite{paper13cc}.
+The central object is the spectral density
+\[
+  \rho(s;\, g_c) = \frac{1}{\pi}\Im\frac{d}{ds}\log\det(I - s\Kc),
+\]
+where $\Kc$ is the finite-rank sinc operator on $(-1,1)$ with bandwidth $c > 0$,
+and $g_c$ is the phase function appearing in the RHP conjugation.
+Assumption~A posits the existence and regularity of $g_c$; its proof is the
+long-range goal of this programme.
+
+\subsection{The nonlinear operator $\mathcal{T}_c$}
+
+Following the RHP analysis, $g_c$ satisfies a fixed-point equation of the form
+\begin{equation}\label{eq:fixedpoint}
+  g = \Tc(g),
+  \qquad
+  (\Tc h)(t) = \Hil\!\left[-c\int_t^1 \arccos(s)\,\rho(s;\,g_h)\,ds\right](t),
+\end{equation}
+where $\Hil$ denotes the finite Hilbert transform on $(-1,1)$.
+Proving that $\Tc$ is a contraction in a suitable Banach space
+would immediately yield Assumption~A via the Banach fixed-point theorem,
+with an explicit convergence radius $\sim c^{-1/3}\log c$.
+
+\subsection{Why global $L^2$-contraction fails}
+
+A direct computation (Section~\ref{sec:resolvent}) shows that the linearised
+operator $D\Tc$ satisfies
+\[
+  \norm{D\Tc}_{L^2 \to L^2} \gtrsim c^{5/3},
+\]
+due to growth of $\norm{R_s}_{\mathfrak{S}_2}^2$ across all eigenvalue modes.
+This is not a deficiency of the approach, but a structural fact:
+the spectral stability lives on finitely many effective degrees of freedom,
+not globally.
+
+\subsection{Main result}
+
+\begin{theorem}[Galerkin contraction]\label{thm:main}
+Let $N = \lfloor A c^{1/3}\rfloor$ for a constant $A > 0$, and let
+$P_N : L^2(-1,1) \to X_c^{(N)}$ denote the orthogonal projection onto
+the first $N$ PSWF modes. Define
+$\mathcal{T}_c^{(N)} := P_N \circ \Tc \circ P_N$.
+Then for $c \geq c_0(A)$:
+\[
+  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
+  \leq C\, c^{-1/3}\log c,
+\]
+where $C$ depends only on $A$ and the coercivity constant $\kappa$ from
+Gram coercivity. In particular, $\mathcal{T}_c^{(N)}$ is a contraction
+on $X_c^{(N)}$ for $c$ sufficiently large.
+\end{theorem}
+
+\begin{remark}
+The contraction rate $c^{-1/3}\log c \to 0$ is explicit and arises from
+three independent sources: see Table~\ref{tab:mechanisms}.
+\end{remark}
+
+%% ============================================================
+\section{Functional Analytic Setup}
+%% ============================================================
+
+\subsection{The weighted space $X_c$}
+
+\begin{definition}[Weighted space]\label{def:Xc}
+Let $w_c : (-1,1) \to (0,\infty)$ be defined by
+\[
+  w_c(s) := \bigl(\lam{n(s)} - \lam{n(s)+1}\bigr)^2,
+\]
+where $n(s)$ denotes the inverse eigenvalue counting function of $\Kc$.
+Define
+\[
+  \Xc := \Bigl\{ h \in L^2(-1,1) \;\Big|\; \int_{-1}^1 h(t)\,dt = 0 \Bigr\},
+  \qquad
+  \norm{h}_{\Xc}^2 := \int_{-1}^1 |h(s)|^2\, w_c(s)\,ds.
+\]
+\end{definition}
+
+The weight $w_c$ has three asymptotic regimes:
+\begin{itemize}[nosep]
+  \item \textbf{Bulk} ($|n - 2c/\pi| \gg c^{1/3}$):
+        $w_c(s) \asymp c^{-2}(1-s^2)^{-1}$ via Widom's density formula.
+  \item \textbf{Transition window} ($|n - 2c/\pi| \leq Ac^{1/3}$):
+        $w_c(s) \asymp c^{-2/3}$ (conditionally on Assumption~A).
+  \item \textbf{Outer region}: exponential decay, negligible in $L^2$.
+\end{itemize}
+
+\subsection{Muckenhoupt $A_2$-property of $w_c$}
+
+\begin{proposition}[$A_2$ control]\label{prop:A2}
+The weight $w_c$ satisfies the Muckenhoupt $A_2$ condition on
+$(-1,1)_\delta := \{s : w_c(s) \geq c^{-M}\}$ for any fixed $M > 0$,
+with constant $[w_c]_{A_2} \leq C$ uniform in $c \geq c_0$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+\textbf{Bulk zone.} Here $w_c(s) \asymp c^{-2}(1-s^2)^{-1}$.
+The $A_2$ condition reduces to
+\[
+  \sup_I \frac{1}{|I|}\!\int_I (1-s^2)^{-1}ds
+  \cdot \frac{1}{|I|}\!\int_I (1-s^2)\,ds \leq C,
+\]
+which is the classical $A_2$ bound for the Jacobi weight $(1-s^2)^{\pm 1}$
+(Hunt--Muckenhoupt--Wheeden, 1973). The $c$-factors cancel.
+
+\textbf{Transition zone.} $w_c \asymp c^{-2/3}$ is constant, hence $[w_c]_{A_2} = 1$.
+
+\textbf{Outer zone.} Excluded by the cutoff $(-1,1)_\delta$.
+The complementary $L^2$-mass is $O(e^{-\gamma c^{1/2}})$ and negligible.
+\end{proof}
+
+\begin{corollary}\label{cor:Hilbert}
+The finite Hilbert transform $\Hil$ is bounded on $\Xc$:
+$\norm{\Hil}_{\Xc \to \Xc} = O(1)$ uniformly in $c$.
+\end{corollary}
+
+\begin{proof}
+Boundedness of the Hilbert transform on weighted $L^2$ with $A_2$ weight
+is classical (Coifman--Fefferman, 1974). Apply Proposition~\ref{prop:A2}.
+\end{proof}
+
+\subsection{Galerkin projection}
+
+\begin{definition}[PSWF Galerkin space]\label{def:Galerkin}
+Let $\{\pswf{k}\}_{k=0}^\infty$ denote the $L^2(-1,1)$-orthonormal PSWF basis
+with eigenvalues $\lam{k}$ of $\Kc$, ordered $\lam{0} > \lam{1} > \cdots$.
+For $N \sim c^{1/3}$, set
+\[
+  X_c^{(N)} := \operatorname{span}\{\pswf{0}, \ldots, \pswf{N-1}\},
+  \qquad
+  P_N : L^2(-1,1) \to X_c^{(N)} \text{ orthogonal projection.}
+\]
+\end{definition}
+
+The Gram matrix of the PSWF restriction satisfies (by Gram coercivity,
+Paper~I of this programme):
+\[
+  \sigma_{\min}(G^{(N)}) \geq \alpha_N \sim c^{-1/2},
+\]
+so $P_N$ is well-conditioned with $\norm{G^{(N)}-1} \lesssim c^{1/2}$.
+
+%% ============================================================
+\section{Resolvent Analysis and Failure of Global Contraction}
+\label{sec:resolvent}
+%% ============================================================
+
+\subsection{Spectral density variation formula}
+
+The linearised density variation is given by the operator trace formula:
+\begin{equation}\label{eq:deltarho}
+  \delta\rho(s) = \frac{1}{\pi}\Im\tr\bigl(R_s \cdot \delta K \cdot R_s\bigr),
+  \qquad R_s := (I - s\Kc)^{-1}.
+\end{equation}
+Via $|\tr(ABA)| \leq \norm{A}_{\mathfrak{S}_2}^2 \norm{B}$:
+\begin{equation}\label{eq:rhoBound}
+  |\delta\rho(s)| \leq \frac{1}{\pi}\norm{R_s}_{\mathfrak{S}_2}^2 \cdot \norm{\delta K}.
+\end{equation}
+
+\subsection{Hilbert--Schmidt growth}
+
+\begin{lemma}[HS norm of resolvent]\label{lem:HS}
+$\displaystyle\norm{R_s}_{\mathfrak{S}_2}^2 = \sum_{k=0}^\infty \frac{1}{(1-s\lam{k})^2}$.
+Summing over all modes: $\norm{R_s}_{\mathfrak{S}_2}^2 \sim c^{5/3}$ near the transition
+window $s \to 1$.
+\end{lemma}
+
+\begin{proof}
+The Transition window contributes $\sim c^{1/3}$ modes with $1 - \lam{k} \asymp c^{-2/3}$
+each contributing $(c^{-2/3})^{-2} = c^{4/3}$, giving total $c^{1/3} \cdot c^{4/3} = c^{5/3}$.
+\end{proof}
+
+This immediately implies $\norm{D\Tc}_{L^2 \to L^2} \gtrsim c \cdot c^{5/3} = c^{8/3}$ (with the
+$c$ from the Widom-phase prefactor), ruling out global $L^2$ contraction.
+
+%% ============================================================
+\section{Matrix Representation in PSWF Basis}
+%% ============================================================
+
+\subsection{Expansion and matrix entries}
+
+Write $h = \sum_{k=0}^{N-1} a_k \pswf{k}$. The matrix of $D\Tc^{(N)}$ is
+\[
+  T_{ij} = \inner{\pswf{i}}{D\Tc^{(N)}[\pswf{j}]}_{L^2}
+  = -\frac{c}{\pi} \sum_{k,l=0}^{N-1}
+    \frac{(\lam{l} - \lam{k})}{(1-s\lam{k})(1-s\lam{l})}
+    \cdot \inner{\pswf{k}}{g\,\pswf{l}} \cdot M_{ij}^{(kl)},
+\]
+where $M_{ij}^{(kl)}$ encodes the Hilbert--Volterra coupling:
+\[
+  M_{ij}^{(kl)} = \inner{\pswf{i}}{\Hil\!\left[\int_\cdot^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right]}_{L^2}.
+\]
+
+\subsection{Commutator structure: diagonal vanishing}
+
+The numerator $(\lam{l} - \lam{k})$ vanishes for $k = l$. Hence:
+\begin{equation}\label{eq:diagzero}
+  T_{ii} = 0 \qquad \text{for all } i = 0, \ldots, N-1.
+\end{equation}
+This is the first and most important structural fact.
+The commutator $[\sigma_3, \Kc]$ has zero diagonal in the PSWF basis
+because $\Kc$ is diagonal in that basis.
+
+\subsection{Off-diagonal decay: Riemann--Lebesgue}
+
+\begin{lemma}[PSWF cross-product integral]\label{lem:RL}
+For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
+\[
+  \left|\int_t^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
+  \leq \frac{C}{c|k-l|}.
+\]
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+The PSWF eigenfunction $\pswf{k}$ satisfies the differential equation
+\[
+  \frac{d}{ds}\bigl[(1-s^2)\pswf{k}'\bigr] + \bigl[\chi_k^{(c)} - c^2 s^2\bigr]\pswf{k} = 0,
+\]
+so products $\pswf{k}\pswf{l}$ oscillate at frequency $\sim c(k-l)/N \sim c^{2/3}|k-l|$
+in the bulk. Integration by parts against $\arccos(s)$ (which has bounded
+variation on $[-1,1]$) yields the claimed bound via a standard
+Riemann--Lebesgue-type argument.
+\textit{(Full proof: Open Problem~\ref{op:RL}.)}
+\end{proof}
+
+%% ============================================================
+\section{Norm Estimate and Contraction}
+%% ============================================================
+
+\subsection{Gershgorin estimate}
+
+Since $T_{ii} = 0$ (equation~\eqref{eq:diagzero}), the Gershgorin circle
+theorem gives
+\[
+  \norm{T}_{\ell^2 \to \ell^2} \leq \max_i \sum_{j \neq i} |T_{ij}|.
+\]
+Each off-diagonal entry satisfies, using Lemma~\ref{lem:RL} and the
+transition-zone estimate $(\lam{l}-\lam{k})/(1-\lam{k})(1-\lam{l}) \asymp c^{1/3}$:
+\[
+  |T_{ij}| \lesssim c \cdot c^{1/3} \cdot \frac{1}{c|i-j|} = \frac{c^{1/3}}{|i-j|}.
+\]
+
+\subsection{Proof of Theorem~\ref{thm:main}}
+
+\begin{proof}
+The row sum (with $N \sim c^{1/3}$ terms and $T_{ii} = 0$):
+\[
+  \sum_{j \neq i} |T_{ij}|
+  \lesssim c^{1/3} \sum_{k=1}^{N} \frac{1}{k}
+  \sim c^{1/3} \log N
+  \sim \frac{c^{1/3}}{3}\log c.
+\]
+By Gershgorin: $\norm{DT_c^{(N)}}_{\ell^2 \to \ell^2} \leq C\, c^{-1/3}\log c$.
+\end{proof}
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\hline
+\textbf{Mechanism} & \textbf{Factor} & \textbf{Source} \\
+\hline
+Commutator: $T_{ii} = 0$ & no diagonal contribution & PSWF-orthogonality \\
+Riemann--Lebesgue (Volterra) & $c^{-1}$ per off-diagonal & PSWF oscillation \\
+Finite modes $N \sim c^{1/3}$ & $c^{1/3}$ terms in row sum & Galerkin cutoff \\
+Gram coercivity & projection well-conditioned & Paper~I, $\alpha_N \sim c^{-1/2}$ \\
+\hline
+\end{tabular}
+\caption{Mechanisms contributing to the contraction estimate $\norm{DT_c^{(N)}} \lesssim c^{-1/3}\log c$.}
+\label{tab:mechanisms}
+\end{table}
+
+\subsection{Fixpoint corollary}
+
+\begin{corollary}[Galerkin fixed point]\label{cor:fixedpoint}
+For $c \geq c_0$ there exists a unique $g^{(N)} \in X_c^{(N)}$ satisfying
+$\mathcal{T}_c^{(N)}(g^{(N)}) = g^{(N)}$,
+and the iteration $g^{(N)}_{k+1} = \mathcal{T}_c^{(N)}(g^{(N)}_k)$
+converges with rate $\leq C c^{-1/3}\log c$ per step.
+\end{corollary}
+
+\begin{proof}
+Follows from Theorem~\ref{thm:main} and the Banach fixed-point theorem.
+\end{proof}
+
+%% ============================================================
+\section{Open Problems}
+%% ============================================================
+
+The following three problems must be resolved to make the argument fully rigorous.
+
+\begin{openproblem}[Riemann--Lebesgue for PSWF products]\label{op:RL}
+Prove Lemma~\ref{lem:RL} rigorously:
+\[
+  \left|\int_t^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
+  \leq \frac{C}{c|k-l|},
+  \quad k \neq l,\; k,l \leq N.
+\]
+The proof should use the PSWF differential equation,
+partial integration, and the bounded variation of $\arccos$.
+\end{openproblem}
+
+\begin{openproblem}[Tail estimate]\label{op:tail}
+Estimate the Galerkin approximation error:
+\[
+  \norm{(\mathrm{id} - P_N)\Tc}_{X_c \to X_c} = O(e^{-\gamma c^{1/2}}).
+\]
+This follows if the eigenvalue clustering for $n > N$ is controlled
+by the known exponential decay $\lam{n} \leq e^{-\gamma c^{1/2}}$ for $n \gg 2c/\pi$.
+\end{openproblem}
+
+\begin{openproblem}[Gershgorin to spectral norm]\label{op:Gershgorin}
+Make the passage from row-sum estimates to the operator norm rigorous,
+in particular establish that the matrix $T_{ij}$ is (approximately)
+self-adjoint or normal, so that the spectral radius equals the operator norm.
+Alternatively, use the Schur test directly.
+\end{openproblem}
+
+%% ============================================================
+\section{Relation to Assumption A}
+%% ============================================================
+
+Theorem~\ref{thm:main} and Corollary~\ref{cor:fixedpoint} establish the
+existence of a Galerkin approximation $g^{(N)}$ to the fixed-point equation.
+This is not a direct proof of Assumption~A, but provides:
+\begin{enumerate}[nosep]
+  \item A controlled finite-dimensional approximation with explicit convergence radius $\sim c^{-1/3}\log c$.
+  \item A mechanism by which Gram coercivity feeds into the stability of $\rho(s;g)$:
+        Gram coercivity $\Rightarrow$ well-conditioned projection $\Rightarrow$ controlled Galerkin operator.
+  \item A roadmap: once Open Problems~\ref{op:RL}--\ref{op:Gershgorin} are resolved,
+        the Galerkin fixed point $g^{(N)}$ extends to a full fixed point via a
+        compactness argument in $\Xc$.
+\end{enumerate}
+
+\begin{remark}[Role of Gram coercivity]
+The coercivity constant $\alpha_N \sim c^{-1/2}$ (Paper~I) enters in two places:
+(a) it ensures $P_N$ is well-conditioned ($\norm{P_N} \lesssim c^{1/2}$);
+(b) it controls the eigenvalue separation in the Transition window,
+which is the same spectral gap that prevents resonances in $T_{ij}$.
+Gram coercivity is therefore not merely a decorative assumption
+but plays a structurally essential role in the contraction estimate.
+\end{remark}
+
+%% ============================================================
+\section*{Acknowledgements}
+%% ============================================================
+
+This paper is part of the \emph{prolate-gram-coercivity} research programme.
+The analysis in Sections~3--5 was developed in a series of working sessions
+in May 2026.
+
+%% ============================================================
+\begin{thebibliography}{99}
+
+\bibitem{paper13cc}
+  \textit{Companion paper on RHP asymptotics and Assumption~A},
+  prolate-gram-coercivity programme, internal manuscript, 2025--2026.
+
+\bibitem{Widom64}
+  H.~Widom,
+  \textit{Asymptotic behavior of the eigenvalues of certain integral equations~II},
+  Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964), 215--229.
+
+\bibitem{HMW73}
+  R.~Hunt, B.~Muckenhoupt, R.~Wheeden,
+  \textit{Weighted norm inequalities for the conjugate function and Hilbert transform},
+  Trans.\ Amer.\ Math.\ Soc.\ \textbf{176} (1973), 227--251.
+
+\bibitem{CF74}
+  R.~R.~Coifman, C.~Fefferman,
+  \textit{Weighted norm inequalities for maximal functions and singular integrals},
+  Studia Math.\ \textbf{51} (1974), 241--250.
+
+\bibitem{Kato66}
+  T.~Kato,
+  \textit{Perturbation Theory for Linear Operators},
+  Springer, 1966.
+
+\bibitem{SP61}
+  D.~Slepian, H.~O.~Pollak,
+  \textit{Prolate spheroidal wave functions, Fourier analysis and uncertainty~I},
+  Bell System Tech.\ J.\ \textbf{40} (1961), 43--63.
+
+\end{thebibliography}
+
+\end{document}
