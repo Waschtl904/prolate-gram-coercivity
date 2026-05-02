@@ -224,6 +224,18 @@ for all $n \le \gamma N$.
   \frac{1/\wncl(x)}{\int_{-x_+(n)}^{x_+(n)} dt/\wncl(t)},
   \quad x \in [-x_+(n), x_+(n)].
 \end{equation}
+The normalization $\int_{-x_+(n)}^{x_+(n)}\rhocl(x)\,dx = 1$
+holds by definition.
+By Lemma~\ref{lem:bohr-sommerfeld-pswf} below,
+the denominator satisfies
+$\int_{-x_+(n)}^{x_+(n)}dt/\wncl(t)
+= \pi(n+\tfrac{1}{2})/\wncl_{\rm avg} + O(1/n^2)$,
+where the $O(1/n)$ relative error in the denominator propagates
+to an $O(1/n)$ relative error in $\rhocl$ only through the
+normalization constant; no mass is lost in the cutoff
+$I_\delta \to [-x_+(n),x_+(n)]$ since
+$\mathrm{supp}\,\rhocl = [-x_+(n),x_+(n)] \subset I_\delta$
+exactly.
 \end{definition}
 
 \subsection{Bohr--Sommerfeld quantization}
@@ -245,13 +257,17 @@ see \cite{OsipovRokhlinXiao}, Ch.~4, Thm.~4.7.
 \end{lemma}
 
 \begin{proof}
-Standard WKB quantization condition for the
-Sturm--Liouville eigenvalue problem \cite{Levitan},
-specialized to the PSWF differential operator.
-The uniform error $O(1/n)$ on $I_\delta$ follows from
-the phase lower bound $\wncl(x) \ge c_{\delta,\gamma}n > 0$
-(Lemma~\ref{lem:G-regularity}(i));
-see \cite{OsipovRokhlinXiao}, Ch.~4.
+The specialization to the PSWF operator
+$(p\psin')' + \wncl(x)^2/p\cdot\psin = 0$
+follows by reduction to Liouville normal form
+\cite{Levitan}, Ch.~2.
+The $O(1/n)$ error is uniform for $n \le \gamma N$ since
+$\wncl \ge c_{\delta,\gamma}n$ (Lemma~\ref{lem:G-regularity}(i))
+and $\|\wncl\|_{C^2(I_\delta)} = O(n)$,
+so the standard WKB remainder bounds
+(see \cite{OsipovRokhlinXiao}, Ch.~4)
+apply uniformly on $I_\delta$;
+see also \cite{Levitan}, Ch.~2, for the Liouville reduction.
 \end{proof}
 
 \subsection{Regularity of the WKB coefficient}
@@ -827,6 +843,17 @@ Substituting:
 \]
 using Lemma~\ref{lem:bohr-sommerfeld-pswf}
 and Definition~\ref{def:rho-cl}.
+%% FIX 4: Explicit normalization-cutoff compatibility
+Note that the normalization of $\rhocl$ is taken over
+$[-x_+(n), x_+(n)]$, and by
+Lemma~\ref{lem:bohr-sommerfeld-pswf}
+this normalization agrees with
+$\tfrac{1}{2}\int r_n^{\mathrm{WKB},2}$
+up to a relative error $O(1/n)$.
+In particular, no additional mass is lost in the cutoff
+$I_\delta \to [-x_+(n), x_+(n)]$,
+since $\mathrm{supp}\,\rhocl = [-x_+(n),x_+(n)] \subset I_\delta$
+exactly (Definition~\ref{def:rho-cl}).
 \end{proof}
 
 %%=================================================================
