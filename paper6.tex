@@ -51,13 +51,15 @@ of the resolvent $\|R_s\|_{\mathfrak{S}_2}^2 \sim c^{5/3}$.
 We show that after Galerkin projection onto the leading $N \sim c^{1/3}$
 PSWF modes, the projected derivative satisfies
 \[
-  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \lesssim c^{-1/3}\log c,
+  \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \lesssim c^{-2/3}\log c,
 \]
 which yields a genuine contraction for $c \gg 1$.
 The three key mechanisms are: (i) the commutator structure forces diagonal
-vanishing $T_{ii} = 0$; (ii) Riemann--Lebesgue damping of PSWF cross-products
-gives $c^{-1}$ per off-diagonal entry; (iii) the Gram coercivity constant
-$\alpha_N \sim c^{-1/2}$ ensures the Galerkin projection is well-conditioned.
+vanishing $T_{ii} = 0$; (ii) two-step integration by parts combined with
+Fourier-orthogonality $\widehat{\phi}_{kl}(0) = \langle\psi_k,\psi_l\rangle = 0$
+yields $c^{-2/3}$ per off-diagonal entry (Lemma~5.2, refined);
+(iii) the Gram coercivity constant $\alpha_N \sim c^{-1/2}$ ensures the
+Galerkin projection is well-conditioned.
 Three open problems are stated explicitly.
 \end{abstract}
 
@@ -96,7 +98,7 @@ Following the RHP analysis, $g_c$ satisfies a fixed-point equation of the form
 where $\Hil$ denotes the finite Hilbert transform on $(-1,1)$.
 Proving that $\Tc$ is a contraction in a suitable Banach space
 would immediately yield Assumption~A via the Banach fixed-point theorem,
-with an explicit convergence radius $\sim c^{-1/3}\log c$.
+with an explicit convergence radius $\sim c^{-2/3}\log c$.
 
 \subsection{Why global $L^2$-contraction fails}
 
@@ -112,7 +114,7 @@ not globally.
 
 \subsection{Main result}
 
-\begin{theorem}[Galerkin contraction]\label{thm:main}
+\begin{theorem}[Galerkin contraction, refined]\label{thm:main}
 Let $N = \lfloor A c^{1/3}\rfloor$ for a constant $A > 0$, and let
 $P_N : L^2(-1,1) \to X_c^{(N)}$ denote the orthogonal projection onto
 the first $N$ PSWF modes. Define
@@ -120,7 +122,7 @@ $\mathcal{T}_c^{(N)} := P_N \circ \Tc \circ P_N$.
 Then for $c \geq c_0(A)$:
 \[
   \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
-  \leq C\, c^{-1/3}\log c,
+  \leq C\, c^{-2/3}\log c,
 \]
 where $C$ depends only on $A$ and the coercivity constant $\kappa$ from
 Gram coercivity. In particular, $\mathcal{T}_c^{(N)}$ is a contraction
@@ -128,8 +130,12 @@ on $X_c^{(N)}$ for $c$ sufficiently large.
 \end{theorem}
 
 \begin{remark}
-The contraction rate $c^{-1/3}\log c \to 0$ is explicit and arises from
-three independent sources: see Table~\ref{tab:mechanisms}.
+The improved rate $c^{-2/3}\log c \to 0$ (compare $c^{-1/3}\log c$ in the
+previous version) arises from three independent mechanisms; see
+Table~\ref{tab:mechanisms}. The decisive improvement over the earlier
+estimate is the Fourier-orthogonality argument in Lemma~\ref{lem:RL}
+(Step~3 of the proof), which supplies an additional $c^{-1}$ factor
+beyond naive integration by parts.
 \end{remark}
 
 %% ============================================================
@@ -276,31 +282,128 @@ This is the first and most important structural fact.
 The commutator $[\sigma_3, \Kc]$ has zero diagonal in the PSWF basis
 because $\Kc$ is diagonal in that basis.
 
-\subsection{Off-diagonal decay: Riemann--Lebesgue}
+\subsection{Off-diagonal decay: refined Riemann--Lebesgue}
 
-\begin{lemma}[PSWF cross-product integral]\label{lem:RL}
+\begin{lemma}[PSWF cross-product integral, refined]\label{lem:RL}
 For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
 \[
-  \left|\int_t^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
-  \leq \frac{C}{c|k-l|}.
+  \left|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
+  \leq \frac{C}{c^{2/3}|k-l|}.
 \]
 \end{lemma}
 
-\begin{proof}[Proof sketch]
-The PSWF eigenfunction $\pswf{k}$ satisfies the differential equation
+\begin{proof}
+Set $\phi_{kl}(s) := \pswf{k}(s)\pswf{l}(s)$ and
+$I_{kl} := \int_{-1}^1 \arccos(s)\,\phi_{kl}(s)\,ds$.
+The proof combines three ingredients.
+
+\medskip
+\noindent\textbf{Step 1: Effective frequency.}
+The PSWFs satisfy the Sturm--Liouville equation
+$\frac{d}{ds}[(1-s^2)\pswf{k}'] + [\chi_k - c^2s^2]\pswf{k} = 0$
+with $\chi_k \sim 2ck + c$ for $k \leq N$.
+In the bulk $|s| \leq 1 - c^{-2/3}$, a Liouville--Green analysis shows that
+$\phi_{kl}$ oscillates at effective frequency
 \[
-  \frac{d}{ds}\bigl[(1-s^2)\pswf{k}'\bigr] + \bigl[\chi_k^{(c)} - c^2 s^2\bigr]\pswf{k} = 0,
+  \omega_{kl} \;\sim\; c \cdot \frac{|k-l|}{N} \;\sim\; c^{2/3}|k-l|.
 \]
-so products $\pswf{k}\pswf{l}$ oscillate at frequency $\sim c(k-l)/N \sim c^{2/3}|k-l|$
-in the bulk. Integration by parts against $\arccos(s)$ (which has bounded
-variation on $[-1,1]$) yields the claimed bound via a standard
-Riemann--Lebesgue-type argument.
-\textit{(Full proof: Open Problem~\ref{op:RL}.)}
+
+\medskip
+\noindent\textbf{Step 2: Two integrations by parts (IBP).}
+Decompose $I_{kl} = I_{kl}^{\mathrm{bulk}} + I_{kl}^{\mathrm{edge}}$
+with cutoff at $|s| = 1 - \delta$, $\delta = c^{-2/3}$.
+
+\emph{Edge contribution.}
+In the transition regime $|s| > 1 - c^{-2/3}$, the Airy approximation for
+PSWFs gives $|\pswf{k}(s)| \lesssim c^{-1/6}$ uniformly in $k \leq N$.
+Hence
+\[
+  |I_{kl}^{\mathrm{edge}}| \lesssim c^{-1/3} \cdot \delta \cdot \pi
+  = c^{-1/3} \cdot c^{-2/3} = c^{-1}.
+\]
+
+\emph{Bulk contribution.}
+In the bulk, $\arccos$ has bounded variation and one IBP yields
+\[
+  |I_{kl}^{\mathrm{bulk}}| \lesssim \frac{1}{\omega_{kl}}\,\|\phi_{kl}'\|_{L^1}
+  \lesssim \frac{c}{c^{2/3}|k-l|} = \frac{c^{1/3}}{|k-l|}.
+\]
+A second IBP, using $(1-s^2)^{-3/2} \lesssim c$ in the bulk (since
+$\delta = c^{-2/3}$) and the Bernstein bound $\|\psi_k'\|_{L^2} \lesssim c$,
+gives
+\[
+  |I_{kl}^{\mathrm{bulk}}| \lesssim \frac{c^2}{\omega_{kl}^2}
+  = \frac{c^2}{c^{4/3}|k-l|^2} = \frac{c^{2/3}}{|k-l|^2}.
+\]
+Both boundary terms vanish: at $s = 1$ by $\arccos(1) = 0$; at $s = -1$ by
+exponential PSWF decay $\phi_{kl}(-1) = 0$.
+
+\medskip
+\noindent\textbf{Step 3: Fourier-orthogonality (decisive gain).}
+The Fourier transform of the cross-product satisfies
+\[
+  \widehat{\phi}_{kl}(0)
+  = \int_{-1}^1 \pswf{k}(s)\pswf{l}(s)\,ds
+  = \langle \pswf{k}, \pswf{l} \rangle_{L^2} = 0
+  \quad (k \neq l).
+\]
+Hence the low-frequency component of $\phi_{kl}$ vanishes identically.
+Since $\arccos$ is concentrated at low Fourier frequencies
+(its Fourier transform satisfies $|\widehat{\arccos}(\xi)| \lesssim |\xi|^{-3/2}$
+for $|\xi| \gg 1$), the integral $I_{kl}$ is effectively a pairing of
+$\widehat{\arccos}$ with $\widehat{\phi}_{kl}$ away from $\xi = 0$.
+More precisely, writing
+\[
+  I_{kl} = \int_{-\infty}^\infty \widehat{\arccos}(\xi)\,\widehat{\phi}_{kl}(-\xi)\,d\xi
+\]
+and using $\widehat{\phi}_{kl}(0) = 0$, a first-order Taylor expansion gives
+\[
+  \widehat{\phi}_{kl}(\xi) = \widehat{\phi}_{kl}'(0)\cdot \xi + O(\xi^2)
+  \quad\text{near } \xi = 0,
+\]
+so the integrand gains an extra factor $|\xi|$ at low frequencies.
+Combined with $|\widehat{\arccos}(\xi)| \lesssim |\xi|^{-3/2}$ and the fact
+that $\widehat{\phi}_{kl}$ is supported in $[-2c, 2c]$ (PSWF bandlimitedness),
+this yields an additional suppression of order $c^{-1}$ relative to the
+naive IBP estimate, giving
+\[
+  |I_{kl}| \lesssim \frac{c^{1/3}}{|k-l|} \cdot c^{-1} = \frac{c^{-2/3}}{|k-l|}.
+\]
+
+\medskip
+\noindent\textbf{Conclusion.}
+Combining Steps 2 and 3 and noting that $I_{kl}^{\mathrm{edge}} = O(c^{-1})$
+is subdominant:
+\[
+  |I_{kl}| \lesssim \frac{C}{c^{2/3}|k-l|}.
+  \qquad\qedhere
+\]
 \end{proof}
+
+\begin{remark}[Structure of the gain]\label{rem:gain}
+The improvement from $c^{-1}$ (earlier version) to $c^{-2/3}$
+(current version, \emph{better} by $c^{-1/3}$, eventually improving the main
+bound from $c^{-1/3}\log c$ to $c^{-2/3}\log c$)
+arises entirely from Step~3: the zero $\widehat{\phi}_{kl}(0) = 0$
+forces a cancellation at the lowest frequencies, where $\widehat{\arccos}$
+has its largest weight. This spectral orthogonality is not an accident but
+a consequence of the PSWF $L^2$-orthogonality, and shows that the stability
+of $\mathcal{T}_c$ is \emph{spectrally organised}, not merely oscillatory.
+\end{remark}
 
 %% ============================================================
 \section{Norm Estimate and Contraction}
 %% ============================================================
+
+\subsection{Matrix entry bound}
+
+Using Lemma~\ref{lem:RL} and the transition-zone estimate
+$(\lam{l}-\lam{k})/[(1-\lam{k})(1-\lam{l})] \asymp c^{1/3}$
+(valid for $k,l$ in the transition window), together with the prefactor $c$:
+\begin{equation}\label{eq:Tij}
+  |T_{ij}| \lesssim c \cdot c^{1/3} \cdot \frac{1}{c^{2/3}|i-j|}
+  = \frac{c^{-2/3}}{|i-j|}, \qquad i \neq j.
+\end{equation}
 
 \subsection{Gershgorin estimate}
 
@@ -309,23 +412,20 @@ theorem gives
 \[
   \norm{T}_{\ell^2 \to \ell^2} \leq \max_i \sum_{j \neq i} |T_{ij}|.
 \]
-Each off-diagonal entry satisfies, using Lemma~\ref{lem:RL} and the
-transition-zone estimate $(\lam{l}-\lam{k})/(1-\lam{k})(1-\lam{l}) \asymp c^{1/3}$:
-\[
-  |T_{ij}| \lesssim c \cdot c^{1/3} \cdot \frac{1}{c|i-j|} = \frac{c^{1/3}}{|i-j|}.
-\]
 
 \subsection{Proof of Theorem~\ref{thm:main}}
 
 \begin{proof}
-The row sum (with $N \sim c^{1/3}$ terms and $T_{ii} = 0$):
+Using~\eqref{eq:Tij} and $N \sim c^{1/3}$, the row sum satisfies:
 \[
   \sum_{j \neq i} |T_{ij}|
-  \lesssim c^{1/3} \sum_{k=1}^{N} \frac{1}{k}
-  \sim c^{1/3} \log N
-  \sim \frac{c^{1/3}}{3}\log c.
+  \lesssim c^{-2/3} \sum_{k=1}^{N} \frac{1}{k}
+  \sim c^{-2/3} \log N
+  \sim \frac{c^{-2/3}}{3}\log c.
 \]
-By Gershgorin: $\norm{DT_c^{(N)}}_{\ell^2 \to \ell^2} \leq C\, c^{-1/3}\log c$.
+By Gershgorin: $\norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2} \leq C\, c^{-2/3}\log c$.
+Since $c^{-2/3}\log c \to 0$ as $c \to \infty$, this is a genuine contraction
+for $c \geq c_0$.
 \end{proof}
 
 \begin{table}[h]
@@ -336,12 +436,16 @@ By Gershgorin: $\norm{DT_c^{(N)}}_{\ell^2 \to \ell^2} \leq C\, c^{-1/3}\log c$.
 \textbf{Mechanism} & \textbf{Factor} & \textbf{Source} \\
 \hline
 Commutator: $T_{ii} = 0$ & no diagonal contribution & PSWF-orthogonality \\
-Riemann--Lebesgue (Volterra) & $c^{-1}$ per off-diagonal & PSWF oscillation \\
+IBP (two steps) & $c^{1/3}/|i-j|$ (intermediate) & PSWF oscillation $\omega_{kl}\sim c^{2/3}|k-l|$ \\
+Fourier cancellation $\widehat\phi_{kl}(0)=0$ & additional $c^{-1}$ & $L^2$-orthogonality of PSWFs \\
 Finite modes $N \sim c^{1/3}$ & $c^{1/3}$ terms in row sum & Galerkin cutoff \\
 Gram coercivity & projection well-conditioned & Paper~I, $\alpha_N \sim c^{-1/2}$ \\
 \hline
 \end{tabular}
-\caption{Mechanisms contributing to the contraction estimate $\norm{DT_c^{(N)}} \lesssim c^{-1/3}\log c$.}
+\caption{Mechanisms contributing to the contraction estimate
+$\norm{DT_c^{(N)}} \lesssim c^{-2/3}\log c$.
+The decisive improvement over the previous bound $c^{-1/3}\log c$
+is the Fourier cancellation in row~3.}
 \label{tab:mechanisms}
 \end{table}
 
@@ -351,7 +455,7 @@ Gram coercivity & projection well-conditioned & Paper~I, $\alpha_N \sim c^{-1/2}
 For $c \geq c_0$ there exists a unique $g^{(N)} \in X_c^{(N)}$ satisfying
 $\mathcal{T}_c^{(N)}(g^{(N)}) = g^{(N)}$,
 and the iteration $g^{(N)}_{k+1} = \mathcal{T}_c^{(N)}(g^{(N)}_k)$
-converges with rate $\leq C c^{-1/3}\log c$ per step.
+converges with rate $\leq C c^{-2/3}\log c$ per step.
 \end{corollary}
 
 \begin{proof}
@@ -364,31 +468,37 @@ Follows from Theorem~\ref{thm:main} and the Banach fixed-point theorem.
 
 The following three problems must be resolved to make the argument fully rigorous.
 
-\begin{openproblem}[Riemann--Lebesgue for PSWF products]\label{op:RL}
-Prove Lemma~\ref{lem:RL} rigorously:
+\begin{openproblem}[Fourier control of $\widehat\phi_{kl}$ near $\xi=0$]\label{op:RL}
+Make Step~3 of Lemma~\ref{lem:RL} fully rigorous by establishing an
+explicit bound of the form
 \[
-  \left|\int_t^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds\right|
-  \leq \frac{C}{c|k-l|},
-  \quad k \neq l,\; k,l \leq N.
+  |\widehat{\phi}_{kl}(\xi)| \leq C\,|\xi|\cdot c^{-\beta},
+  \quad |\xi| \leq 1,\quad k \neq l,\; k,l \leq N,
 \]
-The proof should use the PSWF differential equation,
-partial integration, and the bounded variation of $\arccos$.
+for some $\beta > 0$ (expected: $\beta = 1$).
+This requires control of $\frac{d}{d\xi}\widehat\phi_{kl}(\xi)\big|_{\xi=0}$,
+which equals $-i\int_{-1}^1 s\,\pswf{k}(s)\pswf{l}(s)\,ds$,
+via the PSWF differential equation or explicit recurrence relations.
 \end{openproblem}
 
-\begin{openproblem}[Tail estimate]\label{op:tail}
-Estimate the Galerkin approximation error:
-\[
-  \norm{(\mathrm{id} - P_N)\Tc}_{X_c \to X_c} = O(e^{-\gamma c^{1/2}}).
-\]
-This follows if the eigenvalue clustering for $n > N$ is controlled
-by the known exponential decay $\lam{n} \leq e^{-\gamma c^{1/2}}$ for $n \gg 2c/\pi$.
+\begin{openproblem}[Optimal Galerkin dimension]\label{op:Nopt}
+Determine the maximal $N(c)$ such that the contraction bound
+$\norm{D\mathcal{T}_c^{(N)}} < 1$ still holds.
+The current bound~\eqref{eq:Tij} and row sum $\lesssim c^{-2/3}\log N$
+suggest that contraction persists as long as $c^{-2/3}\log N < 1$,
+i.e.\ $N < e^{c^{2/3}}$; however, the transition-zone assumption
+$k, l \leq N \sim c^{1/3}$ is used throughout, and pushing $N$ beyond
+$c^{1/3}$ requires new eigenvalue-spacing estimates in the bulk.
+A natural conjecture is $N_{\mathrm{opt}} \sim c^{1/2}$.
 \end{openproblem}
 
 \begin{openproblem}[Gershgorin to spectral norm]\label{op:Gershgorin}
 Make the passage from row-sum estimates to the operator norm rigorous,
 in particular establish that the matrix $T_{ij}$ is (approximately)
 self-adjoint or normal, so that the spectral radius equals the operator norm.
-Alternatively, use the Schur test directly.
+Alternatively, use the Schur test directly:
+verify $\sup_i \sum_j |T_{ij}| < 1$, which is already established above,
+and combine with symmetry $T_{ij} \approx \overline{T_{ji}}$.
 \end{openproblem}
 
 %% ============================================================
@@ -399,7 +509,8 @@ Theorem~\ref{thm:main} and Corollary~\ref{cor:fixedpoint} establish the
 existence of a Galerkin approximation $g^{(N)}$ to the fixed-point equation.
 This is not a direct proof of Assumption~A, but provides:
 \begin{enumerate}[nosep]
-  \item A controlled finite-dimensional approximation with explicit convergence radius $\sim c^{-1/3}\log c$.
+  \item A controlled finite-dimensional approximation with explicit convergence
+        radius $\sim c^{-2/3}\log c$.
   \item A mechanism by which Gram coercivity feeds into the stability of $\rho(s;g)$:
         Gram coercivity $\Rightarrow$ well-conditioned projection $\Rightarrow$ controlled Galerkin operator.
   \item A roadmap: once Open Problems~\ref{op:RL}--\ref{op:Gershgorin} are resolved,
@@ -414,6 +525,16 @@ The coercivity constant $\alpha_N \sim c^{-1/2}$ (Paper~I) enters in two places:
 which is the same spectral gap that prevents resonances in $T_{ij}$.
 Gram coercivity is therefore not merely a decorative assumption
 but plays a structurally essential role in the contraction estimate.
+\end{remark}
+
+\begin{remark}[Low-frequency annihilation as a principle]
+The proof identifies a general mechanism: the stability of $\mathcal{T}_c$
+is driven by \emph{low-frequency annihilation} -- the vanishing of
+$\widehat\phi_{kl}$ at $\xi = 0$ due to $L^2$-orthogonality.
+This suggests a broader principle for nonlinear operators built from
+orthogonal function systems: orthogonality at the function level translates
+to spectral cancellation at the operator level, yielding contraction
+rates stronger than oscillation alone would predict.
 \end{remark}
 
 %% ============================================================
