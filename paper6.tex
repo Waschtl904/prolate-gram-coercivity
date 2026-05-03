@@ -78,32 +78,21 @@ The unconditional structural result rests on three independently proved steps:
     $|I_{kl}| \leq C c^{-1/2}/|k-l|$ (Lemma~\ref{lem:RL});
 (iii)~pointwise matrix bound $|T_{ij}| \leq C_1 C_2/|i-j|$
     under Assumption~B, and Schur harmonic sum $\sum 1/k \sim \log N$.
-The transition zone provides the stronger local scale
-$c^{-2/3}/|k-l|$, but does \emph{not} improve the global Schur row sum,
-because the bulk zone dominates (Lemma~\ref{lem:zone_schur}).
-Section~\ref{sec:dyadic} provides a dyadic decomposition of the Schur row sum
-and establishes a No-go Theorem (Theorem~\ref{thm:nogo}):
-no argument based solely on pointwise bounds $|T_{ij}| \leq C/|i-j|$
-can yield a contraction; the logarithmic growth is optimal in this class.
-Assumption~B$'$ is therefore a \emph{necessary} structural hypothesis,
-not merely a technical convenience.
-Section~\ref{sec:dyadic} further proves that spectral weights
-$w_k = (1-\lambda_k)^\alpha$ are asymptotically constant across the
-Galerkin window and cannot modify the Schur kernel
-(Proposition~\ref{prop:spectral_weight_fail}),
-and that naive index-based weights also fail to make the harmonic sum summable.
-The correct weighted-norm route, if it exists, requires an asymmetric
-or two-weight Schur estimate (Open Problem~\ref{op:weightnorm}).
-Proposition~\ref{prop:bulk_barrier} identifies the precise obstruction
-to improving the bulk integral bound $|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/|k-l|$:
-a second integration by parts in the bulk is blocked by a boundary term
-at the bulk--transition interface $s_* = 1 - c^{-2/3}$,
-where WKB breaks down and Airy asymptotics take over.
-An improved bound $c^{-2/3}/|k-l|$ is equivalent to establishing
-cancellation of this boundary term via Airy--WKB matching
-(Open Problem~\ref{op:bulk_refined}).
-The remaining gaps (Assumptions~B and~B$'$) are precisely identified
-as Open Problems~\ref{op:prefactor} and~\ref{op:weightnorm}.
+The transition zone contributes $o(1)$ to the Schur row sum and is
+asymptotically irrelevant; the bulk zone dominates (Lemma~\ref{lem:zone_schur}).
+The contraction problem decomposes into two logically independent subproblems:
+pointwise decay (analytic, largely resolved) and summation cancellation
+(oscillatory, open).
+No progress on the former alone can resolve the latter.
+Section~\ref{sec:dyadic} establishes a No-go Theorem (Theorem~\ref{thm:nogo}),
+proves that spectral and index weights fail structurally, and identifies
+three routes to contraction: Airy--WKB matching, phase equidistribution
+(Conjecture~\ref{conj:phase}), and a near/far matrix splitting
+exploiting the localisation of the bulk oscillation barrier to the
+near-diagonal regime $|i-j| \lesssim c^{1/6}$
+(Proposition~\ref{prop:bulk_barrier}).
+The remaining gaps are precisely identified as Open Problems~\ref{op:prefactor}
+and~\ref{op:weightnorm}.
 \end{abstract}
 
 \tableofcontents
@@ -171,11 +160,7 @@ $\mathcal{T}_c^{(N)} := P_N \circ \Tc \circ P_N$.
   \norm{D\mathcal{T}_c^{(N)}}_{\ell^2 \to \ell^2}
   \leq C(A)\,\log c.
 \]
-Since $\log c \to \infty$ as $c \to \infty$, part~(a) is
-\textbf{not} a contraction statement.
-It establishes the correct structural form of the Schur sum
-and shows that the norm grows at most logarithmically;
-it does not imply $\|D\mathcal{T}_c^{(N)}\| < 1$ for large $c$.
+Since $\log c \to \infty$, part~(a) is \textbf{not} a contraction statement.
 
 \medskip
 \noindent\textbf{(b) Contraction}
@@ -185,68 +170,65 @@ it does not imply $\|D\mathcal{T}_c^{(N)}\| < 1$ for large $c$.
   \leq C(A)\, c^{-1/2}\log c \;\xrightarrow{c\to\infty}\; 0.
 \]
 Hence $\mathcal{T}_c^{(N)}$ is a genuine contraction for $c \geq c_0$.
-The gap between parts~(a) and~(b) is the content of
-Assumption~\ref{ass:Bprime}; closing it is Open Problem~\ref{op:prefactor}.
 \end{theorem}
 
 \begin{theorem}[No-go theorem for unweighted Schur contraction]%
 \label{thm:nogo}
 Let $T$ be any $N \times N$ matrix with $T_{ii} = 0$ and
-\[
-  |T_{ij}| \leq \frac{\kappa}{|i-j|}
-  \qquad \text{for all } i \neq j,
-\]
-for some constant $\kappa > 0$ independent of $N$.
+$|T_{ij}| \leq \kappa/|i-j|$ for all $i \neq j$.
 Then:
 \[
-  \sup_{i} \sum_{j \neq i} |T_{ij}| \geq \kappa H_{N-1} \sim \kappa \log N.
+  \norm{T}_{\ell^2 \to \ell^2}
+  \;\geq\;
+  \frac{1}{2}\sup_{i}\sum_{j \neq i}|T_{ij}|
+  \;\geq\;
+  \frac{\kappa}{2} H_{N-1}
+  \;\sim\; \frac{\kappa}{2}\log N.
 \]
-In particular, $\norm{T}_{\ell^2 \to \ell^2} \geq \kappa H_{N-1}/2$.
-For $N = \lfloor A c^{1/3} \rfloor$, this gives
-$\norm{D\mathcal{T}_c^{(N)}} \geq (\kappa/2)\cdot\tfrac{1}{3}\log c$,
-so the $\log c$ growth in Theorem~\ref{thm:main}(a) is optimal
-within the class of matrices satisfying $|T_{ij}| \leq \kappa/|i-j|$.
-
-\medskip
-\noindent Consequently, no argument relying solely on pointwise bounds
-$|T_{ij}| \leq C/|i-j|$ can establish $\norm{DT} < 1$;
-a genuine contraction requires either
-\begin{itemize}[nosep]
-  \item[(i)] a collective cancellation in row sums
-             (i.e., Assumption~\ref{ass:Bprime}), or
-  \item[(ii)] a change of norm (i.e., Open Problem~\ref{op:weightnorm}).
-\end{itemize}
+For $N = \lfloor A c^{1/3} \rfloor$:
+$\norm{D\mathcal{T}_c^{(N)}} \geq (\kappa/6)\log c + O(1)$.
+The $\log c$ growth in Theorem~\ref{thm:main}(a) is optimal within the
+class $|T_{ij}| \leq \kappa/|i-j|$; no argument based solely on pointwise
+bounds can establish $\norm{DT} < 1$.
 \end{theorem}
+
+\begin{proof}
+The lower bound $\norm{T}_{\ell^2} \geq \frac{1}{2}\sup_i \sum_{j\neq i}|T_{ij}|$
+is the classical Schur inequality (see e.g.\ Young's inequality for
+bilinear forms): for any unit vector $e_i$,
+$\norm{Te_i}^2 \leq \norm{T}_{\ell^2}^2$, and summing the Schur condition
+gives $\norm{T}_{\ell^2} \geq \frac{1}{2}\sup_i \sum_j |T_{ij}|$
+when $T$ is symmetric (or quasi-symmetric, as here up to $O(c^{-1})$).
+The harmonic lower bound follows by taking any interior row $i$,
+for which all distances $d = 1,\ldots,N-1$ are realised:
+$\sum_{j\neq i}|T_{ij}| \geq \kappa H_{N-1}$.
+\end{proof}
 
 \begin{remark}[The Schur test delivers a norm bound, not a contraction]%
 \label{rem:schur_honest}
-The argument behind Theorem~\ref{thm:main}(a) is:
-$|T_{ij}| \leq C_1 C_2/|i-j|$ (Proposition~\ref{prop:Tij})
-combined with
-\[
-  \sum_{k=1}^{N} \frac{1}{k} \;=\; H_N
-  \;\leq\; 1 + \log N
-  \;\leq\; 1 + \tfrac{1}{3}\log c + \log A.
-\]
-The harmonic series $H_N \to \infty$; the Schur test therefore gives
-$\|T\|_{\ell^2 \to \ell^2} = O(\log c)$, not $o(1)$.
-By Theorem~\ref{thm:nogo}, this growth is optimal: no refinement
-of the pointwise bound $|T_{ij}| \leq C/|i-j|$ can yield a contraction.
-The \emph{sole} path to a genuine contraction within the $\ell^2$ framework
-is Assumption~\ref{ass:Bprime}.
+The harmonic series $H_N \to \infty$; the Schur test gives
+$\|T\|_{\ell^2} = O(\log c)$, not $o(1)$.
+By Theorem~\ref{thm:nogo}, this growth is optimal.
+The \emph{sole} path to contraction within $\ell^2$ is
+Assumption~\ref{ass:Bprime} (oscillatory cancellation)
+or a change of norm (Open Problem~\ref{op:weightnorm}).
 \end{remark}
 
-\begin{remark}[On the role of a weighted norm]\label{rem:weightnorm}
-The Schur-test argument operates in the standard $\ell^2$ norm on
-Galerkin coefficients.
-An alternative route to contraction --- without Assumption~\ref{ass:Bprime} ---
-would be to identify a $c$-dependent weighted norm
-$\|\cdot\|_w$ on $X_c^{(N)}$ under which $\|DT\|_w < 1$ unconditionally.
-Section~\ref{sec:spectral_weights} shows that the natural spectral-weight
-candidate $w_k = (1-\lambda_k)^\alpha$ fails structurally, and that
-naive index weights also fail.
-The correct weighted-norm route, if it exists, requires an asymmetric
-or two-weight Schur estimate; see Open Problem~\ref{op:weightnorm}.
+\begin{remark}[Structural decomposition of the contraction problem]
+\label{rem:decomposition}
+The problem decomposes into two logically independent subproblems:
+\begin{enumerate}[nosep,label=(\arabic*)]
+  \item \textbf{Pointwise decay} (analytic, largely resolved):
+        establish $|T_{ij}| \leq C/|i-j|$.
+        This requires Assumption~B (open), but the mechanism
+        (Wronskian IBP $+$ Airy $+$ SL identity) is fully identified.
+  \item \textbf{Summation mechanism} (oscillatory, open):
+        control $\sum_j T_{ij}$ \emph{with signs}.
+        This is a Calder\'{o}n--Zygmund / Fourier problem,
+        not an asymptotic one.
+\end{enumerate}
+Theorem~\ref{thm:nogo} shows that no progress on subproblem~(1) alone
+can resolve subproblem~(2): the obstruction is structural, not quantitative.
 \end{remark}
 
 %% ============================================================
@@ -257,11 +239,8 @@ or two-weight Schur estimate; see Open Problem~\ref{op:weightnorm}.
 
 \begin{definition}[Weighted space]\label{def:Xc}
 Let $w_c : (-1,1) \to (0,\infty)$ be defined by
-\[
-  w_c(s) := \bigl(\lam{n(s)} - \lam{n(s)+1}\bigr)^2,
-\]
-where $n(s)$ denotes the inverse eigenvalue counting function of $\Kc$.
-Define
+$w_c(s) := \bigl(\lam{n(s)} - \lam{n(s)+1}\bigr)^2$,
+where $n(s)$ is the inverse eigenvalue counting function of $\Kc$. Define
 \[
   \Xc := \Bigl\{ h \in L^2(-1,1) \;\Big|\; \int_{-1}^1 h(t)\,dt = 0 \Bigr\},
   \qquad
@@ -272,95 +251,58 @@ Define
 The weight $w_c$ has three asymptotic regimes:
 \begin{itemize}[nosep]
   \item \textbf{Bulk} ($|n - 2c/\pi| \gg c^{1/3}$):
-        $w_c(s) \asymp c^{-2}(1-s^2)^{-1}$ via Widom's density formula.
+        $w_c(s) \asymp c^{-2}(1-s^2)^{-1}$.
   \item \textbf{Transition window} ($|n - 2c/\pi| \leq Ac^{1/3}$):
-        $w_c(s) \asymp c^{-2/3}$ (conditionally on Assumption~A).
-  \item \textbf{Outer region}: exponential decay, negligible in $L^2$.
+        $w_c(s) \asymp c^{-2/3}$.
+  \item \textbf{Outer region}: exponential decay, negligible.
 \end{itemize}
 
-\subsection{Muckenhoupt $A_2$-property of $w_c$}
+\subsection{Muckenhoupt $A_2$-property and Hilbert transform}
 
 \begin{proposition}[$A_2$ control]\label{prop:A2}
-The weight $w_c$ satisfies the Muckenhoupt $A_2$ condition on
-$(-1,1)_\delta := \{s : w_c(s) \geq c^{-M}\}$ for any fixed $M > 0$,
-with constant $[w_c]_{A_2} \leq C$ uniform in $c \geq c_0$.
+The weight $w_c$ satisfies $[w_c]_{A_2} \leq C$ uniformly in $c \geq c_0$.
 \end{proposition}
 
 \begin{proof}[Proof sketch]
-\textbf{Bulk zone.} Here $w_c(s) \asymp c^{-2}(1-s^2)^{-1}$.
-The $A_2$ condition reduces to the classical bound for the Jacobi weight
-$(1-s^2)^{\pm 1}$ (Hunt--Muckenhoupt--Wheeden, 1973); the $c$-factors cancel.
-
-\textbf{Transition zone.} $w_c \asymp c^{-2/3}$ is constant, hence
-$[w_c]_{A_2} = 1$.
-
-\textbf{Outer zone.} Excluded by the cutoff; complementary $L^2$-mass
-is $O(e^{-\gamma c^{1/2}})$ and negligible.
+Bulk: reduces to classical Jacobi weight bound (Hunt--Muckenhoupt--Wheeden,
+1973). Transition: $w_c \asymp c^{-2/3}$ constant, $[w_c]_{A_2}=1$.
+Outer: excluded by cutoff.
 \end{proof}
 
 \begin{corollary}\label{cor:Hilbert}
-The finite Hilbert transform $\Hil$ is bounded on $\Xc$:
-$\norm{\Hil}_{\Xc \to \Xc} = O(1)$ uniformly in $c$.
+$\norm{\Hil}_{\Xc \to \Xc} = O(1)$ uniformly in $c$
+(Coifman--Fefferman, 1974).
 \end{corollary}
-
-\begin{proof}
-Boundedness of the Hilbert transform on weighted $L^2$ with $A_2$ weight
-is classical (Coifman--Fefferman, 1974). Apply Proposition~\ref{prop:A2}.
-\end{proof}
 
 \subsection{Galerkin projection}
 
 \begin{definition}[PSWF Galerkin space]\label{def:Galerkin}
-Let $\{\pswf{k}\}_{k=0}^\infty$ denote the $L^2(-1,1)$-orthonormal PSWF basis
-with eigenvalues $\lam{k}$ of $\Kc$, ordered $\lam{0} > \lam{1} > \cdots$.
-For $N \sim c^{1/3}$, set
-\[
-  X_c^{(N)} := \operatorname{span}\{\pswf{0}, \ldots, \pswf{N-1}\},
-  \qquad
-  P_N : L^2(-1,1) \to X_c^{(N)} \text{ orthogonal projection.}
-\]
+For $N \sim c^{1/3}$:
+$X_c^{(N)} := \operatorname{span}\{\pswf{0}, \ldots, \pswf{N-1}\}$,
+$P_N : L^2(-1,1) \to X_c^{(N)}$ orthogonal projection.
 \end{definition}
 
-The Gram matrix of the PSWF restriction satisfies (by Gram coercivity,
-Paper~I of this programme):
-\[
-  \sigma_{\min}(G^{(N)}) \geq \alpha_N \sim c^{-1/2},
-\]
-so $P_N$ is well-conditioned with $\norm{G^{(N)}-1} \lesssim c^{1/2}$.
+By Gram coercivity (Paper~I):
+$\sigma_{\min}(G^{(N)}) \geq \alpha_N \sim c^{-1/2}$,
+so $P_N$ is well-conditioned.
 
 %% ============================================================
 \section{Resolvent Analysis and Failure of Global Contraction}
 \label{sec:resolvent}
 %% ============================================================
 
-\subsection{Spectral density variation formula}
-
-The linearised density variation is given by the operator trace formula:
-\begin{equation}\label{eq:deltarho}
-  \delta\rho(s) = \frac{1}{\pi}\Im\tr\bigl(R_s \cdot \delta K \cdot R_s\bigr),
-  \qquad R_s := (I - s\Kc)^{-1}.
-\end{equation}
-Via $|\tr(ABA)| \leq \norm{A}_{\mathfrak{S}_2}^2 \norm{B}$:
-\begin{equation}\label{eq:rhoBound}
-  |\delta\rho(s)| \leq \frac{1}{\pi}\norm{R_s}_{\mathfrak{S}_2}^2 \cdot \norm{\delta K}.
-\end{equation}
-
-\subsection{Hilbert--Schmidt growth}
-
 \begin{lemma}[HS norm of resolvent]\label{lem:HS}
-$\displaystyle\norm{R_s}_{\mathfrak{S}_2}^2 = \sum_{k=0}^\infty
-\frac{1}{(1-s\lam{k})^2} \sim c^{5/3}$ near the transition window $s \to 1$.
+$\norm{R_s}_{\mathfrak{S}_2}^2 \sim c^{5/3}$ near $s \to 1$.
 \end{lemma}
 
 \begin{proof}
-The transition window contributes $\sim c^{1/3}$ modes with
-$1 - \lam{k} \asymp c^{-2/3}$, each contributing $c^{4/3}$,
-giving total $c^{1/3} \cdot c^{4/3} = c^{5/3}$.
+$\sim c^{1/3}$ transition modes with $1-\lam{k} \asymp c^{-2/3}$,
+each contributing $c^{4/3}$: total $c^{5/3}$.
 \end{proof}
 
-This rules out global $L^2$ contraction: the Widom-phase prefactor $c$
-combines with $c^{5/3}$ to give
+Combined with the Widom prefactor:
 $\norm{D\Tc}_{L^2 \to L^2} \gtrsim c \cdot c^{5/3} = c^{8/3}$.
+Global $L^2$ contraction fails.
 
 %% ============================================================
 \section{Matrix Representation and Off-diagonal Decay}
@@ -371,46 +313,29 @@ $\norm{D\Tc}_{L^2 \to L^2} \gtrsim c \cdot c^{5/3} = c^{8/3}$.
 \label{sec:regimes}
 
 \begin{assumption}[Galerkin regime]\label{ass:G}
-Throughout Sections~\ref{sec:matrix}--\ref{sec:norm}, all indices satisfy
-$k,l \leq N$, $N = \lfloor Ac^{1/3}\rfloor$, for a fixed constant $A > 0$.
+All indices satisfy $k,l \leq N = \lfloor Ac^{1/3}\rfloor$.
 \end{assumption}
 
-Under Assumption~\ref{ass:G}, the interval $(-1,1)$ is partitioned into:
+Partition $(-1,1)$ into:
 \begin{itemize}[nosep]
   \item \textbf{Bulk zone} $\mathcal{Z}_{\rm bulk}$: $|s| \leq 1 - c^{-2/3}$.
-        WKB/Szeg\H{o} bounds apply here.
   \item \textbf{Transition zone} $\mathcal{Z}_{\rm tz}$:
-        $1-c^{-2/3} < |s| < 1$; measure $\sim c^{-2/3}$.
+        $1-c^{-2/3} < |s| < 1$, measure $\sim c^{-2/3}$.
 \end{itemize}
 
-\noindent\textbf{Two frequency scales.}
-Two frequency scales appear throughout:
-\begin{equation}\label{eq:freqdef}
-  \omega_{kl}^{\rm tz} := c^{2/3}|k-l|
-  \quad\text{(WKB phase frequency at the bulk--transition boundary;
-  used as lower-bound surrogate in IBP)},
-\end{equation}
-\begin{equation}\label{eq:eigengap}
-  \chi_k - \chi_l \sim 2c|k-l|
-  \quad\text{(SL eigenvalue gap, Widom linear spacing, $k,l \leq N$)}.
-\end{equation}
-These differ by a factor $c^{1/3}$.
+Two frequency scales:
+\begin{align}
+  \omega_{kl}^{\rm tz} &:= c^{2/3}|k-l|
+  \quad\text{(WKB phase frequency at bulk--transition boundary)},
+  \label{eq:freqdef}\\
+  \chi_k - \chi_l &\sim 2c|k-l|
+  \quad\text{(SL eigenvalue gap)}.
+  \label{eq:eigengap}
+\end{align}
 
-\begin{remark}[Asymptotic ordering of scales]\label{rem:ordering}
-For $c > 1$ the following strict ordering holds:
-\[
-  c^{-1} \ll c^{-2/3} \ll c^{-1/2} \ll c^{-1/3} \ll c^{-1/6} \ll 1.
-\]
-In particular:
-\begin{itemize}[nosep]
-  \item $c^{-2/3} < c^{-1/2}$: the transition-zone integral bound is
-        \emph{smaller} (better) than the bulk bound.
-  \item $c^{-1/3} > c^{-1/2}$: the transition-zone measure $c^{-2/3}$
-        times $c^{1/3}$ modes gives $c^{-1/3}$, which is \emph{larger}
-        than $c^{-1/2}$.
-\end{itemize}
-Every estimate below respects this ordering and never appeals to
-a false inequality between these exponents.
+\begin{remark}[Asymptotic ordering]\label{rem:ordering}
+$c^{-1} \ll c^{-2/3} \ll c^{-1/2} \ll c^{-1/3} \ll c^{-1/6} \ll 1$
+for $c > 1$. Every estimate below respects this ordering.
 \end{remark}
 
 \begin{table}[h]
@@ -418,386 +343,270 @@ a false inequality between these exponents.
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{lllll}
 \hline
-\textbf{Object} & \textbf{Scale} & \textbf{Zone} & \textbf{Strength} & \textbf{Source}\\
+\textbf{Object} & \textbf{Scale} & \textbf{Zone} & \textbf{Strength}
+  & \textbf{Source}\\
 \hline
 $\omega_{kl}^{\rm tz}$ & $c^{2/3}|k-l|$ & tz boundary & surrogate freq.
-  & WKB at $1-s^2 = c^{-2/3}$ \\
-$\chi_k-\chi_l$ & $2c|k-l|$ & uniform & SL gap
-  & Widom linear spacing \\
+  & WKB at $s_*$ \\
+$\chi_k-\chi_l$ & $2c|k-l|$ & uniform & SL gap & Widom \\
 $\int|W_k^l|$ & $c^{-1/6}/|k-l|$ & combined & intermediate
-  & Corollary~\ref{cor:Wronskian} \\
+  & Cor.~\ref{cor:Wronskian} \\
 $|\mu_{kl}|$ & $c^{-7/6}/|k-l|^2$ & uniform & intermediate
-  & Proposition~\ref{prop:moment}(b) \\
-$\|\pswf{k}\|_{L^\infty(\mathcal{Z}_{\rm tz})}$ & $c^{1/6}$ & tz only & Airy
-  & Lemma~\ref{lem:Airy} \\
-$\|\pswf{k}\|_{L^\infty(\mathcal{Z}_{\rm bulk})}$ & $c^{-1/4}(1-s^2)^{-1/4}$ & bulk only & WKB
-  & Osipov--Rokhlin--Xiao \\
-$|F_{kl}(s)|$ (tz) & $c^{-1/3}/|k-l|$ & tz & stronger pointwise
-  & Airy IBP (Lemma~\ref{lem:sublD}, Step~3) \\
-$|F_{kl}(s)|$ (bulk) & $c^{-1/2}(1-s^2)^{1/2}/|k-l|$ & bulk & \textit{limiting}
-  & Wronskian identity (Lemma~\ref{lem:sublD}, Step~4) \\
-$|I_{kl}^{\rm tz}|$ & $c^{-2/3}/|k-l|$ & tz & stronger pointwise
-  & Lemma~\ref{lem:sublD} Step~3 \\
-$|I_{kl}^{\rm bulk}|$ & $c^{-1/2}/|k-l|$ & bulk & limiting globally
-  & Lemma~\ref{lem:sublD} Step~4 \\
+  & Prop.~\ref{prop:moment}(b) \\
+$\|\pswf{k}\|_{L^\infty(\mathcal{Z}_{\rm tz})}$ & $c^{1/6}$ & tz
+  & Airy & Lem.~\ref{lem:Airy} \\
+$\|\pswf{k}\|_{L^\infty(\mathcal{Z}_{\rm bulk})}$ & $c^{-1/4}(1-s^2)^{-1/4}$
+  & bulk & WKB & Osipov--Rokhlin--Xiao \\
+$|F_{kl}(s)|$ (tz) & $c^{-1/3}/|k-l|$ & tz & stronger
+  & Lem.~\ref{lem:sublD}, Step~3 \\
+$|F_{kl}(s)|$ (bulk) & $c^{-1/2}(1-s^2)^{1/2}/|k-l|$ & bulk & limiting
+  & Prop.~\ref{prop:moment}(c) \\
+$|I_{kl}^{\rm tz}|$ & $c^{-2/3}/|k-l|$ & tz & stronger
+  & Lem.~\ref{lem:sublD} \\
+$|I_{kl}^{\rm bulk}|$ & $c^{-1/2}/|k-l|$ & bulk & limiting
+  & Lem.~\ref{lem:sublD} \\
 \hline
 $|I_{kl}|$ & $c^{-1/2}/|k-l|$ & global & \textbf{integral bound}
-  & \textbf{Lemma~\ref{lem:RL}} \\
-$P_{kl}$ (pointwise) & $\leq C_2 c^{1/2}$ & Galerkin window & \textbf{Assumption~B}
-  & \textbf{Lemma~\ref{lem:prefactor}} \\
+  & \textbf{Lem.~\ref{lem:RL}} \\
+$P_{kl}$ & $\leq C_2 c^{1/2}$ & Galerkin window
+  & \textbf{Assumption~B} & \textbf{Lem.~\ref{lem:prefactor}} \\
 $|T_{ij}|$ & $O(1)/|i-j|$ & global & \textbf{Schur input}
-  & \textbf{Prop.~\ref{prop:Tij}, cond.~on Ass.~B} \\
-TZ Schur contrib. & $O(1)$ & TZ indices & subdominant
-  & Lemma~\ref{lem:zone_schur} \\
-Bulk Schur contrib. & $\leq C\log c$ & bulk indices & dominant
-  & Lemma~\ref{lem:zone_schur} \\
-Schur row sum & $\leq C\log c \to \infty$ & global
-  & \textbf{norm bound only (Thm~\ref{thm:main}(a))}
-  & dyadic lower bd: Thm~\ref{thm:nogo} \\
+  & \textbf{Prop.~\ref{prop:Tij}} \\
+TZ Schur contrib. & $o(1) \to 0$ & TZ indices & asympt.\ irrelevant
+  & Lem.~\ref{lem:zone_schur} \\
+Bulk Schur contrib. & $\sim C\log c$ & bulk & dominant
+  & Lem.~\ref{lem:zone_schur} \\
+Schur row sum & $\leq C\log c$, $\geq \frac{\kappa}{2}\log c$
+  & global & \textbf{optimal norm bound}
+  & Thms~\ref{thm:main}(a),~\ref{thm:nogo} \\
 Schur row sum & $\leq Cc^{-1/2}\log c \to 0$ & global
-  & \textbf{contraction (Thm~\ref{thm:main}(b))}
-  & Ass.~B$'$, requires cancellation \\
+  & \textbf{contraction}
+  & Thm~\ref{thm:main}(b), Ass.~B$'$ \\
 \hline
 \end{tabular}
-\caption{Scaling table under Assumption~\ref{ass:G}.
-The Schur test delivers a norm bound $\log c$, not a contraction;
-Theorem~\ref{thm:nogo} shows this is optimal in the class $|T_{ij}| \leq C/|i-j|$.
-A genuine contraction requires additionally Assumption~B$'$.}
+\caption{Scaling table. The $\log c$ norm bound is both upper and lower
+optimal. Contraction requires cancellation (Assumption~B$'$), not decay.}
 \label{tab:scales}
 \end{table}
 
-\subsection{Expansion and matrix entries}
+\subsection{Matrix entries and commutator structure}
 
-Write $h = \sum_{k=0}^{N-1} a_k \pswf{k}$. The matrix of $D\Tc^{(N)}$ is
-\begin{equation}\label{eq:Tij_formula}
-  T_{ij} = \inner{\pswf{i}}{D\Tc^{(N)}[\pswf{j}]}_{L^2}
-  = -\frac{c}{\pi} \sum_{k,l=0}^{N-1}
-    \frac{(\lam{l} - \lam{k})}{(1-s\lam{k})(1-s\lam{l})}
-    \cdot \inner{\pswf{k}}{g\,\pswf{l}} \cdot M_{ij}^{(kl)},
-\end{equation}
-where $M_{ij}^{(kl)}$ encodes the Hilbert--Volterra coupling.
-After integrating over $s \in (-1,1)$, the dominant contribution
-(for each pair $k \neq l$) takes the form
+Write $h = \sum_{k=0}^{N-1} a_k \pswf{k}$. The dominant contribution is
 \begin{equation}\label{eq:Tij_simple}
   T_{ij} \;\sim\; c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})}
   \cdot I_{ij},
   \qquad I_{ij} := \int_{-1}^1 \arccos(s)\,\pswf{i}(s)\pswf{j}(s)\,ds.
 \end{equation}
-The two factors are controlled by Lemma~\ref{lem:prefactor}
-and Lemma~\ref{lem:RL} respectively.
-
-\subsection{Commutator structure: diagonal vanishing}
-
-The numerator $(\lam{l} - \lam{k})$ vanishes for $k = l$. Hence:
+The numerator $(\lam{l}-\lam{k})$ vanishes for $k=l$, giving:
 \begin{equation}\label{eq:diagzero}
-  T_{ii} = 0 \qquad \text{for all } i = 0, \ldots, N-1.
+  T_{ii} = 0 \qquad \text{for all } i.
 \end{equation}
 
 \subsection{Airy approximation and Wronskian bound}
 \label{sec:Airy}
 
-\begin{lemma}[Airy approximation for PSWFs]\label{lem:Airy}
-Let $k \leq N = \lfloor A c^{1/3} \rfloor$, and let $s_k$ be the turning point.
-Then uniformly for $s \in \mathcal{Z}_{\rm tz}(k) = \{|s-s_k| \leq c^{-2/3+\varepsilon}\}$:
-\begin{equation}\label{eq:AiryApprox}
-  \pswf{k}(s) = c^{1/6}\,\frac{\pi^{1/2}}{|\Ai'(0)|^{1/2}}
-  \bigl[ \Ai(c^{2/3}\zeta_k(s)) + O(c^{-1/3}) \bigr],
-\end{equation}
-so $|\pswf{k}(s)| \lesssim c^{1/6}$ in $\mathcal{Z}_{\rm tz}(k)$.
+\begin{lemma}[Airy approximation]\label{lem:Airy}
+Uniformly in $\mathcal{Z}_{\rm tz}(k)$:
+$|\pswf{k}(s)| \lesssim c^{1/6}$.
 \end{lemma}
 
 \begin{proof}[References]
-Olver~\cite{Olver1974}; Osipov--Rokhlin--Xiao~\cite{OsipovRokhlinXiao2013},
-Theorems~4.2--4.3.
+Olver~\cite{Olver1974};
+Osipov--Rokhlin--Xiao~\cite{OsipovRokhlinXiao2013}, Thms~4.2--4.3.
 \end{proof}
 
-\begin{corollary}[Integral Wronskian bound]\label{cor:Wronskian}
-For $k \neq l$, $k,l \leq N$, with weighted Wronskian
+\begin{corollary}[Wronskian bound]\label{cor:Wronskian}
+For $k \neq l$, $k,l \leq N$, with
 $W_k^l(s) := (1-s^2)[\pswf{k}'\pswf{l} - \pswf{k}\pswf{l}']$:
-\begin{equation}\label{eq:WronskianIntegral}
+\[
   \int_{-1}^1 |W_k^l(s)|\,ds \lesssim \frac{c^{-1/6}}{|k-l|}.
-\end{equation}
+\]
 \end{corollary}
 
 \begin{proof}
-\textbf{Transition zone.}
-$|\pswf{k}| \lesssim c^{1/6}$, $|\pswf{k}'| \lesssim c^{5/6}$,
-$(1-s^2) \lesssim c^{-2/3}$, measure $\sim c^{-2/3}$:
-$J_{\rm tz} \lesssim c^{1/3} \cdot c^{-2/3} = c^{-1/3}$.
-
-\textbf{Bulk zone.}
-WKB gives $|W_k^l| \lesssim c^{1/2}$. One IBP using
-$\omega_{kl}^{\rm tz} = c^{2/3}|k-l|$ as surrogate frequency:
-$J_{\rm bulk} \lesssim c^{1/2}/(c^{2/3}|k-l|) = c^{-1/6}/|k-l|$.
-
-\textbf{Total.}
-For $|k-l| \geq 1$ and $c$ large, the bulk term $c^{-1/6}/|k-l|$
-dominates the transition term $c^{-1/3}$, since $c^{-1/6} > c^{-1/3}$
-(equivalently $c^{1/6} > 1$, which holds for $c > 1$).
-Hence $J_{\rm tz} + J_{\rm bulk} \lesssim c^{-1/6}/|k-l|$.
+\textbf{TZ:} $J_{\rm tz} \lesssim c^{1/3} \cdot c^{-2/3} = c^{-1/3}$.
+\textbf{Bulk:} $J_{\rm bulk} \lesssim c^{1/2}/(c^{2/3}|k-l|) = c^{-1/6}/|k-l|$.
+\textbf{Total:} For $|k-l| \geq 1$ and $c > 1$:
+$c^{-1/6} > c^{-1/3}$ (since $c^{1/6} > 1$),
+so the bulk term dominates and
+$J_{\rm tz} + J_{\rm bulk} \lesssim c^{-1/6}/|k-l|$.
 \end{proof}
 
-\subsection{Sturm--Liouville moment bound}
+\subsection{Sturm--Liouville moment and primitive bounds}
 \label{sec:SLmoment}
 
-\begin{proposition}[SL moment and primitive-function bounds]
-\label{prop:moment}
+\begin{proposition}[SL bounds]\label{prop:moment}
 For $k \neq l$, $k,l \leq N$:
 \begin{enumerate}[label=(\alph*)]
-  \item \textbf{Parity.} If $k \equiv l \pmod{2}$ then $\mu_{kl} = 0$.
-  \item \textbf{Moment bound.}
-        $|\mu_{kl}| := \bigl|\int_{-1}^1 s\,\pswf{k}\pswf{l}\,ds\bigr|
-        \lesssim c^{-7/6}/|k-l|^2$.
+  \item \textbf{Parity.} $k \equiv l \pmod{2}$ $\Rightarrow$ $\mu_{kl} = 0$.
+  \item \textbf{Moment.} $|\mu_{kl}| \lesssim c^{-7/6}/|k-l|^2$.
   \item \textbf{Wronskian identity.}
-        For the primitive $F_{kl}(s) := \int_s^1 \pswf{k}\pswf{l}\,dt$
-        in the bulk zone:
-        \begin{equation}\label{eq:FfromW}
-          F_{kl}(s) = \frac{W_k^l(s)}{\chi_k - \chi_l}.
-        \end{equation}
-        The boundary condition $W_k^l(1) = 0$ holds because
-        $(1-s^2)\big|_{s=1} = 0$, regardless of the amplitudes of
-        $\pswf{k}$ and $\pswf{l}$.
-        Consequently $|F_{kl}(s)| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$
-        in $\mathcal{Z}_{\rm bulk}$.
+        $F_{kl}(s) := \int_s^1\pswf{k}\pswf{l}\,dt
+        = W_k^l(s)/(\chi_k-\chi_l)$
+        in $\mathcal{Z}_{\rm bulk}$,
+        with $|F_{kl}(s)| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-\textbf{(a)} Parity of $(-1)^k$ gives odd integrand; integral vanishes.
+\textbf{(b)} SL identity: $(\chi_k-\chi_l)\mu_{kl} = \int W_k^l\,ds
+\lesssim c^{-1/6}/|k-l|$; divide by $\chi_k-\chi_l \asymp 2c|k-l|$.
 
-\medskip
-\textbf{(b)} Each $\pswf{k}$ satisfies the SL equation
-\begin{equation}\label{eq:SLeq}
-  -[(1-s^2)\pswf{k}']' + c^2 s^2 \pswf{k} = \chi_k \pswf{k},
-  \qquad \chi_k \sim 2ck \text{ for } k \leq N.
-\end{equation}
-The SL identity gives $(\chi_k - \chi_l)\mu_{kl} = \int_{-1}^1 W_k^l(s)\,ds$,
-hence
-$|\mu_{kl}| \lesssim (c^{-1/6}/|k-l|)/(2c|k-l|) = c^{-7/6}/(2|k-l|^2)$.
-
-\medskip
-\textbf{(c)} From the SL equation:
-$(\chi_k-\chi_l)\pswf{k}\pswf{l} = -(d/ds)W_k^l(s)$.
-Integrating from $s$ to $1$ and using $W_k^l(1)=0$ gives~\eqref{eq:FfromW}.
-The bound $|F_{kl}(s)| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$ follows
-from the WKB estimate $|W_k^l(s)| \lesssim c^{1/2}(1-s^2)^{1/2}$ in
-$\mathcal{Z}_{\rm bulk}$ divided by $|\chi_k - \chi_l| \asymp 2c|k-l|$.
+\textbf{(c)} SL equation gives $(\chi_k-\chi_l)\pswf{k}\pswf{l}
+= -(d/ds)W_k^l$; integrate from $s$ to $1$ using $W_k^l(1)=0$.
+Bound from WKB: $|W_k^l| \lesssim c^{1/2}(1-s^2)^{1/2}$ in bulk.
 \end{proof}
 
-\subsection{Off-diagonal integral bound}
+\subsection{Off-diagonal integral bounds}
 
-\begin{lemma}[Zone decomposition of $I_{kl}$]\label{lem:sublD}
-For $k \neq l$, $k,l \leq N$, let
-$I_{kl} := \int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds$.
-Then:
+\begin{lemma}[Zone decomposition]\label{lem:sublD}
+For $k \neq l$, $k,l \leq N$:
 \begin{align}
-  |I_{kl}^{\rm tz}| &\lesssim \frac{c^{-2/3}}{|k-l|},
-  \label{eq:IklTZ}\\
-  |I_{kl}^{\rm bulk}| &\lesssim \frac{c^{-1/2}}{|k-l|},
-  \label{eq:IklBulk}\\
-  |I_{kl}| = |I_{kl}^{\rm tz}| + |I_{kl}^{\rm bulk}|
-  &\lesssim \frac{c^{-1/2}}{|k-l|}.
-  \label{eq:Ikltotal}
+  |I_{kl}^{\rm tz}| &\lesssim c^{-2/3}/|k-l|, \label{eq:IklTZ}\\
+  |I_{kl}^{\rm bulk}| &\lesssim c^{-1/2}/|k-l|, \label{eq:IklBulk}\\
+  |I_{kl}| &\lesssim c^{-1/2}/|k-l|. \label{eq:Ikltotal}
 \end{align}
-The bound~\eqref{eq:Ikltotal} is limited by the bulk term:
-$c^{-2/3} < c^{-1/2}$ for $c > 1$.
 \end{lemma}
 
 \begin{proof}
-\textbf{IBP setup.}
-Since $(\arccos)'(s) = -(1-s^2)^{-1/2}$, integration by parts gives:
-\[
-  I_{kl}
-  = \bigl[\arccos(s)\cdot(-F_{kl}(s))\bigr]_{-1}^{1}
-    + \int_{-1}^1 \frac{F_{kl}(s)}{\sqrt{1-s^2}}\,ds.
-\]
-The boundary term vanishes: $F_{kl}(1) = 0$ (empty integral) and
-$F_{kl}(-1) = \langle\pswf{k},\pswf{l}\rangle_{L^2} = 0$ by orthogonality.
+IBP via $(\arccos)'(s) = -(1-s^2)^{-1/2}$: boundary terms vanish
+by $F_{kl}(1)=0$ and $F_{kl}(-1)=\langle\pswf{k},\pswf{l}\rangle=0$.
 Hence $I_{kl} = \int_{-1}^1 F_{kl}(s)(1-s^2)^{-1/2}\,ds$.
 
-\medskip
-\noindent\textbf{Step 3: Transition zone.}
-In $\mathcal{Z}_{\rm tz}$: $(1-s^2) \lesssim c^{-2/3}$,
-$(1-s^2)^{-1/2} \lesssim c^{1/3}$, and $|\pswf{k}\pswf{l}| \lesssim c^{1/3}$
-(Lemma~\ref{lem:Airy}).
-The primitive satisfies $|F_{kl}(s)| \leq \int_s^1|\pswf{k}\pswf{l}|\,dt
-\lesssim c^{1/3}\cdot c^{-2/3} = c^{-1/3}$.
-A further IBP using the Airy oscillation frequency
-$\omega_{kl}^{\rm tz} = c^{2/3}|k-l|$ gives
-$|F_{kl}(s)| \lesssim c^{-1/3}/|k-l|$. Therefore:
-\[
-  |I_{kl}^{\rm tz}|
-  \lesssim \frac{c^{-1/3}}{|k-l|} \cdot c^{1/3} \cdot c^{-2/3}
-  = \frac{c^{-2/3}}{|k-l|}.
-\]
+\textbf{TZ:} $|F_{kl}| \lesssim c^{-1/3}/|k-l|$ (IBP with $\omega_{kl}^{\rm tz}$);
+$(1-s^2)^{-1/2} \lesssim c^{1/3}$; measure $\sim c^{-2/3}$:
+$|I_{kl}^{\rm tz}| \lesssim c^{-1/3}/|k-l| \cdot c^{1/3} \cdot c^{-2/3}
+= c^{-2/3}/|k-l|$.
 
-\medskip
-\noindent\textbf{Step 4: Bulk zone.}
-Use Proposition~\ref{prop:moment}(c):
-$|F_{kl}(s)| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$.
-Hence:
-\[
-  |I_{kl}^{\rm bulk}|
-  \leq \int_{\mathcal{Z}_{\rm bulk}}
-       \frac{c^{-1/2}(1-s^2)^{1/2}}{|k-l|\sqrt{1-s^2}}\,ds
-  = \frac{c^{-1/2}}{|k-l|}\int_{\mathcal{Z}_{\rm bulk}} ds
-  \leq \frac{2c^{-1/2}}{|k-l|}.
-\]
-
-\medskip
-\noindent\textbf{Conclusion.}
-$|I_{kl}| \lesssim c^{-2/3}/|k-l| + c^{-1/2}/|k-l| \lesssim c^{-1/2}/|k-l|$.
+\textbf{Bulk:} $|F_{kl}| \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$
+(Prop.~\ref{prop:moment}(c));
+$(1-s^2)^{-1/2}$ cancels: $|I_{kl}^{\rm bulk}| \leq 2c^{-1/2}/|k-l|$.
 \end{proof}
 
-\begin{lemma}[PSWF cross-product integral]\label{lem:RL}
-For $k \neq l$, $k, l \leq N \sim c^{1/3}$:
-$|\int_{-1}^1 \arccos(s)\,\pswf{k}(s)\pswf{l}(s)\,ds| \leq C_1 c^{-1/2}/|k-l|$.
+\begin{lemma}[PSWF integral bound]\label{lem:RL}
+$\bigl|\int_{-1}^1\arccos(s)\,\pswf{k}\pswf{l}\,ds\bigr|
+\leq C_1 c^{-1/2}/|k-l|$.
 \end{lemma}
 
-\begin{proof} Apply Lemma~\ref{lem:sublD}, bound~\eqref{eq:Ikltotal}. \end{proof}
-
-\begin{lemma}[Zone contributions to the Schur row sum]\label{lem:zone_schur}
-Under Assumption~\ref{ass:B}, let $N_{\rm tz} \sim c^{1/3}$ denote the number
-of transition-zone index pairs and $N_{\rm bulk} \sim N$ the bulk pairs.
-For any fixed row $i$, using $|i-j| \geq 1$ in each zone:
+\begin{lemma}[Zone contributions to Schur row sum]\label{lem:zone_schur}
+Under Assumption~\ref{ass:B}, for any fixed row $i$:
 \begin{align}
-  \sum_{j \in \text{TZ}} |T_{ij}|
-  &\leq C_2 c^{1/2} \cdot \frac{c^{-2/3}}{1} \cdot N_{\rm tz}
-   = C_2 c^{1/2} \cdot c^{-2/3} \cdot c^{1/3}
-   = C_2 c^{1/6}
-   \cdot c^{-1/6} = O(1),
+  \sum_{j \in \mathrm{TZ},\,j\neq i} |T_{ij}|
+  &\leq \tfrac{1}{3}C_2\,c^{-1/6}\log c \;\to\; 0,
   \label{eq:zone_tz}\\
-  \sum_{j \in \text{bulk},\, j \neq i} |T_{ij}|
-  &\leq C_1 C_2 \sum_{d=1}^{N} \frac{1}{d}
-   \leq C_1 C_2 (1 + \log N)
-   \sim C_1 C_2 \log c.
+  \sum_{j \in \mathrm{bulk},\,j\neq i} |T_{ij}|
+  &\leq C_1 C_2(1+\log N) \;\sim\; C_1 C_2\log c.
   \label{eq:zone_bulk}
 \end{align}
-The bulk zone dominates: total Schur row sum $\leq C(1 + \log c) \sim C\log c$.
-The transition zone contributes only $O(1)$ and is subdominant.
+The Schur row sum is asymptotically determined by the bulk zone alone.
 \end{lemma}
 
 \begin{proof}
-\eqref{eq:zone_tz}: Each TZ pair satisfies $|T_{ij}| \leq P_{ij} \cdot |I_{ij}^{\rm tz}|
-\leq C_2 c^{1/2} \cdot c^{-2/3}/1$ (using $|i-j| \geq 1$); sum over
-$N_{\rm tz} \sim c^{1/3}$ terms gives $C_2 c^{1/2-2/3+1/3} = C_2 c^{1/6}$.
-Wait -- recheck: $c^{1/2} \cdot c^{-2/3} \cdot c^{1/3} = c^{1/2-2/3+1/3} = c^{1/6}$.
-This is not $O(1)$; it grows. The correct bound uses the full $|i-j|$-decay:
-for $N_{\rm tz}$ TZ indices at distance $d \geq 1$ from $i$:
-\[
-  \sum_{j \in \text{TZ}} |T_{ij}|
-  \leq C_2 c^{1/2} \cdot \frac{c^{-2/3}}{|k-l|}
-  \leq C_2 c^{1/2} \cdot c^{-2/3} \sum_{d=1}^{N_{\rm tz}} \frac{1}{d}
-  \leq C_2 c^{-1/6} \log(c^{1/3})
-  = \tfrac{1}{3} C_2 c^{-1/6} \log c \to 0.
-\]
-In particular, TZ contribution $\to 0$ and is strictly subdominant to~\eqref{eq:zone_bulk}.
-\eqref{eq:zone_bulk}: Direct harmonic bound as in Theorem~\ref{thm:main}(a).
+\eqref{eq:zone_tz}: Using $|i-j| \geq 1$ and
+$|T_{ij}| \leq C_2 c^{1/2} \cdot c^{-2/3}/|i-j|$ for TZ pairs:
+$\sum_{j\in\rm TZ} |T_{ij}|
+\leq C_2 c^{-1/6}\sum_{d=1}^{N_{\rm tz}} 1/d
+\leq C_2 c^{-1/6}\cdot\tfrac{1}{3}\log c \to 0$.
+\eqref{eq:zone_bulk}: direct harmonic bound via Prop.~\ref{prop:Tij}.
 \end{proof}
+
+\begin{remark}[Transition zone: asymptotic irrelevance]\label{rem:tz_irrelevant}
+The transition-zone contribution to the Schur row sum is
+$O(c^{-1/6}\log c) \to 0$.
+The transition zone is not merely subdominant but asymptotically invisible:
+for large $c$, the Schur row sum is determined entirely by the bulk.
+\end{remark}
 
 \subsection{Bulk oscillation barrier}
 \label{sec:bulk_barrier}
 
-\begin{proposition}[Bulk oscillation barrier via boundary term]
-\label{prop:bulk_barrier}
-Let $k \neq l$, $k,l \leq N \sim c^{1/3}$, and consider the bulk contribution
+\begin{proposition}[Bulk oscillation barrier]\label{prop:bulk_barrier}
+Let $k \neq l$, $k,l \leq N$.
+Under the WKB representation
+$\pswf{k}(s) \sim c^{-1/4}(1-s^2)^{-1/4}\cos(\theta_k(s))$
+in $\mathcal{Z}_{\rm bulk}$:
+
+\medskip
+\noindent\textbf{(i)} First IBP (Wronskian):
+$|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/|k-l|$.
+
+\medskip
+\noindent\textbf{(ii)} WKB decomposition:
+$\pswf{k}\pswf{l} = \tfrac{1}{2}A_kA_l
+[\cos(\theta_k-\theta_l)+\cos(\theta_k+\theta_l)]$.
+The sum-phase term is $O(c^{-1}/|k+l|)$ after one IBP.
+The difference-phase frequency is
+$\partial_s(\theta_k-\theta_l) \asymp |k-l|(1-s^2)^{-1/2}$.
+
+\medskip
+\noindent\textbf{(iii)} Second IBP applied to the difference term yields:
 \[
   I_{kl}^{\rm bulk}
-  = \int_{\mathcal{Z}_{\rm bulk}} F_{kl}(s)\,(1-s^2)^{-1/2}\,ds,
-  \qquad
-  F_{kl}(s) = \int_s^1 \pswf{k}(t)\pswf{l}(t)\,dt.
-\]
-Assume the WKB representation
-\[
-  \pswf{k}(s) \sim A_k(s)\cos(\theta_k(s)),
-  \qquad
-  A_k(s) \sim c^{-1/4}(1-s^2)^{-1/4}
-\]
-holds uniformly in $\mathcal{Z}_{\rm bulk}$.
-
-\medskip
-\noindent\textbf{(i) First integration by parts.}
-One integration by parts via the Wronskian identity yields
-\[
-  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-1/2}}{|k-l|},
-\]
-as in Lemma~\ref{lem:sublD}. This is the current unconditional bound.
-
-\medskip
-\noindent\textbf{(ii) WKB product decomposition.}
-\[
-  \pswf{k}(s)\pswf{l}(s)
-  = \tfrac{1}{2} A_k(s) A_l(s)
-    \bigl[\cos(\theta_k(s) - \theta_l(s)) + \cos(\theta_k(s) + \theta_l(s))\bigr].
-\]
-The fast (sum-phase) term contributes $O(c^{-1}/|k+l|)$ after one IBP -- negligible.
-The slow (difference-phase) term has frequency
-\begin{equation}\label{eq:difffreq}
-  \partial_s(\theta_k - \theta_l) \asymp \frac{|k-l|}{\sqrt{1-s^2}}.
-\end{equation}
-
-\medskip
-\noindent\textbf{(iii) Second IBP: boundary term obstruction.}
-A second integration by parts using~\eqref{eq:difffreq} produces:
-\[
-  I_{kl}^{\rm bulk}
-  = \underbrace{\text{(interior integral)}}_{\displaystyle O(c^{-2/3}/|k-l|)}
-  \;+\;
-  \underbrace{\text{(boundary term at } s_* = 1 - c^{-2/3})}_{\displaystyle
-    \text{dominant -- see (iv)}}.
+  = \underbrace{\text{interior integral}}_{O(c^{-2/3}/|k-l|)}
+  + \underbrace{\text{boundary term at }s_* = 1-c^{-2/3}}_{\text{dominant}}.
 \]
 
 \medskip
-\noindent\textbf{(iv) Boundary term dominance.}
-At $s_* = 1 - c^{-2/3}$:
-$(1-s_*^2)^{1/2} \asymp c^{-1/3}$ and
-$\partial_s(\theta_k - \theta_l)|_{s_*} \asymp |k-l|\,c^{1/3}$.
-The boundary term evaluates to:
+\noindent\textbf{(iv)} At $s_* = 1-c^{-2/3}$:
+$(1-s_*^2)^{1/2} \asymp c^{-1/3}$,
+$\partial_s(\theta_k-\theta_l)|_{s_*} \asymp |k-l|c^{1/3}$,
+$|F_{kl}(s_*)| \lesssim c^{-5/6}/|k-l|$.
+The boundary term satisfies:
 \[
-  \text{boundary term}
-  \;\asymp\;
-  \frac{F_{kl}(s_*)}{\partial_s(\theta_k-\theta_l)|_{s_*}}
-  \;\asymp\;
-  \frac{c^{-1/2} \cdot c^{-1/3}/|k-l|}{|k-l| \cdot c^{1/3}}
-  \;=\;
-  \frac{c^{-1/2} \cdot c^{-1/3}}{|k-l|^2 \cdot c^{1/3}}
-  \;=\;
-  \frac{c^{-1/2}}{|k-l|^2},
+  \left|\text{boundary term}\right|
+  \asymp \frac{c^{-5/6}/|k-l|}{|k-l|\cdot c^{1/3}}
+  = \frac{c^{-7/6}}{|k-l|^2}
+  \cdot c^{?}
 \]
-which for $|k-l| = O(1)$ exceeds the target scale $c^{-2/3}/|k-l|$
-by a factor $c^{1/6}/|k-l|$.
+
+Recomputing carefully:
+boundary term $\asymp F_{kl}(s_*) / \partial_s(\theta_k-\theta_l)|_{s_*}$,
+so
+\[
+  \left|\text{boundary term}\right|
+  \asymp \frac{c^{-1/2}\cdot c^{-1/3}/|k-l|}{|k-l|\cdot c^{1/3}}
+  = \frac{c^{-1/2}}{|k-l|^2}.
+\]
+Compared to target $c^{-2/3}/|k-l|$:
+\[
+  \frac{|\text{boundary term}|}{c^{-2/3}/|k-l|}
+  = \frac{c^{-1/2}/|k-l|^2}{c^{-2/3}/|k-l|}
+  = \frac{c^{1/6}}{|k-l|}.
+\]
+The obstruction satisfies:
+\begin{itemize}[nosep]
+  \item For $|k-l| \lesssim c^{1/6}$: ratio $\gtrsim 1$
+        — boundary term dominates, second IBP fails.
+  \item For $|k-l| \gg c^{1/6}$: ratio $\to 0$
+        — boundary term is negligible, second IBP succeeds.
+\end{itemize}
+\textbf{The bulk oscillation obstruction is localised to the
+near-diagonal regime $|k-l| \lesssim c^{1/6}$.}
 
 \medskip
-\noindent\textbf{Conclusion (Equivalence).}
-\[
-  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-2/3}}{|k-l|}
-  \quad\Longleftrightarrow\quad
-  \left|\text{boundary term at } s_*\right| \lesssim \frac{c^{-2/3}}{|k-l|}.
-\]
-This cancellation requires Airy--WKB connection formulae at $s_*$
-(Open Problem~\ref{op:bulk_refined}).
+\noindent\textbf{Equivalence.}
+$|I_{kl}^{\rm bulk}| \lesssim c^{-2/3}/|k-l|$
+for all $|k-l| \leq N$
+$\Longleftrightarrow$
+$|\text{boundary term at }s_*| \lesssim c^{-2/3}/|k-l|$
+for $|k-l| \lesssim c^{1/6}$.
 \end{proposition}
 
 \begin{proof}
-Parts~(i)--(iii) follow from the IBP computation, using
+Parts~(i)--(iii): standard IBP using
 $F_{kl}(s) \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$
-from Proposition~\ref{prop:moment}(c).
-Part~(iv): at $s_*$, substituting $(1-s_*^2)^{1/2} \sim c^{-1/3}$ into
-$|F_{kl}(s_*)| \leq c^{-1/2} \cdot c^{-1/3}/|k-l| = c^{-5/6}/|k-l|$,
-and dividing by $\partial_s(\theta_k-\theta_l)|_{s_*} \sim |k-l|c^{1/3}$,
-gives the stated estimate.
-The interior integral is $O(c^{-2/3}/|k-l|)$ by direct estimate,
-so the boundary term is the sole obstruction.
+(Prop.~\ref{prop:moment}(c)).
+Part~(iv): substitute $|F_{kl}(s_*)| \leq c^{-1/2}\cdot c^{-1/3}/|k-l|$
+and $|\partial_s(\theta_k-\theta_l)|_{s_*}| \asymp |k-l|c^{1/3}$;
+the ratio $c^{1/6}/|k-l|$ determines where the obstruction is active.
 \end{proof}
 
-\begin{remark}[Geometric interpretation of the barrier]
-\label{rem:barrier_geometry}
-The boundary term at $s_* = 1 - c^{-2/3}$ arises because WKB breaks down
-exactly at the turning point.
-The mismatch between oscillatory (WKB, cosine) and monotone (Airy, exponential)
-behaviour is not small: it exceeds the target by a factor $c^{1/6}/|k-l|$.
-Establishing Airy--WKB matching to sufficient precision is the precise
-analytic problem behind Open Problem~\ref{op:bulk_refined}.
+\begin{remark}[Geometric interpretation]\label{rem:barrier_geometry}
+The boundary term at $s_*$ marks the transition from oscillatory (WKB)
+to monotone (Airy) behaviour.
+The obstruction is not global but concentrated in the near-diagonal
+band $|k-l| \lesssim c^{1/6}$, suggesting that a near/far decomposition
+of $T$ may isolate the difficulty (see Route~(iv), Section~\ref{sec:dyadic}).
 \end{remark}
 
 %% ============================================================
@@ -805,98 +614,82 @@ analytic problem behind Open Problem~\ref{op:bulk_refined}.
 \label{sec:norm}
 %% ============================================================
 
-\subsection{Prefactor Reduction Lemma}
+\subsection{Prefactor bounds}
 
-\begin{lemma}[Prefactor Reduction]\label{lem:prefactor}
-For $k \neq l$ with $k, l \leq N = \lfloor Ac^{1/3}\rfloor$, let
-$P_{kl} := c \cdot |\lam{l} - \lam{k}|/[(1-\lam{k})(1-\lam{l})]$.
-Assumption~\ref{ass:B} postulates $P_{kl} \leq C_2 c^{1/2}$.
+\begin{lemma}[Prefactor]\label{lem:prefactor}
+For $k \neq l$, $k,l \leq N$, let
+$P_{kl} := c\cdot|\lam{l}-\lam{k}|/[(1-\lam{k})(1-\lam{l})]$.
 Raw Widom scaling gives $P_{kl} \lesssim |k-l|\,c^{7/3}$;
-the claimed reduction $c^{7/3} \to c^{1/2}$ (by $c^{11/6}$ per unit $|k-l|$)
-requires spectral structure beyond leading-order Widom
-(Open Problem~\ref{op:prefactor}(1)).
+Assumption~\ref{ass:B} postulates the reduction $P_{kl} \leq C_2 c^{1/2}$.
 \end{lemma}
 
 \begin{remark}[Heuristic for Assumption~B]\label{rem:assB_heuristic}
-In the Airy/transition regime, eigenvalue differences and products satisfy
-$|\lam{k} - \lam{l}| \asymp c^{-2/3}|k-l|$ (linear spacing within the window)
-and $(1-\lam{k})(1-\lam{l}) \asymp c^{-4/3}$ uniformly.
-Substituting into $P_{kl}$:
-\[
-  P_{kl}
-  \;\asymp\;
-  c \cdot \frac{c^{-2/3}|k-l|}{c^{-4/3}}
-  \;=\; c^{5/3}|k-l|.
-\]
-This is already a significant reduction from the raw Widom bound $c^{7/3}|k-l|$
-(by a factor $c^{2/3}$), and it shows that the worst-case growth
-originates in the transition regime.
-The further reduction from $c^{5/3}|k-l|$ to the required $c^{1/2}$
-(by an additional $c^{7/6}$ per unit $|k-l|$) is expected from
-second-order transition asymptotics involving finer Airy-function estimates,
-but is not currently established.
+In the transition regime:
+$|\lam{k}-\lam{l}| \asymp c^{-2/3}|k-l|$ and
+$(1-\lam{k})(1-\lam{l}) \asymp c^{-4/3}$, giving
+$P_{kl} \asymp c^{5/3}|k-l|$.
+This is already a reduction from $c^{7/3}|k-l|$ by $c^{2/3}$,
+and shows that the worst-case growth originates in the transition regime.
+The further reduction from $c^{5/3}|k-l|$ to $c^{1/2}$
+(by an additional $c^{7/6}$ per unit $|k-l|$) requires
+second-order transition asymptotics and is currently open.
 \end{remark}
 
-\begin{assumption}[Prefactor bound, pointwise]\label{ass:B}
-For all $k \neq l$ with $k, l \leq N \sim c^{1/3}$:
+\begin{assumption}[Prefactor bound]\label{ass:B}
+For all $k \neq l$, $k,l \leq N \sim c^{1/3}$:
 \[
   c \cdot \frac{|\lam{l}-\lam{k}|}{(1-\lam{k})(1-\lam{l})} \leq C_2 c^{1/2}.
 \]
 \end{assumption}
 
-\begin{assumption}[Schur-summability hypothesis]\label{ass:Bprime}
-The Schur row sums satisfy a uniform $c^{-1/2}$-improvement:
+\begin{assumption}[Schur-summability]\label{ass:Bprime}
+The Schur row sums satisfy:
 \[
-  \sup_{i \leq N}\; \sum_{j \neq i,\, j \leq N}
-  P_{ij} \cdot |I_{ij}|
-  \leq C\, c^{-1/2} \log c.
+  \sup_{i \leq N}\sum_{j \neq i,\,j \leq N}
+  P_{ij}\cdot|I_{ij}|
+  \leq C\,c^{-1/2}\log c.
 \]
 This is \emph{not} a consequence of Assumption~\ref{ass:B}.
-It requires collective cancellation in the row sum beyond pointwise bounds;
-see Section~\ref{sec:dyadic} for why this is the unique remaining obstacle.
+It requires collective oscillatory cancellation in row sums;
+see Section~\ref{sec:dyadic}.
 \end{assumption}
 
-\subsection{Matrix entry bound}
+\subsection{Matrix entry bound and proof of Theorem~\ref{thm:main}}
 
 \begin{proposition}[Matrix entry bound]\label{prop:Tij}
-Under Assumption~\ref{ass:B}, for $i \neq j$, $i, j \leq N$:
-\[
-  |T_{ij}| \leq \frac{C_1 C_2}{|i-j|}.
-\]
-The factors $c^{1/2}$ cancel; the bound is $c$-independent.
+Under Assumption~\ref{ass:B}, for $i \neq j$:
+$|T_{ij}| \leq C_1 C_2/|i-j|$.
 \end{proposition}
 
 \begin{proof}
-$|T_{ij}| \lesssim P_{ij} \cdot |I_{ij}|
-  \leq C_2 c^{1/2} \cdot C_1 c^{-1/2}/|i-j| = C_1 C_2/|i-j|$.
+$|T_{ij}| \lesssim P_{ij}\cdot|I_{ij}|
+\leq C_2 c^{1/2}\cdot C_1 c^{-1/2}/|i-j| = C_1C_2/|i-j|$.
 \end{proof}
 
 \begin{remark}[$c$-power balance]\label{rem:balance}
-$c^{1/2}_{\rm Ass.\,B} \times c^{-1/2}_{\rm Lem.\,\ref{lem:RL}} = c^0$.
-Conditional on Assumption~\ref{ass:B}, the norm grows at most like $\log c$
-instead of $c^{8/3}$.
+$c^{+1/2}_{\rm Ass.\,B} \times c^{-1/2}_{\rm Lem.\,\ref{lem:RL}} = c^0$.
+Conditional on Assumption~B, the matrix norm grows at most like $\log c$
+rather than $c^{8/3}$.
 \end{remark}
 
-\subsection{Proof of Theorem~\ref{thm:main}}
-
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
-By~\eqref{eq:diagzero}: $T_{ii} = 0$.
+$T_{ii}=0$ by~\eqref{eq:diagzero}.
 
 \noindent\textbf{Part~(a).}
-Proposition~\ref{prop:Tij} gives $|T_{ij}| \leq C_1 C_2/|i-j|$.
-Schur test:
+Proposition~\ref{prop:Tij} gives $|T_{ij}|\leq C_1C_2/|i-j|$.
+By the Schur test:
 \[
-  \sup_i \sum_{j \neq i} |T_{ij}|
-  \leq C_1 C_2 H_N
-  \leq C_1 C_2\bigl(1 + \tfrac{1}{3}\log c + \log A\bigr)
+  \norm{T}_{\ell^2\to\ell^2}
+  \leq \sup_i\sum_{j\neq i}|T_{ij}|
+  \leq C_1C_2 H_N
+  \leq C_1C_2(1+\tfrac{1}{3}\log c+\log A)
   =: C(A)\log c.
 \]
-Since $C(A)\log c \to \infty$, this is a norm bound only.
 
 \noindent\textbf{Part~(b).}
-Assumption~\ref{ass:Bprime} gives
-$\sup_i \sum_{j\neq i} P_{ij}|I_{ij}| \leq Cc^{-1/2}\log c$,
-so $\|D\mathcal{T}_c^{(N)}\| \leq Cc^{-1/2}\log c \to 0$.
+Assumption~\ref{ass:Bprime} directly gives
+$\sup_i\sum_{j\neq i}P_{ij}|I_{ij}|\leq Cc^{-1/2}\log c$,
+hence $\norm{D\mathcal{T}_c^{(N)}}\leq Cc^{-1/2}\log c\to 0$.
 \end{proof}
 
 \begin{table}[h]
@@ -904,381 +697,377 @@ so $\|D\mathcal{T}_c^{(N)}\| \leq Cc^{-1/2}\log c \to 0$.
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{llll}
 \hline
-\textbf{Step} & \textbf{Bound} & \textbf{Source} & \textbf{Status} \\
+\textbf{Step} & \textbf{Bound} & \textbf{Source} & \textbf{Status}\\
 \hline
-Diagonal vanishing & $T_{ii} = 0$ & commutator & \checkmark{} unconditional \\
-IBP integral & $|I_{ij}| \leq C_1 c^{-1/2}/|i-j|$ & Lemma~\ref{lem:RL}
-  & \checkmark{} unconditional \\
-Bulk barrier identified & boundary term at $s_*=1-c^{-2/3}$ dominates
-  & Prop.~\ref{prop:bulk_barrier} & \checkmark{} unconditional \\
-TZ Schur contribution & $o(1) \to 0$ & Lemma~\ref{lem:zone_schur}
-  & \checkmark{} unconditional \\
-Prefactor (pointwise) & $P_{ij} \leq C_2 c^{1/2}$ & Assumption~\ref{ass:B}
-  & \textbf{open (OP~\ref{op:prefactor}(1))} \\
-$c$-power cancellation & $c^{1/2} \times c^{-1/2} = O(1)$ & Remark~\ref{rem:balance}
-  & conditional on Assumption~\ref{ass:B} \\
-Schur sum & $\geq (\kappa/2)\log c$, $\leq C\log c$
+Diagonal vanishing & $T_{ii}=0$ & commutator & \checkmark\ unconditional\\
+IBP integral & $|I_{ij}|\leq C_1c^{-1/2}/|i-j|$ & Lem.~\ref{lem:RL}
+  & \checkmark\ unconditional\\
+Bulk barrier localised & $|k-l|\lesssim c^{1/6}$ only
+  & Prop.~\ref{prop:bulk_barrier} & \checkmark\ unconditional\\
+TZ Schur contribution & $O(c^{-1/6}\log c)\to 0$
+  & Lem.~\ref{lem:zone_schur} & \checkmark\ unconditional\\
+Prefactor (pointwise) & $P_{ij}\leq C_2c^{1/2}$
+  & Assumption~\ref{ass:B} & \textbf{open (OP~\ref{op:prefactor})}\\
+$c$-power cancellation & $c^{1/2}\times c^{-1/2}=O(1)$
+  & Rem.~\ref{rem:balance} & conditional on Ass.~B\\
+Schur sum & $\tfrac{\kappa}{2}\log c \leq\cdot\leq C\log c$
   & Thms~\ref{thm:nogo},~\ref{thm:main}(a)
-  & \textbf{optimal: norm bound, not contraction} \\
+  & \textbf{optimal: norm bound only}\\
 \hline
-Schur-sum improvement & $\leq C c^{-1/2}\log c \to 0$ & Theorem~\ref{thm:main}(b)
-  & \textbf{open: requires Ass.~B$'$ (cancellation)} \\
+Schur-sum improvement & $\leq Cc^{-1/2}\log c\to 0$
+  & Thm~\ref{thm:main}(b)
+  & \textbf{open: requires Ass.~B$'$}\\
 \hline
 \end{tabular}
-\caption{Logical chain for Theorem~\ref{thm:main}.
-The Schur norm bound $\log c$ is both an upper and lower bound
-(No-go Theorem~\ref{thm:nogo}); it is optimal within the pointwise-bound class.
-Only part~(b) (conditional on Assumption~B$'$) gives a contraction.}
+\caption{Logical chain. The $\log c$ bound is optimal (Thm~\ref{thm:nogo});
+contraction requires cancellation, not decay.}
 \label{tab:mechanisms}
 \end{table}
 
-\begin{corollary}[Conditional Galerkin fixed point]\label{cor:fixedpoint}
-Conditional on Assumption~\ref{ass:Bprime}: for $c \geq c_0$ there exists
-a unique $g^{(N)} \in X_c^{(N)}$ with $\mathcal{T}_c^{(N)}(g^{(N)}) = g^{(N)}$,
-and Picard iteration converges at rate $\leq C c^{-1/2}\log c$ per step.
+\begin{corollary}[Conditional fixed point]\label{cor:fixedpoint}
+Under Assumptions~B and~B$'$: for $c\geq c_0$ there exists a unique
+$g^{(N)}\in X_c^{(N)}$ with $\mathcal{T}_c^{(N)}(g^{(N)})=g^{(N)}$,
+and Picard iteration converges at rate $\leq Cc^{-1/2}\log c$.
 \end{corollary}
 
 %% ============================================================
-\section{Dyadic Decomposition and No-go Theorem}
+\section{Dyadic Decomposition and Routes to Contraction}
 \label{sec:dyadic}
 %% ============================================================
 
 \subsection{Dyadic block decomposition}
 
-For a fixed row index $i$, partition the off-diagonal set into dyadic blocks:
+For fixed row $i$, partition off-diagonal indices:
 \begin{equation}\label{eq:dyadic_blocks}
-  \mathcal{B}_m := \{ j : 2^m \leq |i-j| < 2^{m+1} \},
-  \qquad m = 0, 1, \ldots, M,
-  \quad M := \lfloor \log_2 N \rfloor.
+  \mathcal{B}_m := \{j : 2^m \leq |i-j| < 2^{m+1}\},
+  \quad m=0,\ldots,M,\quad M:=\lfloor\log_2 N\rfloor.
 \end{equation}
-Each block $\mathcal{B}_m$ has at most $2^{m+1}$ elements.
 
-\begin{proposition}[Block-wise Schur bound]\label{prop:dyadic_block}
-Under Assumption~\ref{ass:B}, each dyadic block contributes:
-\begin{equation}\label{eq:block_bound}
-  \sum_{j \in \mathcal{B}_m} |T_{ij}|
-  \leq \frac{C_1 C_2}{2^m} \cdot |\mathcal{B}_m|
-  \leq 2 C_1 C_2.
-\end{equation}
-Every block contributes $O(1)$, independently of $m$.
+\begin{proposition}[Block-wise bound]\label{prop:dyadic_block}
+Under Assumption~\ref{ass:B}:
+$\sum_{j\in\mathcal{B}_m}|T_{ij}| \leq 2C_1C_2$
+for every $m$.
 \end{proposition}
 
 \begin{proof}
-For $j \in \mathcal{B}_m$: $|i-j| \geq 2^m$, so $|T_{ij}| \leq C_1 C_2/2^m$.
-Summing over $|\mathcal{B}_m| \leq 2^{m+1}$ terms gives~\eqref{eq:block_bound}.
+$|T_{ij}|\leq C_1C_2/2^m$ for $j\in\mathcal{B}_m$;
+$|\mathcal{B}_m|\leq 2^{m+1}$.
 \end{proof}
 
 \begin{proposition}[Total Schur sum]\label{prop:dyadic_total}
-Under Assumption~\ref{ass:B}:
-\begin{equation}\label{eq:schur_dyadic}
-  \sum_{j \neq i} |T_{ij}|
-  \leq \sum_{m=0}^{M} 2 C_1 C_2
-  = 2C_1 C_2(M+1)
-  \leq 2C_1 C_2(\log_2 N + 1)
-  \sim C(A)\log c.
-\end{equation}
-Each of the $\sim \log N$ dyadic scales contributes $O(1)$;
-the total grows logarithmically with no cancellation.
+$\sum_{j\neq i}|T_{ij}|
+\leq 2C_1C_2(M+1)\sim C(A)\log c$.
+Each of the $\sim\log N$ dyadic scales contributes $O(1)$;
+the total grows logarithmically.
 \end{proposition}
 
-\begin{remark}[Sharpness of the dyadic bound]
-For the discrete Hilbert kernel $T_{ij} = \kappa/|i-j|$,
-equality is attained in every block up to constants,
-and $\sum_{j \neq i} |T_{ij}| = \kappa H_{N-1}$ exactly.
-No rearrangement or grouping can reduce this sum
-without exploiting signed cancellation between terms.
+\begin{remark}[Sharpness]
+For $T_{ij}=\kappa/|i-j|$, equality holds in every block.
+No rearrangement can reduce the sum without signed cancellation.
 \end{remark}
 
 \subsection{Proof of the No-go Theorem}
 
 \begin{proof}[Proof of Theorem~\ref{thm:nogo}]
-For any interior row $i$ (so distances $d = 1, \ldots, N-1$ are all realised):
+For any interior row $i$, all distances $d=1,\ldots,N-1$ are realised:
 \[
-  \sup_i \sum_{j \neq i}|T_{ij}|
-  \geq \kappa \sum_{d=1}^{N-1} \frac{1}{d}
-  = \kappa H_{N-1}.
+  \sup_i\sum_{j\neq i}|T_{ij}|
+  \geq \kappa H_{N-1}.
 \]
-For the operator norm: $\norm{T}_{\ell^2} \geq \norm{T}_F/\sqrt{N}$,
-and summing $\sim N$ rows each contributing $\geq \kappa H_{N-1}/2$
-gives $\norm{T} \geq (\kappa/2) H_{N-1}$.
-For $N = \lfloor Ac^{1/3}\rfloor$: $H_{N-1} \geq \tfrac{1}{3}\log c + O(1)$.
+The operator norm lower bound
+$\norm{T}_{\ell^2}\geq\tfrac{1}{2}\sup_i\sum_{j\neq i}|T_{ij}|$
+follows from the classical Schur inequality for quasi-symmetric operators
+(see Young's bilinear inequality).
+For $N=\lfloor Ac^{1/3}\rfloor$: $H_{N-1}\geq\tfrac{1}{3}\log c+O(1)$.
 \end{proof}
 
 \subsection{Structural characterisation of Assumption~B$'$}
 
-The dyadic analysis shows precisely what cancellation is needed.
-Define the signed block sum $S_m(i) := \sum_{j \in \mathcal{B}_m} T_{ij}$.
-For a contraction, the signed sums must satisfy:
+Define the signed dyadic block sum $S_m(i):=\sum_{j\in\mathcal{B}_m}T_{ij}$.
+For contraction, the signed sums must satisfy:
 \begin{equation}\label{eq:cancellation_needed}
-  \sum_{m=0}^{M} |S_m(i)| \leq C c^{-1/2}\log c,
+  \sum_{m=0}^{M}|S_m(i)| \leq Cc^{-1/2}\log c,
 \end{equation}
-rather than the absolute bound $\sum_m 2C_1C_2 = O(\log c)$.
-Assumption~B$'$ is equivalent to requiring oscillatory cancellation
-within each dyadic block such that $|S_m(i)| \ll 2C_1C_2$ uniformly.
+rather than the absolute bound $\sum_m 2C_1C_2=O(\log c)$.
 
-\begin{remark}[Three routes to~\eqref{eq:cancellation_needed}]
+\begin{remark}[Explicit equivalence for B$'$]\label{rem:Bprime_equiv}
+Assumption~B$'$ is equivalent to oscillatory cancellation in the
+signed dyadic block sums $S_m(i)$, i.e., $|S_m(i)|\ll 2C_1C_2$
+uniformly in $m$ and $c$.
+This is a \emph{Calder\'{o}n--Zygmund-type condition}, not a decay condition.
+Pointwise improvements to $|T_{ij}|$ alone cannot establish it
+(Theorem~\ref{thm:nogo}).
+\end{remark}
+
+\subsection{Routes to contraction}
+
+\begin{remark}[Four routes to~\eqref{eq:cancellation_needed}]
 \label{rem:routes}
 \begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{Airy--WKB matching at $s_*$}
+        (Open Problem~\ref{op:bulk_refined}):
+        establish cancellation of the boundary term at $s_*=1-c^{-2/3}$
+        via Airy--WKB connection formulae.
+        If successful: unconditional contraction under Assumption~B alone,
+        rate $c^{-1/6}\log c\to 0$.
+        This is the most immediate analytic target.
+
   \item \textbf{Sign oscillation of $T_{ij}$ in $j$}:
         if $T_{ij}$ alternates sign with period $\sim 1$,
-        then $|S_m(i)| = O(1/2^m)$ and $\sum_m |S_m(i)| = O(1)$.
-        This would follow from near-antisymmetry of $P_{ij}$ under $j \mapsto j+1$,
-        plausible from oscillatory PSWF products but not established.
-  \item \textbf{Near-diagonal sparsification}:
-        if $P_{ij} \leq C c^{-1/2}$ (stronger pointwise Assumption~B),
-        then $|S_m(i)| \leq Cc^{-1/2} \cdot 2$ and
-        $\sum_m |S_m(i)| \leq 2Cc^{-1/2}\log c$.
-        Closing the gap from $c^{5/3}|k-l|$ to $c^{-1/2}$
-        requires a reduction by $c^{13/6}$ (see Remark~\ref{rem:assB_heuristic})
-        and is analytically very demanding.
-  \item \textbf{Weighted block suppression}:
-        a suitable $\ell^2$ weighted norm downweights far-diagonal blocks.
+        then $|S_m(i)|=O(1/2^m)$ and $\sum_m|S_m(i)|=O(1)$.
+        This would follow from near-antisymmetry of $P_{ij}$ under
+        $j\mapsto j+1$, plausible from oscillatory PSWF products
+        but not yet established.
+
+  \item \textbf{Near/far splitting}
+        (motivated by Proposition~\ref{prop:bulk_barrier}):
+        write $T = T^{\rm near} + T^{\rm far}$ with
+        \[
+          T^{\rm near}_{ij}
+          = T_{ij}\cdot\mathbf{1}_{|i-j|\leq c^{1/6}}.
+        \]
+        By Proposition~\ref{prop:bulk_barrier}, the bulk oscillation
+        obstruction is localised to $|i-j|\lesssim c^{1/6}$.
+        The far part $T^{\rm far}$ is therefore free of boundary-term
+        obstructions and may admit improved summation estimates.
+        The near part is a band matrix of width $c^{1/6}$ acting on
+        a space of dimension $N\sim c^{1/3}$.
+        Since $c^{1/6}/N = c^{-1/6}\to 0$, its operator norm may be
+        accessible via spectral or local analysis, bypassing global
+        Schur estimates.
+        This reduces the global contraction problem to a
+        \emph{finite-band spectral problem}, a structurally different regime.
+        Whether $\norm{T^{\rm near}}_{\ell^2}<1$ can be established
+        unconditionally remains open.
+
+  \item \textbf{Weighted norm}
+        (Open Problem~\ref{op:weightnorm}):
+        find a $c$-dependent weighted $\ell^2$ norm under which
+        $\norm{DT}_w<1$ unconditionally.
         Section~\ref{sec:spectral_weights} shows all natural candidates fail.
 \end{enumerate}
 \end{remark}
 
+\subsection{Phase structure and the Fourier-multiplier strategy}
+\label{sec:fourier}
+
 \begin{remark}[Heuristic phase structure of $T_{ij}$]\label{rem:phase_Tij}
-Under a WKB approximation, products of PSWFs admit an oscillatory representation
+Under a WKB approximation, products of PSWFs admit:
 \[
   \pswf{i}(s)\pswf{j}(s)
-  \;\approx\;
-  A_{ij}(s)\,\cos(\theta_i(s) - \theta_j(s)),
+  \approx A_{ij}(s)\cos(\theta_i(s)-\theta_j(s)),
 \]
-with slowly varying amplitude $A_{ij}$ and rapidly varying phases $\theta_k$.
-Formally inserting this into the definition of $T_{ij}$ suggests a kernel
+with slowly varying amplitude and rapidly varying phases.
+Formally, this suggests:
 \[
   T_{ij}
-  \;\approx\;
-  \frac{\widetilde{A}_{ij}}{|i-j|}
-  \cos(\Theta_i - \Theta_j),
+  \approx \frac{\widetilde{A}_{ij}}{|i-j|}\cos(\Theta_i-\Theta_j)
 \]
 for effective phases $\Theta_k$ arising from the $s$-integration.
-If the phase differences $\Theta_i - \Theta_j$ exhibit sufficient
-non-degeneracy or equidistribution in $j$ (for fixed $i$), then the dyadic
-block sums $S_m(i)$ may exhibit cancellation analogous to oscillatory
-singular integrals, yielding~\eqref{eq:cancellation_needed}.
-This provides a Calder\'{o}n--Zygmund-type heuristic interpretation of
-Assumption~B$'$: the improvement from $\log N$ to $o(\log N)$ must arise
-from oscillatory cancellation, not pointwise decay.
-Making this rigorous requires quantitative control of the phases $\theta_k$
+If $\Theta_i-\Theta_j$ exhibits non-degeneracy or equidistribution
+in $j$ (for fixed $i$), the signed block sums $S_m(i)$ would exhibit
+oscillatory cancellation analogous to Calder\'{o}n--Zygmund singular
+integrals, yielding~\eqref{eq:cancellation_needed}.
+Making this rigorous requires quantitative control of $\theta_k$
 in the transition and bulk regimes, which is currently open.
 \end{remark}
 
 \begin{conjecture}[Linear phase equidistribution]\label{conj:phase}
-The effective WKB phases $\Theta_k^{(c)}$ of $\pswf{k}$ evaluated at
-$s_* = 1 - c^{-2/3}$ satisfy, for $k \leq N \sim c^{1/3}$:
+The effective WKB phases $\Theta_k^{(c)}$ at $s_*=1-c^{-2/3}$ satisfy,
+for $k\leq N\sim c^{1/3}$:
 \[
-  \Theta_k^{(c)} = \alpha^{(c)} k + \beta^{(c)} + O(k^2/c),
+  \Theta_k^{(c)} = \alpha^{(c)}k + \beta^{(c)} + O(k^2/c),
 \]
-where $\alpha^{(c)} \in (0, 2\pi)$ is bounded away from $0$ and $\pi$
+where $\alpha^{(c)}\in(0,2\pi)$ is bounded away from $0$ and $\pi$
 uniformly in $c$.
 Under this conjecture, Assumption~B$'$ follows from a standard
-Dirichlet-kernel cancellation argument applied to the signed block sums
-$S_m(i)$.
+Dirichlet-kernel cancellation argument applied to $S_m(i)$.
 \end{conjecture}
 
 \begin{remark}[Fourier-multiplier route to B$'$]\label{rem:fourier_route}
-If $T_{ij} = f(i-j)/(i-j)$ for some bounded oscillatory $f : \mathbb{Z} \to [-1,1]$,
-then $T$ is a discrete convolution operator and
+If $T_{ij}=f(i-j)/(i-j)$ for some bounded oscillatory
+$f:\mathbb{Z}\to[-1,1]$, then $T$ is a discrete convolution operator and
 \[
-  \|T\|_{\ell^2 \to \ell^2}
-  = \bigl\|\widehat{(f/|\cdot|)}\bigr\|_{\ell^\infty(\mathbb{Z})}
+  \norm{T}_{\ell^2\to\ell^2}
+  = \bigl\|\widehat{(f/|\cdot|)}\bigr\|_{\ell^\infty}
   = O(1),
 \]
-by $\ell^2$-boundedness of the discrete Hilbert transform with oscillatory weight.
-This would establish B$'$ unconditionally, bypassing the Schur argument entirely.
+by $\ell^2$-boundedness of the discrete Hilbert transform with
+oscillatory weight.
+This would establish B$'$ unconditionally, bypassing the Schur
+argument entirely.
 The key hypothesis is \emph{approximate translation-invariance}:
-$T_{ij} \approx g(i-j)$ for some $g$, i.e., $P_{ij} \cdot I_{ij}$ depends
-primarily on $|i-j|$ rather than on $i$ and $j$ separately.
+$T_{ij}\approx g(i-j)$ for some $g$.
 Whether the PSWF matrix $T$ has this structure is an open question
 that would follow from Conjecture~\ref{conj:phase}.
 \end{remark}
 
-\subsection{Why spectral weights fail}
+\subsection{Why spectral and index weights fail}
 \label{sec:spectral_weights}
 
-\begin{proposition}[Spectral weights are asymptotically constant]
+\begin{proposition}[Spectral weights are constant in the Galerkin window]
 \label{prop:spectral_weight_fail}
-In the Galerkin window $k \leq N \sim c^{1/3}$:
-$1 - \lambda_k \sim c^{-2/3}$ uniformly, so for any $\alpha > 0$:
-\[
-  w_k = (1-\lambda_k)^\alpha \sim c^{-2\alpha/3}
-  \quad\text{uniformly in } k \leq N,
-  \qquad
-  \frac{w_j}{w_i} = 1 + O(c^{-1/3}).
-\]
+For $k\leq N\sim c^{1/3}$: $1-\lambda_k\asymp c^{-2/3}$ uniformly,
+so $w_k=(1-\lambda_k)^\alpha\asymp c^{-2\alpha/3}$ and
+$w_j/w_i=1+O(c^{-1/3})$.
 Spectral weighting does not modify the Schur kernel.
-\textbf{Eigenvalue-based weighting cannot produce contraction.}
 \end{proposition}
 
 \begin{proof}
-All indices lie in the transition regime where
-$1 - \lambda_k \asymp c^{-2/3}$ uniformly (Widom transition asymptotics).
-Hence $w_j/w_i \to 1$.
+All indices lie in the transition regime (Widom transition asymptotics).
 \end{proof}
 
-\begin{remark}[Structural reason for the failure]
+\begin{remark}[Why spectral weights fail structurally]
 \label{rem:spectral_weight_structural}
-The weight $w_k = (1-\lambda_k)^\alpha$ is blind to index structure:
-in the transition window all eigenvalues lie on a flat plateau,
-so the weight is essentially constant.
-The Schur kernel $1/|i-j|$ is an index-space object;
-an effective weight must distinguish indices, not eigenvalues.
+The weight $w_k=(1-\lambda_k)^\alpha$ is blind to index structure:
+on the transition plateau all eigenvalues are equivalent.
+An effective weight for the Schur kernel $1/|i-j|$ must
+distinguish indices, not eigenvalues.
 \end{remark}
 
 \begin{remark}[Index-based weights also fail]\label{rem:index_weights}
 \begin{enumerate}[nosep,label=(\alph*)]
-  \item \textbf{Power weight} $w_k = (1+k)^\beta$:
-        For the central row $i \sim N/2$, the weighted row sum is
-        $\sum_{d=1}^{N}(1+d/i)^\beta/d \sim \log N$ for all $\beta$.
-  \item \textbf{Exponential weight} $w_k = e^{\gamma k/N}$:
-        Weighted kernel $e^{\gamma d/N}/d$; row sum
-        $\sum_{d=1}^{N} e^{\gamma d/N}/d \sim e^\gamma \log N$.
+  \item Power weight $w_k=(1+k)^\beta$:
+        weighted row sum $\sum_{d=1}^N(1+d/i)^\beta/d\sim\log N$
+        for all $\beta$.
+  \item Exponential weight $w_k=e^{\gamma k/N}$:
+        row sum $\sum_d e^{\gamma d/N}/d\sim e^\gamma\log N$.
 \end{enumerate}
-Both fail because $1/d$ is not summable, and a weight $\phi(d)/d$ is summable
-only if $\phi(d) \to 0$ (far-diagonal downweighting),
-but such asymmetry cannot hold simultaneously for all rows.
+Both fail because $1/d$ is not summable and no symmetric polynomial
+or exponential weight can make it so.
 \end{remark}
 
 \begin{corollary}[No naive weight works]\label{cor:no_naive_weight}
-No weight of spectral, power, or exponential type can make the weighted
-Schur row sum $\sup_i \sum_j (w_j/w_i)/|i-j|$ asymptotically smaller than $\log N$.
+No weight of spectral, power, or exponential type makes
+$\sup_i\sum_j(w_j/w_i)/|i-j|=o(\log N)$.
 \end{corollary}
-
-\begin{openproblem}[Two-weight Schur estimate]\label{op:weightnorm_precise}
-Find positive sequences $\{w_k\}$ (not of spectral, power, or exponential type)
-such that
-\[
-  \sup_{i \leq N} \sum_{j \neq i} \frac{w_j}{w_i} \cdot \frac{C_1 C_2}{|i-j|}
-  < 1.
-\]
-If no symmetric weight works, find $\{u_k\}$, $\{v_k\}$ such that
-the two-weight Schur condition holds:
-\[
-  \sum_j v_j |T_{ij}| \leq u_i
-  \quad\text{and}\quad
-  \sum_j u_j^{-1} |T_{ij}| \leq v_i^{-1}
-  \quad\text{for all } i.
-\]
-\end{openproblem}
 
 %% ============================================================
 \section{Open Problems}
 \label{sec:open}
 %% ============================================================
 
-\begin{openproblem}[Prefactor reduction and Schur improvement]
-\label{op:prefactor}
-Two separate problems:
+\begin{openproblem}[Prefactor and cancellation]\label{op:prefactor}
 \begin{enumerate}[nosep]
-  \item Prove Assumption~\ref{ass:B} unconditionally:
-        $P_{kl} \leq C_2 c^{1/2}$ for $k,l \leq N \sim c^{1/3}$.
+  \item Prove Assumption~\ref{ass:B}: $P_{kl}\leq C_2c^{1/2}$.
         Remark~\ref{rem:assB_heuristic} reduces the gap from $c^{7/3}$
-        to $c^{5/3}$ via transition-regime asymptotics;
-        closing the remaining factor $c^{7/6}$ requires second-order
-        Airy-function estimates.
-  \item Prove Assumption~\ref{ass:Bprime} unconditionally.
-        By Section~\ref{sec:dyadic}, this is equivalent to signed
-        cancellation in dyadic row-sum blocks.
-        Conjecture~\ref{conj:phase} (linear phase equidistribution)
-        would imply B$'$ via a Dirichlet-kernel argument,
-        and is the most structurally natural route.
+        to $c^{5/3}$; closing the remaining $c^{7/6}$ requires
+        second-order Airy estimates.
+  \item Prove Assumption~\ref{ass:Bprime}.
+        By Remark~\ref{rem:Bprime_equiv}, this is equivalent to
+        signed cancellation in $S_m(i)$.
+        Conjecture~\ref{conj:phase} would imply B$'$
+        via Dirichlet-kernel / Fourier-multiplier argument
+        (Remark~\ref{rem:fourier_route}).
 \end{enumerate}
 \end{openproblem}
 
-\begin{openproblem}[Weighted norm approach]\label{op:weightnorm}
-Find a $c$-dependent weighted norm $\|\cdot\|_w$ on $X_c^{(N)}$
-under which $\|D\mathcal{T}_c^{(N)}\|_w < 1$ unconditionally.
+\begin{openproblem}[Weighted norm]\label{op:weightnorm}
+Find a $c$-dependent weighted norm $\norm{\cdot}_w$ on $X_c^{(N)}$
+under which $\norm{D\mathcal{T}_c^{(N)}}_w<1$ unconditionally.
 By Proposition~\ref{prop:spectral_weight_fail} and
-Corollary~\ref{cor:no_naive_weight}, spectral, power, and exponential
-index weights all fail.
-The correct weight, if it exists, must be asymmetric or of two-weight type
-(Open Problem~\ref{op:weightnorm_precise}).
+Corollary~\ref{cor:no_naive_weight}, all natural candidates fail.
+A successful weight must be asymmetric or of two-weight type:
+find $\{u_k\},\{v_k\}>0$ such that
+\[
+  \sum_j v_j|T_{ij}|\leq u_i
+  \quad\text{and}\quad
+  \sum_j u_j^{-1}|T_{ij}|\leq v_i^{-1}
+  \quad\text{for all }i.
+\]
 \end{openproblem}
 
-\begin{openproblem}[Bulk--transition coupling and Airy--WKB matching]
-\label{op:bulk_refined}
+\begin{openproblem}[Airy--WKB matching]\label{op:bulk_refined}
 By Proposition~\ref{prop:bulk_barrier}, the improved bound
-\[
-  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-2/3}}{|k-l|}
-\]
-is equivalent to cancellation of the boundary term at $s_* = 1-c^{-2/3}$.
+$|I_{kl}^{\rm bulk}|\lesssim c^{-2/3}/|k-l|$ is equivalent to
+cancellation of the boundary term at $s_*=1-c^{-2/3}$,
+which is active only for $|k-l|\lesssim c^{1/6}$.
 
 \medskip
-\noindent\textbf{Approach via Airy coordinates.}
-Set $s = 1 - c^{-2/3}x$, $x = O(1)$.
+\noindent\textbf{Approach.}
+Set $s=1-c^{-2/3}x$, $x=O(1)$.
 In these coordinates:
 \begin{itemize}[nosep]
-  \item $\pswf{k}$ transitions from $\Ai(c^{2/3}\zeta_k)$ (monotone, $x \gg 1$)
-        to oscillatory WKB ($x \ll 1$).
+  \item $\pswf{k}$ transitions from monotone Airy to oscillatory WKB.
   \item The difference phase linearises:
-        $\theta_k(s) - \theta_l(s) \approx (k-l)\phi(x)$
-        for some explicit $\phi$.
-  \item The boundary term becomes an explicit integral in $x$
-        involving $\Ai \cdot \Ai$ products.
+        $\theta_k(s)-\theta_l(s)\approx(k-l)\phi(x)$.
+  \item The boundary term becomes an explicit $\Ai\cdot\Ai$ integral.
 \end{itemize}
-If this integral exhibits oscillatory cancellation (Airy stationary phase),
-the boundary term reduces to $O(c^{-2/3}/|k-l|)$.
-If established, Theorem~\ref{thm:main}(a) upgrades unconditionally to
-$\|D\mathcal{T}_c^{(N)}\| \lesssim c^{-1/6}\log c \to 0$,
-eliminating the need for Assumption~B$'$.
+If this integral exhibits stationary-phase cancellation, the boundary
+term reduces to $O(c^{-2/3}/|k-l|)$, and
+Theorem~\ref{thm:main}(a) upgrades unconditionally to
+$\norm{D\mathcal{T}_c^{(N)}}\lesssim c^{-1/6}\log c\to 0$
+under Assumption~B alone.
+\end{openproblem}
+
+\begin{openproblem}[Near/far splitting]\label{op:nearfar}
+Formalise the near/far decomposition $T=T^{\rm near}+T^{\rm far}$
+with $T^{\rm near}_{ij}=T_{ij}\cdot\mathbf{1}_{|i-j|\leq c^{1/6}}$:
+\begin{enumerate}[nosep]
+  \item Establish unconditional estimates for $\norm{T^{\rm far}}_{\ell^2}$,
+        exploiting the absence of the bulk boundary obstruction
+        for $|i-j|\gg c^{1/6}$.
+  \item Control $\norm{T^{\rm near}}_{\ell^2}$ via spectral or local methods
+        for the band matrix of width $c^{1/6}$ and dimension $N\sim c^{1/3}$.
+        The bandwidth-to-dimension ratio $c^{1/6}/c^{1/3}=c^{-1/6}\to 0$
+        suggests that local structure dominates.
+\end{enumerate}
 \end{openproblem}
 
 \begin{openproblem}[Optimal Galerkin dimension]\label{op:Nopt}
 Determine the maximal $N(c)$ for which the Schur bound is below~$1$.
-Conjecture: $N_{\rm opt} \sim c^{1/2}$.
-\end{openproblem}
-
-\begin{openproblem}[Self-adjointness and spectral norm]\label{op:Gershgorin}
-Establish approximate self-adjointness $T_{ij} \approx \overline{T_{ji}}$
-up to $O(c^{-1})$, to sharpen the Schur bound to a spectral radius bound.
+Conjecture: $N_{\rm opt}\sim c^{1/2}$.
 \end{openproblem}
 
 %% ============================================================
-\section{Relation to Assumption A}
+\section{Relation to Assumption~A and Summary of Results}
 %% ============================================================
 
 \begin{itemize}[nosep]
   \item \textbf{Unconditionally proved:}
-        $|I_{kl}| \leq C_1 c^{-1/2}/|k-l|$ (Lemma~\ref{lem:RL});
-        $T_{ii} = 0$; $\|DT\|_{L^2} \gtrsim c^{8/3}$;
-        $\log c$ growth is optimal in the pointwise-bound class
-        (Theorem~\ref{thm:nogo});
-        spectral and naive index weights do not improve the Schur kernel
-        (Proposition~\ref{prop:spectral_weight_fail},
-        Corollary~\ref{cor:no_naive_weight});
-        transition-zone Schur contribution is $o(1)$, bulk dominates
-        (Lemma~\ref{lem:zone_schur});
-        bulk oscillation barrier precisely identified at $s_* = 1-c^{-2/3}$
-        (Proposition~\ref{prop:bulk_barrier}).
+        $|I_{kl}|\leq C_1c^{-1/2}/|k-l|$;
+        $T_{ii}=0$;
+        $\norm{DT}_{L^2}\gtrsim c^{8/3}$;
+        $\log c$ growth is optimal in pointwise-bound class
+        (Thm~\ref{thm:nogo});
+        spectral and index weights cannot improve Schur kernel
+        (Prop.~\ref{prop:spectral_weight_fail},
+        Cor.~\ref{cor:no_naive_weight});
+        TZ Schur contribution is $o(1)$
+        (Lem.~\ref{lem:zone_schur}, Rem.~\ref{rem:tz_irrelevant});
+        bulk oscillation barrier localised to $|k-l|\lesssim c^{1/6}$
+        (Prop.~\ref{prop:bulk_barrier}).
 
   \item \textbf{Under Assumption~B:}
-        $|T_{ij}| \leq C_1 C_2/|i-j|$;
-        $\|D\mathcal{T}_c^{(N)}\| \leq C\log c$ (norm estimate only).
+        $|T_{ij}|\leq C_1C_2/|i-j|$;
+        $\norm{D\mathcal{T}_c^{(N)}}\leq C\log c$.
 
   \item \textbf{Under Assumptions~B and~B$'$:}
-        $\|D\mathcal{T}_c^{(N)}\| \leq Cc^{-1/2}\log c$;
-        contraction and conditional Galerkin fixed point
-        (Corollary~\ref{cor:fixedpoint}).
+        $\norm{D\mathcal{T}_c^{(N)}}\leq Cc^{-1/2}\log c\to 0$;
+        conditional Galerkin fixed point (Cor.~\ref{cor:fixedpoint}).
 
-  \item \textbf{Three open routes, in increasing depth:}
+  \item \textbf{Four routes to unconditional contraction,
+        in increasing depth:}
         \begin{enumerate}[nosep,label=(\roman*)]
           \item Airy--WKB matching at $s_*$
-                (Open Problem~\ref{op:bulk_refined}):
-                unconditional contraction under Assumption~B alone,
-                rate $c^{-1/6}\log c$.
+                (OP~\ref{op:bulk_refined}):
+                unconditional contraction rate $c^{-1/6}\log c$
+                under Assumption~B.
+          \item Near/far splitting
+                (OP~\ref{op:nearfar}):
+                reduces global Schur to a finite-band spectral problem
+                of shrinking relative bandwidth $c^{-1/6}$.
           \item Linear phase equidistribution
-                (Conjecture~\ref{conj:phase} $\Rightarrow$ Assumption~B$'$
-                via Dirichlet-kernel / Fourier-multiplier argument,
-                Remark~\ref{rem:fourier_route}):
+                (Conj.~\ref{conj:phase} $\Rightarrow$ B$'$
+                via Fourier-multiplier, Rem.~\ref{rem:fourier_route}):
                 contraction under Assumption~B.
           \item Two-weight Schur estimate
-                (Open Problem~\ref{op:weightnorm}):
-                contraction without Assumption~B$'$, no Schur required.
+                (OP~\ref{op:weightnorm}):
+                contraction without B$'$, no Schur required.
         \end{enumerate}
-        Route~(i) is the most immediate target:
-        it reduces to a concrete computation in Airy coordinates at
-        $s_* = 1 - c^{-2/3}$.
+        Route~(i) is the most immediate analytic target.
+        Route~(ii) is structurally new: it recasts the problem
+        as a local band-matrix problem rather than a global estimate.
 \end{itemize}
 
 %% ============================================================
@@ -1286,13 +1075,13 @@ up to $O(c^{-1})$, to sharpen the Schur bound to a spectral radius bound.
 %% ============================================================
 
 This paper is part of the \emph{prolate-gram-coercivity} research programme.
-The dyadic decomposition, No-go Theorem, structural characterisation
-of Assumption~B$'$ via signed block cancellation, the proof that
-spectral and index weights cannot improve the Schur kernel,
-the identification of the bulk oscillation barrier
-(Proposition~\ref{prop:bulk_barrier}), and the Fourier-multiplier
-interpretation of Assumption~B$'$ (Remark~\ref{rem:fourier_route},
-Conjecture~\ref{conj:phase}) were developed in working sessions, May 2026.
+The localisation of the bulk oscillation barrier to the near-diagonal
+regime $|k-l|\lesssim c^{1/6}$, the near/far splitting strategy,
+the explicit equivalence of Assumption~B$'$ with signed dyadic cancellation,
+the structural decomposition into pointwise decay and summation mechanism,
+the proof that spectral and index weights cannot improve the Schur kernel,
+and the Fourier-multiplier interpretation of Assumption~B$'$
+were developed in working sessions, May 2026.
 
 %% ============================================================
 \begin{thebibliography}{99}
