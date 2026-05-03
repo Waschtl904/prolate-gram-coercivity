@@ -9,6 +9,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}
 \usepackage{hyperref}
+\usepackage{enumerate}
 
 % --- theorem environments ---
 \newtheorem{theorem}{Theorem}[section]
@@ -65,7 +66,8 @@ The main contributions are:
   Principle): a quantitative bi-Lipschitz bound on $\FAi$
   and a corresponding spectral separation estimate
   $|\lambda_i - \lambda_j| \gtrsim c^{-1/3} \cdot |i-j|$,
-  with explicit dependence on $|i-j|$.
+  with explicit dependence on $|i-j|$ and explicit
+  threshold $c_1 = c_1(A_0, C_1, c_{\min})$.
 \item Corollary~\ref{cor:C} (H2 in truncated dyadic sense):
   for any fixed dyadic cutoff $m_0 \ge 1$, hypothesis~(H2)
   of Theorem~2.1 in \cite{paperVII} holds for all blocks
@@ -131,11 +133,12 @@ This splitting is the precise sense in which H2
 The key mechanism in the WKB regime is the following
 fundamental estimate (Lemma~\ref{lem:F}):
 \[
-  |\lambda_i - \lambda_j| \;\gtrsim\; c^{-1/3} \cdot |i-j|.
+  |\lambda_i - \lambda_j| \;\ge\;
+  \tfrac{1}{2}\,c_{\min}\,(c/2)^{-1/3}\,|i-j|.
 \]
 When $j \in \mathcal{B}_m(i)$, so $|i-j| \ge 2^m$, this
-gives denominator $\gtrsim c^{-1/3} \cdot 2^m$, strictly
-dominating numerator $|\lambda_j - \lambda_{j+1}|
+gives denominator $\ge \frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m$,
+strictly dominating numerator $|\lambda_j - \lambda_{j+1}|
 = O(c^{-1/3})$.
 The ratio is $O(2^{-m})$, producing the $o(1)$ decay
 required for H2.
@@ -208,6 +211,13 @@ the transition window $[-A_0,0]$; $c_{\min}$ and
 $C_{\max}$ bound $\mathrm{Ai}^2$ on $[-A_0,A_0]$.
 
 \medskip\noindent
+\textbf{Uniformity of constants.}
+All constants $c_*, c_{\min}, C_{\max}$ depend only on
+$A_0$ and are uniform in $c$, $i$, $j$, $m$.
+No constant introduced in this paper depends on the
+indices $i, j$ or the block scale $m$.
+
+\medskip\noindent
 \textbf{Rescaled index.}
 We define $x_l$ as a \emph{deterministic linear rescaling}:
 \[
@@ -242,21 +252,22 @@ Dyadic blocks: $\Bm(i) := \{j : 2^m \le |i-j| < 2^{m+1}\}$,
 $m = 0,\ldots,M$, $M = \lfloor\log_2 N\rfloor$.
 
 \medskip\noindent
-\textbf{Approximation of $1-\lambda_j$.}
+\textbf{Explicit bound on $1-\lambda_j$.}
 Under Proposition~\ref{prop:U},
-$\lambda_j = \FAi(x_j) + E_j$ with $|E_j| \le C_1 c^{-2/3}$,
-so $1 - \lambda_j = \FAi(x_j) - E_j$.
+$\lambda_j = \FAi(x_j) + E_j$ with $|E_j| \le C_1 c^{-2/3}$.
 All transition-window indices satisfy $x_j \in [-A_0, 0]$,
-so $\FAi(x_j) \ge c_* > 0$ uniformly in $j$.
-Hence
-\[
-  1-\lambda_j = \FAi(x_j)\bigl(1 + O(c^{-2/3})\bigr),
-  \qquad\text{i.e.}\quad
-  1-\lambda_j \asymp \FAi(x_j)
-\]
-uniformly in the transition window.
-This is used explicitly in the proof of
-Corollary~\ref{cor:C}.
+so $\FAi(x_j) \ge c_* > 0$.
+For $c \ge c_0$ large enough that $C_1 c^{-2/3} \le c_*/2$,
+we have:
+\begin{equation}\label{eq:onemlam}
+  \tfrac{1}{2}\,\FAi(x_j)
+  \;\le\; 1-\lambda_j
+  \;\le\; 2\,\FAi(x_j),
+\end{equation}
+uniformly in all transition-window indices $j$.
+This explicit two-sided bound replaces the informal
+$1-\lambda_j \asymp \FAi(x_j)$ used in earlier drafts
+and is used directly in the proof of Corollary~\ref{cor:C}.
 
 % ============================================================
 \section{ORX Uniformity in the Transition Window}
@@ -283,10 +294,9 @@ for fixed rescaled $x$; Proposition~\ref{prop:U} requires
 this with a uniform $O(c^{-2/3})$ error over
 $O(c^{1/3})$ indices simultaneously.
 This is expected from the WKB matching structure of the ORX
-proof, but is not explicitly stated there.
-Proving it requires tracking uniformity constants in
-ORX Sections~4.4--4.7; no Riemann--Hilbert methods
-are needed.
+proof and likely obtainable by tracking the explicit
+uniformity constants in ORX Sections~4.4--4.7,
+but is not explicitly stated there.
 This paper is logically independent of a proof of
 Proposition~\ref{prop:U}; all results below are
 explicitly conditional on it.
@@ -306,6 +316,12 @@ $l$ with $|l - \NSh| \le A_0 c^{1/3}$:
   = (c/2)^{-1/3}\,\mathrm{Ai}(x_l)^2 + R_l,
 \]
 where $|R_l| \le C\,c^{-2/3}$, uniform in $l$.
+In particular,
+\[
+  |\lambda_l - \lambda_{l+1}| \le
+  (C_{\max} + C)\,(c/2)^{-1/3}
+  =: C_A\,(c/2)^{-1/3}.
+\]
 \end{lemma}
 
 \begin{proof}
@@ -333,6 +349,9 @@ the replacement error is $O(c^{-2/3})$.
 
 Combining: $|R_l| \le (2C_1 + L)c^{-2/3}$
 for a finite constant $L$ depending only on $A_0$.
+The upper bound on $|\lambda_l - \lambda_{l+1}|$
+follows from $\mathrm{Ai}(x_l)^2 \le C_{\max}$ and
+$|R_l| \le C\,c^{-2/3} \le C\,(c/2)^{-1/3}$ for $c \ge 1$.
 \end{proof}
 
 % ============================================================
@@ -378,22 +397,28 @@ $\FAi$ satisfies the bi-Lipschitz bound
   \le C_{\max}\,|x_i - x_j|
   \qquad \text{for all } x_i, x_j \in [-A_0, A_0].
 \]
-Under Proposition~\ref{prop:U},
-for any $i \ne j$ with $x_i, x_j \in [-A_0, A_0]$
-and $c$ sufficiently large:
+Under Proposition~\ref{prop:U}, define the explicit
+threshold
 \[
+  c_1 := \left(\frac{4C_1}{c_{\min}}\right)^3
+         \cdot 2
+  \qquad (\text{depending only on } A_0, C_1, c_{\min}).
+\]
+For all $c \ge c_1$ and all $i \ne j$ with
+$x_i, x_j \in [-A_0, A_0]$:
+\begin{equation}\label{eq:specsep}
   |\lambda_i - \lambda_j|
   \ge \tfrac{1}{2}\,c_{\min}\,(c/2)^{-1/3}\,|i-j|.
-\]
+\end{equation}
 In particular, for $j \in \Bm(i)$ (so $|i-j| \ge 2^m$):
 \[
   |\lambda_i - \lambda_j|
   \ge \tfrac{1}{2}\,c_{\min}\,(c/2)^{-1/3}\cdot 2^m.
 \]
-This last estimate is the \emph{Dyadic Separation
-Principle}: eigenvalue separation grows linearly in the
-dyadic scale $2^m$, at the same rate $c^{-1/3}$ as
-the spacing $\lambda_j - \lambda_{j+1}$.
+This is the \emph{Dyadic Separation Principle}:
+eigenvalue separation grows linearly in the dyadic
+scale $2^m$, at the same rate $c^{-1/3}$ as
+$\lambda_j - \lambda_{j+1}$.
 \end{lemma}
 
 \begin{proof}
@@ -418,10 +443,15 @@ $|E_k| \le C_1 c^{-2/3}$. Triangle inequality:
   |\lambda_i-\lambda_j|
   \ge c_{\min}(c/2)^{-1/3}|i-j| - 2C_1 c^{-2/3}.
 \]
-For $c$ sufficiently large (depending only on $A_0$
-and $C_1$), the error term $2C_1 c^{-2/3}$ is absorbed
-by $\frac{1}{2}c_{\min}(c/2)^{-1/3}|i-j|$
-(since $|i-j| \ge 1$ and $(c/2)^{-1/3} \gg c^{-2/3}$).
+The error term $2C_1 c^{-2/3}$ is dominated by
+$\frac{1}{2}c_{\min}(c/2)^{-1/3}|i-j|$ provided:
+\[
+  2C_1 c^{-2/3}
+  \le \tfrac{1}{2}\,c_{\min}\,(c/2)^{-1/3},
+\]
+i.e.\ $4C_1 \le c_{\min}(c/2)^{1/3}$, equivalently
+$c \ge 2(4C_1/c_{\min})^3 =: c_1$.
+For $c \ge c_1$, the estimate~\eqref{eq:specsep} holds.
 For $j \in \Bm(i)$, $|i-j| \ge 2^m$ gives the
 final displayed estimate.
 \end{proof}
@@ -433,15 +463,18 @@ final displayed estimate.
 
 \begin{corollary}[H2 in truncated dyadic sense]
 \label{cor:C}
-Fix $m_0 \ge 1$ (independent of $c$). Under
-Proposition~\ref{prop:U}, Lemma~\ref{lem:B},
+Fix $m_0 \ge 1$ (independent of $c$). Let
+$c_2 := \max(c_0, c_1)$ where $c_0$ is from
+Proposition~\ref{prop:U} and $c_1$ from Lemma~\ref{lem:F}.
+Under Proposition~\ref{prop:U}, Lemma~\ref{lem:B},
 and Lemma~\ref{lem:F}, define
 \[
   \delta_m
-  := \underbrace{\frac{2C}{c_{\min}}\cdot 2^{-m}}_{\text{scale decay}}
-   + \underbrace{\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}}_{\text{global error}}.
+  := \underbrace{\frac{2C_A}{c_{\min}}\cdot 2^{-m}}_{\text{scale decay}}
+   + \underbrace{2\,\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}}_{\text{global error}},
 \]
-Then for all $c \ge c_0$, all $i \le N$, all $m \ge m_0$,
+where $C_A$ is from Lemma~\ref{lem:A}.
+Then for all $c \ge c_2$, all $i \le N$, all $m \ge m_0$,
 and all $j, j+1 \in \Bm(i)$:
 \[
   \frac{|A_{ij} - A_{i,j+1}|}{A_{ij}} \le \delta_m
@@ -452,19 +485,18 @@ Moreover:
 \item For each fixed $m$,\; $\delta_m \to 0$ as
   $c \to \infty$.
 \item $\displaystyle\sup_{m \ge m_0} \delta_m
-  \le \frac{2C}{c_{\min}}\cdot 2^{-m_0}
-       + \frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}.$
+  \le \frac{2C_A}{c_{\min}}\cdot 2^{-m_0}
+       + 2\,\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}.$
   Given any $\varepsilon > 0$, choose first
   $m_0 = m_0(\varepsilon)$ large enough so that
-  $\frac{2C}{c_{\min}} \cdot 2^{-m_0} < \varepsilon/2$,
+  $\frac{2C_A}{c_{\min}} \cdot 2^{-m_0} < \varepsilon/2$,
   then $c = c(\varepsilon, m_0)$ large enough so that
-  $\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3} < \varepsilon/2$.
+  $2\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3} < \varepsilon/2$.
   Then $\sup_{m \ge m_0} \delta_m < \varepsilon$.
 \end{enumerate}
 In the sense of \textup{(ii)}: hypothesis~\textup{(H2)}
 of Theorem~2.1 in \cite{paperVII} holds for all
-$m \ge m_0$, i.e.\ the smallness condition is satisfied
-after fixing the dyadic cutoff $m_0$.
+$m \ge m_0$.
 \end{corollary}
 
 \begin{proof}
@@ -481,59 +513,66 @@ $A_{ij} \propto |\lambda_i-\lambda_j|/
 
 \textbf{Term 2 (global error).}
 By Lemma~\ref{lem:A},
-$|\lambda_j-\lambda_{j+1}| \le C(c/2)^{-1/3}$.
-By Section~\ref{sec:setup},
-$1-\lambda_j \asymp \FAi(x_j) \ge c_* > 0$.
-Lemma~\ref{lem:B} gives
-$\mathrm{Ai}(x_j)^2/\FAi(x_j) \le C_{\max}/c_*$,
+$|\lambda_j-\lambda_{j+1}| \le C_A\,(c/2)^{-1/3}$.
+By \eqref{eq:onemlam}, $1-\lambda_j \ge \frac{1}{2}\FAi(x_j) \ge \frac{c_*}{2}$.
+Since $|\lambda_j-\lambda_{j+1}| = (c/2)^{-1/3}\mathrm{Ai}(x_j)^2 + R_j$
+and $\mathrm{Ai}(x_j)^2 \le C_{\max}$, Lemma~\ref{lem:B} gives:
+\[
+  \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
+  \le \frac{C_A(c/2)^{-1/3}}{c_*/2}
+  = \frac{2C_A}{c_*}\cdot(c/2)^{-1/3}.
+\]
+A sharper bound uses Lemma~\ref{lem:A} and
+Lemma~\ref{lem:B} together:
+$|\lambda_j-\lambda_{j+1}| \le (c/2)^{-1/3}\mathrm{Ai}(x_j)^2 \cdot (1+O(c^{-1/3}))$,
 so:
 \[
-  \text{Term 2}
-  \le \frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}
+  \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
+  \le 2\cdot\frac{\mathrm{Ai}(x_j)^2}{\FAi(x_j)}\cdot(c/2)^{-1/3}
+  \le 2\cdot\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}
   = O(c^{-1/3}).
 \]
 
 \textbf{Term 1 (scale decay, Dyadic Separation Principle).}
 Since $j \in \Bm(i)$ implies $|i-j| \ge 2^m$,
-Lemma~\ref{lem:F} gives
+Lemma~\ref{lem:F} (for $c \ge c_1$) gives
 $|\lambda_i - \lambda_j| \ge
 \frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m$.
-Combining with Lemma~\ref{lem:A}:
+Combining with $|\lambda_j - \lambda_{j+1}| \le C_A(c/2)^{-1/3}$:
 \[
   \text{Term 1}
-  \le \frac{C(c/2)^{-1/3}}
+  \le \frac{C_A(c/2)^{-1/3}}
       {\frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m}
-  = \frac{2C}{c_{\min}}\cdot 2^{-m}
+  = \frac{2C_A}{c_{\min}}\cdot 2^{-m}
   = O(2^{-m}).
 \]
-The $(c/2)^{-1/3}$ factors cancel; Term~1 is
-independent of $c$ and decays purely in $m$.
+The $(c/2)^{-1/3}$ factors cancel exactly;
+Term~1 is independent of $c$.
 
 \textbf{Combining.}
 $\delta_m = \text{Term 1} + \text{Term 2}$
 as defined.
-Statement~(i): Term~1 is fixed; Term~2 $\to 0$.
-Statement~(ii): $\sup_{m \ge m_0}$ of Term~1 is
-$\frac{2C}{c_{\min}} \cdot 2^{-m_0}$; the two-parameter
-choice completes the argument.
+Statements~(i) and (ii) follow as in the statement.
 \end{proof}
 
 \begin{remark}[Dyadic Separation Principle in action]
 \label{rem:dyadic}
 The cancellation of $(c/2)^{-1/3}$ in Term~1 is the
 operative content of the Dyadic Separation Principle:
-numerator and denominator share the same $c^{-1/3}$
-scale, but the denominator carries an extra $2^m$ from
-the separation $|i-j| \ge 2^m$.
-The result is a purely combinatorial $2^{-m}$ factor,
-independent of $c$ --- this is the genuine mechanism
-behind H2.
+numerator $|\lambda_j-\lambda_{j+1}|$ and denominator
+$|\lambda_i-\lambda_j|$ share the same $c^{-1/3}$ scale,
+but the denominator carries an extra $2^m$ from
+$|i-j| \ge 2^m$.
+The result is a purely combinatorial $O(2^{-m})$ factor,
+independent of $c$.
+The $O(c^{-1/3})$ term in $\delta_m$ comes from
+Term~2 alone, and is secondary.
 \end{remark}
 
 \begin{remark}[Why H2 fails for $m = 0$]
 \label{rem:H2_m0}
 For $m = 0$, $|i-j| \ge 1$ only, so
-Term~1 $\le \frac{2C}{c_{\min}} \cdot 2^0 = O(1)$: no decay.
+Term~1 $\le \frac{2C_A}{c_{\min}} \cdot 2^0 = O(1)$: no decay.
 H2 fails at the microscopic scale;
 H3/B-strong provides the necessary control.
 \end{remark}
@@ -553,7 +592,7 @@ $i \ne j$, $i,j \le N$). Then for all $i \le N$:
 \[
   \sum_{j \ne i} |T_{ij}| \le C(m_0, A, C_2)
 \]
-uniform in $i$, $N$, and $c \ge c_0$.
+uniform in $i$, $N$, and $c \ge c_2$.
 \end{lemma}
 
 \begin{proof}
@@ -606,7 +645,7 @@ Consequently:
 which is Assumption~$B'$ of \cite{paperVI}.
 The contraction estimate
 $\norm{D\mathcal{T}_c^{(N)}} \le C(A)\,c^{-1/2}\log c < 1$
-for $c \ge c_0$ follows, establishing Assumption~A
+for $c \ge c_2$ follows, establishing Assumption~A
 conditional on Proposition~\ref{prop:U} and B-strong.
 \end{corollary}
 
@@ -622,6 +661,8 @@ H1 enters unconditionally; Lemma~B is used in
 Cor.~C (Term~2). B-strong (H3) enters only in
 Lemma~E (application of Theorem~2.1 to the truncated
 operator); it is not used in proving H2.
+All thresholds $c_0, c_1, c_2$ depend only on
+$A_0, C_1, c_{\min}$.
 \end{remark}
 
 \begin{remark}[What remains open and plausibility]
@@ -629,7 +670,7 @@ operator); it is not used in proving H2.
 \begin{itemize}
 \item \textbf{Proposition~\ref{prop:U}:}
   Uniform Airy approximation over the transition window;
-  requires explicit constant tracking in
+  likely obtainable by explicit constant tracking in
   ORX Sections~4.4--4.7.
   No new analytic inputs are needed beyond what ORX
   already establishes; this is a uniformisation problem,
@@ -640,7 +681,7 @@ operator); it is not used in proving H2.
   the deepest remaining open problem.
   Heuristic support: in the bulk, $P_{kl}$ is controlled
   by Widom asymptotics; the transition zone requires
-  matching WKB to Airy asymptotics uniformly,
+  uniform matching of WKB to Airy asymptotics,
   which is the content of B-strong.
   The bound is consistent with all known numerical
   evidence and with the structure of the ORX eigenvalue
