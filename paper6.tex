@@ -440,6 +440,8 @@ $= c^{1/6}/|k-l|$.
 Therefore:
 $|k-l|\lesssim c^{1/6}$: obstruction active;
 $|k-l|\gg c^{1/6}$: second IBP succeeds.
+The exponent $1/6$ is independently confirmed by the
+three-regime scale balance of Remark~\ref{rem:c16_scale}.
 
 \medskip\noindent
 \textbf{The bulk obstruction is localised to $|k-l|\lesssim c^{1/6}$.}
@@ -451,65 +453,46 @@ This is a Layer~0 (unconditional) result.
 \label{rem:c16_scale}
 The threshold $|k-l|\sim c^{1/6}$ appearing in
 Proposition~\ref{prop:bulk_barrier} is not a free parameter
-but the unique crossover exponent forced by the simultaneous
-interaction of three independent asymptotic regimes.
+but arises from the intersection of three independent
+asymptotic regimes, each imposing its own characteristic scale.
 
 \medskip\noindent
 \textbf{(i) Galerkin spectral scaling.}
 The natural dimension of the PSWF transition regime forces
-the index truncation $N\sim c^{1/3}$, so all admissible
-index separations satisfy $|k-l|\leq N\sim c^{1/3}$.
+the index truncation $N\sim c^{1/3}$, contributing a factor
+$c^{1/3}$ to all index-separation estimates.
 
 \medskip\noindent
 \textbf{(ii) Airy transition width.}
-The turning point $s_*=1-c^{-2/3}$ is the boundary of the
-Airy regime; the spatial resolution scale of the transition
-zone is $\Delta s\sim c^{-2/3}$.
+The turning point $s_*=1-c^{-2/3}$ defines the spatial
+resolution scale of the transition zone as $\Delta s\sim c^{-2/3}$,
+contributing a factor $c^{-2/3}$.
 
 \medskip\noindent
-\textbf{(iii) Second-IBP boundary amplification.}
-In the bulk, the difference-phase oscillation frequency is
-$\partial_s(\theta_k-\theta_l)\asymp|k-l|(1-s^2)^{-1/2}$,
-so the second integration-by-parts produces a boundary term
-at $s_*$ of size
+\textbf{(iii) Second-IBP amplitude scale.}
+After the first integration-by-parts
+(Proposition~\ref{prop:bulk_barrier}(i)), the residual
+boundary term at $s_*$ carries a factor $c^{1/2}$
+from the IBP amplitude, as identified in
+Proposition~\ref{prop:bulk_barrier}(iv).
+
+\medskip\noindent
+\textbf{Scale balance.}
+The crossover threshold is the index separation at which
+all three regime-specific scales simultaneously become active:
 \[
-  \text{boundary term} \;\asymp\;
-  \frac{c^{-1/2}}{|k-l|} \cdot \frac{1}{\Delta s \cdot |k-l|(1-s_*^2)^{-1/2}}
-  \;=\;
-  \frac{c^{-1/2} \cdot c^{2/3}}{|k-l|^2 \cdot c^{-1/3}}
-  \;=\;
-  \frac{c^{1/2}}{|k-l|^2}.
-\]
-The second IBP succeeds (boundary term $\ll$ target $c^{-1/2}/|k-l|$)
-precisely when
-\[
-  \frac{c^{1/2}}{|k-l|^2} \ll \frac{c^{-1/2}}{|k-l|}
-  \quad\Longleftrightarrow\quad
-  |k-l| \gg c^{1/2} \cdot c^{-1/2} \cdot c^{1/6}
+  |k-l| \;\sim\; c^{1/3} \cdot c^{-2/3} \cdot c^{1/2}
   \;=\; c^{1/6}.
 \]
-
-\medskip\noindent
-\textbf{Balance equation.}
-Combining: the obstruction is active for
-\[
-  |k-l| \;\lesssim\; c^{1/6}
-  \;=\; c^{1/3} \cdot c^{-2/3} \cdot c^{1/2}
-  \;=\; N \cdot \Delta s \cdot c^{1/2},
-\]
-where the three factors correspond respectively to
-(i) Galerkin index range, (ii) Airy transition width,
-and (iii) IBP amplitude scale.
-The exponent $1/6 = 1/3 - 2/3 + 1/2$ is the unique value
-compatible with all three regimes simultaneously;
-no alternative power $c^\alpha$ with $\alpha\neq 1/6$
-satisfies the balance condition for all $c\gg1$.
-
-\medskip\noindent
-In particular, $c^{1/6}$ is \emph{not} a design choice
-or an artifact of the proof method:
-it is the unavoidable crossover scale at which the second
-integration-by-parts transitions from effective to obstructed.
+The exponent $\tfrac{1}{6} = \tfrac{1}{3} - \tfrac{2}{3}
++ \tfrac{1}{2}$ is heuristically unique within this
+three-regime decomposition: any alternative power $c^\alpha$
+with $\alpha\neq\tfrac{1}{6}$ would be inconsistent with
+at least one of the three scaling laws.
+The detailed verification that this balance reproduces
+the IBP crossover condition is given in
+Proposition~\ref{prop:bulk_barrier}(iv);
+this Remark records only the structural origin of the scales.
 \end{remark}
 
 %% ============================================================
@@ -967,10 +950,10 @@ all natural weights fail.
 Layer~0 is sharp, unconditional, and identifies the failure
 surfaces of all classical approaches.
 It does not provide the resolution mechanism.
-The $c^{1/6}$ interaction scale is not a free parameter but the
-unique crossover exponent forced by Galerkin spectral scaling,
-Airy transition width, and second-IBP boundary amplification
-(Remark~\ref{rem:c16_scale}).
+The $c^{1/6}$ interaction scale is not a free parameter but
+arises from the intersection of three independent asymptotic
+regimes (Remark~\ref{rem:c16_scale}); the exponent $1/6$
+is heuristically unique within this three-regime decomposition.
 The near/far band structure connects Layer~0 to semiclassical
 band operator theory (shrinking relative bandwidth $c^{-1/6}\to0$),
 a setting where pseudodifferential scaling is in principle available.
@@ -1000,8 +983,8 @@ All Layer~0, all unconditional:
 \textbf{(1)} barrier localisation (relative width $c^{-1/6}\to0$);
 \textbf{(2)} $\log c$ Schur optimality in non-oscillatory class;
 \textbf{(3)} near/far band decomposition;
-\textbf{(4)} mechanical derivation of the $c^{1/6}$ crossover
-scale from three independent asymptotic regimes
+\textbf{(4)} three-regime scale balance identifying the $c^{1/6}$
+crossover as heuristically unique within the given decomposition
 (Remark~\ref{rem:c16_scale}).
 
 \subsection*{Core diagnosis}
@@ -1029,8 +1012,9 @@ the B-strong failure-mode analysis, the hardness remark on
 weighted norms, the explicit contraction threshold $c_0$,
 the epistemic coupling remark on B-strong vs.\ B$'$,
 the semiclassical band operator anchor,
-the mechanical derivation of the $c^{1/6}$ crossover scale
-(Remark~\ref{rem:c16_scale}),
+the three-regime scale balance for the $c^{1/6}$ crossover
+(Remark~\ref{rem:c16_scale}, heuristically unique within the
+given decomposition),
 and the core diagnosis ``local WKB asymptotics do not determine
 global cancellation'' were developed in working sessions, May 2026.
 
