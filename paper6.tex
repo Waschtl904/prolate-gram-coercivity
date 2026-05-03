@@ -86,6 +86,13 @@ no argument based solely on pointwise bounds $|T_{ij}| \leq C/|i-j|$
 can yield a contraction; the logarithmic growth is optimal in this class.
 Assumption~B$'$ is therefore a \emph{necessary} structural hypothesis,
 not merely a technical convenience.
+Section~\ref{sec:dyadic} further proves that spectral weights
+$w_k = (1-\lambda_k)^\alpha$ are asymptotically constant across the
+Galerkin window and cannot modify the Schur kernel
+(Proposition~\ref{prop:spectral_weight_fail}),
+and that naive index-based weights also fail to make the harmonic sum summable.
+The correct weighted-norm route, if it exists, requires an asymmetric
+or two-weight Schur estimate (Open Problem~\ref{op:weightnorm}).
 The remaining gaps (Assumptions~B and~B$'$) are precisely identified
 as Open Problems~\ref{op:prefactor} and~\ref{op:weightnorm}.
 \end{abstract}
@@ -226,11 +233,11 @@ Galerkin coefficients.
 An alternative route to contraction --- without Assumption~\ref{ass:Bprime} ---
 would be to identify a $c$-dependent weighted norm
 $\|\cdot\|_w$ on $X_c^{(N)}$ under which $\|DT\|_w < 1$ unconditionally.
-Such a norm would need to suppress the contribution of modes near the
-transition window (where the prefactor $P_{kl}$ is largest) relative
-to bulk modes.
-This approach is not pursued here but is identified as
-Open Problem~\ref{op:weightnorm}.
+Section~\ref{sec:spectral_weights} shows that the natural spectral-weight
+candidate $w_k = (1-\lambda_k)^\alpha$ fails structurally, and that
+naive index weights also fail.
+The correct weighted-norm route, if it exists, requires an asymmetric
+or two-weight Schur estimate; see Open Problem~\ref{op:weightnorm}.
 \end{remark}
 
 %% ============================================================
@@ -768,6 +775,9 @@ satisfying $|T_{ij}| \leq \kappa/|i-j|$.
 The analysis simultaneously characterises what Assumption~B$'$ must provide:
 not a better pointwise bound, but a collective cancellation
 across dyadically grouped index pairs.
+Section~\ref{sec:spectral_weights} then proves that spectral weights
+and naive index weights both fail structurally, and formulates the
+correct weighted-norm problem.
 
 \subsection{Dyadic block decomposition}
 
@@ -875,15 +885,139 @@ three distinct mechanisms:
         if $P_{ij} \leq C c^{-1/2}$ (a stronger form of Assumption~B
         with no $|i-j|$ dependence), then $|S_m(i)| \leq C c^{-1/2} \cdot 2$
         and $\sum_m |S_m(i)| \leq 2C c^{-1/2} \log c$.
-        This is exactly Assumption~B$'$ in a stronger pointwise form.
+        However, raw Widom scaling gives $P_{ij} \sim c^{7/3}|i-j|$
+        in the transition zone; closing the gap to $c^{-1/2}$
+        requires a reduction by $c^{11/6}$ per unit $|i-j|$
+        and is analytically very demanding (see Lemma~\ref{lem:prefactor}).
   \item \textbf{Weighted block suppression}:
         if blocks with large $m$ (far-diagonal) are downweighted in a
         suitable $\ell^2$ norm, the effective number of contributing blocks
-        shrinks. This is the weighted-norm approach (Open Problem~\ref{op:weightnorm}).
+        shrinks. This is the weighted-norm approach
+        (Section~\ref{sec:spectral_weights} and Open Problem~\ref{op:weightnorm}).
 \end{enumerate}
-All three routes are open; route~(ii) appears most directly accessible
-from PSWF spectral theory.
+Routes~(i) and~(ii) are open and analytically hard.
+Route~(iii) is structurally clean but, as shown in the next section,
+the naive weighted-norm candidates all fail.
 \end{remark}
+
+\subsection{Why spectral weights fail and what replaces them}
+\label{sec:spectral_weights}
+
+A natural first attempt at a weighted norm is to set
+\begin{equation}\label{eq:spectral_weight}
+  w_k := (1 - \lambda_k)^\alpha, \qquad \alpha > 0.
+\end{equation}
+The hope is that $w_j/w_i \sim |i-j|^\alpha$, converting the harmonic
+sum $\sum 1/|i-j|$ into $\sum |i-j|^{\alpha-1}$, which is summable for $\alpha > 1$.
+
+\begin{proposition}[Spectral weights are asymptotically constant in the Galerkin window]
+\label{prop:spectral_weight_fail}
+In the Galerkin window $k \leq N \sim c^{1/3}$, the PSWF eigenvalues satisfy
+\[
+  1 - \lambda_k \sim c^{-2/3}
+  \qquad \text{uniformly in } k \leq N
+\]
+(transition regime; see Lemma~\ref{lem:HS} and Widom asymptotics).
+Consequently, for any $\alpha > 0$:
+\[
+  w_k = (1-\lambda_k)^\alpha \sim c^{-2\alpha/3}
+  \qquad\text{uniformly in } k \leq N,
+\]
+and therefore
+\[
+  \frac{w_j}{w_i} = 1 + O(c^{-1/3})
+  \qquad \text{for all } i,j \leq N.
+\]
+The spectral weight~\eqref{eq:spectral_weight} does not modify the Schur kernel.
+\textbf{Eigenvalue-based weighting cannot produce contraction.}
+\end{proposition}
+
+\begin{proof}
+The Galerkin window is defined by $k \leq N \sim c^{1/3}$, which places all
+indices inside the transition regime $|k - 2c/\pi| \leq Ac^{1/3}$.
+Within this regime, $1 - \lambda_k \asymp c^{-2/3}$ uniformly
+(Widom transition asymptotics).
+Hence $w_k = c^{-2\alpha/3}(1 + O(c^{-1/3}))$ uniformly,
+giving $w_j/w_i = 1 + O(c^{-1/3}) \to 1$.
+\end{proof}
+
+\begin{remark}[Structural reason for the failure]
+\label{rem:spectral_weight_structural}
+The weight $w_k = (1-\lambda_k)^\alpha$ ``sees'' the eigenvalue,
+not the index $k$.
+In the transition zone all eigenvalues are equally close to~$1$
+(flat plateau of the PSWF spectrum), so the weight is blind to
+the index structure that drives the Schur sum.
+The Schur kernel $1/|i-j|$ is an \emph{index-space} object;
+an effective weight must distinguish indices, not eigenvalues.
+This is not a technical limitation but a structural mismatch:
+the operator lives on a different scale than the spectrum.
+\end{remark}
+
+\begin{remark}[Index-based weights also fail]
+\label{rem:index_weights}
+A weight depending directly on $k$ (rather than $\lambda_k$) must resolve
+the index structure. Two natural candidates both fail:
+\begin{enumerate}[nosep, label=(\alph*)]
+  \item \textbf{Power weight} $w_k = (1+k)^\beta$:
+        Then $w_j/w_i \sim (j/i)^\beta$ for $j \gg i$,
+        giving weighted kernel $\sim (1+d/i)^\beta/d$ with $d = |j-i|$.
+        For the central row $i \sim N/2$, the weighted row sum is
+        \[
+          \sum_{d=1}^{N} \frac{(1 + d/i)^\beta}{d}
+          \;\sim\; \sum_{d=1}^{i} \frac{1}{d} + \sum_{d=i}^{N} \frac{(d/i)^\beta}{d}
+          \;\sim\; \log i + i^{-\beta}\sum_{d=i}^{N} d^{\beta-1}
+          \;\sim\; \log N.
+        \]
+        For $\beta < 1$: $\sum d^{\beta-1}$ converges, but the $\log i$ term
+        survives. For $\beta \geq 1$: the far sum diverges faster.
+        \textbf{Net: no improvement.}
+  \item \textbf{Exponential weight} $w_k = e^{\gamma k/N}$, $\gamma > 0$:
+        Then $w_j/w_i = e^{\gamma(j-i)/N}$, giving weighted kernel
+        $e^{\gamma d/N}/d$.
+        The row sum is $\sum_{d=1}^{N} e^{\gamma d/N}/d \sim e^\gamma \log N$.
+        \textbf{Net: larger constant, same logarithmic growth.}
+\end{enumerate}
+Both candidates fail because the kernel $1/d$ is not integrable,
+and a multiplicative weight $\phi(d)/d$ is summable only if $\phi(d) \to 0$,
+i.e., \emph{far-diagonal indices must be downweighted.}
+But downweighting $j \gg i$ while upweighting $j \ll i$ (or vice versa)
+breaks symmetry: the Schur condition $\sup_i \sum_j (w_j/w_i)|T_{ij}|$
+must hold simultaneously for all rows $i$.
+A weight that helps row $i$ by downweighting far $j$ will hurt row $j$
+by upweighting far $i$.
+\end{remark}
+
+The conclusion of this analysis is:
+
+\begin{corollary}[No naive weight works]\label{cor:no_naive_weight}
+No weight of the form $w_k = f(\lambda_k)$ (spectral weight),
+$w_k = k^\beta$ (power weight), or $w_k = e^{\gamma k/N}$ (exponential weight)
+can make the weighted Schur row sum $\sup_i \sum_j (w_j/w_i)/|i-j|$
+asymptotically smaller than $\log N$.
+\end{corollary}
+
+\begin{openproblem}[Correct formulation of the weighted-norm problem]
+\label{op:weightnorm_precise}
+Find a positive sequence $\{w_k\}_{k=0}^{N-1}$ depending on $k$
+(not on $\lambda_k$) such that
+\[
+  \sup_{i \leq N} \sum_{j \neq i} \frac{w_j}{w_i} \cdot \frac{C_1 C_2}{|i-j|}
+  < 1.
+\]
+By Corollary~\ref{cor:no_naive_weight}, such a weight cannot be
+of power, exponential, or spectral type.
+A non-symmetric (two-weight) Schur estimate may be necessary:
+find positive sequences $\{u_k\}$, $\{v_k\}$ such that
+\[
+  \sum_j v_j |T_{ij}| \leq u_i
+  \quad\text{and}\quad
+  \sum_j u_j^{-1} |T_{ij}| \leq v_i^{-1}
+  \quad\text{for all } i,
+\]
+which together imply $\|T\|_{\ell^2(u) \to \ell^2(v)} < 1$.
+This is the two-weight Schur lemma (Schur--Cotlar--Stein framework).
+\end{openproblem}
 
 %% ============================================================
 \section{Open Problems}
@@ -900,20 +1034,21 @@ Two separate problems:
         By the characterisation of Section~\ref{sec:dyadic},
         this is equivalent to establishing signed cancellation in dyadic
         row-sum blocks (Remark~\ref{rem:routes}).
-        Route~(ii) (near-diagonal sparsification) appears most tractable.
+        Route~(i) (sign oscillation via PSWF phase analysis) is the
+        most structurally natural approach.
 \end{enumerate}
 \end{openproblem}
 
 \begin{openproblem}[Weighted norm approach]\label{op:weightnorm}
-Find a $c$-dependent weighted norm $\|\cdot\|_w$ on $X_c^{(N)}$,
-adapted to the PSWF spectrum, such that $\|D\mathcal{T}_c^{(N)}\|_w < 1$
-unconditionally.
-A natural candidate: $w_k = (1-\lam{k})^\alpha$ for some $\alpha > 0$.
-The weighted Schur sum then becomes $\sum_j (w_j/w_i)|T_{ij}|$;
-for $\alpha = 1/2$ the weight factor $(1-\lam{j})^{1/2}/(1-\lam{i})^{1/2}$
-scales as $|i-j|^{1/2}$ across the transition window,
-potentially converting $\sum 1/|i-j|$ into a convergent sum $\sum |i-j|^{-1/2}$.
-This is route~(iii) of Remark~\ref{rem:routes}.
+Find a $c$-dependent weighted norm $\|\cdot\|_w$ on $X_c^{(N)}$
+under which $\|D\mathcal{T}_c^{(N)}\|_w < 1$ unconditionally.
+By Proposition~\ref{prop:spectral_weight_fail} and
+Corollary~\ref{cor:no_naive_weight}, spectral weights, power weights,
+and exponential index weights all fail.
+The correct weight, if it exists, must be asymmetric or of two-weight type
+(Open Problem~\ref{op:weightnorm_precise}).
+This route avoids Assumption~B$'$ entirely but requires
+new structural input beyond standard Schur theory.
 \end{openproblem}
 
 \begin{openproblem}[Bulk oscillation cancellation]\label{op:bulk}
@@ -944,7 +1079,10 @@ The current status relative to Assumption~A:
         $|I_{kl}| \leq C_1 c^{-1/2}/|k-l|$ (Lemma~\ref{lem:RL});
         $T_{ii} = 0$; $\|DT\|_{L^2} \gtrsim c^{8/3}$ globally;
         $\log c$ growth is optimal in the pointwise-bound class
-        (Theorem~\ref{thm:nogo}).
+        (Theorem~\ref{thm:nogo});
+        spectral and naive index weights do not improve the Schur kernel
+        (Proposition~\ref{prop:spectral_weight_fail},
+        Corollary~\ref{cor:no_naive_weight}).
 
   \item \textbf{Under Assumption~B:}
         $|T_{ij}| \leq C_1 C_2/|i-j|$;
@@ -960,9 +1098,12 @@ The current status relative to Assumption~A:
         (Theorem~\ref{thm:nogo}), not merely technical.
         The dyadic characterisation (Section~\ref{sec:dyadic}) reduces it
         to proving signed block cancellation in $T_{ij}$,
-        which may be accessible via PSWF phase analysis.
-        Alternatively, the weighted-norm approach
-        (Open Problem~\ref{op:weightnorm}) avoids Assumption~B$'$ entirely.
+        most naturally via PSWF phase analysis (route~(i) of
+        Remark~\ref{rem:routes}).
+        The weighted-norm route (Open Problem~\ref{op:weightnorm})
+        would avoid Assumption~B$'$ entirely, but requires
+        an asymmetric or two-weight Schur estimate
+        beyond all naive candidates.
 \end{itemize}
 
 %% ============================================================
@@ -970,9 +1111,10 @@ The current status relative to Assumption~A:
 %% ============================================================
 
 This paper is part of the \emph{prolate-gram-coercivity} research programme.
-The dyadic decomposition, No-go Theorem, and structural characterisation
-of Assumption~B$'$ via signed block cancellation were developed in
-working sessions, May 2026.
+The dyadic decomposition, No-go Theorem, structural characterisation
+of Assumption~B$'$ via signed block cancellation, and the proof that
+spectral and index weights cannot improve the Schur kernel
+were developed in working sessions, May 2026.
 
 %% ============================================================
 \begin{thebibliography}{99}
@@ -1019,6 +1161,12 @@ working sessions, May 2026.
   F.~W.~J.~Olver,
   \textit{Asymptotics and Special Functions},
   Academic Press, 1974.
+
+\bibitem{GarciaTyler2020}
+  S.~R.~Garcia, R.~A.~Horn,
+  \textit{A Second Course in Linear Algebra},
+  Cambridge University Press, 2017.
+  [Two-weight Schur lemma and Cotlar--Stein framework.]
 
 \end{thebibliography}
 
