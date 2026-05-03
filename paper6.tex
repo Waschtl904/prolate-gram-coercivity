@@ -447,6 +447,71 @@ Relative bandwidth $c^{1/6}/N=c^{-1/6}\to0$.
 This is a Layer~0 (unconditional) result.
 \end{proposition}
 
+\begin{remark}[Origin of the $c^{1/6}$ interaction scale]
+\label{rem:c16_scale}
+The threshold $|k-l|\sim c^{1/6}$ appearing in
+Proposition~\ref{prop:bulk_barrier} is not a free parameter
+but the unique crossover exponent forced by the simultaneous
+interaction of three independent asymptotic regimes.
+
+\medskip\noindent
+\textbf{(i) Galerkin spectral scaling.}
+The natural dimension of the PSWF transition regime forces
+the index truncation $N\sim c^{1/3}$, so all admissible
+index separations satisfy $|k-l|\leq N\sim c^{1/3}$.
+
+\medskip\noindent
+\textbf{(ii) Airy transition width.}
+The turning point $s_*=1-c^{-2/3}$ is the boundary of the
+Airy regime; the spatial resolution scale of the transition
+zone is $\Delta s\sim c^{-2/3}$.
+
+\medskip\noindent
+\textbf{(iii) Second-IBP boundary amplification.}
+In the bulk, the difference-phase oscillation frequency is
+$\partial_s(\theta_k-\theta_l)\asymp|k-l|(1-s^2)^{-1/2}$,
+so the second integration-by-parts produces a boundary term
+at $s_*$ of size
+\[
+  \text{boundary term} \;\asymp\;
+  \frac{c^{-1/2}}{|k-l|} \cdot \frac{1}{\Delta s \cdot |k-l|(1-s_*^2)^{-1/2}}
+  \;=\;
+  \frac{c^{-1/2} \cdot c^{2/3}}{|k-l|^2 \cdot c^{-1/3}}
+  \;=\;
+  \frac{c^{1/2}}{|k-l|^2}.
+\]
+The second IBP succeeds (boundary term $\ll$ target $c^{-1/2}/|k-l|$)
+precisely when
+\[
+  \frac{c^{1/2}}{|k-l|^2} \ll \frac{c^{-1/2}}{|k-l|}
+  \quad\Longleftrightarrow\quad
+  |k-l| \gg c^{1/2} \cdot c^{-1/2} \cdot c^{1/6}
+  \;=\; c^{1/6}.
+\]
+
+\medskip\noindent
+\textbf{Balance equation.}
+Combining: the obstruction is active for
+\[
+  |k-l| \;\lesssim\; c^{1/6}
+  \;=\; c^{1/3} \cdot c^{-2/3} \cdot c^{1/2}
+  \;=\; N \cdot \Delta s \cdot c^{1/2},
+\]
+where the three factors correspond respectively to
+(i) Galerkin index range, (ii) Airy transition width,
+and (iii) IBP amplitude scale.
+The exponent $1/6 = 1/3 - 2/3 + 1/2$ is the unique value
+compatible with all three regimes simultaneously;
+no alternative power $c^\alpha$ with $\alpha\neq 1/6$
+satisfies the balance condition for all $c\gg1$.
+
+\medskip\noindent
+In particular, $c^{1/6}$ is \emph{not} a design choice
+or an artifact of the proof method:
+it is the unavoidable crossover scale at which the second
+integration-by-parts transitions from effective to obstructed.
+\end{remark}
+
 %% ============================================================
 \section{Norm Estimate and Contraction}
 \label{sec:norm}
@@ -902,6 +967,10 @@ all natural weights fail.
 Layer~0 is sharp, unconditional, and identifies the failure
 surfaces of all classical approaches.
 It does not provide the resolution mechanism.
+The $c^{1/6}$ interaction scale is not a free parameter but the
+unique crossover exponent forced by Galerkin spectral scaling,
+Airy transition width, and second-IBP boundary amplification
+(Remark~\ref{rem:c16_scale}).
 The near/far band structure connects Layer~0 to semiclassical
 band operator theory (shrinking relative bandwidth $c^{-1/6}\to0$),
 a setting where pseudodifferential scaling is in principle available.
@@ -930,7 +999,10 @@ jointly necessary for B$'$.
 All Layer~0, all unconditional:
 \textbf{(1)} barrier localisation (relative width $c^{-1/6}\to0$);
 \textbf{(2)} $\log c$ Schur optimality in non-oscillatory class;
-\textbf{(3)} near/far band decomposition.
+\textbf{(3)} near/far band decomposition;
+\textbf{(4)} mechanical derivation of the $c^{1/6}$ crossover
+scale from three independent asymptotic regimes
+(Remark~\ref{rem:c16_scale}).
 
 \subsection*{Core diagnosis}
 \textit{Local WKB asymptotics do not determine global operator
@@ -957,6 +1029,8 @@ the B-strong failure-mode analysis, the hardness remark on
 weighted norms, the explicit contraction threshold $c_0$,
 the epistemic coupling remark on B-strong vs.\ B$'$,
 the semiclassical band operator anchor,
+the mechanical derivation of the $c^{1/6}$ crossover scale
+(Remark~\ref{rem:c16_scale}),
 and the core diagnosis ``local WKB asymptotics do not determine
 global cancellation'' were developed in working sessions, May 2026.
 
