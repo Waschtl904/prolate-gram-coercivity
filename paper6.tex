@@ -509,27 +509,33 @@ Concretely, standard methods fail at two points:
 This is the precise content of Open Problem~\ref{op:prefactor}.
 
 \medskip\noindent
-\textbf{Epistemic coupling with B$'$.}
-A structural question complementary to the above concerns the
-logical independence of B-strong from Assumption~B$'$:
-any proof of $P_{kl}\leq C_2c^{1/2}$ will necessarily use
-the Airy-phase data at $s_*$, the same data that drives the
-oscillatory cancellation in B$'$.
-This does not create a logical dependency: $T_{ij}=P_{ij}\cdot I_{ij}$
-is an exact product and the implication chain
-B-strong $+$ B$'$ $\Rightarrow$ Layer~2 is unaffected.
-However, it creates an \emph{epistemic coupling}: the two
-assumptions share a common asymptotic origin at $s_*$, and
-a proof of B-strong may well import oscillatory structure
-already implicit in B$'$.
-If so, B-strong would not be a genuinely separable hypothesis,
-but rather an intermediate consequence of the full
-phase-amplitude structure required by B$'$.
-This does not affect the validity of any result stated here,
-but it is noted explicitly for the programme: the
-conceptually cleanest path may be to prove B$'$ directly
+\textbf{B-strong as independent intermediate hypothesis.}
+Assumption~B-strong is treated throughout as an independent
+intermediate hypothesis: its role in the implication chain
+(B-strong $\Rightarrow$ $|T_{ij}|\leq C/|i-j|$ $\Rightarrow$
+$\norm{T}\leq C\log c$) is logically self-contained,
+and does not presuppose any part of Assumption~B$'$.
+
+\medskip\noindent
+\textbf{Epistemic note on shared asymptotic data.}
+Any proof of $P_{kl}\leq C_2c^{1/2}$ is expected to involve
+the Airy-phase data at $s_*$, which is the same data
+that drives the oscillatory cancellation in B$'$.
+This does not create a logical dependency
+($T_{ij}=P_{ij}\cdot I_{ij}$ is an exact product,
+and the implication chain B-strong $+$ B$'$ $\Rightarrow$ Layer~2
+is unaffected),
+but it suggests that the two assumptions may share
+parts of their eventual proof structure.
+Although its eventual proof may rely on structural ingredients
+overlapping with B$'$, B-strong is formulated as an
+independent assumption and its logical role in Layer~1
+stands regardless of the proof strategy chosen.
+For the programme, this means the conceptually cleanest
+path may be to prove B$'$ directly
 (via Conjectures~\ref{conj:phase}--\ref{conj:amplitude})
-rather than factoring through B-strong as an intermediate step.
+rather than factoring through B-strong as a separate step;
+but B-strong remains a valid and useful intermediate target.
 \end{remark}
 
 \subsection{Assumption~B$'$ and the two-conjecture structure}
@@ -600,6 +606,12 @@ The full implication chain is:
   \text{Assumption~A}.
 \]
 No arrow reverses in general.
+Conjectures~\ref{conj:phase} and~\ref{conj:amplitude} are
+\emph{logically independent}: neither implies the other,
+and they address distinct aspects of the asymptotic structure
+(phase arithmetic at $s_*$ vs.\ amplitude regularity in the Galerkin
+index); they are, however, expected to be jointly necessary for B$'$,
+since the cancellation mechanism requires both.
 The Conjectures are formulated at the level of local WKB data
 at the single point $s_*$, and are strictly weaker than
 Assumption~B$'$.
@@ -749,6 +761,11 @@ $|i-j|\leq c^{1/6}$.
 In this regime $T^{\rm near}$ has \emph{local Toeplitz symbol
 structure} in the WKB scaling limit $c\to\infty$,
 $k/N\to\xi\in[0,1]$ fixed.
+This local symbol structure should not be interpreted as a
+global Toeplitz limit; it is a microlocal approximation valid
+only within the near-band scaling window $|i-j|\leq c^{1/6}$,
+and does not imply operator convergence to a Toeplitz limit
+in $\ell^2$.
 
 \medskip\noindent\textbf{Two open points.}
 \begin{enumerate}[nosep,label=(\arabic*)]
@@ -807,10 +824,11 @@ and amplitude.
 This requires: explicit asymptotic formula for $P_{kl}$ with
 controlled error; phase-sensitive Airy--WKB matching at $s_*$;
 and control of the joint Airy correlation.
-See also the epistemic coupling remark in~\ref{rem:Bstrong_content}:
-it may be more efficient to prove B$'$ directly
-via Conjectures~\ref{conj:phase}--\ref{conj:amplitude}
-than to first establish B-strong as an intermediate step.
+Although B-strong is an independent intermediate hypothesis,
+its proof is expected to involve structural ingredients
+that may overlap with those needed for
+Conjectures~\ref{conj:phase}--\ref{conj:amplitude};
+it may therefore be more efficient to prove B$'$ directly.
 \end{openproblem}
 
 \begin{openproblem}[Airy--WKB matching at $s_*$]
@@ -850,6 +868,9 @@ This Lipschitz-in-$j$ condition on the normalised amplitude
 should follow from PSWF transition asymptotics but is not
 established.
 Together with Conjecture~\ref{conj:phase} it implies B$'$.
+Conjectures~\ref{conj:phase} and~\ref{conj:amplitude} are
+logically independent (one concerns phase arithmetic,
+the other amplitude regularity) but jointly necessary for B$'$.
 \end{openproblem}
 
 \begin{openproblem}[Weighted norm]\label{op:weightnorm}
@@ -888,19 +909,22 @@ a setting where pseudodifferential scaling is in principle available.
 \subsection*{Layer~1: conditional on B-strong}
 $|T_{ij}|\leq C_1C_2/|i-j|$ (regime-coherent product bound);\;
 $\norm{T}\leq C\log c$ (bounded, not contracting).
+B-strong is an independent intermediate hypothesis
+(Rem.~\ref{rem:Bstrong_content});
+its eventual proof may involve structural ingredients
+overlapping with B$'$, but its logical role in Layer~1
+is self-contained.
 B-strong requires phase-sensitive Airy coupling and fails by
 two concrete mechanisms (Rem.~\ref{rem:Bstrong_content});
 B-weak is insufficient (Rem.~\ref{rem:balance}).
-B-strong shares asymptotic origin at $s_*$ with B$'$;
-its epistemic status as a separable hypothesis is open
-(Rem.~\ref{rem:Bstrong_content}).
 
 \subsection*{Layer~2: conditional on B-strong $+$ B$'$}
 $\norm{T}\leq Cc^{-1/2}\log c\to0$ for $c\geq c_0$;\;
 conditional fixed point (Cor.~\ref{cor:fixedpoint}).
 B$'$ requires Conj.~\ref{conj:phase} (phase) \emph{and}
 Conj.~\ref{conj:amplitude} (amplitude, $c$-uniform);
-neither alone suffices.
+the two conjectures are logically independent but
+jointly necessary for B$'$.
 
 \subsection*{What is genuinely new}
 All Layer~0, all unconditional:
