@@ -144,23 +144,23 @@ eigenvalues, ordered decreasingly.
 \medskip\noindent
 \textbf{Airy zeros and the parameter $A_0$.}
 All real zeros of $\mathrm{Ai}$ lie on the negative real
-axis (see \cite[Sec.~9.9]{DLMF}). We order them as
-$a_1 > a_2 > \cdots$ with
-\[
-  a_1 \approx -2.3381, \quad a_2 \approx -4.0879, \quad
-  \ldots
-\]
-For $x > a_1$ (in particular for all $x \ge 0$),
-$\mathrm{Ai}(x) > 0$ strictly.
+axis; we denote them $a_1 > a_2 > \cdots$ (ordered by
+decreasing value, i.e.~increasing distance from the origin),
+with $a_1 \approx -2.3381$ the largest (least negative)
+real zero \cite[Sec.~9.9]{DLMF}.
+Since $a_1$ is the largest real zero, the interval
+$(a_1, +\infty)$ contains no zero of $\mathrm{Ai}$,
+and $\mathrm{Ai}(x) > 0$ for all $x > a_1$
+(in particular for all $x \ge 0$).
 
 We fix once and for all:
 \[
-  \boxed{A_0 \in (0,\, |a_1|) = (0,\, 2.3381\ldots)}
+  \boxed{A_0 \in (0,\, |a_1|) \approx (0,\, 2.3381)}
 \]
-This ensures that the interval $[-A_0, A_0]$ lies entirely
-in $(a_1, +\infty)$ and hence contains no zero of
-$\mathrm{Ai}$. All positivity and Lipschitz estimates
-in this paper are restricted to this interval.
+Then $[-A_0, A_0] \subset (a_1, +\infty)$ and hence
+contains no zero of $\mathrm{Ai}$.
+All positivity and Lipschitz estimates in this paper
+are restricted to this zero-free interval.
 
 \medskip\noindent
 \textbf{Rescaled index.}
@@ -178,12 +178,13 @@ with $A < |a_1|$. For $l \le N_\mathrm{Sh}$ (bulk modes),
 $x_l \le 0$; for $l = N$, $x_N \approx -A$.
 All Galerkin indices therefore satisfy $x_l \in [-A, 0]
 \subset [-A_0, A_0] \subset (a_1, +\infty)$,
-remaining strictly in the zero-free region of $\mathrm{Ai}$.
+remaining in the zero-free interval.
 
 Further definitions:
 \begin{align*}
   \FAi(x) &:= \int_x^\infty \mathrm{Ai}(t)^2\,dt
-           \qquad \text{(complementary Airy CDF)},\\
+           \qquad \text{(complementary Airy CDF; note }
+           \FAi(x) > 0 \text{ for all } x \in \mathbb{R}\text{)},\\
   A_{ij} &:= P_{ij} \cdot c^{1/2},
   \qquad
   P_{ij} := c \cdot
@@ -265,10 +266,10 @@ the mean value theorem gives $\xi_l \in [x_l, x_{l+1}]$:
 \]
 
 \textbf{Replacing $\xi_l$ by $x_l$.}
-On $[-A_0, A_0]$ (zero-free by construction,
-Section~\ref{sec:setup}), $\mathrm{Ai}(x)^2$ is $C^1$
-with Lipschitz constant
-$L := \sup_{[-A_0,A_0]} 2|\mathrm{Ai}||\mathrm{Ai}'| < \infty$.
+On the zero-free interval $[-A_0, A_0]$
+(Section~\ref{sec:setup}),
+$\mathrm{Ai}(x)^2$ is $C^1$ with finite Lipschitz constant
+$L := \sup_{[-A_0,A_0]} 2|\mathrm{Ai}||\mathrm{Ai}'|$.
 Since $|\xi_l - x_l| \le (c/2)^{-1/3}$, the replacement
 error is $L(c/2)^{-2/3} = O(c^{-2/3})$.
 
@@ -292,12 +293,15 @@ there exists $C_{A_0} < \infty$ such that
 \end{lemma}
 
 \begin{proof}
-Since $A_0 < |a_1|$, the interval $[-A_0, A_0]$ contains
-no zero of $\mathrm{Ai}$ (all real zeros lie in
-$(-\infty, a_1)$ with $a_1 \approx -2.3381 < -A_0$).
-Both $\mathrm{Ai}(x)^2$ and $\FAi(x)$ are therefore
-continuous and strictly positive on $[-A_0, A_0]$;
-the ratio is bounded by compactness.
+$\FAi(x) = \int_x^\infty \mathrm{Ai}(t)^2\,dt > 0$
+for all $x \in \mathbb{R}$ (since the integrand is
+non-negative and not identically zero on any
+half-line).
+On the zero-free interval $[-A_0, A_0]$,
+$\mathrm{Ai}(x)^2$ is also strictly positive
+(Section~\ref{sec:setup}).
+Both functions are continuous and bounded away from zero
+on $[-A_0,A_0]$; the ratio is bounded by compactness.
 \end{proof}
 
 % ============================================================
@@ -312,12 +316,12 @@ With $A_0$ as in Section~\ref{sec:setup}, set
   c_{\min}(A_0)
   := \min_{x \in [-A_0,\, A_0]} \mathrm{Ai}(x)^2.
 \]
-Since $[-A_0, A_0] \subset (a_1, +\infty)$ contains
-no zero of $\mathrm{Ai}$ (all real zeros lie in
-$(-\infty, a_1)$ with $a_1 \approx -2.3381$),
-continuity and compactness give $c_{\min}(A_0) > 0$.
+Since $a_1 \approx -2.3381$ is the largest real zero of
+$\mathrm{Ai}$, the interval $(a_1,+\infty)$ contains no
+zero; as $[-A_0,A_0] \subset (a_1,+\infty)$, continuity
+and compactness give $c_{\min}(A_0) > 0$.
 
-Consequently, $\FAi$ satisfies the Lipschitz lower bound
+Consequently:
 \[
   |\FAi(x_i) - \FAi(x_j)|
   \ge c_{\min}(A_0)\,|x_i - x_j|
@@ -335,7 +339,8 @@ sufficiently large:
 \begin{proof}
 \textbf{Lipschitz lower bound.}
 By the fundamental theorem of calculus and
-$\mathrm{Ai}(t)^2 \ge c_{\min}(A_0)$ on $[-A_0,A_0]$:
+$\mathrm{Ai}(t)^2 \ge c_{\min}(A_0) > 0$ on
+$[-A_0, A_0]$:
 \[
   |\FAi(x_i)-\FAi(x_j)|
   = \left|\int_{x_j}^{x_i}\mathrm{Ai}(t)^2\,dt\right|
@@ -345,27 +350,26 @@ $\mathrm{Ai}(t)^2 \ge c_{\min}(A_0)$ on $[-A_0,A_0]$:
 
 \textbf{Spectral separation.}
 Proposition~\ref{prop:U} gives $\lambda_k = \FAi(x_k)+E_k$
-with $|E_k| \le C_1 c^{-2/3}$, so
+with $|E_k| \le C_1 c^{-2/3}$, so by the triangle
+inequality:
 \[
   |\lambda_i-\lambda_j|
   \ge c_{\min}(A_0)(c/2)^{-1/3}|i-j| - 2C_1 c^{-2/3}.
 \]
 For $|i-j| \ge 2^{m_0}$ (fixed) and $c \ge c_1(m_0)$
-sufficiently large, the error $2C_1 c^{-2/3}$
-is dominated by the first term, yielding
-the stated $\frac{1}{2}c_{\min}(A_0)(c/2)^{-1/3}|i-j|$.
+sufficiently large, the first term dominates, yielding
+the stated lower bound.
 \end{proof}
 
 \begin{remark}[Role in Corollary~\ref{cor:C}]
 Lemma~\ref{lem:F} closes the logical gap in
-Corollary~\ref{cor:C}: Term~1 of the relative variation
-($|\lambda_j - \lambda_{j+1}|/|\lambda_i - \lambda_j|$)
-is bounded by
-$C(c/2)^{-1/3} \,/\, (\frac{1}{2}c_{\min}(A_0)(c/2)^{-1/3}
-\cdot 2^{m_0}) = O(1)$,
-which combined with the $O(c^{-1/3})$ Term~2
-(Lemma~\ref{lem:B}) gives total relative variation
-$O(c^{-1/3})$.
+Corollary~\ref{cor:C}: the ratio
+$|\lambda_j - \lambda_{j+1}|/|\lambda_i - \lambda_j|$
+(Term~1) is bounded by
+$C(c/2)^{-1/3} / (\frac{1}{2}c_{\min}(A_0)(c/2)^{-1/3}
+\cdot 2^{m_0}) = O(1)$;
+combined with $O(c^{-1/3})$ from Lemma~\ref{lem:B}
+(Term~2), the total relative variation is $O(c^{-1/3})$.
 \end{remark}
 
 % ============================================================
@@ -417,7 +421,7 @@ By Proposition~\ref{prop:U}, $1-\lambda_j \approx
 For $m \ge m_0$, $|i-j| \ge 2^{m_0}$.
 Lemma~\ref{lem:F} gives
 $|\lambda_i-\lambda_j| \ge
-\frac{1}{2}c_{\min}(A_0)(c/2)^{-1/3} \cdot 2^{m_0}$,
+\frac{1}{2}c_{\min}(A_0)(c/2)^{-1/3}\cdot 2^{m_0}$,
 so:
 \[
   \text{Term 1}
@@ -427,7 +431,7 @@ so:
 \]
 
 \textbf{Conclusion.}
-Term~1 = $O(1)$, Term~2 = $O(c^{-1/3})$;
+Term~1 $= O(1)$, Term~2 $= O(c^{-1/3})$;
 total relative variation $O(c^{-1/3}) \to 0$.
 \end{proof}
 
@@ -435,9 +439,10 @@ total relative variation $O(c^{-1/3}) \to 0$.
 \label{rem:H2_m0}
 For $|i-j| = 1$: both $|\lambda_i-\lambda_j|$ and
 $|\lambda_j-\lambda_{j+1}|$ are $O((c/2)^{-1/3})$
-by Lemma~\ref{lem:A}, so Term~1 = $O(1)$.
-H2 fails at microscopic scale; H3/B-strong provides the
-necessary control there.
+by Lemma~\ref{lem:F} (lower bound) and Lemma~\ref{lem:A}
+(upper bound), so Term~1 $= O(1)$.
+H2 fails at microscopic scale;
+H3/B-strong provides the necessary control.
 \end{remark}
 
 % ============================================================
