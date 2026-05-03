@@ -28,6 +28,7 @@
 \newcommand{\abs}[1]{\lvert#1\rvert}
 \newcommand{\Bm}{\mathcal{B}_m}
 \newcommand{\Bprime}{B^{\prime}}
+\newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
 
 % ============================================================
 \begin{document}
@@ -235,28 +236,54 @@ in Appendix~\ref{sec:appendix}.
 \label{sec:PSWF}
 % ============================================================
 
-\begin{assumption}[B-strong]
+\begin{assumption}[B-strong: phase-sensitive coupling]
 \label{ass:Bstrong}
-% TODO: Copy exact statement from Paper VI.
-$P_{ij}\cdot c^{1/2}\leq C_2$ uniformly for all
-$i\neq j$, $i,j\leq N$.
+For all $k\neq l$, $k,l\leq N = \lfloor Ac^{1/3}\rfloor$:
+\[
+  P_{kl} := c\cdot
+  \frac{\abs{\lam{l}-\lam{k}}}{(1-\lam{k})(1-\lam{l})}
+  \leq C_2\,c^{1/2}.
+\]
 \end{assumption}
 
 \begin{assumption}[$B'$]
 \label{ass:Bprime}
-% TODO: Copy exact statement from Paper VI.
-$\displaystyle\sup_{i\leq N}\sum_{j\neq i}\abs{P_{ij}}
-\leq C\,c^{-1/2}\log c$.
+\[
+  \sup_{i\leq N}\sum_{j\neq i}P_{ij}\cdot\abs{I_{ij}}
+  \leq C\,c^{-1/2}\log c,
+\]
+where $I_{ij}:=\int_{-1}^1\arccos(s)\,\psi_i^{(c)}(s)\psi_j^{(c)}(s)\,ds$.
+Not implied by Assumption~\ref{ass:Bstrong};
+requires signed oscillatory cancellation.
 \end{assumption}
 
-\begin{conjecture}[Phase regularity]
+\begin{conjecture}[Linear phase equidistribution
+  {\normalfont(Conjecture~6.1 of \cite{paperVI})}]
 \label{conj:phase}
-% TODO: Copy Conjecture 6.1 from Paper VI.
+The WKB phases $\Theta_k^{(c)}$ at
+$s_* = 1 - c^{-2/3}$ satisfy, for $k\leq N$:
+\[
+  \Theta_k^{(c)} = \alpha^{(c)}k + \beta^{(c)}
+  + O(k^2/c),
+  \qquad
+  \alpha^{(c)}\in(0,2\pi)
+  \text{ away from }0,\pi.
+\]
 \end{conjecture}
 
-\begin{conjecture}[Amplitude regularity]
+\begin{conjecture}[Amplitude regularity on dyadic blocks
+  {\normalfont(Conjecture~6.2 of \cite{paperVI})}]
 \label{conj:amplitude}
-% TODO: Copy Conjecture 6.2 from Paper VI.
+For the amplitudes $A_{ij}:=P_{ij}\cdot c^{1/2}$ (normalised),
+on each dyadic block
+$\mathcal{B}_m(i)=\{j:2^m\leq\abs{i-j}<2^{m+1}\}$:
+\[
+  \abs{A_{ij}-A_{i,j+1}}
+  = o\!\left(\frac{A_{ij}}{2^m}\right)
+  \quad\text{uniformly in }i,j\in\mathcal{B}_m(i),\;
+  m\leq M,
+\]
+with constants independent of $c$.
 \end{conjecture}
 
 \begin{proposition}[PSWF satisfies hypotheses of
@@ -551,7 +578,8 @@ Summing over $m = 0, \dots, M$:
      + C'\sum_{m=0}^{M}\epsilon_m^{(N)}.
 \]
 The first sum satisfies
-$\sum_{m=0}^\infty (1+\delta_m)2^{-m} \leq 2(1 + \sup_m\delta_m) < \infty$
+$\sum_{m=0}^\infty (1+\delta_m)2^{-m}
+\leq 2(1 + \sup_m\delta_m) < \infty$
 since $\delta_m \to 0$.
 The second sum is $o(1)$ by the summability condition of (H1).
 Hence
