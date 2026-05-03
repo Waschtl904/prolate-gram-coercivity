@@ -127,7 +127,9 @@ B-strong (H3) likewise remains open.
 \medskip\noindent
 \textbf{Structure.}
 Section~\ref{sec:setup} fixes notation and the global
-Airy parameter $A_0$.
+Airy parameter $A_0$ together with the four
+compactness constants $c_*, C_*$ (for $\FAi$) and
+$c_{\min}, C_{\max}$ (for $\mathrm{Ai}^2$).
 Section~\ref{sec:propU} states Proposition~U.
 Sections~\ref{sec:lemmaA}--\ref{sec:lemmaF} prove the
 four supporting lemmas.
@@ -161,8 +163,23 @@ We fix once and for all:
 \]
 Then $[-A_0, A_0] \subset (a_1,+\infty)$ and hence
 contains no zero of $\mathrm{Ai}$.
-All positivity and coercivity estimates in this paper
-are restricted to this zero-free interval.
+
+\medskip\noindent
+\textbf{Compactness constants.}
+We introduce four constants, all depending only on $A_0$,
+that encode the quantitative behaviour of $\FAi$ and
+$\mathrm{Ai}^2$ on the zero-free interval:
+\begin{align*}
+  c_* &:= \min_{x\in[-A_0,\,0]}\FAi(x) > 0,
+  & C_* &:= \max_{x\in[-A_0,\,A_0]}\FAi(x) < \infty,\\
+  c_{\min} &:= \min_{x\in[-A_0,\,A_0]}\mathrm{Ai}(x)^2 > 0,
+  & C_{\max} &:= \max_{x\in[-A_0,\,A_0]}\mathrm{Ai}(x)^2 < \infty.
+\end{align*}
+Positivity and finiteness follow from continuity on a
+compact set and the zero-free condition.
+The convention is: starred constants ($c_*, C_*$) bound
+$\FAi$; subscripted constants ($c_{\min}, C_{\max}$) bound
+$\mathrm{Ai}^2$.
 
 \medskip\noindent
 \textbf{Rescaled index.}
@@ -186,7 +203,8 @@ $x_l \in [-A,0] \subset [-A_0,A_0] \subset (a_1,+\infty)$.
 \begin{align*}
   \FAi(x) &:= \int_x^\infty \mathrm{Ai}(t)^2\,dt
     \qquad \bigl(\FAi(x) > 0 \text{ for all }
-    x \in \mathbb{R}\bigr),\\
+    x \in \mathbb{R};\;
+    \FAi(x)\to 0 \text{ only as } x\to+\infty\bigr),\\
   A_{ij} &:= P_{ij}\cdot c^{1/2},
   \quad
   P_{ij} := c\cdot
@@ -198,23 +216,21 @@ Dyadic blocks: $\Bm(i) := \{j : 2^m \le |i-j| < 2^{m+1}\}$,
 $m = 0,\ldots,M$, $M = \lfloor\log_2 N\rfloor$.
 
 \medskip\noindent
-\textbf{Approximation of $1-\lambda_j$ and uniform
-positivity of $\FAi$.}
+\textbf{Approximation of $1-\lambda_j$.}
 Under Proposition~\ref{prop:U},
 $\lambda_j = \FAi(x_j) + E_j$ with $|E_j| \le C_1 c^{-2/3}$,
 so $1 - \lambda_j = \FAi(x_j) - E_j$.
-All transition-window indices satisfy
-$x_j \in [-A_0, 0]$; since $\FAi$ is continuous
-and strictly positive on $\mathbb{R}$, we have
+All transition-window indices satisfy $x_j \in [-A_0, 0]$,
+so $\FAi(x_j) \ge c_* > 0$ uniformly in $j$.
+Hence
 \[
-  c_* := \min_{x \in [-A_0, 0]} \FAi(x) > 0.
+  1-\lambda_j = \FAi(x_j)\bigl(1 + O(c^{-2/3})\bigr),
+  \qquad\text{i.e.}\quad
+  1-\lambda_j \asymp \FAi(x_j)
 \]
-Hence $\FAi(x_j) \ge c_* > 0$ uniformly in $j$,
-and $1-\lambda_j = \FAi(x_j)(1 + O(c^{-2/3}))$,
-i.e.\ $1-\lambda_j \asymp \FAi(x_j)$ uniformly
-in the transition window.
-This approximation is used explicitly in the proof
-of Corollary~\ref{cor:C}.
+uniformly in the transition window.
+This is used explicitly in the proof of
+Corollary~\ref{cor:C}.
 
 % ============================================================
 \section{ORX Uniformity in the Transition Window}
@@ -285,11 +301,13 @@ with $\FAi(x_l) - \FAi(x_{l+1})
 
 \textbf{Replacing $\xi_l$ by $x_l$.}
 On $[-A_0, A_0]$ (zero-free, Section~\ref{sec:setup}),
-$\mathrm{Ai}(x)^2$ is $C^1$ with finite Lipschitz constant
-$L$. Since $|\xi_l - x_l| \le (c/2)^{-1/3}$,
-the replacement error is $L(c/2)^{-2/3} = O(c^{-2/3})$.
+$\mathrm{Ai}(x)^2$ is $C^1$ with Lipschitz constant
+bounded by $2\sqrt{C_{\max}}\sup|\mathrm{Ai}'|_{[-A_0,A_0]}
+< \infty$. Since $|\xi_l - x_l| \le (c/2)^{-1/3}$,
+the replacement error is $O(c^{-2/3})$.
 
-Combining: $|R_l| \le (2C_1 + L)c^{-2/3}$.
+Combining: $|R_l| \le (2C_1 + L)c^{-2/3}$
+for an explicit $L < \infty$.
 \end{proof}
 
 % ============================================================
@@ -300,29 +318,25 @@ Combining: $|R_l| \le (2C_1 + L)c^{-2/3}$.
 \begin{lemma}[Airy Ratio Bound]
 \label{lem:B}
 With $A_0$ as in Section~\ref{sec:setup},
-there exists $C_{A_0} < \infty$ such that
 \[
   \frac{\mathrm{Ai}(x)^2}{\FAi(x)}
-  \le C_{A_0}
+  \le \frac{C_{\max}}{c_*}
   \qquad \text{for all } x \in [-A_0, A_0].
 \]
 \end{lemma}
 
 \begin{proof}
-$\FAi(x) > 0$ for all $x \in \mathbb{R}$
-(the integrand $\mathrm{Ai}(t)^2$ is non-negative
-and not identically zero on any half-line;
-note that $\FAi(x) \to 0$ only as $x\to+\infty$,
+On $[-A_0, A_0]$: numerator $\le C_{\max}$ and
+denominator $\ge c_* > 0$ (Section~\ref{sec:setup};
+note $\FAi(x)\to 0$ only as $x\to+\infty$,
 so $\FAi$ is bounded away from zero on every
-bounded interval).
-On the zero-free interval $[-A_0,A_0]$,
-$\mathrm{Ai}(x)^2 > 0$ as well
-(Section~\ref{sec:setup}).
-Both the numerator and denominator are continuous
-on the compact set $[-A_0,A_0]$, with the denominator
-bounded away from zero on this bounded interval;
-the ratio is therefore bounded above by compactness.
+bounded interval). The bound follows.
 \end{proof}
+
+\begin{remark}
+The constant $C_{\max}/c_*$ plays the role of $C_{A_0}$
+in the proof of Corollary~\ref{cor:C}.
+\end{remark}
 
 % ============================================================
 \section{Lemma F: Airy Rigidity}
@@ -331,19 +345,12 @@ the ratio is therefore bounded above by compactness.
 
 \begin{lemma}[Airy Rigidity]
 \label{lem:F}
-With $A_0$ as in Section~\ref{sec:setup}, define
+With the constants of Section~\ref{sec:setup},
+$\FAi$ satisfies the bi-Lipschitz bound
 \[
-  c_{\min}(A_0) := \min_{[-A_0,A_0]} \mathrm{Ai}(x)^2 > 0,
-  \qquad
-  C_{\max}(A_0) := \max_{[-A_0,A_0]} \mathrm{Ai}(x)^2 < \infty.
-\]
-Both constants are finite and positive since $[-A_0,A_0]$
-is compact and zero-free (Section~\ref{sec:setup}).
-Then $\FAi$ satisfies the bi-Lipschitz bound
-\[
-  c_{\min}(A_0)\,|x_i - x_j|
+  c_{\min}\,|x_i - x_j|
   \le |\FAi(x_i) - \FAi(x_j)|
-  \le C_{\max}(A_0)\,|x_i - x_j|
+  \le C_{\max}\,|x_i - x_j|
   \qquad \text{for all } x_i, x_j \in [-A_0, A_0].
 \]
 Under Proposition~\ref{prop:U},
@@ -351,25 +358,23 @@ for $|i-j| \ge 2^{m_0}$ (fixed $m_0$) and $c$
 sufficiently large:
 \[
   |\lambda_i - \lambda_j|
-  \ge \tfrac{1}{2}\,c_{\min}(A_0)\,(c/2)^{-1/3}\,|i-j|.
+  \ge \tfrac{1}{2}\,c_{\min}\,(c/2)^{-1/3}\,|i-j|.
 \]
 \end{lemma}
 
 \begin{proof}
 \textbf{Bi-Lipschitz bound.}
-Since $a_1 \approx -2.3381$ is the largest real zero of
-$\mathrm{Ai}$, every real zero satisfies $x < a_1$,
-so $[-A_0,A_0] \subset (a_1,+\infty)$ is zero-free.
 By the fundamental theorem of calculus,
-for any $x_i, x_j \in [-A_0, A_0]$:
+for $x_i, x_j \in [-A_0, A_0]$:
 \[
   |\FAi(x_i)-\FAi(x_j)|
   = \left|\int_{x_j}^{x_i}\mathrm{Ai}(t)^2\,dt\right|.
 \]
 The integrand satisfies
-$c_{\min}(A_0) \le \mathrm{Ai}(t)^2 \le C_{\max}(A_0)$
-on $[-A_0,A_0]$, giving both bounds simultaneously.
-With $|x_i - x_j| = (c/2)^{-1/3}|i-j|$ this yields
+$c_{\min} \le \mathrm{Ai}(t)^2 \le C_{\max}$
+on $[-A_0,A_0]$ (Section~\ref{sec:setup}),
+giving both bounds simultaneously.
+With $|x_i - x_j| = (c/2)^{-1/3}|i-j|$, this yields
 the stated bi-Lipschitz estimate.
 
 \textbf{Spectral separation.}
@@ -377,17 +382,17 @@ Proposition~\ref{prop:U}: $\lambda_k = \FAi(x_k)+E_k$,
 $|E_k| \le C_1 c^{-2/3}$. Triangle inequality:
 \[
   |\lambda_i-\lambda_j|
-  \ge c_{\min}(A_0)(c/2)^{-1/3}|i-j| - 2C_1 c^{-2/3}.
+  \ge c_{\min}(c/2)^{-1/3}|i-j| - 2C_1 c^{-2/3}.
 \]
 For $|i-j| \ge 2^{m_0}$ (fixed) and $c \ge c_1(m_0)$
 large enough, the first term dominates.
 \end{proof}
 
-\begin{remark}[Role in Corollary~\ref{cor:C}]
-Only the lower bound of Lemma~\ref{lem:F} is used in
-Corollary~\ref{cor:C} (Term~1 control). The upper bound
-completes the bi-Lipschitz structure of $\FAi$ on the
-zero-free interval and will be useful in later work.
+\begin{remark}
+Only the lower bound of Lemma~\ref{lem:F} is used
+in Corollary~\ref{cor:C}. The upper bound completes
+the bi-Lipschitz structure of $\FAi$ on the zero-free
+interval and will be useful in later work.
 \end{remark}
 
 % ============================================================
@@ -428,27 +433,27 @@ $A_{ij} \propto |\lambda_i-\lambda_j|/
 By Lemma~\ref{lem:A}, $|\lambda_j-\lambda_{j+1}|
 \le C(c/2)^{-1/3}$.
 By Section~\ref{sec:setup},
-$1-\lambda_j \asymp \FAi(x_j) \ge c_* > 0$
-uniformly in the transition window.
-Lemma~\ref{lem:B} then gives:
+$1-\lambda_j \asymp \FAi(x_j) \ge c_* > 0$.
+Lemma~\ref{lem:B} gives
+$\mathrm{Ai}(x_j)^2/\FAi(x_j) \le C_{\max}/c_*$,
+so:
 \[
   \text{Term 2}
-  \lesssim
-  \frac{(c/2)^{-1/3}\mathrm{Ai}(x_j)^2}{\FAi(x_j)}
-  \le C_{A_0}(c/2)^{-1/3} = O(c^{-1/3}).
+  \lesssim \frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}
+  = O(c^{-1/3}).
 \]
 
 \textbf{Term 1.}
 For $m \ge m_0$, $|i-j| \ge 2^{m_0}$.
 Lemma~\ref{lem:F} (lower bound):
 $|\lambda_i-\lambda_j| \ge
-\frac{1}{2}c_{\min}(A_0)(c/2)^{-1/3}\cdot 2^{m_0}$.
+\frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^{m_0}$.
 Hence:
 \[
   \text{Term 1}
   \le \frac{C(c/2)^{-1/3}}
-           {\frac{1}{2}c_{\min}(A_0)(c/2)^{-1/3}\cdot 2^{m_0}}
-  = \frac{2C}{c_{\min}(A_0)\cdot 2^{m_0}} = O(1).
+           {\frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^{m_0}}
+  = \frac{2C}{c_{\min}\cdot 2^{m_0}} = O(1).
 \]
 
 \textbf{Conclusion.}
@@ -502,8 +507,8 @@ Summing over $m_0$ blocks: $\le 2C_2 m_0 = O(1)$.
 Corollary~\ref{cor:C} gives H2 for all $m \ge m_0$;
 with H1 (unconditional) and H3 (B-strong), Theorem~2.1
 of \cite{paperVII} applies, giving $O(1)$.
-(Note: H3 is used here only for the WKB-regime
-application of Theorem~2.1, not in the proof of H2 itself.)
+(H3 is used here only for the application of
+Theorem~2.1; it is not used in the proof of H2 itself.)
 
 \textbf{Total:} $O(1)$, uniform in $i, c$.
 \end{proof}
@@ -541,8 +546,7 @@ conditional on Proposition~\ref{prop:U} and B-strong.
 \]
 H1 enters unconditionally; Lemma~B is used in
 Cor.~C (Term~2). B-strong (H3) enters only in
-Lemma~E (Core regime) and via Theorem~2.1 of
-\cite{paperVII}; it is not used in proving H2.
+Lemma~E; it is not used in proving H2.
 \end{remark}
 
 \begin{remark}[What remains open]
