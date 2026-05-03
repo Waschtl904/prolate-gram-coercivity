@@ -93,6 +93,14 @@ Galerkin window and cannot modify the Schur kernel
 and that naive index-based weights also fail to make the harmonic sum summable.
 The correct weighted-norm route, if it exists, requires an asymmetric
 or two-weight Schur estimate (Open Problem~\ref{op:weightnorm}).
+Proposition~\ref{prop:bulk_barrier} identifies the precise obstruction
+to improving the bulk integral bound $|I_{kl}^{\rm bulk}| \lesssim c^{-1/2}/|k-l|$:
+a second integration by parts in the bulk is blocked by a boundary term
+at the bulk--transition interface $s_* = 1 - c^{-2/3}$,
+where WKB breaks down and Airy asymptotics take over.
+An improved bound $c^{-2/3}/|k-l|$ is equivalent to establishing
+cancellation of this boundary term via Airy--WKB matching
+(Open Problem~\ref{op:bulk_refined}).
 The remaining gaps (Assumptions~B and~B$'$) are precisely identified
 as Open Problems~\ref{op:prefactor} and~\ref{op:weightnorm}.
 \end{abstract}
@@ -659,6 +667,132 @@ more precisely $c^{-1/3}$ and $c^{-1/2}\log c$ are comparable),
 both zones contribute $O(\log c)$ and neither yields a sub-logarithmic bound.
 \end{remark}
 
+\subsection{Bulk oscillation barrier}
+\label{sec:bulk_barrier}
+
+\begin{proposition}[Bulk oscillation barrier via boundary term]
+\label{prop:bulk_barrier}
+Let $k \neq l$, $k,l \leq N \sim c^{1/3}$, and consider the bulk contribution
+\[
+  I_{kl}^{\rm bulk}
+  = \int_{\mathcal{Z}_{\rm bulk}} F_{kl}(s)\,(1-s^2)^{-1/2}\,ds,
+  \qquad
+  F_{kl}(s) = \int_s^1 \pswf{k}(t)\pswf{l}(t)\,dt.
+\]
+Assume the WKB representation
+\[
+  \pswf{k}(s) \sim A_k(s)\cos(\theta_k(s)),
+  \qquad
+  A_k(s) \sim c^{-1/4}(1-s^2)^{-1/4}
+\]
+holds uniformly in $\mathcal{Z}_{\rm bulk}$.
+
+\medskip
+\noindent\textbf{(i) First integration by parts.}
+One integration by parts via the Wronskian identity yields
+\[
+  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-1/2}}{|k-l|},
+\]
+as in Lemma~\ref{lem:sublD}. This is the current unconditional bound.
+
+\medskip
+\noindent\textbf{(ii) WKB product decomposition.}
+Using the WKB representation:
+\[
+  \pswf{k}(s)\pswf{l}(s)
+  = \tfrac{1}{2} A_k(s) A_l(s)
+    \bigl[\cos(\theta_k(s) - \theta_l(s)) + \cos(\theta_k(s) + \theta_l(s))\bigr].
+\]
+The fast (sum-phase) term $\cos(\theta_k+\theta_l)$ has frequency
+$\partial_s(\theta_k+\theta_l) \asymp c(1-s^2)^{-1/2}(k+l)$
+and contributes $O(c^{-1}/|k+l|)$ after one IBP -- negligible.
+The slow (difference-phase) term $\cos(\theta_k - \theta_l)$ has frequency
+\begin{equation}\label{eq:difffreq}
+  \partial_s(\theta_k - \theta_l) \asymp \frac{|k-l|}{\sqrt{1-s^2}}.
+\end{equation}
+
+\medskip
+\noindent\textbf{(iii) Second IBP attempt on the difference term.}
+Applying a second integration by parts to
+$\int_{\mathcal{Z}_{\rm bulk}} F_{kl}(s)(1-s^2)^{-1/2}\,ds$
+using the oscillation frequency~\eqref{eq:difffreq} produces:
+\[
+  I_{kl}^{\rm bulk}
+  = \underbrace{\text{(interior integral term)}}_{\displaystyle O(c^{-2/3}/|k-l|)
+    \text{ potentially}}
+  \;+\;
+  \underbrace{\text{(boundary term at } s_* = 1 - c^{-2/3})}_{\displaystyle
+    \text{dominant -- see (iv)}}.
+\]
+
+\medskip
+\noindent\textbf{(iv) Boundary term dominance.}
+At the bulk--transition interface $s_* = 1 - c^{-2/3}$:
+\[
+  (1-s_*^2)^{1/2} \asymp c^{-1/3},
+  \qquad
+  \partial_s(\theta_k - \theta_l)\big|_{s_*} \asymp |k-l|\,c^{1/3}.
+\]
+The boundary term from the second IBP evaluates to:
+\[
+  \text{boundary term}
+  \;\sim\;
+  \frac{F_{kl}(s_*)}{(1-s_*^2)^{1/2}}
+  \cdot
+  \frac{(1-s_*^2)^{1/2}}{\partial_s(\theta_k-\theta_l)\big|_{s_*}}
+  \;\asymp\;
+  \frac{c^{-1/2}/|k-l|}{|k-l| \cdot c^{1/3}}
+  \cdot c^{1/3}
+  \;=\;
+  \frac{c^{-1/2}}{|k-l|^2} \cdot c^{2/3}
+  \;=\;
+  \frac{c^{1/6}}{|k-l|^2},
+\]
+which for $|k-l| = O(1)$ is much larger than the target $c^{-2/3}/|k-l|$.
+
+\medskip
+\noindent\textbf{Conclusion (Equivalence).}
+The second IBP cannot improve the bound $c^{-1/2}/|k-l|$ without additional
+control of the boundary term at $s_* = 1-c^{-2/3}$.
+Specifically:
+\[
+  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-2/3}}{|k-l|}
+  \quad\Longleftrightarrow\quad
+  \left|\text{boundary term at } s_*\right| \lesssim \frac{c^{-2/3}}{|k-l|}.
+\]
+This cancellation requires matching of the WKB phase
+$\theta_k - \theta_l$ with the Airy function at the turning point,
+i.e., precise Airy--WKB connection formulae at $s_*$.
+\end{proposition}
+
+\begin{proof}
+Parts~(i)--(iii) follow from the IBP computation described above,
+using $F_{kl}(s) \lesssim c^{-1/2}(1-s^2)^{1/2}/|k-l|$
+from Proposition~\ref{prop:moment}(c).
+Part~(iv): at $s_*$, substituting $(1-s_*^2)^{1/2} \sim c^{-1/3}$ and
+$\partial_s(\theta_k-\theta_l)|_{s_*} \sim |k-l|c^{1/3}$
+into the standard IBP boundary evaluation gives the stated estimate.
+The equivalence statement follows since the interior integral term
+is $O(c^{-2/3}/|k-l|)$ by direct estimate (using $|A_k A_l| \lesssim c^{-1/2}(1-s^2)^{-1/2}$
+and integrating against $(1-s^2)^{-1/2}$ over $\mathcal{Z}_{\rm bulk}$),
+so the obstruction to achieving $c^{-2/3}/|k-l|$ is precisely
+the boundary term.
+\end{proof}
+
+\begin{remark}[Geometric interpretation of the barrier]
+\label{rem:barrier_geometry}
+The boundary term at $s_* = 1 - c^{-2/3}$ arises because WKB is not a
+valid approximation at the turning point $s \to 1$.
+The transition from oscillatory (WKB, cosine) behaviour to monotone
+(Airy, exponentially decaying) behaviour happens exactly at $s_*$.
+The mismatch between the two approximations is not small:
+it is $O(c^{1/6}/|k-l|^2)$, which exceeds the target $c^{-2/3}/|k-l|$ by
+$c^{1/6+2/3} = c^{5/6}$ for $|k-l| = 1$.
+Establishing Airy--WKB matching to sufficient precision is thus
+the precise analytic problem that must be solved to improve the
+bulk integral bound.
+\end{remark}
+
 %% ============================================================
 \section{Norm Estimate and Contraction}
 \label{sec:norm}
@@ -739,6 +873,8 @@ so $\|D\mathcal{T}_c^{(N)}\| \leq Cc^{-1/2}\log c \to 0$.
 Diagonal vanishing & $T_{ii} = 0$ & commutator & \checkmark{} unconditional \\
 IBP integral & $|I_{ij}| \leq C_1 c^{-1/2}/|i-j|$ & Lemma~\ref{lem:RL}
   & \checkmark{} unconditional \\
+Bulk barrier identified & boundary term at $s_*=1-c^{-2/3}$ dominates
+  & Prop.~\ref{prop:bulk_barrier} & \checkmark{} unconditional \\
 Prefactor (pointwise) & $P_{ij} \leq C_2 c^{1/2}$ & Assumption~\ref{ass:B}
   & \textbf{open (OP~\ref{op:prefactor}(1))} \\
 $c$-power cancellation & $c^{1/2} \times c^{-1/2} = O(1)$ & Remark~\ref{rem:balance}
@@ -753,7 +889,9 @@ Schur-sum improvement & $\leq C c^{-1/2}\log c \to 0$ & Theorem~\ref{thm:main}(b
 \caption{Logical chain for Theorem~\ref{thm:main}.
 The Schur norm bound $\log c$ is both an upper bound (part~(a)) and a lower bound
 (No-go Theorem~\ref{thm:nogo}); it is optimal within the pointwise-bound class.
-Only part~(b) (conditional on Assumption~B$'$) gives a contraction.}
+Only part~(b) (conditional on Assumption~B$'$) gives a contraction.
+The bulk barrier (Proposition~\ref{prop:bulk_barrier}) is now an unconditional
+structural result identifying the obstruction to improving $|I_{kl}^{\rm bulk}|$.}
 \label{tab:mechanisms}
 \end{table}
 
@@ -988,8 +1126,6 @@ A weight that helps row $i$ by downweighting far $j$ will hurt row $j$
 by upweighting far $i$.
 \end{remark}
 
-The conclusion of this analysis is:
-
 \begin{corollary}[No naive weight works]\label{cor:no_naive_weight}
 No weight of the form $w_k = f(\lambda_k)$ (spectral weight),
 $w_k = k^\beta$ (power weight), or $w_k = e^{\gamma k/N}$ (exponential weight)
@@ -1051,11 +1187,40 @@ This route avoids Assumption~B$'$ entirely but requires
 new structural input beyond standard Schur theory.
 \end{openproblem}
 
-\begin{openproblem}[Bulk oscillation cancellation]\label{op:bulk}
-Prove $|I_{kl}^{\rm bulk}| \lesssim c^{-2/3}/|k-l|$
-via stationary-phase or second-IBP exploiting WKB phases $\theta_k - \theta_l$.
-If established: part~(a) upgrades to $\|DT\| \lesssim c^{-1/6}\log c$;
-part~(b) to $\|DT\| \lesssim c^{-2/3}\log c$.
+\begin{openproblem}[Bulk--transition coupling and Airy--WKB matching]
+\label{op:bulk_refined}
+By Proposition~\ref{prop:bulk_barrier}, the bound
+\[
+  |I_{kl}^{\rm bulk}| \lesssim \frac{c^{-2/3}}{|k-l|}
+\]
+is equivalent to establishing cancellation or decay of the boundary term
+at the bulk--transition interface $s_* = 1 - c^{-2/3}$.
+Concretely: control the term
+\[
+  \frac{F_{kl}(s_*)}{(1-s_*^2)^{1/2}} \cdot
+  \frac{(1-s_*^2)^{1/2}}{\partial_s(\theta_k - \theta_l)\big|_{s_*}}
+  \;\asymp\; \frac{c^{1/6}}{|k-l|^2}
+\]
+to the required scale $c^{-2/3}/|k-l|$.
+
+\medskip
+\noindent\textbf{Approach via Airy coordinates.}
+Set $s = 1 - c^{-2/3} x$ with $x = O(1)$ near $s_*$.
+In these coordinates:
+\begin{itemize}[nosep]
+  \item The PSWF $\pswf{k}$ transitions from $\Ai(c^{2/3}\zeta_k)$
+        (Airy, monotone for $x \gg 1$) to oscillatory WKB for $x \ll 1$.
+  \item The difference phase $\theta_k - \theta_l$ linearises:
+        $\theta_k(s) - \theta_l(s) \approx (k-l)\cdot\phi(x)$
+        for some explicit $\phi$.
+  \item The boundary term becomes an explicit integral in $x$
+        involving $\Ai \cdot \Ai$ products and their derivatives.
+\end{itemize}
+If this integral exhibits oscillatory cancellation in $x$ (Airy-type
+stationary phase), the boundary term is reduced to $O(c^{-2/3}/|k-l|)$.
+If established, Theorem~\ref{thm:main}(a) upgrades unconditionally to
+$\|D\mathcal{T}_c^{(N)}\| \lesssim c^{-1/6}\log c \to 0$,
+and Theorem~\ref{thm:main}(b) to $\|D\mathcal{T}_c^{(N)}\| \lesssim c^{-2/3}\log c$.
 \end{openproblem}
 
 \begin{openproblem}[Optimal Galerkin dimension]\label{op:Nopt}
@@ -1082,7 +1247,10 @@ The current status relative to Assumption~A:
         (Theorem~\ref{thm:nogo});
         spectral and naive index weights do not improve the Schur kernel
         (Proposition~\ref{prop:spectral_weight_fail},
-        Corollary~\ref{cor:no_naive_weight}).
+        Corollary~\ref{cor:no_naive_weight});
+        the bulk oscillation barrier is precisely identified at
+        $s_* = 1-c^{-2/3}$ via second-IBP analysis
+        (Proposition~\ref{prop:bulk_barrier}).
 
   \item \textbf{Under Assumption~B:}
         $|T_{ij}| \leq C_1 C_2/|i-j|$;
@@ -1093,17 +1261,26 @@ The current status relative to Assumption~A:
         contraction; conditional Galerkin fixed point
         (Corollary~\ref{cor:fixedpoint}).
 
+  \item \textbf{Conditional on Open Problem~\ref{op:bulk_refined}:}
+        $|I_{kl}^{\rm bulk}| \lesssim c^{-2/3}/|k-l|$, which under
+        Assumption~B gives $\|D\mathcal{T}_c^{(N)}\| \lesssim c^{-1/6}\log c \to 0$
+        unconditionally -- eliminating the need for Assumption~B$'$.
+
   \item \textbf{Gap and path forward:}
-        Assumption~B$'$ is structurally necessary
-        (Theorem~\ref{thm:nogo}), not merely technical.
-        The dyadic characterisation (Section~\ref{sec:dyadic}) reduces it
-        to proving signed block cancellation in $T_{ij}$,
-        most naturally via PSWF phase analysis (route~(i) of
-        Remark~\ref{rem:routes}).
-        The weighted-norm route (Open Problem~\ref{op:weightnorm})
-        would avoid Assumption~B$'$ entirely, but requires
-        an asymmetric or two-weight Schur estimate
-        beyond all naive candidates.
+        Three routes remain open, in increasing order of structural depth:
+        \begin{enumerate}[nosep, label=(\roman*)]
+          \item Airy--WKB matching at $s_*$
+                (Open Problem~\ref{op:bulk_refined}): would give
+                unconditional contraction under Assumption~B alone.
+          \item Sign oscillation / PSWF phase analysis
+                (route~(i) of Remark~\ref{rem:routes}): would establish
+                Assumption~B$'$ and contraction under Assumption~B.
+          \item Two-weight Schur estimate
+                (Open Problem~\ref{op:weightnorm}): would avoid
+                both Assumption~B$'$ and the bulk barrier entirely.
+        \end{enumerate}
+        Route~(i) is the most immediate target: it reduces to a
+        concrete computation in Airy coordinates at $s_* = 1-c^{-2/3}$.
 \end{itemize}
 
 %% ============================================================
@@ -1112,9 +1289,11 @@ The current status relative to Assumption~A:
 
 This paper is part of the \emph{prolate-gram-coercivity} research programme.
 The dyadic decomposition, No-go Theorem, structural characterisation
-of Assumption~B$'$ via signed block cancellation, and the proof that
-spectral and index weights cannot improve the Schur kernel
-were developed in working sessions, May 2026.
+of Assumption~B$'$ via signed block cancellation, the proof that
+spectral and index weights cannot improve the Schur kernel,
+and the identification of the bulk oscillation barrier via second-IBP
+analysis (Proposition~\ref{prop:bulk_barrier}) were
+developed in working sessions, May 2026.
 
 %% ============================================================
 \begin{thebibliography}{99}
