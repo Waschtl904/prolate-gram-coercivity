@@ -239,6 +239,10 @@ independent of Assumptions~B and~B$'$:
   \item \textbf{Near/far decomposition}
         (OP~\ref{op:nearfar}):
         reduction to band-matrix of shrinking relative bandwidth.
+        Item~(3) connects Layer~0 to the theory of semiclassical
+        band operators with shrinking relative bandwidth $c^{-1/6}\to0$
+        --- a setting where pseudodifferential scaling arguments
+        are in principle available, though not yet applied here.
 \end{enumerate}
 
 %% ============================================================
@@ -503,6 +507,29 @@ Concretely, standard methods fail at two points:
         must exploit.
 \end{enumerate}
 This is the precise content of Open Problem~\ref{op:prefactor}.
+
+\medskip\noindent
+\textbf{Epistemic coupling with B$'$.}
+A structural question complementary to the above concerns the
+logical independence of B-strong from Assumption~B$'$:
+any proof of $P_{kl}\leq C_2c^{1/2}$ will necessarily use
+the Airy-phase data at $s_*$, the same data that drives the
+oscillatory cancellation in B$'$.
+This does not create a logical dependency: $T_{ij}=P_{ij}\cdot I_{ij}$
+is an exact product and the implication chain
+B-strong $+$ B$'$ $\Rightarrow$ Layer~2 is unaffected.
+However, it creates an \emph{epistemic coupling}: the two
+assumptions share a common asymptotic origin at $s_*$, and
+a proof of B-strong may well import oscillatory structure
+already implicit in B$'$.
+If so, B-strong would not be a genuinely separable hypothesis,
+but rather an intermediate consequence of the full
+phase-amplitude structure required by B$'$.
+This does not affect the validity of any result stated here,
+but it is noted explicitly for the programme: the
+conceptually cleanest path may be to prove B$'$ directly
+(via Conjectures~\ref{conj:phase}--\ref{conj:amplitude})
+rather than factoring through B-strong as an intermediate step.
 \end{remark}
 
 \subsection{Assumption~B$'$ and the two-conjecture structure}
@@ -780,6 +807,10 @@ and amplitude.
 This requires: explicit asymptotic formula for $P_{kl}$ with
 controlled error; phase-sensitive Airy--WKB matching at $s_*$;
 and control of the joint Airy correlation.
+See also the epistemic coupling remark in~\ref{rem:Bstrong_content}:
+it may be more efficient to prove B$'$ directly
+via Conjectures~\ref{conj:phase}--\ref{conj:amplitude}
+than to first establish B-strong as an intermediate step.
 \end{openproblem}
 
 \begin{openproblem}[Airy--WKB matching at $s_*$]
@@ -850,6 +881,9 @@ all natural weights fail.
 Layer~0 is sharp, unconditional, and identifies the failure
 surfaces of all classical approaches.
 It does not provide the resolution mechanism.
+The near/far band structure connects Layer~0 to semiclassical
+band operator theory (shrinking relative bandwidth $c^{-1/6}\to0$),
+a setting where pseudodifferential scaling is in principle available.
 
 \subsection*{Layer~1: conditional on B-strong}
 $|T_{ij}|\leq C_1C_2/|i-j|$ (regime-coherent product bound);\;
@@ -857,6 +891,9 @@ $\norm{T}\leq C\log c$ (bounded, not contracting).
 B-strong requires phase-sensitive Airy coupling and fails by
 two concrete mechanisms (Rem.~\ref{rem:Bstrong_content});
 B-weak is insufficient (Rem.~\ref{rem:balance}).
+B-strong shares asymptotic origin at $s_*$ with B$'$;
+its epistemic status as a separable hypothesis is open
+(Rem.~\ref{rem:Bstrong_content}).
 
 \subsection*{Layer~2: conditional on B-strong $+$ B$'$}
 $\norm{T}\leq Cc^{-1/2}\log c\to0$ for $c\geq c_0$;\;
@@ -894,6 +931,8 @@ implication under open operator-convergence), the uniformity
 clauses in Lemma~\ref{lem:RL} and Proposition~\ref{prop:Tij},
 the B-strong failure-mode analysis, the hardness remark on
 weighted norms, the explicit contraction threshold $c_0$,
+the epistemic coupling remark on B-strong vs.\ B$'$,
+the semiclassical band operator anchor,
 and the core diagnosis ``local WKB asymptotics do not determine
 global cancellation'' were developed in working sessions, May 2026.
 
