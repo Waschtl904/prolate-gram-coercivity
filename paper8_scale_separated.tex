@@ -46,49 +46,37 @@
 % ------------------------------------------------------------
 \begin{abstract}
 We reduce the open amplitude hypothesis~(H2) of
-Paper~VII \cite{paperVII} to a single uniform Airy
-approximation over the transition window
-(Proposition~\ref{prop:U}): a uniform $O(c^{-2/3})$
-error for PSWF eigenvalues $\lambda_l$ relative to
-$\FAi(x_l)$ over $O(c^{1/3})$ indices simultaneously.
+Paper~VII \cite{paperVII} to two uniform analytic inputs
+about PSWF eigenvalues in the transition window
+(Proposition~\ref{prop:U}): a pointwise $O(c^{-2/3})$
+Airy approximation and a discrete Lipschitz control on
+consecutive eigenvalue differences.
 All results are conditional on Proposition~\ref{prop:U}
-(stated as an assumption; see Remark~\ref{rem:propU_route}
-for a proof strategy) and on Assumption~B-strong
-\cite{paperVI}.
+and on Assumption~B-strong \cite{paperVI}.
 
 The main contributions are:
 \begin{itemize}
-\item Lemma~\ref{lem:A} (Uniform Airy Increment): a
-  discrete-to-continuous stability result for PSWF eigenvalue
-  differences $\lambda_l - \lambda_{l+1}$ in the Airy
-  transition regime.
-\item Lemma~\ref{lem:B} (Airy Ratio Bound): uniform control
-  of the ratio $\mathrm{Ai}(x)^2 / \FAi(x)$
-  on a compact interval containing no zero of $\mathrm{Ai}$.
-\item Lemma~\ref{lem:F} (Airy Rigidity / Dyadic Separation
-  Principle): a quantitative bi-Lipschitz bound on $\FAi$
-  and a corresponding spectral separation estimate
-  $|\lambda_i - \lambda_j| \gtrsim c^{-1/3} \cdot |i-j|$,
-  with explicit threshold $c_1 = c_1(A_0, C_1, c_{\min})$.
+\item Lemma~\ref{lem:A} (Uniform Airy Increment):
+  under Proposition~\ref{prop:U}~(U'),
+  $\lambda_l - \lambda_{l+1}
+  = (c/2)^{-1/3}\mathrm{Ai}(x_l)^2 + O(c^{-2/3})$
+  uniformly in the transition window.
+\item Lemma~\ref{lem:B} (Airy Ratio Bound):
+  uniform control of $\mathrm{Ai}(x)^2/\FAi(x)$.
+\item Lemma~\ref{lem:F} (Dyadic Separation Principle):
+  $|\lambda_i - \lambda_j| \ge
+  \tfrac{1}{2}c_{\min}(c/2)^{-1/3}|i-j|$
+  for $c \ge c_1$.
 \item Corollary~\ref{cor:C} (H2 in truncated dyadic sense):
-  for any fixed dyadic cutoff $m_0 \ge 1$,
-  $\delta_m = O(2^{-m}) + O(c^{-1/3})$ via a
-  two-parameter argument.
-\item Lemma~\ref{lem:E} (Core--WKB Split): the Core regime
-  $m < m_0$ is controlled directly by H3;
-  Theorem~2.1 of \cite{paperVII} is applied to the
-  truncated operator with $m \ge m_0$ only.
+  $\delta_m = O(2^{-m}) + O(c^{-1/3})$.
+\item Lemma~\ref{lem:E} (Core--WKB Split).
 \end{itemize}
-The central structural mechanism is the
-\emph{Dyadic Separation Principle}
-(Lemma~\ref{lem:F}, Remark~\ref{rem:dyadic}):
-\[
-  \frac{|\lambda_j - \lambda_{j+1}|}{|\lambda_i - \lambda_j|}
-  \;\sim\; 2^{-m}
-  \quad \text{for } j \in \mathcal{B}_m(i),
-\]
-which is the structural mechanism behind H2 and is
-not contained in ORX \cite{OsipovRokhlinXiao}.
+The central mechanism is the
+\emph{Dyadic Separation Principle}: for
+$j \in \mathcal{B}_m(i)$,
+$|\lambda_j-\lambda_{j+1}|/|\lambda_i-\lambda_j|
+\sim 2^{-m}$, which is not contained in ORX
+\cite{OsipovRokhlinXiao}.
 \end{abstract}
 
 % ============================================================
@@ -98,176 +86,123 @@ not contained in ORX \cite{OsipovRokhlinXiao}.
 
 Paper~VII \cite{paperVII} established an abstract dyadic
 cancellation theorem (Theorem~2.1) and reduced the
-contraction problem for the PSWF Galerkin operator
-$\mathcal{T}_c^{(N)}$ to the verification of three
-hypotheses:
-\begin{itemize}
-\item[(H1)] Non-degenerate oscillatory phase: verified
-  unconditionally from Widom asymptotics.
-\item[(H2)] Blockwise amplitude regularity: the relative
-  variation of $A_{ij}$ within each dyadic block
-  $\mathcal{B}_m(i)$ is $o(1)$ as $c \to \infty$,
-  for each fixed $m \ge m_0$.
-\item[(H3)] Uniform amplitude bound: $A_{ij} \le C$
-  for all $i \ne j$; equivalent to Assumption~B-strong
-  \cite{paperVI}.
-\end{itemize}
-
-H2 was stated in \cite{paperVII} as Conjecture~6.2.
-The present paper does not unconditionally close H2,
-but reduces it to a single analytic input:
-
-\begin{quote}
-\textit{Proposition~\ref{prop:U}: a uniform
-$O(c^{-2/3})$ Airy approximation for PSWF eigenvalues
-over the entire transition window of size $O(c^{1/3})$.}
-\end{quote}
-
-This is the missing ingredient that ORX
-\cite{OsipovRokhlinXiao} provides only pointwise.
-The present paper is therefore a
-\emph{conditional reduction theorem}:
+contraction problem to three hypotheses (H1)--(H3).
+H2 was stated as Conjecture~6.2 and is reduced here
+to Proposition~\ref{prop:U}, a uniform Airy approximation
+not explicitly provided by ORX \cite{OsipovRokhlinXiao}.
+This paper is a \emph{conditional reduction theorem}:
 under Proposition~\ref{prop:U} and B-strong,
-all hypotheses (H1)--(H3) are verified and the
-contraction estimate follows.
+hypotheses (H1)--(H3) are verified and the contraction
+estimate follows.
 
 \medskip\noindent
 \textbf{The Dyadic Separation Principle.}
-The new structural insight of this paper is that
-the ratio
-\[
-  \frac{|\lambda_j - \lambda_{j+1}|}{|\lambda_i - \lambda_j|}
-  \;\sim\; 2^{-m}
-  \quad (j \in \mathcal{B}_m(i))
-\]
-decays purely combinatorially in $m$, independently of $c$.
-This is the operative content of Lemma~\ref{lem:F}:
-both numerator and denominator scale as $c^{-1/3}$,
-but the denominator carries an extra $2^m$
-from $|i-j| \ge 2^m$, so the $c$-dependence cancels.
-This mechanism does not appear in ORX.
+$|\lambda_j-\lambda_{j+1}|/|\lambda_i-\lambda_j|
+\sim 2^{-m}$ for $j \in \mathcal{B}_m(i)$:
+both scales are $c^{-1/3}$, but the denominator carries
+an extra $2^m$ from $|i-j| \ge 2^m$, so the
+$c$-dependence cancels.
 
 \medskip\noindent
 \textbf{H2 in truncated dyadic sense.}
-H2 does not hold at all dyadic scales:
-for $m = 0$, the relative amplitude variation is $O(1)$.
-The correct statement is two-regime:
-\[
-  \text{H2 holds for } m \ge m_0;
-  \quad
-  m < m_0 \text{ controlled by H3.}
-\]
+H2 fails at $m=0$ (variation is $O(1)$).
+For $m \ge m_0$ (WKB): H2 holds via Corollary~\ref{cor:C}.
+For $m < m_0$ (Core): bounded by H3.
 Theorem~2.1 of \cite{paperVII} is applied to the
 truncated operator (blocks $m \ge m_0$ only).
 
 \medskip\noindent
 \textbf{What is not proved here.}
-Proposition~\ref{prop:U} is stated as an assumption;
+Proposition~\ref{prop:U}~(U') is stated as an assumption;
 see Remark~\ref{rem:propU_route} for a proof strategy.
 B-strong remains open; see Remark~\ref{rem:open}.
 
 \medskip\noindent
 \textbf{Structure.}
-Section~\ref{sec:setup} fixes notation.
-Section~\ref{sec:propU} states Proposition~U.
-Sections~\ref{sec:lemmaA}--\ref{sec:lemmaF} prove
-the supporting lemmas.
-Section~\ref{sec:H2} proves Corollary~C.
-Section~\ref{sec:split} proves Lemma~E.
-Section~\ref{sec:closure} collects the reduction.
+Sec.~\ref{sec:setup}: notation.
+Sec.~\ref{sec:propU}: Proposition~U.
+Secs.~\ref{sec:lemmaA}--\ref{sec:lemmaF}: lemmas.
+Sec.~\ref{sec:H2}: Corollary~C.
+Sec.~\ref{sec:split}: Lemma~E.
+Sec.~\ref{sec:closure}: reduction.
 
 % ============================================================
 \section{Setup and Notation}
 \label{sec:setup}
 % ============================================================
 
-Throughout, $c \ge 1$ is the bandwidth parameter and
-$\lambda_k = \lambda_k^{(c)} \in (0,1)$ are the PSWF
-eigenvalues, ordered decreasingly.
+Throughout, $c \ge 1$; $\lambda_k = \lambda_k^{(c)} \in (0,1)$
+ordered decreasingly.
 
 \medskip\noindent
-\textbf{Airy zeros and the parameter $A_0$.}
-All real zeros of $\mathrm{Ai}$ are negative
-(since $\mathrm{Ai}(x) > 0$ for all $x \ge 0$
-and the zeros are the negative values
-$a_1 > a_2 > \cdots$, $a_1 \approx -2.3381$
-\cite[Sec.~9.9]{DLMF}).
-We fix once and for all:
+\textbf{Airy zeros and $A_0$.}
+All zeros of $\mathrm{Ai}$ are real and negative;
+$a_1 \approx -2.3381$ is the largest
+\cite[Sec.~9.9]{DLMF}. We fix:
 \[
-  \boxed{A_0 \in (0,\, |a_1|) \approx (0,\, 2.3381).}
+  \boxed{A_0 \in (0,|a_1|) \approx (0,2.3381).}
 \]
-Then $[-A_0, A_0]$ contains no zero of $\mathrm{Ai}$;
-all quantities involving $\mathrm{Ai}$ on this interval
-are uniformly bounded above and below.
+$[-A_0,A_0]$ contains no zero of $\mathrm{Ai}$.
 
 \medskip\noindent
-\textbf{Compactness constants.}
-We introduce three constants, depending only on $A_0$:
+\textbf{Compactness constants (depend only on $A_0$):}
 \begin{align*}
-  c_* &:= \min_{x\in[-A_0,\,0]}\FAi(x) > 0,\\
-  c_{\min} &:= \min_{x\in[-A_0,\,A_0]}\mathrm{Ai}(x)^2 > 0,
-  \qquad
-  C_{\max} := \max_{x\in[-A_0,\,A_0]}\mathrm{Ai}(x)^2 < \infty.
+  c_* &:= \min_{x\in[-A_0,0]}\FAi(x) > 0,\\
+  c_{\min} &:= \min_{x\in[-A_0,A_0]}\mathrm{Ai}(x)^2 > 0,
+  \quad
+  C_{\max} := \max_{x\in[-A_0,A_0]}\mathrm{Ai}(x)^2 < \infty.
 \end{align*}
-Positivity and finiteness follow from continuity on a
-compact zero-free set.
 
 \medskip\noindent
-\textbf{Lipschitz constant of $\mathrm{Ai}^2$.}
-Since $\mathrm{Ai} \in C^\infty(\mathbb{R})$, the
-function $\mathrm{Ai}(x)^2$ is $C^1$ on $[-A_0, A_0]$
-with bounded derivative. We define:
+\textbf{Lipschitz constant of $\mathrm{Ai}^2$:}
 \[
-  L_{A_0} := \sup_{x \in [-A_0,\,A_0]}
-  \bigl|\tfrac{d}{dx}\mathrm{Ai}(x)^2\bigr|
-  = 2\sup_{x \in [-A_0,A_0]}|\mathrm{Ai}(x)\,\mathrm{Ai}'(x)|
-  < \infty.
+  L_{A_0} :=
+  \sup_{x \in [-A_0,A_0]}\abs{\tfrac{d}{dx}\mathrm{Ai}(x)^2}
+  = 2\sup_{[-A_0,A_0]}|\mathrm{Ai}\,\mathrm{Ai}'| < \infty.
 \]
-This is the Lipschitz constant of $\mathrm{Ai}^2$
-on $[-A_0, A_0]$, used in the error bound
-$|\mathrm{Ai}(\xi)^2 - \mathrm{Ai}(x)^2| \le L_{A_0}|\xi - x|$
-in the proof of Lemma~\ref{lem:A}.
 
 \medskip\noindent
-\textbf{Uniformity of constants.}
-All constants $c_*, c_{\min}, C_{\max}, L_{A_0}$ depend
-only on $A_0$ and are uniform in $c$, $i$, $j$, $m$.
+\textbf{Monotonicity fact.}
+$\FAi(x) = \int_x^\infty\mathrm{Ai}(t)^2\,dt$ is strictly
+decreasing with $\FAi'(x) = -\mathrm{Ai}(x)^2 \le -c_{\min}<0$
+on $[-A_0,A_0]$.
+In particular, $\FAi(x) \ge \FAi(0) > 0$ for all
+$x \le 0$, so $c_* = \min_{[-A_0,0]}\FAi \ge \FAi(0) > 0$.
+This is why~\eqref{eq:onemlam} holds uniformly for all
+transition-window indices with $x_j \le 0$.
 
 \medskip\noindent
-\textbf{Rescaled index.}
-\[
-  x_l := (l - \NSh)\,(c/2)^{-1/3},
-  \qquad \NSh := \frac{2c}{\pi}.
-\]
-This is a definition; the spacing
-$x_{l+1} - x_l = (c/2)^{-1/3}$ is exactly constant.
-All Galerkin indices ($N = \lfloor Ac^{1/3}\rfloor$,
-$A < |a_1|$) satisfy $x_l \in [-A,0] \subset [-A_0,A_0]$.
+\textbf{Uniformity.}
+All constants depend only on $A_0$; none depend on
+$c$, $i$, $j$, $m$.
+
+\medskip\noindent
+\textbf{Rescaled index:}
+$x_l := (l-\NSh)(c/2)^{-1/3}$, $\NSh := 2c/\pi$.
+Spacing $x_{l+1}-x_l = (c/2)^{-1/3}$ exactly.
+All Galerkin indices satisfy $x_l \in [-A,0]
+\subset [-A_0,0] \subset [-A_0,A_0]$.
 
 \medskip\noindent
 \textbf{Further definitions:}
 \begin{align*}
-  \FAi(x) &:= \int_x^\infty \mathrm{Ai}(t)^2\,dt,\\
-  A_{ij} &:= P_{ij}\cdot c^{1/2},
-  \quad
-  P_{ij} := c\cdot
+  A_{ij} &:= P_{ij}\cdot c^{1/2},\\
+  P_{ij} &:= c\cdot
   \frac{|\lambda_i-\lambda_j|}{(1-\lambda_i)(1-\lambda_j)}
-  \quad (i\ne j).
+  \quad(i\ne j).
 \end{align*}
-
-Dyadic blocks: $\Bm(i) := \{j : 2^m \le |i-j| < 2^{m+1}\}$.
+$\Bm(i) := \{j : 2^m \le |i-j| < 2^{m+1}\}$.
 
 \medskip\noindent
 \textbf{Explicit bound on $1-\lambda_j$.}
-Under Proposition~\ref{prop:U} with $|E_j| \le C_1 c^{-2/3}$
-and $\FAi(x_j) \ge c_* > 0$,
-for $c \ge c_0$ such that $C_1 c_0^{-2/3} \le c_*/2$:
+Under (U) of Proposition~\ref{prop:U},
+$\lambda_j = \FAi(x_j)+E_j$, $|E_j| \le C_1 c^{-2/3}$.
+For $c \ge c_0$ with $C_1 c_0^{-2/3} \le c_*/2$:
 \begin{equation}\label{eq:onemlam}
-  \tfrac{1}{2}\,\FAi(x_j)
-  \;\le\; 1-\lambda_j
-  \;\le\; 2\,\FAi(x_j),
-  \qquad \text{uniform in all transition-window indices.}
+  \tfrac{1}{2}\FAi(x_j) \le 1-\lambda_j \le 2\FAi(x_j)
 \end{equation}
+uniformly for all transition-window indices
+(using $\FAi(x_j) \ge c_* > 0$, the monotonicity fact).
 
 % ============================================================
 \section{ORX Uniformity in the Transition Window}
@@ -276,46 +211,67 @@ for $c \ge c_0$ such that $C_1 c_0^{-2/3} \le c_*/2$:
 
 \begin{proposition}[ORX Uniformity]
 \label{prop:U}
-There exist $C_1, c_0 > 0$ such that for all $c \ge c_0$
-and all $l$ with $|l - \NSh| \le A_0 c^{1/3}$:
-\[
-  \abs{\lambda_l - \FAi(x_l)} \le C_1\, c^{-2/3},
-\]
-uniform in $l$ throughout the transition window.
+There exist $C_1, C_2, c_0 > 0$ (depending only on $A_0$)
+such that for all $c \ge c_0$ and all $l$ with
+$|l - \NSh| \le A_0 c^{1/3}$, the following two
+estimates hold:
+\begin{itemize}
+\item[\textup{(U)}] \textbf{Pointwise:}
+  $\abs{\lambda_l - \FAi(x_l)} \le C_1\, c^{-2/3}$.
+\item[\textup{(U')}] \textbf{Discrete increment:}
+  $\abs{(\lambda_l - \lambda_{l+1})
+  - (\FAi(x_l) - \FAi(x_{l+1}))}
+  \le C_2\, c^{-2/3}$.
+\end{itemize}
+Both bounds are uniform in $l$ throughout the window.
 \end{proposition}
 
-\begin{remark}[Status and context of Proposition~\ref{prop:U}]
-\label{rem:propU_status}
-ORX \cite{OsipovRokhlinXiao} establishes pointwise
-convergence $\lambda_l \to \FAi(x_l)$ for fixed
-rescaled $x$. Proposition~\ref{prop:U} requires a
-uniform $O(c^{-2/3})$ error over $O(c^{1/3})$ indices
-simultaneously — this is the analytic content missing
-from ORX and is the genuine hard core of the whole
-argument.
-All results below are conditional on it.
+\begin{remark}[Why (U') is the correct condition]
+\label{rem:propU_uprime}
+Lemma~\ref{lem:A} requires controlling
+$E_l - E_{l+1} := (\lambda_l - \FAi(x_l))
+- (\lambda_{l+1} - \FAi(x_{l+1}))$.
+Condition~(U) alone gives only $|E_l|, |E_{l+1}| \le C_1 c^{-2/3}$,
+but does \emph{not} prevent the errors from oscillating
+at scale $c^{-2/3}$, in which case $|E_l - E_{l+1}|$
+could be $O(c^{-2/3})$ but not necessarily with
+the right constant for a useful bound.
+Condition~(U') directly asserts
+$|E_l - E_{l+1}| \le C_2 c^{-2/3}$ as a separate,
+explicit requirement.
+This is a discrete Lipschitz (or equicontinuity)
+condition on the error sequence $\{E_l\}$ and is the
+minimal additional hypothesis needed for Lemma~\ref{lem:A}.
 \end{remark}
 
-\begin{remark}[Route to a proof of Proposition~\ref{prop:U}]
+\begin{remark}[Status and context]
+\label{rem:propU_status}
+ORX \cite{OsipovRokhlinXiao} provides~(U) pointwise
+for fixed rescaled $x$.
+Condition~(U') is a uniform discrete increment bound;
+it is the genuine analytic hard core that ORX does
+not explicitly address.
+All results below are conditional on
+Proposition~\ref{prop:U}.
+\end{remark}
+
+\begin{remark}[Route to a proof]
 \label{rem:propU_route}
-A proof is expected from three steps within the ORX
-framework:
+A proof of Proposition~\ref{prop:U} is expected from:
 \begin{enumerate}[(i)]
-\item \textbf{Uniform Liouville--Green (WKB) control:}
-  the WKB remainder is $O(c^{-2/3})$, uniform over
-  the transition window.
-\item \textbf{Airy matching with explicit remainder:}
-  the connection formula between the WKB solution and
-  the Airy function holds with a $O(c^{-2/3})$ remainder,
-  uniform in $x_l \in [-A_0, A_0]$.
-\item \textbf{Stability of the inverse spectral map:}
-  $O(c^{-2/3})$ perturbations of $\FAi(x_l)$
-  propagate to $O(c^{-2/3})$ perturbations of $\lambda_l$
-  uniformly in $l$.
+\item Uniform Liouville--Green (WKB) control with
+  $O(c^{-2/3})$ remainder over the transition window.
+\item Airy matching with explicit uniform remainder
+  $O(c^{-2/3})$ in $x_l \in [-A_0,A_0]$;
+  this yields~(U).
+\item Stability of the spectral map under $O(c^{-2/3})$
+  perturbations, \emph{including its discrete derivative}
+  (i.e.\ stability of $\lambda_l - \lambda_{l+1}$);
+  this yields~(U').
 \end{enumerate}
-Each step is expected to require careful bookkeeping
-of the uniformity constants already implicit in the
-ORX analysis.
+Step~(iii) is the additional content beyond~(U)
+and requires tracking how the WKB matching propagates
+to consecutive eigenvalue differences.
 \end{remark}
 
 % ============================================================
@@ -325,48 +281,59 @@ ORX analysis.
 
 \begin{lemma}[Uniform Airy Increment]
 \label{lem:A}
-Under Proposition~\ref{prop:U}, for all $c \ge c_0$ and all
-$l$ with $|l - \NSh| \le A_0 c^{1/3}$:
+Under Proposition~\ref{prop:U}~\textup{(U')},
+for all $c \ge c_0$ and all $l$ with
+$|l-\NSh| \le A_0 c^{1/3}$:
 \[
   \lambda_l - \lambda_{l+1}
   = (c/2)^{-1/3}\,\mathrm{Ai}(x_l)^2 + R_l,
 \]
-where $|R_l| \le C\,c^{-2/3}$ with
-$C = 2C_1 + L_{A_0}$, uniform in $l$.
+where $|R_l| \le (L_{A_0}\,(c/2)^{-1/3} + C_2)\,c^{-1/3}$,
+uniform in $l$.
 In particular,
 $|\lambda_l - \lambda_{l+1}| \le C_A\,(c/2)^{-1/3}$
-with $C_A := C_{\max} + C$.
+with $C_A := C_{\max} + L_{A_0} + C_2$.
 \end{lemma}
 
 \begin{proof}
-From Proposition~\ref{prop:U}:
-\[
+Write:
+\begin{align*}
   \lambda_l - \lambda_{l+1}
-  = [\FAi(x_l) - \FAi(x_{l+1})] + (E_l - E_{l+1}),
-\]
-$|E_l - E_{l+1}| \le 2C_1 c^{-2/3}$.
+  &= [\FAi(x_l) - \FAi(x_{l+1})]
+  + [(\lambda_l - \lambda_{l+1}) -
+     (\FAi(x_l) - \FAi(x_{l+1}))].
+\end{align*}
 
 \textbf{Main term.}
-Since $\FAi' = -\mathrm{Ai}^2$ and
-$x_{l+1} - x_l = (c/2)^{-1/3}$, the MVT gives
-$\xi_l \in [x_l, x_{l+1}]$ with
-$\FAi(x_l) - \FAi(x_{l+1})
-= \mathrm{Ai}(\xi_l)^2 (c/2)^{-1/3}$.
+$\FAi' = -\mathrm{Ai}^2$ and $x_{l+1}-x_l = (c/2)^{-1/3}$,
+so by MVT: $\FAi(x_l)-\FAi(x_{l+1})
+= \mathrm{Ai}(\xi_l)^2(c/2)^{-1/3}$
+for some $\xi_l \in [x_l,x_{l+1}]$.
+By Lipschitz continuity of $\mathrm{Ai}^2$ with
+constant $L_{A_0}$:
+$|\mathrm{Ai}(\xi_l)^2-\mathrm{Ai}(x_l)^2|
+\le L_{A_0}(c/2)^{-1/3}$,
+so the MVT contribution to $R_l$ is
+$\le L_{A_0}(c/2)^{-2/3}$.
 
-\textbf{Replacing $\xi_l$ by $x_l$.}
-Since $\mathrm{Ai}^2 \in C^1([-A_0,A_0])$
-with Lipschitz constant $L_{A_0}$
-(Section~\ref{sec:setup}),
-and $|\xi_l - x_l| \le (c/2)^{-1/3}$:
-\[
-  |\mathrm{Ai}(\xi_l)^2 - \mathrm{Ai}(x_l)^2|
-  \le L_{A_0}\,(c/2)^{-1/3},
-\]
-giving a contribution $L_{A_0}(c/2)^{-2/3}$ to $R_l$.
+\textbf{Error term.}
+By (U') directly:
+$|(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))|
+\le C_2 c^{-2/3}$.
 
-Combining: $|R_l| \le 2C_1 c^{-2/3} + L_{A_0}(c/2)^{-2/3}
-\le (2C_1 + L_{A_0})c^{-2/3}$.
+\textbf{Combining:}
+$|R_l| \le L_{A_0}(c/2)^{-2/3} + C_2 c^{-2/3}
+\le (L_{A_0}+C_2 2^{2/3})c^{-2/3}$.
+This is $O(c^{-2/3})$ uniformly in $l$.
 \end{proof}
+
+\begin{remark}
+The use of~(U') in the error term is essential:
+without it, $|E_l - E_{l+1}|$ is not directly bounded
+by $C c^{-2/3}$ from~(U) alone (the errors could
+oscillate at scale $c^{-2/3}$). See
+Remark~\ref{rem:propU_uprime}.
+\end{remark}
 
 % ============================================================
 \section{Lemma B: Airy Ratio Bound}
@@ -375,16 +342,13 @@ Combining: $|R_l| \le 2C_1 c^{-2/3} + L_{A_0}(c/2)^{-2/3}
 
 \begin{lemma}[Airy Ratio Bound]
 \label{lem:B}
-\[
-  \frac{\mathrm{Ai}(x)^2}{\FAi(x)}
-  \le \frac{C_{\max}}{c_*}
-  \qquad \text{for all } x \in [-A_0, A_0].
-\]
+$\mathrm{Ai}(x)^2/\FAi(x) \le C_{\max}/c_*$
+for all $x \in [-A_0,A_0]$.
 \end{lemma}
 
 \begin{proof}
-Numerator $\le C_{\max}$, denominator $\ge c_* > 0$
-(Section~\ref{sec:setup}).
+Numerator $\le C_{\max}$, denominator
+$\ge c_* > 0$.
 \end{proof}
 
 % ============================================================
@@ -394,55 +358,45 @@ Numerator $\le C_{\max}$, denominator $\ge c_* > 0$
 
 \begin{lemma}[Airy Rigidity / Dyadic Separation Principle]
 \label{lem:F}
-$\FAi$ satisfies the bi-Lipschitz bound
+$\FAi$ is bi-Lipschitz on $[-A_0,A_0]$:
 \[
-  c_{\min}\,|x_i - x_j|
-  \le |\FAi(x_i) - \FAi(x_j)|
-  \le C_{\max}\,|x_i - x_j|
-  \quad \text{for all } x_i, x_j \in [-A_0, A_0].
+  c_{\min}|x_i-x_j|
+  \le |\FAi(x_i)-\FAi(x_j)|
+  \le C_{\max}|x_i-x_j|.
 \]
-Under Proposition~\ref{prop:U}, with threshold
-$c_1 := 2(4C_1/c_{\min})^3$,
-for all $c \ge c_1$ and all $i \ne j$ with
-$x_i, x_j \in [-A_0, A_0]$:
+Under~\textup{(U)}, with $c_1 := 2(4C_1/c_{\min})^3$,
+for $c \ge c_1$ and all $i \ne j$ with
+$x_i,x_j \in [-A_0,A_0]$:
 \begin{equation}\label{eq:specsep}
-  |\lambda_i - \lambda_j|
-  \ge \tfrac{1}{2}\,c_{\min}\,(c/2)^{-1/3}\,|i-j|.
+  |\lambda_i-\lambda_j|
+  \ge \tfrac{1}{2}c_{\min}(c/2)^{-1/3}|i-j|.
 \end{equation}
-For $j \in \Bm(i)$:
-$|\lambda_i - \lambda_j|
-\ge \tfrac{1}{2}\,c_{\min}\,(c/2)^{-1/3}\cdot 2^m$.
 \end{lemma}
 
 \begin{proof}
 \textbf{Bi-Lipschitz.}
-$|\FAi(x_i)-\FAi(x_j)| = |\int_{x_j}^{x_i}\mathrm{Ai}(t)^2\,dt|$;
-the integrand satisfies $c_{\min} \le \mathrm{Ai}(t)^2
-\le C_{\max}$ on $[-A_0,A_0]$, giving both bounds.
-(The strict positivity $c_{\min} > 0$ is the key
-rigidity mechanism: it holds because $A_0 < |a_1|$,
-so $[-A_0,A_0]$ contains no zero of $\mathrm{Ai}$,
-and the lower bi-Lipschitz bound is what drives the
-Dyadic Separation Principle.)
+$|\FAi(x_i)-\FAi(x_j)| = |\int_{x_j}^{x_i}\mathrm{Ai}^2\,dt|$;
+$c_{\min} \le \mathrm{Ai}^2 \le C_{\max}$ on $[-A_0,A_0]$.
+(Strict positivity $c_{\min}>0$: $[-A_0,A_0]$ contains
+no zero of $\mathrm{Ai}$ since $A_0 < |a_1|$; this is
+the key rigidity fact driving the Dyadic Separation
+Principle.)
 
 \textbf{Spectral separation.}
-$|\lambda_i-\lambda_j|
+By~(U): $|\lambda_i-\lambda_j|
 \ge c_{\min}(c/2)^{-1/3}|i-j| - 2C_1 c^{-2/3}$.
-For $c \ge c_1 = 2(4C_1/c_{\min})^3$:
-$2C_1 c^{-2/3} \le \frac{1}{2}c_{\min}(c/2)^{-1/3}$,
-giving~\eqref{eq:specsep}.
+For $c \ge c_1$: $2C_1 c^{-2/3}
+\le \frac{1}{2}c_{\min}(c/2)^{-1/3}$,
+absorbing the error.
 \end{proof}
 
 \begin{remark}[Microscopic scale and dyadic truncation]
 \label{rem:microscopic}
-At $|i-j| = O(1)$, both
-$c_{\min}(c/2)^{-1/3}|i-j|$ and $2C_1 c^{-2/3}$
-are $O(c^{-1/3})$, so the absorption fails
-and~\eqref{eq:specsep} degenerates.
-This is why $m \ge m_0$ (i.e.\ $|i-j| \ge 2^{m_0}$
-with $m_0$ fixed, independent of $c$) is necessary:
-the separation $2^{m_0}$ is a fixed positive integer,
-guaranteeing absorption for all $c \ge c_1$.
+At $|i-j|=O(1)$, both main term and error
+are $O(c^{-1/3})$; absorption fails and
+\eqref{eq:specsep} degenerates.
+This is precisely why $m \ge m_0$ (fixed $2^{m_0}$
+independent of $c$) is necessary.
 The Core regime $m < m_0$ is handled by H3.
 \end{remark}
 
@@ -453,82 +407,70 @@ The Core regime $m < m_0$ is handled by H3.
 
 \begin{corollary}[H2 in truncated dyadic sense]
 \label{cor:C}
-Fix $m_0 \ge 1$. Let $c_2 := \max(c_0,c_1)$.
-Under Proposition~\ref{prop:U}, Lemmas~\ref{lem:B},
-\ref{lem:F}, define
+Fix $m_0 \ge 1$; let $c_2 := \max(c_0,c_1)$.
+Under Proposition~\ref{prop:U}, define
 \[
   \delta_m
-  := \frac{2C_A}{c_{\min}}\cdot 2^{-m}
-   + 2\,\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}.
+  := \frac{2C_A}{c_{\min}} 2^{-m}
+  + 2\,\frac{C_{\max}}{c_*}(c/2)^{-1/3}.
 \]
-All indices $i,j$ below lie strictly inside the
-transition window, away from the bulk plateau
-(i.e.\ $x_j \in [-A_0,0]$ and $\FAi(x_j) \ge c_* > 0$)
-so that~\eqref{eq:onemlam} applies uniformly.
-For all $c \ge c_2$, all $i \le N$, $m \ge m_0$,
-and $j, j+1 \in \Bm(i)$:
+All indices $i,j$ lie strictly inside the transition
+window ($x_j \in [-A_0,0]$, $\FAi(x_j) \ge c_* > 0$,
+away from the bulk plateau), so~\eqref{eq:onemlam}
+applies uniformly.
+For all $c \ge c_2$, $i \le N$, $m \ge m_0$,
+$j,j+1 \in \Bm(i)$:
 \[
-  \frac{|A_{ij} - A_{i,j+1}|}{A_{ij}} \le \delta_m.
+  \frac{|A_{ij}-A_{i,j+1}|}{A_{ij}} \le \delta_m
+  = O(2^{-m})+O(c^{-1/3}).
 \]
-For any $\varepsilon > 0$: choose $m_0$ so that
-$\frac{2C_A}{c_{\min}} 2^{-m_0} < \varepsilon/2$,
-then $c$ so that
+For any $\varepsilon>0$: first choose $m_0$ so
+$\frac{2C_A}{c_{\min}}2^{-m_0} < \varepsilon/2$,
+then $c$ so
 $2\frac{C_{\max}}{c_*}(c/2)^{-1/3} < \varepsilon/2$;
-then $\sup_{m \ge m_0}\delta_m < \varepsilon$.
-This is H2 (in truncated dyadic sense) for
-Theorem~2.1 in \cite{paperVII}.
+then $\sup_{m\ge m_0}\delta_m < \varepsilon$.
 \end{corollary}
 
 \begin{proof}
-\[
-  \frac{|A_{ij} - A_{i,j+1}|}{A_{ij}}
-  \lesssim
-  \underbrace{\frac{|\lambda_j - \lambda_{j+1}|}
-              {|\lambda_i - \lambda_j|}}_{\text{Term 1}}
-  +
-  \underbrace{\frac{|\lambda_j - \lambda_{j+1}|}
-              {1 - \lambda_j}}_{\text{Term 2}}.
-\]
+$\frac{|A_{ij}-A_{i,j+1}|}{A_{ij}}
+\lesssim
+\underbrace{\frac{|\lambda_j-\lambda_{j+1}|}
+            {|\lambda_i-\lambda_j|}}_{\text{Term 1}}
++
+\underbrace{\frac{|\lambda_j-\lambda_{j+1}|}
+            {1-\lambda_j}}_{\text{Term 2}}.$
 
-\textbf{Term 1.}
+\textbf{Term 1 (Dyadic Separation).}
 Lemma~\ref{lem:A}: numerator $\le C_A(c/2)^{-1/3}$.
 Lemma~\ref{lem:F}: denominator
 $\ge \frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m$.
 The $(c/2)^{-1/3}$ factors cancel:
-Term~1 $\le \frac{2C_A}{c_{\min}} 2^{-m} = O(2^{-m})$,
-independent of $c$.
+Term~1 $\le \frac{2C_A}{c_{\min}}2^{-m}$, independent of $c$.
 
-\textbf{Term 2.}
+\textbf{Term 2 (Global error).}
 Lemma~\ref{lem:A} + Lemma~\ref{lem:B}
-+ lower bound from~\eqref{eq:onemlam}:
++ lower bound of~\eqref{eq:onemlam}:
 \[
   \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
   \le
   \frac{(c/2)^{-1/3}\mathrm{Ai}(x_j)^2 + O(c^{-2/3})}
-       {\tfrac{1}{2}\FAi(x_j)}
-  \le 2\cdot\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}
-  = O(c^{-1/3}).
+       {\frac{1}{2}\FAi(x_j)}
+  \le 2\frac{C_{\max}}{c_*}(c/2)^{-1/3}.
 \]
-(Step: $|\lambda_j-\lambda_{j+1}| \approx
-(c/2)^{-1/3}\mathrm{Ai}(x_j)^2$ by Lemma~\ref{lem:A};
-then $\mathrm{Ai}(x_j)^2/\FAi(x_j) \le C_{\max}/c_*$
-by Lemma~\ref{lem:B}; denominator
-$\ge c_*/2$ by~\eqref{eq:onemlam}.
-Note: indices are strictly inside the transition window,
-not at the bulk plateau, so $\FAi(x_j) \ge c_* > 0$.)
-
-\textbf{Combining:} $\delta_m = \text{Term 1} + \text{Term 2}$.
+(Indices strictly inside transition window:
+$\FAi(x_j) \ge c_* > 0$; not near bulk plateau.)
 \end{proof}
 
-\begin{remark}[The Dyadic Separation Principle in action]
+\begin{remark}[The Dyadic Separation Principle]
 \label{rem:dyadic}
 The cancellation of $(c/2)^{-1/3}$ in Term~1 is
-the operative content of the Dyadic Separation Principle:
-numerator and denominator share the same $c^{-1/3}$ scale,
-but the denominator carries an extra $2^m$ from $|i-j|\ge 2^m$.
-The result is a purely combinatorial $O(2^{-m})$,
+the operative content:
+both $|\lambda_j-\lambda_{j+1}|$ and
+$|\lambda_i-\lambda_j|$ scale as $c^{-1/3}$,
+but $|\lambda_i-\lambda_j|$ carries $2^m$.
+Result: purely combinatorial $O(2^{-m})$,
 independent of $c$.
-The $O(c^{-1/3})$ in $\delta_m$ comes from Term~2 alone.
+The $O(c^{-1/3})$ in $\delta_m$ comes from Term~2 only.
 \end{remark}
 
 % ============================================================
@@ -538,50 +480,36 @@ The $O(c^{-1/3})$ in $\delta_m$ comes from Term~2 alone.
 
 \begin{lemma}[Core--WKB Split]
 \label{lem:E}
-Fix $m_0 \ge 1$.
-Assume Proposition~\ref{prop:U},
-Lemmas~\ref{lem:A}, \ref{lem:B}, \ref{lem:F},
-and Assumption~B-strong \cite{paperVI}
-(H3: $A_{ij} \le C_2$ uniformly).
-Then $\sum_{j \ne i} |T_{ij}| \le C(m_0, A, C_2)$
+Fix $m_0 \ge 1$; assume Proposition~\ref{prop:U}
+and B-strong \cite{paperVI} ($A_{ij} \le C_2$).
+$\sum_{j\ne i}|T_{ij}| \le C(m_0,A,C_2)$
 uniformly in $i$, $N$, $c \ge c_2$.
 \end{lemma}
 
 \begin{proof}
-Split at $m_0$:
-\[
-  \sum_{j\ne i}|T_{ij}|
-  = \sum_{m < m_0}\sum_{j\in\Bm(i)}|T_{ij}|
-  + \sum_{m \ge m_0}\sum_{j\in\Bm(i)}|T_{ij}|.
-\]
+Split at $m_0$.
 
-\textbf{Core ($m < m_0$).}
-The kernel satisfies $|T_{ij}| \le C_2/|i-j|$,
-a direct consequence of B-strong ($A_{ij} \le C_2$)
+\textbf{Core ($m<m_0$).}
+$|T_{ij}| \le C_2/|i-j|$, a consequence of B-strong
 and the off-diagonal structure of $T_{ij}$
-(see \cite[Lemma~5.2]{paperVII}).
-Each block $\Bm(i)$ has $\le 2^{m+1}$ terms with
-$|i-j| \ge 2^m$, giving $\sum_{\Bm}|T_{ij}| \le 2C_2$;
-summing over $m_0$ blocks yields $\le 2C_2 m_0$.
+(\cite[Lemma~5.2]{paperVII}).
+Each $\Bm(i)$ contributes $\le 2C_2$;
+sum over $m_0$ blocks: $\le 2C_2 m_0$.
 
 \textbf{WKB ($m \ge m_0$).}
-Corollary~\ref{cor:C} gives H2 for all $m \ge m_0$.
-Theorem~2.1 of \cite{paperVII} is applied to the
-\emph{truncated operator} (blocks $m \ge m_0$ only),
-using H1 (unconditional) and H3 (B-strong):
-this gives $O(1)$ uniformly.
+Corollary~\ref{cor:C} gives H2 for all $m\ge m_0$.
+Apply Theorem~2.1 of \cite{paperVII} to the
+\emph{truncated operator}, using H1 and H3: $O(1)$.
 \end{proof}
 
 \begin{remark}[Role of H3]
 \label{rem:H3role}
 H3 is not used in proving H2 (Corollary~\ref{cor:C}).
-It enters in two places in Lemma~\ref{lem:E}:
+It enters in Lemma~\ref{lem:E} in two places:
 (i) directly in the Core estimate
 ($|T_{ij}| \le C_2/|i-j|$),
-and (ii) as input to Theorem~2.1 of \cite{paperVII}
-in the WKB part.
-In particular, a proof of H3 alone would not simplify
-or strengthen the H2 argument.
+and (ii) as input to Theorem~2.1 of \cite{paperVII}.
+A proof of H3 would not simplify the H2 argument.
 \end{remark}
 
 % ============================================================
@@ -591,49 +519,49 @@ or strengthen the H2 argument.
 
 \begin{corollary}[Conditional Reduction]
 \label{cor:closure}
-Under Proposition~\ref{prop:U} and B-strong
-\cite{paperVI}, hypotheses \textup{(H1)--(H3)} of
-Theorem~2.1 in \cite{paperVII} are verified
-(H2 in truncated dyadic sense).
-Consequently:
+Under Proposition~\ref{prop:U} and B-strong,
+hypotheses (H1)--(H3) of Theorem~2.1 in
+\cite{paperVII} are verified (H2 in truncated
+dyadic sense), giving:
 \[
-  \sup_{i\le N}\,\sum_{j\ne i}|P_{ij}|
-  \le C\,c^{-1/2}\log c
-  \qquad (\text{Assumption }B'\text{ of }\cite{paperVI}),
+  \sup_{i\le N}\sum_{j\ne i}|P_{ij}|
+  \le C c^{-1/2}\log c
+  \qquad(\text{Assumption }B').
 \]
-and the contraction estimate
-$\norm{D\mathcal{T}_c^{(N)}} \le C(A)\,c^{-1/2}\log c < 1$
+The contraction estimate
+$\norm{D\mathcal{T}_c^{(N)}} \le C(A)c^{-1/2}\log c < 1$
 holds for $c \ge c_2$, conditional on
 Proposition~\ref{prop:U} and B-strong.
 \end{corollary}
 
 \begin{remark}[Logical dependency chain]
 \[
-  \text{Prop.~U}
-  \Rightarrow \text{Lem.~A, F}
-  \Rightarrow \text{Cor.~C (H2)}
-  \xrightarrow{+\text{H3}} \text{Lem.~E}
-  \Rightarrow B' \Rightarrow \text{Assumption~A.}
+  \text{(U')}\Rightarrow\text{Lem.~A};
+  \quad
+  \text{(U)}\Rightarrow\text{Lem.~F};
+  \quad
+  \text{Lem.~A}+\text{Lem.~F}\Rightarrow\text{Cor.~C (H2)};
+  \quad
+  \text{H2}+\text{H3}\Rightarrow\text{Lem.~E}\Rightarrow B'\Rightarrow A.
 \]
 H1: unconditional.
-Lemma~B: used in Cor.~C Term~2.
-H3: enters only in Lemma~E (not in H2).
-All thresholds $c_0, c_1, c_2$ depend only on
-$A_0, C_1, c_{\min}$.
+All thresholds $c_0,c_1,c_2$ depend only on
+$A_0,C_1,c_{\min}$.
 \end{remark}
 
-\begin{remark}[Open problems and plausibility]
+\begin{remark}[Open problems]
 \label{rem:open}
 \begin{itemize}
-\item \textbf{Proposition~\ref{prop:U}:}
+\item \textbf{Proposition~\ref{prop:U}~(U'):}
   the genuine analytic hard core;
-  see Remark~\ref{rem:propU_route} for strategy.
+  (U) is the pointwise bound from ORX,
+  (U') is the discrete increment bound.
+  See Remark~\ref{rem:propU_route} for strategy.
 \item \textbf{B-strong:}
   $P_{kl} \le C_2 c^{1/2}$ in the transition zone.
-  Plausible: bulk is controlled by Widom;
-  transition requires uniform WKB-to-Airy matching,
-  consistent with ORX structure and numerical evidence,
-  but no proof is currently available.
+  Plausible from Widom + WKB-to-Airy matching,
+  consistent with numerical evidence;
+  no proof currently available.
 \end{itemize}
 \end{remark}
 
