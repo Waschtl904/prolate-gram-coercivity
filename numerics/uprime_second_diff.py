@@ -9,12 +9,10 @@ Numerical scaling test for condition (U') of Paper VIII.
 
 Here lambda_l in (0,1) are eigenvalues of the CONCENTRATION OPERATOR
   Q_c f(x) = int_{-1}^{1} sin(c(x-y)) / (pi*(x-y)) f(y) dy,
-NOT the Sturm-Liouville (tridiagonal) eigenvalues chi_l.
-
-lambda_l are computed from PSWFs psi_l via:
-  lambda_l = (c/(2*pi)) * (int_{-1}^{1} psi_l(x) dx)^2
-which is the squared DC coefficient (k=0 Legendre coefficient), scaled.
-This gives lambda_l in (0,1) as required by Paper VIII.
+computed as eigenvalues of the sinc kernel Gram matrix in the Legendre basis:
+  S[k,m] = int int sin(c(x-y))/(pi(x-y)) phi_k(x) phi_m(y) dx dy
+where phi_k = sqrt((2k+1)/2) * P_k.  Eigenvalues sorted descending:
+  lambda_0 ~ 1, lambda_{N_Sh} ~ 0.5, then rapid decay.
 
 Transition window: |l - N_Sh| <= A0 * c^{1/3}, A0 = 2.0 < |a_1| ~ 2.3381
 
@@ -34,71 +32,58 @@ os.makedirs('numerics', exist_ok=True)
 
 # ── Constants ──────────────────────────────────────────────────────────────
 A0 = 2.0
-N_SH_FACTOR = 2.0 / np.pi   # N_Sh = 2c/pi
+N_SH_FACTOR = 2.0 / np.pi
 C_VALUES = [30, 50, 100, 200, 400]
-M_MAT = 500       # Legendre basis size
-N_GRID = 800      # Gauss-Legendre quadrature points
+N_GRID = 800      # Gauss-Legendre quadrature points for sinc kernel
+# M_LEG: Legendre basis size -- only need indices in transition window + buffer
+# M_LEG = N_Sh + A0*c^{1/3} + 10 is sufficient; set per c below
 
 
-# ── 1. Tridiagonal PSWF matrix (ORX Ch. 3) ────────────────────────────────
-def build_pswf_matrix(c, M):
-    k = np.arange(M, dtype=np.float64)
-    diag = k*(k+1) + c**2 * (2*k*(k+1) - 1) / ((2*k-1)*(2*k+3))
-    diag[0] = c**2 / 3.0
-    sup = np.zeros(M-1)
-    for i in range(M-1):
-        ki = float(i)
-        sup[i] = (c**2 * (ki+1)*(ki+2)
-                  / ((2*ki+3) * np.sqrt((2*ki+1)*(2*ki+5))))
-    return np.diag(diag) + np.diag(sup, 1) + np.diag(sup, -1)
-
-
-# ── 2. Concentration eigenvalues lambda_l in (0,1) ──────────────────────────
-def get_concentration_eigenvalues(c, M=M_MAT, n_grid=N_GRID):
+# ── 1. Concentration eigenvalues via sinc kernel Gram matrix ────────────────
+def get_concentration_eigenvalues(c, n_grid=N_GRID):
     """
-    Returns lambda_l = (c/(2*pi)) * (int_{-1}^1 psi_l(x) dx)^2  in (0,1),
-    sorted by prolate order (l = 0, 1, 2, ...).
-
-    Method:
-      - Build tridiagonal matrix, diagonalize -> Legendre coefficients of psi_l
-      - int_{-1}^1 psi_l(x) dx = sqrt(2) * a_0^{(l)}  (k=0 Legendre coefficient,
-        since int_{-1}^1 P_0(x) dx = 2 and P_k normalized as sqrt((2k+1)/2)*P_k)
-      - lambda_l = (c / (2*pi)) * 2 * (a_0^{(l)})^2
-        where a_0 is the coefficient of the UNnormalized Legendre basis.
-
-    Reference: ORX 2013, Ch. 2-3; Slepian 1978.
+    Returns lambda_l = eigenvalues of
+      S[k,m] = int_{-1}^1 int_{-1}^1 K_c(x,y) phi_k(x) phi_m(y) dx dy
+    where K_c(x,y) = sin(c(x-y))/(pi*(x-y)), phi_k = sqrt((2k+1)/2)*P_k.
+    Result sorted descending: lambda_0 ~ 1, lambda_{N_Sh} ~ 0.5.
+    M = N_Sh + ceil(A0*c^{1/3}) + 15  (sufficient for transition window).
     """
-    T = build_pswf_matrix(c, M)
-    eigvals_chi, eigvecs = eigh(T)
-    # Sort by ascending chi (prolate order)
-    idx_sort = np.argsort(eigvals_chi)
-    eigvecs = eigvecs[:, idx_sort]   # columns: psi_0, psi_1, ...
+    N_sh = int(np.round(N_SH_FACTOR * c))
+    M = N_sh + int(np.ceil(A0 * c**(1./3.))) + 15
 
-    # Legendre basis: column k of eigvecs is coefficient of sqrt((2k+1)/2)*P_k
-    # So the k=0 coefficient in the NORMALIZED basis is eigvecs[0, l]
-    # int_{-1}^1 psi_l dx = eigvecs[0,l] * int_{-1}^1 sqrt(1/2)*P_0 dx
-    #                     = eigvecs[0,l] * sqrt(1/2) * 2
-    #                     = eigvecs[0,l] * sqrt(2)
-    dc_coeff = eigvecs[0, :]   # coefficient of k=0 normalized Legendre basis
-    integral = dc_coeff * np.sqrt(2.0)   # int_{-1}^1 psi_l dx
+    x, w = np.polynomial.legendre.leggauss(n_grid)
 
-    lam = (c / (2.0 * np.pi)) * integral**2
-    # Clip to [0,1] for safety (numerical noise near 0 or 1)
-    lam = np.clip(lam, 0.0, 1.0)
-    return lam   # array of length M, ordered by prolate index l
+    # Legendre basis: phi[k, i] = sqrt((2k+1)/2) * P_k(x_i)
+    phi = np.zeros((M, n_grid))
+    for k in range(M):
+        phi[k] = np.sqrt((2*k+1)/2.0) * eval_legendre(k, x)
+
+    # Sinc kernel matrix
+    xi, xj = np.meshgrid(x, x, indexing='ij')   # (n_grid, n_grid)
+    diff = xi - xj
+    with np.errstate(divide='ignore', invalid='ignore'):
+        K = np.where(np.abs(diff) < 1e-14,
+                     c / np.pi,
+                     np.sin(c * diff) / (np.pi * diff))
+
+    # S = (phi * w) @ K @ (phi * w).T
+    phiw = phi * w[np.newaxis, :]   # (M, n_grid)
+    S = phiw @ K @ phiw.T           # (M, M), symmetric
+
+    lam = eigh(S, eigvals_only=True)
+    return np.sort(lam)[::-1]       # descending
 
 
-# ── 3. F_Ai: analytic antiderivative of Ai^2 ──────────────────────────────
+# ── 2. F_Ai: analytic antiderivative of Ai^2 ──────────────────────────────
 def F_Ai(x_arr):
-    """F_Ai(x) = (x*Ai(x)^2 - Ai'(x)^2) / 2  (exact antiderivative of Ai^2)"""
+    """F_Ai(x) = (x*Ai(x)^2 - Ai'(x)^2) / 2"""
     x_arr = np.asarray(x_arr, dtype=np.float64)
     Ai_vals, Aip_vals, _, _ = airy(x_arr)
     return (x_arr * Ai_vals**2 - Aip_vals**2) / 2.0
 
 
-# ── 4. Transition window ──────────────────────────────────────────────────
+# ── 3. Transition window ──────────────────────────────────────────────────
 def transition_window(c):
-    """Indices l with |l - N_Sh| <= A0 * c^{1/3}."""
     N_sh = N_SH_FACTOR * c
     half_width = A0 * c**(1.0/3.0)
     l_min = int(np.ceil(N_sh - half_width))
@@ -107,24 +92,23 @@ def transition_window(c):
 
 
 def rescaled_index(l, c):
-    """x_l = (l - N_Sh) * (c/2)^{-1/3}"""
     N_sh = N_SH_FACTOR * c
     return (l - N_sh) * (c / 2.0)**(-1.0/3.0)
 
 
-# ── 5. Main computation ────────────────────────────────────────────────────
+# ── 4. Main computation ────────────────────────────────────────────────────
 print("Computing concentration eigenvalues lambda_l in (0,1)...")
+print("(This may take 1-2 min for large c -- sinc kernel matrix per c value)")
 
 results = {}
 for c in C_VALUES:
-    print(f"  c = {c} ...", end=" ")
-    lam_all = get_concentration_eigenvalues(c, M=M_MAT)
+    print(f"  c = {c} ...", end=" ", flush=True)
+    lam_all = get_concentration_eigenvalues(c)
 
-    # Sanity check: values should be in (0,1)
-    in_range = np.sum((lam_all > 1e-10) & (lam_all < 1 - 1e-10))
-    print(f"lambda in (0,1): {in_range}/{len(lam_all)}", end=" ")
+    N_sh_int = int(np.round(N_SH_FACTOR * c))
+    lam_near = lam_all[N_sh_int-2:N_sh_int+3]
+    print(f"lam[N_Sh-2:N_Sh+3]={np.round(lam_near,3)}", end=" ")
 
-    # Transition window
     idx = transition_window(c)
     idx = idx[idx + 2 < len(lam_all)]
     idx = idx[idx >= 0]
@@ -144,10 +128,7 @@ for c in C_VALUES:
     Delta_Ai_scaled  = scale * Delta_Ai
     max_scaled = np.max(np.abs(Delta_lam_scaled))
 
-    # Also print lambda values in window for sanity
-    print(f"| window={len(idx)}, lam_window in [{lam_w.min():.3f}, {lam_w.max():.3f}]",
-          end=" ")
-    print(f"| max|c^{{2/3}} Delta|={max_scaled:.4f}")
+    print(f"| window={len(idx)}, max|c^{{2/3}} Delta|={max_scaled:.4f}")
 
     results[c] = {
         'x_l':              x_l0,
@@ -159,7 +140,7 @@ for c in C_VALUES:
     }
 
 
-# ── 6. Plot A: scaled second differences vs x_l ────────────────────────────
+# ── 5. Plot A: scaled second differences vs x_l ────────────────────────────
 print("\nPlot A: scaled second differences...")
 fig, axes = plt.subplots(2, 3, figsize=(15, 8))
 axes_flat = axes.flatten()
@@ -181,8 +162,8 @@ for i, c in enumerate(C_VALUES):
 axes_flat[-1].set_visible(False)
 fig.suptitle(
     r'Scaled Second Differences $c^{2/3}\Delta_l$ vs $x_l$  '
-    r'[$\lambda_l \in (0,1)$ concentration eigenvalues]' + '\n'
-    r'Blue: $\lambda_l$ $\quad$ Orange dashed: Airy $\quad$ Window $|x_l| \leq 2.0$',
+    r'[$\lambda_l \in (0,1)$: concentration eigenvalues]' + '\n'
+    r'Blue: $\lambda_l$ $\quad$ Orange dashed: Airy $F_{\rm Ai}$ $\quad$ Window $|x_l| \leq 2.0$',
     fontsize=12
 )
 plt.tight_layout(rect=[0, 0, 1, 0.92])
@@ -191,7 +172,7 @@ plt.close()
 print("  Saved: uprime_A_scaled_second_diff.png")
 
 
-# ── 7. Plot B: log-log scaling ──────────────────────────────────────────────
+# ── 6. Plot B: log-log scaling ──────────────────────────────────────────────
 print("Plot B: log-log scaling...")
 c_arr   = np.array(C_VALUES, dtype=float)
 max_arr = np.array([results[c]['max_scaled'] for c in C_VALUES])
@@ -216,7 +197,7 @@ ax2.set_ylabel(r'$\max|c^{2/3} \cdot \Delta_\lambda|$', fontsize=12)
 ax2.set_title(
     r'Log-Log Scaling: $\max|c^{2/3}\Delta_\lambda|$ vs $c$' + '\n'
     fr'Fit exponent $\alpha = {alpha:.3f}$ '
-    r'($\alpha \approx 0$: (U$^\prime$) holds; $\alpha > 0$: too weak)',
+    r'($\alpha \approx 0$: (U$^\prime$) plausible; $\alpha > 0$: too weak)',
     fontsize=12
 )
 ax2.legend(fontsize=11)
@@ -228,9 +209,9 @@ plt.close()
 print("  Saved: uprime_B_loglog_scaling.png")
 
 
-# ── 8. Save summary JSON ──────────────────────────────────────────────────
+# ── 7. Save summary JSON ──────────────────────────────────────────────────
 summary = {
-    'operator': 'concentration operator Q_c, eigenvalues lambda_l in (0,1)',
+    'operator': 'concentration operator Q_c, sinc kernel Gram matrix in Legendre basis',
     'A0': A0,
     'c_values': C_VALUES,
     'power_law_exponent_alpha': float(alpha),
