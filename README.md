@@ -5,6 +5,8 @@ frame stability, and spectral structure in Paley–Wiener spaces using prolate
 spheroidal wave functions (PSWFs), with connections to operator-theoretic
 approaches to Weil positivity.
 
+**Current state: Papers I–VIII complete. Paper IX (WKB attack on ass:gap) in preparation.**
+
 ---
 
 ## Core Idea
@@ -17,8 +19,10 @@ The central concept developed in this series is the
 > frame operators.
 
 The main result of Paper I is a **reduction principle**: frame stability holds —
-with explicit bounds — provided the DSTP is satisfied. Papers II–IV develop the
-operator-theoretic, arithmetic, and semiclassical consequences of this principle.
+with explicit bounds — provided the DSTP is satisfied. Papers II–VII develop the
+operator-theoretic, arithmetic, semiclassical, and dyadic consequences of this
+principle. **Paper VIII** completes the conditional reduction to the
+Dyadic Separation Principle, depending only on Assumption ass:gap and B-strong.
 
 ---
 
@@ -26,12 +30,16 @@ operator-theoretic, arithmetic, and semiclassical consequences of this principle
 
 | File | Title | Status |
 |---|---|---|
-| `paper1.tex` | Frame coercivity and defect decomposition; introduction of DSTP | Reinschrift |
-| `paper2.tex` | Scaling limits, trace formula, conditional coercivity; Weil connection | Reinschrift |
-| `paper2_quadrature.tex` | XRY quadrature compatibility; conditional DSTP verification framework | Reinschrift |
-| `paper3.tex` | PSWF product spectral tail estimates; edge obstruction (bandwidth doubling) | Reinschrift |
+| `paper1.tex` | Frame coercivity and defect decomposition; introduction of DSTP | Complete |
+| `paper2.tex` | Scaling limits, trace formula, conditional coercivity; Weil connection | Complete |
+| `paper2_quadrature.tex` | XRY quadrature compatibility; conditional DSTP verification framework | Complete |
+| `paper3.tex` | PSWF product spectral tail estimates; edge obstruction (bandwidth doubling) | Complete |
 | `paper4_semiclassical.tex` | Semiclassical equidistribution of PSWF densities via Prüfer analysis | Complete |
-| `section5_numerical_evidence.tex` | Numerical experiments supporting the analytic results | In progress |
+| `paper5.tex` | Galerkin operator norm estimates; coercivity structure | Complete |
+| `paper6.tex` | Galerkin norm estimates for the prolate phase operator (B-strong framework) | Complete |
+| `paper7_skeleton.tex` | Dyadic cancellation for PSWF Galerkin operators; abstract Theorem 2.1 | Complete |
+| `paper8_scale_separated.tex` | Scale-separated dyadic cancellation; Dyadic Separation Principle | **Submission-ready v6** |
+| `section5_numerical_evidence.tex` | Numerical experiments supporting the analytic results | Supplementary |
 
 Additional files:
 
@@ -45,102 +53,116 @@ Additional files:
 
 ---
 
-## Relationship Between the Papers
+## Paper VIII: The Dyadic Separation Principle
 
-**Paper I** establishes the core reduction: frame stability of the prolate
-sampling operator is equivalent to a spectral defect condition (DSTP).
-An exact algebraic defect decomposition is proved
-(`E_mn = R_mn^quad`; the PSWF orthogonality term vanishes exactly).
-Unconditional coercivity holds for unisolvent sampling configurations;
-DSTP is verified for random and Gauss–PSWF sampling.
-Prime sampling is left open.
+**Paper VIII** (`paper8_scale_separated.tex`) is the most recent completed paper
+in the series. It establishes two classes of results:
 
-**Paper II** develops the operator-theoretic scaling limit: normalized
-Gram operators along prime sampling sequences are unconditionally compact
-(Banach–Alaoglu), and a trace formula connects the weighted Gram matrix to
-the prime number theorem. Strong coercivity `λ_min → 1` in the scaling limit
-is conditional on DSTP holding along prime sequences (Assumption H).
-No claim is made about zeros of ζ(s).
+### Rigorous core
 
-**Paper II (quadrature)** organises the problem of verifying DSTP for
-XRY PSWF-Gauss quadrature into two explicit conjectural inputs:
-a PSWF product spectral tail conjecture and an XRY stability conjecture.
-The scope is restricted to the bulk and off-diagonal regimes.
-The edge regime (`m, n ~ N`) is identified as a **proved structural obstruction**
-via bandwidth doubling (established in Paper III), not a conjecture.
+Under **Assumption ass:gap** (uniform spectral gap lower bound at scale
+`(c/2)^{−1/3}`) and **B-strong** (from Paper VI), the three hypotheses
+(H1)–(H3) of Paper VII's abstract dyadic cancellation theorem are verified
+via the **Dyadic Separation Principle**:
 
-**Paper III** provides the analytical foundation for the product spectral tail.
-Three results are unconditional:
-- Uniform off-diagonal bound `‖(I−P_N)f_mn‖ ≤ C T^{1/2}`.
-- Mean spectral localization `𝔼_mn[χ_k] = μ_mn + E_mn`.
-- Spectral lower bound `𝔼_mn[χ_k] ≥ μ_mn/2` (exact energy decomposition).
+> For `j ∈ B_m(i)`, the ratio `|λ_j − λ_{j+1}| / |λ_i − λ_j|` is bounded
+> by `C · 2^{−m}` independently of `c`, because the factor `(c/2)^{−1/3}`
+> cancels exactly between numerator and denominator.
 
-The bulk exponential tail bound is conditional on Assumption 2.4 (bulk
-convolution decay; see Open Problems). The off-diagonal algebraic decay
-is conditional on Assumption 3.1 (pointwise spectral localization).
-The edge obstruction is proved.
+This cancellation is a **scale-combinatorial mechanism** requiring only
+monotonicity and a uniform gap lower bound — independent of any detailed
+spectral asymptotics beyond that local gap condition.
 
-A **Bulk Decorrelation Reduction** (Lemma 6.3) shows that the energy
-equidistribution goal reduces to the weak convergence of `ψ_n²` to the
-classical equilibrium density — a problem resolved unconditionally by Paper IV.
+### Three-scale architecture
 
-**Paper IV** proves the semiclassical equidistribution theorem for PSWF
-densities by elementary ODE methods (Prüfer phase analysis, integration by
-parts, drift cancellation identity), without microlocal machinery or
-Riemann–Hilbert methods. The main result gives, for all `f ∈ C¹` and `n ≤ γN`:
+| Scale | Layer | Content | Status |
+|---|---|---|---|
+| Combinatorial `c^{−1/3}` | Dyadic Separation | Lemma F (DSP), Corollary C | ✅ Rigorous (under ass:gap) |
+| Local Airy `(c/2)^{−1/3}` | Airy / WKB | Proposition U (U'), Lemma A | ⚠️ Open (Prop U unproved) |
+| Global Landau–Widom `(log c)^{2/3}` | erfc profile | Conjecture ULW | 📊 Empirical only |
 
+### Empirical evidence (Conjecture ULW)
+
+Numerical evidence for the **Landau–Widom global scaling law**:
 ```
-∫ f ψ_n² dx  =  λ_n(c) ∫ f ρ^cl dx  +  O(λ_n ‖f‖_{C¹} / n)
+λ_l ≈ (1/2) erfc( ln2 · (l − N_Sh − β(c)) / S(c) ),   S(c) = (log c/π)^{2/3}
 ```
-
-uniformly in `n`. This supplies hypothesis (6.1) of Lemma 6.3 in Paper III
-unconditionally, **closing the bulk decorrelation step** of the program.
-The bulk tail bound itself remains conditional on Assumption 2.4 of Paper III.
+with cross-bandwidth residuals ≈ 2·10^{−2} across c ∈ {50, 100, 200},
+decreasing with c. The centering parameter β(c) drifts slowly
+(β(50) ≈ −0.42, β(200) ≈ −0.36); its limit is an open problem.
 
 ---
 
-## Current State of Open Problems (April 2026)
+## Open Problems (May 2026)
 
-| Problem | Source | Status |
+The program has a clean three-tier structure:
+
+### Tier 1 — Rigorous core (complete under stated assumptions)
+
+- Dyadic Separation Principle (Paper VIII, Lemma F) ✅
+- Abstract dyadic cancellation theorem (Paper VII, Theorem 2.1) ✅
+- Conditional reduction: ass:gap + B-strong → contraction estimate ✅
+
+### Tier 2 — Open inputs (required to make the core unconditional)
+
+| Problem | Location | Planned route |
 |---|---|---|
-| DSTP for prime sampling | Paper I | 🔴 Open |
-| Bulk convolution decay (Assumption 2.4 of Paper III) | Paper III | 🔴 Open — main remaining analytic gap |
-| Off-diagonal spectral localization (Assumption 3.1 / specloc) | Paper III | 🔴 Open |
-| XRY stability conjecture | Paper II (quad) | 🔴 Open |
-| Identification of G_∞ as Weil operator | Paper II | 🔴 Open |
-| Uniqueness and tr(G_∞) = 1 | Paper II | 🔴 Open |
-| C⁰ extension of Paper IV equidistribution | Paper IV | 🟡 Partial (density argument gives rate-free convergence) |
-| Off-diagonal analogue of Paper IV main theorem | Paper IV | 🔴 Open |
-| Edge regime analysis (m, n ~ N) | Papers II(quad), III | 🔴 Open — requires Airy-scale methods |
-| Critical density regime N/c → 2/π | Paper II | 🔴 Open |
+| **ass:gap**: uniform spectral gap `λ_l − λ_{l+1} ≥ κ_0 (c/2)^{−1/3}` | Paper VIII Assumption 1 | WKB monotone comparison (Paper IX) |
+| **Proposition U (and U')**: uniform Airy approximation `|λ_l − F_Ai(x_l)| ≤ C₁ c^{−2/3}` | Paper VIII Proposition 1 | WKB + Airy matching |
+| **B-strong**: `P_{kl} ≤ C₂ c^{1/2}` in the transition zone | Paper VI/VIII | Galerkin norm bound |
+| **Bulk convolution decay** (Assumption 2.4 of Paper III) | Paper III | Schur test on product kernel |
+| DSTP for prime sampling | Paper I | — |
 
-**Closed by Paper IV:**
+### Tier 3 — Empirical (no analytic proof at present)
 
-| Problem | Resolved in |
+| Problem | Evidence |
 |---|---|
-| Weak convergence of `ψ_n²` to `ρ^cl` (rate O(1/n)) — Problem prob:pswf-weak-limit of Paper III | Paper IV, Theorem 1 |
-| Hypothesis of Bulk Decorrelation Reduction (Lemma 6.3 of Paper III) | Paper IV, Corollary 5.2 |
-
-A full dependency and status graph is in [`DEPENDENCIES.md`](DEPENDENCIES.md).
+| **Conjecture ULW**: erfc global scaling law | Numerical residuals ≈ 2·10^{−2} |
+| Limit of β(c) as c → ∞ | Fitting suggests β(∞) ∈ [−0.30, −0.21] |
+| XRY stability conjecture (Paper II quad) | Heuristic |
 
 ---
 
-## Logical Dependency Chain (Summary)
+## Planned: Paper IX
+
+**Paper IX** will attack **Assumption ass:gap** via the WKB route:
+
+1. First-order WKB comparison for PSWF eigenvalue increments
+2. Monotone comparison argument at leading order (without full Airy matching)
+3. Goal: prove `λ_l − λ_{l+1} ≥ κ_0 (c/2)^{−1/3}` unconditionally
+
+This is the highest-priority open problem since ass:gap is the **sole remaining
+gap** between the current conditional reduction and a fully rigorous proof of
+the contraction estimate.
+
+---
+
+## Logical Dependency Chain
 
 ```
-Paper IV (equidistribution)
-    ↓ supplies Lemma III.6.3 unconditionally
-Paper III (bulk reduction) + Assumption 2.4 (open)
+Paper IX (WKB — planned)
+    ↓ will prove
+Assumption ass:gap (uniform gap lower bound)
+    ↓
+Paper VIII Lemma F (Dyadic Separation Principle)
+    ↓ + B-strong (Paper VI, open)
+Paper VIII Corollary: (H1)–(H3) verified
+    ↓
+Paper VII Theorem 2.1 (abstract dyadic cancellation)
+    ↓
+Contraction estimate: ‖D T_c^{(N)}‖ < 1 for large c
+
+───────────────────────────────────────────────────
+
+Paper IV (PSWF equidistribution)
+    ↓ supplies hypothesis (6.1)
+Paper III Lemma 6.3 (bulk decorrelation) + Ass. 2.4 (open)
     ↓ conditional bulk tail bound
-Paper II(quad) + XRY stability conjecture (open)
-    ↓ conditional DSTP for XRY quadrature (bulk/off-diagonal)
+Paper II (quad) + XRY stability conjecture (open)
+    ↓
 Paper I (frame stability under DSTP)
     ↓
 Conditional frame stability for PSWF-Gauss sampling
-
-Paper II (scaling limit)
-    ↓ unconditional compactness + trace formula
-    ↓ conditional coercivity under Assumption H (prime DSTP, open)
 ```
 
 ---
@@ -154,3 +176,4 @@ Paper II (scaling limit)
 - Levitan–Sargsjan (1991): *Sturm–Liouville and Dirac Operators*, Kluwer
 - Weil (1952): *Sur les formules explicites de la théorie des nombres*
 - Reed–Simon (1980): *Methods of Modern Mathematical Physics I*, Academic Press
+- NIST DLMF (2023): Digital Library of Mathematical Functions, https://dlmf.nist.gov/
