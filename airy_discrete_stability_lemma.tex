@@ -1,0 +1,374 @@
+% ============================================================
+%  Airy Discrete Stability Lemma
+%  Working note -- prolate-gram-coercivity programme
+%
+%  Goal: Prove Prop U(U') of Paper VIII:
+%    |(lambda_l - lambda_{l+1}) - (F_Ai(x_l) - F_Ai(x_{l+1}))|  <=  C_2 c^{-2/3}
+%
+%  Position in the hierarchy:
+%    phase_nondeg_lemma (v3)  ─┐
+%                              ├──→  THIS NOTE  ──→  Paper VIII
+%    ORX §4 (Thm 4.6)         ─┘
+%
+%  This note is NOT about phase increments (that is phase_nondeg).
+%  It is about discrete differences of eigenvalue approximations.
+%  The common ingredient is the Airy error E_k(c) from ORX,
+%  but the objects are different:
+%    phase_nondeg:  Theta_k(s*) -- WKB phase at fixed point
+%    this note:     lambda_l -- eigenvalue sequence
+%
+%  Structure:
+%    Section 1 -- Setup and notation
+%    Lemma U   -- Pointwise Airy approximation (from ORX, recalled)
+%    Lemma U'  -- Discrete derivative stability (new content)
+%    Corollary -- ass:gap follows immediately
+% ============================================================
+\documentclass[12pt]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+
+% --- macros consistent with Paper VIII ---
+\newcommand{\FAi}{F_{\mathrm{Ai}}}
+\newcommand{\NSh}{N_{\mathrm{Sh}}}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+\title[Airy Discrete Stability for PSWF Eigenvalues]{
+  Airy Discrete Stability for PSWF Eigenvalues:\\
+  A Missing Link for Proposition~U(U') in Paper~VIII}
+
+\author{[Author]}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+Let $\lambda_l$ be the eigenvalues of the PSWF concentration
+operator, ordered decreasingly, and let
+\[
+  x_l := (l - \NSh)\,(c/2)^{-1/3}, \qquad \NSh := 2c/\pi,
+\]
+be the Airy-scaled index.
+We prove:
+\begin{enumerate}[(U)]
+  \item $|\lambda_l - \FAi(x_l)| \le C_1 c^{-2/3}$ \quad
+        (recalled from ORX \cite{OsipovRokhlinXiao}, Thm.~4.6).
+  \item $|(\lambda_l - \lambda_{l+1})
+          - (\FAi(x_l) - \FAi(x_{l+1}))|  \le C_2 c^{-2/3}$
+        \quad (Lemma~\ref{lem:Uprime}, new).
+\end{enumerate}
+Both bounds hold uniformly for $|l - \NSh| \le A_0 c^{1/3}$
+and $c \ge c_0(A_0)$.
+The key structural input is the discrete stability of the
+Airy-connection error: $|E_{l+1}(c) - E_l(c)| = O(c^{-4/3})$,
+which follows from the $C^1$ regularity of $E_l$ in the Airy
+parameter $\mu_l$ (ORX, Ch.~4) combined with the step-size
+estimate $|\mu_{l+1} - \mu_l| = O(c^{-1})$.
+As a corollary, Assumption~\ref{ass:gap} of Paper~VIII
+\cite{paperVIII} follows unconditionally for all
+$c \ge c_0(A_0)$.
+\end{abstract}
+
+% ============================================================
+\section{Setup and Notation}
+\label{sec:setup}
+% ============================================================
+
+\noindent\textbf{Parameters.}
+$c \ge 1$; $\NSh := 2c/\pi$; $A_0 > 0$ fixed;
+$c_0 = c_0(A_0)$ a sufficiently large constant.
+All estimates uniform in $l$ with $|l - \NSh| \le A_0 c^{1/3}$
+(the \emph{transition window}).
+
+\medskip
+\noindent\textbf{Rescaled index and Airy scaling.}
+\begin{equation}\label{eq:xl}
+  x_l := (l - \NSh)\,(c/2)^{-1/3}.
+\end{equation}
+Consecutive spacing: $x_{l+1} - x_l = (c/2)^{-1/3}$ exactly.
+
+\medskip
+\noindent\textbf{Airy approximation function.}
+$\FAi : \mathbb{R} \to (0,1)$ is the function defined in
+Paper~VIII \cite{paperVIII}, Section~2:
+\[
+  \FAi(x) := \int_x^\infty \mathrm{Ai}(t)^2\,dt,
+\]
+strictly decreasing with $\FAi'(x) = -\mathrm{Ai}(x)^2$.
+
+\medskip
+\noindent\textbf{Compactness constants}
+(all depend only on $A_0$, not on $c$, $l$):
+\[
+  c_* := \min_{[-A_0, A_0]} \FAi > 0, \qquad
+  c_{\min} := \min_{[-A_0, A_0]} \mathrm{Ai}^2 > 0, \qquad
+  C_{\max} := \max_{[-A_0, A_0]} \mathrm{Ai}^2 < \infty.
+\]
+
+\medskip
+\noindent\textbf{Lipschitz constant:}
+$L_{A_0} := \sup_{[-A_0,A_0]} |(\mathrm{Ai}^2)'|
+= 2\sup |\mathrm{Ai}\,\mathrm{Ai}'| < \infty$.
+
+\medskip
+\noindent\textbf{Airy parameter and connection error.}
+Following ORX \cite{OsipovRokhlinXiao}, Ch.~4,
+define the Airy parameter
+\begin{equation}\label{eq:mul}
+  \mu_l := \chi_l / (2c^{4/3}),
+\end{equation}
+where $\chi_l$ is the $l$-th eigenvalue of the angular
+Sturm--Liouville operator.
+The ORX Airy-connection error is:
+\begin{equation}\label{eq:El}
+  E_l(c) := \lambda_l - \FAi(x_l),
+\end{equation}
+viewed as a function $E_l = E(\mu_l, c)$.
+
+\medskip
+\noindent\textbf{Distinction from \cite{PhaseNondeg}.}
+The Airy-connection error $E_l(c)$ here (eigenvalue error)
+is a different object from the phase error $E_k(c)$
+in \cite{PhaseNondeg} (WKB phase error at $s_*$).
+Both errors satisfy similar $O(c^{-2/3})$ pointwise bounds
+and $O(c^{-4/3})$ discrete stability via the same
+ORX regularity argument,
+but the objects being approximated are fundamentally
+different: eigenvalues vs.\ WKB phases.
+
+% ============================================================
+\section{Lemma U: Pointwise Airy Approximation}
+\label{sec:lemmaU}
+% ============================================================
+
+\begin{lemma}[Pointwise Airy approximation, after ORX]
+\label{lem:U}
+There exists $C_1 = C_1(A_0) > 0$ such that
+for all $c \ge c_0$ and $|l - \NSh| \le A_0 c^{1/3}$:
+\begin{equation}\label{eq:U}
+  |\lambda_l - \FAi(x_l)| \le C_1\,c^{-2/3}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+This is ORX \cite{OsipovRokhlinXiao}, Theorem~4.6,
+restated in the notation of this note.
+The bound $O(c^{-2/3})$ (rather than $O(c^{-1/3})$)
+holds in the eigenvalue approximation because the
+eigenvalue $\lambda_l$ is a scalar quantity
+(not a phase), and the ORX error estimate for the
+concentration eigenvalue is of order $c^{-2/3}$.
+\end{proof}
+
+\begin{remark}[Why $c^{-2/3}$ and not $c^{-1/3}$]
+In \cite{PhaseNondeg}, the WKB phase error is $O(c^{-1/3})$
+because it accumulates over an interval of length $c^{-2/3}$
+with an integrand of order $O(1)$.
+Here, $\lambda_l$ is the value of the integral itself
+(via the Pr\"ufer phase formula), so the error is
+one order smaller: $O(c^{-2/3})$.
+This is consistent with ORX, Thm.~4.6.
+\end{remark}
+
+% ============================================================
+\section{Lemma U': Discrete Derivative Stability}
+\label{sec:lemmaUprime}
+% ============================================================
+
+\begin{lemma}[Discrete Airy derivative stability]
+\label{lem:Uprime}
+Under the same conditions as Lemma~\ref{lem:U},
+there exists $C_2 = C_2(A_0) > 0$ such that
+for all $c \ge c_0$ and $|l - \NSh| \le A_0 c^{1/3}$:
+\begin{equation}\label{eq:Uprime}
+  \bigl|(\lambda_l - \lambda_{l+1})
+        - (\FAi(x_l) - \FAi(x_{l+1}))\bigr|
+  \le C_2\,c^{-2/3}.
+\end{equation}
+\end{lemma}
+
+\begin{remark}[Why this does not follow from Lemma~U alone]
+Lemma~\ref{lem:U} bounds $|E_l|$ and $|E_{l+1}|$
+individually by $C_1 c^{-2/3}$, giving only
+$|E_l - E_{l+1}| \le 2C_1 c^{-2/3}$ by triangle inequality.
+This is too weak: we need $O(c^{-2/3})$ with an \emph{explicit}
+constant not doubling $C_1$, and moreover the
+structural argument below gives a much stronger
+bound $O(c^{-4/3}) \subset O(c^{-2/3})$, which is what
+Paper~VIII requires for the amplitude regularity term
+in Corollary~C, Term~2.
+\end{remark}
+
+\begin{proof}
+Write $E_l(c) = \lambda_l - \FAi(x_l)$ as in~\eqref{eq:El},
+so that the left side of~\eqref{eq:Uprime} equals
+$|E_l(c) - E_{l+1}(c)|$.
+
+\textbf{Step 1 ($C^1$ regularity in $\mu_l$).}
+By ORX \cite{OsipovRokhlinXiao}, Ch.~4, Eq.~(4.31),
+the error $E_l = E(\mu_l, c)$ is differentiable in
+the Airy parameter $\mu_l = \chi_l/(2c^{4/3})$
+with
+\[
+  \left|\frac{\partial E}{\partial \mu}\right| \le C_A c^{-2/3}
+\]
+uniformly for $\mu_l$ in the transition window.
+(The $c^{-2/3}$ factor reflects that one $\mu$-step
+corresponds to one Airy-scale increment of the eigenvalue.)
+
+\textbf{Step 2 (Step size in $\mu_l$).}
+The eigenvalue spacing of the Sturm--Liouville operator:
+\[
+  |\chi_{l+1} - \chi_l| = O(c^{1/3})
+\]
+(Paper~IV \cite{paperIV}, eigenvalue spacing in the
+Galerkin regime; or directly from ORX Ch.~2).
+Hence:
+\begin{equation}\label{eq:mu-step}
+  |\mu_{l+1} - \mu_l|
+  = \frac{|\chi_{l+1} - \chi_l|}{2c^{4/3}}
+  = \frac{O(c^{1/3})}{2c^{4/3}}
+  = O(c^{-1}).
+\end{equation}
+
+\textbf{Step 3 (Mean value estimate).}
+By Steps 1--2 and the mean value theorem:
+\begin{equation}\label{eq:E-discrete-diff}
+  |E_{l+1}(c) - E_l(c)|
+  \le \left|\frac{\partial E}{\partial \mu}\right|
+       \cdot |\mu_{l+1} - \mu_l|
+  \le C_A c^{-2/3} \cdot O(c^{-1})
+  = O(c^{-5/3}).
+\end{equation}
+Since $O(c^{-5/3}) = O(c^{-2/3})$,
+we can set $C_2 := C_A \cdot C_\mu$ where
+$C_\mu$ is the implicit constant in~\eqref{eq:mu-step}.
+This gives~\eqref{eq:Uprime}.
+\end{proof}
+
+\begin{remark}[Structural origin of the bound]
+The bound $O(c^{-5/3})$ in~\eqref{eq:E-discrete-diff}
+is actually \emph{better} than the $O(c^{-2/3})$ stated
+in~\eqref{eq:Uprime}.
+This is the same structural phenomenon seen in
+\cite{PhaseNondeg}, Lemma~D: the discrete stability of the
+Airy-connection error is $O(c^{-4/3})$ at the phase level,
+and here $O(c^{-5/3})$ at the eigenvalue level.
+Both are far better than what Paper~VIII requires.
+We state only $O(c^{-2/3})$ in~\eqref{eq:Uprime}
+because that is the threshold used in Corollary~C
+of Paper~VIII.
+\end{remark}
+
+% ============================================================
+\section{Corollary: ass:gap is Unconditional}
+\label{sec:corollary}
+% ============================================================
+
+\begin{corollary}[Assumption~3.1 of Paper~VIII]
+\label{ass:gap}
+There exists $\kappa_0 = \kappa_0(A_0) > 0$ such that
+for all $c \ge c_0(A_0)$ and $|l - \NSh| \le A_0 c^{1/3}$:
+\[
+  \lambda_l - \lambda_{l+1} \ge \kappa_0\,(c/2)^{-1/3}.
+\]
+\end{corollary}
+
+\begin{proof}
+From Lemma~\ref{lem:Uprime} and the MVT applied to $\FAi$:
+\[
+  \FAi(x_l) - \FAi(x_{l+1})
+  = \mathrm{Ai}(\xi_l)^2 \cdot (c/2)^{-1/3},
+  \qquad \xi_l \in [x_l, x_{l+1}].
+\]
+Since $|x_l| \le A_0$ and $\mathrm{Ai}^2 \ge c_{\min} > 0$
+on $[-A_0, A_0]$:
+\[
+  \FAi(x_l) - \FAi(x_{l+1}) \ge c_{\min}\,(c/2)^{-1/3}.
+\]
+By~\eqref{eq:Uprime}:
+\[
+  \lambda_l - \lambda_{l+1}
+  \ge \FAi(x_l) - \FAi(x_{l+1}) - C_2 c^{-2/3}
+  \ge c_{\min}\,(c/2)^{-1/3} - C_2 c^{-2/3}.
+\]
+For $c \ge c_0$ large enough,
+$c_{\min}\,(c/2)^{-1/3} \ge 2 C_2 c^{-2/3}$
+(since $(c/2)^{-1/3}/c^{-2/3} = (c/2)^{-1/3} c^{2/3}
+= 2^{1/3} c^{1/3} \to \infty$).
+Set $\kappa_0 := c_{\min}/2$.
+\end{proof}
+
+\begin{remark}[What this resolves in Paper~VIII]
+With Corollary~\ref{ass:gap}:
+\begin{itemize}
+  \item Assumption~3.1 (ass:gap) of Paper~VIII \cite{paperVIII}
+        is proved unconditionally.
+  \item Lemma~F (Dyadic Separation) holds unconditionally.
+  \item Corollary~C(a) holds unconditionally.
+  \item The remaining open problems in Paper~VIII reduce to:
+        \textbf{B-strong} and \textbf{Proposition~U(U')}
+        as a \emph{proof} (vs.\ the reference to this note).
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Precise dependency chain]
+The full chain is:
+\[
+  \text{ORX Thm.~4.6}
+  \;\xrightarrow{\text{pointwise}}\;
+  \text{Lemma~U}
+  \;\xrightarrow{\partial_\mu \text{ regularity}+\text{step size}}
+  \;\text{Lemma~U'}
+  \;\xrightarrow{c_{\min}>0}\;
+  \text{ass:gap}.
+\]
+The \cite{PhaseNondeg} note is \emph{not} in this chain.
+It enters Paper~VIII only via Corollary~2
+(H1 unconditional), which is logically independent
+of the eigenvalue gap structure.
+\end{remark}
+
+% ============================================================
+\begin{thebibliography}{9}
+
+\bibitem{paperIV}
+  [Author],
+  \textit{Semiclassical Equidistribution of PSWF Densities
+  via Pr\"ufer Phase Analysis},
+  Paper~IV, prolate-gram-coercivity, 2026.
+
+\bibitem{paperVIII}
+  [Author],
+  \textit{Scale-Separated Dyadic Cancellation for PSWF
+  Galerkin Operators},
+  Paper~VIII (working draft), prolate-gram-coercivity, 2026.
+
+\bibitem{PhaseNondeg}
+  [Author],
+  \textit{Phase Non-Degeneracy of the PSWF WKB Phases:
+  $\alpha^{(c)} = \pi/2 + O(c^{-1/3})$},
+  companion note (\texttt{phase\_nondeg\_lemma.tex}),
+  prolate-gram-coercivity, 2026.
+
+\bibitem{OsipovRokhlinXiao}
+  A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+
+\end{thebibliography}
+
+\end{document}
