@@ -1,7 +1,7 @@
 % ============================================================
 %  Paper VIII  --  Working draft
 %  Scale-Separated Dyadic Cancellation for PSWF Galerkin Operators
-%  Status: working draft
+%  Status: working draft (revised: Airy local + LW global)
 % ============================================================
 \documentclass[12pt]{amsart}
 
@@ -14,6 +14,7 @@
 % --- theorem environments ---
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{definition}
@@ -37,7 +38,7 @@
 \title[Scale-Separated Dyadic Cancellation]
       {Scale-Separated Dyadic Cancellation\\
        for PSWF Galerkin Operators:\\
-       Reduction of H2 to Uniform Airy Asymptotics}
+       Two-Scale Structure of the Spectral Transition}
 
 \author{[Author]}
 \date{\today}
@@ -45,41 +46,37 @@
 
 % ------------------------------------------------------------
 \begin{abstract}
-We reduce the open amplitude hypothesis~(H2) of
-Paper~VII \cite{paperVII} to two uniform analytic inputs
-about PSWF eigenvalues in the transition window
-(Proposition~\ref{prop:U}): a pointwise $O(c^{-2/3})$
-Airy approximation~(U) and a discrete increment
-bound~(U') controlling the discrete derivative of
-the spectral curve.
-All results are conditional on Proposition~\ref{prop:U}
-and on Assumption~B-strong \cite{paperVI}.
+We study the eigenvalue transition of the PSWF concentration
+operator in the high-bandwidth regime and establish two
+classes of results.
 
-The main contributions are:
-\begin{itemize}
-\item Lemma~\ref{lem:A} (Uniform Airy Increment):
-  under~(U'),
-  $\lambda_l - \lambda_{l+1}
-  = (c/2)^{-1/3}\mathrm{Ai}(x_l)^2 + R_l$
-  with $|R_l| \le C_R c^{-2/3}$ uniformly,
-  and $|\lambda_l-\lambda_{l+1}|
-  \le C_I(c/2)^{-1/3}$
-  with $C_I := C_{\max} + C_R \cdot 2^{-1/3}$.
-\item Lemma~\ref{lem:B} (Airy Ratio Bound).
-\item Lemma~\ref{lem:F} (Dyadic Separation Principle):
-  $|\lambda_i-\lambda_j| \ge
-  \tfrac{1}{2}c_{\min}(c/2)^{-1/3}|i-j|$
-  for $c \ge c_1$.
-\item Corollary~\ref{cor:C} (H2 in truncated dyadic sense):
-  $\delta_m = O(2^{-m})+O(c^{-1/3})$.
-\item Lemma~\ref{lem:E} (Core--WKB Split).
-\end{itemize}
-The central mechanism is the
-\emph{Dyadic Separation Principle}: for
-$j \in \mathcal{B}_m(i)$,
-$|\lambda_j-\lambda_{j+1}|/|\lambda_i-\lambda_j|
-\sim 2^{-m}$, not contained in ORX
-\cite{OsipovRokhlinXiao}.
+\emph{Rigorous.}
+Under Proposition~\ref{prop:U} (ORX/WKB local uniformity)
+and Assumption~B-strong \cite{paperVI}, we verify
+hypotheses~(H1)--(H3) of Paper~VII \cite{paperVII}
+via the \emph{Dyadic Separation Principle}:
+for $j \in \mathcal{B}_m(i)$, the ratio
+$|\lambda_j - \lambda_{j+1}|/|\lambda_i - \lambda_j|$
+is bounded by $C \cdot 2^{-m}$ independently of~$c$,
+because the factor $(c/2)^{-1/3}$ cancels between
+numerator and denominator.
+This cancellation is the operative content of the paper.
+
+\emph{Empirical.}
+We present numerical evidence for a universal scaling law
+governing the global transition profile
+(Conjecture~\ref{conj:ULW}):
+\[
+  \lambda_l \approx \tfrac{1}{2}\operatorname{erfc}
+  \!\left(\frac{\ln 2\cdot(l-\NSh-\beta(c))}{S(c)}\right),
+  \quad S(c) = (\log c/\pi)^{2/3},
+\]
+with cross-bandwidth residuals of order $2\cdot 10^{-2}$
+across $c \in \{50,100,200\}$, decreasing with~$c$.
+The centering parameter $\beta(c)$ drifts slowly
+($\beta(50)\approx -0.42$, $\beta(200)\approx -0.36$);
+its limiting behavior is an open problem.
+A full asymptotic derivation of this law remains open.
 \end{abstract}
 
 % ============================================================
@@ -98,24 +95,40 @@ hypotheses (H1)--(H3) are verified and the contraction
 estimate follows.
 
 \medskip\noindent
+\textbf{Two-scale structure.}
+Our analysis reveals a two-layer structure of the
+spectral transition:
+\begin{itemize}
+\item \emph{Local scale} (Airy / WKB): controls increments
+  $\lambda_l - \lambda_{l+1}$ at scale $(c/2)^{-1/3}$;
+  this is the content of Proposition~\ref{prop:U}
+  and Lemma~\ref{lem:A}.
+\item \emph{Global scale} (Landau--Widom): the eigenvalue
+  profile as a whole follows an error-function law with
+  logarithmic width $S(c) = (\log c/\pi)^{2/3}$;
+  this is the content of Conjecture~\ref{conj:ULW}.
+\end{itemize}
+These two scales are not competing but complementary:
+the local Airy structure controls curvature and increments,
+while the global erfc structure controls the macroscopic
+shape of the transition.
+
+\medskip\noindent
 \textbf{The Dyadic Separation Principle.}
 For $j \in \mathcal{B}_m(i)$:
 both $|\lambda_j-\lambda_{j+1}|$ and $|\lambda_i-\lambda_j|$
 scale as $c^{-1/3}$, but $|\lambda_i-\lambda_j|$ carries
 an extra $2^m$ from $|i-j| \ge 2^m$, so the ratio is
 $O(2^{-m})$ independently of $c$.
-
-\medskip\noindent
-\textbf{H2 in truncated dyadic sense.}
-For $m \ge m_0$: H2 via Corollary~\ref{cor:C}.
-For $m < m_0$: bounded by H3.
-Theorem~2.1 of \cite{paperVII} applied to truncated
-operator (blocks $m \ge m_0$ only).
+This mechanism depends only on monotonicity and local
+gap lower bounds, not on the fine Airy or erfc structure.
 
 \medskip\noindent
 \textbf{What is not proved here.}
 Proposition~\ref{prop:U} and B-strong remain open;
 see Remarks~\ref{rem:propU_route} and~\ref{rem:open}.
+Conjecture~\ref{conj:ULW} is supported by strong numerical
+evidence but has no analytic proof at present.
 
 % ============================================================
 \section{Setup and Notation}
@@ -123,7 +136,7 @@ see Remarks~\ref{rem:propU_route} and~\ref{rem:open}.
 % ============================================================
 
 Throughout, $c \ge 1$; $\lambda_k \in (0,1)$ ordered
-decreasing.
+decreasing. $\NSh := 2c/\pi$.
 
 \medskip\noindent
 \textbf{Airy zeros and $A_0$.}
@@ -147,9 +160,7 @@ $L_{A_0} := \sup_{[-A_0,A_0]}|\frac{d}{dx}\mathrm{Ai}^2|
 \medskip\noindent
 \textbf{Monotonicity fact.}
 $\FAi$ is strictly decreasing
-($\FAi' = -\mathrm{Ai}^2 \le -c_{\min} < 0$ on $[-A_0,A_0]$),
-so $\FAi(x) \ge \FAi(0) > 0$ for all $x \le 0$
-and $c_* \ge \FAi(0) > 0$.
+($\FAi' = -\mathrm{Ai}^2 \le -c_{\min} < 0$ on $[-A_0,A_0]$).
 
 \medskip\noindent
 \textbf{All constants} depend only on $A_0$; none
@@ -157,9 +168,13 @@ depend on $c$, $i$, $j$, $m$.
 
 \medskip\noindent
 \textbf{Rescaled index:}
-$x_l := (l-\NSh)(c/2)^{-1/3}$, $\NSh = 2c/\pi$;
+$x_l := (l-\NSh)(c/2)^{-1/3}$;
 spacing $x_{l+1}-x_l = (c/2)^{-1/3}$ exactly.
-All Galerkin indices: $x_l \in [-A,0] \subset [-A_0,0]$.
+
+\medskip\noindent
+\textbf{LW scaling variable:}
+$S(c) := (\log c/\pi)^{2/3}$,\quad
+$Z_l := \ln 2 \cdot (l - \NSh - \beta(c))/S(c)$.
 
 \medskip\noindent
 \textbf{Notation:}
@@ -177,11 +192,18 @@ Under~(U) with $C_1 c_0^{-2/3} \le c_*/2$:
 uniformly in all transition-window indices.
 
 % ============================================================
-\section{ORX Uniformity in the Transition Window}
+\section{Two-Scale Spectral Structure}
 \label{sec:propU}
 % ============================================================
 
-\begin{proposition}[ORX Uniformity]
+We formulate two propositions describing the eigenvalue
+transition at different scales.
+These are independent: Proposition~\ref{prop:U} is a local
+statement used in the rigorous sections;
+Conjecture~\ref{conj:ULW} is a global statement supported
+by numerical evidence.
+
+\begin{proposition}[ORX Local Uniformity]
 \label{prop:U}
 There exist $C_1, C_2, c_0 > 0$ (depending only on $A_0$)
 such that for all $c \ge c_0$ and all $l$ with
@@ -196,46 +218,97 @@ $|l-\NSh| \le A_0 c^{1/3}$:
 Both bounds are uniform in $l$.
 \end{proposition}
 
+\begin{remark}[Scope of Proposition~\ref{prop:U}]
+\label{rem:propU_scope}
+Proposition~\ref{prop:U} is a \emph{local} statement:
+it controls individual increments and pointwise values
+at the Airy scale $(c/2)^{-1/3}$.
+It makes no claim about the global shape of the
+eigenvalue profile or its large-$l$ behavior.
+The global erfc structure is addressed separately
+in Conjecture~\ref{conj:ULW}.
+\end{remark}
+
 \begin{remark}[Why (U') is necessary]
 \label{rem:propU_uprime}
 Lemma~\ref{lem:A} requires bounding
 $E_l - E_{l+1}$ where $E_l := \lambda_l - \FAi(x_l)$.
 Condition~(U) gives only $|E_l|, |E_{l+1}| \le C_1 c^{-2/3}$
-individually; it does not prevent the errors from
-oscillating at scale $c^{-2/3}$, in which case
-$|E_l - E_{l+1}|$ need not be bounded by a useful constant.
-Condition~(U') directly supplies this bound.
-In particular, (U') is not a technical refinement of~(U),
-but a genuinely stronger condition: it controls the
-discrete derivative of the spectral curve.
+individually and does not prevent oscillations at scale
+$c^{-2/3}$.
+Condition~(U') directly supplies this bound and is
+a genuinely stronger condition controlling the discrete
+derivative of the spectral curve.
 \end{remark}
 
-\begin{remark}[Heuristic interpretation of (U')]
-\label{rem:Uprime_heuristic}
-In the transition window, the eigenvalues $\lambda_l$
-approximate the smooth Airy profile $\FAi(x)$ sampled
-at the discrete points $x_l$.
-Condition~(U) asserts pointwise closeness of this
-sampling; condition~(U') asserts that the approximation
-is stable under discrete differentiation.
-Equivalently, (U') is a \emph{uniformly bounded discrete
-curvature} condition on the spectral curve
-$l \mapsto \lambda_l$: it ensures that the error
-sequence $\{E_l\}$ has no oscillations at scale
-$c^{-2/3}$, uniformly in $l$ and $c$.
-\end{remark}
-
-\begin{remark}[Status and route to proof]
+\begin{remark}[Route to proof of Proposition~\ref{prop:U}]
 \label{rem:propU_route}
 ORX \cite{OsipovRokhlinXiao} provides~(U) pointwise.
 A proof of both (U) and (U') is expected from:
 \begin{enumerate}[(i)]
 \item Uniform WKB control with $O(c^{-2/3})$ remainder.
 \item Airy matching with uniform remainder; yields~(U).
-\item Stability of the spectral map including its
-  discrete derivative; yields~(U').
+\item Stability of the spectral map under discrete
+  differentiation; yields~(U').
 \end{enumerate}
 Step~(iii) is the additional content beyond~(U).
+\end{remark}
+
+\begin{conjecture}[Landau--Widom Global Scaling Law]
+\label{conj:ULW}
+Let $S(c) = (\log c/\pi)^{2/3}$.
+There exists a centering parameter $\beta(c) \in \mathbb{R}$
+such that for all $l$ in the transition region,
+\[
+  \lambda_l = \frac{1}{2}
+  \operatorname{erfc}\!\left(
+  \frac{\ln 2 \cdot (l - \NSh - \beta(c))}{S(c)}
+  \right)
+  + O(S(c)^{-1}).
+\]
+Equivalently, the first differences satisfy the
+Gaussian boundary layer law
+\[
+  \lambda_l - \lambda_{l+1}
+  \approx \frac{\ln 2}{\sqrt{\pi}\,S(c)}\,e^{-Z_l^2}.
+\]
+\end{conjecture}
+
+\begin{remark}[Numerical evidence for Conjecture~\ref{conj:ULW}]
+\label{rem:ULW_numerics}
+For $c \in \{50,100,200\}$, direct eigenvalue computation
+via Gauss--Legendre discretization of the prolate operator
+(grid size $n=400$) yields cross-bandwidth residuals
+\[
+  \sup_{c,c'}\,
+  \sup_{Z \in [-2.5,2.5]}
+  |\lambda_c(Z) - \lambda_{c'}(Z)| \approx 2.7 \cdot 10^{-2},
+\]
+decreasing with $c$.
+The centering parameter satisfies
+\[
+  \beta(50)\approx -0.424,\quad
+  \beta(100)\approx -0.380,\quad
+  \beta(200)\approx -0.359,
+\]
+suggesting slow convergence to a limit
+$\beta(\infty) \in [-0.30,-0.21]$.
+No analytic expression for $\beta(c)$ is known.
+\end{remark}
+
+\begin{remark}[Relation between the two scales]
+\label{rem:two_scales}
+The two propositions are compatible and complementary.
+Proposition~\ref{prop:U} describes the \emph{local}
+geometry of the spectral curve at Airy scale
+$(c/2)^{-1/3} \sim c^{-1/3}$:
+it controls curvature and discrete increments.
+Conjecture~\ref{conj:ULW} describes the \emph{global}
+shape at Landau--Widom scale $S(c) \sim (\log c)^{2/3}$:
+it governs the macroscopic transition profile.
+The ratio of scales $S(c)/(c/2)^{-1/3}
+\sim c^{1/3}(\log c)^{2/3} \to \infty$
+confirms genuine scale separation.
 \end{remark}
 
 % ============================================================
@@ -262,8 +335,7 @@ Consequently:
   |\lambda_l-\lambda_{l+1}|
   \le C_{\max}(c/2)^{-1/3} + C_R\,c^{-2/3}.
 \end{equation}
-In particular, since $c^{-2/3} \le (c/2)^{-1/3}\cdot 2^{-1/3}$
-for $c\ge 1$:
+In particular:
 \begin{equation}\label{eq:incr_simple}
   |\lambda_l-\lambda_{l+1}|
   \le C_I\,(c/2)^{-1/3},
@@ -279,7 +351,6 @@ Write:
   = [\FAi(x_l)-\FAi(x_{l+1})]
   + [(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))].
 \]
-
 \textbf{Main term.}
 $\FAi'=-\mathrm{Ai}^2$; MVT gives
 $\FAi(x_l)-\FAi(x_{l+1})
@@ -289,32 +360,18 @@ By Lipschitz continuity of $\mathrm{Ai}^2$ with constant
 $L_{A_0}$:
 $|\mathrm{Ai}(\xi_l)^2-\mathrm{Ai}(x_l)^2|
 \le L_{A_0}(c/2)^{-1/3}$,
-contributing $L_{A_0}(c/2)^{-2/3} = L_{A_0}2^{2/3}c^{-2/3}$
-to $R_l$.
+contributing $L_{A_0}2^{2/3}c^{-2/3}$ to $R_l$.
 
 \textbf{Increment error.}
-By~(U') directly:
-$|(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))|
+By~(U'): $|(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))|
 \le C_2 c^{-2/3}$.
 
 \textbf{Combining:}
 $|R_l| \le (L_{A_0}2^{2/3}+C_2)c^{-2/3} = C_R c^{-2/3}$.
-Bound~\eqref{eq:incr_bound} follows from
-$|\mathrm{Ai}(x_l)^2| \le C_{\max}$.
-For~\eqref{eq:incr_simple}:
-$c^{-2/3} \le (c/2)^{-1/3}\cdot 2^{-1/3}$
-for $c \ge 1$
-(since $(c/2)^{-1/3} = 2^{1/3}c^{-1/3}$
-and $c^{-2/3} \le c^{-1/3}$ for $c\ge 1$),
-giving $C_I = C_{\max}+C_R\cdot 2^{-1/3}$.
+Bounds~\eqref{eq:incr_bound} and~\eqref{eq:incr_simple}
+follow since $c^{-2/3} \le (c/2)^{-1/3}\cdot 2^{-1/3}$
+for $c\ge 1$.
 \end{proof}
-
-\begin{remark}
-Bound~\eqref{eq:incr_bound} keeps the two scales
-$(c/2)^{-1/3}$ and $c^{-2/3}$ explicit.
-Bound~\eqref{eq:incr_simple} unifies them;
-both forms are used in the sequel.
-\end{remark}
 
 % ============================================================
 \section{Lemma B: Airy Ratio Bound}
@@ -332,46 +389,60 @@ Numerator $\le C_{\max}$, denominator $\ge c_*>0$.
 \end{proof}
 
 % ============================================================
-\section{Lemma F: Airy Rigidity and Dyadic Separation}
+\section{Lemma F: Dyadic Separation Principle}
 \label{sec:lemmaF}
 % ============================================================
 
-\begin{lemma}[Airy Rigidity / Dyadic Separation Principle]
+\begin{lemma}[Dyadic Separation Principle]
 \label{lem:F}
-$\FAi$ is bi-Lipschitz on $[-A_0,A_0]$:
-$c_{\min}|x_i-x_j|
-\le |\FAi(x_i)-\FAi(x_j)|
-\le C_{\max}|x_i-x_j|$.
-Under~\textup{(U)}, with $c_1 := 2(4C_1/c_{\min})^3$,
-for $c \ge c_1$:
+Assume only:
+\begin{enumerate}[\textup{(i)}]
+\item $\{\lambda_l\}$ is strictly decreasing.
+\item There exists $\kappa > 0$ such that
+  $\lambda_l - \lambda_{l+1} \ge \kappa\,(c/2)^{-1/3}$
+  for all $l$ in the transition window.
+\end{enumerate}
+Then for all $i \ne j$ in the transition window:
 \begin{equation}\label{eq:specsep}
   |\lambda_i-\lambda_j|
-  \ge \tfrac{1}{2}c_{\min}(c/2)^{-1/3}|i-j|.
+  \ge \kappa\,(c/2)^{-1/3}\,|i-j|.
 \end{equation}
+Under Proposition~\ref{prop:U}\textup{(U)}, condition~\textup{(ii)}
+holds with $\kappa = \tfrac{1}{2}c_{\min}$ for $c \ge c_1
+:= (2C_R/c_{\min})^3$.
 \end{lemma}
 
 \begin{proof}
-\textbf{Bi-Lipschitz.}
-$|\FAi(x_i)-\FAi(x_j)|
-= |\int_{x_j}^{x_i}\mathrm{Ai}^2\,dt|$;
-$c_{\min} \le \mathrm{Ai}^2 \le C_{\max}$ on $[-A_0,A_0]$
-(strict positivity: $A_0 < |a_1|$, no zero;
-this is the key rigidity fact).
+\textbf{From (i)--(ii) alone.}
+Without loss of generality $i < j$.
+By telescoping and assumption~(ii):
+\[
+  |\lambda_i - \lambda_j|
+  = \sum_{l=i}^{j-1}(\lambda_l - \lambda_{l+1})
+  \ge (j-i)\,\kappa\,(c/2)^{-1/3}.
+\]
 
-\textbf{Spectral separation.}
-By~(U):
-$|\lambda_i-\lambda_j|
-\ge c_{\min}(c/2)^{-1/3}|i-j|-2C_1c^{-2/3}$.
-For $c \ge c_1$: $2C_1c^{-2/3}
-\le \frac{1}{2}c_{\min}(c/2)^{-1/3}$,
-giving~\eqref{eq:specsep}.
+\textbf{Verifying (ii) under (U).}
+Lemma~\ref{lem:A} gives
+$\lambda_l - \lambda_{l+1}
+\ge c_{\min}(c/2)^{-1/3} - C_R c^{-2/3}$.
+For $c \ge c_1$:
+$C_R c^{-2/3} \le \tfrac{1}{2}c_{\min}(c/2)^{-1/3}$,
+so $\kappa = \tfrac{1}{2}c_{\min}$ works.
 \end{proof}
 
-\begin{remark}[Microscopic scale and dyadic truncation]
-\label{rem:microscopic}
-At $|i-j|=O(1)$, absorption fails and~\eqref{eq:specsep}
-degenerates. This is why $m \ge m_0$ is necessary;
-the Core regime $m < m_0$ is handled by H3.
+\begin{remark}[Robustness of Lemma~\ref{lem:F}]
+\label{rem:Frobust}
+The bound~\eqref{eq:specsep} follows from
+assumptions~(i)--(ii) alone: strict monotonicity plus
+a local lower gap bound at scale $(c/2)^{-1/3}$.
+It requires neither the Airy form of
+$\lambda_l - \lambda_{l+1}$ nor the erfc form of~$\lambda_l$.
+Any mechanism providing a lower gap bound at this scale
+suffices.
+This robustness is the key structural property:
+Conjecture~\ref{conj:ULW}, if proved, would provide
+an alternative verification of~(ii) at the global scale.
 \end{remark}
 
 % ============================================================
@@ -389,9 +460,6 @@ Under Proposition~\ref{prop:U}, define
   + \frac{2C_{\max}}{c_*}(c/2)^{-1/3}
   + \frac{2C_R}{c_*}c^{-2/3}.
 \]
-All indices $i,j$ lie in the transition window
-($x_j \in [-A_0,0]$, $\FAi(x_j) \ge c_*>0$),
-so~\eqref{eq:onemlam} applies uniformly.
 For $c \ge c_2$, $i \le N$, $m \ge m_0$,
 $j,j+1 \in \Bm(i)$:
 \[
@@ -405,46 +473,79 @@ then $\sup_{m\ge m_0}\delta_m < \varepsilon$.
 \end{corollary}
 
 \begin{proof}
-$\frac{|A_{ij}-A_{i,j+1}|}{A_{ij}}
+\[
+\frac{|A_{ij}-A_{i,j+1}|}{A_{ij}}
 \lesssim
 \underbrace{\frac{|\lambda_j-\lambda_{j+1}|}
             {|\lambda_i-\lambda_j|}}_{\text{Term 1}}
 +
 \underbrace{\frac{|\lambda_j-\lambda_{j+1}|}
-            {1-\lambda_j}}_{\text{Term 2}}.$
+            {1-\lambda_j}}_{\text{Term 2}}.
+\]
 
 \textbf{Term 1 (Dyadic Separation).}
-Lemma~\ref{lem:A} (bound~\eqref{eq:incr_simple}):
-numerator $\le C_I(c/2)^{-1/3}$.
-Lemma~\ref{lem:F}: denominator
-$\ge \frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m$.
-The $(c/2)^{-1/3}$ cancels:
-Term~1 $\le \frac{2C_I}{c_{\min}}2^{-m}$,
-\emph{independent of $c$}.
+Numerator $\le C_I(c/2)^{-1/3}$ by
+bound~\eqref{eq:incr_simple} of Lemma~\ref{lem:A}.
+Denominator $\ge \tfrac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m$
+by Lemma~\ref{lem:F}.
+The factor $(c/2)^{-1/3}$ \emph{cancels exactly}:
+\[
+  \text{Term 1} \le \frac{2C_I}{c_{\min}}2^{-m},
+  \quad\text{independent of }c.
+\]
 
 \textbf{Term 2 (Global error).}
 Using~\eqref{eq:incr_bound} and~\eqref{eq:onemlam}:
 \[
   \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
   \le
-  \frac{C_{\max}(c/2)^{-1/3} + C_R c^{-2/3}}
-       {\frac{1}{2}\FAi(x_j)}
-  \le
   \frac{2C_{\max}}{c_*}(c/2)^{-1/3}
-  + \frac{2C_R}{c_*}c^{-2/3}.
+  + \frac{2C_R}{c_*}c^{-2/3} = O(c^{-1/3}).
 \]
-Both terms are $O(c^{-1/3})$ for $c \ge 1$,
-uniformly in $j$.
 \end{proof}
 
-\begin{remark}[The Dyadic Separation Principle]
+\begin{remark}[The operative cancellation]
 \label{rem:dyadic}
 The cancellation of $(c/2)^{-1/3}$ in Term~1 is
-the operative content: both scales are $c^{-1/3}$,
-but the denominator carries $2^m$.
-Result: purely combinatorial $O(2^{-m})$,
-independent of $c$.
-The $O(c^{-1/3})$ in $\delta_m$ comes from Term~2 only.
+the operative content of the paper:
+both $|\lambda_j-\lambda_{j+1}|$ and $|\lambda_i-\lambda_j|$
+are $O(c^{-1/3})$, but the denominator carries
+the combinatorial factor $2^m$ from $|i-j|\ge 2^m$.
+The result is a purely combinatorial $O(2^{-m})$,
+independent of~$c$.
+The $O(c^{-1/3})$ contribution to $\delta_m$ comes
+from Term~2 only and vanishes as $c\to\infty$.
+\end{remark}
+
+% ============================================================
+\section{Centering Parameter $\beta(c)$}
+\label{sec:beta}
+% ============================================================
+
+\begin{remark}[Empirical behavior of $\beta(c)$]
+\label{rem:beta}
+The centering parameter $\beta(c)$ in
+Conjecture~\ref{conj:ULW} is determined numerically
+by median alignment: $\beta(c)$ is chosen so that
+the erfc profile crosses $\lambda = 1/2$ at the
+correct index.
+
+Numerical computation via Gauss--Legendre
+discretization ($n=400$) yields:
+\[
+  \beta(50) \approx -0.424,\quad
+  \beta(100) \approx -0.380,\quad
+  \beta(200) \approx -0.359.
+\]
+Fitting suggests $\beta(c) \sim A + B/\log(c)$ with
+limit $\beta(\infty) \in [-0.30, -0.21]$,
+but the model sensitivity is high and no analytic
+expression is known.
+
+The slow drift of $\beta(c)$ is consistent with a
+half-integer lattice-centering effect arising from
+$\lfloor 2c/\pi \rfloor$ vs.\ $2c/\pi$,
+but this remains a heuristic explanation only.
 \end{remark}
 
 % ============================================================
@@ -472,14 +573,6 @@ Apply Theorem~2.1 of \cite{paperVII} to truncated
 operator, using H1 and H3: $O(1)$.
 \end{proof}
 
-\begin{remark}[Role of H3]
-\label{rem:H3role}
-H3 is not used in proving H2.
-It enters Lemma~\ref{lem:E} in the Core estimate
-and as input to Theorem~2.1. A proof of H3 alone
-would not simplify the H2 argument.
-\end{remark}
-
 % ============================================================
 \section{Conditional Reduction}
 \label{sec:closure}
@@ -498,22 +591,33 @@ and $\norm{D\mathcal{T}_c^{(N)}} < 1$ for $c\ge c_2$.
 \begin{remark}[Dependency chain]
 \[
   \text{(U')}\Rightarrow\text{Lem.~A};\quad
-  \text{(U)}\Rightarrow\text{Lem.~F};\quad
+  \text{(i)--(ii)}\Rightarrow\text{Lem.~F};\quad
+  \text{(U)}\Rightarrow\text{(ii) of Lem.~F};\quad
   \text{Lem.~A+F}\Rightarrow\text{Cor.~C};\quad
-  \text{Cor.~C+H3}\Rightarrow\text{Lem.~E}
-  \Rightarrow B'\Rightarrow A.
+  \text{Cor.~C+H3}\Rightarrow\text{Lem.~E}.
 \]
-All thresholds depend only on $A_0,C_1,C_2,c_{\min}$.
+\textbf{Key structural point:}
+Lemma~F is independent of the specific Airy or erfc form
+of the eigenvalues; it requires only monotonicity~(i)
+and the lower gap bound~(ii).
+Proposition~\ref{prop:U}(U) provides one verification
+of~(ii); Conjecture~\ref{conj:ULW}, if proved, would
+provide another at the global scale.
+All thresholds depend only on $A_0, C_1, C_2, c_{\min}$.
 \end{remark}
 
 \begin{remark}[Open problems]
 \label{rem:open}
 \begin{itemize}
-\item \textbf{(U'):} the genuine hard core;
+\item \textbf{Proposition~\ref{prop:U}:}
+  the genuine hard core of the local Airy analysis;
   see Remark~\ref{rem:propU_route}.
 \item \textbf{B-strong:} $P_{kl}\le C_2 c^{1/2}$
   in the transition zone; plausible from Widom +
   WKB-to-Airy matching; no proof available.
+\item \textbf{Conjecture~\ref{conj:ULW}:}
+  a full asymptotic derivation of the erfc scaling law;
+  and the determination of $\lim_{c\to\infty}\beta(c)$.
 \end{itemize}
 \end{remark}
 
