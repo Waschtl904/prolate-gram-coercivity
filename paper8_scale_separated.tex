@@ -1,7 +1,7 @@
 % ============================================================
 %  Paper VIII  --  Working draft
 %  Scale-Separated Dyadic Cancellation for PSWF Galerkin Operators
-%  Status: working draft (revised v4: submission-ready light)
+%  Status: working draft (revised v5: submission-ready)
 % ============================================================
 \documentclass[12pt]{amsart}
 
@@ -51,7 +51,7 @@ operator in the high-bandwidth regime and establish two
 classes of results.
 
 \emph{Rigorous.}
-Under Assumption~\ref{ass:gap_only} (uniform spectral gap
+Under Assumption~\ref{ass:gap} (uniform spectral gap
 lower bound) and Assumption~B-strong \cite{paperVI},
 we verify hypotheses~(H1)--(H3) of Paper~VII \cite{paperVII}
 via the \emph{Dyadic Separation Principle}:
@@ -61,8 +61,8 @@ is bounded by $C \cdot 2^{-m}$ independently of~$c$,
 because the factor $(c/2)^{-1/3}$ cancels between
 numerator and denominator.
 This cancellation depends only on monotonicity and a
-uniform gap lower bound; no Airy or erfc structure
-is required.
+uniform gap lower bound, and is therefore independent
+of any specific spectral asymptotics.
 
 \emph{Empirical.}
 We present numerical evidence for a universal scaling law
@@ -89,11 +89,23 @@ Paper~VII \cite{paperVII} established an abstract dyadic
 cancellation theorem (Theorem~2.1) and reduced the
 contraction problem to three hypotheses (H1)--(H3).
 H2 was stated as Conjecture~6.2 and is reduced here
-to Assumption~\ref{ass:gap_only}.
+to Assumption~\ref{ass:gap}.
 This paper is a \emph{conditional reduction theorem}:
-under Assumption~\ref{ass:gap_only} and B-strong,
+under Assumption~\ref{ass:gap} and B-strong,
 hypotheses (H1)--(H3) are verified and the contraction
 estimate follows.
+
+\medskip\noindent
+\textbf{Structural novelty.}
+The novelty of the present paper is the identification
+of the Dyadic Separation Principle as a purely
+combinatorial mechanism, independent of any Airy or
+global spectral structure, reducing the analytic burden
+to a single local gap estimate.
+This is not a renaming of hypothesis~H2: it is the
+observation that H2 requires no spectral asymptotics
+whatsoever — only monotonicity and a lower bound on
+consecutive eigenvalue gaps.
 
 \medskip\noindent
 \textbf{Three-scale structure.}
@@ -101,7 +113,7 @@ Our analysis reveals three separated layers:
 \begin{itemize}
 \item \emph{Combinatorial scale} (Dyadic Separation):
   requires only a uniform gap lower bound at scale
-  $(c/2)^{-1/3}$; this is Assumption~\ref{ass:gap_only},
+  $(c/2)^{-1/3}$; this is Assumption~\ref{ass:gap},
   Lemma~\ref{lem:F}, and Corollary~\ref{cor:C}.
   This is the rigorous core, independent of the
   specific form of the eigenvalue profile.
@@ -110,7 +122,7 @@ Our analysis reveals three separated layers:
   Airy functions; this is Proposition~\ref{prop:U}
   and Lemma~\ref{lem:A}.
   It supplies one route to verifying
-  Assumption~\ref{ass:gap_only} and the upper bounds
+  Assumption~\ref{ass:gap} and the upper bounds
   needed for Term~2 of Corollary~\ref{cor:C},
   but is not a logical prerequisite for the
   Dyadic Separation Principle.
@@ -130,7 +142,7 @@ $O(2^{-m})$ independently of $c$.
 
 \medskip\noindent
 \textbf{What is not proved here.}
-Assumption~\ref{ass:gap_only}, Proposition~\ref{prop:U},
+Assumption~\ref{ass:gap}, Proposition~\ref{prop:U},
 and B-strong remain open;
 see Remarks~\ref{rem:gap_route}, \ref{rem:propU_route},
 and~\ref{rem:open}.
@@ -204,9 +216,9 @@ uniformly in all transition-window indices.
 \label{sec:structure}
 % ============================================================
 
-\begin{assumption}[Minimal Spectral Input]
-\label{ass:gap_only}
-There exist $\kappa_0 > 0$ such that for all
+\begin{assumption}[Uniform Gap Condition]
+\label{ass:gap}
+There exists $\kappa_0 > 0$ such that for all
 sufficiently large $c$ and all $l$ with
 $|l - \NSh| \le A_0 c^{1/3}$:
 \begin{equation}\label{eq:gapbound}
@@ -216,7 +228,7 @@ No further structural information on the eigenvalue
 profile is required for Lemma~\ref{lem:F}.
 \end{assumption}
 
-\begin{remark}[Routes to Assumption~\ref{ass:gap_only}]
+\begin{remark}[Routes to Assumption~\ref{ass:gap}]
 \label{rem:gap_route}
 Three routes to~\eqref{eq:gapbound} are known or plausible:
 \begin{enumerate}[(i)]
@@ -248,7 +260,7 @@ with $|l-\NSh| \le A_0 c^{1/3}$:
 \end{itemize}
 Both bounds are uniform in $l$.
 Proposition~\ref{prop:U}\textup{(U)} implies
-Assumption~\ref{ass:gap_only} with
+Assumption~\ref{ass:gap} with
 $\kappa_0 = \tfrac{1}{2}c_{\min}$.
 \end{proposition}
 
@@ -322,7 +334,7 @@ Fitting suggests $\beta(c) \to \beta(\infty)
 
 \begin{remark}[Scale separation]
 \label{rem:scales}
-Assumption~\ref{ass:gap_only} and Lemma~\ref{lem:F}
+Assumption~\ref{ass:gap} and Lemma~\ref{lem:F}
 act at the combinatorial scale $c^{-1/3}$.
 Proposition~\ref{prop:U} resolves the local Airy
 scale $(c/2)^{-1/3}$.
@@ -348,8 +360,7 @@ $|l-\NSh| \le A_0 c^{1/3}$:
   = (c/2)^{-1/3}\,\mathrm{Ai}(x_l)^2 + R_l,
   \quad |R_l| \le C_R\,c^{-2/3},
 \]
-where $C_R := L_{A_0}\cdot 2^{2/3} + C_2$
-depends only on $A_0$ and $C_2$.
+where $C_R := L_{A_0}\cdot 2^{2/3} + C_2$.
 Consequently:
 \begin{equation}\label{eq:incr_bound}
   |\lambda_l-\lambda_{l+1}|
@@ -400,7 +411,7 @@ Numerator $\le C_{\max}$, denominator $\ge c_*>0$.
 
 \begin{lemma}[Dyadic Separation Principle]
 \label{lem:F}
-Under Assumption~\ref{ass:gap_only},
+Under Assumption~\ref{ass:gap},
 for all sufficiently large $c$ and all $i \ne j$
 in the transition window:
 \begin{equation}\label{eq:specsep}
@@ -420,7 +431,7 @@ WLOG $i < j$. By strict monotonicity and telescoping:
 
 \begin{remark}[Full independence of Lemma~\ref{lem:F}]
 \label{rem:Frobust}
-The proof uses only Assumption~\ref{ass:gap_only}:
+The proof uses only Assumption~\ref{ass:gap}:
 strict monotonicity and a gap lower bound at scale
 $(c/2)^{-1/3}$.
 No Airy functions, no erfc structure, no specific
@@ -438,7 +449,7 @@ Any mechanism verifying~\eqref{eq:gapbound} suffices.
 Fix $m_0\ge 1$.
 Assume:
 \begin{enumerate}[\textup{(a)}]
-\item Assumption~\ref{ass:gap_only} (gap lower bound);
+\item Assumption~\ref{ass:gap} (gap lower bound);
 \item An upper bound
   $|\lambda_l - \lambda_{l+1}| \le C_I\,(c/2)^{-1/3}$
   for all $l$ in the transition window.
@@ -459,10 +470,13 @@ $m \ge m_0$, and $j,j+1 \in \Bm(i)$:
 For any $\varepsilon>0$: choose $m_0$ large, then $c$
 sufficiently large; then $\sup_{m\ge m_0}\delta_m<\varepsilon$.
 
-\smallskip
-\emph{The upper bound in~\textup{(b)} is implied by
-Proposition~\ref{prop:U}\textup{(U')};
-see~\eqref{eq:incr_simple} of Lemma~\ref{lem:A}.}
+\smallskip\noindent
+\emph{Condition~\textup{(b)} is implied by
+Proposition~\ref{prop:U}\textup{(U')} via
+\eqref{eq:incr_simple} of Lemma~\ref{lem:A}.
+The bound on $1-\lambda_j$ used in Term~2 follows
+from Proposition~\ref{prop:U}\textup{(U)}
+via~\eqref{eq:onemlam}.}
 \end{corollary}
 
 \begin{proof}
@@ -535,8 +549,9 @@ in terms of spectral or arithmetic data is known.
 
 \begin{lemma}[Core--WKB Split]
 \label{lem:E}
-Fix $m_0 \ge 1$; assume Assumption~\ref{ass:gap_only},
-Proposition~\ref{prop:U}, and B-strong \cite{paperVI}.
+Fix $m_0 \ge 1$; assume Assumption~\ref{ass:gap},
+Proposition~\ref{prop:U} (both \textup{(U)} and
+\textup{(U')}), and B-strong \cite{paperVI}.
 Then $\sum_{j\ne i}|T_{ij}| \le C(m_0,A,C_2)$
 uniformly in $i$, $N$, and all sufficiently large $c$.
 \end{lemma}
@@ -548,7 +563,7 @@ $|T_{ij}| \le C_2/|i-j|$ by B-strong
 sum $\le 2C_2 m_0$.
 
 \textbf{WKB ($m\ge m_0$).}
-Corollary~\ref{cor:C} gives H2;
+Corollary~\ref{cor:C} gives H2 via~(a) and~(b);
 apply Theorem~2.1 of \cite{paperVII} with H1 and H3.
 \end{proof}
 
@@ -559,8 +574,9 @@ apply Theorem~2.1 of \cite{paperVII} with H1 and H3.
 
 \begin{corollary}[Conditional Reduction]
 \label{cor:closure}
-Under Assumption~\ref{ass:gap_only},
-Proposition~\ref{prop:U}, and B-strong,
+Under Assumption~\ref{ass:gap},
+Proposition~\ref{prop:U} (both \textup{(U)} and
+\textup{(U')}), and B-strong,
 hypotheses (H1)--(H3) of Theorem~2.1 in \cite{paperVII}
 are verified, giving
 $\sup_{i\le N}\sum_{j\ne i}|P_{ij}|
@@ -572,30 +588,34 @@ for all sufficiently large $c$.
 \begin{remark}[Dependency chain]
 \label{rem:deps}
 \begin{align*}
-  &\text{Ass.~\ref{ass:gap_only}}
+  &\text{Ass.~\ref{ass:gap}}
     \Rightarrow\text{Lem.~\ref{lem:F}}
-    \Rightarrow\text{Cor.~\ref{cor:C} (Term 1)};\\
+    \Rightarrow\text{Cor.~\ref{cor:C}\,(a)};\\
   &\text{Prop.~\ref{prop:U}(U')}
     \Rightarrow\text{Lem.~\ref{lem:A}}
-    \Rightarrow\text{Cor.~\ref{cor:C}\,(b) + Term 2};\\
+    \Rightarrow\text{Cor.~\ref{cor:C}\,(b)};\\
   &\text{Prop.~\ref{prop:U}(U)}
-    \Rightarrow\text{Ass.~\ref{ass:gap_only} (one route)};\\
+    \Rightarrow\text{bound on }(1-\lambda_j)
+    \Rightarrow\text{Cor.~\ref{cor:C}\,Term 2};\\
+  &\text{Prop.~\ref{prop:U}(U)}
+    \Rightarrow\text{Ass.~\ref{ass:gap} (one route)};\\
   &\text{Cor.~\ref{cor:C} + H3}
-    \Rightarrow\text{Lem.~\ref{lem:E}}.
+    \Rightarrow\text{Lem.~\ref{lem:E}}
+    \Rightarrow\text{Cor.~\ref{cor:closure}}.
 \end{align*}
 \textbf{Key point:}
-Lemma~\ref{lem:F} requires only
-Assumption~\ref{ass:gap_only}.
-Proposition~\ref{prop:U} is one sufficient condition
-for both (a) and (b) of Corollary~\ref{cor:C},
-but it is not the logical foundation of
-the Dyadic Separation Principle.
+Lemma~\ref{lem:F} requires only Assumption~\ref{ass:gap}.
+Proposition~\ref{prop:U} enters exclusively via
+conditions~(b) and Term~2 of Corollary~\ref{cor:C},
+and as one sufficient route to Assumption~\ref{ass:gap}.
+It is not the logical foundation of the
+Dyadic Separation Principle.
 \end{remark}
 
 \begin{remark}[Open problems]
 \label{rem:open}
 \begin{itemize}
-\item \textbf{Assumption~\ref{ass:gap_only}:}
+\item \textbf{Assumption~\ref{ass:gap}:}
   a uniform gap lower bound; plausible from WKB
   or monotone comparison; no proof available.
 \item \textbf{Proposition~\ref{prop:U}:}
