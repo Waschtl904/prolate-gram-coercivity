@@ -265,9 +265,8 @@ we have:
   \;\le\; 2\,\FAi(x_j),
 \end{equation}
 uniformly in all transition-window indices $j$.
-This explicit two-sided bound replaces the informal
-$1-\lambda_j \asymp \FAi(x_j)$ used in earlier drafts
-and is used directly in the proof of Corollary~\ref{cor:C}.
+This explicit two-sided bound is used directly in the
+proof of Corollary~\ref{cor:C}.
 
 % ============================================================
 \section{ORX Uniformity in the Transition Window}
@@ -300,6 +299,30 @@ but is not explicitly stated there.
 This paper is logically independent of a proof of
 Proposition~\ref{prop:U}; all results below are
 explicitly conditional on it.
+\end{remark}
+
+\begin{remark}[Route to a proof of Proposition~\ref{prop:U}]
+\label{rem:propU_route}
+A proof of Proposition~\ref{prop:U} is expected to follow
+from three steps, each within the existing ORX framework:
+\begin{enumerate}[(i)]
+\item \textbf{Uniform Liouville--Green (WKB) control:}
+  establish that the WKB approximation to the PSWF
+  differential equation holds with a remainder
+  $O(c^{-2/3})$ uniform over the transition window
+  $|l - \NSh| \le A_0 c^{1/3}$.
+\item \textbf{Airy matching with explicit remainder:}
+  the connection between the WKB solution and the
+  Airy function holds with a $O(c^{-2/3})$ remainder,
+  uniform in the rescaled variable $x_l \in [-A_0, A_0]$.
+\item \textbf{Stability of the inverse spectral map:}
+  $O(c^{-2/3})$ perturbations of the Airy integral
+  $\FAi(x_l)$ propagate to $O(c^{-2/3})$ perturbations
+  of $\lambda_l$, uniformly in $l$.
+\end{enumerate}
+Each step is expected to require only careful bookkeeping
+of the uniformity constants already present in the
+ORX analysis, without new analytic tools.
 \end{remark}
 
 % ============================================================
@@ -400,8 +423,7 @@ $\FAi$ satisfies the bi-Lipschitz bound
 Under Proposition~\ref{prop:U}, define the explicit
 threshold
 \[
-  c_1 := \left(\frac{4C_1}{c_{\min}}\right)^3
-         \cdot 2
+  c_1 := 2\left(\frac{4C_1}{c_{\min}}\right)^3
   \qquad (\text{depending only on } A_0, C_1, c_{\min}).
 \]
 For all $c \ge c_1$ and all $i \ne j$ with
@@ -451,10 +473,32 @@ $\frac{1}{2}c_{\min}(c/2)^{-1/3}|i-j|$ provided:
 \]
 i.e.\ $4C_1 \le c_{\min}(c/2)^{1/3}$, equivalently
 $c \ge 2(4C_1/c_{\min})^3 =: c_1$.
-For $c \ge c_1$, the estimate~\eqref{eq:specsep} holds.
+For $c \ge c_1$, estimate~\eqref{eq:specsep} holds.
 For $j \in \Bm(i)$, $|i-j| \ge 2^m$ gives the
 final displayed estimate.
 \end{proof}
+
+\begin{remark}[Microscopic scale and necessity of dyadic truncation]
+\label{rem:microscopic}
+Estimate~\eqref{eq:specsep} is only effective when
+$|i-j|$ is large relative to the ratio
+$c^{-2/3}/(c^{-1/3}) = c^{-1/3}$.
+At the microscopic scale $|i-j| = O(1)$, the error
+term $2C_1 c^{-2/3}$ in the spectral separation is
+comparable to the main term
+$c_{\min}(c/2)^{-1/3}|i-j| = O(c^{-1/3})$:
+both are $O(c^{-1/3})$ for $|i-j| = O(1)$, so
+the lower bound on $|\lambda_i - \lambda_j|$ degenerates.
+This is precisely why the dyadic truncation
+$m \ge m_0$ (i.e.\ $|i-j| \ge 2^{m_0}$) is necessary
+in Corollary~\ref{cor:C}: for $m \ge m_0$, the
+separation $2^m$ is a fixed positive integer independent
+of $c$, and the absorption of the $c^{-2/3}$ error
+into $c^{-1/3} \cdot 2^m$ is guaranteed by
+$c \ge c_1$.
+The Core regime $m < m_0$ does not benefit from
+this mechanism and must be handled separately via H3.
+\end{remark}
 
 % ============================================================
 \section{Corollary C: H2 in Truncated Dyadic Sense}
@@ -474,6 +518,15 @@ and Lemma~\ref{lem:F}, define
    + \underbrace{2\,\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}}_{\text{global error}},
 \]
 where $C_A$ is from Lemma~\ref{lem:A}.
+
+\medskip\noindent
+\textit{Scope.}
+All indices $i, j$ appearing in this corollary lie within
+the transition window, so that $x_i, x_j \in [-A_0, 0]$
+and both~\eqref{eq:onemlam} and Proposition~\ref{prop:U}
+apply uniformly.
+
+\medskip
 Then for all $c \ge c_2$, all $i \le N$, all $m \ge m_0$,
 and all $j, j+1 \in \Bm(i)$:
 \[
@@ -515,22 +568,16 @@ $A_{ij} \propto |\lambda_i-\lambda_j|/
 By Lemma~\ref{lem:A},
 $|\lambda_j-\lambda_{j+1}| \le C_A\,(c/2)^{-1/3}$.
 By \eqref{eq:onemlam}, $1-\lambda_j \ge \frac{1}{2}\FAi(x_j) \ge \frac{c_*}{2}$.
-Since $|\lambda_j-\lambda_{j+1}| = (c/2)^{-1/3}\mathrm{Ai}(x_j)^2 + R_j$
-and $\mathrm{Ai}(x_j)^2 \le C_{\max}$, Lemma~\ref{lem:B} gives:
+More precisely, using Lemma~\ref{lem:A}
+($|\lambda_j-\lambda_{j+1}| \approx (c/2)^{-1/3}\mathrm{Ai}(x_j)^2$)
+and Lemma~\ref{lem:B} ($\mathrm{Ai}(x_j)^2/\FAi(x_j) \le C_{\max}/c_*$)
+together with the lower bound in~\eqref{eq:onemlam}:
 \[
   \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
-  \le \frac{C_A(c/2)^{-1/3}}{c_*/2}
-  = \frac{2C_A}{c_*}\cdot(c/2)^{-1/3}.
-\]
-A sharper bound uses Lemma~\ref{lem:A} and
-Lemma~\ref{lem:B} together:
-$|\lambda_j-\lambda_{j+1}| \le (c/2)^{-1/3}\mathrm{Ai}(x_j)^2 \cdot (1+O(c^{-1/3}))$,
-so:
-\[
-  \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
-  \le 2\cdot\frac{\mathrm{Ai}(x_j)^2}{\FAi(x_j)}\cdot(c/2)^{-1/3}
-  \le 2\cdot\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}
-  = O(c^{-1/3}).
+  \le \frac{(c/2)^{-1/3}\mathrm{Ai}(x_j)^2 + O(c^{-2/3})}
+           {\frac{1}{2}\FAi(x_j)}
+  \le 2\cdot\frac{\mathrm{Ai}(x_j)^2}{\FAi(x_j)}\cdot(c/2)^{-1/3}(1+O(c^{-1/3}))
+  \le 2\cdot\frac{C_{\max}}{c_*}\cdot(c/2)^{-1/3}.
 \]
 
 \textbf{Term 1 (scale decay, Dyadic Separation Principle).}
@@ -543,8 +590,7 @@ Combining with $|\lambda_j - \lambda_{j+1}| \le C_A(c/2)^{-1/3}$:
   \text{Term 1}
   \le \frac{C_A(c/2)^{-1/3}}
       {\frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m}
-  = \frac{2C_A}{c_{\min}}\cdot 2^{-m}
-  = O(2^{-m}).
+  = \frac{2C_A}{c_{\min}}\cdot 2^{-m}.
 \]
 The $(c/2)^{-1/3}$ factors cancel exactly;
 Term~1 is independent of $c$.
@@ -617,12 +663,23 @@ Theorem~2.1 of \cite{paperVII} is applied to the
 \emph{truncated operator} (blocks $m \ge m_0$ only),
 with H1 (unconditional) and H3 (B-strong),
 giving $O(1)$.
-(H3 is used here only for the application of
-Theorem~2.1 to the truncated operator;
-it is not used in the proof of H2 itself.)
 
 \textbf{Total:} $O(1)$, uniform in $i, c$.
 \end{proof}
+
+\begin{remark}[Role of H3 in the WKB regime]
+\label{rem:H3role}
+Assumption~(H3) is \emph{not} used in establishing H2
+(Corollary~\ref{cor:C}); H2 follows from
+Proposition~\ref{prop:U} and the compactness constants
+alone.
+H3 enters only in the application of Theorem~2.1 of
+\cite{paperVII} to the truncated operator ($m \ge m_0$),
+where it provides the uniform amplitude bound required
+by the abstract theorem.
+In particular, a proof of H3 would not simplify or
+strengthen the H2 argument.
+\end{remark}
 
 % ============================================================
 \section{Closure: Full Hypothesis Verification}
@@ -670,11 +727,10 @@ $A_0, C_1, c_{\min}$.
 \begin{itemize}
 \item \textbf{Proposition~\ref{prop:U}:}
   Uniform Airy approximation over the transition window;
-  likely obtainable by explicit constant tracking in
-  ORX Sections~4.4--4.7.
+  see Remark~\ref{rem:propU_route} for a concrete
+  three-step strategy.
   No new analytic inputs are needed beyond what ORX
-  already establishes; this is a uniformisation problem,
-  not a deeper approximation problem.
+  already establishes.
 
 \item \textbf{Assumption~B-strong:}
   $P_{kl} \le C_2 c^{1/2}$ in the transition zone;
@@ -682,11 +738,9 @@ $A_0, C_1, c_{\min}$.
   Heuristic support: in the bulk, $P_{kl}$ is controlled
   by Widom asymptotics; the transition zone requires
   uniform matching of WKB to Airy asymptotics,
-  which is the content of B-strong.
-  The bound is consistent with all known numerical
-  evidence and with the structure of the ORX eigenvalue
-  asymptotics, but a proof requires a more refined
-  amplitude analysis than is available in the literature.
+  consistent with all known numerical evidence and the
+  ORX eigenvalue structure, but a proof requires a more
+  refined amplitude analysis than currently available.
 \end{itemize}
 All other hypotheses are closed by this paper.
 \end{remark}
