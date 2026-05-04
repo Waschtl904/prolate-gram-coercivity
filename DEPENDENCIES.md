@@ -1,155 +1,102 @@
-# Logical Dependency Graph — Papers I–VIII
+# DEPENDENCIES — prolate-gram-coercivity
 
-> This file documents which results each paper imports from earlier papers.
-> Status: ✅ unconditional | ⚠️ conditional | 🔴 open/unproved | ❌ disproved/obstructed
-> Last updated: May 2026 (after Paper VIII submission-ready v6)
+> Stand: Mai 2026. Alle Papers I–VII berücksichtigt.
 
 ---
 
-## Overview
-
-Papers I–VIII form the complete series to date.
-Paper VIII (Dyadic Separation) is the most recent paper; it establishes a
-**conditional reduction theorem** under Assumption ass:gap and B-strong.
-Paper IV closes the bulk decorrelation step unconditionally.
-Paper IX (WKB attack on ass:gap) is in preparation.
+## Implikationskette
 
 ```
-Paper I → Paper II (companion) → Paper III → Paper IV
-                ↑_______________________________↑
-         (Paper II conjectures; Papers III–IV prove/reduce)
-
-Paper V → Paper VI (B-strong framework)
-               ↓
-Paper VII (abstract dyadic cancellation) ← Paper VIII (scale-separated reduction)
+Paper I  (Gram-Koerzivität, DSTP)
+  ↓  liefert: Koerzivität, Defektzerlegung, DSTP-Verifikation
+Paper II  (Skalierungslimiten, Spurformel, Weil)
+  ↓  liefert: Kompaktheit, Spurformel, PNT-Konsistenz
+Paper II_quad  (XRY-Quadratur, konditionaler Framework)
+  ↓  bedingt: Konj.(i)+(ii) → DSTP für XRY
+Paper III  (Bulk-Tail, Off-diagonal, Kantenobstruktion)
+  ←  INPUT: Paper IV (Äquidistribution), Paper V (Bridge Lemma)
+  ↓  liefert (unbedingt für γ<1/2): ‖(I-P_N)f_{mn}‖ ≤ Ce^{-αN}
+Paper IV  (Semiklassische Äquidistribution)
+  ↓  liefert: H1-Input für Paper III + Prüfer-Amplituden für Paper V
+Paper V  (WKB Cover, Bridge Lemma, Schur Control)
+  ↓  **BEWIESEN**: ass:bulkconv (Assumption 2.4) für γ < 1/2
+Paper VI  (Galerkin Norm, No-Go-Theorem, Layer 0–2)
+  ↓  liefert: Methodenbarriere (Schur-Klasse tot)
+             Layer-0 Geometrie der Obstruktion
+Paper VII  (Dyadic Cancellation, Reduktion)
+  ↓  liefert: Abstrakte Cancellation unter H1–H3 (vollständig)
+             Reduktion auf B-strong (H3) + Conj.amplitude (H2)
 ```
 
 ---
 
-## Main Dependency Table: Papers I–IV (Prolate–Weil subprogram)
+## Status aller Assumptions und Conjectures
 
-| Result exported | Source | Used by | Status |
+| ID | Beschreibung | Status | In Paper |
 |---|---|---|---|
-| Frame coercivity under the DSTP | Paper I | Paper II, Paper III | ✅ |
-| Implication framework (Conj. 3.1 + XRY → DSTP) | Paper II (quadrature) | — | ⚠️ conditional |
-| `conj:pswf_product_tail`(i) bulk: exponential decay for `m,n ≤ γN` | Paper II (quad) | Paper III (target) | ⚠️ bulk decorrelation closed by Paper IV; exponential tail conditional on Ass. 2.4 |
-| `conj:pswf_product_tail`(ii) off-diagonal: algebraic decay `|m-n| ≥ δN` | Paper II (quad) | Paper III (target) | ⚠️ conditional on Paper III Ass. 3.1 |
-| `conj:pswf_product_tail`(iii) global uniform bound over all `m,n ≤ N` | Paper II (quad) | — | ❌ **disproved** by Paper III `prop:bwdoubling` |
-| Unconditional uniform bound `‖(I−P_N)f_{mn}‖ ≤ CT^{1/2}` | Paper III | Paper II (quad) | ✅ |
-| Mean spectral localization, exact IBP energy identity, spectral lower bound | Paper III | Paper II (quad) | ✅ |
-| Edge obstruction: global uniform tail bound false for `m,n ~ N` | Paper III | Paper II (quad) | ✅ negative dependency |
-| **Weak convergence of PSWF densities to ρ^cl, rate O(1/n)** | **Paper IV** | **Paper III Lem 6.3** | **✅ unconditional** |
-| **Hypothesis (6.1) of Bulk Decorrelation Reduction (Lemma 6.3)** | **Paper IV** | **Paper III** | **✅ resolved** |
-| Bulk exponential tail bound | Paper III (via Paper IV) | Paper II (quad) | ⚠️ conditional on Ass. 2.4 |
+| ass:bulkconv (Ass. 2.4) | Bulk-Faltungsabfall `E_out(f_{mn}) ≤ Ce^{-αc}` für γ<1/2 | ✅ **BEWIESEN** (Bridge Lemma) | Paper V |
+| ass:gap | Uniform Gap Condition | 🔴 offen | Paper III (Ziel: Paper IX) |
+| DSTP | Discrete Spectral Transfer Property | ✅ verifiziert (Zufalls-/Gauß-Sampling) | Paper I |
+| DSTP (Primes) | DSTP für Primzahl-Sampling | 🔴 offen | Paper I |
+| Assumption 2.4 Off-diag (3.1) | Off-diagonal decay, Kantenregime | 🔴 offen | Paper III |
+| B-strong | `P_{kl} ≤ C₂ c^{1/2}` | 🔴 offen — Methodenwechsel nötig (WKB/Airy) | Paper VI, VII |
+| Conj. phase | α^(c) linear + non-degenerate | 🔴 offen — **kritisch für Paper VII H1** | Paper VI, VII |
+| Conj. amplitude | Lipschitz-Amplitude auf dyadischen Blöcken | 🔴 offen | Paper VI, VII |
+| B' | Summabilitätsbedingung | 🔴 offen — folgt aus B-strong + Conj.phase + Conj.amplitude | Paper VI, VII |
+| Weil-Operator | G_∞ = Weil-Operator | 🔴 offen | Paper II |
+| XRY-Stabilität | XRY-Stabilitätskonjektur | 🔴 offen (bedingt) | Paper II_quad |
+| ULW | Uniform Large-Width Conjecture | 📊 empirisch stabil | numerics/ |
 
 ---
 
-## Main Dependency Table: Papers V–VIII (Dyadic subprogram)
+## Was Paper V konkret schließt
 
-| Result exported | Source | Used by | Status |
-|---|---|---|---|
-| Galerkin norm estimates; coercivity structure | Paper V | Papers VI, VII | ✅ |
-| B-strong: `P_{kl} ≤ C₂ c^{1/2}` in transition zone | Paper VI | Papers VII, VIII | 🔴 **open — no proof available** |
-| Abstract dyadic cancellation Theorem 2.1; reduction to (H1)–(H3) | Paper VII | Paper VIII | ✅ |
-| H2 verification in truncated dyadic sense (Corollary C) | Paper VIII | — | ✅ under ass:gap + Prop U |
-| **Dyadic Separation Principle (Lemma F)** | **Paper VIII** | **core of series** | **✅ rigorous under ass:gap** |
-| Conditional reduction: ass:gap + B-strong → `‖D T_c^{(N)}‖ < 1` | Paper VIII | Paper IX (target) | ⚠️ both inputs open |
-| Proposition U: uniform Airy approx `|λ_l − F_Ai(x_l)| ≤ C₁ c^{−2/3}` | Paper VIII (stated) | Papers VIII (Lem A, Term 2) | 🔴 **open** |
-| Proposition U': discrete derivative bound `|Δλ_l − ΔF_Ai(x_l)| ≤ C₂ c^{−2/3}` | Paper VIII (stated) | Paper VIII Lem A | 🔴 **open** |
-| Assumption ass:gap: `λ_l − λ_{l+1} ≥ κ_0 (c/2)^{−1/3}` | Paper VIII (stated) | Paper VIII Lem F | 🔴 **open — target of Paper IX** |
-| Conjecture ULW: global erfc scaling law | Paper VIII (empirical) | — | 📊 numerical only |
+Paper V beweist Assumption ass:bulkconv **unconditionally für γ < 1/2** via:
+1. **Bridge Lemma** (Theorem 4.1): geometrische Abdeckung der verbotenen Zonen
+   → `E_out(f_{mn}) ≤ C_γ · e^{-α_γ c}` für alle m,n ≤ γ N_Sh
+2. **Schur-Diagonal-Bound** (Prop. 3.1 + Schur-Test, Section 5):
+   → `K_N(x,x) ≤ C · Nc/(πT)` auf Bulk-Intervallen
+3. **Corollary 5.2**: Bulk-Tail-Bound `‖(I-P_N)f_{mn}‖ ≤ Ce^{-α'N}` unbedingt
+
+**Voraussetzung:** γ < 1/2. Extension zu γ ∈ [1/2, 1) bleibt offen (Remark 4.3 in Paper V).
 
 ---
 
-## Dependency Flow for the Dyadic Separation Principle
+## Was Paper VI konkret liefert (No-Go)
 
-```
-Assumption ass:gap          Proposition U (U')         B-strong (Paper VI)
-       ↓                          ↓                          ↓
-  Lemma F (DSP)             Lemma A (Airy incr.)       Paper VII Lem 5.2
-       ↓                          ↓                          ↓
- Cor. C part (a)           Cor. C part (b), Term 2    Core sum bound
-       └──────────────────────────┴───────────────────────────┘
-                                  ↓
-                           Lemma E (Core–WKB split)
-                                  ↓
-                    Corollary: (H1)–(H3) verified
-                                  ↓
-                    Paper VII Theorem 2.1 applied
-                                  ↓
-                    ‖D T_c^{(N)}‖ < 1  for large c
-```
-
-**Key independence property of Lemma F:**
-The Dyadic Separation Principle requires *only* Assumption ass:gap —
-no Airy functions, no erfc structure, no specific form of the eigenvalue profile.
-Proposition U enters exclusively via parts (b) and Term 2 of Corollary C,
-and as one sufficient route to ass:gap. It is not the logical foundation.
+- **Theorem 2 (No-Go):** Jede Matrix T mit `T_{ii}=0`, `|T_{ij}| ≤ κ/|i-j|`
+  erfüllt `‖T‖ ≥ κ/2 · H_{N-1} ~ κ/6 · log c` — optimal in dieser Klasse.
+- **Konsequenz:** Nicht-oszillatorische Schur-Argumente können `‖T‖ < 1` nicht liefern.
+  Kontrakion erfordert zwingend oszillatorische Cancellation (signierte Struktur).
+- **Layer-0 Geometrie (unbedingt):**
+  - Obstruktion lokalisiert auf `|k-l| ≲ c^{1/6}` (relative Bandbreite → 0)
+  - `c^{1/6}` ergibt sich eindeutig aus Drei-Regime-Balance (Remark 4.2 in Paper VI)
 
 ---
 
-## Three-Scale Architecture (Paper VIII)
+## Was Paper VII konkret liefert
 
-| Scale | Physical layer | Key result | Logical status |
-|---|---|---|---|
-| Combinatorial `c^{−1/3}` | Dyadic Separation | Lemma F, Corollary C | ✅ rigorous under ass:gap |
-| Local Airy `(c/2)^{−1/3}` | Airy/WKB approximation | Proposition U, Lemma A | 🔴 open |
-| Global Landau–Widom `(log c)^{2/3}` | erfc eigenvalue profile | Conjecture ULW | 📊 empirical |
-
-Scale separation confirmed: `S(c) / (c/2)^{−1/3} ~ c^{1/3} (log c)^{2/3} → ∞`.
-
----
-
-## Open Problems (May 2026)
-
-### Tier 1 — Open inputs blocking unconditional proof
-
-| Problem | Where needed | Routes known |
-|---|---|---|
-| **ass:gap**: `λ_l − λ_{l+1} ≥ κ_0 (c/2)^{−1/3}` | Paper VIII Lem F | (i) via Prop U; (ii) WKB monotone comparison (Paper IX target); (iii) heuristic numerics |
-| **Proposition U**: `|λ_l − F_Ai(x_l)| ≤ C₁ c^{−2/3}` | Paper VIII Lem A, Term 2 | Uniform WKB + Airy matching; step (iii) (discrete diff.) is the additional gap |
-| **B-strong**: `P_{kl} ≤ C₂ c^{1/2}` | Paper VIII Lem E | Galerkin norm argument |
-| **Assumption 2.4** (bulk convolution decay, Paper III) | Paper III tail bound | Schur test on product kernel (see `assumption_2_4_target.md`) |
-
-### Tier 2 — Open problems in the larger program
-
-| Problem | Source | Status |
-|---|---|---|
-| DSTP for prime sampling | Paper I | 🔴 |
-| Off-diagonal algebraic decay (Ass. 3.1) | Paper III | 🔴 |
-| XRY stability conjecture | Paper II (quad) | 🔴 |
-| Identification of G_∞ as Weil operator | Paper II | 🔴 |
-| Uniqueness and tr(G_∞) = 1 | Paper II | 🔴 |
-| Edge regime analysis (m,n ~ N; Airy-scale) | Papers II quad, III | 🔴 |
-| C⁰ extension of Paper IV main theorem | Paper IV | 🟡 partial |
-| Off-diagonal analogue of Paper IV | Paper IV | 🔴 |
-
-### Tier 3 — Empirical (Paper VIII)
-
-| Conjecture | Evidence | Open subproblem |
-|---|---|---|
-| Conjecture ULW: erfc law with S(c) = (log c/π)^{2/3} | Residuals ≈ 2·10^{−2}, c ∈ {50,100,200} | Analytic derivation |
-| β(c) → β(∞) ∈ [−0.30, −0.21] | Numerical fitting, high model sensitivity | Structural identification of β(c) |
+- **Theorem 1 (Dyadic Cancellation):** Unter H1–H3 gilt
+  `sup_i ∑_{j≠i} |T_{ij}| = O(1)` — vollständig bewiesen (Appendix).
+- **Reduktion:** PSWF-Galerkin-Operator erfüllt:
+  - H1 (phase): **unbedingt** (Widom + Summabilitätsbedingung) — ABER α ∉ {0,π} noch zu referenzieren
+  - H2 (amplitude regularity): unter **Conj.amplitude** (offen)
+  - H3 (uniform bound): unter **B-strong** (offen)
+- **Corollary 3.1:** Unter B-strong + Conj.phase + Conj.amplitude:
+  `‖DT_c^(N)‖ ≤ C c^{-1/2} log c → 0` → Kontraktion → Assumption A
 
 ---
 
-## Unconditionally Proved Results (May 2026)
+## Strategische Diagnose (Mai 2026)
 
-### Papers I–IV
-- Frame coercivity under DSTP with explicit bounds (Paper I) ✅
-- Exact algebraic defect decomposition `E_mn = R_mn^quad` (Paper I) ✅
-- DSTP verified for random and Gauss–PSWF sampling (Paper I) ✅
-- Compactness of normalized Gram operators in scaling limit (Paper II) ✅
-- Trace formula consistent with PNT (Paper II) ✅
-- Uniform off-diagonal bound, mean spectral localization, spectral lower bound (Paper III) ✅
-- Edge obstruction: global uniform tail bound false for m,n ~ N (Paper III) ✅
-- **PSWF equidistribution: `∫f ψ_n² = λ_n ∫f ρ^cl + O(λ_n ‖f‖_{C¹}/n)` (Paper IV) ✅**
-- **Bulk decorrelation hypothesis (6.1) supplied unconditionally (Paper IV → III) ✅**
+**Verbleibende Hindernisse bilden ein gekoppeltes System:**
+- Conj. phase (lokal, am nächsten lösbar)
+- B-strong (WKB/Airy-Ebene, eigenes Paper-Level-Problem)
+- Conj. amplitude (Lipschitz-Kontrolle, tief gekoppelt mit B-strong)
 
-### Papers V–VIII
-- Galerkin norm estimates; coercivity structure (Paper V) ✅
-- Abstract dyadic cancellation theorem (Paper VII, Theorem 2.1) ✅
-- **Dyadic Separation Principle: `|λ_i − λ_j| ≥ κ_0 (c/2)^{−1/3} |i−j|` (Paper VIII, Lemma F, under ass:gap) ✅**
-- **Scale independence: (c/2)^{−1/3} cancels in Term 1 of Corollary C (Paper VIII) ✅**
-- **Conditional reduction: ass:gap + B-strong → (H1)–(H3) → contraction (Paper VIII) ✅**
-- Numerical evidence for Conjecture ULW, β(c) behavior (Paper VIII, empirical) 📊
+**Nächster Angriffspunkt:** Phase Non-Degeneracy (Conj. phase)
+→ Entweder kurzes Lemma aus Widom-Daten, oder explizite Conjecture isolieren
+→ Details: `PHASE_NONDEG_NOTE.md`
+
+**Bulk-Programm (γ < 1/2):** abgeschlossen durch Papers IV + V.
+Das verbleibende Problem ist die Kontraktion — ein anderer Mechanismus.

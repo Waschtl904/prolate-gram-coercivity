@@ -1,142 +1,140 @@
-# Context Summary — PSWF Galerkin / Prolate–Weil Program
+# Context Summary — prolate-gram-coercivity
 
-> Internal scaffold for session continuity.
-> Last updated: May 2026 (after Paper VIII submission-ready v6).
-
----
-
-## Current state of the series
-
-**Papers I–VIII are complete.** Paper VIII is submission-ready (v6).
-Paper IX (WKB attack on Assumption ass:gap) is the planned next step.
-
-| Paper | Short title | Status |
-|---|---|---|
-| I | Frame coercivity, DSTP | Complete |
-| II | Scaling limit, trace formula | Complete |
-| II (quad) | XRY quadrature compatibility | Complete |
-| III | PSWF product tail, edge obstruction | Complete |
-| IV | Semiclassical equidistribution (Prüfer) | Complete |
-| V | Galerkin norm estimates | Complete |
-| VI | Prolate phase operator, B-strong framework | Complete |
-| VII | Dyadic cancellation, abstract Theorem 2.1 | Complete |
-| **VIII** | **Scale-separated Dyadic Separation** | **Submission-ready v6** |
-| IX | WKB proof of ass:gap | **Planned** |
+> Stand: Mai 2026. Vollständige Notation, alle Paper-Abhängigkeiten, offene Probleme.
+> Für neuen KI-Chat: dieses Dokument + relevante paper*.tex lesen.
 
 ---
 
-## Paper VIII: What was proved
+## Überblick: Papers I–VII
 
-**Main result:** Under Assumption ass:gap and B-strong, hypotheses (H1)–(H3)
-of Paper VII Theorem 2.1 are verified via the **Dyadic Separation Principle**.
-
-**The operative mechanism:** For `j ∈ B_m(i)`, the ratio
-`|λ_j − λ_{j+1}| / |λ_i − λ_j|`
-is O(2^{−m}) independent of c, because (c/2)^{−1/3} cancels between
-numerator and denominator. The denominator carries the combinatorial
-factor 2^m from |i−j| ≥ 2^m.
-
-**Structural novelty:** Lemma F (DSP) requires only
-- strict monotonicity of eigenvalues, and
-- a uniform gap lower bound at scale (c/2)^{−1/3} (= Assumption ass:gap).
-
-No Airy functions, no erfc, no detailed spectral asymptotics are needed
-for Lemma F itself.
-
-**Three-scale architecture:**
-1. **Combinatorial (c^{−1/3}):** Lemma F, Corollary C — rigorous under ass:gap
-2. **Local Airy ((c/2)^{−1/3}):** Proposition U/U', Lemma A — open
-3. **Global Landau–Widom ((log c)^{2/3}):** Conjecture ULW — empirical only
-
-Scale separation: S(c)/(c/2)^{−1/3} ~ c^{1/3}(log c)^{2/3} → ∞.
+| Paper | Datei | Inhalt | Status |
+|---|---|---|---|
+| I | `paper1.tex` | Gram-Koerzivität, DSTP, Defektzerlegung | Near publication-ready |
+| II | `paper2.tex` | Skalierungslimiten, Spurformel, Weil-Verbindung | Near publication-ready |
+| II_quad | `paper2_quadrature.tex` | XRY-Quadratur, konditionaler Framework | Reinschrift |
+| III | `paper3.tex` | PSWF-Produkt Spektral-Tail-Schätzungen | Reinschrift |
+| IV | `paper4_semiclassical.tex` | Semiklassische Äquidistribution ψ_n² → ρ^cl | Vollständig bewiesen |
+| V | `paper5.tex` | WKB Cover, Bridge Lemma, Schur Control | **Vollständig bewiesen** |
+| VI | `paper6.tex` | Galerkin Norm, No-Go-Theorem, Layer 0–2 | **Publikationsreif** |
+| VII | `paper7_skeleton.tex` | Dyadic Cancellation, Reduktion auf B-strong + Conj.amp | Referee Draft |
 
 ---
 
-## Key open problems after Paper VIII
+## Vollständige Notation
 
-### Priority 1 — Target of Paper IX
-
-**Assumption ass:gap:** `λ_l − λ_{l+1} ≥ κ_0 (c/2)^{−1/3}` for all l in transition window.
-- Route (i): via Proposition U (would give κ_0 = c_min/2, but Prop U itself is open)
-- Route (ii): first-order WKB monotone comparison (no Airy matching needed — preferred route)
-- Route (iii): heuristic numerics (not a proof)
-
-This is the **sole gap** between Paper VIII's conditional reduction and a fully
-unconditional contraction estimate.
-
-### Priority 2 — Required for full unconditional proof
-
-**Proposition U (and U'):**
-- (U): `|λ_l − F_Ai(x_l)| ≤ C₁ c^{−2/3}` pointwise
-- (U'): `|(λ_l − λ_{l+1}) − (F_Ai(x_l) − F_Ai(x_{l+1}))| ≤ C₂ c^{−2/3}`
-- Proof requires: uniform WKB, Airy matching, stability under discrete differentiation
-- (U') is stronger than (U): controls the discrete derivative of the error
-
-**B-strong:** `P_{kl} ≤ C₂ c^{1/2}` in the transition zone (Paper VI context)
-
-### Priority 3 — Earlier in the series, still open
-
-- Bulk convolution decay (Assumption 2.4 of Paper III): Schur test approach recommended
-- DSTP for prime sampling (Paper I)
-- XRY stability conjecture (Paper II quad)
-- Identification of G_∞ as Weil operator (Paper II)
-
-### Empirical (Paper VIII, no analytic route known)
-
-- **Conjecture ULW:** erfc global scaling law with S(c) = (log c/π)^{2/3}
-  - Residuals ≈ 2·10^{−2} across c ∈ {50, 100, 200}, decreasing with c
-- **β(c):** centering parameter, β(50) ≈ −0.424, β(100) ≈ −0.380, β(200) ≈ −0.359
-  - Fitting suggests β(∞) ∈ [−0.30, −0.21]; model sensitivity high
-  - No structural identification known
-
----
-
-## Internal terminology
-
-| Symbol / term | Meaning |
+| Symbol | Bedeutung |
 |---|---|
-| ass:gap | Assumption ass:gap = Assumption 1 of Paper VIII: uniform gap lower bound |
-| Prop U / U' | Proposition 1(U)/(U') of Paper VIII: uniform Airy approximation |
-| B-strong | Galerkin norm bound `P_{kl} ≤ C₂ c^{1/2}` (Paper VI) |
-| Conj ULW | Conjecture 1 of Paper VIII: Landau–Widom erfc global scaling law |
-| DSP / Lemma F | Dyadic Separation Principle: Lemma F of Paper VIII |
-| Cor C | Corollary C of Paper VIII: H2 in truncated dyadic sense |
-| N_Sh | N_Sh = 2c/π (Landau–Widom counting number) |
-| x_l | Rescaled transition index: x_l = (l − N_Sh)(c/2)^{−1/3} |
-| F_Ai | Integrated Airy function: F_Ai(x) = ∫_x^∞ Ai(t)² dt |
-| S(c) | Landau–Widom width: S(c) = (log c/π)^{2/3} |
-| β(c) | Centering parameter in Conjecture ULW |
-| B_m(i) | Dyadic annulus: {j : 2^m ≤ |i−j| < 2^{m+1}} |
-| DSTP | Discrete Spectral Transfer Property |
-| PNT | Prime Number Theorem (appears via trace formula, Paper II) |
+| `ψ_n^(c)` | PSWF auf [-T,T], Bandbreite ω, c = ωT |
+| `λ_n(c)` | Slepian-Konzentrations-Eigenwert |
+| `χ_n(c)` | SL-Eigenwert von D_c: χ_n ~ n(n+1) + c²/2 |
+| `K_N(x,y)` | Christoffel-Darboux-Kern |
+| `P_N` | Projektor auf span{ψ_0,...,ψ_{N-1}} |
+| `G^(N)_{p,c}` | Gram-Matrix PSWF-Quadratur |
+| `DSTP` | Discrete Spectral Transfer Property (Paper I) |
+| `f_{mn}` | Produktfunktion ψ_m · ψ_n |
+| `μ_{mn}` | χ_m + χ_n |
+| `E_{mn}[χ_k]` | Spektralmittelwert von D_c in Zustand f_{mn} |
+| `ρ^cl(x)` | Klassische Gleichgewichtsdichte |
+| `θ_n(x)` | Prüfer-Phase von ψ_n (Paper IV) |
+| `r_n(x)` | Prüfer-Amplitude (Paper IV) |
+| `r_n^WKB(x)` | WKB-Referenzamplitude (Paper IV) |
+| `N_Sh = 2c/π` | Shannon-Zahl |
+| `x_+(n)` | Klassischer Wendepunkt von ψ_n |
+| `I_δ` | Bulk-Subintervall [-(1-δ)T, (1-δ)T] |
+| `E_out(f_{mn})` | Out-of-band Spektralenergie von f_{mn} (Paper V) |
+| `s* = 1-c^{-2/3}` | Übergangspunkt (Paper VI/VII) |
+| `α^(c)` | WKB-Phase an s* — Non-Degeneracy α ∉ {0,π} offen |
+| `T_{ij}` | Galerkin-Matrixeinträge von DT_c^(N) |
+| `P_{kl}` | Prefaktor: c·|λ_l-λ_k|/((1-λ_k)(1-λ_l)) |
+| `B-strong` | Ass.: P_{kl} ≤ C₂ c^{1/2} |
+| `B'` | Schur-Summabilitätsbedingung |
+| `B_m(i)` | Dyadischer Block {j: 2^m ≤ |i-j| < 2^{m+1}} |
 
 ---
 
-## Planned Paper IX: WKB route to ass:gap
+## Bewiesene Resultate (Mai 2026)
 
-**Goal:** Prove Assumption ass:gap without Airy matching.
+### Papers I–IV (stabil, nicht wiederholen)
+- Gram-Koerzivität unter DSTP ✅
+- Defektzerlegung E_{mn} = R_{mn}^quad ✅
+- Kompaktheit Gram-Operatoren im Skalierungslimes ✅
+- Spurformel mit PNT-Konsistenz ✅
+- Bulk-Tail-Bound ‖(I-P_N)f_{mn}‖ ≤ CT^{1/2} (Paper III) ✅
+- Schwache Konvergenz ψ_n² → λ_n ρ^cl, Rate O(1/n) (Paper IV) ✅
 
-**Strategy:**
-1. Write PSWF eigenvalues in terms of the Prüfer phase angle θ_n(c)
-2. Use first-order WKB to bound θ_n'(x) from below in the transition window
-3. Derive gap lower bound `λ_l − λ_{l+1} ≥ κ_0 (c/2)^{−1/3}` via monotone comparison
-4. Explicit κ_0 in terms of WKB data (no Airy constants needed)
+### Paper V (Bridge Lemma) — NEU ✅
+- **ass:bulkconv BEWIESEN für γ < 1/2** (Bridge Lemma, Theorem 4.1)
+- E_out(f_{mn}) ≤ C_γ · e^{-α_γ c} für alle m,n ≤ γ N_Sh ✅
+- K_N(x,x) ≤ C · Nc/(πT) auf I_δ (Schur-Diagonal-Bound) ✅
+- Unconditional Bulk-Tail-Bound ‖(I-P_N)f_{mn}‖ ≤ Ce^{-α'N} für γ<1/2 ✅
+- Mechanismus: geometrische Abdeckung der WKB-verbotenen Zonen ✅
+- Extension zu γ ≥ 1/2: offen (Remark 4.3)
 
-**Why this is preferred over route (i) (via Prop U):**
-Route (ii) (WKB monotone comparison) requires strictly less:
-no uniform Airy approximation, no matching argument, only leading-order
-WKB behavior. It would also give a cleaner proof of ass:gap as a standalone result.
+### Paper VI (No-Go + Layer 0) — STARK ✅
+- **No-Go-Theorem:** ‖T‖ ≥ κ/2 · log c — optimal in nicht-oszillatorischer Schur-Klasse ✅
+- Konsequenz: Kontraktion erfordert zwingend oszillatorische (signierte) Cancellation ✅
+- Obstruktion lokalisiert auf |k-l| ≲ c^{1/6}, relative Bandbreite c^{-1/6} → 0 ✅
+- c^{1/6}-Schwelle eindeutig aus Drei-Regime-Balance ✅
+- Near/Far-Zerlegung T = T^near + T^far ✅
 
-**Dependency:** If Paper IX succeeds, the chain
-ass:gap + B-strong → Lemma F → Corollary C → Lemma E → Corollary (Paper VIII)
-becomes unconditional in the ass:gap component.
-B-strong remains the sole surviving open input for the dyadic contraction estimate.
+### Paper VII (Dyadic Cancellation) — Referee Draft ✅/⚠️
+- **Abstrakte Dyadic Cancellation (Theorem 1) vollständig bewiesen** (Appendix) ✅
+- H1 (Phase): Summabilitätsbedingung Σ ε_m^(N) = o(1) bewiesen ✅
+- ⚠️ **H1 Non-Degeneracy:** α^(c) ∉ {0,π} — noch zu referenzieren (kritisch!)
+- H2 (Amplitude regularity): unter Conj.amplitude (offen)
+- H3 (Uniform bound): unter B-strong (offen)
+- Corollary 3.1: B-strong + Conj.phase + Conj.amp → Kontraktion → Assumption A ✅
 
 ---
 
-## Session notes
+## Offene Probleme (priorisiert)
 
-- All .md documentation files updated May 2026 to reflect Paper VIII status.
-- Paper VIII file: `paper8_scale_separated.tex`, submission-ready v6.
-- Proof scaffolds for open problems: see `assumption_2_4_target.md` (for Ass. 2.4 of Paper III).
-- Numerical evidence files: see `numerics/` directory.
+### 🔥 Priorität 1 — Phase Non-Degeneracy (Paper VII)
+**Gap:** α^(c) ∉ {0,π} an s* = 1-c^{-2/3} ist nicht explizit referenziert.
+Ohne das kollabiert die Cancellation-Struktur im Resonanzfall.
+**Optionen:**
+1. Kurzes Lemma aus Widom-Daten + Sturm-Liouville
+2. Explizite Conjecture mit quantitativer Schranke: α^(c) ≥ ε₀ > 0
+**Details:** `PHASE_NONDEG_NOTE.md`
+
+### 🔥 Priorität 2 — B-strong
+**Gap:** P_{kl} ≤ C₂ c^{1/2} ist nicht bewiesen.
+**Warum schwer:** zwei konkrete Failure-Modes (Paper VI, Remark 5.2):
+- Nicht-uniforme stationäre Phase in der Transition Zone
+- Korrelierte Airy-Faktoren (Eigenwert-Spacing und Amplitude nicht unabhängig)
+**Route:** WKB/Airy-Matching an s*, Modellproblem formulieren
+**Einschätzung:** eigenes Paper-Level-Problem, nicht eine Section
+
+### 🔥 Priorität 3 — Conjecture amplitude
+**Gap:** Lipschitz-Kontrolle A_{ij} in j auf dyadischen Blöcken.
+**Verbindung:** tief gekoppelt mit B-strong (beide brauchen Transition-Zone-Kontrolle)
+**Route:** PSWF-Transition-Asymptotics, Olver 1974
+
+### 🔶 Mittelfristig
+- ass:gap (Uniform Gap Condition) — Paper III, Ziel Paper IX
+- Off-diagonal Assumption 3.1 (Kantenregime) — Paper III
+- XRY-Stabilitätskonjektur — Paper II_quad
+- Weil-Operator-Identifikation — Paper II
+- DSTP für Primzahl-Sampling — Paper I
+
+---
+
+## Archivierte Dokumente
+
+| Datei | Inhalt | Warum archiviert |
+|---|---|---|
+| `assumption_2_4_target.md` | Beweisstrategie für ass:bulkconv (Varianten A/B/C) | Superseded by Paper V (Bridge Lemma) |
+
+---
+
+## Strategische Diagnose
+
+Der Bulk (γ < 1/2) ist durch Papers IV + V **abgeschlossen**.
+Das verbleibende Problem — Kontraktion von T_c^(N) — ist ein **anderer Mechanismus**:
+kein weiteres Estimate-Farming, sondern oscillatory cancellation.
+
+Das System ist nicht mehr linear rückständig:
+- Phase, B-strong, Amplitude sind **gekoppelt**
+- Einziger aktuell lokal angreifbarer Punkt: **Phase Non-Degeneracy**
+
+Das ist der nächste gezielte Angriff.
