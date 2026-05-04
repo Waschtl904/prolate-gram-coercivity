@@ -61,7 +61,9 @@ The main contributions are:
   under~(U'),
   $\lambda_l - \lambda_{l+1}
   = (c/2)^{-1/3}\mathrm{Ai}(x_l)^2 + R_l$
-  with $|R_l| \le C_A' c^{-2/3}$ uniformly.
+  with $|R_l| \le C_R c^{-2/3}$ uniformly,
+  and $|\lambda_l-\lambda_{l+1}|
+  \le C_{\max}(c/2)^{-1/3} + C_R c^{-2/3}$.
 \item Lemma~\ref{lem:B} (Airy Ratio Bound).
 \item Lemma~\ref{lem:F} (Dyadic Separation Principle):
   $|\lambda_i-\lambda_j| \ge
@@ -143,12 +145,10 @@ $L_{A_0} := \sup_{[-A_0,A_0]}|\frac{d}{dx}\mathrm{Ai}^2|
 
 \medskip\noindent
 \textbf{Monotonicity fact.}
-$\FAi$ is strictly decreasing on $\mathbb{R}$
+$\FAi$ is strictly decreasing
 ($\FAi' = -\mathrm{Ai}^2 \le -c_{\min} < 0$ on $[-A_0,A_0]$),
-so $\FAi(x) \ge \FAi(0) > 0$ for all $x \le 0$.
-Hence $c_* \ge \FAi(0) > 0$, and~\eqref{eq:onemlam}
-holds uniformly for all transition-window indices
-with $x_j \le 0$.
+so $\FAi(x) \ge \FAi(0) > 0$ for all $x \le 0$
+and $c_* \ge \FAi(0) > 0$.
 
 \medskip\noindent
 \textbf{All constants} depend only on $A_0$; none
@@ -168,8 +168,8 @@ $P_{ij} := c|\lambda_i-\lambda_j|/
 $\Bm(i) := \{j: 2^m \le |i-j| < 2^{m+1}\}$.
 
 \medskip\noindent
-\textbf{Explicit bound on $1-\lambda_j$.}
-For $c \ge c_0$ (with $C_1 c_0^{-2/3} \le c_*/2$):
+\textbf{Bound on $1-\lambda_j$.}
+Under~(U) with $C_1 c_0^{-2/3} \le c_*/2$:
 \begin{equation}\label{eq:onemlam}
   \tfrac{1}{2}\FAi(x_j) \le 1-\lambda_j \le 2\FAi(x_j)
 \end{equation}
@@ -202,8 +202,7 @@ $E_l - E_{l+1}$ where $E_l := \lambda_l - \FAi(x_l)$.
 Condition~(U) gives only $|E_l|, |E_{l+1}| \le C_1 c^{-2/3}$
 individually; it does not prevent the errors from
 oscillating at scale $c^{-2/3}$, in which case
-$|E_l - E_{l+1}|$ need not be bounded by a useful
-constant.
+$|E_l - E_{l+1}|$ need not be bounded by a useful constant.
 Condition~(U') directly supplies this bound.
 In particular, (U') is not a technical refinement of~(U),
 but a genuinely stronger condition: it controls the
@@ -215,23 +214,23 @@ discrete derivative of the spectral curve.
 In the transition window, the eigenvalues $\lambda_l$
 approximate the smooth Airy profile $\FAi(x)$ sampled
 at the discrete points $x_l$.
-Condition~(U) asserts pointwise closeness;
-condition~(U') asserts that the approximation is
-stable under discrete differentiation.
-Equivalently: (U') is a \emph{bounded discrete curvature}
-condition on the spectral curve $l \mapsto \lambda_l$,
-ensuring no oscillations of the error sequence $\{E_l\}$
-at scale $c^{-2/3}$.
+Condition~(U) asserts pointwise closeness of this
+sampling; condition~(U') asserts that the approximation
+is stable under discrete differentiation.
+Equivalently, (U') is a \emph{uniformly bounded discrete
+curvature} condition on the spectral curve
+$l \mapsto \lambda_l$: it ensures that the error
+sequence $\{E_l\}$ has no oscillations at scale
+$c^{-2/3}$, uniformly in $l$ and $c$.
 \end{remark}
 
 \begin{remark}[Status and route to proof]
 \label{rem:propU_route}
 ORX \cite{OsipovRokhlinXiao} provides~(U) pointwise.
-A proof of (U') is expected from:
+A proof of both (U) and (U') is expected from:
 \begin{enumerate}[(i)]
 \item Uniform WKB control with $O(c^{-2/3})$ remainder.
-\item Airy matching with uniform remainder in
-  $x_l \in [-A_0,A_0]$; yields~(U).
+\item Airy matching with uniform remainder; yields~(U).
 \item Stability of the spectral map including its
   discrete derivative; yields~(U').
 \end{enumerate}
@@ -253,14 +252,22 @@ with $|l-\NSh| \le A_0 c^{1/3}$:
 \]
 where
 \[
-  |R_l| \le C_A'\,c^{-2/3},
-  \qquad
-  C_A' := L_{A_0}\cdot 2^{2/3} + C_2,
+  |R_l| \le C_R\,c^{-2/3},
+  \qquad C_R := L_{A_0}\cdot 2^{2/3} + C_2,
 \]
-depending only on $A_0, L_{A_0}, C_2$, uniform in $l$.
-In particular, the remainder is $O(c^{-2/3})$ uniformly
-in $l$, and $|\lambda_l-\lambda_{l+1}| \le C_A(c/2)^{-1/3}$
-with $C_A := C_{\max} + C_A'\cdot 2^{-1/3}$.
+depending only on $A_0$ and $C_2$, uniform in $l$.
+Consequently:
+\begin{equation}\label{eq:incr_bound}
+  |\lambda_l-\lambda_{l+1}|
+  \le C_{\max}(c/2)^{-1/3} + C_R\,c^{-2/3}.
+\end{equation}
+In particular, since $c^{-2/3} \le (c/2)^{-1/3}$ for $c\ge 1$:
+\begin{equation}\label{eq:incr_simple}
+  |\lambda_l-\lambda_{l+1}|
+  \le C_I\,(c/2)^{-1/3},
+  \qquad C_I := C_{\max} + C_R\cdot 2^{1/3},
+\end{equation}
+for a constant $C_I$ depending only on $A_0$.
 \end{lemma}
 
 \begin{proof}
@@ -272,15 +279,16 @@ Write:
 \]
 
 \textbf{Main term.}
-$\FAi'=-\mathrm{Ai}^2$, spacing $(c/2)^{-1/3}$ exact;
-MVT gives $\xi_l \in [x_l,x_{l+1}]$ with
+$\FAi'=-\mathrm{Ai}^2$; MVT gives
 $\FAi(x_l)-\FAi(x_{l+1})
-= \mathrm{Ai}(\xi_l)^2(c/2)^{-1/3}$.
-By Lipschitz continuity of $\mathrm{Ai}^2$ with
-constant $L_{A_0}$:
-$|\mathrm{Ai}(\xi_l)^2 - \mathrm{Ai}(x_l)^2|
+= \mathrm{Ai}(\xi_l)^2(c/2)^{-1/3}$
+for some $\xi_l \in [x_l,x_{l+1}]$.
+By Lipschitz continuity of $\mathrm{Ai}^2$ with constant
+$L_{A_0}$:
+$|\mathrm{Ai}(\xi_l)^2-\mathrm{Ai}(x_l)^2|
 \le L_{A_0}(c/2)^{-1/3}$,
-contributing $L_{A_0}(c/2)^{-2/3}$ to $R_l$.
+contributing $L_{A_0}(c/2)^{-2/3} = L_{A_0}2^{2/3}c^{-2/3}$
+to $R_l$.
 
 \textbf{Increment error.}
 By~(U') directly:
@@ -288,16 +296,21 @@ $|(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))|
 \le C_2 c^{-2/3}$.
 
 \textbf{Combining:}
-$|R_l|
-\le L_{A_0}(c/2)^{-2/3} + C_2 c^{-2/3}
-= (L_{A_0}\cdot 2^{2/3}+C_2)\,c^{-2/3}
-= C_A'\,c^{-2/3}$.
+$|R_l| \le (L_{A_0}2^{2/3}+C_2)c^{-2/3} = C_R c^{-2/3}$.
+Bound~\eqref{eq:incr_bound} follows from
+$|\mathrm{Ai}(x_l)^2| \le C_{\max}$.
+For~\eqref{eq:incr_simple}: $c^{-2/3}
+= (c/2)^{-1/3}\cdot 2^{-1/3}c^{-1/3}
+\le (c/2)^{-1/3}\cdot 2^{-1/3}$
+for $c \ge 1$, giving $C_I = C_{\max}+C_R\cdot 2^{-1/3}$.
 \end{proof}
 
 \begin{remark}
-The use of~(U') in the increment error is essential:
-without it, $|E_l-E_{l+1}|$ is not controlled
-by $Cc^{-2/3}$ from~(U) alone.
+The upper bound~\eqref{eq:incr_bound} keeps the two
+scales $(c/2)^{-1/3}$ and $c^{-2/3}$ separate and
+explicit.
+Bound~\eqref{eq:incr_simple} unifies them at the cost
+of a larger constant; both forms are used in the sequel.
 \end{remark}
 
 % ============================================================
@@ -354,8 +367,8 @@ giving~\eqref{eq:specsep}.
 \begin{remark}[Microscopic scale and dyadic truncation]
 \label{rem:microscopic}
 At $|i-j|=O(1)$, absorption fails and~\eqref{eq:specsep}
-degenerates (both main term and error are $O(c^{-1/3})$).
-This is why $m \ge m_0$ is necessary.
+degenerates. This is why $m \ge m_0$ is necessary;
+the Core regime $m < m_0$ is handled by H3.
 \end{remark}
 
 % ============================================================
@@ -369,8 +382,9 @@ Fix $m_0\ge 1$; let $c_2:=\max(c_0,c_1)$.
 Under Proposition~\ref{prop:U}, define
 \[
   \delta_m
-  := \frac{2C_A}{c_{\min}}2^{-m}
-  + 2\frac{C_{\max}}{c_*}(c/2)^{-1/3}.
+  := \frac{2C_I}{c_{\min}}2^{-m}
+  + \frac{2C_{\max}}{c_*}(c/2)^{-1/3}
+  + \frac{2C_R}{c_*}c^{-2/3}.
 \]
 All indices $i,j$ lie in the transition window
 ($x_j \in [-A_0,0]$, $\FAi(x_j) \ge c_*>0$),
@@ -382,9 +396,8 @@ $j,j+1 \in \Bm(i)$:
   \le \delta_m = O(2^{-m})+O(c^{-1/3}).
 \]
 For any $\varepsilon>0$: choose $m_0$ so
-$\frac{2C_A}{c_{\min}}2^{-m_0}<\varepsilon/2$,
-then $c$ so
-$2\frac{C_{\max}}{c_*}(c/2)^{-1/3}<\varepsilon/2$;
+$\frac{2C_I}{c_{\min}}2^{-m_0}<\varepsilon/2$,
+then $c$ large enough for the remaining terms;
 then $\sup_{m\ge m_0}\delta_m < \varepsilon$.
 \end{corollary}
 
@@ -397,20 +410,29 @@ $\frac{|A_{ij}-A_{i,j+1}|}{A_{ij}}
 \underbrace{\frac{|\lambda_j-\lambda_{j+1}|}
             {1-\lambda_j}}_{\text{Term 2}}.$
 
-\textbf{Term 1.}
-Lemma~\ref{lem:A}: numerator $\le C_A(c/2)^{-1/3}$.
+\textbf{Term 1 (Dyadic Separation).}
+Lemma~\ref{lem:A} (bound~\eqref{eq:incr_simple}):
+numerator $\le C_I(c/2)^{-1/3}$.
 Lemma~\ref{lem:F}: denominator
 $\ge \frac{1}{2}c_{\min}(c/2)^{-1/3}\cdot 2^m$.
 The $(c/2)^{-1/3}$ cancels:
-Term~1 $\le \frac{2C_A}{c_{\min}}2^{-m}$, \emph{independent of $c$}.
+Term~1 $\le \frac{2C_I}{c_{\min}}2^{-m}$,
+\emph{independent of $c$}.
 
-\textbf{Term 2.}
-Lemma~\ref{lem:A} + Lemma~\ref{lem:B}
-+ lower bound~\eqref{eq:onemlam}:
-$\frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
-\le \frac{(c/2)^{-1/3}\mathrm{Ai}(x_j)^2+O(c^{-2/3})}
-         {\frac{1}{2}\FAi(x_j)}
-\le 2\frac{C_{\max}}{c_*}(c/2)^{-1/3}$.
+\textbf{Term 2 (Global error).}
+Using~\eqref{eq:incr_bound} explicitly and
+~\eqref{eq:onemlam}:
+\[
+  \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
+  \le
+  \frac{C_{\max}(c/2)^{-1/3} + C_R c^{-2/3}}
+       {\frac{1}{2}\FAi(x_j)}
+  \le
+  \frac{2C_{\max}}{c_*}(c/2)^{-1/3}
+  + \frac{2C_R}{c_*}c^{-2/3}.
+\]
+Both terms are $O(c^{-1/3})$ (since $c^{-2/3} \le c^{-1/3}$
+for $c \ge 1$), uniformly in $j$.
 \end{proof}
 
 \begin{remark}[The Dyadic Separation Principle]
@@ -418,7 +440,8 @@ $\frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
 The cancellation of $(c/2)^{-1/3}$ in Term~1 is
 the operative content: both scales are $c^{-1/3}$,
 but the denominator carries $2^m$.
-Result: purely combinatorial $O(2^{-m})$, independent of $c$.
+Result: purely combinatorial $O(2^{-m})$,
+independent of $c$.
 The $O(c^{-1/3})$ in $\delta_m$ comes from Term~2 only.
 \end{remark}
 
@@ -450,8 +473,9 @@ operator, using H1 and H3: $O(1)$.
 \begin{remark}[Role of H3]
 \label{rem:H3role}
 H3 is not used in proving H2.
-It enters Lemma~\ref{lem:E} in two places:
-(i) Core estimate; (ii) input to Theorem~2.1.
+It enters Lemma~\ref{lem:E} in the Core estimate
+and as input to Theorem~2.1. A proof of H3 alone
+would not simplify the H2 argument.
 \end{remark}
 
 % ============================================================
@@ -477,7 +501,7 @@ and $\norm{D\mathcal{T}_c^{(N)}} < 1$ for $c\ge c_2$.
   \text{Cor.~C+H3}\Rightarrow\text{Lem.~E}
   \Rightarrow B'\Rightarrow A.
 \]
-All thresholds depend only on $A_0,C_1,c_{\min}$.
+All thresholds depend only on $A_0,C_1,C_2,c_{\min}$.
 \end{remark}
 
 \begin{remark}[Open problems]
