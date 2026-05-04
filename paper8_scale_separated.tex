@@ -63,7 +63,8 @@ The main contributions are:
   = (c/2)^{-1/3}\mathrm{Ai}(x_l)^2 + R_l$
   with $|R_l| \le C_R c^{-2/3}$ uniformly,
   and $|\lambda_l-\lambda_{l+1}|
-  \le C_{\max}(c/2)^{-1/3} + C_R c^{-2/3}$.
+  \le C_I(c/2)^{-1/3}$
+  with $C_I := C_{\max} + C_R \cdot 2^{-1/3}$.
 \item Lemma~\ref{lem:B} (Airy Ratio Bound).
 \item Lemma~\ref{lem:F} (Dyadic Separation Principle):
   $|\lambda_i-\lambda_j| \ge
@@ -261,11 +262,12 @@ Consequently:
   |\lambda_l-\lambda_{l+1}|
   \le C_{\max}(c/2)^{-1/3} + C_R\,c^{-2/3}.
 \end{equation}
-In particular, since $c^{-2/3} \le (c/2)^{-1/3}$ for $c\ge 1$:
+In particular, since $c^{-2/3} \le (c/2)^{-1/3}\cdot 2^{-1/3}$
+for $c\ge 1$:
 \begin{equation}\label{eq:incr_simple}
   |\lambda_l-\lambda_{l+1}|
   \le C_I\,(c/2)^{-1/3},
-  \qquad C_I := C_{\max} + C_R\cdot 2^{1/3},
+  \qquad C_I := C_{\max} + C_R\cdot 2^{-1/3},
 \end{equation}
 for a constant $C_I$ depending only on $A_0$.
 \end{lemma}
@@ -299,18 +301,19 @@ $|(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))|
 $|R_l| \le (L_{A_0}2^{2/3}+C_2)c^{-2/3} = C_R c^{-2/3}$.
 Bound~\eqref{eq:incr_bound} follows from
 $|\mathrm{Ai}(x_l)^2| \le C_{\max}$.
-For~\eqref{eq:incr_simple}: $c^{-2/3}
-= (c/2)^{-1/3}\cdot 2^{-1/3}c^{-1/3}
-\le (c/2)^{-1/3}\cdot 2^{-1/3}$
-for $c \ge 1$, giving $C_I = C_{\max}+C_R\cdot 2^{-1/3}$.
+For~\eqref{eq:incr_simple}:
+$c^{-2/3} \le (c/2)^{-1/3}\cdot 2^{-1/3}$
+for $c \ge 1$
+(since $(c/2)^{-1/3} = 2^{1/3}c^{-1/3}$
+and $c^{-2/3} \le c^{-1/3}$ for $c\ge 1$),
+giving $C_I = C_{\max}+C_R\cdot 2^{-1/3}$.
 \end{proof}
 
 \begin{remark}
-The upper bound~\eqref{eq:incr_bound} keeps the two
-scales $(c/2)^{-1/3}$ and $c^{-2/3}$ separate and
-explicit.
-Bound~\eqref{eq:incr_simple} unifies them at the cost
-of a larger constant; both forms are used in the sequel.
+Bound~\eqref{eq:incr_bound} keeps the two scales
+$(c/2)^{-1/3}$ and $c^{-2/3}$ explicit.
+Bound~\eqref{eq:incr_simple} unifies them;
+both forms are used in the sequel.
 \end{remark}
 
 % ============================================================
@@ -420,8 +423,7 @@ Term~1 $\le \frac{2C_I}{c_{\min}}2^{-m}$,
 \emph{independent of $c$}.
 
 \textbf{Term 2 (Global error).}
-Using~\eqref{eq:incr_bound} explicitly and
-~\eqref{eq:onemlam}:
+Using~\eqref{eq:incr_bound} and~\eqref{eq:onemlam}:
 \[
   \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
   \le
@@ -431,8 +433,8 @@ Using~\eqref{eq:incr_bound} explicitly and
   \frac{2C_{\max}}{c_*}(c/2)^{-1/3}
   + \frac{2C_R}{c_*}c^{-2/3}.
 \]
-Both terms are $O(c^{-1/3})$ (since $c^{-2/3} \le c^{-1/3}$
-for $c \ge 1$), uniformly in $j$.
+Both terms are $O(c^{-1/3})$ for $c \ge 1$,
+uniformly in $j$.
 \end{proof}
 
 \begin{remark}[The Dyadic Separation Principle]
