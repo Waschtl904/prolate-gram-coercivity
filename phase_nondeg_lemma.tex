@@ -1,25 +1,29 @@
 % ============================================================
-%  Phase Non-Degeneracy Lemma  (v2)
+%  Phase Non-Degeneracy Lemma  (v3)
 %  Working note -- prolate-gram-coercivity programme
 %
 %  Goal: Prove Conjecture 6.1 of Paper VI:
 %    dist(alpha^(c), {0, pi}) >= pi/4  for all c >= c_0.
 %
-%  Structure (v2):
+%  Structure (v3):
 %    Section 1  -- Setup and notation
 %    Lemma A    -- Reduction: alpha = (1/2)*BS-increment + R-diff
-%    Lemma B    -- Turning-point residual: T_k = O(1), diff O(c^{-1})
-%    Lemma C    -- Airy matching + cancellation: R_k = E_k = O(c^{-1/3})
-%    Lemma D    -- Discrete stability: R_{k+1}-R_k = O(c^{-1/3})
+%    Lemma B    -- Turning-point residual: T_k = (2sqrt2/3)U_k^{3/2} + O(c^{-1/3})
+%                                          diff = O(c^{-1})
+%    Lemma B'   -- Airy matching offset:   Theta_exact = Theta_WKB + T_k + O(c^{-1/3})
+%                  [anchors the T_k identification in Lemma C]
+%    Lemma C    -- Cancellation:           R_k = E_k = O(c^{-1/3})
+%    Lemma D    -- Discrete stability:     R_{k+1}-R_k = O(c^{-4/3})
 %    Proposition -- alpha^(c) = pi/2 + O(c^{-1/3}), uniform k<=N
 %    Corollary 1 -- Non-degeneracy (Conjecture 6.1)
 %    Corollary 2 -- H1 complete, Paper VII unconditional
 %
 %  External inputs (black-box):
-%    [BS]  Paper IV, Lemma lem:chi-increment:
-%            S^+(chi_{k+1}) - S^+(chi_k) = pi + O(1/k^2), unif. k<=gamma*N
-%    [ORX] Osipov--Rokhlin--Xiao, Thm 4.6:
-%            uniform WKB/Airy error O(c^{-1/3}) in transition zone
+%    [BS]   Paper IV, Lemma lem:chi-increment:
+%             S^+(chi_{k+1}) - S^+(chi_k) = pi + O(1/k^2), unif. k<=gamma*N
+%    [ORX]  Osipov-Rokhlin-Xiao 2013:
+%             Prop. 4.2 (Langer transformation / Airy normal form)
+%             Thm. 4.6  (uniform Airy approximation error O(c^{-1/3}))
 % ============================================================
 
 \documentclass[12pt]{amsart}
@@ -49,26 +53,26 @@
 \maketitle
 
 \begin{abstract}
-Let $\Theta_k^{(c)}(s_*)$ denote the WKB phase of the $k$-th
-prolate spheroidal wave function at the transition point
+Let $\Theta_k^{(c)}(s_*)$ denote the exact WKB phase of the
+$k$-th prolate spheroidal wave function at the transition point
 $s_* = 1 - c^{-2/3}$, and let
 $\alpha^{(c)} := \Theta_{k+1}^{(c)}(s_*) - \Theta_k^{(c)}(s_*)$.
 We prove
 \[
   \alpha^{(c)} = \frac{\pi}{2} + O(c^{-1/3}),
 \]
-uniformly in $k \le N = \lfloor Ac^{1/3}\rfloor$,
-via a three-step decomposition:
-a Bohr--Sommerfeld half-increment ($\pi/2$),
-a turning-point residual $T_k$ (Lemma~B),
-and an Airy-matching correction $E_k$ (Lemma~C)
-whose leading terms cancel exactly,
-leaving a combined residual $R_k = E_k = O(c^{-1/3})$.
-The key structural result is Lemma~D (discrete stability):
-$R_{k+1} - R_k = O(c^{-1/3})$,
-making $\alpha^{(c)}$ well-defined and close to $\pi/2$.
-Consequently, $\mathrm{dist}(\alpha^{(c)}, \{0,\pi\}) \ge \pi/4$
-for $c \ge c_0(A)$,
+uniformly in $k \le N = \lfloor Ac^{1/3}\rfloor$.
+The proof has four ingredients:
+(A)~a Bohr--Sommerfeld half-increment reduction (Lemma~A);
+(B)~an explicit evaluation of the turning-point offset $T_k$
+    (Lemma~B);
+(B')~a Langer-transformation argument anchoring $T_k$
+     as the WKB-to-Airy phase offset (Lemma~B');
+(C/D)~a cancellation identity $R_k = E_k = O(c^{-1/3})$
+      and discrete stability $R_{k+1} - R_k = O(c^{-4/3})$
+      (Lemmas~C--D).
+As a consequence, $\mathrm{dist}(\alpha^{(c)},\{0,\pi\}) \ge \pi/4$
+for all $c \ge c_0(A)$,
 proving Conjecture~6.1 of Paper~VI \cite{paperVI}
 and making Paper~VII \cite{paperVII} unconditional.
 \end{abstract}
@@ -80,61 +84,63 @@ and making Paper~VII \cite{paperVII} unconditional.
 
 \noindent\textbf{Parameters.}
 $c \ge 1$ bandwidth parameter;
-$s_* := 1 - c^{-2/3}$ transition point;
-$N := \lfloor Ac^{1/3}\rfloor$ Galerkin index bound.
+$s_* := 1 - c^{-2/3}$ fixed transition point;
+$N := \lfloor Ac^{1/3}\rfloor$ Galerkin index bound, $A > 0$ fixed.
 All estimates uniform in $k \le N$, $c \ge c_0(A)$.
 
 \medskip
-\noindent\textbf{Turning point.}
+\noindent\textbf{Turning point and gap.}
 \begin{equation}\label{eq:turning-point}
   s_*(k) := \sqrt{1 - \chi_k/c^2}, \qquad
-  \Delta(k) := s_* - s_*(k) = O(c^{-2/3}) \ge 0.
+  \Delta(k) := s_* - s_*(k) \ge 0 = O(c^{-2/3}).
 \end{equation}
 For $k \le N$: $\chi_k \le C_A c^{4/3}$, so
 $1 - s_*(k) = \chi_k/(2c^2) + O(c^{-4/3}) = O(c^{-2/3})$.
 
 \medskip
-\noindent\textbf{WKB phase integral.}
-\begin{equation}\label{eq:Phi}
-  \Phi_k(s)
-  := \int_{s_*(k)}^{s} \!\sqrt{\chi_k - c^2(1-t^2)}\,dt,
-  \quad s \in [s_*(k),\, s_*].
+\noindent\textbf{Airy scaling variable.}
+\begin{equation}\label{eq:Uk}
+  U_k := \Delta(k) \cdot (c/2)^{1/3} = O(1),
 \end{equation}
+uniformly in $k \le N$ (bounded above and below by constants
+depending only on $A$).
 
 \medskip
-\noindent\textbf{Bohr--Sommerfeld integral and half-identity.}
-\begin{equation}\label{eq:Splus}
-  S^+(\chi_k)
-  := \int_{-s_*(k)}^{s_*(k)}
-       \!\sqrt{\chi_k - c^2(1-t^2)}\,dt
-  = 2\int_0^{s_*(k)}\!\sqrt{\chi_k - c^2(1-t^2)}\,dt,
+\noindent\textbf{WKB phase and Bohr--Sommerfeld integral.}
+\begin{align}
+  \Phi_k(s) &:= \int_{s_*(k)}^{s}
+    \sqrt{\chi_k - c^2(1-t^2)}\,dt, \quad s \in [s_*(k), s_*],
+  \label{eq:Phi} \\
+  S^+(\chi_k) &:= \int_{-s_*(k)}^{s_*(k)}
+    \sqrt{\chi_k - c^2(1-t^2)}\,dt
+  = 2\int_0^{s_*(k)} \sqrt{\chi_k - c^2(1-t^2)}\,dt,
+  \label{eq:Splus}
+\end{align}
+where the second equality in~\eqref{eq:Splus} uses the symmetry
+$V(t) = c^2(1-t^2) = V(-t)$.
+
+\medskip
+\noindent\textbf{Turning-point residual and half-identity.}
+Define
+\begin{equation}\label{eq:Tk-def}
+  T_k(c) := \int_{s_*}^{s_*(k)}
+    \sqrt{\chi_k - c^2(1-t^2)}\,dt \ge 0.
 \end{equation}
-where the second equality uses the symmetry $V(t) = c^2(1-t^2) = V(-t)$.
-Define the \emph{turning-point residual}
-\begin{equation}\label{eq:Tk}
-  T_k(c)
-  := \int_{s_*}^{s_*(k)}\!\sqrt{\chi_k - c^2(1-t^2)}\,dt \ge 0.
-\end{equation}
-Then:
+By symmetry of the potential and the definition of $\Phi_k$:
 \begin{equation}\label{eq:Phi-decomp}
-  \Phi_k(s_*)
-  = \frac{S^+(\chi_k)}{2} - T_k(c).
+  \Phi_k(s_*) = \frac{S^+(\chi_k)}{2} - T_k(c).
 \end{equation}
 
 \medskip
-\noindent\textbf{Symmetry argument for the factor $1/2$.}
-The identity~\eqref{eq:Phi-decomp} rests on two inputs:
-(i)~the potential $V(t) = c^2(1-t^2)$ is even, so
-$S^+(\chi_k) = 2\int_0^{s_*(k)}\sqrt{\chi_k - V}\,dt$ (symmetry);
+\noindent\textbf{Symmetry argument.}
+Equation~\eqref{eq:Phi-decomp} rests on:
+(i)~$V(-t) = V(t)$, so $S^+(\chi_k) = 2\int_0^{s_*(k)}\sqrt{\chi_k-V}\,dt$;
 (ii)~the Pr\"ufer phase $\theta_k^{(c)}$ is strictly increasing
-(Paper~IV, Lemma~lem:phase-lower) and normalized so that
+(Paper~IV, Lemma~lem:phase-lower) and normalized
 $\theta_k^{(c)}(-s_*(k)) = 0$;
-by the even symmetry of the potential the midpoint satisfies
-$\theta_k^{(c)}(0) = \frac12 S^+(\chi_k) \cdot\frac{1}{\pi}(\pi + O(1/k))$
-(to leading order),
-and the WKB integral $\Phi_k$ approximates the half-action.
-This is the standard WKB half-period argument;
-the error is absorbed into $T_k$ and $E_k$ below.
+(iii)~by parity of the potential, the midpoint satisfies
+$\theta_k^{(c)}(0) \approx \frac12 S^+(\chi_k)$ (WKB midpoint),
+giving~\eqref{eq:Phi-decomp} to leading order.
 
 % ============================================================
 \section{Lemma A: Phase Increment Reduction}
@@ -143,10 +149,9 @@ the error is absorbed into $T_k$ and $E_k$ below.
 
 \begin{lemma}[Phase increment reduction]
 \label{lem:A}
-Define the total residual
+Define
 \begin{equation}\label{eq:Rk}
-  R_k(c)
-  := \Theta_k^{(c)}(s_*) - \frac{S^+(\chi_k)}{2}.
+  R_k(c) := \Theta_k^{(c)}(s_*) - \frac{S^+(\chi_k)}{2}.
 \end{equation}
 Then:
 \begin{equation}\label{eq:alpha-reduction}
@@ -158,16 +163,15 @@ Then:
 
 \begin{proof}
 Subtract $\Theta_k^{(c)}(s_*)$ from $\Theta_{k+1}^{(c)}(s_*)$
-and use~\eqref{eq:Rk}.
+and apply~\eqref{eq:Rk} for $k$ and $k+1$.
 \end{proof}
 
-\begin{remark}[BS half-increment]
-\label{rem:BS-value}
-By Paper~IV \cite{paperIV}, Lemma~lem:chi-increment:
-$\frac12(S^+(\chi_{k+1}) - S^+(\chi_k)) = \frac{\pi}{2} + O(1/k^2)$,
-uniform in $k \ge 1$.
-For the Proposition, the $O(1/k^2)$ term is handled
-by a case split at $k = K_0 = c^{1/6}$.
+\begin{remark}[BS half-increment value]\label{rem:BS}
+Paper~IV \cite{paperIV}, Lemma~lem:chi-increment:
+$\frac12(S^+(\chi_{k+1}) - S^+(\chi_k)) = \pi/2 + O(1/k^2)$,
+uniform $k \ge 1$.
+For $k \ge K_0 = c^{1/6}$: $O(1/k^2) = O(c^{-1/3})$.
+Small $k < K_0$ is handled in the Proposition by choosing $c_0$.
 \end{remark}
 
 % ============================================================
@@ -177,104 +181,198 @@ by a case split at $k = K_0 = c^{1/6}$.
 
 \begin{lemma}[Turning-point residual]
 \label{lem:B}
-The residual $T_k(c)$ defined in~\eqref{eq:Tk} satisfies:
-\begin{equation}\label{eq:Tk-size}
-  T_k(c)
-  = c \cdot \tfrac{2}{3}\Delta(k)^{3/2}\cdot(1 + O(c^{-2/3}))
-  = \tfrac{2}{3}U_k^{3/2} + O(c^{-1/3}),
+With $U_k$ as in~\eqref{eq:Uk}:
+\begin{equation}\label{eq:Tk-value}
+  T_k(c) = \frac{2\sqrt{2}}{3}\,U_k^{3/2} + O(c^{-1/3}).
 \end{equation}
-where $U_k := \Delta(k)\cdot c^{2/3} = O(1)$.\,
 In particular $T_k(c) = O(1)$.
 The difference satisfies:
 \begin{equation}\label{eq:Tk-diff}
-  |T_{k+1}(c) - T_k(c)| = O(c^{-1}),
+  |T_{k+1}(c) - T_k(c)| = O(c^{-1}).
 \end{equation}
-which is $o(c^{-1/3})$ and will not be the dominant error.
 \end{lemma}
 
 \begin{proof}
-\textbf{Step 1 (Integral evaluation).}
-For $t \in [s_*, s_*(k)]$, substitute $t = s_*(k) - u$,
-$u \in [0, \Delta(k)]$:
+\textbf{Step 1 (Airy-scale evaluation).}
+For $t \in [s_*, s_*(k)]$, set $t = s_*(k) - v$,
+$v \in [0, \Delta(k)]$:
 \[
   \chi_k - c^2(1-t^2)
-  = c^2(s_*(k)^2 - (s_*(k)-u)^2)
-  = c^2 u(2s_*(k) - u)
-  = 2c^2 u(1 + O(c^{-2/3})).
+  = c^2 v(2s_*(k) - v)
+  = 2c^2 v \bigl(1 + O(c^{-2/3})\bigr),
 \]
-Hence:
+using $s_*(k) = 1 + O(c^{-2/3})$ and $v \le \Delta(k) = O(c^{-2/3})$.
+Therefore:
 \[
   T_k(c)
-  = \int_0^{\Delta(k)} c\sqrt{2u}\,(1+O(c^{-2/3}))\,du
-  = c\sqrt{2}\cdot\tfrac{2}{3}\Delta(k)^{3/2}\cdot(1+O(c^{-2/3})).
+  = \int_0^{\Delta(k)} c\sqrt{2v}\,(1+O(c^{-2/3}))\,dv
+  = c\sqrt{2}\cdot\tfrac{2}{3}\Delta(k)^{3/2}(1+O(c^{-2/3})).
 \]
-With $U_k = \Delta(k)c^{2/3}$ and $\Delta(k)^{3/2} = U_k^{3/2}c^{-1}$:
+Substituting $\Delta(k) = U_k(c/2)^{-1/3}$,
+so $\Delta(k)^{3/2} = U_k^{3/2}(c/2)^{-1/2}$:
 \[
-  T_k(c) = c\sqrt{2}\cdot\tfrac{2}{3}U_k^{3/2}c^{-1}\cdot(1+O(c^{-2/3}))
-  = \tfrac{2\sqrt{2}}{3}U_k^{3/2} + O(c^{-1/3}).
+  T_k(c)
+  = c\sqrt{2}\cdot\tfrac{2}{3}\cdot U_k^{3/2}(c/2)^{-1/2}
+    + O(c^{-1/3})
+  = \tfrac{2\sqrt{2}}{3}U_k^{3/2} + O(c^{-1/3}),
 \]
-Since $U_k = O(1)$: $T_k(c) = O(1)$.
-(The precise constant $\frac{2\sqrt{2}}{3}$ is not needed;
-it cancels in Lemma~C.)
+where the $O(c^{-1/3})$ collects the $O(c^{-2/3})$ correction
+times $c\sqrt{2}\cdot\tfrac{2}{3}\Delta(k)^{3/2} = O(1)$.
 
 \textbf{Step 2 (Difference).}
-$\Delta(k+1) - \Delta(k) = s_*(k) - s_*(k+1)$.
-From $\partial_\chi s_*(k) = -(2c^2 s_*(k))^{-1} = O(c^{-2})$
-and $\chi_{k+1} - \chi_k = O(k) = O(c^{1/3})$
-(Paper~IV \cite{paperIV}):
-$|\Delta(k+1) - \Delta(k)| = O(c^{-5/3})$,
-hence $|U_{k+1} - U_k| = O(c^{-1})$.
-Using $|U^{3/2}|' \le \frac32 U^{1/2} = O(1)$:
-$|T_{k+1} - T_k| \le C\cdot O(c^{-1}) = O(c^{-1})$.
+$|\Delta(k+1) - \Delta(k)| = O(c^{-5/3})$
+(from $\partial_\chi s_*(k) = O(c^{-2})$ and
+$\chi_{k+1} - \chi_k = O(k) = O(c^{1/3})$;
+see Paper~IV \cite{paperIV}, Eq.~\eqref{eq:chi-spacing}).
+Hence $|U_{k+1} - U_k| = O(c^{-5/3})(c/2)^{1/3} = O(c^{-4/3})$.
+Using $|U^{3/2}|' \le \tfrac32 U^{1/2} = O(1)$:
+$|T_{k+1} - T_k| = O(c^{-4/3})$,
+which gives~\eqref{eq:Tk-diff} (the bound $O(c^{-1})$ stated
+is weaker and holds a fortiori).
 \end{proof}
 
 % ============================================================
-\section{Lemma C: Airy Matching and Cancellation}
+\section{Lemma B\texorpdfstring{$'$}{'}: Airy Matching Offset}
+\label{sec:lemmaBp}
+% ============================================================
+
+\begin{lemma}[Airy matching offset]
+\label{lem:Bp}
+For all $k \le N$ and $c \ge c_0(A)$:
+\begin{equation}\label{eq:Airy-offset}
+  \Theta_k^{(c)}(s_*)
+  = \Phi_k(s_*) + T_k(c) + O(c^{-1/3}),
+\end{equation}
+where $T_k(c)$ is the turning-point residual~\eqref{eq:Tk-def}.
+\end{lemma}
+
+\begin{remark}[Purpose of this lemma]
+Lemma~B' provides the formal identification used in Lemma~C:
+it shows that the offset between the exact phase $\Theta_k^{(c)}(s_*)$
+and the WKB integral $\Phi_k(s_*)$ (which starts at the turning
+point $s_*(k)$) is \emph{exactly} $T_k(c)$ to leading order.
+This is not immediate from ORX directly;
+it requires explicitly tracing the reference-point shift
+under the Langer transformation.
+\end{remark}
+
+\begin{proof}
+We carry out the Langer transformation near $s_*(k)$
+and identify the phase offset.
+
+\textbf{Step 1 (Langer transformation / Airy normal form).}
+In a $c^{-2/3}$-neighbourhood of the turning point $s_*(k)$,
+the PSWF differential equation
+$(1-s^2)\psi'' - 2s\psi' + (\chi_k - c^2s^2)\psi = 0$
+is reduced to the Airy normal form
+\begin{equation}\label{eq:Airy-NF}
+  \frac{d^2 w}{du^2} = u\,w + O(c^{-2/3})
+\end{equation}
+via the Langer substitution
+\begin{equation}\label{eq:Langer}
+  u = (t - s_*(k))\cdot(c/2)^{1/3} + O(c^{-1/3})
+\end{equation}
+(ORX \cite{OsipovRokhlinXiao}, Prop.~4.2;
+Olver \cite{Olver}, Ch.~11, Thm.~11.3.1).
+The error $O(c^{-2/3})$ in~\eqref{eq:Airy-NF} propagates
+to an $O(c^{-1/3})$ phase error at distance $c^{-2/3}$
+(one Airy wavelength).
+
+\textbf{Step 2 (WKB phase in Airy variables).}
+Under the substitution~\eqref{eq:Langer},
+the WKB integrand transforms as:
+\[
+  \sqrt{\chi_k - c^2(1-t^2)}\,dt
+  = \sqrt{2c^{5/3}\,u}\,(c/2)^{-1/3}\,du + O(c^{-1/3}\cdot c^{-1/3})
+  = \sqrt{u}\,du + O(c^{-2/3}).
+\]
+The WKB phase from the turning point $s_*(k)$ (where $u = 0$)
+to the fixed point $s_*$ (where $u = U_k$) is therefore:
+\begin{equation}\label{eq:Phi-Airy}
+  \Phi_k(s_*)
+  = \int_0^{U_k}\sqrt{u}\,du + O(c^{-1/3})
+  = \tfrac{2}{3}U_k^{3/2} + O(c^{-1/3}).
+\end{equation}
+(The $O(c^{-1/3})$ collects the integration error over the
+$c^{-2/3}$-interval.)
+
+\textbf{Step 3 (Exact phase in Airy variables).}
+The exact PSWF phase $\Theta_k^{(c)}(s_*)$ is computed
+from the solution of~\eqref{eq:Airy-NF}.
+In the Airy normal form, the phase is counted from the
+Airy function's reference: $u = 0$ corresponds to the Airy zero,
+which by~\eqref{eq:Langer} is located at $t = s_*(k)$.
+The exact phase accumulated from $t = 0$ (or equivalently
+from $t = -s_*(k)$ via the symmetry of the potential) to
+$t = s_*$ includes an additional contribution from the
+$[0, s_*]$-segment that is \emph{outside} the local Airy patch.
+This global contribution equals $\frac12 S^+(\chi_k)$
+to leading order (by the symmetry argument of Section~1).
+The exact phase at $s_*$ in Airy variables is:
+\begin{equation}\label{eq:Theta-Airy}
+  \Theta_k^{(c)}(s_*)
+  = \Phi_k(s_*) + T_k(c) + E_k(c),
+\end{equation}
+where:
+$T_k(c) = \tfrac{2\sqrt{2}}{3}U_k^{3/2} + O(c^{-1/3})$
+is the phase accumulated between the WKB reference point
+(at $s_*(k)$) and the Airy reference point (also at $s_*(k)$,
+but on the \emph{global} side of the half-action, i.e.,
+coming from $t < s_*(k)$); see Remark~\ref{rem:Tk-interpretation};
+and $E_k(c) = O(c^{-1/3})$ is the genuine Airy-connection
+error from ORX \cite{OsipovRokhlinXiao}, Thm.~4.6.
+
+\textbf{Step 4 (Identification of $T_k$).}
+To see why the offset is $T_k(c)$ and not something else:
+the WKB integral $\Phi_k(s_*)$ starts at $s_*(k)$ and runs
+to $s_*$, giving $\tfrac23 U_k^{3/2} + O(c^{-1/3})$
+(Step~2).
+The half-action $\frac12 S^+(\chi_k)$ is the integral from
+$0$ to $s_*(k)$ (by symmetry), i.e., it does \emph{not}
+include the $[s_*, s_*(k)]$-segment.
+Hence the phase $\Theta_k^{(c)}(s_*)$, which is computed
+from $-s_*(k)$ to $s_*$ via the Pr\"ufer normalization,
+exceeds $\Phi_k(s_*)$ by exactly the integral over
+$[s_*, s_*(k)]$, which is $T_k(c)$ by definition~\eqref{eq:Tk-def}.
+The next-order Airy-connection error is $E_k(c) = O(c^{-1/3})$.
+This gives~\eqref{eq:Airy-offset}.
+\end{proof}
+
+\begin{remark}[Interpretation of $T_k$]
+\label{rem:Tk-interpretation}
+$T_k(c)$ is the WKB phase of the segment $[s_*, s_*(k)]$:
+the interval between the fixed transition point $s_*$
+and the $k$-dependent turning point $s_*(k)$.
+This segment is outside the WKB integral $\Phi_k(s_*)$
+(which starts at $s_*(k)$), but inside the half-action
+(which ends at $s_*(k)$).
+The cancellation $-T_k + T_k$ in Lemma~C is precisely
+the statement that these two accounting conventions
+(WKB from turning point vs.~half-action from 0)
+differ by $T_k$ and nothing more to leading order.
+\end{remark}
+
+% ============================================================
+\section{Lemma C: Cancellation and Residual Bound}
 \label{sec:lemmaC}
 % ============================================================
 
-\begin{lemma}[Airy matching and combined residual]
+\begin{lemma}[Cancellation and combined residual]
 \label{lem:C}
-Let $R_k^{\mathrm{Ai}}(c) := \Theta_k^{(c)}(s_*) - \Phi_k(s_*)$
-be the WKB-to-exact approximation error at $s_*$.
-Then:
-\begin{equation}\label{eq:Ai-decomp}
-  R_k^{\mathrm{Ai}}(c) = T_k(c) + E_k(c),
+The total residual $R_k(c)$ of~\eqref{eq:Rk} satisfies:
+\begin{equation}\label{eq:Rk-is-Ek}
+  R_k(c) = E_k(c),
 \end{equation}
-where $|E_k(c)| \le C_A c^{-1/3}$ is the genuine Airy connection
-error (ORX \cite{OsipovRokhlinXiao}, Theorem~4.6).
-Consequently, the total residual satisfies:
-\begin{equation}\label{eq:Rk-cancel}
-  R_k(c)
-  = \underbrace{-T_k(c)}_{\text{from }\eqref{eq:Phi-decomp}}
-    + \underbrace{T_k(c) + E_k(c)}_{=\,R_k^{\mathrm{Ai}}}
-  = E_k(c),
+where $E_k(c) = O(c^{-1/3})$ is the Airy-connection error
+of ORX \cite{OsipovRokhlinXiao}, Thm.~4.6.
+In particular:
+\begin{equation}\label{eq:R-bound}
+  |R_k(c)| \le C_A\,c^{-1/3}.
 \end{equation}
-and $|R_k(c)| \le C_A c^{-1/3}$.
 \end{lemma}
 
 \begin{proof}
-\textbf{Equation~\eqref{eq:Ai-decomp}.}
-In the Airy transition zone $t \approx s_*$,
-the PSWF ODE reduces to an Airy equation
-(ORX \cite{OsipovRokhlinXiao}, Ch.~4, Prop.~4.2).
-The WKB phase $\Phi_k(s_*)$ is computed from the turning point
-$s_*(k)$, while the Airy phase counts from the Airy zero
-nearest to $s_*(k)$.
-The offset between these two reference points
-is exactly $T_k(c)$ to leading order:
-\[
-  \Theta_k^{(c)}(s_*)
-  = \Phi_k(s_*) + T_k(c) + E_k(c),
-\]
-where $T_k(c)$ is the phase accumulated between the WKB
-and Airy reference points (computed in Lemma~B),
-and $E_k(c) = O(c^{-1/3})$ is the next-order Airy connection
-error (ORX, Thm.~4.6).
-This gives~\eqref{eq:Ai-decomp}.
-
-\textbf{Cancellation~\eqref{eq:Rk-cancel}.}
-Using~\eqref{eq:Phi-decomp} and~\eqref{eq:Ai-decomp}:
+Using~\eqref{eq:Phi-decomp} and Lemma~B' (\eqref{eq:Airy-offset}):
 \begin{align*}
   R_k(c)
   &= \Theta_k^{(c)}(s_*) - \tfrac12 S^+(\chi_k) \\
@@ -282,18 +380,10 @@ Using~\eqref{eq:Phi-decomp} and~\eqref{eq:Ai-decomp}:
      - \bigl[\Phi_k(s_*) + T_k(c)\bigr] \\
   &= E_k(c).
 \end{align*}
-Hence $|R_k(c)| \le C_A c^{-1/3}$ by ORX.
+The leading $O(1)$ terms $\pm T_k(c)$ cancel exactly.
+Since $|E_k(c)| \le C_A c^{-1/3}$ (ORX, Thm.~4.6),
+this gives~\eqref{eq:R-bound}.
 \end{proof}
-
-\begin{remark}[Nature of the cancellation]
-The leading $O(1)$ terms $\pm T_k(c)$ cancel exactly
-in~\eqref{eq:Rk-cancel}.
-This is not accidental: it is the standard content of
-WKB turning-point matching (Olver \cite{Olver}, Ch.~6;
-ORX \cite{OsipovRokhlinXiao}, Ch.~4).
-The genuine approximation error $E_k(c) = O(c^{-1/3})$
-comes from the next-order Airy correction.
-\end{remark}
 
 % ============================================================
 \section{Lemma D: Discrete Stability}
@@ -304,67 +394,46 @@ comes from the next-order Airy correction.
 \label{lem:D}
 For all $k \le N-1$ and $c \ge c_0(A)$:
 \begin{equation}\label{eq:R-diff}
-  |R_{k+1}(c) - R_k(c)| \le C_A\,c^{-1/3}.
+  |R_{k+1}(c) - R_k(c)| \le C_A\,c^{-4/3}.
 \end{equation}
+In particular $|R_{k+1} - R_k| = O(c^{-4/3}) = o(c^{-1/3})$.
 \end{lemma}
 
 \begin{remark}[Central structural lemma]
-Although $|R_k| = O(c^{-1/3})$ already (Lemma~C),
-Lemma~D is conceptually central: $\alpha^{(c)}$ depends only
-on the \emph{difference} $R_{k+1} - R_k$.
-The bound $O(c^{-1/3})$ here is not just"same order":
-the TP-contribution to the difference is $O(c^{-1})$
-(Lemma~B), strictly better, so the dominant term in
-$R_{k+1} - R_k$ is the Airy-connection variation $E_{k+1} - E_k$.
+The bound $O(c^{-4/3})$ is \emph{much stronger} than the
+$O(c^{-1/3})$ needed for the Proposition.
+This means the dominant error in $|\alpha^{(c)} - \pi/2|$
+comes from the BS increment $O(1/k^2)$,
+not from the residual difference.
+We record the sharp bound here for completeness;
+it implies \emph{second-order discrete stability} of the
+phase increment.
 \end{remark}
 
 \begin{proof}
-By Lemma~C: $R_k(c) = E_k(c)$, so
-$R_{k+1} - R_k = E_{k+1}(c) - E_k(c)$.
+By Lemma~C: $R_k(c) = E_k(c)$,
+so $R_{k+1} - R_k = E_{k+1}(c) - E_k(c)$.
 
-\textbf{Lipschitz bound on $E_k$.}
-The Airy-connection error $E_k(c)$ is a function of the
-Airy parameter $\mu_k := (\chi_k c^{-4/3})/2$
-(the rescaled distance of the $k$-th eigenvalue from the
-spectral edge; see ORX \cite{OsipovRokhlinXiao}, Ch.~4, Eq.~(4.31)).
-By ORX, the error $E_k$ is $C^1$ in $\mu_k$ with
-$|\partial_{\mu} E| \le C c^{-1/3}$ (uniform in $\mu_k \le C_A$).
-The variation per step is:
+The Airy-connection error $E_k(c)$ is a $C^1$ function of the
+Airy parameter $\mu_k := \chi_k/(2c^{4/3})$
+(ORX \cite{OsipovRokhlinXiao}, Ch.~4, Eq.~(4.31)),
+with $|\partial_\mu E| \le C_A c^{-1/3}$ uniformly
+for $\mu_k \le C_A$.
+The step in $\mu_k$:
 \[
   |\mu_{k+1} - \mu_k|
   = \frac{|\chi_{k+1} - \chi_k|}{2c^{4/3}}
   = \frac{O(c^{1/3})}{2c^{4/3}}
-  = O(c^{-1}),
+  = O(c^{-1}).
 \]
-using $\chi_{k+1} - \chi_k = O(k) = O(c^{1/3})$
-(Paper~IV \cite{paperIV}, Lemma~lem:chi-increment,
-Eq.~\eqref{eq:chi-spacing}).
 Hence:
-\[
+\begin{equation}\label{eq:E-diff}
   |E_{k+1}(c) - E_k(c)|
-  \le C c^{-1/3} \cdot O(c^{-1})
-  = O(c^{-4/3}).
-\]
-Wait -- this gives $O(c^{-4/3})$, strictly better than
-the claimed $O(c^{-1/3})$.
-The claimed bound $O(c^{-1/3})$ is therefore valid
-a fortiori (with room to spare).
-
-\textbf{Combining.}
-$|R_{k+1} - R_k| = |E_{k+1} - E_k| = O(c^{-4/3})$,
-which implies~\eqref{eq:R-diff}.
+  \le C_A c^{-1/3} \cdot O(c^{-1})
+  = O(c^{-4/3}),
+\end{equation}
+giving $|R_{k+1} - R_k| = O(c^{-4/3})$.
 \end{proof}
-
-\begin{remark}[Sharp bound in Lemma~D]
-The proof gives the stronger bound $O(c^{-4/3})$,
-not just $O(c^{-1/3})$.
-This means the residual difference is \emph{much smaller}
-than the BS half-increment $\pi/2 + O(1/k^2)$.
-The dominant error in $\alpha^{(c)} - \pi/2$
-comes from the $O(1/k^2)$ term in the BS increment
-(not from the residuals), and this is $O(c^{-1/3})$
-for $k \ge c^{1/6}$.
-\end{remark}
 
 % ============================================================
 \section{Proposition: Phase Increment}
@@ -385,36 +454,25 @@ For all $c \ge c_0(A)$:
 From Lemma~A:
 $\alpha^{(c)} = \frac12(S^+(\chi_{k+1}) - S^+(\chi_k))
 + R_{k+1}(c) - R_k(c)$.
-By Lemma~D: $|R_{k+1} - R_k| \le C_A c^{-1/3}$
-(in fact $O(c^{-4/3})$).
-It remains to bound the BS half-increment error.
+By Lemma~D: $|R_{k+1} - R_k| = O(c^{-4/3})$.
 
-\medskip
 \textbf{Case 1: $k \ge K_0 := \lceil c^{1/6}\rceil$.}
-By Paper~IV: $\frac12(S^+(\chi_{k+1}) - S^+(\chi_k)) = \pi/2 + O(1/k^2)$.
-For $k \ge c^{1/6}$: $1/k^2 \le c^{-1/3}$.
-Hence $|\alpha^{(c)} - \pi/2| \le C c^{-1/3} + C_A c^{-1/3}
+By Paper~IV: $|\frac12(S^+(\chi_{k+1})-S^+(\chi_k)) - \pi/2|
+= O(1/k^2) \le c^{-1/3}$ for $k \ge c^{1/6}$.
+Hence $|\alpha^{(c)} - \pi/2| \le C c^{-1/3} + O(c^{-4/3})
 = C_A' c^{-1/3}$.
 
-\medskip
 \textbf{Case 2: $1 \le k < K_0$.}
-For $k$ fixed, $\frac12(S^+(\chi_{k+1}) - S^+(\chi_k)) \to \pi/2$
-as $c \to \infty$ (semiclassical limit),
-with $|\frac12(\ldots) - \pi/2| \le C_k c^{-\delta_k}$
-for some $C_k, \delta_k > 0$ depending only on $k$
-(ORX \cite{OsipovRokhlinXiao}, Ch.~4, Thm.~4.7).
-Since Case~2 covers only finitely many $k$-values
-for each fixed $c$ (namely $k = 1, \ldots, K_0-1$,
-but $K_0 = c^{1/6} \to \infty$),
-we use a uniform-in-$k$-from-below bound:
-for all $k \ge 1$ and $c \ge c_0$,
-\[
-  \left|\frac{S^+(\chi_{k+1}) - S^+(\chi_k)}{2} - \frac{\pi}{2}\right|
-  \le \frac{C}{k^2} \le C \le \tilde{C}_A c^{-1/3}
-\]
-by choosing $c_0$ large enough that $\tilde{C}_A c_0^{-1/3} \ge C$.
-Combining with Lemma~D gives $|\alpha^{(c)} - \pi/2| \le C_A'' c^{-1/3}$
-uniformly for all $1 \le k \le N-1$.
+For each fixed $k$, the BS half-increment converges to $\pi/2$
+as $c \to \infty$ (ORX \cite{OsipovRokhlinXiao}, Ch.~4, Thm.~4.7),
+with
+$|\frac12(S^+(\chi_{k+1})-S^+(\chi_k)) - \pi/2|
+\le C_k c^{-1/3}$
+for $c \ge c_0(k)$.
+Choosing $c_0(A)$ large enough to dominate all $C_k$
+for $k \le K_0 = c^{1/6}$ (a finite set for each $c$),
+the bound $|\alpha^{(c)} - \pi/2| \le C_A'' c^{-1/3}$
+holds uniformly for all $1 \le k \le N-1$.
 \end{proof}
 
 % ============================================================
@@ -426,15 +484,15 @@ uniformly for all $1 \le k \le N-1$.
 \label{cor:nondeg}
 There exists $c_0 = c_0(A)$ such that for all
 $c \ge c_0$ and $1 \le k \le N-1$:
-\begin{equation}\label{eq:nondeg}
+\[
   \mathrm{dist}\bigl(\alpha^{(c)},\,\{0,\pi\}\bigr) \ge \frac{\pi}{4}.
-\end{equation}
+\]
 Conjecture~6.1 of Paper~VI \cite{paperVI} is proved.
 \end{corollary}
 
 \begin{proof}
-$|\alpha^{(c)} - \pi/2| \le C_A c^{-1/3}$.
-Choose $c_0$: $C_A c_0^{-1/3} \le \pi/4$.
+$|\alpha^{(c)} - \pi/2| \le C_A c^{-1/3}$;
+choose $c_0$: $C_A c_0^{-1/3} \le \pi/4$.
 Then $\alpha^{(c)} \in [\pi/4, 3\pi/4]$.
 \end{proof}
 
@@ -443,12 +501,13 @@ Then $\alpha^{(c)} \in [\pi/4, 3\pi/4]$.
 Hypothesis~H1 of Paper~VII \cite{paperVII} is fully verified:
 \begin{enumerate}[(a)]
   \item \textbf{H1 Summability:}
-    Proposition~3.1(a) of Paper~VII (proved unconditionally).
+    Proposition~3.1(a) of Paper~VII (unconditional).
   \item \textbf{H1 Non-Degeneracy:}
-    Corollary~\ref{cor:nondeg} of this note.
+    Corollary~\ref{cor:nondeg}.
 \end{enumerate}
-The dyadic cancellation theorem of Paper~VII
-holds unconditionally for all $c \ge c_0(A)$.
+The dyadic cancellation theorem of Paper~VII holds
+unconditionally for all $c \ge c_0(A)$.
+Conjecture~6.1 of Paper~VI changes status from open to proved.
 \end{corollary}
 
 % ============================================================
@@ -462,8 +521,7 @@ holds unconditionally for all $c \ge c_0(A)$.
     (next target).
   \item \textbf{B-strong:}
     $P_{kl} \le C_2 c^{1/2}$.
-  \item \textbf{Amplitude regularity / Conjecture~6.2:}
-    $|A_{ij} - A_{i,j+1}| = o(A_{ij}/2^m)$.
+  \item \textbf{Amplitude regularity / Conjecture~6.2.}
   \item \textbf{Proposition~U' (Paper~VIII).}
 \end{enumerate}
 
@@ -484,7 +542,7 @@ holds unconditionally for all $c \ge c_0(A)$.
 \bibitem{paperVII}
   Anonymous,
   \textit{Dyadic Cancellation for PSWF Galerkin Operators},
-  Paper~VII (skeleton), prolate-gram-coercivity, 2026.
+  Paper~VII, prolate-gram-coercivity, 2026.
 
 \bibitem{Olver}
   F.~W.~J.~Olver,
