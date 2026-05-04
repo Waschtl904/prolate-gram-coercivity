@@ -7,15 +7,17 @@ Numerical scaling test for condition (U') of Paper VIII.
   |(lambda_l - lambda_{l+1}) - (F_Ai(x_l) - F_Ai(x_{l+1}))| <= C_2 * c^{-2/3}
   uniform in l throughout the transition window.
 
-Here lambda_l in (0,1) are eigenvalues of the CONCENTRATION OPERATOR
-  Q_c f(x) = int_{-1}^{1} sin(c(x-y)) / (pi*(x-y)) f(y) dy,
-computed as eigenvalues of the sinc kernel Gram matrix in the Legendre basis:
+lambda_l in (0,1): eigenvalues of the concentration operator
+  Q_c f(x) = int_{-1}^{1} sin(c(x-y)) / (pi*(x-y)) f(y) dy
+via sinc kernel Gram matrix in Legendre basis:
   S[k,m] = int int sin(c(x-y))/(pi(x-y)) phi_k(x) phi_m(y) dx dy
-where phi_k = sqrt((2k+1)/2) * P_k.  Eigenvalues sorted descending:
-  lambda_0 ~ 1, lambda_{N_Sh} ~ 0.5, then rapid decay.
+  phi_k = sqrt((2k+1)/2) * P_k
+
+Eigenvalues sorted descending: lambda_0 ~ 1, lambda_{N_Sh} ~ 0.5.
+N_Sh = int(2c/pi)  (floor, NOT round).
+M = 2*N_Sh + 20   (ensures crossing region is well inside computed spectrum).
 
 Transition window: |l - N_Sh| <= A0 * c^{1/3}, A0 = 2.0 < |a_1| ~ 2.3381
-
 c values: 30, 50, 100, 200, 400
 """
 
@@ -32,49 +34,47 @@ os.makedirs('numerics', exist_ok=True)
 
 # ── Constants ──────────────────────────────────────────────────────────────
 A0 = 2.0
-N_SH_FACTOR = 2.0 / np.pi
 C_VALUES = [30, 50, 100, 200, 400]
-N_GRID = 800      # Gauss-Legendre quadrature points for sinc kernel
-# M_LEG: Legendre basis size -- only need indices in transition window + buffer
-# M_LEG = N_Sh + A0*c^{1/3} + 10 is sufficient; set per c below
+N_GRID = 800
+
+
+def N_Sh(c):
+    """Shannon number: int(2c/pi), floor."""
+    return int(2.0 * c / np.pi)
 
 
 # ── 1. Concentration eigenvalues via sinc kernel Gram matrix ────────────────
 def get_concentration_eigenvalues(c, n_grid=N_GRID):
     """
-    Returns lambda_l = eigenvalues of
-      S[k,m] = int_{-1}^1 int_{-1}^1 K_c(x,y) phi_k(x) phi_m(y) dx dy
-    where K_c(x,y) = sin(c(x-y))/(pi*(x-y)), phi_k = sqrt((2k+1)/2)*P_k.
-    Result sorted descending: lambda_0 ~ 1, lambda_{N_Sh} ~ 0.5.
-    M = N_Sh + ceil(A0*c^{1/3}) + 15  (sufficient for transition window).
+    Eigenvalues of S[k,m] = int int K_c(x,y) phi_k(x) phi_m(y) dx dy
+    K_c(x,y) = sin(c(x-y))/(pi*(x-y)), phi_k = sqrt((2k+1)/2)*P_k.
+    M = 2*N_Sh + 20 ensures the 0.5-crossing is well inside the spectrum.
+    Returns eigenvalues sorted descending.
     """
-    N_sh = int(np.round(N_SH_FACTOR * c))
-    M = N_sh + int(np.ceil(A0 * c**(1./3.))) + 15
+    nsh = N_Sh(c)
+    M = 2 * nsh + 20
 
     x, w = np.polynomial.legendre.leggauss(n_grid)
 
-    # Legendre basis: phi[k, i] = sqrt((2k+1)/2) * P_k(x_i)
     phi = np.zeros((M, n_grid))
     for k in range(M):
         phi[k] = np.sqrt((2*k+1)/2.0) * eval_legendre(k, x)
 
-    # Sinc kernel matrix
-    xi, xj = np.meshgrid(x, x, indexing='ij')   # (n_grid, n_grid)
+    xi, xj = np.meshgrid(x, x, indexing='ij')
     diff = xi - xj
     with np.errstate(divide='ignore', invalid='ignore'):
         K = np.where(np.abs(diff) < 1e-14,
                      c / np.pi,
                      np.sin(c * diff) / (np.pi * diff))
 
-    # S = (phi * w) @ K @ (phi * w).T
-    phiw = phi * w[np.newaxis, :]   # (M, n_grid)
-    S = phiw @ K @ phiw.T           # (M, M), symmetric
+    phiw = phi * w[np.newaxis, :]
+    S = phiw @ K @ phiw.T
 
     lam = eigh(S, eigvals_only=True)
-    return np.sort(lam)[::-1]       # descending
+    return np.sort(lam)[::-1]
 
 
-# ── 2. F_Ai: analytic antiderivative of Ai^2 ──────────────────────────────
+# ── 2. F_Ai ────────────────────────────────────────────────────────────────
 def F_Ai(x_arr):
     """F_Ai(x) = (x*Ai(x)^2 - Ai'(x)^2) / 2"""
     x_arr = np.asarray(x_arr, dtype=np.float64)
@@ -82,36 +82,38 @@ def F_Ai(x_arr):
     return (x_arr * Ai_vals**2 - Aip_vals**2) / 2.0
 
 
-# ── 3. Transition window ──────────────────────────────────────────────────
+# ── 3. Transition window ───────────────────────────────────────────────────
 def transition_window(c):
-    N_sh = N_SH_FACTOR * c
-    half_width = A0 * c**(1.0/3.0)
-    l_min = int(np.ceil(N_sh - half_width))
-    l_max = int(np.floor(N_sh + half_width))
+    nsh = 2.0 * c / np.pi          # exact float N_Sh
+    half = A0 * c**(1.0/3.0)
+    l_min = int(np.ceil(nsh - half))
+    l_max = int(np.floor(nsh + half))
     return np.arange(l_min, l_max + 1)
 
 
 def rescaled_index(l, c):
-    N_sh = N_SH_FACTOR * c
-    return (l - N_sh) * (c / 2.0)**(-1.0/3.0)
+    return (l - 2.0 * c / np.pi) * (c / 2.0)**(-1.0/3.0)
 
 
 # ── 4. Main computation ────────────────────────────────────────────────────
 print("Computing concentration eigenvalues lambda_l in (0,1)...")
-print("(This may take 1-2 min for large c -- sinc kernel matrix per c value)")
+print("(sinc kernel Gram matrix; M = 2*N_Sh + 20 per c value)")
 
 results = {}
 for c in C_VALUES:
     print(f"  c = {c} ...", end=" ", flush=True)
     lam_all = get_concentration_eigenvalues(c)
 
-    N_sh_int = int(np.round(N_SH_FACTOR * c))
-    lam_near = lam_all[N_sh_int-2:N_sh_int+3]
-    print(f"lam[N_Sh-2:N_Sh+3]={np.round(lam_near,3)}", end=" ")
+    nsh = N_Sh(c)
+    lam_near = lam_all[nsh-2:nsh+3]
+    print(f"N_Sh={nsh}, M={2*nsh+20}, lam[N_Sh-2:N_Sh+3]={np.round(lam_near,3)}", end=" ")
+
+    # verify crossing
+    crossing = np.where(np.diff(np.sign(lam_all - 0.5)))[0]
+    print(f"| crossing at {crossing}", end=" ")
 
     idx = transition_window(c)
-    idx = idx[idx + 2 < len(lam_all)]
-    idx = idx[idx >= 0]
+    idx = idx[(idx + 2 < len(lam_all)) & (idx >= 0)]
 
     lam_w  = lam_all[idx]
     lam_p1 = lam_all[idx + 1]
@@ -137,10 +139,12 @@ for c in C_VALUES:
         'Delta_Ai_scaled':  Delta_Ai_scaled,
         'max_scaled':       max_scaled,
         'n_window':         len(idx),
+        'N_Sh':             nsh,
+        'crossing':         crossing.tolist(),
     }
 
 
-# ── 5. Plot A: scaled second differences vs x_l ────────────────────────────
+# ── 5. Plot A: scaled second differences ──────────────────────────────────
 print("\nPlot A: scaled second differences...")
 fig, axes = plt.subplots(2, 3, figsize=(15, 8))
 axes_flat = axes.flatten()
@@ -153,7 +157,7 @@ for i, c in enumerate(C_VALUES):
     ax.plot(r['x_l'], r['Delta_Ai_scaled'],
             color='#ff7f0e', lw=1.8, ls='--', label=r'$c^{2/3}\Delta_{\rm Ai}$')
     ax.axhline(0, color='gray', lw=0.8, ls=':')
-    ax.set_title(f'c = {c}', fontsize=12)
+    ax.set_title(f'c = {c}  (N_Sh={r["N_Sh"]})', fontsize=11)
     ax.set_xlabel(r'$x_l = (l-N_{\rm Sh})(c/2)^{-1/3}$', fontsize=9)
     ax.set_ylabel(r'$c^{2/3} \cdot \Delta$', fontsize=9)
     if i == 0:
@@ -161,9 +165,8 @@ for i, c in enumerate(C_VALUES):
 
 axes_flat[-1].set_visible(False)
 fig.suptitle(
-    r'Scaled Second Differences $c^{2/3}\Delta_l$ vs $x_l$  '
-    r'[$\lambda_l \in (0,1)$: concentration eigenvalues]' + '\n'
-    r'Blue: $\lambda_l$ $\quad$ Orange dashed: Airy $F_{\rm Ai}$ $\quad$ Window $|x_l| \leq 2.0$',
+    r'Scaled Second Differences $c^{2/3}\Delta_l$ vs $x_l$' + '\n'
+    r'Blue: $\lambda_l$ (concentration eigenvalues) $\quad$ Orange: Airy $F_{\rm Ai}$',
     fontsize=12
 )
 plt.tight_layout(rect=[0, 0, 1, 0.92])
@@ -172,7 +175,7 @@ plt.close()
 print("  Saved: uprime_A_scaled_second_diff.png")
 
 
-# ── 6. Plot B: log-log scaling ──────────────────────────────────────────────
+# ── 6. Plot B: log-log scaling ─────────────────────────────────────────────
 print("Plot B: log-log scaling...")
 c_arr   = np.array(C_VALUES, dtype=float)
 max_arr = np.array([results[c]['max_scaled'] for c in C_VALUES])
@@ -209,9 +212,11 @@ plt.close()
 print("  Saved: uprime_B_loglog_scaling.png")
 
 
-# ── 7. Save summary JSON ──────────────────────────────────────────────────
+# ── 7. Save summary JSON ───────────────────────────────────────────────────
 summary = {
     'operator': 'concentration operator Q_c, sinc kernel Gram matrix in Legendre basis',
+    'N_Sh_formula': 'int(2c/pi)  [floor]',
+    'M_formula': '2*N_Sh + 20',
     'A0': A0,
     'c_values': C_VALUES,
     'power_law_exponent_alpha': float(alpha),
@@ -222,6 +227,8 @@ summary = {
     ),
     'per_c': {
         str(c): {
+            'N_Sh': results[c]['N_Sh'],
+            'crossing_index': results[c]['crossing'],
             'window_size': int(results[c]['n_window']),
             'max_scaled_second_diff': float(results[c]['max_scaled']),
             'lam_window_min': float(results[c]['lam_window'].min()),
