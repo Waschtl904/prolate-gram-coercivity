@@ -1,7 +1,7 @@
 % ============================================================
 %  Paper VIII  --  Working draft
 %  Scale-Separated Dyadic Cancellation for PSWF Galerkin Operators
-%  Status: working draft (revised v3: gap-axiom + two-scale)
+%  Status: working draft (revised v4: submission-ready light)
 % ============================================================
 \documentclass[12pt]{amsart}
 
@@ -51,7 +51,7 @@ operator in the high-bandwidth regime and establish two
 classes of results.
 
 \emph{Rigorous.}
-Under Proposition~\ref{prop:gap} (uniform spectral gap
+Under Assumption~\ref{ass:gap_only} (uniform spectral gap
 lower bound) and Assumption~B-strong \cite{paperVI},
 we verify hypotheses~(H1)--(H3) of Paper~VII \cite{paperVII}
 via the \emph{Dyadic Separation Principle}:
@@ -60,8 +60,9 @@ $|\lambda_j - \lambda_{j+1}|/|\lambda_i - \lambda_j|$
 is bounded by $C \cdot 2^{-m}$ independently of~$c$,
 because the factor $(c/2)^{-1/3}$ cancels between
 numerator and denominator.
-This cancellation is the operative content of the paper
-and depends only on monotonicity and a local gap lower bound.
+This cancellation depends only on monotonicity and a
+uniform gap lower bound; no Airy or erfc structure
+is required.
 
 \emph{Empirical.}
 We present numerical evidence for a universal scaling law
@@ -77,7 +78,6 @@ across $c \in \{50,100,200\}$, decreasing with~$c$.
 The centering parameter $\beta(c)$ drifts slowly
 ($\beta(50)\approx -0.42$, $\beta(200)\approx -0.36$);
 its limiting behavior is an open problem.
-A full asymptotic derivation of this law remains open.
 \end{abstract}
 
 % ============================================================
@@ -89,35 +89,35 @@ Paper~VII \cite{paperVII} established an abstract dyadic
 cancellation theorem (Theorem~2.1) and reduced the
 contraction problem to three hypotheses (H1)--(H3).
 H2 was stated as Conjecture~6.2 and is reduced here
-to Proposition~\ref{prop:gap}.
+to Assumption~\ref{ass:gap_only}.
 This paper is a \emph{conditional reduction theorem}:
-under Proposition~\ref{prop:gap} and B-strong,
+under Assumption~\ref{ass:gap_only} and B-strong,
 hypotheses (H1)--(H3) are verified and the contraction
 estimate follows.
 
 \medskip\noindent
-\textbf{Two-scale structure.}
-Our analysis reveals a two-layer structure of the
-spectral transition:
+\textbf{Three-scale structure.}
+Our analysis reveals three separated layers:
 \begin{itemize}
 \item \emph{Combinatorial scale} (Dyadic Separation):
   requires only a uniform gap lower bound at scale
-  $(c/2)^{-1/3}$; this is Proposition~\ref{prop:gap},
+  $(c/2)^{-1/3}$; this is Assumption~\ref{ass:gap_only},
   Lemma~\ref{lem:F}, and Corollary~\ref{cor:C}.
-  This layer is the rigorous core and is independent
-  of the specific form of the eigenvalue profile.
-\item \emph{Local scale} (Airy / WKB): provides a
-  refined description of increments
-  $\lambda_l - \lambda_{l+1}$ via Airy functions;
-  this is Proposition~\ref{prop:U} and Lemma~\ref{lem:A}.
-  It supplies one verification of Proposition~\ref{prop:gap}
-  and the upper bounds needed for Term~2 of
-  Corollary~\ref{cor:C}, but is not the logical
-  foundation of the Dyadic Separation Principle.
-\item \emph{Global scale} (Landau--Widom): the eigenvalue
-  profile follows an error-function law with
-  logarithmic width $S(c) = (\log c/\pi)^{2/3}$;
-  this is Conjecture~\ref{conj:ULW}.
+  This is the rigorous core, independent of the
+  specific form of the eigenvalue profile.
+\item \emph{Local scale} (Airy / WKB):
+  provides a refined description of increments via
+  Airy functions; this is Proposition~\ref{prop:U}
+  and Lemma~\ref{lem:A}.
+  It supplies one route to verifying
+  Assumption~\ref{ass:gap_only} and the upper bounds
+  needed for Term~2 of Corollary~\ref{cor:C},
+  but is not a logical prerequisite for the
+  Dyadic Separation Principle.
+\item \emph{Global scale} (Landau--Widom):
+  the eigenvalue profile follows an erfc law with
+  logarithmic width $S(c)$; this is
+  Conjecture~\ref{conj:ULW}, supported by numerics.
 \end{itemize}
 
 \medskip\noindent
@@ -127,16 +127,14 @@ both $|\lambda_j-\lambda_{j+1}|$ and $|\lambda_i-\lambda_j|$
 scale as $c^{-1/3}$, but $|\lambda_i-\lambda_j|$ carries
 an extra $2^m$ from $|i-j| \ge 2^m$, so the ratio is
 $O(2^{-m})$ independently of $c$.
-This mechanism depends only on monotonicity and the
-gap lower bound of Proposition~\ref{prop:gap}.
 
 \medskip\noindent
 \textbf{What is not proved here.}
-Proposition~\ref{prop:gap}, Proposition~\ref{prop:U},
+Assumption~\ref{ass:gap_only}, Proposition~\ref{prop:U},
 and B-strong remain open;
 see Remarks~\ref{rem:gap_route}, \ref{rem:propU_route},
 and~\ref{rem:open}.
-Conjecture~\ref{conj:ULW} is supported by strong numerical
+Conjecture~\ref{conj:ULW} is supported by numerical
 evidence but has no analytic proof at present.
 
 % ============================================================
@@ -167,7 +165,7 @@ $L_{A_0} := \sup_{[-A_0,A_0]}|\frac{d}{dx}\mathrm{Ai}^2|
 = 2\sup|\mathrm{Ai}\,\mathrm{Ai}'| < \infty.$
 
 \medskip\noindent
-\textbf{Monotonicity fact.}
+\textbf{Monotonicity.}
 $\FAi$ is strictly decreasing
 ($\FAi' = -\mathrm{Ai}^2 \le -c_{\min} < 0$ on $[-A_0,A_0]$).
 
@@ -194,65 +192,53 @@ $\Bm(i) := \{j: 2^m \le |i-j| < 2^{m+1}\}$.
 
 \medskip\noindent
 \textbf{Bound on $1-\lambda_j$.}
-Under~(U) with $C_1 c_0^{-2/3} \le c_*/2$:
+Under Proposition~\ref{prop:U}\textup{(U)}
+with $C_1 c_0^{-2/3} \le c_*/2$:
 \begin{equation}\label{eq:onemlam}
   \tfrac{1}{2}\FAi(x_j) \le 1-\lambda_j \le 2\FAi(x_j)
 \end{equation}
 uniformly in all transition-window indices.
 
 % ============================================================
-\section{Three-Layer Spectral Structure}
+\section{Spectral Assumptions and Conjectures}
 \label{sec:structure}
 % ============================================================
 
-We formulate three propositions at increasing levels of
-specificity.
-Proposition~\ref{prop:gap} is the axiomatic minimum
-required by the rigorous core.
-Proposition~\ref{prop:U} is a stronger local statement
-supplying one route to Proposition~\ref{prop:gap}.
-Conjecture~\ref{conj:ULW} is a global statement
-supported by numerical evidence.
-
-%------------------------------
-\begin{proposition}[Uniform Spectral Gap]
-\label{prop:gap}
-There exist $\kappa_0 > 0$ and $c_0 > 0$ such that
-for all sufficiently large $c$ and all $l$ with
+\begin{assumption}[Minimal Spectral Input]
+\label{ass:gap_only}
+There exist $\kappa_0 > 0$ such that for all
+sufficiently large $c$ and all $l$ with
 $|l - \NSh| \le A_0 c^{1/3}$:
 \begin{equation}\label{eq:gapbound}
   \lambda_l - \lambda_{l+1} \ge \kappa_0\,(c/2)^{-1/3}.
 \end{equation}
-\end{proposition}
+No further structural information on the eigenvalue
+profile is required for Lemma~\ref{lem:F}.
+\end{assumption}
 
-\begin{remark}[Role and routes to Proposition~\ref{prop:gap}]
+\begin{remark}[Routes to Assumption~\ref{ass:gap_only}]
 \label{rem:gap_route}
-Proposition~\ref{prop:gap} is the only spectral
-condition required by Lemma~\ref{lem:F} and
-Corollary~\ref{cor:C}.
-It asserts a uniform lower bound on eigenvalue
-increments at scale $(c/2)^{-1/3}$, without
-specifying the leading-order form.
-
-Three routes to~\eqref{eq:gapbound} are plausible:
+Three routes to~\eqref{eq:gapbound} are known or plausible:
 \begin{enumerate}[(i)]
-\item Via Proposition~\ref{prop:U}(U): for $c$
-  sufficiently large, the Airy approximation implies
+\item Via Proposition~\ref{prop:U}(U): for sufficiently
+  large $c$, the Airy approximation implies
   $\kappa_0 = \tfrac{1}{2}c_{\min}$.
 \item Via first-order WKB: a monotone comparison
   argument at leading order, without Airy matching.
-\item Via numerical lower bounds: direct computation
-  for finite $c$ combined with asymptotic stability.
+  This route does not require (U) and may be more
+  accessible.
+\item Heuristic support from numerical computation
+  combined with asymptotic stability arguments
+  (not a proof; included for orientation only).
 \end{enumerate}
 None of these routes is currently complete.
 \end{remark}
 
-%------------------------------
 \begin{proposition}[ORX Airy Approximation]
 \label{prop:U}
-There exist $C_1, C_2, c_0 > 0$ (depending only on $A_0$)
-such that for all sufficiently large $c$ and all $l$ with
-$|l-\NSh| \le A_0 c^{1/3}$:
+There exist $C_1, C_2 > 0$ (depending only on $A_0$)
+such that for all sufficiently large $c$ and all $l$
+with $|l-\NSh| \le A_0 c^{1/3}$:
 \begin{itemize}
 \item[\textup{(U)}] $\abs{\lambda_l - \FAi(x_l)}
   \le C_1 c^{-2/3}$.
@@ -262,60 +248,54 @@ $|l-\NSh| \le A_0 c^{1/3}$:
 \end{itemize}
 Both bounds are uniform in $l$.
 Proposition~\ref{prop:U}\textup{(U)} implies
-Proposition~\ref{prop:gap} with
+Assumption~\ref{ass:gap_only} with
 $\kappa_0 = \tfrac{1}{2}c_{\min}$.
 \end{proposition}
 
 \begin{remark}[Scope of Proposition~\ref{prop:U}]
 \label{rem:propU_scope}
-Proposition~\ref{prop:U} is a \emph{local} statement:
-it controls individual increments and pointwise values
+Proposition~\ref{prop:U} is a \emph{local} statement
 at the Airy scale $(c/2)^{-1/3}$.
-It makes no claim about the global shape of the
-eigenvalue profile.
-The global erfc structure is addressed separately
-in Conjecture~\ref{conj:ULW}.
+It makes no claim about the global eigenvalue profile.
+The global erfc structure is addressed in
+Conjecture~\ref{conj:ULW}.
 \end{remark}
 
 \begin{remark}[Why (U') is necessary for Lemma~\ref{lem:A}]
 \label{rem:propU_uprime}
-Lemma~\ref{lem:A} requires bounding
-$E_l - E_{l+1}$ where $E_l := \lambda_l - \FAi(x_l)$.
-Condition~(U) gives only $|E_l|, |E_{l+1}| \le C_1 c^{-2/3}$
-individually and does not prevent oscillations at scale
-$c^{-2/3}$.
-Condition~(U') controls the discrete derivative of the
-spectral curve and is a genuinely stronger condition.
+Condition~(U) bounds $|E_l|$ and $|E_{l+1}|$
+individually where $E_l := \lambda_l - \FAi(x_l)$,
+but does not control $E_l - E_{l+1}$.
+Condition~(U') directly supplies this discrete
+derivative bound and is a genuinely stronger condition.
 \end{remark}
 
 \begin{remark}[Route to proof of Proposition~\ref{prop:U}]
 \label{rem:propU_route}
 ORX \cite{OsipovRokhlinXiao} provides~(U) pointwise.
-A proof of both (U) and (U') is expected from:
+A proof of (U') additionally requires:
 \begin{enumerate}[(i)]
 \item Uniform WKB control with $O(c^{-2/3})$ remainder.
-\item Airy matching with uniform remainder; yields~(U).
-\item Stability of the spectral map under discrete
-  differentiation; yields~(U').
+\item Airy matching with uniform error; yields~(U).
+\item Stability under discrete differentiation;
+  yields~(U').
 \end{enumerate}
 Step~(iii) is the additional content beyond~(U).
 \end{remark}
 
-%------------------------------
 \begin{conjecture}[Landau--Widom Global Scaling Law]
 \label{conj:ULW}
 Let $S(c) = (\log c/\pi)^{2/3}$.
-There exists a centering parameter $\beta(c) \in \mathbb{R}$
-such that for all $l$ in the transition region,
+There exists $\beta(c) \in \mathbb{R}$ such that
+for all $l$ in the transition region,
 \[
   \lambda_l = \frac{1}{2}
   \operatorname{erfc}\!\left(
   \frac{\ln 2 \cdot (l - \NSh - \beta(c))}{S(c)}
   \right)
-  + O(S(c)^{-1}).
+  + O(S(c)^{-1}),
 \]
-Equivalently, the first differences satisfy the
-Gaussian boundary layer law
+and the first differences satisfy
 \[
   \lambda_l - \lambda_{l+1}
   \approx \frac{\ln 2}{\sqrt{\pi}\,S(c)}\,e^{-Z_l^2}.
@@ -324,32 +304,26 @@ Gaussian boundary layer law
 
 \begin{remark}[Numerical evidence for Conjecture~\ref{conj:ULW}]
 \label{rem:ULW_numerics}
-For $c \in \{50,100,200\}$, direct eigenvalue computation
-via Gauss--Legendre discretization ($n=400$) yields
-cross-bandwidth residuals
+For $c \in \{50,100,200\}$, Gauss--Legendre
+discretization ($n=400$) yields cross-bandwidth residuals
 \[
-  \sup_{c,c'}\,
-  \sup_{Z \in [-2.5,2.5]}
+  \sup_{c,c'}\sup_{Z \in [-2.5,2.5]}
   |\lambda_c(Z) - \lambda_{c'}(Z)| \approx 2.7 \cdot 10^{-2},
 \]
-decreasing with $c$.
-The centering parameter satisfies
+decreasing with $c$, and
 \[
   \beta(50)\approx -0.424,\quad
   \beta(100)\approx -0.380,\quad
-  \beta(200)\approx -0.359,
+  \beta(200)\approx -0.359.
 \]
-suggesting slow convergence to a limit
-$\beta(\infty) \in [-0.30,-0.21]$.
-No analytic expression for $\beta(c)$ is known.
+Fitting suggests $\beta(c) \to \beta(\infty)
+\in [-0.30,-0.21]$; no analytic expression is known.
 \end{remark}
 
 \begin{remark}[Scale separation]
 \label{rem:scales}
-The three layers operate at genuinely separated scales.
-Proposition~\ref{prop:gap} and Lemma~\ref{lem:F} act
-at the combinatorial scale, requiring only gaps bounded
-below at order $c^{-1/3}$.
+Assumption~\ref{ass:gap_only} and Lemma~\ref{lem:F}
+act at the combinatorial scale $c^{-1/3}$.
 Proposition~\ref{prop:U} resolves the local Airy
 scale $(c/2)^{-1/3}$.
 Conjecture~\ref{conj:ULW} describes the global
@@ -372,52 +346,36 @@ $|l-\NSh| \le A_0 c^{1/3}$:
 \[
   \lambda_l - \lambda_{l+1}
   = (c/2)^{-1/3}\,\mathrm{Ai}(x_l)^2 + R_l,
+  \quad |R_l| \le C_R\,c^{-2/3},
 \]
-where
-\[
-  |R_l| \le C_R\,c^{-2/3},
-  \qquad C_R := L_{A_0}\cdot 2^{2/3} + C_2,
-\]
-depending only on $A_0$ and $C_2$, uniform in $l$.
+where $C_R := L_{A_0}\cdot 2^{2/3} + C_2$
+depends only on $A_0$ and $C_2$.
 Consequently:
 \begin{equation}\label{eq:incr_bound}
   |\lambda_l-\lambda_{l+1}|
-  \le C_{\max}(c/2)^{-1/3} + C_R\,c^{-2/3}.
+  \le C_{\max}(c/2)^{-1/3} + C_R\,c^{-2/3},
 \end{equation}
-In particular:
+and in particular
 \begin{equation}\label{eq:incr_simple}
   |\lambda_l-\lambda_{l+1}|
   \le C_I\,(c/2)^{-1/3},
-  \qquad C_I := C_{\max} + C_R\cdot 2^{-1/3}.
+  \quad C_I := C_{\max} + C_R\cdot 2^{-1/3}.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-Write:
-\[
-  \lambda_l-\lambda_{l+1}
-  = [\FAi(x_l)-\FAi(x_{l+1})]
-  + [(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))].
-\]
-\textbf{Main term.}
-$\FAi'=-\mathrm{Ai}^2$; MVT gives
+Write $\lambda_l-\lambda_{l+1}
+= [\FAi(x_l)-\FAi(x_{l+1})]
++ [(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))]$.
+By MVT and $\FAi'=-\mathrm{Ai}^2$:
 $\FAi(x_l)-\FAi(x_{l+1})
-= \mathrm{Ai}(\xi_l)^2(c/2)^{-1/3}$
-for some $\xi_l \in [x_l,x_{l+1}]$.
-By Lipschitz continuity of $\mathrm{Ai}^2$:
-$|\mathrm{Ai}(\xi_l)^2-\mathrm{Ai}(x_l)^2|
-\le L_{A_0}(c/2)^{-1/3}$,
-contributing $L_{A_0}2^{2/3}c^{-2/3}$ to $R_l$.
-
-\textbf{Increment error.}
-By~(U'): $|(\lambda_l-\lambda_{l+1})-(\FAi(x_l)-\FAi(x_{l+1}))|
-\le C_2 c^{-2/3}$.
-
-\textbf{Combining:}
-$|R_l| \le (L_{A_0}2^{2/3}+C_2)c^{-2/3} = C_R c^{-2/3}$.
-Bounds~\eqref{eq:incr_bound} and~\eqref{eq:incr_simple}
-follow since $c^{-2/3} \le (c/2)^{-1/3}\cdot 2^{-1/3}$
-for $c\ge 1$.
+= \mathrm{Ai}(\xi_l)^2(c/2)^{-1/3}$,
+with $|\mathrm{Ai}(\xi_l)^2-\mathrm{Ai}(x_l)^2|
+\le L_{A_0}(c/2)^{-1/3}$.
+By~(U'): remainder $\le C_2 c^{-2/3}$.
+Combining gives $|R_l| \le C_R c^{-2/3}$;
+\eqref{eq:incr_bound}--\eqref{eq:incr_simple} follow
+since $c^{-2/3}\le 2^{-1/3}(c/2)^{-1/3}$.
 \end{proof}
 
 % ============================================================
@@ -442,7 +400,7 @@ Numerator $\le C_{\max}$, denominator $\ge c_*>0$.
 
 \begin{lemma}[Dyadic Separation Principle]
 \label{lem:F}
-Under Proposition~\ref{prop:gap},
+Under Assumption~\ref{ass:gap_only},
 for all sufficiently large $c$ and all $i \ne j$
 in the transition window:
 \begin{equation}\label{eq:specsep}
@@ -452,9 +410,7 @@ in the transition window:
 \end{lemma}
 
 \begin{proof}
-Without loss of generality $i < j$.
-Since $\{\lambda_l\}$ is strictly decreasing,
-by telescoping and Proposition~\ref{prop:gap}:
+WLOG $i < j$. By strict monotonicity and telescoping:
 \[
   |\lambda_i - \lambda_j|
   = \sum_{l=i}^{j-1}(\lambda_l - \lambda_{l+1})
@@ -464,12 +420,11 @@ by telescoping and Proposition~\ref{prop:gap}:
 
 \begin{remark}[Full independence of Lemma~\ref{lem:F}]
 \label{rem:Frobust}
-Lemma~\ref{lem:F} depends only on
-Proposition~\ref{prop:gap}: strict monotonicity plus
-a local lower gap bound at scale $(c/2)^{-1/3}$.
-It requires neither the Airy form of
-$\lambda_l - \lambda_{l+1}$ nor the erfc form of
-$\lambda_l$.
+The proof uses only Assumption~\ref{ass:gap_only}:
+strict monotonicity and a gap lower bound at scale
+$(c/2)^{-1/3}$.
+No Airy functions, no erfc structure, no specific
+form of $\lambda_l - \lambda_{l+1}$ is required.
 Any mechanism verifying~\eqref{eq:gapbound} suffices.
 \end{remark}
 
@@ -481,8 +436,14 @@ Any mechanism verifying~\eqref{eq:gapbound} suffices.
 \begin{corollary}[H2 in truncated dyadic sense]
 \label{cor:C}
 Fix $m_0\ge 1$.
-Under Proposition~\ref{prop:gap} and
-Proposition~\ref{prop:U}\textup{(U')}, define
+Assume:
+\begin{enumerate}[\textup{(a)}]
+\item Assumption~\ref{ass:gap_only} (gap lower bound);
+\item An upper bound
+  $|\lambda_l - \lambda_{l+1}| \le C_I\,(c/2)^{-1/3}$
+  for all $l$ in the transition window.
+\end{enumerate}
+Define
 \[
   \delta_m
   := \frac{2C_I}{\kappa_0}\,2^{-m}
@@ -495,9 +456,13 @@ $m \ge m_0$, and $j,j+1 \in \Bm(i)$:
   \frac{|A_{ij}-A_{i,j+1}|}{A_{ij}}
   \le \delta_m = O(2^{-m})+O(c^{-1/3}).
 \]
-For any $\varepsilon>0$: choose $m_0$ large and
-then $c$ sufficiently large;
-then $\sup_{m\ge m_0}\delta_m < \varepsilon$.
+For any $\varepsilon>0$: choose $m_0$ large, then $c$
+sufficiently large; then $\sup_{m\ge m_0}\delta_m<\varepsilon$.
+
+\smallskip
+\emph{The upper bound in~\textup{(b)} is implied by
+Proposition~\ref{prop:U}\textup{(U')};
+see~\eqref{eq:incr_simple} of Lemma~\ref{lem:A}.}
 \end{corollary}
 
 \begin{proof}
@@ -510,38 +475,33 @@ then $\sup_{m\ge m_0}\delta_m < \varepsilon$.
 \underbrace{\frac{|\lambda_j-\lambda_{j+1}|}
             {1-\lambda_j}}_{\text{Term 2}}.
 \]
-
-\textbf{Term 1 (Dyadic Separation).}
-Numerator $\le C_I(c/2)^{-1/3}$ by
-Lemma~\ref{lem:A}\,\eqref{eq:incr_simple}.
-Denominator $\ge \kappa_0\,(c/2)^{-1/3}\cdot 2^m$
+\textbf{Term 1.}
+Numerator $\le C_I(c/2)^{-1/3}$ by~(b).
+Denominator $\ge \kappa_0(c/2)^{-1/3}\cdot 2^m$
 by Lemma~\ref{lem:F}.
 The factor $(c/2)^{-1/3}$ \emph{cancels exactly}:
 \[
   \text{Term 1} \le \frac{C_I}{\kappa_0}\,2^{-m},
   \quad\text{independent of }c.
 \]
-
-\textbf{Term 2 (Global error).}
-Using~\eqref{eq:incr_bound} and~\eqref{eq:onemlam}:
+\textbf{Term 2.}
+By~\eqref{eq:incr_bound} and~\eqref{eq:onemlam}:
 \[
   \frac{|\lambda_j-\lambda_{j+1}|}{1-\lambda_j}
-  \le
-  \frac{2C_{\max}}{c_*}(c/2)^{-1/3}
+  \le \frac{2C_{\max}}{c_*}(c/2)^{-1/3}
   + \frac{2C_R}{c_*}c^{-2/3} = O(c^{-1/3}).
 \]
 \end{proof}
 
 \begin{remark}[The operative cancellation]
 \label{rem:dyadic}
-The cancellation of $(c/2)^{-1/3}$ in Term~1 is
-the operative content:
-both $|\lambda_j-\lambda_{j+1}|$ and $|\lambda_i-\lambda_j|$
+Both $|\lambda_j-\lambda_{j+1}|$ and $|\lambda_i-\lambda_j|$
 are $O(c^{-1/3})$, but the denominator carries
 the combinatorial factor $2^m$ from $|i-j|\ge 2^m$.
-Result: purely combinatorial $O(2^{-m})$, independent of~$c$.
-The $O(c^{-1/3})$ in $\delta_m$ comes from Term~2 only
-and vanishes as $c\to\infty$.
+The $(c/2)^{-1/3}$ cancels, leaving $O(2^{-m})$
+independent of~$c$.
+The $O(c^{-1/3})$ term in $\delta_m$ comes from
+Term~2 only and vanishes as $c\to\infty$.
 \end{remark}
 
 % ============================================================
@@ -551,27 +511,21 @@ and vanishes as $c\to\infty$.
 
 \begin{remark}[Empirical behavior of $\beta(c)$]
 \label{rem:beta}
-The centering parameter $\beta(c)$ in
-Conjecture~\ref{conj:ULW} is determined numerically
-by median alignment: $\beta(c)$ is chosen so that
-the erfc profile crosses $\lambda = 1/2$ at the
-correct index.
-
-Numerical computation via Gauss--Legendre
-discretization ($n=400$) yields:
+The parameter $\beta(c)$ in Conjecture~\ref{conj:ULW}
+is determined numerically by median alignment.
+Gauss--Legendre discretization ($n=400$) gives:
 \[
-  \beta(50) \approx -0.424,\quad
-  \beta(100) \approx -0.380,\quad
-  \beta(200) \approx -0.359.
+  \beta(50)\approx -0.424,\quad
+  \beta(100)\approx -0.380,\quad
+  \beta(200)\approx -0.359.
 \]
-Fitting suggests $\beta(c) \sim A + B/\log(c)$ with
-limit $\beta(\infty) \in [-0.30, -0.21]$,
-but the model sensitivity is high and no analytic
-expression is known.
+Fitting suggests $\beta(c)\sim A+B/\log(c)$ with
+limit $\beta(\infty)\in[-0.30,-0.21]$,
+but the model sensitivity is high.
 The observed drift is consistent with a
-discretization-induced centering effect, but no
-structural identification of $\beta(c)$ in terms
-of spectral or arithmetic data is known.
+discretization-induced centering effect,
+but no structural identification of $\beta(c)$
+in terms of spectral or arithmetic data is known.
 \end{remark}
 
 % ============================================================
@@ -581,23 +535,21 @@ of spectral or arithmetic data is known.
 
 \begin{lemma}[Core--WKB Split]
 \label{lem:E}
-Fix $m_0 \ge 1$; assume Proposition~\ref{prop:gap},
-Proposition~\ref{prop:U}, and B-strong \cite{paperVI}
-($A_{ij} \le C_2$).
+Fix $m_0 \ge 1$; assume Assumption~\ref{ass:gap_only},
+Proposition~\ref{prop:U}, and B-strong \cite{paperVI}.
 Then $\sum_{j\ne i}|T_{ij}| \le C(m_0,A,C_2)$
 uniformly in $i$, $N$, and all sufficiently large $c$.
 \end{lemma}
 
 \begin{proof}
 \textbf{Core ($m<m_0$).}
-$|T_{ij}| \le C_2/|i-j|$ (B-strong +
-off-diagonal structure, \cite[Lemma~5.2]{paperVII});
-sum: $\le 2C_2 m_0$.
+$|T_{ij}| \le C_2/|i-j|$ by B-strong
+\cite[Lemma~5.2]{paperVII};
+sum $\le 2C_2 m_0$.
 
 \textbf{WKB ($m\ge m_0$).}
-Corollary~\ref{cor:C} gives H2.
-Apply Theorem~2.1 of \cite{paperVII} to truncated
-operator, using H1 and H3: $O(1)$.
+Corollary~\ref{cor:C} gives H2;
+apply Theorem~2.1 of \cite{paperVII} with H1 and H3.
 \end{proof}
 
 % ============================================================
@@ -607,8 +559,8 @@ operator, using H1 and H3: $O(1)$.
 
 \begin{corollary}[Conditional Reduction]
 \label{cor:closure}
-Under Proposition~\ref{prop:gap}, Proposition~\ref{prop:U},
-and B-strong,
+Under Assumption~\ref{ass:gap_only},
+Proposition~\ref{prop:U}, and B-strong,
 hypotheses (H1)--(H3) of Theorem~2.1 in \cite{paperVII}
 are verified, giving
 $\sup_{i\le N}\sum_{j\ne i}|P_{ij}|
@@ -618,43 +570,43 @@ for all sufficiently large $c$.
 \end{corollary}
 
 \begin{remark}[Dependency chain]
+\label{rem:deps}
 \begin{align*}
-  &\text{Prop.~\ref{prop:gap}}
+  &\text{Ass.~\ref{ass:gap_only}}
     \Rightarrow\text{Lem.~\ref{lem:F}}
     \Rightarrow\text{Cor.~\ref{cor:C} (Term 1)};\\
   &\text{Prop.~\ref{prop:U}(U')}
     \Rightarrow\text{Lem.~\ref{lem:A}}
-    \Rightarrow\text{Cor.~\ref{cor:C} (Term 2 + upper bound)};\\
+    \Rightarrow\text{Cor.~\ref{cor:C}\,(b) + Term 2};\\
   &\text{Prop.~\ref{prop:U}(U)}
-    \Rightarrow\text{Prop.~\ref{prop:gap} (one route)};\\
+    \Rightarrow\text{Ass.~\ref{ass:gap_only} (one route)};\\
   &\text{Cor.~\ref{cor:C} + H3}
-    \Rightarrow\text{Lem.~\ref{lem:E}}
-    \Rightarrow B' \Rightarrow A.
+    \Rightarrow\text{Lem.~\ref{lem:E}}.
 \end{align*}
-\textbf{Key structural point:}
-Lemma~\ref{lem:F} depends only on
-Proposition~\ref{prop:gap}.
-Proposition~\ref{prop:U} provides the Airy upper bounds
-for Term~2 in Corollary~\ref{cor:C} and one route
-to Proposition~\ref{prop:gap}, but it is not the
-logical foundation of the Dyadic Separation Principle.
-All constants depend only on $A_0, C_1, C_2, c_{\min}$.
+\textbf{Key point:}
+Lemma~\ref{lem:F} requires only
+Assumption~\ref{ass:gap_only}.
+Proposition~\ref{prop:U} is one sufficient condition
+for both (a) and (b) of Corollary~\ref{cor:C},
+but it is not the logical foundation of
+the Dyadic Separation Principle.
 \end{remark}
 
 \begin{remark}[Open problems]
 \label{rem:open}
 \begin{itemize}
-\item \textbf{Proposition~\ref{prop:gap}:}
-  uniform gap lower bound; plausible from WKB
+\item \textbf{Assumption~\ref{ass:gap_only}:}
+  a uniform gap lower bound; plausible from WKB
   or monotone comparison; no proof available.
 \item \textbf{Proposition~\ref{prop:U}:}
-  the Airy refinement; requires full uniform
-  WKB-to-Airy matching with $O(c^{-2/3})$ error control.
-\item \textbf{B-strong:} $P_{kl}\le C_2 c^{1/2}$
-  in the transition zone; no proof available.
+  uniform WKB-to-Airy matching with
+  $O(c^{-2/3})$ error; no proof available.
+\item \textbf{B-strong:}
+  $P_{kl}\le C_2 c^{1/2}$ in the transition zone;
+  no proof available.
 \item \textbf{Conjecture~\ref{conj:ULW}:}
-  a full asymptotic derivation of the erfc scaling law
-  and the determination of $\lim_{c\to\infty}\beta(c)$.
+  analytic derivation of the erfc law and
+  determination of $\lim_{c\to\infty}\beta(c)$.
 \end{itemize}
 \end{remark}
 
