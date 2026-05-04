@@ -7,17 +7,14 @@ Numerical scaling test for condition (U') of Paper VIII.
   |(lambda_l - lambda_{l+1}) - (F_Ai(x_l) - F_Ai(x_{l+1}))| <= C_2 * c^{-2/3}
   uniform in l throughout the transition window.
 
-Equivalently, the second differences
-  Delta_l := lambda_l - 2*lambda_{l+1} + lambda_{l+2}
-should satisfy c^{2/3} * Delta_l = O(1) uniformly in the window.
+Here lambda_l in (0,1) are eigenvalues of the CONCENTRATION OPERATOR
+  Q_c f(x) = int_{-1}^{1} sin(c(x-y)) / (pi*(x-y)) f(y) dy,
+NOT the Sturm-Liouville (tridiagonal) eigenvalues chi_l.
 
-This script tests:
-  (A) Raw scaling: c^{2/3} * Delta_l vs rescaled index x_l
-      Expected: bounded, smooth if (U') holds at scale c^{-2/3}
-  (B) Airy consistency: Delta_l^Ai = F_Ai(x_l) - 2*F_Ai(x_{l+1}) + F_Ai(x_{l+2})
-      Expected: close to eigenvalue curve if Airy approximation is good
-  (C) Log-log scaling: max_{l in window} |c^{2/3} * Delta_l| vs c
-      Expected: O(1) if (U') correct, decaying if (U') too strong
+lambda_l are computed from PSWFs psi_l via:
+  lambda_l = (c/(2*pi)) * (int_{-1}^{1} psi_l(x) dx)^2
+which is the squared DC coefficient (k=0 Legendre coefficient), scaled.
+This gives lambda_l in (0,1) as required by Paper VIII.
 
 Transition window: |l - N_Sh| <= A0 * c^{1/3}, A0 = 2.0 < |a_1| ~ 2.3381
 
@@ -26,7 +23,7 @@ c values: 30, 50, 100, 200, 400
 
 import numpy as np
 from scipy.linalg import eigh
-from scipy.special import airy
+from scipy.special import airy, eval_legendre
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -37,9 +34,10 @@ os.makedirs('numerics', exist_ok=True)
 
 # ── Constants ──────────────────────────────────────────────────────────────
 A0 = 2.0
-N_SH_FACTOR = 2.0 / np.pi
+N_SH_FACTOR = 2.0 / np.pi   # N_Sh = 2c/pi
 C_VALUES = [30, 50, 100, 200, 400]
-M_MAT = 500
+M_MAT = 500       # Legendre basis size
+N_GRID = 800      # Gauss-Legendre quadrature points
 
 
 # ── 1. Tridiagonal PSWF matrix (ORX Ch. 3) ────────────────────────────────
@@ -55,22 +53,52 @@ def build_pswf_matrix(c, M):
     return np.diag(diag) + np.diag(sup, 1) + np.diag(sup, -1)
 
 
-def get_eigenvalues(c, M=M_MAT):
+# ── 2. Concentration eigenvalues lambda_l in (0,1) ──────────────────────────
+def get_concentration_eigenvalues(c, M=M_MAT, n_grid=N_GRID):
+    """
+    Returns lambda_l = (c/(2*pi)) * (int_{-1}^1 psi_l(x) dx)^2  in (0,1),
+    sorted by prolate order (l = 0, 1, 2, ...).
+
+    Method:
+      - Build tridiagonal matrix, diagonalize -> Legendre coefficients of psi_l
+      - int_{-1}^1 psi_l(x) dx = sqrt(2) * a_0^{(l)}  (k=0 Legendre coefficient,
+        since int_{-1}^1 P_0(x) dx = 2 and P_k normalized as sqrt((2k+1)/2)*P_k)
+      - lambda_l = (c / (2*pi)) * 2 * (a_0^{(l)})^2
+        where a_0 is the coefficient of the UNnormalized Legendre basis.
+
+    Reference: ORX 2013, Ch. 2-3; Slepian 1978.
+    """
     T = build_pswf_matrix(c, M)
-    eigvals = eigh(T, eigvals_only=True)
-    return np.sort(eigvals)
+    eigvals_chi, eigvecs = eigh(T)
+    # Sort by ascending chi (prolate order)
+    idx_sort = np.argsort(eigvals_chi)
+    eigvecs = eigvecs[:, idx_sort]   # columns: psi_0, psi_1, ...
+
+    # Legendre basis: column k of eigvecs is coefficient of sqrt((2k+1)/2)*P_k
+    # So the k=0 coefficient in the NORMALIZED basis is eigvecs[0, l]
+    # int_{-1}^1 psi_l dx = eigvecs[0,l] * int_{-1}^1 sqrt(1/2)*P_0 dx
+    #                     = eigvecs[0,l] * sqrt(1/2) * 2
+    #                     = eigvecs[0,l] * sqrt(2)
+    dc_coeff = eigvecs[0, :]   # coefficient of k=0 normalized Legendre basis
+    integral = dc_coeff * np.sqrt(2.0)   # int_{-1}^1 psi_l dx
+
+    lam = (c / (2.0 * np.pi)) * integral**2
+    # Clip to [0,1] for safety (numerical noise near 0 or 1)
+    lam = np.clip(lam, 0.0, 1.0)
+    return lam   # array of length M, ordered by prolate index l
 
 
-# ── 2. F_Ai: analytic antiderivative of Ai^2 ──────────────────────────────
+# ── 3. F_Ai: analytic antiderivative of Ai^2 ──────────────────────────────
 def F_Ai(x_arr):
-    """F_Ai(x) = (x*Ai(x)^2 - Ai'(x)^2) / 2  (exact antiderivative)"""
+    """F_Ai(x) = (x*Ai(x)^2 - Ai'(x)^2) / 2  (exact antiderivative of Ai^2)"""
     x_arr = np.asarray(x_arr, dtype=np.float64)
     Ai_vals, Aip_vals, _, _ = airy(x_arr)
     return (x_arr * Ai_vals**2 - Aip_vals**2) / 2.0
 
 
-# ── 3. Transition window ──────────────────────────────────────────────────
+# ── 4. Transition window ──────────────────────────────────────────────────
 def transition_window(c):
+    """Indices l with |l - N_Sh| <= A0 * c^{1/3}."""
     N_sh = N_SH_FACTOR * c
     half_width = A0 * c**(1.0/3.0)
     l_min = int(np.ceil(N_sh - half_width))
@@ -84,22 +112,27 @@ def rescaled_index(l, c):
     return (l - N_sh) * (c / 2.0)**(-1.0/3.0)
 
 
-# ── 4. Main computation ────────────────────────────────────────────────────
-print("Computing eigenvalues and second differences...")
+# ── 5. Main computation ────────────────────────────────────────────────────
+print("Computing concentration eigenvalues lambda_l in (0,1)...")
 
 results = {}
 for c in C_VALUES:
     print(f"  c = {c} ...", end=" ")
-    eigvals = get_eigenvalues(c, M=M_MAT)
+    lam_all = get_concentration_eigenvalues(c, M=M_MAT)
 
+    # Sanity check: values should be in (0,1)
+    in_range = np.sum((lam_all > 1e-10) & (lam_all < 1 - 1e-10))
+    print(f"lambda in (0,1): {in_range}/{len(lam_all)}", end=" ")
+
+    # Transition window
     idx = transition_window(c)
-    idx = idx[idx + 2 < len(eigvals)]
+    idx = idx[idx + 2 < len(lam_all)]
     idx = idx[idx >= 0]
 
-    lam_window = eigvals[idx]
-    lam_p1     = eigvals[idx + 1]
-    lam_p2     = eigvals[idx + 2]
-    Delta_lam  = lam_window - 2*lam_p1 + lam_p2
+    lam_w  = lam_all[idx]
+    lam_p1 = lam_all[idx + 1]
+    lam_p2 = lam_all[idx + 2]
+    Delta_lam = lam_w - 2*lam_p1 + lam_p2
 
     x_l0 = rescaled_index(idx,     c)
     x_l1 = rescaled_index(idx + 1, c)
@@ -111,17 +144,22 @@ for c in C_VALUES:
     Delta_Ai_scaled  = scale * Delta_Ai
     max_scaled = np.max(np.abs(Delta_lam_scaled))
 
+    # Also print lambda values in window for sanity
+    print(f"| window={len(idx)}, lam_window in [{lam_w.min():.3f}, {lam_w.max():.3f}]",
+          end=" ")
+    print(f"| max|c^{{2/3}} Delta|={max_scaled:.4f}")
+
     results[c] = {
         'x_l':              x_l0,
+        'lam_window':       lam_w,
         'Delta_lam_scaled': Delta_lam_scaled,
         'Delta_Ai_scaled':  Delta_Ai_scaled,
         'max_scaled':       max_scaled,
         'n_window':         len(idx),
     }
-    print(f"window size={len(idx)}, max|c^{{2/3}} Delta|={max_scaled:.4f}")
 
 
-# ── 5. Plot A: scaled second differences vs x_l ────────────────────────────
+# ── 6. Plot A: scaled second differences vs x_l ────────────────────────────
 print("\nPlot A: scaled second differences...")
 fig, axes = plt.subplots(2, 3, figsize=(15, 8))
 axes_flat = axes.flatten()
@@ -135,16 +173,17 @@ for i, c in enumerate(C_VALUES):
             color='#ff7f0e', lw=1.8, ls='--', label=r'$c^{2/3}\Delta_{\rm Ai}$')
     ax.axhline(0, color='gray', lw=0.8, ls=':')
     ax.set_title(f'c = {c}', fontsize=12)
-    ax.set_xlabel(r'$x_l$', fontsize=10)
-    ax.set_ylabel(r'$c^{2/3} \cdot \Delta$', fontsize=10)
+    ax.set_xlabel(r'$x_l = (l-N_{\rm Sh})(c/2)^{-1/3}$', fontsize=9)
+    ax.set_ylabel(r'$c^{2/3} \cdot \Delta$', fontsize=9)
     if i == 0:
         ax.legend(fontsize=9)
 
 axes_flat[-1].set_visible(False)
 fig.suptitle(
-    r'Scaled Second Differences $c^{2/3}\Delta_l$ vs $x_l = (l-N_{\rm Sh})(c/2)^{-1/3}$' + '\n'
-    r'Blue: eigenvalue $\quad$ Orange dashed: Airy $\quad$ Window $|x_l| \leq 2.0$',
-    fontsize=13
+    r'Scaled Second Differences $c^{2/3}\Delta_l$ vs $x_l$  '
+    r'[$\lambda_l \in (0,1)$ concentration eigenvalues]' + '\n'
+    r'Blue: $\lambda_l$ $\quad$ Orange dashed: Airy $\quad$ Window $|x_l| \leq 2.0$',
+    fontsize=12
 )
 plt.tight_layout(rect=[0, 0, 1, 0.92])
 plt.savefig('numerics/uprime_A_scaled_second_diff.png', dpi=150, bbox_inches='tight')
@@ -152,7 +191,7 @@ plt.close()
 print("  Saved: uprime_A_scaled_second_diff.png")
 
 
-# ── 6. Plot B: log-log scaling ──────────────────────────────────────────────
+# ── 7. Plot B: log-log scaling ──────────────────────────────────────────────
 print("Plot B: log-log scaling...")
 c_arr   = np.array(C_VALUES, dtype=float)
 max_arr = np.array([results[c]['max_scaled'] for c in C_VALUES])
@@ -177,7 +216,7 @@ ax2.set_ylabel(r'$\max|c^{2/3} \cdot \Delta_\lambda|$', fontsize=12)
 ax2.set_title(
     r'Log-Log Scaling: $\max|c^{2/3}\Delta_\lambda|$ vs $c$' + '\n'
     fr'Fit exponent $\alpha = {alpha:.3f}$ '
-    r'($\alpha\approx 0$ confirms (U$^\prime$) at scale $c^{{-2/3}}$)',
+    r'($\alpha \approx 0$: (U$^\prime$) holds; $\alpha > 0$: too weak)',
     fontsize=12
 )
 ax2.legend(fontsize=11)
@@ -189,8 +228,9 @@ plt.close()
 print("  Saved: uprime_B_loglog_scaling.png")
 
 
-# ── 7. Save summary JSON ──────────────────────────────────────────────────
+# ── 8. Save summary JSON ──────────────────────────────────────────────────
 summary = {
+    'operator': 'concentration operator Q_c, eigenvalues lambda_l in (0,1)',
     'A0': A0,
     'c_values': C_VALUES,
     'power_law_exponent_alpha': float(alpha),
@@ -202,7 +242,9 @@ summary = {
     'per_c': {
         str(c): {
             'window_size': int(results[c]['n_window']),
-            'max_scaled_second_diff': float(results[c]['max_scaled'])
+            'max_scaled_second_diff': float(results[c]['max_scaled']),
+            'lam_window_min': float(results[c]['lam_window'].min()),
+            'lam_window_max': float(results[c]['lam_window'].max()),
         } for c in C_VALUES
     }
 }
