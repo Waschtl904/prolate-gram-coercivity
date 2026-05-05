@@ -617,7 +617,50 @@ on each dyadic block $\mathcal{B}_m=\{j:2^m\leq|i-j|<2^{m+1}\}$:
   \text{uniformly in }i,j\in\mathcal{B}_m,\,m\leq M,
 \]
 with constants independent of $c$.
+
+The conjecture splits into two regimes with different analytical content:
+\begin{enumerate}[nosep,label=(\alph*)]
+  \item \textbf{Right regime} ($x_j > 0$, $\lambda_j \approx 0$):
+        $A_{ij} \approx c^{1/2}\lambda_i/(1-\lambda_i) = O(1)$,
+        nearly constant in $j$.
+        Numerically: $\mathrm{TV}(A_{i,\cdot}|_{x_j>0})/A_{\mathrm{avg}}
+        \approx 0.63$, consistent with the conjecture;
+        Abel summation applies directly.
+  \item \textbf{Left regime} ($x_j < 0$, $\lambda_j \sim 1/2$):
+        $A_{ij}$ grows monotonically by a factor $\sim 15\times$
+        across the Airy window.
+        Numerically: $\mathrm{TV}(A_{i,\cdot}|_{x_j<0})/A_{\mathrm{avg}}
+        \approx 1.64$ at finite $c$;
+        $\mathrm{TV}/(n\cdot A_{\mathrm{avg}}) \sim c^{-0.30}$,
+        so the condition holds only asymptotically and slowly.
+        Because $A_{ij}$ is \emph{monotone} on this side,
+        summation-by-parts with monotone weights (Abel--Dirichlet)
+        gives $|S_{\mathrm{left}}| \leq A_{i,\mathrm{far}}
+        \cdot |\sum_k \cos(\alpha k)/k|$,
+        reducing to the same $O(c^{-1/2}\log c)$ scale provided
+        $\alpha$ is bounded away from $0,\pi$
+        (Conjecture~\ref{conj:phase}).
+\end{enumerate}
 \end{conjecture}
+
+\begin{remark}[Inhomogeneity of the amplitude condition]
+\label{rem:amplitude_inhom}
+On the right side ($x_j>0$), $(1-\lambda_j)\approx 1$ and $A_{ij}$
+is flat in $j$: standard Abel summation and the identity
+\[
+  \sum_{k=1}^N \frac{\cos(\alpha k)}{k}
+  = -\log\!\bigl(2|\sin(\alpha/2)|\bigr) + O(N^{-1})
+\]
+give the full $c^{-1/2}\log c$ gain for this half of each row.
+On the left side ($x_j<0$), the uniform TV condition fails at
+finite $c$, but monotonicity makes the Abel--Dirichlet theorem
+available as a replacement: the signed sum
+$S_{\mathrm{left}} = \sum_{k<0} A_{i,i+k}\cos(\alpha k)/|k|$
+is controlled by $A_{i,\mathrm{far}} \cdot O(\log N)$, which
+after the $c^{-1/2}$ factor from $I_{ij}$ yields $O(c^{-1/2}\log c)$.
+The two sides therefore require different summation arguments
+but yield the same asymptotic bound.
+\end{remark}
 
 \begin{remark}[Two-conjecture structure of B$'$]
 \label{rem:Bprime_chain}
@@ -665,6 +708,31 @@ at the single point $s_*$, and are strictly weaker than
 Assumption~B$'$.
 They do not resolve the contraction problem ---
 they identify its minimal local input.
+\end{remark}
+
+\begin{remark}[Schur bound vs.\ spectral norm: rank structure of $T$]
+\label{rem:rank}
+Assumption~B$'$ is formulated as a Schur row-sum condition
+$\sup_i \sum_j P_{ij}|I_{ij}| \leq Cc^{-1/2}\log c$.
+Numerically, the signed row sums already satisfy this bound
+at finite $c$ (ratio $\sim 1.2$ at $c=100$).
+However, the spectral norm satisfies $\|T\|_{\mathrm{op}} \sim c^{0.40}$,
+which exceeds $c^{-1/2}\log c$ by a factor growing with $c$.
+
+The explanation is the \emph{low-rank structure} of $T$: numerically,
+$T \approx \sigma_1 v_1 v_1^T + \sigma_2 v_2 v_2^T$
+with $\sigma_1 \sim c^{0.40}$, $\sigma_2 \ll \sigma_1$,
+and all remaining singular values $< 10^{-3}$.
+For such a low-rank operator the Schur bound
+$\|T\| \leq \max_i \sum_j |T_{ij}|$
+is not tight when $v_1$ is far from the constant vector $\mathbf{1}$:
+the signed cancellation that makes row sums small
+is \emph{not} the same cancellation that suppresses $\|Tv_1\|$.
+
+Therefore Assumption~B$'$ (row sums) is \emph{necessary but not
+sufficient} for $\|T\|_{\mathrm{op}} \leq Cc^{-1/2}\log c$
+unless the dominant eigenvector satisfies a delocalization condition.
+See Open Problem~\ref{op:eigenvector}.
 \end{remark}
 
 \subsection{Matrix entry bound and proof of Theorem~\ref{thm:main}}
@@ -912,13 +980,45 @@ $T^{\rm near}_{ij}:=T_{ij}\cdot\mathbf{1}_{|i-j|\leq c^{1/6}}$.
 Prove Conjecture~\ref{conj:amplitude}:
 $|A_{ij}-A_{i,j+1}|=o(A_{ij}/2^m)$ on $\mathcal{B}_m$,
 with constants independent of $c$.
-This Lipschitz-in-$j$ condition on the normalised amplitude
-should follow from PSWF transition asymptotics but is not
-established.
+The right regime ($x_j>0$) is numerically consistent with the
+conjecture ($\mathrm{TV}/A_{\mathrm{avg}}\approx 0.63$) and
+analytically accessible via standard Airy asymptotics.
+The left regime ($x_j<0$) satisfies
+$\mathrm{TV}/(n\cdot A_{\mathrm{avg}})\sim c^{-0.30}\to 0$
+asymptotically, but the convergence is slow and the uniform
+$o(1)$ condition requires explicit control of the Airy-quotient
+gradient $\partial_j A_{ij}$ near $\lambda_j\sim 1/2$.
 Together with Conjecture~\ref{conj:phase} it implies B$'$.
-Conjectures~\ref{conj:phase} and~\ref{conj:amplitude} are
-logically independent (one concerns phase arithmetic,
-the other amplitude regularity) but jointly necessary for B$'$.
+\end{openproblem}
+
+\begin{openproblem}[Dominant eigenvector delocalization]
+\label{op:eigenvector}
+Numerically, $T$ is approximately rank~$2$ with leading singular
+value $\sigma_1\sim c^{0.40}$ and dominant eigenvector $v_1$
+satisfying $\langle v_1,\mathbf{1}\rangle\approx 0$.
+Assumption~B$'$ controls $\|T\cdot\mathbf{1}\|$ but not $\sigma_1$,
+because the Schur bound is not tight for low-rank operators
+when $v_1\not\approx\mathbf{1}$ (Remark~\ref{rem:rank}).
+Prove one of:
+\begin{enumerate}[nosep,label=(\alph*)]
+  \item \textbf{Delocalization:}
+        $\|v_1\|_\infty\leq C/\sqrt{N}$,
+        so $v_1^T T v_1\leq\|T\|_F/N\to 0$.
+  \item \textbf{Left-support bound:}
+        $\sum_{i:\,x_i<0}|v_1(i)|^2=o(1)$,
+        i.e.\ $v_1$ does not concentrate on the left Airy flank
+        where $A_{ij}$ is large.
+  \item \textbf{Explicit eigenvector approximation:}
+        Identify $v_1$ asymptotically as an Airy-weighted mode
+        and verify $v_1^T T v_1\leq Cc^{-1/2}\log c$ directly.
+\end{enumerate}
+Any of (a)--(c) closes the gap between the row-sum
+condition~B$'$ and $\|T\|_{\mathrm{op}}\leq Cc^{-1/2}\log c$.
+Conditional on Toeplitz convergence
+(Remark~\ref{rem:toeplitz} and OP~\ref{op:nearfar}(2b)),
+(a) follows from Fourier delocalization of Toeplitz eigenvectors,
+providing a further conditional link between
+OP~\ref{op:nearfar}(2b) and OP~\ref{op:eigenvector}.
 \end{openproblem}
 
 \begin{openproblem}[Weighted norm]\label{op:weightnorm}
@@ -977,6 +1077,10 @@ B$'$ requires Conj.~\ref{conj:phase} (phase) \emph{and}
 Conj.~\ref{conj:amplitude} (amplitude, $c$-uniform);
 the two conjectures are logically independent but
 jointly necessary for B$'$.
+The Schur row-sum condition~B$'$ is necessary but not sufficient
+for $\|T\|_{\mathrm{op}}\leq Cc^{-1/2}\log c$ unless the
+dominant eigenvector satisfies a delocalization condition
+(Rem.~\ref{rem:rank}, OP~\ref{op:eigenvector}).
 
 \subsection*{What is genuinely new}
 All Layer~0, all unconditional:
@@ -1015,8 +1119,14 @@ the semiclassical band operator anchor,
 the three-regime scale balance for the $c^{1/6}$ crossover
 (Remark~\ref{rem:c16_scale}, heuristically unique within the
 given decomposition),
-and the core diagnosis ``local WKB asymptotics do not determine
-global cancellation'' were developed in working sessions, May 2026.
+the inhomogeneous left/right splitting of Conjecture~\ref{conj:amplitude}
+with the Abel--Dirichlet argument for the left regime
+(Remark~\ref{rem:amplitude_inhom}),
+the rank-structure gap between B$'$ and $\|T\|_{\mathrm{op}}$
+(Remark~\ref{rem:rank}),
+and the dominant eigenvector delocalization problem
+(Open Problem~\ref{op:eigenvector})
+were developed in working sessions, May 2026.
 
 %% ============================================================
 \begin{thebibliography}{99}
@@ -1037,7 +1147,7 @@ global cancellation'' were developed in working sessions, May 2026.
   and Hilbert transform},
   Trans.\ Amer.\ Math.\ Soc.\ \textbf{176} (1973), 227--251.
 
-\bibitem{CF74}
+  \bibitem{CF74}
   R.~R.~Coifman, C.~Fefferman,
   \textit{Weighted norm inequalities for maximal functions and
   singular integrals},
