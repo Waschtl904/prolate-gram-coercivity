@@ -1,0 +1,427 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\Ai}{\operatorname{Ai}}
+\newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
+\newcommand{\eps}[1]{\varepsilon_{#1}^{(c)}}
+\newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\Tc}{T_c}
+\newcommand{\VN}{V_N}
+\newcommand{\inner}[2]{\langle #1,\, #2 \rangle}
+
+\title{%
+  \textbf{Paper~X: Spectral Gap Lower Bound}\\[0.4em]
+  \large $\varepsilon_N^{(c)} \geq C c^{-1/2}$ via PSWF
+  Superconcentration
+}
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper~IX reduced Assumption B-strong to the spectral gap condition
+$\varepsilon_N^{(c)} := 1 - \lambda_N^{(c)} \geq C c^{-1/2}$
+for $N = \lfloor Ac^{1/3}\rfloor$.
+This paper carries out the proof attack (Route~C of Paper~IX):
+we bound $\varepsilon_N^{(c)}$ from below using
+the superconcentration properties of PSWF eigenvalues
+in the regime $k \ll N_{\mathrm{Sh}} = 2c/\pi$.
+The main tool is the quantitative Landau--Pollak
+concentration theorem combined with the integral-equation
+asymptotics of Osipov--Rokhlin--Xiao~\cite{ORX2013},
+Chapter~4.
+
+\medskip\noindent
+The central technical proposition (Proposition~\ref{prop:main})
+gives a lower bound of the form
+\[
+  \varepsilon_N^{(c)} \geq \exp\!\bigl(-C_1 c^{2/3}\bigr)
+\]
+for an explicit constant $C_1 > 0$.
+This is superpolynomially small — hence \emph{does not yet}
+establish $\varepsilon_N \geq Cc^{-1/2}$.
+The gap between exponential and polynomial is identified as
+the \emph{final obstruction} of the programme,
+and is formulated as Open Problem~\ref{op:sharpening}.
+\end{abstract}
+
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Goal and Standing Reductions}
+\label{sec:goal}
+%% ============================================================
+
+By Paper~IX, Proposition~2.3 and Open Problem~3.1,
+Assumption B-strong is implied by:
+\[
+  \boxed{\varepsilon_N^{(c)} := 1 - \lam{N} \geq C c^{-1/2},
+  \qquad N = \lfloor Ac^{1/3}\rfloor.}
+  \tag{Gap}
+\]
+This is the \emph{sole remaining target} of the programme.
+All other reductions (Airy-WKB, Teleskop, Regime~I--III)
+have been completed or identified as spectrally irrelevant
+(\texttt{bstrong\_reduction\_lemma.tex}).
+
+\begin{remark}[What this paper does and does not do]
+This paper gives the best currently available lower bound
+on $\varepsilon_N^{(c)}$, identifies why it falls short
+of~(Gap), and formulates the sharp version as an
+explicit open problem.
+It does \emph{not} claim to prove~(Gap).
+\end{remark}
+
+%% ============================================================
+\section{Baseline: Landau--Pollak Lower Bound}
+\label{sec:LP}
+%% ============================================================
+
+\subsection{Setup}
+
+The PSWF operator $\Tc$ has the variational characterisation:
+\[
+  \lam{k} = \max_{\substack{f \perp \pswf{0},\ldots,\pswf{k-1} \\
+  \|f\|=1}} \int_{-1}^{1}|\hat f(\xi)|^2\,d\xi,
+\]
+where $\hat f$ denotes the Fourier transform
+normalized on $[-c,c]$.
+Equivalently, $\lam{k}$ is the fraction of $L^2$-energy
+of $\pswf{k}$ concentrated in $[-1,1]$.
+
+\subsection{Landau--Pollak theorem}
+
+The following is a quantitative form of the
+Landau--Pollak concentration result
+(Landau--Pollak \cite{LP1961II},
+Slepian \cite{Slepian1978}):
+
+\begin{theorem}[Landau--Pollak, quantitative form]
+\label{thm:LP}
+For $k \leq 2c/\pi - Cc^{1/3}$ (i.e.\ $k$ well below
+the spectral edge):
+\[
+  1 - \lam{k}
+  \leq A_0 \exp\!\bigl(-c\,\phi(k/c)\bigr),
+\]
+where $\phi(t) := \pi(1 - 2t/\pi) > 0$ for
+$t < \pi/2$ (the ``undersaturation'' exponent),
+and $A_0 > 0$ is an absolute constant.
+\end{theorem}
+
+\begin{remark}
+For $k \leq N = \lfloor Ac^{1/3}\rfloor$:
+$k/c \leq Ac^{-2/3} \to 0$, so
+$\phi(k/c) \to \phi(0) = \pi$.
+Thus Theorem~\ref{thm:LP} gives
+$\varepsilon_k \leq A_0 e^{-\pi c}$,
+which is a \emph{superexponential upper} bound on
+$\varepsilon_k$ (confirming superconcentration).
+It says nothing about lower bounds.
+\end{remark}
+
+\subsection{Lower bound via energy complementarity}
+
+A matching lower bound requires a different argument.
+The standard route uses the \emph{complementary}
+concentration: since $\pswf{k}$ has non-zero
+energy outside $[-1,1]$, one needs to lower-bound
+this complementary energy.
+
+\begin{proposition}[Lower bound -- crude form]
+\label{prop:crude}
+For $k \leq N = \lfloor Ac^{1/3}\rfloor$ and $c \geq c_0$:
+\[
+  \varepsilon_k^{(c)} = 1 - \lam{k}
+  \geq \exp\!\bigl(-C_1 c^{2/3}\bigr)
+\]
+for an explicit constant $C_1 = C_1(A) > 0$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The PSWF $\pswf{k}$ satisfies the Sturm--Liouville
+equation with eigenvalue $\mu_k^{(c)}$ (the
+associated ODE eigenvalue, not the concentration eigenvalue).
+For $k \leq N$, $\mu_k^{(c)} \sim c^2 + O(kc)$.
+The function $\pswf{k}$ oscillates on $[-1,1]$ with
+$\sim k$ zeros and decays outside.
+The $L^2$-mass outside $[-1,1]$ is governed by
+the WKB turning point at $|x| = 1$:
+\[
+  \int_{|x|>1}|\pswf{k}(x)|^2\,dx
+  \geq \exp\!\bigl(-2\int_1^{x_k^*}
+  \sqrt{c^2(x^2-1)}\,dx\bigr)
+\]
+where $x_k^*$ is the outer turning point at
+$c^2(x^2-1) = \mu_k^{(c)} - c^2$, giving
+$x_k^* = \sqrt{1 + \mu_k^{(c)}/c^2 - 1}
+\sim 1 + O(k/c)$.
+For $k \leq Ac^{1/3}$: $x_k^* - 1 \sim Ac^{-2/3}$,
+so the WKB exponent is
+$\sim 2c \cdot (c^{-2/3})^{3/2} = 2c^{2/3}$.
+Hence $\varepsilon_k \geq \exp(-C_1 c^{2/3})$
+for $C_1 = 2A^{3/2}$.
+\end{proof}
+
+\begin{remark}[The gap]
+\label{rem:gap}
+Proposition~\ref{prop:crude} gives
+$\varepsilon_N \geq e^{-C_1 c^{2/3}}$,
+while (Gap) requires $\varepsilon_N \geq Cc^{-1/2}$.
+Since $e^{-C_1 c^{2/3}} \ll c^{-1/2}$ for all $c$,
+the WKB lower bound is too weak by a
+\emph{superpolynomial factor}.
+This is the final obstruction.
+\end{remark}
+
+%% ============================================================
+\section{ORX Chapter 4: Sharper Asymptotics}
+\label{sec:ORX}
+%% ============================================================
+
+\subsection{What ORX provides}
+
+Osipov--Rokhlin--Xiao \cite{ORX2013}, Chapter~4,
+give a refined analysis of PSWF eigenvalues based on
+the integral equation
+\[
+  \lambda_k^{(c)}\,\pswf{k}(x)
+  = \int_{-1}^{1} \frac{\sin(c(x-y))}{\pi(x-y)}\,
+  \pswf{k}(y)\,dy.
+\]
+Their key result (Theorem~4.3 in \cite{ORX2013})
+gives, for $k$ \emph{near the spectral edge}
+$k \sim N_{\mathrm{Sh}} = 2c/\pi$:
+\[
+  \lam{k} = F_{\mathrm{Ai}}\!\left(
+  \frac{k - N_{\mathrm{Sh}}}{(c/2)^{1/3}}\right)
+  + O(c^{-2/3}),
+\]
+where $F_{\mathrm{Ai}}$ is the Airy CDF.
+This is the expansion used in Papers~VI--IX,
+valid for $|k - N_{\mathrm{Sh}}| = O(c^{1/3})$.
+
+\subsection{Regime of validity and the gap}
+
+\begin{remark}[ORX does not reach the Galerkin scale]
+The ORX expansion is valid for
+$k = N_{\mathrm{Sh}} + O(c^{1/3})$,
+i.e.\ $k \in [N_{\mathrm{Sh}} - C_0 c^{1/3},
+N_{\mathrm{Sh}} + C_0 c^{1/3}]$.
+For $k \leq N = \lfloor Ac^{1/3}\rfloor$:
+$k \ll N_{\mathrm{Sh}} - c^{1/3}$,
+so the ORX expansion is \emph{not valid}.
+In this regime, the Airy CDF is superexponentially
+close to $1$, i.e.\ $F_{\mathrm{Ai}}(x_k) \approx 1$
+for $x_k = (k-N_{\mathrm{Sh}})(c/2)^{-1/3} \ll -1$,
+giving only $\varepsilon_k \approx 1 - F_{\mathrm{Ai}}(x_k)
+\sim e^{-c|x_k|^{3/2}}$,
+consistent with Proposition~\ref{prop:crude}
+but not sharper.
+\end{remark}
+
+\subsection{What a sharp bound would require}
+
+To establish $\varepsilon_N \geq Cc^{-1/2}$, one needs
+an asymptotic expansion of $\lam{k}$ valid for
+$k = O(c^{1/3})$, specifically in the form
+\[
+  \varepsilon_k^{(c)} = 1 - \lam{k}
+  = c^{-\beta}\,g(k/c^{1/3},\, c)\,(1 + o(1))
+\]
+for some $\beta \leq 1/2$ and slowly-varying $g$.
+Neither the Landau--Pollak theorem,
+the ORX spectral-edge theory,
+nor the WKB approach currently provides this.
+
+%% ============================================================
+\section{The Final Obstruction}
+\label{sec:obstruction}
+%% ============================================================
+
+\begin{proposition}[Main result of this paper]
+\label{prop:main}
+The following is the best currently available lower bound
+on $\varepsilon_N^{(c)}$:
+\[
+  \varepsilon_N^{(c)} \geq \exp\!\bigl(-C_1 A^{3/2}\, c^{2/3}\bigr),
+  \qquad N = \lfloor Ac^{1/3}\rfloor,
+\]
+where $C_1 > 0$ is an absolute constant.
+This follows from the WKB outer-tail estimate of
+Proposition~\ref{prop:crude}.
+It does not imply (Gap).
+\end{proposition}
+
+\begin{openproblem}[Sharpening to polynomial]
+\label{op:sharpening}
+Show that for $N = \lfloor Ac^{1/3}\rfloor$:
+\[
+  \varepsilon_N^{(c)} = 1 - \lam{N} \geq C(A)\,c^{-1/2}.
+\]
+
+\medskip\noindent
+This requires an asymptotic expansion of $\lam{N}$
+for $N = O(c^{1/3})$ that goes beyond current
+Landau--Pollak and ORX theory.
+The following approaches are natural candidates:
+\begin{enumerate}[nosep]
+  \item \textbf{Fredholm determinant asymptotics:}
+        express $\prod_{k=0}^{N}\lam{k}$ as a Fredholm
+        determinant of $\Tc|_{[-1,1]}$,
+        then extract individual $\lam{N}$ from
+        log-derivative estimates.
+  \item \textbf{$\chi^2$ / random matrix analogy:}
+        in random matrix theory, the gap below the
+        $k$-th largest eigenvalue of a GUE matrix
+        is polynomial; a heuristic analogy suggests
+        a polynomial lower bound for $\varepsilon_N$
+        may hold but requires rigorous transfer.
+  \item \textbf{Direct ODE/shooting argument:}
+        the PSWF satisfies a second-order ODE;
+        a Pr\"ufer/shooting argument might give
+        precise eigenvalue localization at the
+        Galerkin scale $k = O(c^{1/3})$.
+\end{enumerate}
+\end{openproblem}
+
+\begin{remark}[Plausibility of (Gap)]
+\label{rem:plausibility}
+Numerical experiments (see \texttt{numerics/}) suggest
+that $\varepsilon_N^{(c)} \cdot c^{1/2}$ is
+\emph{bounded below away from zero} as $c \to \infty$
+for fixed $A$.
+This supports (Gap) but does not prove it.
+The exponential lower bound of Proposition~\ref{prop:main}
+is consistent with (Gap) since
+$\exp(-Cc^{2/3}) \ll c^{-1/2}$
+--- the WKB estimate is simply too crude to see
+the polynomial regime.
+\end{remark}
+
+%% ============================================================
+\section{Consequences if (Gap) Holds}
+\label{sec:consequences}
+%% ============================================================
+
+\begin{corollary}[B-strong from (Gap)]
+If $\varepsilon_N^{(c)} \geq Cc^{-1/2}$, then:
+\begin{enumerate}[nosep]
+  \item The coercivity constant of $(I-\Tc)|_{\VN}$
+        is $\geq Cc^{-1/2}$.
+  \item For all $k,l \leq N$ with $|k-l| \leq c^{1/6}$:
+        $P_{kl} \leq C_2 c^{1/2}$,
+        i.e.\ Assumption B-strong holds.
+  \item The Galerkin matrix $G_N$ of Paper~VI is
+        invertible with $\|G_N^{-1}\| \leq C c^{1/2}$.
+  \item The error estimate of Theorem~1.1 of
+        Paper~VI holds unconditionally.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Items (1) and (2) follow from Paper~IX,
+Proposition~2.3 and the Lipschitz bound
+$|1/\varepsilon_l - 1/\varepsilon_k| \leq
+(1/\varepsilon_N - 1/\varepsilon_0) \leq
+N \cdot \sup_k |d(1/\varepsilon_k)/dk|$,
+together with (Gap) and the monotonicity
+$\varepsilon_0 \leq \varepsilon_k \leq \varepsilon_N$.
+Items (3)--(4) follow from Paper~VI, Section~5.
+\end{proof}
+
+%% ============================================================
+\section{Programme Architecture After Paper~X}
+\label{sec:arch}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{p{2.5cm} p{5cm} p{4cm} p{1.8cm}}
+\toprule
+\textbf{Papers} & \textbf{Content} & \textbf{Tools} & \textbf{Status} \\
+\midrule
+I--V & Galerkin framework, PSWFs, coercivity structure
+& Functional analysis & \checkmark \\
+VI & B-strong assumption, Galerkin norm estimate
+& Airy CDF, eigenvalue approx. & \checkmark \\
+VII--VIII & Spectral edge, scale separation
+& WKB, semiclassical & \checkmark \\
+\texttt{bstrong\_red.} & Airy reduction, regime analysis, domain correction
+& Airy ODE, numerics & \checkmark \\
+IX & B-strong $\Leftrightarrow$ spectral gap; framework shift
+& Operator theory & \checkmark \\
+X (this) & Best lower bound for $\varepsilon_N$; final obstruction
+& LP, WKB, ORX & \checkmark / \textbf{open} \\
+\midrule
+\textbf{Open} & $\varepsilon_N \geq Cc^{-1/2}$ (polynomial sharpening)
+& Fredholm det., ODE shooting, RMT analogy
+& \textbf{open} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+\textbf{Summary of the programme.}
+The only remaining gap between the full proof and the
+current state is the polynomial lower bound
+$\varepsilon_N^{(c)} \geq Cc^{-1/2}$.
+All other components are closed.
+The three candidate methods
+(Fredholm determinant, ODE shooting, random matrix analogy)
+are documented in Open Problem~\ref{op:sharpening}.
+
+%% ============================================================
+\begin{thebibliography}{9}
+
+\bibitem{paper6}
+  \textit{Paper~VI: Galerkin Norm Estimates},
+  \texttt{paper6.tex}, prolate-gram-coercivity programme, 2026.
+
+\bibitem{paper9}
+  \textit{Paper~IX: B-strong as a Spectral Gap},
+  \texttt{paper9\_superconcentration.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{LP1961II}
+  H.~J.~Landau and H.~O.~Pollak,
+  ``Prolate Spheroidal Wave Functions,
+  Fourier Analysis and Uncertainty~II,''
+  \textit{Bell Syst.\ Tech.\ J.}, 40 (1961), 65--84.
+
+\bibitem{Slepian1978}
+  D.~Slepian,
+  ``Prolate Spheroidal Wave Functions, Fourier Analysis,
+  and Uncertainty~V,''
+  \textit{Bell Syst.\ Tech.\ J.}, 57 (1978), 1371--1430.
+
+\bibitem{ORX2013}
+  A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+
+\end{thebibliography}
+
+\end{document}
