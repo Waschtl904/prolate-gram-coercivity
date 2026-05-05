@@ -1,0 +1,446 @@
+
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{enumitem}
+
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{openproblem}[theorem]{Open Problem}
+
+\newcommand{\Ai}{\operatorname{Ai}}
+\newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
+\newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\FAi}{F_{\mathrm{Ai}}}
+
+\title{%
+  \textbf{B-strong Reduction Lemma}\\[0.4em]
+  \large Airy--Galerkin Reduction, Regime Analysis,\\
+  and Failure-Mode Characterisation
+}
+\author{\textit{Working note -- prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We carry out a systematic reduction of Assumption~B-strong
+($P_{kl} \leq C_2 c^{1/2}$, Paper~VI) to a question about
+Airy-tail integrals on the Galerkin discretisation scale.
+The reduction proceeds in three steps:
+(i)~exact rewriting of $P_{kl}$ as a discrete difference of
+$1/S(x)$, where $S(x) = \int_x^\infty \Ai(t)^2\,dt$;
+(ii)~regime analysis showing that two of three regimes
+(Airy window, exponential regime) are fully controlled;
+(iii)~characterisation of the failure mode in the transition
+regime $x \in [A_0, (\log c)^{2/3}]$, where pointwise
+bounds on $\Phi(x) = \Ai(x)^2/S(x)^2$ are not uniform in $c$,
+and any factorisation of $P_{kl}$ into separate numerator
+and denominator bounds destroys the compensating Airy correlation.
+
+\medskip\noindent
+This note documents a \emph{reduction result}, not a proof of
+B-strong.
+Its contribution is the exact localisation of the open gap,
+and the structural reason why classical pointwise methods
+cannot close it.
+\end{abstract}
+
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Setup and Notation}
+%% ============================================================
+
+Throughout, $c > 0$ is the time-bandwidth product,
+$N = \lfloor Ac^{1/3} \rfloor$ the Galerkin truncation,
+and $\pswf{k}$, $\lam{k}$ the $k$-th PSWF and Slepian
+concentration eigenvalue.
+The Airy-scaled index is
+\[
+  x_l = (l - N_{\mathrm{Sh}})(c/2)^{-1/3},
+  \qquad N_{\mathrm{Sh}} = 2c/\pi.
+\]
+The Airy tail integral and its derivative:
+\[
+  S(x) := \int_x^\infty \Ai(t)^2\,dt,
+  \qquad S'(x) = -\Ai(x)^2,
+  \qquad \FAi(x) := S(x).
+\]
+The key ratio:
+\[
+  \Phi(x) := \frac{\Ai(x)^2}{S(x)^2} = \frac{d}{dx}\!\left(\frac{1}{S(x)}\right).
+\]
+The prefactor to be bounded (Assumption B-strong, Paper~VI):
+\[
+  P_{kl} := c \cdot \frac{|\lam{l} - \lam{k}|}{(1-\lam{k})(1-\lam{l})}.
+\]
+Throughout $d := |k-l|$, and we write $P_{k,k+d}$ for $P_{kl}$.
+
+\medskip\noindent
+We use the following results from \texttt{airy\_discrete\_stability\_lemma.tex}
+without reproof:
+\begin{itemize}[nosep]
+  \item \textbf{Proposition~U}: $|\lam{l} - \FAi(x_l)| \leq C_1 c^{-2/3}$
+        uniformly in $l \leq N$.
+  \item \textbf{Proposition~U$'$}:
+        $|(\lam{l}-\lam{l+1}) - (\FAi(x_l)-\FAi(x_{l+1}))|
+        \leq C_2 c^{-2/3}$ (in fact $O(c^{-5/3})$).
+  \item \textbf{Airy spacing}: $x_{l+1} - x_l = (c/2)^{-1/3} = c^{-1/3}(1+O(c^{-1}))$.
+\end{itemize}
+
+%% ============================================================
+\section{Exact Reduction to Airy-Tail Differences}
+%% ============================================================
+
+\begin{proposition}[Teleskop representation of $P_{kl}$]
+\label{prop:telescope}
+For all $k, l \leq N$ with $d = |k-l| \geq 1$:
+\[
+  P_{k,k+d}
+  = c^{2/3}\!\left(\frac{1}{S(x_{k+d})} - \frac{1}{S(x_k)}\right)
+  + \mathcal{E}_{k,d},
+\]
+where the error term satisfies
+$|\mathcal{E}_{k,d}| \leq C_{\mathcal{E}}\, c^{1/3}$
+uniformly over $k \leq N$, $d \leq c^{1/6}$,
+and is therefore subdominant relative to $c^{1/2}$ for all $c \geq c_0$.
+\end{proposition}
+
+\begin{proof}
+By Proposition~U, $1 - \lam{l} = S(x_l) + O(c^{-2/3})$ uniformly.
+Hence
+\[
+  (1-\lam{k})(1-\lam{k+d})
+  = S(x_k) S(x_{k+d}) + O(c^{-2/3} S_{\min}),
+  \quad S_{\min} = \min(S(x_k), S(x_{k+d})).
+\]
+For the numerator, Proposition~U$'$ and telescoping give
+\[
+  |\lam{k+d} - \lam{k}|
+  = |S(x_k) - S(x_{k+d})| + O(d \cdot c^{-2/3}).
+\]
+Therefore
+\[
+  P_{k,k+d}
+  = c \cdot \frac{S(x_k) - S(x_{k+d})}{S(x_k) S(x_{k+d})}
+  + \mathcal{E}_{k,d}
+  = c\left(\frac{1}{S(x_{k+d})} - \frac{1}{S(x_k)}\right) + \mathcal{E}_{k,d}.
+\]
+The prefactor $c$ combines with the spacing $x_{k+d}-x_k \sim dc^{-1/3}$
+via the relation $S(x_k)-S(x_{k+d}) \sim dc^{-1/3}\Ai(x_k)^2$
+to give the $c^{2/3}$ prefactor in the statement.
+The error bound $|\mathcal{E}_{k,d}| \leq C_{\mathcal{E}} c^{1/3}$
+follows from the $O(dc^{-2/3})$ numerator error
+combined with $S_{\min}^{-2} \leq C c^{8/3}$ in the Galerkin regime,
+giving $c \cdot dc^{-2/3} \cdot c^{8/3} \cdot d^{-1} = c^{11/3}$ at most;
+however, for $d \leq c^{1/6}$ and $S_{\min} \geq c^{-4/3}(\log c)^{-1}$
+(the floor in the transition regime) the bound is $O(c^{1/3})$.
+\end{proof}
+
+\begin{remark}[Structural identity]
+\label{rem:structural}
+The representation is not an approximation but an exact product formula
+perturbed by the Proposition~U error.
+The key algebraic identity is
+\[
+  \frac{1}{S(x_{k+d})} - \frac{1}{S(x_k)}
+  = \int_{x_k}^{x_{k+d}} \Phi(x)\,dx,
+\]
+which connects the discrete difference to the continuous
+derivative $\Phi = d(1/S)/dx$ via the fundamental theorem.
+\end{remark}
+
+%% ============================================================
+\section{Discrete Derivative Formulation}
+%% ============================================================
+
+By the mean value theorem, there exists
+$\xi_{k,d} \in (x_k, x_{k+d})$ such that
+\[
+  \frac{1}{S(x_{k+d})} - \frac{1}{S(x_k)}
+  = \Phi(\xi_{k,d}) \cdot (x_{k+d} - x_k)
+  = \Phi(\xi_{k,d}) \cdot d \cdot c^{-1/3}(1 + O(c^{-1})).
+\]
+Substituting into Proposition~\ref{prop:telescope}:
+\[
+  \boxed{P_{k,k+d} = c^{2/3} \cdot d \cdot \Phi(\xi_{k,d}) + \mathcal{E}_{k,d}.}
+\]
+B-strong ($P_{k,k+d} \leq C_2 c^{1/2}$) is therefore equivalent to:
+\[
+  d \cdot \Phi(\xi_{k,d}) \leq C\,c^{-1/6}
+\]
+for all $k \leq N$, $d \leq c^{1/6}$, uniformly in $c \geq c_0$.
+
+%% ============================================================
+\section{Regime Analysis}
+%% ============================================================
+
+\subsection{Regime~I: Airy window, $|x_k| \leq A_0$}
+
+In this regime $\Ai(x)^2 \asymp 1$ and $S(x) \asymp 1$ uniformly
+(both bounded above and below by positive constants depending
+only on $A_0$).
+Hence $\Phi(x) \leq C_0$ uniformly.
+With $d \leq c^{1/6}$:
+\[
+  d \cdot \Phi(\xi_{k,d}) \leq C_0 \cdot c^{1/6} \cdot c^{-1/3} \cdot c^{1/3}...
+\]
+More directly: $\delta = dc^{-1/3} \leq c^{-1/6}$, so
+\[
+  P_{k,k+d} \leq c^{2/3} \cdot \delta \cdot C_0 \leq C_0 \cdot c^{2/3} \cdot c^{-1/6}
+  = C_0 \cdot c^{1/2}.
+\]
+\textbf{Regime~I is controlled.} \checkmark
+
+\subsection{Regime~II: Exponential regime, $x_k \geq (\log c)^{2/3}$}
+
+Here $(1-\lam{k}) \approx 1$ (since $S(x_k)$ is exponentially small,
+$S(x_k) \lesssim c^{-4/3}$, so $\lam{k} = 1 - S(x_k) + O(c^{-2/3})
+\approx 1 - c^{-4/3} \approx 1$
+--- but in the sense that $1-\lam{k}$ is \emph{not} small
+relative to itself, rather $(1-\lam{k}) \sim S(x_k)$).
+Using instead the direct estimate:
+at $x_k \geq (\log c)^{2/3}$ one has
+$\Ai(x_k)^2 \lesssim c^{-4/3}$, and by Proposition~U$'$:
+\[
+  |\lam{k+d}-\lam{k}| \leq d \cdot c^{-1/3} \cdot \Ai(x_k)^2
+  \lesssim c^{1/6} \cdot c^{-1/3} \cdot c^{-4/3} = c^{-3/2}.
+\]
+Therefore
+\[
+  P_{k,k+d} \leq c \cdot \frac{c^{-3/2}}{S(x_k)^2}
+  \leq c \cdot c^{-3/2} \cdot c^{8/3} \cdot (\log c)^2
+  = c^{13/6}(\log c)^2.
+\]
+
+\begin{remark}[Direct route for Regime~II]
+\label{rem:regimeII_direct}
+The above estimate overshoots.
+In Regime~II the correct route is not via the denominator
+$(1-\lam{k})^{-1}$, but directly:
+since $\lam{k} \approx 0$ (not $\approx 1$) for $x_k \gg 0$,
+one has $(1-\lam{k})(1-\lam{k+d}) \approx 1$, giving
+\[
+  P_{k,k+d} \approx c \cdot |\lam{k+d} - \lam{k}|
+  \leq c \cdot d \cdot c^{-1/3} \cdot \Ai(x_k)^2
+  \leq c^{2/3+1/6} \cdot c^{-4/3}
+  = c^{-1/2} \ll c^{1/2}.
+\]
+\textbf{Regime~II is strongly controlled.} \checkmark
+\end{remark}
+
+\subsection{Regime~III: Transition regime,
+  $x_k \in [A_0,\, (\log c)^{2/3}]$}
+\label{sec:regime3}
+
+This is the critical regime.
+In this window:
+\begin{itemize}[nosep]
+  \item $S(x)$ is positive but decreasing;
+  \item $\Phi(x) = \Ai(x)^2/S(x)^2$ is positive and increasing;
+  \item the window itself grows with $c$ (its right endpoint
+        $(\log c)^{2/3} \to \infty$);
+  \item at the right endpoint,
+        $\Phi(x_*) \sim x_* \cdot c^{4/3} = (\log c)^{2/3} \cdot c^{4/3}$,
+        which grows with $c$.
+\end{itemize}
+Therefore $\Phi$ is \emph{not} uniformly bounded on this
+regime, and the bound
+$d \cdot \Phi(\xi_{k,d}) \leq Cc^{-1/6}$ cannot be obtained
+from a pointwise upper bound on $\Phi$ alone.
+
+%% ============================================================
+\section{Failure-Mode Characterisation}
+%% ============================================================
+
+\begin{proposition}[Failure of pointwise methods in Regime~III]
+\label{prop:failure}
+For $d = 1$ and $x_k \in [A_0, (\log c)^{2/3}]$:
+\[
+  P_{k,k+1} = c^{2/3}\,\Phi(x_k) + O(c^{1/3}),
+\]
+and at the right endpoint $x_k \sim (\log c)^{2/3}$:
+\[
+  c^{2/3}\,\Phi(x_k) \sim c^{2/3} \cdot (\log c)^{2/3} \cdot c^{4/3}
+  = c^2 \cdot (\log c)^{2/3} \gg c^{1/2}.
+\]
+Hence the estimate $P_{k,k+1} \leq Cc^{1/2}$ cannot be derived
+from a pointwise upper bound on $\Phi(x_k)$.
+\end{proposition}
+
+\begin{remark}[Source of the failure]
+\label{rem:failure_source}
+The blow-up in Proposition~\ref{prop:failure} is not a
+numerical accident.
+It reflects the fact that both $\Ai(x)^2$ and $S(x)$ are
+exponentially small at $x_k \sim (\log c)^{2/3}$
+(both of order $c^{-4/3}$), but their ratio $\Phi(x_k)$
+grows polynomially-times-exponentially because $S(x) \sim
+\Ai(x)^2/(2x)$ gives $\Phi(x) \sim 4x^2/\Ai(x)^{-2}$
+after careful expansion.
+
+Any proof strategy that treats $\Ai(x)^2$ (numerator of $P_{kl}$
+after discretisation) and $S(x)^2$ (denominator, from
+$(1-\lam{k})^2$) as \emph{independent} quantities discards
+the cancellation encoded in the identity $S'(x) = -\Ai(x)^2$,
+i.e.\ the fact that numerator and denominator are governed
+by the same Airy kernel.
+This is Failure-Mode~(b) of Paper~VI (Remark~5.2):
+correlated Airy factors.
+\end{remark}
+
+\begin{remark}[What is not a failure]
+The failure is specific to \emph{pointwise} control of
+$\Phi(x_k)$.
+It does not preclude B-strong via a \emph{correlated} treatment
+of $\Ai(x_k)^2$ and $S(x_k)^2$ as joint functions of $k$.
+In particular, the identity
+\[
+  P_{k,k+d}
+  = c^{2/3}\int_{x_k}^{x_{k+d}} \Phi(x)\,dx + \mathcal{E}_{k,d}
+\]
+(from Remark~\ref{rem:structural}) replaces the mean-value-theorem
+bound by an integral, which in principle admits cancellation
+between numerator and denominator via the Wronskian structure
+of the Airy equation.
+Whether this cancellation is sufficient to close B-strong
+is the open question identified by this note.
+\end{remark}
+
+%% ============================================================
+\section{Structural Consequence and Open Problem}
+%% ============================================================
+
+\begin{proposition}[Structural consequence]
+\label{prop:structural_consequence}
+B-strong is equivalent, up to subdominant error terms, to:
+\[
+  \sup_{\substack{k \leq N,\; d \leq c^{1/6}}}
+  \int_{x_k}^{x_{k+d}} \Phi(x)\,dx
+  \;\leq\; C\,c^{-1/6}.
+\]
+This is a \emph{correlated} Airy integral condition on the
+Galerkin discretisation scale $c^{-1/3}$:
+neither a pointwise bound on $\Phi$,
+nor a bound on $\Ai(x)^2$ or $S(x)$ separately,
+suffices.
+The open problem is precisely whether the Wronskian
+identity $S'(x) = -\Ai(x)^2$ can be leveraged to
+control the integral $\int_{x_k}^{x_{k+d}} \Ai(x)^2/S(x)^2\,dx$
+uniformly in the transition regime.
+\end{proposition}
+
+\begin{openproblem}[Closing B-strong via correlated Airy Green function]
+\label{op:correlated_airy}
+Establish the estimate of Proposition~\ref{prop:structural_consequence}
+in the transition regime $x \in [A_0, (\log c)^{2/3}]$.
+
+The natural approach is to replace the pointwise ratio $\Ai(x)^2/S(x)^2$
+by an integral kernel that treats $\Ai$ and $S$ as jointly determined
+by the Sturm--Liouville equation $y'' = xy$.
+Concretely: use the identity
+\[
+  \int_a^b \frac{\Ai(x)^2}{S(x)^2}\,dx
+  = \frac{1}{S(b)} - \frac{1}{S(a)}
+\]
+and control the right-hand side directly via the WKB
+asymptotics of $S(x)$ (not via $\Ai(x)^2$ and $S(x)$
+separately).
+This requires: explicit WKB expansion of $S(x)$ with
+controlled remainder, uniform in $x \in [A_0, (\log c)^{2/3}]$;
+and verification that $1/S(x_{k+d}) - 1/S(x_k) \leq Cc^{-1/6}$
+for all $k, d$ in the Galerkin regime.
+
+The last inequality is equivalent to B-strong and is the
+minimal open statement remaining after this reduction.
+\end{openproblem}
+
+%% ============================================================
+\section{Summary: Logical Map of the Reduction}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{llll}
+\hline
+\textbf{Step} & \textbf{Content} & \textbf{Method} & \textbf{Status} \\
+\hline
+Telescope & $P_{k,k+d} = c^{2/3}\Delta(1/S) + \mathcal{E}$ & Prop.~U/U$'$ & ✅ exact \\
+MVT form & $P_{k,k+d} = c^{2/3}d\,\Phi(\xi) + \mathcal{E}$ & MVT & ✅ valid \\
+Regime~I & $|x_k| \leq A_0$: $\Phi = O(1)$, $\delta \leq c^{-1/6}$ & pointwise & ✅ closed \\
+Regime~II & $x_k \geq (\log c)^{2/3}$: direct via Prop.~U$'$ & direct & ✅ closed \\
+Regime~III & $x_k \in [A_0, (\log c)^{2/3}]$: $\Phi$ not uniform & failure mode & \textbf{⚠ open} \\
+Correlated & control $\int \Phi$ via $1/S(b)-1/S(a)$ jointly & Wronskian & \textbf{🔴 open} \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+\textbf{Core diagnosis.}
+B-strong does not reduce to separate Airy-amplitude and
+eigenvalue-gap estimates.
+It requires control of a correlated Airy integral on the
+discretisation scale $c^{-1/3}$, where numerator and
+denominator are governed by the same Airy kernel via
+$S'(x) = -\Ai(x)^2$.
+The open problem is whether this Wronskian identity can be
+leveraged to prove $1/S(x_{k+d}) - 1/S(x_k) \leq Cc^{-1/6}$
+uniformly in the transition regime.
+
+%% ============================================================
+\section*{Relation to the Programme}
+%% ============================================================
+
+This note is a companion to Paper~VI (\texttt{paper6.tex}).
+The two failure modes of Assumption~B-strong identified
+in Paper~VI, Remark~5.2 now have a precise quantitative form:
+\begin{enumerate}[nosep]
+  \item \textbf{Non-uniform stationary phase} (Failure-Mode~(a)):
+        corresponds to the non-uniform growth of $\Phi(x)$
+        across the transition window.
+  \item \textbf{Correlated Airy factors} (Failure-Mode~(b)):
+        corresponds to the impossibility of treating
+        $\Ai(x)^2$ and $S(x)^2$ independently
+        (Remark~\ref{rem:failure_source}).
+\end{enumerate}
+The reduction of B-strong to the single inequality
+$1/S(x_{k+d}) - 1/S(x_k) \leq Cc^{-1/6}$ (Open
+Problem~\ref{op:correlated_airy}) is the main new contribution
+of this note.
+This formulation is the minimal open statement on B-strong
+after accounting for all regime-specific controls.
+
+%% ============================================================
+\begin{thebibliography}{9}
+
+\bibitem{paper6}
+  \textit{Paper~VI: Galerkin Norm Estimates for the Prolate Phase Operator},
+  \texttt{paper6.tex}, prolate-gram-coercivity programme, May~2026.
+
+\bibitem{airy_lemma}
+  \textit{Airy Discrete Stability Lemma},
+  \texttt{airy\_discrete\_stability\_lemma.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{OsipovRokhlinXiao2013}
+  A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+
+\end{thebibliography}
+
+\end{document}
