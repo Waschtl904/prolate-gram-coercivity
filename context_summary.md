@@ -1,22 +1,29 @@
 # Context Summary — prolate-gram-coercivity
 
-> Stand: Mai 2026. Vollständige Notation, alle Paper-Abhängigkeiten, offene Probleme.
+> Stand: Mai 2026 (aktualisiert). Vollständige Notation, alle Paper-Abhängigkeiten, offene Probleme.
 > Für neuen KI-Chat: dieses Dokument + relevante paper*.tex lesen.
+> **Papers I–VIII + alle Begleitnotizen berücksichtigt.**
 
 ---
 
-## Überblick: Papers I–VII
+## Überblick: Papers I–VIII + Begleitnotizen
 
-| Paper | Datei | Inhalt | Status |
-|---|---|---|---|
-| I | `paper1.tex` | Gram-Koerzivität, DSTP, Defektzerlegung | Near publication-ready |
-| II | `paper2.tex` | Skalierungslimiten, Spurformel, Weil-Verbindung | Near publication-ready |
-| II_quad | `paper2_quadrature.tex` | XRY-Quadratur, konditionaler Framework | Reinschrift |
-| III | `paper3.tex` | PSWF-Produkt Spektral-Tail-Schätzungen | Reinschrift |
-| IV | `paper4_semiclassical.tex` | Semiklassische Äquidistribution ψ_n² → ρ^cl | Vollständig bewiesen |
-| V | `paper5.tex` | WKB Cover, Bridge Lemma, Schur Control | **Vollständig bewiesen** |
-| VI | `paper6.tex` | Galerkin Norm, No-Go-Theorem, Layer 0–2 | **Publikationsreif** |
-| VII | `paper7_skeleton.tex` | Dyadic Cancellation, Reduktion auf B-strong + Conj.amp | Referee Draft |
+| Paper / Datei | Inhalt | Status |
+|---|---|---|
+| I — `paper1.tex` | Gram-Koerzivität, DSTP, Defektzerlegung | Near publication-ready |
+| II — `paper2.tex` | Skalierungslimiten, Spurformel, Weil-Verbindung | Near publication-ready |
+| II_quad — `paper2_quadrature.tex` | XRY-Quadratur, konditionaler Framework | Reinschrift |
+| III — `paper3.tex` | PSWF-Produkt Spektral-Tail-Schätzungen | Reinschrift |
+| IV — `paper4_semiclassical.tex` | Semiklassische Äquidistribution ψ_n² → ρ^cl | Vollständig bewiesen |
+| V — `paper5.tex` | WKB Cover, Bridge Lemma, Schur Control | **Vollständig bewiesen** |
+| VI — `paper6.tex` | Galerkin Norm, No-Go-Theorem, Layer 0–2 | **Publikationsreif** |
+| VII — `paper7_skeleton.tex` | Dyadic Cancellation, H1–H3 Reduktion | **H1 bedingungslos** |
+| VIII — `paper8_scale_separated.tex` | Skalen-separierte dyadische Auslöschung | Submission-ready (bedingt) |
+| `bridge_lemma.tex` | Bridge Lemma ausformuliert (für paper5.tex) | Einzufügend ✅ |
+| `phase_nondeg_lemma.tex` | Phase Non-Degeneracy: α^(c) = π/2 + O(c^{-1/3}) | **Bewiesen** ✅ |
+| `airy_discrete_stability_lemma.tex` | Prop. U(U') + ass:gap bedingungslos | **Bewiesen** ✅ |
+| `ax5_independence_remark.tex` | DSTP logisch unabhängig von AX1–AX4 (Riemann-Zeuge) | Einzufügend ✅ |
+| `section5_numerical_evidence.tex` | Numerische Evidenz Spektral-Tail (für paper2_quadrature.tex) | Einzufügend |
 
 ---
 
@@ -43,75 +50,89 @@
 | `I_δ` | Bulk-Subintervall [-(1-δ)T, (1-δ)T] |
 | `E_out(f_{mn})` | Out-of-band Spektralenergie von f_{mn} (Paper V) |
 | `s* = 1-c^{-2/3}` | Übergangspunkt (Paper VI/VII) |
-| `α^(c)` | WKB-Phase an s* — Non-Degeneracy α ∉ {0,π} offen |
+| `α^(c)` | WKB-Phaseninkrement an s* — **BEWIESEN: α^(c) = π/2 + O(c^{-1/3})** |
 | `T_{ij}` | Galerkin-Matrixeinträge von DT_c^(N) |
 | `P_{kl}` | Prefaktor: c·|λ_l-λ_k|/((1-λ_k)(1-λ_l)) |
-| `B-strong` | Ass.: P_{kl} ≤ C₂ c^{1/2} |
-| `B'` | Schur-Summabilitätsbedingung |
+| `B-strong` | Ass.: P_{kl} ≤ C₂ c^{1/2} — **einzig verbleibende Hauptlücke** |
 | `B_m(i)` | Dyadischer Block {j: 2^m ≤ |i-j| < 2^{m+1}} |
+| `F_Ai(x)` | ∫_x^∞ Ai(t)² dt — Airy-Näherungsfunktion für λ_l |
+| `x_l = (l-N_Sh)(c/2)^{-1/3}` | Skalierter Index (Airy-Skala) |
+| `μ_l = χ_l / (2c^{4/3})` | Airy-Parameter (ORX Ch. 4) |
+| `E_l(c) = λ_l - F_Ai(x_l)` | Airy-Verbindungsfehler (Eigenwertebene) |
+| `S(c) = (log c/π)^{2/3}` | Landau-Widom-Skalenparameter |
 
 ---
 
-## Bewiesene Resultate (Mai 2026)
+## Bewiesene Resultate (Mai 2026, vollständig aktualisiert)
 
-### Papers I–IV (stabil, nicht wiederholen)
-- Gram-Koerzivität unter DSTP ✅
+### Papers I–IV (stabil)
+- Gram-Koerzivität unter DSTP mit expliziten Schranken ✅
 - Defektzerlegung E_{mn} = R_{mn}^quad ✅
-- Kompaktheit Gram-Operatoren im Skalierungslimes ✅
+- DSTP verifiziert für Zufalls- und Gauß-PSWF-Sampling ✅
+- Kompaktheit normierter Gram-Operatoren im Skalierungslimes ✅
 - Spurformel mit PNT-Konsistenz ✅
-- Bulk-Tail-Bound ‖(I-P_N)f_{mn}‖ ≤ CT^{1/2} (Paper III) ✅
+- Uniforme Off-diagonal-Schranke ‖(I-P_N)f_{mn}‖ ≤ CT^{1/2} (Paper III) ✅
 - Schwache Konvergenz ψ_n² → λ_n ρ^cl, Rate O(1/n) (Paper IV) ✅
 
-### Paper V (Bridge Lemma) — NEU ✅
-- **ass:bulkconv BEWIESEN für γ < 1/2** (Bridge Lemma, Theorem 4.1)
+### Paper V — Bridge Lemma ✅
+- ass:bulkconv **BEWIESEN für γ < 1/2** (Bridge Lemma, Theorem 4.1) ✅
 - E_out(f_{mn}) ≤ C_γ · e^{-α_γ c} für alle m,n ≤ γ N_Sh ✅
-- K_N(x,x) ≤ C · Nc/(πT) auf I_δ (Schur-Diagonal-Bound) ✅
-- Unconditional Bulk-Tail-Bound ‖(I-P_N)f_{mn}‖ ≤ Ce^{-α'N} für γ<1/2 ✅
-- Mechanismus: geometrische Abdeckung der WKB-verbotenen Zonen ✅
-- Extension zu γ ≥ 1/2: offen (Remark 4.3)
+- Mechanismus: geometrische Abdeckung beider WKB-verbotener Zonen (scharf bei γ = 1/2) ✅
+- Unconditional Bulk-Tail-Bound ‖(I-P_N)f_{mn}‖ ≤ Ce^{-α'N} für γ < 1/2 ✅
 
-### Paper VI (No-Go + Layer 0) — STARK ✅
-- **No-Go-Theorem:** ‖T‖ ≥ κ/2 · log c — optimal in nicht-oszillatorischer Schur-Klasse ✅
-- Konsequenz: Kontraktion erfordert zwingend oszillatorische (signierte) Cancellation ✅
-- Obstruktion lokalisiert auf |k-l| ≲ c^{1/6}, relative Bandbreite c^{-1/6} → 0 ✅
-- c^{1/6}-Schwelle eindeutig aus Drei-Regime-Balance ✅
-- Near/Far-Zerlegung T = T^near + T^far ✅
+### Paper VI — No-Go + Layer 0 ✅
+- No-Go-Theorem: nicht-oszillatorische Schur-Klasse gibt ‖T‖ ≥ κ/2 · log c — optimal ✅
+- Konsequenz: Kontraktion erfordert zwingend oszillatorische Cancellation ✅
+- Obstruktion lokalisiert auf |k-l| ≲ c^{1/6} ✅
 
-### Paper VII (Dyadic Cancellation) — Referee Draft ✅/⚠️
-- **Abstrakte Dyadic Cancellation (Theorem 1) vollständig bewiesen** (Appendix) ✅
-- H1 (Phase): Summabilitätsbedingung Σ ε_m^(N) = o(1) bewiesen ✅
-- ⚠️ **H1 Non-Degeneracy:** α^(c) ∉ {0,π} — noch zu referenzieren (kritisch!)
-- H2 (Amplitude regularity): unter Conj.amplitude (offen)
-- H3 (Uniform bound): unter B-strong (offen)
-- Corollary 3.1: B-strong + Conj.phase + Conj.amp → Kontraktion → Assumption A ✅
+### Paper VII — Dyadic Cancellation ✅ (H1 jetzt bedingungslos)
+- Abstraktes Dyadic Cancellation Theorem vollständig bewiesen ✅
+- **H1 Summabilitätsbedingung**: ∑ ε_m^(N) = o(1) ✅
+- **H1 Non-Degeneracy**: α^(c) = π/2 + O(c^{-1/3}) — **BEWIESEN** via `phase_nondeg_lemma.tex` ✅
+- H2, H3: siehe Paper VIII und B-strong unten
+
+### Paper VIII — Skalen-separierte dyadische Auslöschung ✅/⚠️
+- Dyadisches Trennungsprinzip (Lemma F): |λ_i - λ_j| ≥ κ_0 (c/2)^{-1/3} |i-j| ✅
+- Korollar C: H2 im dyadischen Sinne unter ass:gap + Prop.U(U') ✅
+- **ass:gap BEWIESEN** via `airy_discrete_stability_lemma.tex` ✅
+- **Proposition U(U') BEWIESEN** via `airy_discrete_stability_lemma.tex` ✅
+- Lemma F, Korollar C(a) und (b): **alle bedingungslos** ✅
+- Drei-Skalen-Struktur: kombinatorisch (c^{-1/3}), lokal (Airy), global (Landau-Widom) dokumentiert ✅
+- Konjektur ULW (globales erfc-Gesetz): numerisch gestützt, analytisch offen
+
+### Begleitnotizen (neue Resultate)
+- **`phase_nondeg_lemma.tex`**: α^(c) = π/2 + O(c^{-1/3}) gleichmäßig in k ≤ N — **Conj. 6.1 aus Paper VI bewiesen** ✅
+  - Mechanismus: Bohr-Sommerfeld-Halbinkrement + T_k-Auslöschung (Langer-Transformation)
+  - dist(α^(c), {0,π}) ≥ π/4 für alle c ≥ c_0(A) ✅
+- **`airy_discrete_stability_lemma.tex`**: Prop. U(U') + ass:gap **bedingungslos bewiesen** ✅
+  - Lemma U: |λ_l - F_Ai(x_l)| ≤ C₁ c^{-2/3} (aus ORX)
+  - Lemma U': |(λ_l - λ_{l+1}) - (F_Ai(x_l) - F_Ai(x_{l+1}))| ≤ C₂ c^{-2/3} (neu, sogar O(c^{-5/3}))
+  - ass:gap mit κ_0 = c_min/2 bedingungslos ✅
+- **`ax5_independence_remark.tex`**: DSTP logisch unabhängig von AX1–AX4 (Riemann-Zeuge) ✅
 
 ---
 
-## Offene Probleme (priorisiert)
+## Offene Probleme (priorisiert, aktualisiert)
 
-### 🔥 Priorität 1 — Phase Non-Degeneracy (Paper VII)
-**Gap:** α^(c) ∉ {0,π} an s* = 1-c^{-2/3} ist nicht explizit referenziert.
-Ohne das kollabiert die Cancellation-Struktur im Resonanzfall.
-**Optionen:**
-1. Kurzes Lemma aus Widom-Daten + Sturm-Liouville
-2. Explizite Conjecture mit quantitativer Schranke: α^(c) ≥ ε₀ > 0
-**Details:** `PHASE_NONDEG_NOTE.md`
-
-### 🔥 Priorität 2 — B-strong
+### 🔥 Priorität 1 — B-strong
 **Gap:** P_{kl} ≤ C₂ c^{1/2} ist nicht bewiesen.
-**Warum schwer:** zwei konkrete Failure-Modes (Paper VI, Remark 5.2):
+**Status:** Einzig verbleibende Hauptlücke auf dem Weg zur Kontraktion.
+**Warum schwer:** Zwei konkrete Failure-Modes (Paper VI, Remark 5.2):
 - Nicht-uniforme stationäre Phase in der Transition Zone
 - Korrelierte Airy-Faktoren (Eigenwert-Spacing und Amplitude nicht unabhängig)
-**Route:** WKB/Airy-Matching an s*, Modellproblem formulieren
-**Einschätzung:** eigenes Paper-Level-Problem, nicht eine Section
+**Route:** WKB/Airy-Matching an s*, Modellproblem formulieren — eigenes Paper-Level-Problem.
 
-### 🔥 Priorität 3 — Conjecture amplitude
-**Gap:** Lipschitz-Kontrolle A_{ij} in j auf dyadischen Blöcken.
-**Verbindung:** tief gekoppelt mit B-strong (beide brauchen Transition-Zone-Kontrolle)
-**Route:** PSWF-Transition-Asymptotics, Olver 1974
+### 🔶 Priorität 2 — Landau-Widom Konjektur (global)
+**Gap:** λ_l ≈ (1/2) erfc(Z_l) mit S(c) = (log c/π)^{2/3} — kein analytischer Beweis.
+**Status:** Numerisch gestützt (Residuen ≈ 2.7·10^{-2} für c ∈ {50,100,200}, abnehmend).
+**Teilproblem:** β(c) → β(∞) unbekannt; numerisch β(∞) ∈ [-0.30, -0.21].
 
-### 🔶 Mittelfristig
-- ass:gap (Uniform Gap Condition) — Paper III, Ziel Paper IX
+### 🔶 Priorität 3 — Bridge Lemma Extension γ ≥ 1/2
+**Gap:** Geometrische Überdeckung bricht für γ ≥ 1/2 zusammen.
+**Route:** Stationäre Phase / Integrationsaufteilung — offen.
+
+### 🔵 Mittelfristig
+- Dominante Eigenvektordelokalisierung (Paper VI, OP 5)
 - Off-diagonal Assumption 3.1 (Kantenregime) — Paper III
 - XRY-Stabilitätskonjektur — Paper II_quad
 - Weil-Operator-Identifikation — Paper II
@@ -127,14 +148,18 @@ Ohne das kollabiert die Cancellation-Struktur im Resonanzfall.
 
 ---
 
-## Strategische Diagnose
+## Strategische Diagnose (Mai 2026, aktualisiert)
 
-Der Bulk (γ < 1/2) ist durch Papers IV + V **abgeschlossen**.
-Das verbleibende Problem — Kontraktion von T_c^(N) — ist ein **anderer Mechanismus**:
-kein weiteres Estimate-Farming, sondern oscillatory cancellation.
+**Phase Non-Degeneracy ist gelöst** — H1 von Paper VII gilt bedingungslos.
+**ass:gap und Prop. U(U') sind gelöst** — Lemma F und Korollar C von Paper VIII gelten bedingungslos.
 
-Das System ist nicht mehr linear rückständig:
-- Phase, B-strong, Amplitude sind **gekoppelt**
-- Einziger aktuell lokal angreifbarer Punkt: **Phase Non-Degeneracy**
+Das Programm hängt jetzt an einem einzigen Scharnier: **B-strong** (`P_{kl} ≤ C₂ c^{1/2}`).
 
-Das ist der nächste gezielte Angriff.
+Implikationskette zum Ziel:
+```
+B-strong → H3 (Paper VII) → ‖DT_c^(N)‖ ≤ C c^{-1/2} log c < 1
+         → Kontraktion → Fixpunkt → Assumption A → Vollständige Theorie
+```
+
+H1 ✅ (bedingungslos), H2 ✅ (via ass:gap + Prop.U(U'), bedingungslos),
+H3 ⚠️ (unter B-strong — einzig verbleibend).
