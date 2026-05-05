@@ -1,0 +1,538 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\Ai}{\operatorname{Ai}}
+\newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
+\newcommand{\eps}[1]{\varepsilon_{#1}^{(c)}}
+\newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\Tc}{T_c}
+\newcommand{\VN}{V_N}
+\newcommand{\Dc}{D_c}
+
+\title{%
+  \textbf{Paper~XI: Fredholm Determinant Microlocal Inversion}\\[0.4em]
+  \large Spectral Gap at the Galerkin Scale via
+  $\log \det(I - zT_c)$
+}
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper~X established that the best available lower bound
+on $\varepsilon_N^{(c)} = 1 - \lam{N}$ from local
+(WKB/Pr\"ufer/ORX) methods is
+$\varepsilon_N \gtrsim e^{-Cc^{2/3}}$,
+which falls short of the required polynomial bound
+$\varepsilon_N \geq Cc^{-1/2}$ by a superpolynomial factor.
+The gap reflects a fundamental structural mismatch:
+local methods describe individual eigenfunctions,
+but the target bound at the Galerkin scale
+$k = O(c^{1/3}) \ll N_{\mathrm{Sh}}$
+is an \emph{intermediate spectral problem}
+inaccessible to purely local analysis.
+
+\medskip\noindent
+This paper develops the Fredholm determinant approach
+as the unique structural route capable of
+bridging global spectral information
+to a single eigenvalue at small index.
+We introduce the Fredholm determinant
+$\Dc(z) = \det(I - z\Tc)$,
+derive its asymptotic expansion in the bulk-scaled
+regime $z \approx 1$,
+and identify the \emph{missing bridge} between
+$\log \Dc(z)$ and $\lam{N}$.
+
+\medskip\noindent
+We also confront the fundamental tension:
+$\varepsilon_N \geq c^{-1/2}$ requires the prolate
+operator to \emph{leak energy} from superconcentrated
+modes at a polynomial rate, which is \emph{counter to}
+the natural concentration structure of PSWFs.
+We make this tension precise,
+and formulate the conditions under which it resolves
+in favour of B-strong.
+\end{abstract}
+
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{The Structural Tension}
+\label{sec:tension}
+%% ============================================================
+
+\subsection{What B-strong requires against what PSWFs do}
+
+The PSWF concentration eigenvalues $\lam{k}$
+are classically described as follows:
+\begin{itemize}[nosep]
+  \item For $k \leq N_{\mathrm{Sh}} = 2c/\pi$:
+        $\lam{k}$ is exponentially close to $1$;
+        the modes $\pswf{k}$ are \emph{maximally concentrated}
+        in $[-1,1]$.
+  \item The transition from $\lam{k} \approx 1$ to
+        $\lam{k} \approx 0$ occurs on a window
+        $|k - N_{\mathrm{Sh}}| = O(c^{1/3})$.
+  \item For $k \ll N_{\mathrm{Sh}}$: the concentration
+        is \emph{superexponentially stable};
+        the energy leak $\varepsilon_k = 1 - \lam{k}$
+        is of order $e^{-c^\alpha}$ for some $\alpha > 0$.
+\end{itemize}
+
+\begin{remark}[The tension, made explicit]
+\label{rem:tension}
+B-strong requires $\varepsilon_N \geq Cc^{-1/2}$,
+i.e.\ the prolate operator must lose at least
+a polynomial fraction $c^{-1/2}$ of energy
+for the $N$-th mode.
+But the entire structure of PSWF theory says that
+for $k \leq N = O(c^{1/3}) \ll N_{\mathrm{Sh}}$,
+the energy loss is superexponentially \emph{smaller}
+than any polynomial.
+
+\medskip\noindent
+This is not a technical failure --- it is a
+\emph{structural contradiction} between
+the known superconcentration asymptotics and
+the B-strong requirement.
+One of two things must therefore be true:
+\begin{enumerate}[nosep]
+  \item[(A)] The known asymptotics are insufficiently
+        sharp at the scale $k = O(c^{1/3})$,
+        and the true $\varepsilon_N$ is in fact
+        polynomial (not exponential).
+  \item[(B)] B-strong is false as stated,
+        i.e.\ $\varepsilon_N \ll c^{-1/2}$,
+        and the programme must either weaken
+        the assumption or seek an alternative
+        route to coercivity.
+\end{enumerate}
+\noindent
+\textbf{Resolving this dichotomy is the central
+problem of Paper~XI.}
+\end{remark}
+
+\subsection{Why local methods cannot resolve the tension}
+
+Local methods (WKB, ORX, Landau--Pollak) give information of
+the form:
+\[
+  \varepsilon_k \sim \exp(-c \cdot \phi(k/c))
+\]
+with $\phi(t) = \pi(1 - 2t/\pi) > 0$ for $t < \pi/2$.
+For $k = O(c^{1/3})$: $k/c = O(c^{-2/3}) \to 0$,
+so $\phi(k/c) \to \pi > 0$, giving
+$\varepsilon_k \sim e^{-\pi c}$ --- superexponentially small.
+
+This estimate cannot be improved by any refinement
+of the same local asymptotic:
+the exponential suppression comes from tunneling
+through the effective potential barrier
+$V_{\mathrm{eff}}(x) = c^2(x^2-1)$ at $|x| > 1$,
+which is a genuine physical mechanism, not an artifact.
+
+\begin{proposition}[Local methods are optimally wrong]
+\label{prop:localfail}
+Any estimate of the form
+$\varepsilon_k \geq f(c)$ derived solely from the
+WKB outer-tail of $\pswf{k}$ (Proposition~3.1 of Paper~X)
+will satisfy $f(c) \leq e^{-c^{\delta}}$ for some
+$\delta > 0$, and hence $f(c) \ll c^{-1/2}$.
+Local analysis cannot distinguish scenario~(A)
+from scenario~(B) of Remark~\ref{rem:tension}.
+\end{proposition}
+
+%% ============================================================
+\section{The Fredholm Determinant}
+\label{sec:fredholm}
+%% ============================================================
+
+\subsection{Definition and basic properties}
+
+\begin{definition}[Prolate Fredholm determinant]
+For $z \in \mathbb{C}$ with $|z| \leq 1$:
+\[
+  \Dc(z) := \det(I - z\Tc)
+  = \prod_{k=0}^{\infty} (1 - z\lam{k}).
+\]
+Since $\Tc$ is trace-class (as an integral operator
+on $L^2([-1,1])$ with continuous kernel),
+this product converges absolutely.
+\end{definition}
+
+\begin{proposition}[Basic identities]
+\label{prop:fredholm_basic}
+\begin{enumerate}[nosep]
+  \item $\Dc(1) = \prod_k (1 - \lam{k}) = \prod_k \eps{k}$.
+  \item $\partial_z \log \Dc(z) = -\sum_k \frac{\lam{k}}{1-z\lam{k}}$.
+  \item $\log \Dc(z) = -\sum_{n=1}^{\infty}
+        \frac{z^n}{n}\operatorname{tr}(\Tc^n)
+        = -\sum_{n=1}^{\infty} \frac{z^n}{n}
+        \sum_k (\lam{k})^n$.
+  \item $\operatorname{tr}(\Tc^n)
+        = \int_{[-1,1]^n}
+        \prod_{j=1}^n K_c(x_j, x_{j+1})\,
+        dx_1\cdots dx_n$
+        (with $x_{n+1} = x_1$),
+        where $K_c(x,y) = \sin(c(x-y))/(\pi(x-y))$.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Why Fredholm reaches the Galerkin scale}
+
+The key insight is that $\Dc(z)$ is \emph{global}:
+it contains information about all eigenvalues
+$\{\lam{k}\}_{k \geq 0}$ simultaneously.
+In particular, $\Dc(z)$ near $z = \lam{N}^{-1}$
+has a simple zero whose location encodes $\lam{N}$.
+
+\begin{proposition}[Zero extraction]
+\label{prop:zero}
+For each $k$, $\Dc(z)$ has a simple zero at
+$z = z_k := (\lam{k})^{-1} > 1$.
+In particular, for $z$ near $z_N^{-1} = \lam{N}$
+(approaching from below along the real axis):
+\[
+  \varepsilon_N = 1 - \lam{N}
+  = 1 - z_N^{-1}
+  = \frac{z_N - 1}{z_N}.
+\]
+\noindent
+Equivalently: extracting $\varepsilon_N$ from $\Dc$
+requires locating the $N$-th \emph{smallest zero}
+of $z \mapsto \Dc(1/z)$ in $(0,1)$.
+\end{proposition}
+
+\subsection{The missing bridge}
+
+\begin{definition}[Partial determinant and truncated log-derivative]
+For $M \geq 0$, define the \emph{Galerkin partial determinant}:
+\[
+  \Dc^{(N)}(z) := \prod_{k=0}^{N} (1 - z\lam{k}),
+\]
+so that $\Dc(z) = \Dc^{(N)}(z) \cdot \Dc^{(>N)}(z)$
+with $\Dc^{(>N)}(z) = \prod_{k > N}(1 - z\lam{k})$.
+\end{definition}
+
+\begin{remark}[The missing bridge, precisely]
+\label{rem:bridge}
+To extract $\varepsilon_N$ from $\Dc$, one needs
+to separate $\Dc^{(N)}$ from $\Dc^{(>N)}$.
+This requires:
+\begin{enumerate}[nosep]
+  \item \textbf{Asymptotic control of $\log \Dc(z)$}
+        for $z \in (0, 1)$ in the
+        \emph{bulk-scaled regime} $z = 1 - sc^{-1/2}$
+        (not in the edge-scaled regime $z \approx \lam{N_{\mathrm{Sh}}}^{-1}$).
+  \item \textbf{Separation of contributions:}
+        the sum $\sum_k \lam{k}^n$ splits as
+        $\sum_{k \leq N} \lam{k}^n + \sum_{k > N}\lam{k}^n$;
+        for $k \leq N$ all terms are $\approx 1$,
+        while for $k > N_{\mathrm{Sh}} + C c^{1/3}$
+        all terms are $\approx 0$.
+        The intermediate range
+        $k \in [N, N_{\mathrm{Sh}} + Cc^{1/3}]$
+        contributes the non-trivial part.
+  \item \textbf{Finite-difference log-derivative:}
+        the difference
+        $\log\Dc^{(N)}(z) - \log\Dc^{(N-1)}(z)
+        = \log(1 - z\lam{N})$
+        gives $\lam{N}$ directly.
+\end{enumerate}
+The obstacle is step (1): the asymptotics of
+$\log \Dc(z)$ in the bulk regime $z \approx 1$
+are governed by $\operatorname{tr}(\Tc^n)$,
+which requires controlling oscillatory integrals
+of the form
+$\int_{[-1,1]^n} \prod_j K_c(x_j, x_{j+1})\,dx$
+for large $n$.
+This is a \emph{multi-dimensional stationary phase problem}.
+\end{remark}
+
+%% ============================================================
+\section{Bulk-Scaled Asymptotics of $\log D_c(z)$}
+\label{sec:bulk}
+%% ============================================================
+
+\subsection{Trace asymptotics}
+
+The standard asymptotic for the trace is:
+\[
+  \operatorname{tr}(\Tc) = \sum_k \lam{k}
+  \sim \frac{2c}{\pi}
+  = N_{\mathrm{Sh}},
+\]
+and more generally
+$\sum_k (\lam{k})^n \sim N_{\mathrm{Sh}}$
+for each fixed $n$ (since $\lam{k} \approx 1$
+for $k \leq N_{\mathrm{Sh}}$ and $\approx 0$ otherwise).
+
+\begin{proposition}[Log-determinant in bulk regime]
+\label{prop:logdet}
+For $z = 1 - sc^{-1/2}$ with $s > 0$ fixed:
+\[
+  \log \Dc(z)
+  = \sum_k \log(1 - z\lam{k})
+  \approx \sum_{k \leq N_{\mathrm{Sh}}} \log(1 - z)
+  + \sum_{\substack{k : |\lam{k} - z^{-1}| = O(c^{-1/3})}}
+  \log(1 - z\lam{k}).
+\]
+The first sum contributes
+$N_{\mathrm{Sh}} \log(sc^{-1/2}) \sim -\frac{c}{2}\log c$,
+which dominates.
+The second sum (edge correction) is $O(c^{1/3}\log c)$.
+The Galerkin terms $k \leq N$ contribute
+$\sum_{k=0}^N \log(1 - z\lam{k})
+\approx N \log(sc^{-1/2})
+= O(c^{1/3}\log c)$,
+subdominant relative to the full sum.
+\end{proposition}
+
+\begin{remark}[Consequence for microlocal inversion]
+Proposition~\ref{prop:logdet} shows that the Galerkin
+terms $k \leq N$ contribute at the level
+$O(c^{1/3}\log c)$ to $\log \Dc(z)$,
+which is exponentially smaller than the total
+$O(c \log c)$.
+Extracting $\lam{N}$ from $\log \Dc(z)$ therefore
+requires a relative precision of $c^{-2/3}$ in
+the log-determinant --- comparable to the Galerkin
+contribution itself.
+This is precisely the difficulty:
+$\Dc(z)$ is globally dominated by the bulk,
+but B-strong concerns the exponentially suppressed
+Galerkin sector.
+\end{remark}
+
+\subsection{The required precision and its cost}
+
+\begin{proposition}[Precision requirement]
+\label{prop:precision}
+To determine $\varepsilon_N = 1 - \lam{N}$
+with absolute precision $\delta$ via
+$\log \Dc(z)$, one requires control of
+$\log \Dc(z)$ to precision $\delta/\varepsilon_N$.
+Since $\varepsilon_N \sim e^{-Cc^{2/3}}$
+(Paper~X, Proposition~3.1),
+this requires precision $\delta \cdot e^{Cc^{2/3}}$
+in $\log \Dc$ --- superexponentially better
+than the current $O(c^{1/3} \log c)$ error.
+\end{proposition}
+
+\begin{corollary}[Fredholm inversion is obstructed]
+\label{cor:fredholm_obstructed}
+If the WKB bound $\varepsilon_N \sim e^{-Cc^{2/3}}$
+is sharp (scenario~(B) of Remark~\ref{rem:tension}),
+then $\log \Dc(z)$ cannot distinguish
+$\varepsilon_N$ from $0$ at any accessible
+asymptotic precision.
+If the bound is \emph{not} sharp (scenario~(A)),
+the polynomial $\varepsilon_N \sim c^{-1/2}$ must
+emerge from a \emph{cancellation mechanism}
+in the Fredholm determinant that reduces the
+apparent exponential suppression.
+\end{corollary}
+
+%% ============================================================
+\section{The Dichotomy: Scenario (A) vs.\ (B)}
+\label{sec:dichotomy}
+%% ============================================================
+
+\subsection{Scenario (A): polynomial gap despite superconcentration}
+
+For scenario~(A) to hold, there must exist a mechanism
+that generates \emph{polynomial energy leakage}
+$\varepsilon_N \sim c^{-1/2}$ despite the exponential
+suppression visible in WKB.
+Three candidate mechanisms:
+
+\begin{enumerate}
+  \item \textbf{Collective eigenvalue interaction.}
+        The prolate eigenvalues are not independent;
+        they repel each other (as in GUE).
+        Eigenvalue repulsion at the Galerkin scale
+        could force $\varepsilon_N$ to be larger
+        than the individual WKB estimate suggests.
+        Specifically, the product
+        $\prod_{k=0}^N \varepsilon_k$ is controlled
+        by $\Dc(1)$, and if $\Dc(1)$ has polynomial
+        order, then at least one $\varepsilon_k$ must
+        be polynomial.
+
+  \item \textbf{WKB estimate is not sharp at this scale.}
+        The WKB outer-tail estimate uses a one-dimensional
+        tunneling model.
+        For $k = O(c^{1/3})$, the PSWF is
+        not well approximated by a 1D Schr\"odinger
+        eigenfunction; multi-dimensional effects
+        or exact ODE analysis might give a
+        larger lower bound.
+
+  \item \textbf{Phase-space concentration vs.\ operator range.}
+        $\pswf{k}$ for $k \leq N$ has Fourier support
+        essentially in $[-c, c]$ and spatial support
+        essentially in $[-1, 1]$.
+        For $k = O(c^{1/3})$, the phase-space
+        volume $4c \cdot 2 = 8c$ greatly exceeds $k$,
+        meaning these modes \emph{underfill}
+        their phase-space box.
+        This underfilling could cause non-trivial
+        leakage at polynomial scale.
+\end{enumerate}
+
+\subsection{Scenario (B): B-strong is false}
+
+If $\varepsilon_N \ll c^{-1/2}$, then B-strong fails,
+and the Paper~VI Galerkin estimate requires
+a fundamentally different proof strategy.
+In this case:
+\begin{itemize}[nosep]
+  \item The Galerkin matrix $G_N$ may not be
+        invertible with $\|G_N^{-1}\| = O(c^{1/2})$.
+  \item The error bound of Paper~VI, Theorem~1.1
+        is not derivable via the B-strong route.
+  \item Alternative: direct coercivity of the
+        full Galerkin form without eigenvalue
+        factorisation may still hold, but
+        requires a different proof.
+\end{itemize}
+
+%% ============================================================
+\section{Open Problems and Programme Decision Point}
+\label{sec:decision}
+%% ============================================================
+
+\begin{openproblem}[Fredholm determinant precision]
+\label{op:fredholm_precision}
+Determine the asymptotic expansion of
+$\log \Dc(z) = \log \det(I - z\Tc)$
+for $z \in (0,1)$, $z = 1 - sc^{-1/2}$, to precision
+$O(c^{1/3})$, explicitly separating the contribution
+$\sum_{k=0}^N \log(1 - z\lam{k})$ from the bulk.
+\end{openproblem}
+
+\begin{openproblem}[$D_c(1)$ and Galerkin product]
+\label{op:dc1}
+Determine the asymptotic order of
+$\Dc(1) = \prod_{k \geq 0} \varepsilon_k^{(c)}$
+as $c \to \infty$.
+If $\Dc(1)$ has polynomial decay (i.e.
+$\log |\Dc(1)| = O(\log c)$),
+then by AM--GM, at least one Galerkin eigenvalue
+residual $\varepsilon_k$ is polynomial.
+\emph{This would confirm scenario~(A).}
+If $\log |\Dc(1)| = -\Omega(c^{2/3})$, scenario~(B)
+becomes more plausible.
+\end{openproblem}
+
+\begin{openproblem}[Eigenvalue repulsion at Galerkin scale]
+\label{op:repulsion}
+Using the Hadamard--Weyl formula or the kernel
+determinant structure of the prolate operator,
+estimate the spacing $\lam{N} - \lam{N+1}$
+for $N = O(c^{1/3})$.
+If this spacing is $\Omega(c^{-1/2})$,
+it supports polynomial order of $\varepsilon_N$
+via a level-repulsion argument.
+\end{openproblem}
+
+\begin{remark}[Programme decision point]
+\label{rem:decision}
+The programme now faces a genuine bifurcation:
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{p{2.5cm} p{5cm} p{5cm}}
+\toprule
+& \textbf{Scenario (A): B-strong true}
+& \textbf{Scenario (B): B-strong false} \\
+\midrule
+Mechanism
+& Polynomial $\varepsilon_N$ via cancellation
+& WKB bound is sharp; $\varepsilon_N \ll c^{-1/2}$ \\
+Consequence
+& Programme closes; Paper VI Thm 1.1 proven
+& New proof strategy needed for coercivity \\
+Next step
+& Op.~Prob.~\ref{op:dc1}: control $D_c(1)$
+& Direct coercivity of Galerkin form without $P_{kl}$ \\
+Difficulty
+& Fredholm precision; cancellation mechanism
+& Full Paper VI restructuring \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{remark}
+
+\medskip\noindent
+\textbf{Recommended next step.}
+Open Problem~\ref{op:dc1} is the minimal
+numerically testable statement that distinguishes
+the two scenarios:
+compute $\log |\Dc(1)| = \sum_k \log \varepsilon_k^{(c)}$
+numerically for $c \in \{10, 50, 100, 200\}$
+and check whether the growth is $O(c \log c)$
+(exponential, scenario~B) or $O(c^{\alpha})$
+for $\alpha < 1$ (subexponential, possibly scenario~A).
+This single numerical experiment would resolve
+the dichotomy with high confidence.
+
+%% ============================================================
+\begin{thebibliography}{9}
+
+\bibitem{paper9}
+  \textit{Paper~IX: B-strong as a Spectral Gap},
+  \texttt{paper9\_superconcentration.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{paper10}
+  \textit{Paper~X: Spectral Gap Lower Bound},
+  \texttt{paper10\_coercivity\_gap.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{LP1961II}
+  H.~J.~Landau and H.~O.~Pollak,
+  ``Prolate Spheroidal Wave Functions,
+  Fourier Analysis and Uncertainty~II,''
+  \textit{Bell Syst.\ Tech.\ J.}, 40 (1961), 65--84.
+
+\bibitem{ORX2013}
+  A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+
+\bibitem{Simon2005}
+  B.~Simon,
+  \textit{Trace Ideals and Their Applications},
+  2nd ed., AMS, 2005.
+
+\bibitem{Bornemann2010}
+  F.~Bornemann,
+  ``On the numerical evaluation of Fredholm determinants,''
+  \textit{Math.\ Comp.}, 79 (2010), 871--915.
+
+\end{thebibliography}
+
+\end{document}
