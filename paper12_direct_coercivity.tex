@@ -1,0 +1,536 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
+\newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
+\newcommand{\Tc}{T_c}
+\newcommand{\VN}{V_N}
+\newcommand{\GN}{G_N}
+\newcommand{\inner}[2]{\langle #1,\, #2 \rangle}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+
+\title{%
+  \textbf{Paper~XII: Direct Coercivity}\\[0.4em]
+  \large $\langle (I - T_c)f,\, f \rangle \geq C c^{-1/2} \|f\|^2$
+  on $V_N$ without Spectral Factorisation
+}
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Papers~IX--XI established that Assumption B-strong is
+equivalent to a spectral gap $\varepsilon_N \geq Cc^{-1/2}$,
+and that neither local (WKB/ORX) nor global (Fredholm
+determinant) methods can reach this bound:
+the Fredholm determinant is bulk-dominated and blind
+to the Galerkin scale, while local methods are
+constrained by tunneling to exponential bounds.
+
+\medskip\noindent
+This paper pursues a third route:
+\emph{direct coercivity} of the quadratic form
+\[
+  \boxed{
+  \inner{(I - \Tc)f}{f} \geq C c^{-1/2} \norm{f}^2
+  \quad \forall\, f \in \VN,}
+  \tag{Coer}
+\]
+without passing through eigenvalues $\varepsilon_k$
+as intermediate objects.
+We formulate three proof routes
+(algebraic Gram structure, kernel localisation,
+phase-space filling),
+identify the precise obstacle in each,
+and formulate the minimal open statement
+that would close the programme.
+\end{abstract}
+
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Setup and Standing Context}
+\label{sec:setup}
+%% ============================================================
+
+\subsection{What has been established}
+
+The programme has reduced everything to a single
+scalar inequality (Paper~IX, Proposition~2.3):
+\[
+  \varepsilon_N^{(c)} = 1 - \lam{N} \geq C c^{-1/2},
+  \qquad N = \lfloor A c^{1/3} \rfloor.
+\]
+Papers~X--XI showed that this cannot be reached via:
+\begin{itemize}[nosep]
+  \item WKB/ORX outer-tail: gives only
+        $\varepsilon_N \gtrsim e^{-Cc^{2/3}}$
+  \item Fredholm determinant $D_c(1)$: bulk-dominated,
+        Galerkin sector below resolution threshold
+\end{itemize}
+
+\subsection{The new object}
+
+Instead of asking ``how large is $\varepsilon_N$?''
+we ask directly:
+\[
+  \text{Is } (I - \Tc)|_{\VN}
+  \text{ coercive with constant } \geq C c^{-1/2}?
+\]
+These are equivalent by Paper~IX (since $\VN$ is
+$\Tc$-invariant and $\Tc|_{\VN}$ is diagonal in
+the PSWF basis).
+The advantage of the direct formulation is that
+it does not require knowing $\varepsilon_N$
+individually --- it requires only a
+\emph{lower bound on the quadratic form}
+over all $f \in \VN$ simultaneously.
+
+\begin{remark}[Why this is different]
+In the eigenvalue formulation, one needs to control
+the \emph{smallest} eigenvalue of $(I-\Tc)|_{\VN}$,
+which is $\varepsilon_N$.
+In the quadratic form formulation, one needs a
+\emph{global} lower bound that could in principle
+come from the collective structure of $\VN$
+rather than from the individual mode $\pswf{N}$.
+This is the sense in which (Coer) is a genuinely
+different question.
+\end{remark}
+
+%% ============================================================
+\section{Route A: Algebraic Gram Structure}
+\label{sec:gram}
+%% ============================================================
+
+\subsection{The Gram matrix}
+
+Let $\{e_k\}_{k=0}^{N}$ be any orthonormal basis
+of $\VN$ (e.g.\ the PSWFs $\pswf{k}$).
+Define the \emph{prolate Gram matrix}:
+\[
+  [\GN]_{kl} := \inner{(I-\Tc)e_k}{e_l}
+  = \delta_{kl} - \inner{\Tc e_k}{e_l}.
+\]
+In the PSWF basis, $\GN = \mathrm{diag}(\varepsilon_0,
+\ldots, \varepsilon_N)$, so (Coer) is equivalent to
+$\lambda_{\min}(\GN) \geq Cc^{-1/2}$.
+
+\subsection{The obstacle in the algebraic route}
+
+In an arbitrary basis, $\GN$ is a full matrix
+and its smallest eigenvalue need not be
+directly related to $\varepsilon_N$.
+However, in any basis, the Courant--Fischer theorem gives:
+\[
+  \lambda_{\min}(\GN)
+  = \min_{\norm{v}=1} v^\top \GN v
+  = \min_{f \in \VN,\, \norm{f}=1}
+    \inner{(I-\Tc)f}{f}.
+\]
+Since $\VN$ is $\Tc$-invariant,
+this minimum is always achieved by $f = \pswf{N}$,
+giving $\lambda_{\min}(\GN) = \varepsilon_N$.
+The algebraic route therefore \emph{reduces back to}
+the eigenvalue problem.
+
+\begin{proposition}[Algebraic route collapses]
+\label{prop:gram_collapse}
+For any choice of basis of $\VN$:
+\[
+  \lambda_{\min}(\GN) = \varepsilon_N^{(c)}.
+\]
+The algebraic Gram route does not bypass the
+eigenvalue problem; it is equivalent to it.
+\end{proposition}
+
+\begin{remark}[What the algebraic route does give]
+Proposition~\ref{prop:gram_collapse} is not a
+dead end: it precisely locates the difficulty.
+The coercivity constant is $\varepsilon_N$,
+achieved by the single mode $\pswf{N}$.
+To prove (Coer), one must therefore either:
+\begin{enumerate}[nosep]
+  \item show $\varepsilon_N \geq Cc^{-1/2}$ directly, or
+  \item show that the minimum of
+        $\inner{(I-\Tc)f}{f}$ over $\VN$
+        is \emph{not} achieved by a pure mode
+        (which would require $\VN$ to not be
+        $\Tc$-invariant, contradicting the PSWF structure).
+\end{enumerate}
+Option (2) is impossible for the standard $\VN
+= \mathrm{span}\{\pswf{0},\ldots,\pswf{N}\}$.
+It becomes available only if $\VN$ is replaced by
+a \emph{different} $N$-dimensional subspace of $L^2[-1,1]$
+that is not $\Tc$-invariant.
+\end{remark}
+
+%% ============================================================
+\section{Route B: Kernel Localisation}
+\label{sec:kernel}
+%% ============================================================
+
+\subsection{The quadratic form as a double integral}
+
+For $f \in \VN$ with $\norm{f} = 1$:
+\[
+  \inner{(I-\Tc)f}{f}
+  = \int_{-1}^{1} |f(x)|^2\,dx
+  - \int_{-1}^{1}\int_{-1}^{1}
+    \frac{\sin(c(x-y))}{\pi(x-y)}\,
+    f(x)\overline{f(y)}\,dx\,dy.
+\]
+Since $\Tc f = \sum_{k=0}^N \lam{k}
+\inner{f}{\pswf{k}}\pswf{k}$:
+\[
+  \inner{\Tc f}{f}
+  = \sum_{k=0}^N \lam{k} |\hat f_k|^2,
+  \quad \hat f_k := \inner{f}{\pswf{k}},
+\]
+so
+\[
+  \inner{(I-\Tc)f}{f}
+  = \sum_{k=0}^N (1-\lam{k})|\hat f_k|^2
+  = \sum_{k=0}^N \varepsilon_k |\hat f_k|^2.
+\]
+This is a weighted $\ell^2$-norm of the PSWF
+coefficients of $f$, with weights $\varepsilon_k$.
+
+\subsection{The obstacle in the kernel route}
+
+The minimum of $\sum_k \varepsilon_k |\hat f_k|^2$
+subject to $\sum_k |\hat f_k|^2 = 1$ is again
+$\min_k \varepsilon_k = \varepsilon_N$.
+The kernel route therefore also collapses to
+the eigenvalue problem.
+
+\begin{proposition}[Kernel route collapses]
+\label{prop:kernel_collapse}
+\[
+  \min_{f \in \VN,\, \norm{f}=1}
+  \inner{(I-\Tc)f}{f}
+  = \varepsilon_N^{(c)}.
+\]
+\end{proposition}
+
+\begin{remark}[What the kernel route does give --- a positive direction]
+\label{rem:kernel_positive}
+Although the minimum is $\varepsilon_N$,
+the kernel localisation reveals a useful structure:
+if $f$ is \emph{not} aligned with $\pswf{N}$,
+i.e.\ $|\hat f_N|^2 \leq 1 - \delta$ for some $\delta > 0$,
+then:
+\[
+  \inner{(I-\Tc)f}{f}
+  \geq \varepsilon_{N-1}(1-\delta) + \varepsilon_N \delta
+  \geq \varepsilon_{N-1}(1-\delta).
+\]
+For $k < N$, $\varepsilon_k \gg \varepsilon_N$
+(since eigenvalues are monotone), so
+the form is much larger than $\varepsilon_N$
+unless $f$ is nearly $\pswf{N}$.
+
+\medskip\noindent
+This suggests an \emph{energy separation argument}:
+if one can show that the relevant functions
+$f$ in the Galerkin approximation have
+$|\hat f_N|^2 \leq 1 - c^{-\alpha}$
+for some $\alpha < 1/2$, then (Coer)
+follows from $\varepsilon_{N-1}$ alone,
+without needing to control $\varepsilon_N$.
+\end{remark}
+
+%% ============================================================
+\section{Route C: Phase-Space Filling}
+\label{sec:phasespace}
+%% ============================================================
+
+\subsection{The underfilling argument}
+
+For $k \leq N = O(c^{1/3})$, the PSWF $\pswf{k}$
+has approximately $k$ zeros on $[-1,1]$ and
+Fourier support essentially in $[-c,c]$.
+Its phase-space ``footprint'' is a rectangle of
+area $\sim 4c \cdot 2 = 8c$.
+But $k \leq c^{1/3}$ modes cannot fill this
+rectangle efficiently: each mode occupies
+a phase-space area $\sim 2\pi$ (by the
+uncertainty principle), so the $N$ lowest modes
+fill an area $\sim 2\pi N \sim c^{1/3}$,
+leaving a fraction $1 - c^{1/3}/(8c) \approx 1$
+of the phase-space rectangle unfilled.
+
+\begin{proposition}[Phase-space underfilling]
+\label{prop:phasespace}
+For $f \in \VN$ with $\norm{f}=1$:
+the Wigner distribution $W_f(x,\xi)$ has
+$L^2$-mass concentrated in a region of
+phase-space area $O(c^{1/3})$,
+while $\Tc$ acts as a projection onto a
+phase-space region of area $\sim 4c \cdot 2$.
+The \emph{uncovered fraction} is
+$1 - O(c^{-2/3})$, i.e.\ almost the entire
+phase-space rectangle.
+\end{proposition}
+
+\subsection{Why underfilling gives coercivity --- heuristically}
+
+The energy ``leaked'' by $f$ outside $[-1,1]$
+is precisely $\inner{(I-\Tc)f}{f}$.
+Phase-space underfilling says that $f$'s
+energy is concentrated in a small region
+of phase-space.
+If this region is generically not aligned with the
+``exit channels'' of $\Tc$ (the directions of
+maximal concentration loss), then the leaked
+energy is at least the fraction
+of phase-space that is ``underfilled'' ---
+which is $\Omega(1)$.
+
+\begin{remark}[Why this heuristic fails to give $c^{-1/2}$]
+The phase-space underfilling argument gives a
+constant lower bound (independent of $c$),
+not a $c^{-1/2}$ bound.
+The $c^{-1/2}$ scale must come from a
+\emph{quantitative} version of the underfilling,
+specifically from the $O(c^{1/3})$ transition
+window in the Airy regime:
+the ``exit channels'' of $\Tc$ are localised
+in a phase-space strip of width $O(c^{-1/3})$
+(in the spectral parameter), and the overlap
+of $f \in \VN$ with this strip is
+$O(c^{1/3}) \cdot c^{-1/3} = O(1)$.
+Turning this into a $c^{-1/2}$ bound
+requires a more precise estimate of the
+overlap, which is the content of the
+open problem below.
+\end{remark}
+
+%% ============================================================
+\section{The Minimal Open Statement}
+\label{sec:open}
+%% ============================================================
+
+\begin{openproblem}[Minimal statement for (Coer)]
+\label{op:minimal}
+Show that for all $f \in \VN$
+with $\norm{f} = 1$ and
+$N = \lfloor Ac^{1/3} \rfloor$:
+\[
+  |\inner{f}{\pswf{N}}|^2
+  \leq 1 - \delta(c)
+\]
+for some $\delta(c) \geq C c^{-1/2}$,
+i.e.\ no unit vector in $\VN$
+is more than $1 - Cc^{-1/2}$
+aligned with the worst mode $\pswf{N}$.
+
+\medskip\noindent
+By Remark~\ref{rem:kernel_positive},
+this would imply (Coer) with the constant
+coming from $\varepsilon_{N-1}$ rather than $\varepsilon_N$.
+\end{openproblem}
+
+\begin{remark}[Why Open Problem~\ref{op:minimal} is likely false for $\VN$]
+In the PSWF basis, $\pswf{N} \in \VN$ by definition,
+so $|\inner{\pswf{N}}{\pswf{N}}|^2 = 1$.
+The minimum alignment is achieved by $f = \pswf{N}$
+itself, giving $\delta = 0$.
+Open Problem~\ref{op:minimal} is therefore
+\emph{vacuously false} for the standard $\VN$.
+
+\medskip\noindent
+This reinforces the conclusion of
+Proposition~\ref{prop:gram_collapse}:
+for the PSWF-defined $\VN$, the direct
+coercivity approach is equivalent to the
+eigenvalue approach.
+(Coer) holds if and only if $\varepsilon_N \geq Cc^{-1/2}$.
+\end{remark}
+
+\begin{openproblem}[Alternative subspace]
+\label{op:altspace}
+Define $\widetilde{V}_N$ to be an $N$-dimensional
+subspace of $L^2[-1,1]$ that is \emph{not}
+$\Tc$-invariant but approximates $\VN$ in the
+sense that the Galerkin approximation in
+$\widetilde{V}_N$ has the same order of accuracy
+as in $\VN$.
+Does there exist such a $\widetilde{V}_N$ for which:
+\[
+  \min_{f \in \widetilde{V}_N,\, \norm{f}=1}
+  \inner{(I-\Tc)f}{f}
+  \geq C c^{-1/2}?
+\]
+If so, (Coer) holds for $\widetilde{V}_N$,
+and the Paper~VI error estimate may be recoverable
+with $\widetilde{V}_N$ replacing $\VN$.
+\end{openproblem}
+
+%% ============================================================
+\section{Option B: Phase-Space Coercivity as Escape Hatch}
+\label{sec:optionB}
+%% ============================================================
+
+The preceding analysis shows that (Coer)
+for the standard $\VN$ is equivalent to
+$\varepsilon_N \geq Cc^{-1/2}$,
+and that all three direct routes collapse
+to this eigenvalue bound.
+
+\medskip\noindent
+The structural reason is that $\VN$ is
+$\Tc$-invariant by definition.
+The only route that could bypass this is to
+replace $\VN$ by a subspace that is
+\emph{not} $\Tc$-invariant
+(Open Problem~\ref{op:altspace}).
+
+\medskip\noindent
+This is precisely the setting of
+\textbf{microlocal / phase-space coercivity}
+(Option B of the programme):
+instead of the PSWF eigenspace $\VN$,
+use a \emph{phase-space cutoff space}
+$\widetilde{V}_N = \Pi_{P} L^2$,
+where $\Pi_P$ is a pseudodifferential
+cutoff to a phase-space region $P \subset
+\mathbb{R} \times \mathbb{R}$ of area $\sim N$.
+
+\begin{remark}[Why Option B is the escape hatch]
+In the phase-space cutoff framework:
+\begin{itemize}[nosep]
+  \item $\widetilde{V}_N$ is \emph{not} $\Tc$-invariant
+        (it is a spatial cutoff, not a spectral one).
+  \item The coercivity of $(I-\Tc)$ on $\widetilde{V}_N$
+        is controlled by the \emph{overlap} of the
+        phase-space region $P$ with the
+        ``concentration zone'' of $\Tc$
+        (i.e.\ $[-1,1] \times [-c,c]$).
+  \item For $P$ chosen as a phase-space rectangle
+        of area $\sim c^{1/3}$ aligned with the
+        low-frequency modes, the overlap is
+        $O(c^{1/3}/c) = O(c^{-2/3})$,
+        giving $(I-\Tc)$ coercive with constant
+        $\sim 1 - O(c^{-2/3}) \approx 1$
+        --- much better than $\varepsilon_N$.
+\end{itemize}
+The cost is that $\widetilde{V}_N \neq \VN$,
+so the Galerkin approximation in $\widetilde{V}_N$
+requires separate accuracy analysis.
+This is the content of Paper~XIII (if needed).
+\end{remark}
+
+\begin{openproblem}[Phase-space subspace approximation]
+\label{op:phasespace_approx}
+Let $\widetilde{V}_N = \Pi_P L^2[-1,1]$ for
+$P = [-1,1] \times [-c^{1/3}, c^{1/3}]$.
+Show that:
+\begin{enumerate}[nosep]
+  \item $(I-\Tc)$ is coercive on $\widetilde{V}_N$
+        with constant $\geq Cc^{-1/2}$.
+  \item The best approximation error in
+        $\widetilde{V}_N$ is of the same order
+        as in $\VN$ for the target function class.
+\end{enumerate}
+Together, (1) and (2) would replace B-strong
+entirely with a phase-space coercivity statement.
+\end{openproblem}
+
+%% ============================================================
+\section{Summary and Programme State}
+\label{sec:summary}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{p{2.2cm} p{4.5cm} p{4.5cm} p{1.5cm}}
+\toprule
+\textbf{Route} & \textbf{Idea} & \textbf{Outcome} & \textbf{Status} \\
+\midrule
+A (Gram) &
+  Direct $\lambda_{\min}(G_N) \geq Cc^{-1/2}$ &
+  Collapses to $\varepsilon_N$ (Prop.~\ref{prop:gram_collapse}) &
+  Closed \\
+B (Kernel) &
+  Weighted $\ell^2$ form over modes &
+  Collapses to $\varepsilon_N$ (Prop.~\ref{prop:kernel_collapse});
+  energy separation possible if $f \not\approx \psi_N$ &
+  Partial \\
+C (Phase-space) &
+  Underfilling of phase-space rectangle &
+  Gives $O(1)$ bound, not $c^{-1/2}$; needs quantitative overlap &
+  Open \\
+\midrule
+\textbf{Option B} &
+  Replace $V_N$ by phase-space cutoff $\widetilde{V}_N$ &
+  Coercivity likely $\geq Cc^{-1/2}$; accuracy TBD &
+  \textbf{Open} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+\textbf{Programme state after Paper~XII.}
+The direct coercivity approach establishes that
+(Coer) for the standard $\VN$ is rigorously
+equivalent to $\varepsilon_N \geq Cc^{-1/2}$
+--- confirming that no shortcut through
+Gram structure or kernel localisation exists
+for the PSWF eigenspace.
+The only genuine bypass is the phase-space
+subspace replacement of Open Problem~\ref{op:phasespace_approx},
+which is the starting point of Paper~XIII.
+
+%% ============================================================
+\begin{thebibliography}{9}
+
+\bibitem{paper9}
+  \textit{Paper~IX: B-strong as a Spectral Gap},
+  \texttt{paper9\_superconcentration.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{paper11}
+  \textit{Paper~XI: Fredholm Determinant Microlocal Inversion},
+  \texttt{paper11\_fredholm\_microlocal.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{LP1961II}
+  H.~J.~Landau and H.~O.~Pollak,
+  ``Prolate Spheroidal Wave Functions,
+  Fourier Analysis and Uncertainty~II,''
+  \textit{Bell Syst.\ Tech.\ J.}, 40 (1961), 65--84.
+
+\bibitem{ORX2013}
+  A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+
+\bibitem{Folland1989}
+  G.~B.~Folland,
+  \textit{Harmonic Analysis in Phase Space},
+  Princeton University Press, 1989.
+
+\end{thebibliography}
+
+\end{document}
