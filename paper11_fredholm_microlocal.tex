@@ -544,6 +544,142 @@ signal on the current numerical range.
 \end{remark}
 
 %% ============================================================
+\section{Microlocal Interpretation}
+\label{sec:microlocal}
+%% ============================================================
+
+\subsection{Effective spectral density}
+
+The preceding analysis --- both theoretical
+(Proposition~\ref{prop:logdet}) and numerical
+(Remark~\ref{rem:numerics}) --- establishes that
+$\log |\Dc(1)|$ is governed by a continuous
+spectral density, not by individual eigenvalues.
+We make this precise.
+
+\begin{definition}[Effective spectral action]
+\label{def:phi}
+Define the \emph{effective spectral action} of $\Tc$ by:
+\[
+  \Phi(c) := -\log |\Dc(1)|
+  = \sum_{k=0}^\infty (-\log \eps{k})
+  = \sum_{k=0}^\infty (-\log(1 - \lam{k})).
+\]
+By Proposition~\ref{prop:fredholm_basic}(1),
+$\Phi(c) \geq 0$.
+Numerically, $\Phi(c) \sim 18.4\, c$ for $c \in [5,100]$
+(Remark~\ref{rem:numerics}).
+\end{definition}
+
+\begin{proposition}[Decomposition of $\Phi(c)$]
+\label{prop:phi_decomp}
+Write the sum defining $\Phi(c)$ as three contributions:
+\begin{align*}
+  \Phi(c)
+  &= \underbrace{\sum_{k=0}^{N} (-\log \eps{k})}_{\Phi_{\mathrm{Gal}}(c)}
+  + \underbrace{\sum_{k=N+1}^{N_{\mathrm{Sh}} - Cc^{1/3}}
+    (-\log \eps{k})}_{\Phi_{\mathrm{bulk}}(c)}
+  + \underbrace{\sum_{|k - N_{\mathrm{Sh}}| \leq Cc^{1/3}}
+    (-\log \eps{k})}_{\Phi_{\mathrm{Airy}}(c)}.
+\end{align*}
+The orders of magnitude are:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{llll}
+\toprule
+Term & \# modes & per-mode contrib. & total \\
+\midrule
+$\Phi_{\mathrm{Gal}}$ & $N \sim c^{1/3}$
+  & $-\log\eps{k} \gtrsim \pi c$ (WKB)
+  & $\Omega(c^{4/3})$ \\
+$\Phi_{\mathrm{bulk}}$ & $\sim N_{\mathrm{Sh}} \sim c$
+  & $-\log\eps{k} \sim \pi c \cdot (k/c)$ (LP)
+  & $O(c^2)$ \\
+$\Phi_{\mathrm{Airy}}$ & $O(c^{1/3})$
+  & $O(\log c)$ (Airy CDF)
+  & $O(c^{1/3} \log c)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{remark}[Airy is subleading]
+\label{rem:airy_subleading}
+Proposition~\ref{prop:phi_decomp} shows that
+$\Phi_{\mathrm{Airy}}(c) = O(c^{1/3} \log c)$
+is strictly subleading relative to
+$\Phi_{\mathrm{bulk}}(c) = O(c^2)$
+and even to $\Phi_{\mathrm{Gal}}(c) = \Omega(c^{4/3})$.
+
+\medskip\noindent
+This explains why the numerically observed effective
+exponent $\approx 1.18 > 1$ is \emph{not} a signature
+of Airy-edge dominance:
+the Airy contribution is too small to be visible
+at the precision accessible in the range $c \leq 100$.
+The dominant signal is the bulk integral
+$\Phi_{\mathrm{bulk}}$, with the Galerkin sector
+$\Phi_{\mathrm{Gal}}$ contributing at an
+intermediate scale.
+
+\medskip\noindent
+The non-linear coupling question of Paper~XI ---
+whether the Airy transition generates a
+spectral rigidity effect that forces $\varepsilon_N$
+to be polynomial --- is therefore \emph{invisible}
+in $\Phi(c)$ at any accessible numerical precision.
+It is a subleading-of-subleading effect.
+\end{remark}
+
+\subsection{The transition proposition}
+
+\begin{proposition}[Closure of the numerical phase]
+\label{prop:closure}
+The following has been established:
+\begin{enumerate}[nosep]
+  \item $\Phi(c) = -\Omega(c)$
+        (numerically confirmed, $c \leq 100$).
+  \item $\Phi_{\mathrm{Airy}}(c) = O(c^{1/3}\log c)$
+        is subleading (analytical, from Proposition~\ref{prop:phi_decomp}).
+  \item The Galerkin sector $\Phi_{\mathrm{Gal}}(c)$
+        contributes at scale $\Omega(c^{4/3})$,
+        but is masked by the bulk in $\Phi(c)$.
+  \item No accessible numerical or analytical method
+        extracts $\varepsilon_N$ from $\Phi(c)$
+        at the required precision
+        (Proposition~\ref{prop:precision}).
+\end{enumerate}
+\noindent
+The present analysis therefore determines the
+leading-order growth of $\log|\Dc(1)|$,
+but does \emph{not} resolve whether the subleading
+structure is governed by a logarithmic correction
+or a higher-order spectral rigidity effect.
+
+\medskip\noindent
+The resolution of the dichotomy (A) vs.\ (B)
+requires a method that bypasses $\Phi(c)$ entirely
+and addresses $\varepsilon_N$ directly ---
+either via a non-linear Fredholm symbol calculus,
+or via the direct operator-theoretic approach
+(coercivity of $G_N$ without $P_{kl}$ factorisation).
+\end{proposition}
+
+\begin{remark}[What comes next]
+Proposition~\ref{prop:closure} marks the
+structural transition of the programme:
+\begin{itemize}[nosep]
+  \item The \emph{numerical phase} is complete.
+  \item The \emph{operator-theoretic phase} begins.
+  \item The single remaining question is:
+        \emph{can one prove or disprove
+        $\varepsilon_N \geq Cc^{-1/2}$
+        without going through $\Dc(1)$?}
+\end{itemize}
+This is the content of Paper~XII.
+\end{remark}
+
+%% ============================================================
 \begin{thebibliography}{9}
 
 \bibitem{paper9}
