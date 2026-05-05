@@ -1,0 +1,483 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=2.5cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\Ai}{\operatorname{Ai}}
+\newcommand{\lam}[1]{\lambda_{#1}^{(c)}}
+\newcommand{\eps}[1]{\varepsilon_{#1}^{(c)}}
+\newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\Tc}{T_c}
+\newcommand{\VN}{V_N}
+\newcommand{\Lop}{\mathcal{L}}
+
+\title{%
+  \textbf{Paper~IX: B-strong as a Spectral Gap}\\[0.4em]
+  \large Operator-Theoretic Reformulation
+  in the Superconcentration Regime
+}
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Assumption B-strong ($P_{kl} \leq C_2 c^{1/2}$, Paper~VI) is
+reformulated as a \emph{spectral gap condition} for the
+prolate operator $\Tc$ restricted to the Galerkin subspace
+$\VN = \operatorname{span}\{\pswf{0},\ldots,\pswf{N}\}$,
+$N = \lfloor Ac^{1/3}\rfloor$.
+The Airy-WKB analysis of \texttt{bstrong\_reduction\_lemma.tex}
+established that the Galerkin indices $k \leq N$ lie entirely
+in the \emph{superconcentration regime}
+$\varepsilon_k := 1 - \lam{k} \ll 1$,
+asymptotically disjoint from the spectral-edge Airy window.
+This disjointness, together with the structure of $P_{kl}$
+as a ratio of eigenvalue residuals, reduces B-strong to the
+statement that the spectral gap
+$\gamma(c) := 1 - \|\Tc|_{\VN}\|$
+satisfies
+\[
+  \gamma(c) \geq C c^{-1/2}.
+\]
+We formulate this as the central open problem of the
+programme, identify the natural proof routes
+(Landau--Pollak concentration, resolvent methods, direct
+coercivity), and explain why the spectral-gap formulation
+bypasses the failure modes of the WKB approach.
+\end{abstract}
+
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{From Eigenvalue Ratios to Spectral Gap}
+\label{sec:reduction}
+%% ============================================================
+
+\subsection{The superconcentration regime}
+
+The Galerkin truncation is at $N = \lfloor Ac^{1/3}\rfloor$.
+The Slepian concentration number is $N_{\mathrm{Sh}} = 2c/\pi$.
+Since $c^{1/3} \ll c$ as $c \to \infty$:
+\[
+  \frac{N}{N_{\mathrm{Sh}}} \sim \frac{A\pi}{2}\,c^{-2/3} \to 0.
+\]
+All Galerkin indices $k \leq N$ therefore satisfy
+$k \ll N_{\mathrm{Sh}}$, which is the \emph{superconcentration
+regime} for PSWF eigenvalues: the concentration eigenvalues
+$\lam{k}$ are exponentially close to $1$.
+
+\begin{definition}[Eigenvalue residuals]
+For $k \leq N$, define the \emph{residual}
+\[
+  \eps{k} := 1 - \lam{k} > 0.
+\]
+By the superconcentration property, $\eps{k} \ll 1$
+uniformly for $k \leq N$ and all sufficiently large $c$.
+\end{definition}
+
+\subsection{B-strong as a residual ratio condition}
+
+In terms of residuals, the B-strong prefactor is:
+\[
+  P_{kl} = c \cdot \frac{|\lam{l} - \lam{k}|}{(1-\lam{k})(1-\lam{l})}
+  = c \cdot \frac{|\eps{k} - \eps{l}|}{\eps{k}\,\eps{l}}.
+\]
+
+\begin{proposition}[B-strong in residual form]
+\label{prop:residual}
+Assumption B-strong ($P_{kl} \leq C_2 c^{1/2}$ for all
+$k,l \leq N$, $|k-l| \leq c^{1/6}$) is equivalent to:
+\[
+  \frac{|\eps{k} - \eps{l}|}{\eps{k}\,\eps{l}} \leq C_2\,c^{-1/2}
+\]
+for all such $k, l$.
+Alternatively, with $d = |k - l|$ and $k < l$:
+\[
+  \frac{1}{\eps{k}} - \frac{1}{\eps{l}} \leq C_2\,c^{-1/2},
+\]
+which is a \emph{Lipschitz condition on the map
+$k \mapsto 1/\eps{k}$} with Lipschitz constant $C_2 c^{-1/2}$
+(per unit index step, weighted by $d$).
+\end{proposition}
+
+\begin{proof}
+Direct computation:
+$|\eps{k}-\eps{l}|/(\eps{k}\eps{l}) = |1/\eps{l} - 1/\eps{k}|$.
+\end{proof}
+
+\begin{remark}[Structural parallel with Airy analysis]
+The map $k \mapsto 1/\eps{k}$ is the discrete analogue
+of $x \mapsto 1/S(x)$ from \texttt{bstrong\_reduction\_lemma.tex}.
+The Lipschitz condition here plays the role of
+$\delta \cdot \Phi(x) \leq Cc^{-1/6}$ there.
+The difference is that in the superconcentration regime
+$\eps{k}$ is not approximated by any simple Airy expression,
+so the Lipschitz bound must come from operator-theoretic
+or spectral arguments.
+\end{remark}
+
+%% ============================================================
+\section{Operator-Theoretic Reformulation}
+\label{sec:operator}
+%% ============================================================
+
+\subsection{The restricted operator and its spectrum}
+
+Let $\Tc : L^2(\mathbb{R}) \to L^2(\mathbb{R})$ be the
+prolate operator with kernel
+$K_c(x,y) = \sin(c(x-y))/(\pi(x-y))$,
+restricted to $[-1,1]$.
+The PSWFs $\pswf{k}$ form a complete orthonormal system
+of eigenfunctions:
+\[
+  \Tc \pswf{k} = \lam{k}\,\pswf{k},
+  \qquad 1 > \lam{0} > \lam{1} > \cdots > 0.
+\]
+Define the Galerkin subspace
+$\VN := \operatorname{span}\{\pswf{0},\ldots,\pswf{N}\}$
+and the restricted operator $\Tc|_{\VN} : \VN \to \VN$.
+Since $\VN$ is invariant under $\Tc$ (it is spanned by
+eigenvectors), the operator norm is:
+\[
+  \|\Tc|_{\VN}\| = \lam{0}^{(c)} < 1.
+\]
+
+\subsection{The spectral gap}
+
+\begin{definition}[Spectral gap]
+The \emph{spectral gap} of $\Tc$ relative to $\VN$ is:
+\[
+  \gamma(c) := 1 - \|\Tc|_{\VN}\| = 1 - \lam{0}^{(c)} = \eps{0}.
+\]
+\end{definition}
+
+\begin{remark}
+Since $\lam{0} > \lam{1} > \cdots > \lam{N}$,
+the relevant spectral gap is controlled by $\eps{0}$,
+the residual of the \emph{largest} Galerkin eigenvalue.
+B-strong in its strongest form (for all $k, l$) requires
+control of the entire ratio $1/\eps{k} - 1/\eps{l}$,
+not just $\eps{0}$.
+However, the dominant contribution to $P_{kl}$ for
+$k \approx 0$, $l \approx N$ comes from $1/\eps{N}$,
+the inverse residual of the \emph{smallest} Galerkin eigenvalue.
+\end{remark}
+
+\subsection{B-strong as a two-sided spectral condition}
+
+\begin{proposition}[B-strong via spectral gap]
+\label{prop:spectral_gap}
+A sufficient condition for B-strong is:
+\[
+  \frac{1}{\eps{N}} - \frac{1}{\eps{0}} \leq C_2\,c^{-1/2}.
+\]
+This is implied by:
+\[
+  \frac{d}{dk}\left(\frac{1}{\eps{k}}\right) \leq \frac{C_2\,c^{-1/2}}{d}
+  \quad \text{for all } k \leq N,\; d = |k-l|,
+\]
+i.e.\ $k \mapsto 1/\eps{k}$ is Lipschitz-$c^{-1/2}$ on
+$\{0, \ldots, N\}$.
+\end{proposition}
+
+\begin{remark}[Why this is non-trivial]
+For $k$ in the superconcentration regime,
+$\eps{k}$ is exponentially small and the ratio
+$1/\eps{k}$ is exponentially large.
+B-strong requires that despite this,
+the \emph{differences} $1/\eps{l} - 1/\eps{k}$
+remain polynomially bounded ($\leq C c^{-1/2}$).
+This is a statement of \emph{relative stability}:
+the exponentially small residuals vary slowly
+\emph{relative to each other}.
+\end{remark}
+
+%% ============================================================
+\section{The Central Open Problem}
+\label{sec:open}
+%% ============================================================
+
+\begin{openproblem}[Spectral gap lower bound]
+\label{op:gap}
+Show that
+\[
+  \frac{1}{\eps{N}^{(c)}} - \frac{1}{\eps{0}^{(c)}}
+  \leq C c^{-1/2}
+\]
+for all $c \geq c_0$, with $N = \lfloor Ac^{1/3}\rfloor$
+and $C$ depending only on $A$.
+
+\medskip
+\noindent
+Equivalently: the map $k \mapsto 1/\eps{k}^{(c)}$
+is Lipschitz-$(C c^{-1/2})$ on $\{0, \ldots, N\}$,
+uniformly in $c$.
+\end{openproblem}
+
+\subsection{Proof routes}
+
+\subsubsection*{Route A: Landau--Pollak concentration bounds}
+
+Landau and Pollak \cite{LandauPollak1961} established that
+for $k \leq N_{\mathrm{Sh}} = 2c/\pi$:
+\[
+  \lam{k} \geq 1 - \exp(-c\,\phi(k/c))
+\]
+for an explicit function $\phi > 0$.
+For $k \leq N = O(c^{1/3})$:
+\[
+  \frac{k}{c} \leq Ac^{-2/3} \to 0,
+  \qquad \phi(k/c) \sim \phi(0) + O(c^{-2/3}).
+\]
+A precise asymptotic expansion of $\eps{k}$ in powers
+of $k/c$ for $k \ll N_{\mathrm{Sh}}$ would give
+explicit Lipschitz bounds for $1/\eps{k}$.
+
+\textbf{Obstacle:} The Landau--Pollak bound is not sharp
+enough at this scale; it gives
+$\eps{k} \sim \exp(-c\phi(k/c))$
+but not the precise $k$-dependence of the exponent
+at $k = O(c^{1/3})$.
+
+\subsubsection*{Route B: Eigenvalue perturbation / resolvent}
+
+Since $\lam{k}$ are simple eigenvalues of $\Tc$,
+the Hadamard--Weyl formula gives:
+\[
+  \lam{k} - \lam{k+1}
+  = \langle \Tc\pswf{k}, \pswf{k}\rangle
+  - \langle \Tc\pswf{k+1},\pswf{k+1}\rangle
+  = \int_{-1}^{1}\int_{-1}^{1}
+    K_c(x,y)(\pswf{k}(x)\pswf{k}(y)
+    - \pswf{k+1}(x)\pswf{k+1}(y))\,dx\,dy.
+\]
+For $k \leq N$ in the superconcentration regime,
+$\pswf{k}$ and $\pswf{k+1}$ are both near-identical
+functions (both highly concentrated in $[-1,1]$),
+and their difference controls $\lam{k}-\lam{k+1}$.
+A resolvent estimate on $\Tc - \lam{k}$ for
+$k$ in the superconcentration regime would quantify this.
+
+\textbf{Obstacle:} The resolvent of $\Tc$ is not
+explicit; one needs spectral theory of
+integral operators with oscillatory kernels.
+
+\subsubsection*{Route C: Direct coercivity on $\VN$}
+
+Instead of bounding individual $\eps{k}$, one can
+attempt to show directly that the bilinear form
+associated to the Galerkin matrix $G_N$ (Paper~VI)
+is coercive with constant $\geq C c^{-1/2}$
+on $\VN$, without passing through $P_{kl}$.
+This bypasses B-strong entirely and goes directly
+to the target estimate of the programme.
+
+Specifically: if one can show
+\[
+  \langle (I - \Tc)u, u\rangle \geq C c^{-1/2}\,\|u\|^2
+  \quad \forall\, u \in \VN,
+\]
+then $\gamma(c) \geq Cc^{-1/2}$ follows immediately.
+For $u = \sum_{k=0}^N a_k \pswf{k}$:
+\[
+  \langle (I-\Tc)u,u\rangle
+  = \sum_{k=0}^N \eps{k}\,|a_k|^2
+  \geq \eps{N}\,\|u\|^2.
+\]
+Hence the coercivity constant is exactly $\eps{N}$,
+and B-strong (in its strongest form) is equivalent to
+$\eps{N} \geq C c^{-1/2}$ \emph{and} to the
+Lipschitz condition on $1/\eps{k}$.
+
+\begin{proposition}[Coercivity equivalent]
+\label{prop:coercivity}
+$(I - \Tc)|_{\VN}$ is coercive with constant
+$\eps{N} = 1 - \lam{N}^{(c)}$.
+B-strong (for all $k, l \leq N$, $d = |k-l| \leq c^{1/6}$)
+is implied by:
+\[
+  \eps{N}^{(c)} \geq c^{1/2} \cdot C^{-1}
+  \qquad \text{(}\!\Leftarrow\!\text{ coercivity at scale } c^{-1/2}\text{).}
+\]
+
+\noindent\emph{Warning:} this is a one-sided statement.
+B-strong also requires \emph{upper} bounds on
+$\eps{k}$ differences (the Lipschitz condition),
+not only lower bounds on $\eps{N}$.
+See Open Problem~\ref{op:gap}.
+\end{proposition}
+
+%% ============================================================
+\section{Known Asymptotics of $\varepsilon_k$ and What Is Missing}
+\label{sec:asymptotics}
+%% ============================================================
+
+\subsection{Qualitative picture}
+
+The following is known for PSWF eigenvalues
+(see Osipov--Rokhlin--Xiao \cite{ORX2013},
+Slepian \cite{Slepian1978}):
+\begin{enumerate}[nosep]
+  \item For $k \leq N_{\mathrm{Sh}} - O(c^{1/3})$
+        (well below the spectral edge):
+        $\eps{k} = 1 - \lam{k}$ is superexponentially
+        small in $c$.
+  \item Near the edge ($k \approx N_{\mathrm{Sh}}$):
+        $\eps{k}$ transitions from $\approx 0$ to
+        $\approx 1$ on a scale $O(c^{1/3})$,
+        described by the Airy CDF $F_{\mathrm{Ai}}$.
+  \item For $k \leq N = O(c^{1/3})$:
+        $\eps{k} \sim \exp(-c^\alpha g(k/c))$
+        for some $\alpha > 0$ and $g > 0$;
+        the precise exponent is not pinned down
+        in the literature to sufficient precision for B-strong.
+\end{enumerate}
+
+\subsection{What is missing}
+
+\begin{openproblem}[Superconcentration asymptotics]
+\label{op:asymptotics}
+Determine the asymptotic behaviour of
+$\eps{k}^{(c)} = 1 - \lam{k}^{(c)}$
+for $k \leq N = \lfloor Ac^{1/3}\rfloor$
+as $c \to \infty$, to sufficient precision to prove
+or disprove the Lipschitz condition of
+Open Problem~\ref{op:gap}.
+
+\medskip\noindent
+Specifically: is there an expansion
+\[
+  \eps{k}^{(c)} = \exp\!\bigl(-c^{\alpha}\,h(k, c)\bigr)
+\]
+where $h(k,c)$ varies slowly enough in $k$ that
+$1/\eps{k} - 1/\eps{l} \leq Cc^{-1/2}$
+for $|k-l| \leq c^{1/6}$?
+\end{openproblem}
+
+%% ============================================================
+\section{Structural Map: Old vs.\ New Framework}
+\label{sec:map}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{p{3.5cm} p{4.5cm} p{4.5cm}}
+\toprule
+& \textbf{Airy-WKB framework}
+& \textbf{Operator / superconc.\ framework} \\
+\midrule
+Primary object
+& $S(x) = \int_x^\infty \Ai^2$, $\Phi(x) = \Ai^2/S^2$
+& $\eps{k} = 1 - \lam{k}$, map $k \mapsto 1/\eps{k}$ \\
+Key identity
+& $d(1/S)/dx = \Phi(x)$
+& $|1/\eps{l} - 1/\eps{k}| = P_{kl}/c$ \\
+Target bound
+& $\delta\,\Phi(x) \leq Cc^{-1/6}$
+& $1/\eps{N} - 1/\eps{0} \leq Cc^{-1/2}$ \\
+Failure mode
+& $\Phi$ not uniform in transition regime
+& $1/\eps{k}$ exponentially large (but differences small?) \\
+Relevant spectral domain
+& $x \in [-A_0, (\log c)^{2/3}]$ ($k \sim N_{\mathrm{Sh}}$)
+& $k \leq N = O(c^{1/3})$ ($x_k \sim -c^{2/3}$) \\
+Domains disjoint?
+& \multicolumn{2}{c}{\textbf{Yes.} $N/N_{\mathrm{Sh}} \sim c^{-2/3} \to 0$.} \\
+Tool
+& Airy ODE, WKB, Wronskian
+& Eigenvalue asymptotics, resolvent, coercivity \\
+Status
+& Closed in own domain; spectrally empty for B-strong
+& \textbf{Open.} Central problem of this note. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%% ============================================================
+\section{Relation to the Programme and Next Steps}
+\label{sec:next}
+%% ============================================================
+
+This paper represents a \emph{direction shift} in the
+prolate-gram-coercivity programme.
+Papers~I--VIII developed analytical tools
+(Airy approximation, WKB, semiclassical phase,
+scale-separated estimates) whose natural domain
+is the spectral-edge regime $k \sim N_{\mathrm{Sh}}$.
+Paper~IX identifies that B-strong, for the Galerkin
+indices $k \leq N = O(c^{1/3})$, requires instead
+tools from the spectral theory of
+$\Tc|_{\VN}$ in the superconcentration regime.
+
+\paragraph{Immediate next step.}
+The most direct route to B-strong is
+Route~C (Section~\ref{sec:open}):
+show $\eps{N}^{(c)} \geq Cc^{-1/2}$ using
+the known concentration properties of $\pswf{N}$
+for $N = O(c^{1/3})$.
+This is a sharp version of the Landau--Pollak theorem
+at the Galerkin scale, and is likely accessible
+via the integral-equation methods of
+Osipov--Rokhlin--Xiao \cite{ORX2013}, Chapter~4.
+
+\paragraph{Alternative.}
+If $\eps{N} \geq Cc^{-1/2}$ proves elusive,
+one may attempt to bypass B-strong entirely
+(Route~C coercivity without the $P_{kl}$ decomposition)
+or to establish a weaker uniform bound
+$P_{kl} \leq Cc^\alpha$ for some $\alpha < 1$
+that still suffices for the coercivity conclusion
+of Paper~VI.
+
+%% ============================================================
+\begin{thebibliography}{9}
+
+\bibitem{paper6}
+  \textit{Paper~VI: Galerkin Norm Estimates for the Prolate Phase Operator},
+  \texttt{paper6.tex}, prolate-gram-coercivity programme, May~2026.
+
+\bibitem{bstrong_reduction}
+  \textit{B-strong Reduction Lemma},
+  \texttt{bstrong\_reduction\_lemma.tex},
+  prolate-gram-coercivity programme, May~2026.
+
+\bibitem{LandauPollak1961}
+  H.~J.~Landau and H.~O.~Pollak,
+  ``Prolate Spheroidal Wave Functions, Fourier Analysis and
+  Uncertainty~II,''
+  \textit{Bell Syst.\ Tech.\ J.}, 40 (1961), 65--84.
+
+\bibitem{Slepian1978}
+  D.~Slepian,
+  ``Prolate Spheroidal Wave Functions, Fourier Analysis, and
+  Uncertainty~V,''
+  \textit{Bell Syst.\ Tech.\ J.}, 57 (1978), 1371--1430.
+
+\bibitem{ORX2013}
+  A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+
+\end{thebibliography}
+
+\end{document}
