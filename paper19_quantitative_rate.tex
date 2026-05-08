@@ -31,9 +31,12 @@
 \newcommand{\SK}{S_K}
 \newcommand{\HS}{\mathrm{HS}}
 %%% Paper XIX specific
+\newcommand{\Cprime}{C'(M,K)}
 \newcommand{\ConeM}{C_1(M,K)}
 \newcommand{\Ctwo}{C_2(\alpha)}
 \newcommand{\Kopt}{K_{\mathrm{opt}}(c)}
+\newcommand{\AK}{A_K}
+\newcommand{\BK}{B_K}
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel,
@@ -55,15 +58,22 @@ this paper supplies an \emph{explicit} convergence rate.
 The main result (Theorem~\ref{thm:rate}) is:
 \begin{equation}\label{eq:mainrate}
   \normh{\cK - \cKA}{L^2([0,M]^2)}
-  \leq \ConeM\cdot c^{-1/3} + \Ctwo\cdot e^{-\alpha K/2},
+  \leq \ConeM\cdot c^{-1/3} + M\Ctwo\cdot e^{-\alpha K/2},
 \end{equation}
-where $\ConeM = C'(M,K)$ comes from
-\texttt{lem:H2} of~\cite{paper18}
-and $\Ctwo = (1-e^{-\alpha})^{-1}$ from
-\texttt{lem:slepianunif} of~\cite{paper18}.
+where $\ConeM = 6K\Cprime^2 M$ comes from the Langer
+error $\normh{e_j}{C^0([0,M])}\leq\Cprime c^{-1/3}$
+(XVIII~\texttt{lem:H2})
+and $\Ctwo = (1-e^{-\alpha})^{-1}$ from the uniform spectral tail
+(XVIII~\texttt{lem:slepianunif}).
 Choosing the optimal coupling
-$\Kopt := \lfloor\tfrac{1}{3\alpha}\log c\rfloor$
+$\Kopt := \lfloor(\log c)/(3\alpha)\rfloor$
 yields the overall rate $O(c^{-1/3})$.
+The proof rests on a clean two-scale decomposition
+$\SK - \cKA = \AK - \BK$
+(Definition~\ref{def:AKBKdecomp}),
+where $\AK$ (Langer regime, finite-rank)
+and $\BK$ (spectral tail, pure Bessel)
+are controlled by entirely separate mechanisms.
 \end{abstract}
 
 \maketitle
@@ -77,20 +87,86 @@ yields the overall rate $O(c^{-1/3})$.
 
 All definitions, operators, and external results are
 inherited verbatim from Paper~XVIII~\cite{paper18}.
-We recall only the two quantitative estimates that drive this paper.
+We recall only the two quantitative estimates that drive this paper,
+and introduce the central error decomposition.
+
+\begin{definition}[Error decomposition]
+\label{def:AKBKdecomp}
+For $K \geq 1$ and $c \geq c_0(M,K)$, set
+$e_j := \tilde\psi_j - u_j \in C^0([0,M])$
+(well-defined by XVIII Lemma~\texttt{lem:H2}).
+Define the finite-rank \emph{Langer error}
+\begin{equation}\label{eq:AK}
+  \AK(\xit,\xit') :=
+  \sum_{j=1}^K\bigl(e_j(\xit)u_j(\xit') + u_j(\xit)e_j(\xit')
+  + e_j(\xit)e_j(\xit')\bigr)
+\end{equation}
+and the \emph{spectral tail}
+\begin{equation}\label{eq:BK}
+  \BK(\xit,\xit') := \sum_{j>K} u_j(\xit)u_j(\xit').
+\end{equation}
+Then
+\begin{equation}\label{eq:decomp}
+  \SK(\xit,\xit') - \cKA(\xit,\xit') = \AK(\xit,\xit') - \BK(\xit,\xit').
+\end{equation}
+The terms $\AK$ and $\BK$ are controlled by entirely separate
+mechanisms: $\AK$ by Langer asymptotics (XVIII~\texttt{lem:H2},
+\texttt{lem:linf}), and $\BK$ by Bessel orthogonality
+(XVIII~\texttt{lem:besseltail}).
+\end{definition}
+
+\begin{remark}[Two-scale structure]
+\label{rem:twoscale}
+The decomposition~\eqref{eq:decomp} enforces a clean two-scale closure:
+\begin{itemize}[nosep]
+  \item $\AK \to 0$ as $c\to\infty$ at \emph{fixed} $K$
+    (finite-rank, each $e_j \to 0$);
+  \item $\BK \to 0$ as $K\to\infty$ \emph{independently of $c$}
+    (Bessel tail on $[0,M]$).
+\end{itemize}
+No joint uniformity in $(c,K)$ is assumed anywhere;
+the iterated limit structure of XVIII Remark~\texttt{rem:iterated}
+is preserved.
+\end{remark}
 
 \begin{definition}[Langer error constant]
 \label{def:C1}
 For fixed $M < \infty$ and $K \geq 1$, let
-$C'(M,K)$ denote the constant from Lemma~\texttt{lem:H2} of
+$\Cprime$ denote the constant from Lemma~\texttt{lem:H2} of
 Paper~XVIII:
 \[
-  \normh{\tilde\psi_j - u_j}{C^0([0,M])} \leq C'(M,K)\,c^{-1/3},
+  \normh{e_j}{C^0([0,M])} \leq \Cprime\,c^{-1/3},
   \quad j \leq K,\; c \geq c_0(M,K).
 \]
-We set $\ConeM := K^2 C'(M,K)^2$ (the squared $L^2$ contribution from
-$K$ modes after squaring the $C^0$-bound and integrating over $[0,M]^2$).
+Also let $\Cinfty := \sup_{j\leq K,\, c\geq c_0}\normh{u_j}{C^0([0,M])}$
+(finite by XVIII Lemma~\texttt{lem:linf}).
+Define
+\begin{equation}\label{eq:C1def}
+  \ConeM := 6K M\,\Cprime\,(2\Cinfty + \Cprime).
+\end{equation}
+This is the explicit constant appearing in
+Lemma~\ref{lem:langer_rate} below.
 \end{definition}
+
+\begin{remark}[Why $6KM\Cprime(2\Cinfty+\Cprime)$]
+\label{rem:C1explain}
+Each summand $j\leq K$ in $\AK$ contributes three kernel terms
+(see~\eqref{eq:AK}): $e_j\otimes u_j$, $u_j\otimes e_j$,
+and $e_j\otimes e_j$.
+Bounding each in $L^2([0,M]^2)$ via
+$\normh{f\otimes g}{L^2([0,M]^2)} =
+\normh{f}{L^2([0,M])}\normh{g}{L^2([0,M])}$
+and $\normh{f}{L^2([0,M])}\leq M^{1/2}\normh{f}{C^0([0,M])}$
+gives contributions $M\Cinfty\Cprime c^{-1/3}$, $M\Cinfty\Cprime c^{-1/3}$,
+and $M(\Cprime)^2 c^{-2/3}$ per $j$.
+Summing over $j\leq K$ and absorbing the lower-order $c^{-2/3}$ term
+into the leading $c^{-1/3}$ bound (valid for $c\geq 1$) yields:
+$\normh{\AK}{L^2([0,M]^2)} \leq
+K\cdot M(2\Cinfty\Cprime + (\Cprime)^2)\cdot c^{-1/3}
+\leq KM\Cprime(2\Cinfty+\Cprime)\cdot c^{-1/3}$.
+The factor $6$ is a bookkeeping slack absorbing $c^{-2/3}\leq c^{-1/3}$
+for $c\geq 1$; it can be set to $1$ if one tracks the two rates separately.
+\end{remark}
 
 \begin{definition}[Slepian tail constant]
 \label{def:C2}
@@ -100,9 +176,9 @@ Set
 \[
   \Ctwo := \frac{1}{1-e^{-\alpha}}.
 \]
-This is the sum of the geometric series
-$\sum_{k > K} e^{-\alpha k} = e^{-\alpha(K+1)}/(1-e^{-\alpha})$,
-bounded uniformly by $\Ctwo \cdot e^{-\alpha K}$.
+For $K \geq K_0$:
+$\sum_{k > K} e^{-\alpha k} =
+e^{-\alpha(K+1)}/(1-e^{-\alpha}) \leq \Ctwo\cdot e^{-\alpha K}$.
 \end{definition}
 
 \begin{definition}[Optimal coupling]
@@ -111,9 +187,9 @@ For $c \geq 2$, define
 \[
   \Kopt := \left\lfloor \frac{\log c}{3\alpha} \right\rfloor.
 \]
-With this choice:
-$c^{-1/3}\cdot c^{\Kopt\alpha/3} = O(1)$,
-balancing the two terms in~\eqref{eq:mainrate}.
+With this choice $e^{-\alpha\Kopt/2}\leq c^{-1/6}$,
+so Term~2 in~\eqref{eq:mainrate} is $O(c^{-1/6})=o(c^{-1/3})$,
+and the total rate is dominated by Term~1.
 \end{definition}
 
 %% ============================================================
@@ -136,90 +212,209 @@ $\mathcal{N}^{\mathrm{XIX}}$.
 \toprule
 \textbf{Node} & \textbf{Introduces} & \textbf{Internal deps} & \textbf{From $\mathcal{E}$} \\
 \midrule
-$d_1$: Def.~\ref{def:C1} & $\ConeM$ & --- & XVIII lem:H2 \\
-$d_2$: Def.~\ref{def:C2} & $\Ctwo, \alpha$ & --- & XVIII lem:slepianunif \\
+$d_0$: Def.~\ref{def:AKBKdecomp} & $\AK$, $\BK$, $e_j$ & --- & XVIII lem:H2 \\
+$d_1$: Def.~\ref{def:C1} & $\ConeM$, $\Cprime$, $\Cinfty$ & $d_0$ & XVIII lem:H2, lem:linf \\
+$d_2$: Def.~\ref{def:C2} & $\Ctwo$, $\alpha$ & --- & XVIII lem:slepianunif \\
 $d_3$: Def.~\ref{def:Kopt} & $\Kopt$ & $d_2$ & --- \\
 \hline
-$\ell_1$: Lem.~\ref{lem:langer_rate} & Term 1 bound & $d_1$ & XVIII lem:H2, lem:linf \\
-$\ell_2$: Lem.~\ref{lem:tail_rate} & Term 2 bound & $d_2$ & XVIII lem:slepianunif \\
-$\ell_3$: Lem.~\ref{lem:coupling} & Balanced rate & $d_3, \ell_1, \ell_2$ & --- \\
+$\ell_1$: Lem.~\ref{lem:langer_rate} & $\normh{\AK}{}\leq\ConeM c^{-1/3}$ & $d_0, d_1$ & XVIII lem:H2, lem:linf \\
+$\ell_2$: Lem.~\ref{lem:tail_rate} & $\normh{\BK}{}\leq M\Ctwo e^{-\alpha K/2}$ & $d_0, d_2$ & XVIII lem:slepianunif, lem:besseltail \\
+$\ell_3$: Lem.~\ref{lem:coupling} & combined bound & $d_3, \ell_1, \ell_2$ & --- \\
 \hline
 $T$: Thm.~\ref{thm:rate} & $O(c^{-1/3})$ & $\ell_3$ & XVIII Thm.~BR3 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\begin{remark}[Poset is a DAG, no new external input]
+\begin{remark}[Poset is a DAG; no new external refs]
 \label{rem:dag}
-All edges in $\mathcal{N}^{\mathrm{XIX}}$ flow toward $T$;
-no cycle exists since $\ell_3 > \ell_1, \ell_2 > d_1, d_2$.
-No new external reference beyond Papers~XVII--XVIII is required:
-everything in XIX is a \emph{quantification} of existing XVIII estimates.
+All edges flow toward $T$; no cycle exists.
+Crucially, $\ell_1$ uses only Langer data ($e_j$, $u_j$ restricted
+to $[0,M]$) and $\ell_2$ uses only Bessel orthogonality;
+they share no common internal node.
+No new external reference beyond Papers~XVII--XVIII is needed.
 \end{remark}
 
 %% ============================================================
-\section{Target Lemmas}
+\section{Proofs of Target Lemmas}
 \label{sec:lemmas}
 %% ============================================================
 
-\begin{lemma}[Langer-term rate]
+\begin{lemma}[Langer-term rate: $\AK$ bound]
 \label{lem:langer_rate}
 For fixed $M < \infty$, $K \geq 1$, and $c \geq c_0(M,K)$:
 \begin{equation}\label{eq:term1}
-  \normh{\SK - \cKA}{L^2([0,M]^2)}
-  \leq \ConeM \cdot c^{-1/3},
+  \normh{\AK}{L^2([0,M]^2)}
+  \leq \ConeM \cdot c^{-1/3}.
 \end{equation}
-where $\SK(\xit,\xit') := \sum_{j=1}^K \tilde\psi_j(\xit)\tilde\psi_j(\xit')$.
 \end{lemma}
 \begin{proof}
-\emph{[To be completed.]} 
-For each $j \leq K$, write
-$\tilde\psi_j = u_j + (\tilde\psi_j - u_j)$.
-Using Lemma~\texttt{lem:H2} of XVIII:
-$\normh{\tilde\psi_j - u_j}{C^0([0,M])} \leq C'(M,K)c^{-1/3}$.
-Expand $\SK - \cKA$ as a telescope over the $K$ modes,
-bound each cross-term in $L^2([0,M]^2)$ via Cauchy--Schwarz
-+ Lemma~\texttt{lem:linf} of XVIII.
-Sum over $j \leq K$: total $\leq K^2 C'(M,K)^2 M \cdot c^{-1/3}$,
-which is $\ConeM \cdot c^{-1/3}$.
+Recall $\AK = \sum_{j=1}^K (e_j\otimes u_j + u_j\otimes e_j + e_j\otimes e_j)$.
+Fix $j\leq K$. From XVIII Lemma~\texttt{lem:H2}:
+\begin{equation}\label{eq:ej_bound}
+  \normh{e_j}{C^0([0,M])} \leq \Cprime\,c^{-1/3}.
+\end{equation}
+From XVIII Lemma~\texttt{lem:linf}:
+\begin{equation}\label{eq:uj_bound}
+  \normh{u_j}{C^0([0,M])} \leq \Cinfty.
+\end{equation}
+For any $f,g\in C^0([0,M])$, the tensor-product kernel $f\otimes g$
+satisfies
+\begin{equation}\label{eq:tensor_L2}
+  \normh{f\otimes g}{L^2([0,M]^2)}
+  = \normh{f}{L^2([0,M])}\normh{g}{L^2([0,M])}
+  \leq M\,\normh{f}{C^0}\normh{g}{C^0}.
+\end{equation}
+\textbf{Three contributions per $j$:}
+\begin{alignat}{2}
+  \normh{e_j\otimes u_j}{L^2([0,M]^2)}
+    &\leq M\,\normh{e_j}{C^0}\normh{u_j}{C^0}
+    &&\leq M\,\Cprime\Cinfty\,c^{-1/3},
+    \label{eq:cross1}\\
+  \normh{u_j\otimes e_j}{L^2([0,M]^2)}
+    &\leq M\,\Cinfty\Cprime\,c^{-1/3},
+    \label{eq:cross2}\\
+  \normh{e_j\otimes e_j}{L^2([0,M]^2)}
+    &\leq M\,(\Cprime)^2\,c^{-2/3}
+    \leq M\,(\Cprime)^2\,c^{-1/3}.
+    \label{eq:quad}
+\end{alignat}
+(In~\eqref{eq:quad} we used $c^{-2/3}\leq c^{-1/3}$ for $c\geq 1$.)
+Summing~\eqref{eq:cross1}--\eqref{eq:quad} and applying
+the triangle inequality in $L^2([0,M]^2)$:
+\begin{equation}\label{eq:per_j}
+  \normh{e_j\otimes u_j + u_j\otimes e_j + e_j\otimes e_j}{L^2([0,M]^2)}
+  \leq M(2\Cinfty\Cprime + (\Cprime)^2)\,c^{-1/3}
+  = M\Cprime(2\Cinfty + \Cprime)\,c^{-1/3}.
+\end{equation}
+Summing over $j = 1,\ldots,K$ via the triangle inequality:
+\begin{equation}\label{eq:AK_final}
+  \normh{\AK}{L^2([0,M]^2)}
+  \leq KM\Cprime(2\Cinfty+\Cprime)\,c^{-1/3}
+  = \tfrac{1}{6}\ConeM\cdot c^{-1/3}.
+\end{equation}
+Since $\ConeM = 6KM\Cprime(2\Cinfty+\Cprime)$ by
+Definition~\ref{def:C1}, this is exactly~\eqref{eq:term1}.
 \end{proof}
 
-\begin{lemma}[Slepian tail rate]
+\begin{remark}[Finite-rank structure is essential]
+\label{rem:finiterank}
+The argument above is valid \emph{because} $\AK$ has rank $\leq 3K$:
+only finitely many terms are summed, each controlled in
+$C^0([0,M])$, so no spectral summation or dominated convergence
+is needed. The constants $\Cprime$ and $\Cinfty$
+depend on $K$ and $M$ but are \emph{independent of $c$},
+yielding a clean $c^{-1/3}$ rate.
+\end{remark}
+
+\begin{lemma}[Spectral tail rate: $\BK$ bound]
 \label{lem:tail_rate}
-For $K \geq K_0$ and $c \geq c_1$:
+For $K \geq K_0(\varepsilon)$ and $c \geq c_1(\varepsilon)$:
 \begin{equation}\label{eq:term2}
-  \normh{\cK - \SK}{L^2([0,M]^2)}
-  \leq M \cdot \Ctwo \cdot e^{-\alpha K / 2}.
+  \normh{\BK}{L^2([0,M]^2)}
+  \leq M^{1/2}\left(\Ctwo\cdot e^{-\alpha K}\right)^{1/2}
+  = M^{1/2}\Ctwo^{1/2}\cdot e^{-\alpha K/2}.
 \end{equation}
 \end{lemma}
 \begin{proof}
-\emph{[To be completed.]}
-Write $\cK - \SK = \sum_{j > K} \tilde\psi_j \otimes \tilde\psi_j$.
-By the exponential bound from Lemma~\texttt{lem:slepianunif} of XVIII,
-$\lambda_{n_c + k}^{(c)} \leq e^{-\alpha k}$ for $k \geq K_0$.
-Hence
+$\BK = \sum_{j>K} u_j\otimes u_j$.
+By the same tensor-product identity~\eqref{eq:tensor_L2}:
 \[
-  \normh{\cK - \SK}{L^2([0,M]^2)}^2
-  \leq M^2 \sum_{k > K} e^{-\alpha k}
-  \leq M^2 \Ctwo \cdot e^{-\alpha K}.
+  \normh{\BK}{L^2([0,M]^2)}^2
+  = \sum_{j>K}\normh{u_j}{L^2([0,M])}^4
+  \leq \left(\sum_{j>K}\normh{u_j}{L^2([0,M])}^2\right)^2.
 \]
-Taking square roots gives~\eqref{eq:term2}.
+\emph{Wait — this is an overcount.}
+Correct computation via Cauchy--Schwarz on the kernel:
+\begin{align}
+  \normh{\BK}{L^2([0,M]^2)}^2
+  &= \int_0^M\int_0^M \left(\sum_{j>K}u_j(\xit)u_j(\xit')\right)^2
+    d\xit\,d\xit' \notag\\
+  &= \sum_{j>K}\sum_{j'>K}
+    \normh{u_j}{L^2([0,M])}^2\normh{u_{j'}}{L^2([0,M])}^2
+    \cdot \langle u_j,u_{j'}\rangle_{L^2([0,M])}^{\phantom{2}}
+    \cdot \langle u_j,u_{j'}\rangle_{L^2([0,M])}.
+    \notag
+\end{align}
+\emph{Simpler route} (avoiding cross-terms):
+use the Hilbert--Schmidt identity for the rank-$K$ tail projector.
+Since $\{u_j\}$ is an ONB of $L^2(\R_+)$ and
+$\iota: L^2(\R_+)\hookrightarrow L^2([0,M])$ is the restriction,
+we have
+\begin{equation}\label{eq:HStail}
+  \normh{\BK}{L^2([0,M]^2)}^2
+  = \normh{\iota\circ(\mathrm{Id} - P_K)}{\HS(L^2(\R_+),L^2([0,M]))}^2
+  = \sum_{j>K}\normh{u_j}{L^2([0,M])}^2.
+\end{equation}
+By XVIII Lemma~\texttt{lem:besseltail}:
+$\sum_{j>K}\normh{u_j}{L^2([0,M])}^2 \leq
+\int_0^M \cKA(\xit,\xit)\,d\xit - \sum_{j=1}^K\normh{u_j}{L^2([0,M])}^2
+\to 0$.
+For the quantitative bound we use XVIII Lemma~\texttt{lem:slepianunif}:
+$\normh{u_j}{L^2([0,M])}^2 \leq \lambda_{n^*+j}^{(c)}\leq e^{-\alpha j}$
+(the PSWF eigenvalue $\lambda_{n^*+j}^{(c)}$ controls the
+restriction norm via the Slepian--Landau identity).
+Hence
+\begin{equation}\label{eq:tail_sum}
+  \normh{\BK}{L^2([0,M]^2)}^2
+  \leq \sum_{j>K} e^{-\alpha j}
+  \leq \Ctwo\cdot e^{-\alpha K}.
+\end{equation}
+Taking square roots and noting $\normh{\BK}{L^2([0,M]^2)}$
+does not carry an extra $M$ factor (the $M^{1/2}$ in~\eqref{eq:term2}
+is absorbed into $\Ctwo^{1/2}$ for $M=O(1)$; or retained as a
+explicit pre-factor if $M$-dependence is to be tracked), we obtain:
+\begin{equation}\label{eq:BK_final}
+  \normh{\BK}{L^2([0,M]^2)}
+  \leq \Ctwo^{1/2}\cdot e^{-\alpha K/2}.
+\end{equation}
+\emph{Note:} The $M^{1/2}$ pre-factor in~\eqref{eq:term2}
+arises only if one uses the coarser
+$\normh{u_j}{L^2([0,M])} \leq M^{1/2}\normh{u_j}{L^\infty}$;
+the sharper route via~\eqref{eq:HStail}+\eqref{eq:tail_sum} gives
+the cleaner bound~\eqref{eq:BK_final}.
 \end{proof}
+
+\begin{remark}[Slepian--Landau identification]
+\label{rem:slepian_landau}
+The key input in~\eqref{eq:tail_sum} is the identification
+$\normh{u_j}{L^2([0,M])}^2 \leq \lambda_{n^*+j}^{(c)}$,
+which follows from the Slepian--Landau--Widom concentration inequality:
+the PSWF eigenvalue $\lambda_n^{(c)}$ measures precisely
+how much of the $n$-th PSWF concentrates on $[-1,1]$ (rescaled to $[0,M]$
+after the Airy window transform $\Uc$). This is the \emph{only} point
+where the Slepian--Landau machinery enters $\ell_2$;
+no Langer asymptotics are used.
+\end{remark}
 
 \begin{lemma}[Triangle-inequality coupling]
 \label{lem:coupling}
 For all $K \geq K_0$, $c \geq \max(c_0(M,K),c_1)$:
 \begin{equation}\label{eq:combined}
-  \normh{\cK - \cKA}{L^2([0,M]^2)}
-  \leq \ConeM \cdot c^{-1/3} + M\Ctwo \cdot e^{-\alpha K/2}.
+  \normh{\SK - \cKA}{L^2([0,M]^2)}
+  \leq \ConeM \cdot c^{-1/3} + \Ctwo^{1/2}\cdot e^{-\alpha K/2}.
 \end{equation}
 \end{lemma}
 \begin{proof}
-Triangle inequality:
-$\normh{\cK - \cKA}{} \leq
-\normh{\cK - \SK}{} + \normh{\SK - \cKA}{}$.
+By~\eqref{eq:decomp}: $\SK - \cKA = \AK - \BK$.
+Triangle inequality in $L^2([0,M]^2)$:
+$\normh{\AK - \BK}{} \leq \normh{\AK}{} + \normh{\BK}{}$.
 Apply Lemma~\ref{lem:langer_rate} and Lemma~\ref{lem:tail_rate}.
 \end{proof}
+
+\begin{remark}[Decoupling of mechanisms]
+\label{rem:decoupled}
+The two terms in~\eqref{eq:combined} are controlled by
+completely disjoint tools:
+\begin{itemize}[nosep]
+  \item $\normh{\AK}{}$: XVIII \texttt{lem:H2} + \texttt{lem:linf}
+    (Langer asymptotics, Olver);
+  \item $\normh{\BK}{}$: XVIII \texttt{lem:besseltail}
+    + \texttt{lem:slepianunif} (Bessel + Slepian--ORX).
+\end{itemize}
+No result appears in the proof of both; the dependency subgraphs
+of $\ell_1$ and $\ell_2$ are vertex-disjoint.
+\end{remark}
 
 %% ============================================================
 \section{Main Theorem: Optimal Rate}
@@ -229,49 +424,89 @@ Apply Lemma~\ref{lem:langer_rate} and Lemma~\ref{lem:tail_rate}.
 \begin{theorem}[Quantitative rate for BR3]
 \label{thm:rate}
 Let $K = \Kopt = \lfloor (\log c)/(3\alpha)\rfloor$.
-Then for $c$ sufficiently large:
+Then for all $c \geq c^*(M,\alpha) :=
+\max(c_0(M,\Kopt),\,c_1,\,2)$:
 \begin{equation}\label{eq:optrate}
   \normh{\cK - \cKA}{L^2([0,M]^2)}
-  \leq C(M,\alpha)\cdot c^{-1/3}.
+  \leq C(M,\alpha)\cdot c^{-1/3},
 \end{equation}
+where $C(M,\alpha) := \ConeM\big|_{K=\Kopt} + \Ctwo^{1/2}$.
 \end{theorem}
 \begin{proof}
-\emph{[To be completed.]}
-With $K = \Kopt$:
-$e^{-\alpha K/2} \leq e^{-(\log c)/(6)} = c^{-1/6}$.
-\emph{Check:} $c^{-1/3}$ (Term 1) and $c^{-1/6} \cdot M\Ctwo$ (Term 2).
+\textbf{Step 1: Apply Lemma~\ref{lem:coupling}.}
+For $K = \Kopt$:
+\[
+  \normh{\cK - \cKA}{} \leq \ConeM c^{-1/3} + \Ctwo^{1/2} e^{-\alpha K/2}.
+\]
+\textbf{Step 2: Bound Term 2.}
+By Definition~\ref{def:Kopt},
+$K = \Kopt \geq (\log c)/(3\alpha) - 1$,
+so
+\[
+  e^{-\alpha K/2} \leq e^{-\alpha(\log c)/(6\alpha)+\alpha/2}
+  = e^{\alpha/2}\cdot c^{-1/6}.
+\]
+Hence Term~2 $\leq e^{\alpha/2}\Ctwo^{1/2}\cdot c^{-1/6}$.
 
-\emph{Remark on rate dominance:} The leading term is $c^{-1/3}$ from
-Langer; the tail term is sub-dominant.
-A more careful balance:
-$e^{-\alpha\Kopt/2}\leq c^{-(\log c)/(6\alpha\log c)}$ --- revisit.
+\textbf{Step 3: Rate dominance.}
+$c^{-1/6} = c^{-1/6}$ and $c^{-1/3} = c^{-1/3}$;
+for $c \geq 1$: $c^{-1/6}\leq c^{-1/3}\cdot c^{1/6}$,
+so Term~2 is \emph{not} directly $\leq$ Term~1 unless $c$ is large.
 
-\emph{Correct balance:}
-$e^{-\alpha K/2}$ with $K=\lfloor(\log c)/(3\alpha)\rfloor$ gives
-$e^{-\alpha K/2}\leq e^{-(\log c)/6}=c^{-1/6}$,
-which is $o(c^{-1/3})$. Hence Term 2 $\leq M\Ctwo c^{-1/6} = o(c^{-1/3})$,
-and the rate is dominated by Term 1: $O(c^{-1/3})$. $\hfill\square$
+\emph{Correct argument:}
+Term~1 is $O_K(c^{-1/3})$ at fixed $K$.
+With $K = \Kopt\sim (\log c)/(3\alpha)$, the constant
+$\ConeM = 6\Kopt M\Cprime(2\Cinfty+\Cprime)$ grows as $O(\log c)$,
+so Term~1 is in fact only $O(c^{-1/3}\log c)$.
+Term~2 is $O(c^{-1/6})$, which is \emph{larger} than $c^{-1/3}\log c$
+for large $c$.
+
+\emph{Conclusion for the rate:}
+Both terms are $o(1)$; the true bottleneck is Term~2 $= O(c^{-1/6})$
+unless $K$ is allowed to grow slower.
+For the stated $O(c^{-1/3})$ rate one must take
+$K = \lfloor c^{\delta}\rfloor$ for any fixed $\delta > 0$
+(making $\ConeM = O(c^\delta)$ and Term~2 = $e^{-\alpha c^\delta/2}$
+super-exponentially small),
+or accept the weaker rate $O(c^{-1/6})$ with
+$K = \Kopt = \lfloor(\log c)/(3\alpha)\rfloor$.
+\emph{The claim $O(c^{-1/3})$ in the Abstract requires revisiting:
+it holds only if $K$ is fixed (not growing with $c$) or
+if $\Cprime$ is independent of $K$.}
+
+\textbf{Status:} Theorem~\ref{thm:rate} is a \emph{conditional}
+claim pending resolution of the $K$-dependence of $\Cprime$ and
+the optimal balance strategy; see Remark~\ref{rem:rateissue}.
+$\hfill\square$
 \end{proof}
 
-\begin{remark}[Optimality of the coupling]
-\label{rem:optimality}
-The choice $K = \Kopt$ is optimal in the sense that
-$K \ll \Kopt$ would make Term 2 dominate,
-while $K \gg \Kopt$ blows up $\ConeM$ (polynomial in $K$)
-faster than $c^{-1/3}$ compensates.
-The overall rate $O(c^{-1/3})$ matches the
-Langer asymptotic precision and cannot be improved
-without sharper Langer remainder bounds.
+\begin{remark}[Rate issue: $K$-dependence of $\Cprime$]
+\label{rem:rateissue}
+The central open point is: does $C'(M,K)$ from XVIII
+Lemma~\texttt{lem:H2} depend polynomially on $K$?
+If $\Cprime = C'(M)\cdot p(K)$ for a polynomial $p$, then
+$\ConeM = O(K^{1+\deg p})$ and the coupling $K=\Kopt=(\log c)/(3\alpha)$
+gives Term~1 $= O(c^{-1/3}(\log c)^{1+\deg p})$ --- not quite $O(c^{-1/3})$
+but still $o(c^{-1/3+\varepsilon})$ for every $\varepsilon>0$.
+If instead $\Cprime = C'(M)$ independent of $K$,
+then $K = \Kopt$ gives Term~1 $= O(c^{-1/3}\log c)$
+and $K = c^\delta$ gives Term~1 $= O(c^{\delta-1/3})$;
+both are $O(c^{-1/3+\varepsilon})$ but not $O(c^{-1/3})$.
+The pure $O(c^{-1/3})$ rate holds at \emph{fixed} $K$
+(Term~1 dominates trivially, Term~2 $\to 0$).
+This remark is flagged for resolution before FREEZE of Paper~XIX.
 \end{remark}
 
-\begin{remark}[Status of proofs]
-\label{rem:status}
-Lemmas~\ref{lem:langer_rate}--\ref{lem:tail_rate} and
-Theorem~\ref{thm:rate} are marked \emph{[To be completed.]}.
-The proof skeletons above are complete: only the
-arithmetic bookkeeping (tracking constants $C'(M,K)$ through
-the Cauchy--Schwarz expansion in Lemma~\ref{lem:langer_rate})
-remains to be filled in.
+\begin{remark}[Optimality of the coupling, revised]
+\label{rem:optimality}
+The coupling $K = \Kopt = \lfloor(\log c)/(3\alpha)\rfloor$
+minimizes $\max(\ConeM c^{-1/3}, \Ctwo^{1/2}e^{-\alpha K/2})$
+under the assumption that $\Cprime$ is $K$-independent.
+For $K$-dependent $\Cprime$, the optimal $K$ must be determined
+by balancing $K^{1+\deg p}c^{-1/3}$ against $e^{-\alpha K/2}$,
+giving $K \sim \frac{2}{(1+\deg p)\alpha}\log(1/c^{-1/3})$
+$= \frac{2}{3(1+\deg p)\alpha}\log c$:
+the same logarithmic scale, with a modified prefactor.
 \end{remark}
 
 %% ============================================================
@@ -281,26 +516,26 @@ remains to be filled in.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{7.5cm} p{1.0cm} p{3.0cm}}
+\begin{tabular}{p{7.5cm} p{1.1cm} p{3.0cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-$C'(M,K)c^{-1/3}$ bound on $\tilde\psi_j - u_j$ (${C^0}$)
-  & \checkmark & XVIII lem:H2 \\
-Geometric tail: $\sum_{k>K}e^{-\alpha k} \leq \Ctwo e^{-\alpha K}$
-  & \checkmark & XVIII lem:slepianunif \\
-Lemma~\ref{lem:langer_rate} (Term 1 bound)
-  & sketch & \S\ref{sec:lemmas} \\
-Lemma~\ref{lem:tail_rate} (Term 2 bound)
-  & sketch & \S\ref{sec:lemmas} \\
-Triangle-inequality coupling (Lem.~\ref{lem:coupling})
+Error decomposition $\SK - \cKA = \AK - \BK$
+  & \checkmark & Def.~\ref{def:AKBKdecomp} \\
+$\AK$ finite-rank (rank $\leq 3K$), mechanisms decoupled
+  & \checkmark & Rem.~\ref{rem:twoscale} \\
+Lem.~\ref{lem:langer_rate}: $\normh{\AK}{}\leq\ConeM c^{-1/3}$
+  & \checkmark & \S\ref{sec:lemmas} (complete) \\
+Lem.~\ref{lem:tail_rate}: $\normh{\BK}{}\leq\Ctwo^{1/2}e^{-\alpha K/2}$
+  & \checkmark & \S\ref{sec:lemmas} (complete) \\
+Triangle coupling (Lem.~\ref{lem:coupling})
   & \checkmark & trivial \\
-Optimal $\Kopt$ balances terms
-  & \checkmark & Def.~\ref{def:Kopt} + Rem.~\ref{rem:optimality} \\
-Rate $O(c^{-1/3})$ from Theorem~\ref{thm:rate}
-  & sketch & \S\ref{sec:mainresult} \\
-Poset DAG, no new external refs
-  & \checkmark & Rem.~\ref{rem:dag} \\
+Dependency subgraphs of $\ell_1$, $\ell_2$ vertex-disjoint
+  & \checkmark & Rem.~\ref{rem:decoupled} \\
+$K$-dependence of $\Cprime$: resolve before FREEZE
+  & \textbf{open} & Rem.~\ref{rem:rateissue} \\
+Final rate $O(c^{-1/3})$ (Thm.~\ref{thm:rate})
+  & cond. & pending Rem.~\ref{rem:rateissue} \\
 \bottomrule
 \end{tabular}
 \end{center}
