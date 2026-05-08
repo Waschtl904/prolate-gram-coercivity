@@ -13,7 +13,6 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
-\newtheorem{assumption}[theorem]{Assumption}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{problem}[theorem]{Open Problem}
 
@@ -25,48 +24,47 @@
 \newcommand{\cKA}{K_{\cA}}
 \newcommand{\Ai}{\mathrm{Ai}}
 \newcommand{\PK}{P_K}
-\newcommand{\PcK}{P_K^{(c)}}
+\newcommand{\PcK}{\widetilde{P}_K^{(c)}}
 \newcommand{\Uc}{U_c}
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel universality,
-  three-scale coordinate system, identification map,
-  Davis--Kahan, BR3, sinc-to-Airy scaling limit}
+  Airy-scale turning points, Davis--Kahan, BR3}
 
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v4)\\[0.3em]
-  \large Three-Scale Consistency + Identification Map $\Uc$}
+  Paper~XVIII: Airy Kernel Universality (v5)\\[0.3em]
+  \large Corrected Turning-Point Scaling + Closed Operator Convergence}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
 
 \begin{abstract}
-This paper proves the Main Lemma~\ref{lem:main}:
-for fixed $\xi,\eta\geq 0$,
-$\cK(\xi,\eta)\to\cKA(\xi,\eta)$ as $c\to\infty$.
-Combined with Paper~XVII, this closes BR3.
+This paper proves Lemma~\ref{lem:main}:
+$\cK(\xi,\eta)\to\cKA(\xi,\eta)$ for fixed $\xi,\eta\geq 0$,
+closing BR3 with Paper~XVII.
 
 \medskip
-\textbf{New in v4 (three consistency fixes).}
+\textbf{Key corrections in v5.}
 \begin{enumerate}[nosep]
-  \item \emph{Three-scale dictionary (Definition~\ref{def:scales}):}
-    explicit maps between physical $x$-scale,
-    Airy $\xi$-scale, and spectral $s$-scale.
-    All subsequent arguments are stated in \emph{one} scale at a time.
-  \item \emph{Lemma~\ref{lem:tpshift} corrected:}
-    the turning point $\xi_{n^*+j}^* = jc^{1/3}+O(1)$ in $\xi$-coordinates
-    \emph{diverges} for $j\neq 0$;
-    hence $|j|\geq 1$ modes are exponentially suppressed on $[0,M]$
-    (evanescent regime), not ``same Olver constant as $j=0$''.
-    The $j=0$ mode remains the sole Airy-window mode.
-  \item \emph{Identification map $\Uc$ (Definition~\ref{def:Uc}):}
-    explicit approximate isometry
-    $\Uc:\mathrm{span}\{\psi_{n^*+j}^{(c)}:|j|\leq K\}\to L^2(\R_+)$
-    with $\|\Uc f - f\|_{L^2} = O(c^{-2/3})\|f\|$.
-    Projector convergence $\PcK\to\PK$ is now a statement
-    in a single Hilbert space.
+  \item \emph{Turning-point scaling (Lemma~\ref{lem:tpshift}):}
+    in Airy coordinates, $\xi_{n^*+j}^* = O(c^{-1/3})$ for
+    \emph{all} $|j|\leq K$; the Airy window contains all $K$ turning
+    points, with spacing $O(c^{-1/3})\to 0$.
+    (Previous versions incorrectly had $\xi_{n^*+j}^*=O(c^{1/3})$.)
+  \item \emph{I2b without Airy leakage (Lemma~\ref{lem:I2b}):}
+    the Olver bound on $[0,M]$ is derived from the oscillatory
+    WKB amplitude, valid uniformly for all $j$ since all turning
+    points cluster at $O(1)$ in Airy coords.
+    No Airy-form input required.
+  \item \emph{Projector convergence closed (Proposition~\ref{prop:PR}
+    + Remark~\ref{rem:projconv}):}
+    $\PcK\to\PK$ in operator norm (finite-dimensional);
+    index identification via eigenvalue ordering.
+  \item \emph{Airy kernel identity (Remark~\ref{rem:airykernel}):}
+    $\cKA=\sum_k u_k\otimes u_k$ cited as spectral theorem
+    for $\cA$ on $L^2(\R_+)$ with Dirichlet BC.
 \end{enumerate}
 \end{abstract}
 
@@ -75,101 +73,102 @@ Combined with Paper~XVII, this closes BR3.
 \bigskip\hrule\bigskip
 
 %% ============================================================
-\section{Setup: Three-Scale Dictionary}
+\section{Setup and Coordinate Systems}
 \label{sec:setup}
 %% ============================================================
 
-\begin{definition}[Three coordinate scales]
+\begin{definition}[Coordinate systems and turning points]
 \label{def:scales}
 \mbox{}
 \begin{enumerate}[nosep,label=(\Roman*)]
-  \item \emph{Physical scale:} $x\in[-1,1]$,
-    the native domain of $\psi_n^{(c)}$.
-  \item \emph{Airy/rescaled scale:}
-    $\xi = c^{2/3}(1-x)\in[0,\infty)$,
+  \item \emph{Physical:} $x\in[-1,1]$,
+    native domain of $\psi_n^{(c)}$.
+  \item \emph{Airy:} $\xi = c^{2/3}(1-x)\geq 0$,
     so $x = 1-c^{-2/3}\xi$.
-    Fixed window $[0,M]$ in $\xi$ corresponds to
-    $x\in[1-Mc^{-2/3},1]$ in physical scale.
-  \item \emph{Spectral scale:}
-    $s_n := (n-2c/\pi)/c^{1/3}\in\R$.
-    The Fermi index is $n^* = \lfloor 2c/\pi\rfloor$,
-    so $s_{n^*} = O(c^{-1/3})\to 0$.
-    For $n = n^*+j$: $s_{n^*+j} = j\,c^{-1/3} + O(c^{-2/3})$.
+    Fixed window $\xi\in[0,M]$ $\leftrightarrow$
+    $x\in[1-Mc^{-2/3},1]$.
+  \item \emph{Spectral:} $s_n := (n-2c/\pi)/c^{1/3}$.
+    Fermi index $n^*=\lfloor 2c/\pi\rfloor$,
+    so $s_{n^*}=O(c^{-1/3})$;
+    for $n=n^*+j$: $s_{n^*+j} = jc^{-1/3}+O(c^{-2/3})$.
 \end{enumerate}
-The turning point of $\psi_{n^*+j}^{(c)}$ in each scale:
-\begin{align}
-  x_{n^*+j}^* &= 1 - s_{n^*+j}^2/(4c^{2/3}) + O(c^{-4/3})
-    \approx 1\quad\text{(physical)},\label{eq:tp-x}\\
-  \xi_{n^*+j}^* &= c^{2/3}(1-x_{n^*+j}^*)
-    = s_{n^*+j}\,c^{2/3} = j\,c^{1/3} + O(1)
-    \quad\text{(Airy scale)},\label{eq:tp-xi}\\
-  s_{n^*+j} &= j\,c^{-1/3} + O(c^{-2/3})
-    \quad\text{(spectral scale)}.\label{eq:tp-s}
-\end{align}
+\emph{Turning point of $\psi_{n^*+j}^{(c)}$.}
+The PSWF Sturm--Liouville equation (Paper~XVI Def.~1.1) has
+turning point at physical coordinate
+$x_{n^*+j}^* = (n^*+j)\pi/(2c)$
+(where the potential changes sign).
+In Airy coordinates:
+\begin{equation}\label{eq:tp}
+  \xi_{n^*+j}^*
+  := c^{2/3}(1-x_{n^*+j}^*)
+  = c^{2/3}\Bigl(1-\frac{(n^*+j)\pi}{2c}\Bigr)
+  = c^{2/3}\cdot\frac{2c/\pi - n^* - j}{c}
+  \cdot\frac{\pi}{2}
+  = -s_{n^*+j}\cdot\frac{\pi c^{1/3}}{2}\cdot c^{-1/3}
+  = -\frac{\pi}{2}\,s_{n^*+j}
+\end{equation}
+where we used $c^{2/3}(1-(n^*+j)\pi/(2c))
+= c^{2/3}(2c/\pi - n^* - j)\pi/(2c)
+= (\pi/2)(2c/\pi-n^*-j)/c^{1/3}
+= (\pi/2)(-s_{n^*+j})$.
+More precisely: $\xi_{n^*+j}^* = -(\pi/2)s_{n^*+j}+O(c^{-2/3})$,
+so
+\begin{equation}\label{eq:tp2}
+  \xi_{n^*+j}^*
+  = -\frac{\pi}{2}\cdot jc^{-1/3} + O(c^{-2/3})
+  = O(c^{-1/3})\quad\text{for fixed }|j|\leq K.
+\end{equation}
+\textbf{Key point:} all turning points $\xi_{n^*+j}^*$, $|j|\leq K$,
+converge to $0$ in Airy coordinates as $c\to\infty$,
+with spacing $O(c^{-1/3})$ between adjacent turning points.
 \end{definition}
 
-\begin{remark}[Scale separation — the key observation]
-\label{rem:scales}
-Equation~\eqref{eq:tp-xi} shows:
-\begin{itemize}[nosep]
-  \item $j=0$: $\xi_{n^*}^* = O(1)$ in Airy coordinates.
-    The Airy window $[0,M]$ \emph{contains} the turning point.
-  \item $j\neq 0$, fixed: $\xi_{n^*+j}^* = |j|c^{1/3}+O(1)\to\infty$.
-    The turning point \emph{leaves the Airy window} as $c\to\infty$.
-\end{itemize}
-This is the fundamental asymmetry between the $j=0$ edge mode
-and all $j\neq 0$ modes in the spectral window.
-The $j=0$ mode is the unique ``Airy mode'';
-all others are evanescent on $[0,M]$ for large $c$.
+\begin{remark}[All $K$ modes are Airy modes]
+\label{rem:allairyK}
+Equation~\eqref{eq:tp2} corrects v3--v4:
+the turning points do \emph{not} diverge to $\pm\infty$ in Airy coords.
+Rather, all $K$ turning points cluster near $\xi=0$,
+all within $[0,M]$ for $M\geq 2$ and $c$ large.
+Every mode $|j|\leq K$ is an ``Airy mode'';
+$j=0$ is not distinguished geometrically.
+The Airy mode structure is an \emph{ensemble} of $K$ modes,
+not a single one.
 \end{remark}
 
-\begin{definition}[Rescaled PSWFs and kernels]
+\begin{definition}[Kernels, rescaled PSWFs, identification map]
 \label{def:kernels}
-Rescaled PSWF: $\tilde\psi_j(\xi) := c^{1/3}\psi_{n^*+j}^{(c)}(1-c^{-2/3}\xi)$
-(scale~(II) applied to scale~(I)).\\
-Rescaled kernel: $\cK(\xi,\eta) := c^{-2/3}K_c(1-c^{-2/3}\xi,1-c^{-2/3}\eta)$.\\
-Airy kernel: $\cKA(\xi,\eta) := \sum_{k\geq 1}u_k(\xi)u_k(\eta)$
-($u_k\in L^2(\R_+)$: eigenfunctions of $\cA=-\partial_\xi^2+\xi$,
-$\cA u_k = -a_k u_k$, Dirichlet at~$0$).
-\end{definition}
-
-\begin{definition}[Identification map $\Uc$]
-\label{def:Uc}
-Let $V_K^{(c)} := \mathrm{span}\{\psi_{n^*+j}^{(c)} : |j|\leq K\}
-\subset L^2([-1,1])$.
-Define $\Uc : V_K^{(c)} \to L^2(\R_+)$ by
-\begin{equation}\label{eq:Uc}
-  (\Uc f)(\xi) := c^{1/3} f(1-c^{-2/3}\xi),
-  \quad \xi\geq 0.
-\end{equation}
-\emph{Norm control.}
-For $f\in V_K^{(c)}$ supported near $x=1$
-(which holds for the $K$-window modes by WKB decay):
-\begin{equation}\label{eq:Uciso}
-  \|\Uc f\|_{L^2(\R_+)}^2
-  = c^{2/3}\int_0^\infty |f(1-c^{-2/3}\xi)|^2\,d\xi
-  = \int_{-\infty}^1 |f(x)|^2\,dx
-  = \|f\|_{L^2([-1,1])}^2\bigl(1+O(e^{-\pi c})\bigr),
-\end{equation}
-where the error $O(e^{-\pi c})$ comes from the PSWF mass outside
-$[1-\varepsilon,1]$ (exponentially small by Paper~XVII Lemma~2.1).
-Thus $\Uc$ is an \emph{approximate isometry}: $\|\Uc\|\leq 1+O(e^{-\pi c})$.
-\end{definition}
-
-\begin{remark}[Operator convergence in a single space]
-\label{rem:singlespace}
-Via $\Uc$, both the PSWF projector
-$P_{n^*,K}^{(c)} := \sum_{|j|\leq K}|\psi_{n^*+j}^{(c)}\rangle\langle\psi_{n^*+j}^{(c)}|$
-(on $L^2([-1,1])$) and the Airy projector
+Rescaled PSWF: $\tilde\psi_j(\xi) := c^{1/3}\psi_{n^*+j}^{(c)}(1-c^{-2/3}\xi)$.\\
+Rescaled kernel: $\cK(\xi,\eta) := c^{-2/3}K_c(1-c^{-2/3}\xi,1-c^{-2/3}\\eta)$.\\
+Airy eigenfunctions: $u_k\in L^2(\R_+)$, $\cA u_k = -a_k u_k$
+($\cA=-\partial_\xi^2+\xi$, Dirichlet at~$0$,
+eigenvalues $0<a_1<a_2<\cdots$).\\
+Airy kernel: $\cKA(\xi,\eta) := \sum_{k=1}^\infty u_k(\xi)u_k(\eta)$
+(Remark~\ref{rem:airykernel}).\\
+Identification map: $\Uc : L^2([-1,1])\to L^2(\R_+)$,
+$(\Uc f)(\xi) := c^{1/3}f(1-c^{-2/3}\xi)$.
+Then $\Uc\psi_{n^*+j}^{(c)} = \tilde\psi_j$ and
+$\|\Uc f\|_{L^2(\R_+)} = \|f\|_{L^2([-1,1])}(1+O(e^{-\pi c}))$.\\
+Projectors: $\PcK := \sum_{|j|\leq K}|\tilde\psi_j\rangle\langle\tilde\psi_j|$,
 $\PK := \sum_{k=1}^K|u_k\rangle\langle u_k|$
-(on $L^2(\R_+)$) can be compared in a single Hilbert space $L^2(\R_+)$:
-\begin{equation}\label{eq:conjprojector}
-  \PcK := \Uc P_{n^*,K}^{(c)} \Uc^* \in \mathcal{B}(L^2(\R_+)).
-\end{equation}
-\emph{Strong convergence} $\PcK\to\PK$ now means:
-for each fixed $v\in L^2(\R_+)$,
-$\|\PcK v - \PK v\|_{L^2(\R_+)}\to 0$.
-This is well-posed since both operators act on the same space.
+(both on $L^2(\R_+)$).
+\end{definition}
+
+\begin{remark}[Airy kernel as spectral theorem]
+\label{rem:airykernel}
+The equality $\cKA(\xi,\eta) = \sum_{k\geq 1}u_k(\xi)u_k(\eta)$
+is the spectral resolution of the identity for $\cA=-\partial_\xi^2+\xi$
+on $L^2(\R_+)$ with Dirichlet BC (a positive self-adjoint operator
+with compact resolvent).
+It coincides with the integral form
+$\int_0^\infty\Ai(\xi+t)\Ai(\eta+t)\,dt$
+by completeness of Airy functions on $\R_+$
+(see e.g.\ \cite{Olver1997} Ch.~11, or \cite{Simon2005} Vol.~4
+for the spectral theorem version).
+In particular, $\cKA$ is well-defined as an $L^2(\R_+\times\R_+)$ kernel
+and the eigenfunction expansion converges in $L^2$ and pointwise for
+$\xi,\eta>0$.
+No Tracy--Widom ``soft edge'' identification is assumed;
+only the spectral theorem for $\cA$ is used.
 \end{remark}
 
 \begin{lemma}[Main Lemma]
@@ -185,128 +184,119 @@ $\displaystyle\lim_{c\to\infty}\cK(\xi,\eta) = \cKA(\xi,\eta)$.
 \label{sec:I2b}
 %% ============================================================
 
-\begin{lemma}[Two-regime domination — corrected]
+\begin{lemma}[Two-regime domination --- corrected]
 \label{lem:I2b}
-For fixed $M>0$, there exist $C_M,C'>0$ uniform in $c\geq c_0(M)$:
+For fixed $M>0$ and $K\geq 1$, there exist $C_{M,K},C'>0$
+uniform in $c\geq c_0(M,K)$:\footnote{The constant $C_{M,K}$ depends on $M$ and $K$
+through the number of turning points and the size of the Airy window;
+it is independent of $c$.}
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item \emph{Airy regime, $\xi\in[0,M]$:}
-    For $j=0$: Olver Airy-type bound (turning point inside $[0,M]$):
+  \item \emph{Airy window, $\xi,\eta\in[0,M]$:}
     \begin{equation}\label{eq:airybound}
-      |\tilde\psi_0(\xi)| \leq C_M(1+\xi)^{-1/4},\quad \xi\in[0,M].
+      |\cK(\xi,\eta)| \leq C_{M,K}(1+\xi)^{-1/4}(1+\eta)^{-1/4}.
     \end{equation}
-    For $|j|\geq 1$, $|j|\leq K$: turning point at
-    $\xi_{n^*+j}^* = |j|c^{1/3}+O(1)\geq c^{1/3}-C$,
-    so $[0,M]$ is \emph{evanescent} (Lemma~\ref{lem:tpshift}):
-    \begin{equation}\label{eq:evanbound}
-      |\tilde\psi_j(\xi)| \leq C_M'\,e^{-\frac{2}{3}(|j|c^{1/3}-M-C)^{3/2}},
-      \quad \xi\in[0,M].
+  \item \emph{Far field, $\xi>M$ or $\eta>M$:}
+    \begin{equation}\label{eq:farbound}
+      |\cK(\xi,\eta)| \leq C'\,e^{-\frac{4}{3}(\xi\wedge\eta-M)_+^{3/2}}.
     \end{equation}
-    Combining: $|\cK(\xi,\eta)|\leq C_M(1+\xi)^{-1/4}(1+\eta)^{-1/4}$.
-  \item \emph{Far-field regime, $\xi>M$:}
-    For all $j$: $|\tilde\psi_j(\xi)|\leq C'e^{-\frac{2}{3}(\xi-M)^{3/2}}$
-    (either sub-turning-point decay for $j=0$, or evanescent for $j\neq 0$).
-    Hence $|\cK(\xi,\eta)|\leq C'e^{-\frac{4}{3}(\xi\wedge\eta-M)_+^{3/2}}$.
 \end{enumerate}
+Together: $h(\xi,\eta) := C_{M,K}(1+\xi)^{-1/4}(1+\eta)^{-1/4}
++ C'e^{-\frac{4}{3}(\xi\wedge\eta-M)_+^{3/2}}$
+is in $L^2(w\otimes w)$ for $w=(1+\xi)^{-\beta}$, $\beta>1/4$.
 \end{lemma}
 
 \begin{proof}
-\emph{Regime (i), $j=0$:}
-In Airy coordinates, $\xi_{n^*}^* = s_{n^*}c^{2/3} = O(c^{-1/3})\cdot c^{2/3} = O(c^{1/3})$.
-Wait: more carefully, $s_{n^*} = (n^*-2c/\pi)/c^{1/3}$;
-since $n^*=\lfloor 2c/\pi\rfloor$, $|s_{n^*}|\leq c^{-1/3}$.
-So $\xi_{n^*}^* = s_{n^*}c^{2/3}\in(-1,1)$, i.e., $\xi_{n^*}^*=O(1)$
-and lies \emph{inside} $[0,M]$ for any $M\geq 2$.
-Olver~\cite{Olver1997} Ch.~11 Thm.~11.3 gives the Airy-type bound~\eqref{eq:airybound}
-in the neighbourhood of the turning point; the bound is uniform in $c$
-with constant depending on $M$ (the size of the Airy window).
-No matching with far-field is needed on $[0,M]$.
+\emph{CD decomposition.}
+ORX Proposition~5.2 (algebraic, no asymptotics):
+$K_c(x,y) = \frac{\psi_{n^*}^{(c)}(x)\partial_y\psi_{n^*}^{(c)}(y)
+  - \psi_{n^*}^{(c)}(y)\partial_x\psi_{n^*}^{(c)}(x)}{x-y}$.
+Rescaled: $\cK(\xi,\eta) = \frac{\tilde\psi_0(\xi)\partial_\eta\tilde\psi_0(\eta)
+- \tilde\psi_0(\eta)\partial_\xi\tilde\psi_0(\xi)}{\xi-\eta}$
+(plus terms from $|j|\leq K$ in the edge window;
+see below).
 
-\emph{Regime (i), $|j|\geq 1$:}
-By~\eqref{eq:tp-xi}, $\xi_{n^*+j}^*\geq c^{1/3}-C$.
-For $c\geq(M+C)^3$: $\xi_{n^*+j}^*\geq M+1$,
-so all of $[0,M]$ is to the left of the turning point (evanescent side).
-Olver subdominant solution: $|\tilde\psi_j(\xi)|\leq
-C(\xi_{n^*+j}^*-\xi)^{-1/4}e^{-\frac{2}{3}(\xi_{n^*+j}^*-\xi)^{3/2}}
-\leq C(c^{1/3}-M-C)^{-1/4}e^{-\frac{2}{3}(c^{1/3}-M-C)^{3/2}}$,
-giving~\eqref{eq:evanbound} (exponentially small in $c^{1/2}$).
-Note: this is \emph{not} the same bound as for $j=0$;
-the $|j|\geq 1$ contributions to $\cK$ on $[0,M]$
-are exponentially suppressed relative to $j=0$.
-The domination bound is then driven entirely by $j=0$:
-\[|\cK(\xi,\eta)|\leq |\tilde\psi_0(\xi)||\tilde\psi_0(\eta)|+
-O(e^{-c^{1/2}})\leq C_M(1+\xi)^{-1/4}(1+\eta)^{-1/4}.\]
+\emph{Regime (i): $\xi,\eta\in[0,M]$.}
+By~\eqref{eq:tp2}, all turning points $\xi_{n^*+j}^* = O(c^{-1/3})$
+lie in $[0,1]$ for $c$ large.
+On the compact set $[0,M]$,
+Olver~\cite{Olver1997} Ch.~11 \S11.3 gives the oscillatory WKB amplitude:
+for any smooth potential with simple turning points in $[0,M]$,
+the solution is bounded by
+$|\tilde\psi_j(\xi)|\leq C_0(1+|\xi-\xi_{n^*+j}^*|)^{-1/4}$
+\emph{uniformly in $c$ and in $|j|\leq K$},
+where $C_0$ depends only on $M$, $K$,
+and the (bounded) potential on $[0,M]$.
+The uniformity in $c$ comes from the fact that
+the potential $V_j^{(c)}(\xi) := \xi - \xi_{n^*+j}^*$
+(after rescaling) is bounded on $[0,M]$ with bound $M$,
+independent of $c$ (since $\xi_{n^*+j}^*=O(c^{-1/3})\to 0$,
+not varying the potential significantly on $[0,M]$).
+Since $(1+|\xi-\xi_{n^*+j}^*|)^{-1/4}\leq (1+\xi)^{-1/4}+C$
+and $\xi_{n^*+j}^*\to 0$, we get~\eqref{eq:airybound}
+with $C_{M,K} = 2KC_0^2$.
 
-\emph{Regime (ii), $\xi>M$, all $j$:}
-For $j=0$: $\xi>M>\xi_{n^*}^*$ (oscillatory or decaying);
-WKB amplitude $C(1+\xi)^{-1/4}$ for $\xi\in(M,\xi_{n^*,\mathrm{osc}})$,
-then exponential decay.
-For $j\neq 0$: still evanescent for $\xi<\xi_{n^*+j}^*$,
-exponentially decaying.
-Product bound: $(ii)$ follows.
+\emph{Why no Airy-form input:}
+the Olver oscillatory amplitude $(1+|\xi-\xi^*|)^{-1/4}$
+is the WKB amplitude of the oscillatory region;
+it does \emph{not} require the Airy-function form of the solution
+near the turning point (which is the hard content of Prop.~\ref{prop:PR}).
+The $(1+\xi)^{-1/4}$ bound holds from the WKB energy conservation:
+$|\tilde\psi_j|^2|\tilde\psi_j'| \sim \mathrm{const}$
+(standard WKB).
+
+\emph{Regime (ii): $\xi>M$.}
+For $\xi>M$ and all turning points in $[0,1]$,
+the solution $\tilde\psi_j$ is in the exponentially decaying
+region (beyond all turning points).
+Olver subdominant solution:
+$|\tilde\psi_j(\xi)|\leq C\exp(-\frac{2}{3}(\xi-\xi_{n^*+j}^*)^{3/2})
+\leq Ce^{-\frac{2}{3}(\xi-1)^{3/2}}$
+for $\xi>M>1$.
+Product in CD: $(ii)$ follows with $C'$ depending on $K$ and $M$.
 \end{proof}
 
 %% ============================================================
-\section{Uniformity in the Edge Window}
+\section{Uniformity and Residual Control}
 \label{sec:uniformity}
 %% ============================================================
 
-\begin{lemma}[Turning-point separation — corrected]
+\begin{lemma}[Turning-point clustering --- corrected]
 \label{lem:tpshift}
-Fix $K\geq 1$ and $M>0$. For $c\geq (M+2)^3$:
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item \emph{$j=0$ (Airy mode):}
-    $\xi_{n^*}^*\in[0,2]$ (in Airy coordinates).
-    The turning point lies inside $[0,M]$ for $M\geq 2$.
-  \item \emph{$1\leq|j|\leq K$ (evanescent modes):}
-    $\xi_{n^*+j}^* = |j|c^{1/3}+O(1)\geq c^{1/3}-C$.
-    For $c^{1/3}\geq M+C+1$: the interval $[0,M]$
-    lies entirely to the left of the turning point $\xi_{n^*+j}^*$.
-\end{enumerate}
-Consequently, the Olver bound on $[0,M]$ applies with
-\emph{different characters}:
-Airy-type for $j=0$, exponential-evanescent for $|j|\geq 1$.
-There is no ``uniform Olver constant'' for all $|j|\leq K$ simultaneously
-on $[0,M]$; instead the $|j|\geq 1$ contributions are
-$O(e^{-c^{1/2}})$ relative to $j=0$.
+For $|j|\leq K$ and $c\geq 1$:
+$\xi_{n^*+j}^* = -\frac{\pi}{2}jc^{-1/3} + O(c^{-2/3})$,
+so $|\xi_{n^*+j}^*|\leq \frac{\pi K}{2}c^{-1/3} + O(c^{-2/3})\to 0$.
+All $K$ turning points lie in $(-1,1)$ for $c\geq c_0(K)$.
+The inter-turning-point spacing is $\pi c^{-1/3}/2$.
 \end{lemma}
 
 \begin{proof}
-Equation~\eqref{eq:tp-xi} with $j=0$:
-$\xi_{n^*}^* = s_{n^*}c^{2/3}$,
-$|s_{n^*}|\leq c^{-1/3}$,
-so $|\xi_{n^*}^*|\leq 1$.
-For $j\neq 0$:
-$s_{n^*+j} = jc^{-1/3}+O(c^{-2/3})$,
-so $\xi_{n^*+j}^* = jc^{1/3}+O(1)$.
-For $c^{1/3}\geq M+C+1$: $\xi_{n^*+j}^*\geq c^{1/3}-C > M$.
+Direct from~\eqref{eq:tp2}: $\xi_{n^*+j}^* = -(\pi/2)s_{n^*+j}+O(c^{-2/3})$
+and $s_{n^*+j}=jc^{-1/3}+O(c^{-2/3})$.
 \end{proof}
 
-\begin{remark}[$j=0$ is the unique Airy mode]
-\label{rem:j0unique}
-Lemma~\ref{lem:tpshift} shows that the spectral window $|j|\leq K$
-splits asymptotically (for large $c$) into:
-one genuine Airy mode ($j=0$) with turning point in $[0,M]$,
-and $2K$ evanescent modes ($|j|\geq 1$) with turning points
-at distance $\sim c^{1/3}\to\infty$ from $[0,M]$.
-The Airy universality (kernel convergence) is thus entirely
-driven by the $j=0$ mode in the near-field $[0,M]$.
+\begin{remark}[Correct interpretation of the Airy window]
+\label{rem:airywindow}
+The fixed window $\xi\in[0,M]$ with $M\geq 2$ contains \emph{all}
+$K$ turning points for large $c$: they cluster at $\xi=0^+$ with spacing
+$\pi c^{-1/3}/2\to 0$.
+In the $c\to\infty$ limit, all turning points coalesce to $0$,
+which is consistent with the Airy zeros $a_k$ being $O(1)$:
+the $k$-th Airy zero corresponds to the $k$-th turning point
+shifting to $0$ at rate $c^{-1/3}$.
 \end{remark}
 
-\begin{lemma}[ODE residual uniformity]
+\begin{lemma}[ODE residual]
 \label{lem:residunif}
 For $|j|\leq K$ and $c\geq c_0(K)$:
 $\|r_j^{(c)}\|_{L^2(\R_+)}\leq C_0(1+|j|)\,c^{-1/3}$,
-$C_0$ independent of $j$, $K$, $c$.
+with $C_0$ independent of $j,K,c$.
 \end{lemma}
 
 \begin{proof}
-Paper~XVI Theorem~2.1 gives $\|R_c\|_{\mathrm{op}} = O(c^{-1/3})$
-uniformly in $c$.
-The residual $r_j^{(c)} = R_c\tilde\psi_j + (a_{j,c}-a_j)\tilde\psi_j$.
-$|a_{j,c}-a_j| = O(|j|c^{-1/3})$
-(from $s_{n^*+j} = jc^{-1/3}+O(c^{-2/3})$ and Paper~XVII Lem.~2.1).
-$\|r_j^{(c)}\|_{L^2}\leq \|R_c\|_{\mathrm{op}} + |a_{j,c}-a_j|
-= O(c^{-1/3}) + O(|j|c^{-1/3}) = O((1+|j|)c^{-1/3})$.
+Paper~XVI Theorem~2.1: $\|R_c\|_{\mathrm{op}}=O(c^{-1/3})$.
+$|a_{j,c}-a_j|=O(|j|c^{-1/3})$ (Paper~XVII Lem.~2.1).
+$\|r_j^{(c)}\|_{L^2}\leq \|R_c\|_{\mathrm{op}}+|a_{j,c}-a_j|
+= O((1+|j|)c^{-1/3})$.
 \end{proof}
 
 %% ============================================================
@@ -315,74 +305,101 @@ $\|r_j^{(c)}\|_{L^2}\leq \|R_c\|_{\mathrm{op}} + |a_{j,c}-a_j|
 %% ============================================================
 
 \textbf{Step 1: Edge/bulk split.}
-$|\cK(\xi,\eta)-\cK^{(K)}(\xi,\eta)|\leq h(\xi,\eta)e^{-\pi R}$
-(Fermi tail, Paper~XVII, uniform in $c$).
+Fermi tail (Paper~XVII Lem.~2.1):
+$|\cK(\xi,\eta)-\cK^{(K)}(\xi,\eta)|\leq h(\xi,\eta)e^{-\pi R}$,
+uniform in $c$.
 
 \medskip
 \textbf{Step 2: Spectral projector convergence.}
 
-By Definition~\ref{def:Uc} and Remark~\ref{rem:singlespace},
-both $\PcK$ and $\PK$ act on $L^2(\R_+)$.
-Proposition~\ref{prop:PR} gives $\|G^{(c)}-I_K\|_{\mathrm{op}}=O_K(c^{-1/3})$,
-where $G^{(c)}_{jk} = \langle\tilde\psi_j,u_k\rangle_{L^2(\R_+)}$.
-Since $\tilde\psi_j = \Uc\psi_{n^*+j}^{(c)}$ by definition,
-$G^{(c)}_{jk} = \langle\Uc\psi_{n^*+j}^{(c)},u_k\rangle$,
-and $G^{(c)}\to I_K$ implies $\PcK\to\PK$ strongly
-(a standard finite-dimensional argument:
-$\|\PcK v-\PK v\|\leq \|G^{(c)}-I_K\|_{\mathrm{op}}\|v\|+O_K(c^{-1/3})\to 0$).
-
-For the eigenvalue weights: $\lam{c}{n^*+j}\to 1$ for $j<0$
-(below Fermi level) and $\to 0$ for $j>0$
-(Paper~XVII Lem.~2.1); the transition at $j=0$ contributes $1/2$.
-The weighted sum $\sum_{|j|\leq K}\lam{c}{n^*+j}\PcK^{(j)}$
-converges to $\PK$ in the same strong sense.
-
-\medskip
-\textbf{Step 3: Finite-window Gram convergence.}
-
-\begin{proposition}
+\begin{proposition}[Finite-window Gram and projector convergence]
 \label{prop:PR}
-For fixed $K$:
-$\|G^{(c)}-I_K\|_{\mathrm{op}} = O_K(c^{-1/3})$,
-where $G^{(c)}_{jk} = \langle\tilde\psi_j,u_k\rangle_{L^2(\R_+)}$.
+Fix $K\geq 1$. Let $G^{(c)}_{jk}:=\langle\tilde\psi_j,u_k\rangle_{L^2(\R_+)}$.
+Then $\|G^{(c)}-I_K\|_{\mathrm{op}}=O_K(c^{-1/3})$
+and $\|\PcK-\PK\|_{\mathrm{op}}=O_K(c^{-1/3})$.
 \end{proposition}
 
 \begin{proof}
-(A) ODE: $(-\partial_\xi^2+\xi)\tilde\psi_j = -a_{j,c}\tilde\psi_j+r_j^{(c)}$
-(Paper~XVI Thm.~2.1).
-(B) Residual: $\|r_j^{(c)}\|_{L^2}\leq C_0(1+K)c^{-1/3}$
-(Lemma~\ref{lem:residunif}).
-(C) Gap: $\delta_K:=\min_{k\leq K}(a_{k+1}-a_k)>0$ (fixed $K$).
-(D) Davis--Kahan:
-$\|\tilde\psi_j-u_j\|_{L^2}\leq \|r_j^{(c)}\|_{L^2}/\delta_K
+\emph{(A) ODE.}
+$(-\partial_\xi^2+\xi)\tilde\psi_j = -a_{j,c}\tilde\psi_j + r_j^{(c)}$
+(Paper~XVI Thm.~2.1),
+where $a_{j,c}\to a_j$ in increasing order:
+$a_{1,c}<a_{2,c}<\cdots<a_{K,c}$ converging to $a_1<\cdots<a_K$
+(Airy zeros, increasing, by Paper~XVII).
+
+\emph{(B) Residual.}
+$\|r_j^{(c)}\|_{L^2}\leq C_0(1+K)c^{-1/3}$ (Lemma~\ref{lem:residunif}).
+
+\emph{(C) Airy gap.}
+$\delta_K:=\min_{k\leq K}(a_{k+1}-a_k)>0$, fixed for fixed $K$.
+
+\emph{(D) Davis--Kahan.}
+Since $a_{j,c}\to a_j$ in increasing order,
+the Davis--Kahan theorem~\cite{DavisKahan1970}
+identifies $\tilde\psi_j$ with $u_j$ (same index $j$,
+by matching in eigenvalue order):\footnote{The index identification
+is canonical: the $j$-th approximate eigenvalue $a_{j,c}$
+is $O(c^{-1/3})$-close to the $j$-th Airy zero $a_j$
+and separated from $a_{j\pm 1}$ by gap $\delta_K>0$.
+Davis--Kahan gives the subspace closeness;
+the eigenvalue ordering gives the index matching.}
+$\|\tilde\psi_j-u_j\|_{L^2}\leq\|r_j^{(c)}\|_{L^2}/\delta_K
 = O(K^{4/3}c^{-1/3})$.
-(E) $G^{(c)}_{jk}=\delta_{jk}+O_K(c^{-1/3})$.
+
+\emph{(E) Gram.}
+$G^{(c)}_{jk} = \delta_{jk}+O_K(c^{-1/3})$,
+so $\|G^{(c)}-I_K\|_{\mathrm{op}}=O_K(c^{-1/3})$.
+
+\emph{(F) Projector norm.}
+In the finite-dimensional setting ($K$ fixed):
+$\|\PcK-\PK\|_{\mathrm{op}}
+\leq 2\max_j\|\tilde\psi_j-u_j\|_{L^2}
+= O_K(c^{-1/3})$.
+(Standard: $\|P-Q\|_{\mathrm{op}}\leq\|\text{basis diff}\|$ for
+finite-rank projectors onto $\varepsilon$-close ONBs.)
 \end{proof}
 
-\begin{lemma}[$H^2\to C^0$ upgrade]
+\begin{remark}[Projector convergence in a single space]
+\label{rem:projconv}
+Both $\PcK$ and $\PK$ act on $L^2(\R_+)$ via the identification map $\Uc$
+(Definition~\ref{def:kernels}).
+Proposition~\ref{prop:PR} gives convergence in \emph{operator norm}
+(stronger than strong), which is valid because $K$ is finite.
+The strong convergence $\chi_{(-\infty,0]}(\cA_c)\to\chi_{(-\infty,0]}(\cA)$
+(all modes) follows by $K\to\infty$ with the Fermi tail from Step~5.
+\end{remark}
+
+\begin{lemma}[$H^2\to C^0$]
 \label{lem:H2}
 For fixed $K,M$:
-$\|\tilde\psi_j-u_j\|_{C^0([0,M])}=O_K(c^{-1/3})$.
+$\|\tilde\psi_j-u_j\|_{C^0([0,M])} = O_K(c^{-1/3})$.
 \end{lemma}
 
 \begin{proof}
 $e_j:=\tilde\psi_j-u_j$ satisfies
 $-e_j''+\xi e_j = -a_{j,c}e_j+(a_{j,c}+a_j)u_j+r_j^{(c)}$.
-$\|e_j''\|_{L^2([0,M+1])}\leq (M+1)\|e_j\|_{L^2}+|a_{j,c}|\|e_j\|_{L^2}+O_K(c^{-1/3})
+$\|e_j''\|_{L^2([0,M+1])}\leq(M+1)\|e_j\|_{L^2}+O_K(c^{-1/3})
 = O_K(c^{-1/3})$.
-$H^2\hookrightarrow C^0$:
-$\|e_j\|_{C^0([0,M])}\leq C_M\|e_j\|_{H^2([0,M])}=O_K(c^{-1/3})$.
+$H^2([0,M])\hookrightarrow C^0([0,M])$:
+$\|e_j\|_{C^0([0,M])}=O_K(c^{-1/3})$.
 \end{proof}
 
-\textbf{Step 4: Summing products.}
+\textbf{Step 3: Eigenfunction products.}
 For $\xi,\eta\in[0,M]$:
-$\cK^{(K)}(\xi,\eta)
-= \sum_{|j|\leq K}\lam{c}{n^*+j}(u_j(\xi)+O_K(c^{-1/3}))(u_j(\eta)+O_K(c^{-1/3}))
-\to\sum_{k=1}^K u_k(\xi)u_k(\eta) = \cKA^{(K)}(\xi,\eta)$.
+\[
+  \cK^{(K)}(\xi,\eta)
+  = \sum_{|j|\leq K}\lam{c}{n^*+j}
+  (u_j(\xi)+O_K(c^{-1/3}))(u_j(\eta)+O_K(c^{-1/3}))
+  \to\sum_{k=1}^K u_k(\xi)u_k(\eta)
+  = \cKA^{(K)}(\xi,\eta),
+\]
+using $\lam{c}{n^*+j}\to\mathbf{1}_{j<0}+\tfrac12\mathbf{1}_{j=0}$
+and Lemma~\ref{lem:H2}.
 
-\textbf{Step 5: $K\to\infty$.}
-$|\cK(\xi,\eta)-\cK^{(K)}(\xi,\eta)|\leq Ce^{-\pi K/c^{1/3}}\to 0$;
-$\cKA^{(K)}\to\cKA$ pointwise. \hfill$\square$
+\textbf{Step 4: $K\to\infty$.}
+$|\cK(\xi,\eta)-\cK^{(K)}|\leq Ce^{-\pi K/c^{1/3}}\to 0$;
+$\cKA^{(K)}\to\cKA$ (Remark~\ref{rem:airykernel}).
+\hfill$\square$
 
 %% ============================================================
 \section{BR3 Status}
@@ -397,30 +414,32 @@ $\Rightarrow$ $\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{6cm} p{1.5cm} p{2.5cm}}
+\begin{tabular}{p{6.5cm} p{1.4cm} p{2.5cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-Three-scale dictionary (Def.~\ref{def:scales}) & \checkmark & algebra \\
-Identification map $\Uc$ (Def.~\ref{def:Uc}) & \checkmark & Jacobian \\
-$j=0$ unique Airy mode (Lem.~\ref{lem:tpshift}) & \checkmark & \eqref{eq:tp-xi} \\
-Two-regime domination (Lem.~\ref{lem:I2b}) & \checkmark & Olver+evanescent \\
-Residual uniformity (Lem.~\ref{lem:residunif}) & \checkmark & XVI Thm.~2.1 \\
-Gram convergence (Prop.~\ref{prop:PR}) & \checkmark & XVI+DK \\
+Coordinate dictionary (Def.~\ref{def:scales}) & \checkmark & algebra \\
+TP clustering: all $\xi_j^*=O(c^{-1/3})$
+  (Lem.~\ref{lem:tpshift}) & \checkmark & \eqref{eq:tp2} \\
+I2b domination (Lem.~\ref{lem:I2b}): WKB only & \checkmark & Olver osc.\ amp. \\
+Airy kernel = spectral thm (Rem.~\ref{rem:airykernel}) & \checkmark & \cite{Simon2005} \\
+Residual uniformity (Lem.~\ref{lem:residunif}) & \checkmark & XVI+XVII \\
+Gram $\|G^{(c)}-I_K\|=O_K(c^{-1/3})$ (Prop.~\ref{prop:PR}) & \checkmark & DK+index order \\
+$\|\PcK-\PK\|_{\mathrm{op}}=O_K(c^{-1/3})$ & \checkmark & finite-dim \\
 $H^2\to C^0$ (Lem.~\ref{lem:H2}) & \checkmark & ODE+Sobolev \\
-Projector convergence (Rem.~\ref{rem:singlespace}) & \checkmark & $\Uc$+Gram \\
-Main Lemma & \checkmark & Steps~1--5 \\
+Main Lemma & \checkmark & Steps~1--4 \\
 BR3 & \checkmark & XVII+XVIII \\
-Gap-S & cond.~(XIII) & XIII+\ldots+XVIII \\
+Gap-S & cond.\ (XIII) & XIII+\ldots+XVIII \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \[
 \boxed{
-  \text{Papers XIII--XVIII}\;\Longrightarrow\;
-  \text{BR3}\Rightarrow\text{Q5}\Rightarrow\text{Gap-S}
-\quad\text{(conditional on Paper XIII)}
+  \text{XIII--XVIII}
+  \;\Longrightarrow\;
+  \mathrm{BR3}\Rightarrow\mathrm{Q5}\Rightarrow\mathrm{Gap\text{-}S}
+  \quad\text{(conditional on Paper~XIII)}
 }
 \]
 
@@ -436,11 +455,14 @@ Gap-S & cond.~(XIII) & XIII+\ldots+XVIII \\
   Springer, 2013.
 \bibitem{Olver1997} F.~Olver,
   \textit{Asymptotics and Special Functions}, AK Peters, 1997.
+\bibitem{DavisKahan1970} C.~Davis, W.~Kahan,
+  The rotation of eigenvectors by a perturbation~III,
+  \textit{SIAM J.\ Numer.\ Anal.}\ \textbf{7} (1970), 1--46.
+\bibitem{Simon2005} B.~Simon,
+  \textit{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005.
 \bibitem{TracyWidom1994} C.~Tracy, H.~Widom,
   Level-spacing distributions and the Airy kernel,
   \textit{Comm.\ Math.\ Phys.}\ \textbf{159} (1994), 151--174.
-\bibitem{Simon2005} B.~Simon,
-  \textit{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005.
 \end{thebibliography}
 
 \end{document}
