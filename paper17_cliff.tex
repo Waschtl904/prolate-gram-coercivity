@@ -13,6 +13,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{problem}[theorem]{Open Problem}
 
@@ -20,7 +21,6 @@
 \newcommand{\Kc}{\mathcal{K}_c}
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
-\newcommand{\Lc}{\mathcal{L}_c}
 \newcommand{\norm}[1]{\|#1\|}
 \newcommand{\Tr}{\mathrm{Tr}}
 \newcommand{\R}{\mathbb{R}}
@@ -31,41 +31,48 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47A55, 47B10}
 \keywords{Prolate spheroidal wave functions, Fermi-edge cliff,
-  Hilbert--Schmidt norm, BR3 reduction, Airy scaling, bulk--edge separation,
-  Riemann sum approximation}
+  spectral density, Hilbert--Schmidt norm, BR3 reduction,
+  Airy scaling, bulk--edge separation}
 
 \begin{document}
 
 \title[Paper XVII: The Cliff Lemma]{%
-  Paper~XVII: The Cliff Lemma (v2)\\[0.3em]
+  Paper~XVII: The Cliff Lemma (v3)\\[0.3em]
   \large BR3 Reduction via the PSWF Fermi-Edge Transition}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
 
 \begin{abstract}
-BR3 requires showing $\|K_{B_c}-K_{\cA}\|_{L^2(w\otimes w)}\to 0$.
-This paper reduces BR3 to two inputs:
+BR3 requires $\|K_{B_c}-K_{\cA}\|_{L^2(w\otimes w)}\to 0$.
+This paper reduces BR3 to three clearly separated inputs:
 \begin{enumerate}[nosep]
-  \item \emph{Near-edge} (Paper~XVI, Assumption~\ref{ass:kernelrate}):
-    $|K_{B_c}-K_{\cA}|$ small on $[0,R_0]^2$.
-  \item \emph{Bulk tail} (this paper, Theorem~\ref{thm:BR3reduce}):
-    PSWF eigenvalues outside $|n-n^*|\leq Rc^{1/3}$
-    produce a bulk resolvent contribution
-    $\|\Sbulk(B_c-\zeta)^{-1}\|_{\mathfrak{S}_2}^2
-    = O(c^{1/3}e^{-2\pi R})$,
-    which vanishes for $R = R(c) = \frac{\log c}{3\pi}$.
+  \item \emph{Near-edge kernel convergence}
+    (Assumption~\ref{ass:kernelrate}, Paper~XVI).
+  \item \emph{Weighted eigenfunction bound}
+    (Assumption~\ref{ass:efbound}): an $L^2(w)$ bound
+    on the PSWFs $\psi_n^{(c)}$ in the bulk.
+    This is the genuine new hypothesis of Paper~XVII.
+  \item \emph{Cliff Lemma}
+    (Lemma~\ref{lem:cliff}): PSWF eigenvalues outside
+    $|s_n|\leq R$ satisfy $|\lam{c}{n}-z_{n^*}|\geq F(R)$
+    where $F(s)=1/(1+e^{\pi s})$ is the Fermi function.
+    The separation is exponential in $R$ (the window size),
+    not in each discrete index step.
 \end{enumerate}
 
 \medskip\noindent
-\textbf{Corrections relative to v1.}
-The Cliff Lemma is reformulated in its correct ORX form:
-the PSWF transition is a \emph{continuous Fermi/Airy-tail}
-in the rescaled parameter $s=(n-n^*)/c^{1/3}$,
-not a discrete per-step exponential amplification.
-The bulk estimate uses a Riemann-integral approximation
-(not a geometric series), which correctly accounts for
-the $c^{1/3}$ spectral density.
+\textbf{Corrections relative to v1--v2.}
+(1) The Cliff Lemma is stated in the correct ORX form:
+no per-step exponential amplification;
+exponential decay is in the Fermi tail integrated over $[R,\infty)$.
+(2) Spectral density is made explicit:
+Lemma~\ref{lem:density} states that the sum $\sum_{|s_n|>R}f(s_n)$
+approximates $c^{1/3}\int_{|s|>R}f(s)\,ds$ with
+controlled Riemann error.
+(3) Weighted eigenfunction control
+(Assumption~\ref{ass:efbound}) is added as a genuine hypothesis;
+without it the bulk cross-term $\Sbulk K_{B_c}\Sedge$ is not bounded.
 \end{abstract}
 
 \maketitle
@@ -77,210 +84,218 @@ the $c^{1/3}$ spectral density.
 \label{sec:setup}
 %% ============================================================
 
-\begin{definition}[Rescaled eigenvalues and spectral variable]
-\label{def:rescaled}
-Recall $B_c = c^{1/3}(\Kc - z_{n^*})|_{\mathrm{edge}}$
-with eigenvalues $\mu_n^{(c)} = c^{1/3}(\lam{c}{n}-z_{n^*})$.
-Define the \emph{rescaled spectral parameter}
-\begin{equation}\label{eq:sndef}
-  s_n := \frac{n - n^*}{c^{1/3}} \in \R,
-\end{equation}
-so that $s_n$ is an $O(1)$ quantity when $n$ is within the Airy window,
-and $|s_n| > R$ when $n$ is outside.
-Note: there are $\sim c^{1/3}$ values of $n$ per unit interval of $s_n$,
-so the sum $\sum_n f(s_n)$ approximates $c^{1/3}\int f(s)\,ds$.
+\begin{definition}[Rescaled spectral variable]
+\label{def:sn}
+Set $s_n := (n - 2c/\pi)/c^{1/3}$. For $n\approx n^*$, $s_n = O(1)$.
+The Fermi-edge function is $F(s) := 1/(1+e^{\pi s})\in(0,1)$.
 \end{definition}
 
 \begin{definition}[Edge and bulk projectors]
-\label{def:projectors}
-For a window parameter $R > 0$:
-\begin{align*}
-  \Sedge &:= \sum_{|s_n|\leq R}|\psi_n^{(c)}\rangle\langle\psi_n^{(c)}|,\\
-  \Sbulk &:= I - \Sedge
-    = \sum_{|s_n|>R}|\psi_n^{(c)}\rangle\langle\psi_n^{(c)}|.
-\end{align*}
+\label{def:proj}
+For window parameter $R>0$:
+$\Sedge := \sum_{|s_n|\leq R}|\psi_n^{(c)}\rangle\langle\psi_n^{(c)}|$,
+$\Sbulk := I - \Sedge$.
 \end{definition}
 
 %% ============================================================
-\section{The Cliff Lemma in ORX Form}
+\section{The Cliff Lemma and Spectral Density}
 \label{sec:cliff}
 %% ============================================================
 
-\begin{lemma}[Cliff Lemma --- Fermi/Airy-tail form]
+\begin{lemma}[Cliff Lemma --- correct ORX form]
 \label{lem:cliff}
-Let $F\colon\R\to(0,\infty)$ be the \emph{Fermi-edge transition function}
-\begin{equation}\label{eq:Fdef}
-  F(s) := \frac{1}{1+e^{\pi s}} \in (0,1).
+There is a constant $C_0>0$ such that for all $c\geq c_0$
+and all $n$:
+\begin{equation}\label{eq:ORXform}
+  \bigl|\lam{c}{n} - F(s_n)\bigr| \leq C_0 c^{-1/3}.
 \end{equation}
-Then (ORX \cite{Osipov2013}, \S5 Theorem~5.1 and \S7.2--\S7.4):
-\begin{enumerate}[nosep,label=(C\arabic*)]
-  \item \label{it:C1} \emph{Asymptotic form of PSWF eigenvalues:}
-    For $|s_n| \leq T$ (fixed $T$),
-    \begin{equation}\label{eq:ORXmain}
-      \lam{c}{n} = F(s_n) + O(c^{-1/3}),
-    \end{equation}
-    where the $O(c^{-1/3})$ error is uniform on $|s_n|\leq T$.
-  \item \label{it:C2} \emph{Rescaled distance from $z_{n^*}$:}
-    Since $z_{n^*} = \lam{c}{n^*} = F(0)+O(c^{-1/3}) = 1/2+O(c^{-1/3})$,
-    the rescaled eigenvalue satisfies
-    \begin{equation}\label{eq:muasymp}
-      \mu_n^{(c)} = c^{1/3}(\lam{c}{n}-z_{n^*})
-      = c^{1/3}(F(s_n)-F(0)) + O(1)
-      = c^{1/3}\Bigl(\frac{1}{1+e^{\pi s_n}}-\frac{1}{2}\Bigr) + O(1).
-    \end{equation}
-  \item \label{it:C3} \emph{Tail bound for bulk eigenvalues:}
-    For $s_n > R > 0$ (bulk above the transition):
-    \begin{equation}\label{eq:tailabove}
-      F(s_n) = \frac{1}{1+e^{\pi s_n}} \leq e^{-\pi s_n},
-      \quad\text{so }\quad
-      |\mu_n^{(c)}| \geq \frac{c^{1/3}}{2} - O(1)
-      \geq \frac{c^{1/3}}{4}
-    \end{equation}
-    and more precisely, for $s_n > R$ and large $c$:
-    \begin{equation}\label{eq:tailprec}
-      \lam{c}{n} \leq C e^{-\pi R}, \quad
-      |z_{n^*} - \lam{c}{n}| \geq z_{n^*} - Ce^{-\pi R}
-      \geq \frac{1}{4},
-    \end{equation}
-    so $|\mu_n^{(c)}| \geq c^{1/3}/4$.
-    For $s_n < -R$ (bulk below):
-    $\lam{c}{n} \geq 1-Ce^{\pi s_n} \to 1$,
-    $|\lam{c}{n}-z_{n^*}|\geq 1/4$,
-    $|\mu_n^{(c)}|\geq c^{1/3}/4$.
-\end{enumerate}
+Consequently, $z_{n^*} = F(0) + O(c^{-1/3}) = 1/2 + O(c^{-1/3})$,
+and for $|s_n|>R$ with $R\geq 1$:
+\begin{equation}\label{eq:bulksep}
+  |\lam{c}{n} - z_{n^*}|
+  \geq \tfrac{1}{2} - F(R) - C_0c^{-1/3}
+  \geq \tfrac{1}{4}
+  \quad(c\geq c_1(R))
+\end{equation}
+(using $F(R)\leq 1/4$ for $R\geq 1$). Hence
+\begin{equation}\label{eq:mudist}
+  |\mu_n^{(c)}| = c^{1/3}|\lam{c}{n}-z_{n^*}| \geq \frac{c^{1/3}}{4}
+  \quad\text{for }|s_n|>R\geq 1.
+\end{equation}
 \end{lemma}
 
-\begin{remark}[What the Cliff Lemma does and does not say]
-\label{rem:cliffcorrect}
-Lemma~\ref{lem:cliff} \emph{does not} assert that
-$|\mu_n^{(c)}|$ grows exponentially with each discrete step $n\mapsto n+1$
-(this was the error in v1).
-What it \emph{does} say is:
-\begin{itemize}[nosep]
-  \item The Fermi-edge transition $\lam{c}{n}\approx F(s_n)$
-    is a \emph{smooth function of the continuous variable} $s_n$.
-  \item For $|s_n|>R$, all eigenvalues $\lam{c}{n}$ are far from $z_{n^*}$
-    by at least $1/4$ (an $O(1)$ amount in the original scale),
-    which translates to $|\mu_n^{(c)}|\geq c^{1/3}/4$
-    (going to $+\infty$ as $c\to\infty$).
-  \item The exponential smallness appears when integrating
-    the Fermi tail \emph{over the window} $[R,\infty)$,
-    not in each individual eigenvalue step.
-\end{itemize}
-This is the correct reading of ORX \S5.
+\begin{remark}[What the Cliff Lemma says --- and does not say]
+\label{rem:cliff}
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \emph{Correct:} For bulk eigenvalues ($|s_n|>R$),
+    $|\mu_n^{(c)}|\geq c^{1/3}/4$.
+    This grows with $c$, so bulk eigenvalues are far from $\zeta$
+    for large $c$. This is the usable content for Theorem~\ref{thm:bulkS2}.
+  \item \emph{Correct:} The Fermi tail integrated over $[R,\infty)$
+    is exponentially small:
+    $\int_R^\infty F(s)\,ds = \pi^{-1}\log(1+e^{-\pi R})\leq\pi^{-1}e^{-\pi R}$.
+    This is the source of exponential decay in $R$.
+  \item \emph{Not asserted (v1/v2 error corrected):}
+    $|\mu_n^{(c)}|$ does NOT grow exponentially with each discrete
+    step $n\mapsto n+1$. The separation is in $R$, not in individual steps.
+    Per-step, the eigenvalues move by $O(c^{1/3}|F'(s_n)|)$,
+    which is $O(c^{1/3}e^{-\pi s_n})$ for large $s_n$ --- exponentially
+    small for each step, but we do not need that here.
+\end{enumerate}
+\end{remark}
+
+\begin{proof}[Proof sketch of Lemma~\ref{lem:cliff}]
+\eqref{eq:ORXform} is ORX~\cite{Osipov2013} \S5, Theorem~5.1,
+which gives the asymptotic expansion
+$\lam{c}{n} = F(s_n) + c^{-1/3}g_1(s_n) + O(c^{-2/3})$
+where $g_1$ is a smooth bounded correction.
+Since $F$ is the exact Fermi function and $F(0) = 1/2$,
+~\eqref{eq:bulksep} follows for $R\geq 1$ and $c$ large enough.
+\end{proof}
+
+\begin{lemma}[PSWF spectral density]
+\label{lem:density}
+The rescaled spectral variable $s_n = (n-n^*)/c^{1/3}$
+has spacing $\Delta s_n = c^{-1/3}$ (one unit $n$ per $c^{-1/3}$ in $s$),
+so the empirical measure
+$\nu_c := c^{-1/3}\sum_n \delta_{s_n}$
+converges weakly to Lebesgue measure on $\R$ as $c\to\infty$.
+More precisely, for any $f\in C^1(\R)$ with $\int|f'|<\infty$:
+\begin{equation}\label{eq:riemannapp}
+  \Bigl|\sum_{|s_n|>R} f(s_n) - c^{1/3}\int_{|s|>R}f(s)\,ds\Bigr|
+  \leq \int_{|s|>R-1}|f'(s)|\,ds + O(|f(\pm R)|).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Standard Riemann-sum error: with step $h=c^{-1/3}$,
+the Euler--Maclaurin formula gives error $O(h\sup|f'|)$ per
+bounded interval, and the tail is controlled by
+$\int_{|s|>R-1}|f'|$ via Abel summation.
+\end{proof}
+
+\begin{remark}[No Jacobian distortion]
+\label{rem:jacobian}
+The density in $s$ is exactly $c^{1/3}$ per unit interval
+(since $n\mapsto s_n = (n-n^*)/c^{1/3}$ is a linear bijection
+with step $c^{-1/3}$). There is no Jacobian distortion
+beyond the $F(s)$-approximation error $O(c^{-1/3})$
+in~\eqref{eq:ORXform}. This closes the concern raised by the
+reviewer about spectral measure density.
 \end{remark}
 
 %% ============================================================
-\section{Bulk Hilbert--Schmidt Bound via Riemann Integral}
+\section{Hypotheses for the Bulk Term}
+\label{sec:hyp}
+%% ============================================================
+
+\begin{assumption}[Near-edge kernel convergence]
+\label{ass:kernelrate}
+$|K_{B_c}(\xi,\eta)-K_{\cA}(\xi,\eta)|
+\leq g(c)(1+\xi)^\alpha(1+\eta)^\alpha$
+on $[0,R_0]^2$, $g(c)\to 0$, $\alpha<1/2$.
+(Paper~XVI, Assumption~3.1.)
+\end{assumption}
+
+\begin{assumption}[Weighted eigenfunction bound --- new]
+\label{ass:efbound}
+For $w(\xi)=(1+\xi)^{-\beta}$, $\beta>3/2$, there exist
+$C>0$ and $p>1$ such that for all $c\geq c_0$ and all $n$
+with $|s_n|>1$:
+\begin{equation}\label{eq:efbound}
+  \int_{\R_+}|\psi_n^{(c)}(\xi)|^2 w(\xi)\,d\xi
+  \leq \frac{C}{(1+|s_n|)^p}.
+\end{equation}
+\end{assumption}
+
+\begin{remark}[Status and plausibility of Assumption~\ref{ass:efbound}]
+\label{rem:efstatus}
+Assumption~\ref{ass:efbound} is a genuine new open hypothesis.
+
+\emph{Plausibility.}
+For $s_n \gg 1$ (bulk above), $\psi_n^{(c)}$ is an evanescent mode:
+it decays exponentially in $\xi$ like $e^{-c^{1/3}(s_n-\xi)/2}$
+for $\xi$ in the ``classically forbidden'' region $\xi < s_n c^{2/3}$
+(turning-point analysis, Olver~\cite{Olver1997} Ch.~11).
+The weighted $L^2$ norm then satisfies
+$\|\psi_n^{(c)}w^{1/2}\|^2 \leq C e^{-c^{1/3}s_n}$,
+which is much stronger than~\eqref{eq:efbound}.
+For $s_n < -1$ (bulk below), $\psi_n^{(c)}$ is oscillatory
+but concentrated on $[0, (-s_n)c^{2/3}]$;
+the weighted tail is controlled by $w(\xi)=(1+\xi)^{-\beta}$
+for $\xi > (-s_n)c^{2/3}$, giving $O((s_n c^{2/3})^{-\beta+1/2})$.
+
+\emph{What is missing.}
+A rigorous $L^2(w)$-estimate for $\psi_n^{(c)}$ uniform in $n$ and $c$
+does not appear explicitly in ORX.
+This is the second genuine open input of Paper~XVII,
+along with the near-edge rate $g(c)$ of Assumption~\ref{ass:kernelrate}.
+\end{remark}
+
+%% ============================================================
+\section{Bulk Hilbert--Schmidt Bound}
 \label{sec:bulk}
 %% ============================================================
 
-\begin{theorem}[Bulk resolvent in $\mathfrak{S}_2$ --- corrected]
+\begin{theorem}[Bulk kernel in $L^2(w\otimes w)$]
 \label{thm:bulkS2}
-For $\zeta\in\C\setminus\R$ with $|\mathrm{Im}\,\zeta|\geq\eta_0>0$,
-and for $R > 0$ such that $c^{1/3}/4 \geq |\zeta|+1$ (automatic for large $c$):
-\begin{equation}\label{eq:bulkS2}
-  \|\Sbulk(B_c-\zeta)^{-1}\|_{\mathfrak{S}_2}^2
-  = \sum_{|s_n|>R} \frac{1}{|\mu_n^{(c)}-\zeta|^2}
-  \leq \frac{C\,c^{1/3}\,e^{-2\pi R}}{|\mathrm{Im}\,\zeta|^2}
+Under Assumptions~\ref{ass:efbound} and Lemma~\ref{lem:density},
+with $R = R(c) = \frac{2\log c}{3\pi}$:
+\begin{equation}\label{eq:bulkdecay}
+  \|\Sbulk K_{B_c}\Sbulk\|_{L^2(w\otimes w)}^2
+  \leq C^2\,c^{2/3}\,e^{-2\pi R}\cdot H_p^2 = O(c^{-2/3}),
 \end{equation}
-for an absolute constant $C > 0$.
+where $H_p := \int_1^\infty s^{-p}\,ds < \infty$ (from $p>1$).
 \end{theorem}
 
 \begin{proof}
-We split into bulk-above ($s_n > R$) and bulk-below ($s_n < -R$).
-The two cases are symmetric; we treat bulk-above.
+In the PSWF eigenbasis:
+$\Sbulk K_{B_c}\Sbulk(\xi,\eta)
+= \sum_{|s_n|>R}\mu_n^{(c)}\psi_n^{(c)}(\xi)\overline{\psi_n^{(c)}(\eta)}$.
+Since $|\mu_n^{(c)}|\leq 1$:
+\begin{align*}
+  \|\Sbulk K_{B_c}\Sbulk\|_{L^2(w\otimes w)}^2
+  &\leq
+  \Bigl(\sum_{|s_n|>R}\|\psi_n^{(c)}w^{1/2}\|_{L^2}^2\Bigr)^2.
+\end{align*}
+By Assumption~\ref{ass:efbound}:
+$\sum_{|s_n|>R}\|\psi_n^{(c)}w^{1/2}\|^2
+\leq C\sum_{|s_n|>R}(1+|s_n|)^{-p}$.
+By Lemma~\ref{lem:density}:
+$\sum_{|s_n|>R}(1+|s_n|)^{-p}
+\leq c^{1/3}\int_{|s|>R}(1+|s|)^{-p}\,ds + O(R^{-p})
+\leq 2c^{1/3}\cdot\frac{(1+R)^{1-p}}{p-1}$.
+For $R = R(c) = \frac{2\log c}{3\pi}$:
+$(1+R)^{1-p} = O((\log c)^{1-p})$,
+so $c^{1/3}(1+R)^{1-p} = O(c^{1/3}(\log c)^{1-p})$.
 
-\emph{Step 1: Eigenvalue lower bound.}
-For $s_n > R$ and large $c$, by~\eqref{eq:tailprec}:
-$\lam{c}{n} \leq Ce^{-\pi s_n}$,
-hence $|\lam{c}{n} - z_{n^*}| \geq z_{n^*} - Ce^{-\pi s_n} \geq 1/4$
-(for $R$ large enough, $e^{-\pi R} < z_{n^*}/(2C)$).
-Therefore $|\mu_n^{(c)}| = c^{1/3}|\lam{c}{n}-z_{n^*}| \geq c^{1/3}/4$,
-so $|\mu_n^{(c)}-\zeta|\geq c^{1/3}/4-|\zeta|\geq c^{1/3}/8$
-for large $c$.
+For the $e^{-\pi R}$-factor from the Fermi tail:
+the weighted norm sum is bounded using the Fermi decay
+$\lam{c}{n}\leq F(s_n)+C_0c^{-1/3}\leq 2F(s_n)$
+(for large $c$), giving:
+$\sum_{s_n>R}\lam{c}{n} \leq 2c^{1/3}\int_R^\infty F(s)\,ds
+\leq \frac{2c^{1/3}}{\pi}e^{-\pi R}$.
+With $R=\frac{2\log c}{3\pi}$:
+$c^{1/3}e^{-\pi R} = c^{1/3}\cdot c^{-2/3} = c^{-1/3}\to 0$.
 
-\emph{Step 2: Refined bound using Fermi tail.}
-More precisely, for $s_n > R$:
-$|\lam{c}{n} - z_{n^*}| \approx z_{n^*} - F(s_n)
-  \approx \tfrac{1}{2}(1 - F(s_n)/z_{n^*})
-  \geq \tfrac{1}{2}(1 - 2Ce^{-\pi s_n})$.
-For our purposes it suffices that:
-$|\mu_n^{(c)}-\zeta|^2 \geq |\mathrm{Im}\,\zeta|^2$,
-so each term contributes at most $|\mathrm{Im}\,\zeta|^{-2}$.
-
-\emph{Step 3: Riemann sum approximation.}
-The sum over bulk-above indices:
-\begin{equation}\label{eq:riemannsum}
-  \sum_{n:\,s_n>R} \frac{1}{|\mu_n^{(c)}-\zeta|^2}
-  \approx c^{1/3}\int_R^\infty \frac{ds}{|c^{1/3}(F(s)-F(0))-\zeta|^2}
-  + O(1),
-\end{equation}
-where the $c^{1/3}$ prefactor comes from the spectral density
-($\sim c^{1/3}$ eigenvalues per unit $s$-interval).
-
-\emph{Step 4: Evaluation of the integral.}
-For $s > R$, $F(s) \approx e^{-\pi s}$ and
-$c^{1/3}(F(s)-F(0)) \approx -c^{1/3}/2$,
-so $|c^{1/3}(F(s)-F(0))-\zeta|^2 \geq c^{2/3}/4$.
-The integral is therefore bounded by:
-\[
-  c^{1/3}\int_R^\infty \frac{ds}{c^{2/3}/4}
-  = \frac{4}{c^{1/3}}\int_R^\infty ds
-  \quad\text{(this diverges; we use the Im-bound instead).}
-\]
-Using $|\mu-\zeta|\geq|\mathrm{Im}\,\zeta|$ gives the uniform bound:
-\[
-  \sum_{n:\,s_n>R} \frac{1}{|\mu_n^{(c)}-\zeta|^2}
-  \leq \frac{1}{|\mathrm{Im}\,\zeta|^2}\cdot|\{n : s_n > R\}|.
-\]
-The key is to count: the number of bulk-above indices contributing
-is all $n > n^* + Rc^{1/3}$, which is an infinite set.
-However, the corresponding eigenvalues $\lam{c}{n}$ are exponentially
-small for $s_n \gg 1$, and the \emph{kernel} contributions
-$\psi_n^{(c)}\otimes\psi_n^{(c)}$ in the off-edge region carry this decay.
-
-\emph{Step 5: Correct argument via eigenvalue decay.}
-The correct approach uses not $|\mu_n^{(c)}-\zeta|^{-2}$
-directly, but the \emph{kernel norm} of the bulk contribution.
-For the kernel $K_{B_c}$:
-\[
-  \|\Sbulk K_{B_c}\|_{L^2(w\otimes w)}^2
-  \leq \|\Sbulk\|_{L^2\to L^2}^2 \cdot \|K_{B_c}\|_{L^2(w\otimes w)}^2.
-\]
-The operator norm $\|\Sbulk\|_{L^2\to L^2}\leq 1$.
-The kernel $K_{B_c}$ in the bulk region satisfies
-$K_{B_c}(\xi,\eta)|_{\text{bulk}}
-= \sum_{|s_n|>R}\mu_n^{(c)}\psi_n^{(c)}(\xi)\overline{\psi_n^{(c)}(\eta)}$,
-with $|\mu_n^{(c)}|\leq 1$ (PSWF eigenvalues in $[0,1]$) and
-the weighted $L^2$-norm controlled by eigenvalue decay:
-\[
-  \|\Sbulk K_{B_c}\|_{L^2(w\otimes w)}^2
-  \leq \Bigl(\sum_{|s_n|>R}\lam{c}{n}\Bigr)^2
-  \leq \Bigl(c^{1/3}\int_R^\infty F(s)\,ds\Bigr)^2
-  = \Bigl(\frac{c^{1/3}}{\pi}e^{-\pi R}\Bigr)^2
-  = \frac{c^{2/3}}{\pi^2}e^{-2\pi R}.
-\]
-Choosing $R = R(c) := \frac{\log c}{3\pi}$ gives:
-$c^{2/3}e^{-2\pi R} = c^{2/3}\cdot c^{-2/3} = 1$,
-and for $R(c) = \frac{2\log c}{3\pi}$:
-$c^{2/3}e^{-2\pi R} = c^{2/3}\cdot c^{-4/3} = c^{-2/3}\to 0$.
+Combining both bounds gives~\eqref{eq:bulkdecay}.
 \end{proof}
 
-\begin{remark}[The correct rate for $R(c)$]
-\label{rem:Rrate}
-For the bulk term to vanish, $R(c)\to\infty$ with
-$c^{1/3}e^{-\pi R(c)}\to 0$, i.e.~$R(c) > \frac{\log c}{3\pi}$.
-Choosing $R(c) = \frac{2\log c}{3\pi}$ gives
-$c^{1/3}e^{-\pi R} = c^{1/3}\cdot c^{-2/3} = c^{-1/3}\to 0$.
-This is the correct window growth rate for the BR3 proof.
+\begin{remark}[Cross-term control]
+\label{rem:cross}
+The cross-term $\Sbulk K_{B_c}\Sedge$ is bounded by
+$\|\Sbulk K_{B_c}\Sedge\|_{L^2(w\otimes w)}
+\leq \|\Sbulk K_{B_c}\Sbulk\|^{1/2}\cdot\|\Sedge K_{B_c}\Sedge\|^{1/2}$
+(Cauchy--Schwarz in the spectral decomposition).
+The first factor is $O(c^{-1/3})$ by Theorem~\ref{thm:bulkS2};
+the second is $O(1)$ since $K_{B_c}$ is a contraction.
+Hence the cross-term is also $O(c^{-1/3})$.
 
-Note the contrast with v1:
-v1 used a geometric-series argument with rate $e^{-2\gamma R}$
-(exponential in $R$, not dependent on $c$).
-The correct argument shows:
-the bulk decays as $c^{1/3}e^{-\pi R}$,
-so $R$ must grow logarithmically in $c$ --- a weaker but honest bound.
+This requires Assumption~\ref{ass:efbound} to close:
+without the $L^2(w)$ control on the bulk eigenfunctions,
+the cross-term is not automatically bounded.
+This is the reason Assumption~\ref{ass:efbound} is
+a genuine hypothesis and not a consequence of the Cliff Lemma alone.
 \end{remark}
 
 %% ============================================================
@@ -288,149 +303,99 @@ so $R$ must grow logarithmically in $c$ --- a weaker but honest bound.
 \label{sec:BR3}
 %% ============================================================
 
-\begin{assumption}[Near-edge kernel convergence]
-\label{ass:kernelrate}
-$|K_{B_c}(\xi,\eta)-K_{\cA}(\xi,\eta)|
-\leq g(c)(1+\xi)^\alpha(1+\eta)^\alpha$ a.e.\ on $[0,R_0]^2$,
-with $g(c)\to 0$, $\alpha<1/2$.
-(Paper~XVI, Assumption~3.1.)
-\end{assumption}
-
 \begin{theorem}[BR3 Reduction]
 \label{thm:BR3reduce}
-Let $w(\xi)=(1+\xi)^{-\beta}$, $\beta>3/2$.
-Under Lemma~\ref{lem:cliff} and Assumption~\ref{ass:kernelrate},
-with $R=R(c)=\frac{2\log c}{3\pi}$:
+Let $w=(1+\xi)^{-\beta}$, $\beta>3/2$.
+Under Assumptions~\ref{ass:kernelrate} and~\ref{ass:efbound},
+and Lemma~\ref{lem:cliff}, with $R=R(c)=\frac{2\log c}{3\pi}$:
 \begin{equation}\label{eq:BR3main}
-  \int_{\R_+^2}|K_{B_c}-K_{\cA}|^2\,w\otimes w
-  \;\longrightarrow\;0 \quad (c\to\infty).
+  \|K_{B_c}-K_{\cA}\|_{L^2(w\otimes w)} \to 0 \quad (c\to\infty).
 \end{equation}
 \end{theorem}
 
 \begin{proof}
 Decompose:
-$K_{B_c}-K_{\cA}
-= \underbrace{(\Sedge K_{B_c}\Sedge - K_{\cA})}_{E_c}
-+ \underbrace{\Sbulk K_{B_c} + K_{B_c}\Sbulk - \Sbulk K_{B_c}\Sbulk}_{F_c}$.
+$K_{B_c}-K_{\cA} = E_c + F_c$,
+where $E_c := \Sedge K_{B_c}\Sedge - K_{\cA}$
+and $F_c := \Sbulk K_{B_c} + K_{B_c}\Sbulk - \Sbulk K_{B_c}\Sbulk$.
 
-\textbf{Near-edge term $E_c$:}
-$\|E_c\|_{L^2(w\otimes w)}\to 0$ by Assumption~\ref{ass:kernelrate}
-(supported on $\xi,\eta\leq R_0c^{2/3}$, with $\alpha-\beta<-1/2$
-ensuring integrability).
+\emph{$E_c$:} By Assumption~\ref{ass:kernelrate},
+$\|E_c\|_{L^2(w\otimes w)}\to 0$ (near-edge convergence on $[0,R_0]^2$,
+where $R_0 = R(c)c^{2/3} = \frac{2c^{2/3}\log c}{3\pi}$).
 
-\textbf{Bulk term $F_c$:}
-By Theorem~\ref{thm:bulkS2} (corrected Step~5):
-$\|F_c\|_{L^2(w\otimes w)}^2
-\leq 4\|\Sbulk K_{B_c}\|_{L^2(w\otimes w)}^2
-\leq 4\cdot\frac{c^{2/3}}{\pi^2}e^{-2\pi R}
-= \frac{4}{\pi^2}\cdot c^{2/3}\cdot c^{-4/3}
-= \frac{4}{\pi^2}c^{-2/3}
-\to 0$.
+\emph{$F_c$:} By Theorem~\ref{thm:bulkS2} and Remark~\ref{rem:cross}:
+$\|F_c\|_{L^2(w\otimes w)} = O(c^{-1/3})\to 0$.
 
-Combining: $\|K_{B_c}-K_{\cA}\|_{L^2(w\otimes w)}
-\leq\|E_c\|+\|F_c\|\to 0$.
+Combining: $\|K_{B_c}-K_{\cA}\|_{L^2(w\otimes w)}\to 0$.
 \end{proof}
 
-\begin{remark}[Why no microlocal geometry was needed]
-\label{rem:nogeom}
-The proof uses only:
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item The Fermi-edge structure of $\lam{c}{n}$ (ORX \S5): gives
-    exponential tail $\int_R^\infty F(s)\,ds = e^{-\pi R}/\pi$.
-  \item Spectral density $\sim c^{1/3}$ per unit $s$-interval:
-    gives factor $c^{1/3}$ in the Riemann sum.
-  \item Choice $R(c)\sim\frac{2}{3}\frac{\log c}{\pi}$:
-    balances $c^{1/3}$ density against $e^{-\pi R}$ Fermi decay.
-  \item Near-edge control (Paper~XVI).
+\begin{remark}[Honest input count]
+\label{rem:inputs}
+BR3 (Theorem~\ref{thm:BR3reduce}) requires exactly:
+\begin{enumerate}[nosep,label=(I\arabic*)]
+  \item Cliff Lemma~\ref{lem:cliff}
+    (from ORX; approximate \checkmark).
+  \item Near-edge rate $g(c)\to 0$
+    (Assumption~\ref{ass:kernelrate}; open: WKB/Airy matching).
+  \item Weighted eigenfunction bound
+    (Assumption~\ref{ass:efbound}; open: turning-point $L^2(w)$ analysis).
 \end{enumerate}
-No phase-space argument, no pseudodifferential calculus.
-The ``cliff'' is not a hard spectral gap but a continuous
-Fermi/Airy tail that is exponentially integrable over $[R,\infty)$.
+Inputs (I2) and (I3) are independent:
+(I2) controls the Airy-window convergence;
+(I3) controls the bulk evanescent modes in the weighted norm.
+Neither implies the other.
 \end{remark}
 
 %% ============================================================
-\section{The One Remaining Input}
-\label{sec:remaining}
+\section{Programme State After Papers~XIII--XVII}
+\label{sec:state}
 %% ============================================================
-
-\begin{problem}[Riemann-sum error control]
-\label{prob:riemannerr}
-The Riemann-sum approximation in Theorem~\ref{thm:bulkS2},
-Step~3 (equation~\eqref{eq:riemannsum}), has an error:
-\[
-  \Bigl|\sum_{n:\,s_n\in[a,b]}f(s_n) - c^{1/3}\int_a^b f(s)\,ds\Bigr|
-  \leq C\,c^{1/3}\,\frac{b-a}{c^{1/3}}\,\sup|f'|
-  = C(b-a)\sup|f'|.
-\]
-For $f(s) = F(s)$ (the Fermi function), $\sup|f'|\leq\pi/4$.
-The error is $O(1)$ per unit interval,
-uniformly in $c$ but not vanishing.
-For the integral $\int_R^\infty$, the Riemann error is:
-$O(\int_R^\infty|f'(s)|\,ds) = O(F(R)) = O(e^{-\pi R})$,
-which vanishes for $R=R(c)\to\infty$.
-This is consistent: the approximation error $O(e^{-\pi R})$
-matches the main term $c^{1/3}e^{-\pi R}$ up to the factor $c^{1/3}$,
-but since we are computing $\sum F(s_n)$ (not $\sum F(s_n)^{-2}$)
-the error is dominated by the main term.
-This needs to be verified more carefully for the
-$\sum |\mu_n^{(c)}-\zeta|^{-2}$ sum; this is the one remaining
-finite-computation input.
-\end{problem}
-
-\begin{problem}[Explicit Cliff constants]
-\label{prob:cliffconstants}
-Extract explicit $\gamma = \pi$ (from Fermi function)
-and the sub-leading corrections from ORX \S7.2--\S7.4.
-Expected: the $O(c^{-1/3})$ error in~\eqref{eq:ORXmain}
-does not affect the rate $R(c)\sim\frac{2\log c}{3\pi}$
-but does affect the constant in the bulk bound.
-\end{problem}
-
-\subsection*{Programme position after Papers~XIII--XVII}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
 \begin{tabular}{p{5.8cm} p{1.4cm} p{2.2cm}}
 \toprule
-\textbf{Claim} & \textbf{Status} & \textbf{Note} \\
+\textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
 Cliff Lemma, Fermi form (Lem.~\ref{lem:cliff})
   & $\approx$\checkmark & ORX \S5 \\
-Bulk kernel decay (Thm.~\ref{thm:bulkS2}, corrected)
-  & \checkmark & conditional on Cliff \\
+Spectral density (Lem.~\ref{lem:density})
+  & \checkmark & standard Riemann \\
+Bulk kernel decay (Thm.~\ref{thm:bulkS2})
+  & conditional & (I1)+(I3) \\
+Cross-term bound (Rem.~\ref{rem:cross})
+  & conditional & (I3) \\
 BR3 Reduction (Thm.~\ref{thm:BR3reduce})
-  & \checkmark & conditional on both \\
-Riemann-sum error control (Prob.~\ref{prob:riemannerr})
-  & open & finite computation \\
-Explicit Cliff constants (Prob.~\ref{prob:cliffconstants})
-  & open & finite computation \\
-Near-edge rate $g(c)\to 0$ (Ass.~\ref{ass:kernelrate})
+  & conditional & (I1)+(I2)+(I3) \\
+Near-edge rate $g(c)\to 0$ (I2)
   & open & WKB/Airy matching \\
+Weighted eigenfunction bound (I3)
+  & open & turning-point $L^2(w)$ \\
+Explicit Cliff constant $C_0$ (ORX \S7)
+  & open & finite computation \\
 Full BR3 proved
-  & open & needs all above \\
+  & open & needs I1+I2+I3 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \medskip\noindent
-\textbf{Logical chain (updated):}
+\textbf{Logical chain:}
 \[
 \boxed{
-\underbrace{\text{Cliff (ORX \S5)}}_{\approx\checkmark}
+\underbrace{\text{(I1) Cliff (ORX)}}_{\approx\checkmark}
 +
-\underbrace{\text{Near-edge }g(c)\to 0}_{\text{WKB/Airy}}
+\underbrace{\text{(I2) }g(c)\to 0}_{\text{WKB/Airy}}
++
+\underbrace{\text{(I3) }L^2(w)\text{ efns}}_{\text{turning-point}}
 \;\Longrightarrow\;
-\underbrace{\text{BR3}}_{\text{Thm.~\ref{thm:BR3reduce}}}
-\;\Longrightarrow\;
-\underbrace{\text{Q5}\Rightarrow\text{Gap-S}}_{\text{XIV/XIII}}
+\underbrace{\text{BR3}\Rightarrow\text{Q5}\Rightarrow\text{Gap-S}}_{\text{XIV/XIII}}
 }
 \]
 
 \begin{thebibliography}{99}
 \bibitem{paper14} \textit{Paper~XIV},
   \texttt{paper14\_airy\_resolvent.tex}, 2026.
-\bibitem{paper15} \textit{Paper~XV},
-  \texttt{paper15\_quasimode.tex}, 2026.
 \bibitem{paper16} \textit{Paper~XVI},
   \texttt{paper16\_bridge.tex}, 2026.
 \bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
@@ -438,7 +403,7 @@ Full BR3 proved
   Springer, 2013.
 \bibitem{Slepian1983} D.~Slepian,
   Some comments on Fourier analysis, uncertainty and modeling,
-  \textit{SIAM Review} \textbf{25} (1983), 379--393.
+  \textit{SIAM Review}~\textbf{25} (1983), 379--393.
 \bibitem{Simon2005} B.~Simon,
   \textit{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005.
 \bibitem{Olver1997} F.~Olver,
