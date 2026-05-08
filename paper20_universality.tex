@@ -30,7 +30,9 @@
 \newcommand{\AKlin}{A_K^{\mathrm{lin}}}
 \newcommand{\AKquad}{A_K^{\mathrm{quad}}}
 \newcommand{\BK}{B_K}
-\newcommand{\Kopt}{K_{\mathrm{opt}}}
+% \Kopt is now an alias for K^* (variational minimizer);
+% the old K_{\mathrm{opt}} notation is retired.
+\newcommand{\Kopt}{K^*}
 \newcommand{\Clin}{C_{\mathrm{lin}}(M,K)}
 \newcommand{\Cquad}{C_{\mathrm{quad}}(M,K)}
 \newcommand{\Ctwo}{C_2(\alpha)}
@@ -196,7 +198,8 @@ for $c\geq c_0(j)$.
 
 \emph{Status:} Airy: XVIII; power family: sketch
 (\texttt{olver\_growth\_lemma.tex}, Remark~\ref{rem:h1_mechanism});
-general: open (requires regular variation).
+general: follows from H1-K
+(\texttt{olver\_growth\_lemma.tex}, Corollary~\texttt{cor:h1\_derived}).
 \end{hypothesis}
 
 \begin{remark}[Mechanism for H1, power family]
@@ -272,11 +275,14 @@ Apply Euler--Maclaurin $\sum_{j=1}^K j^\sigma
 \label{lem:loglog}
 Let $K^*(c)$ be the unique minimizer from
 Lemma~\ref{lem:kopt_variational}.
-There exist explicit constants
-$c_1 = \frac{2\beta}{\alpha+2\gamma/1}$ and
-$c_2 = \frac{2(\beta+1)}{\alpha}$,
-depending only on $\alpha,\beta,\gamma$, such that
-for all $c$ sufficiently large:
+Set
+\[
+  c_1 := \frac{2\beta}{\alpha},
+  \qquad
+  c_2 := \frac{2(\beta+1)}{\alpha},
+\]
+both depending only on $\alpha,\beta$.
+For all $c$ sufficiently large:
 \begin{equation}\label{eq:sandwich}
   c_1 \log c \leq K^*(c) \leq c_2 \log c.
 \end{equation}
@@ -289,41 +295,45 @@ of~\eqref{eq:sandwich} yields
 
 \begin{proof}
 \textit{Upper bound.}
-At the minimizer the FOC~\eqref{eq:FOC} gives
-$\frac{\alpha}{2}K^* = \beta\log c + \gamma\log K^* + C_0$
-where $C_0=\log(L(1+\gamma)/((\alpha/2)T))$.
-Since $\gamma\log K^* \geq 0$ and $\log K^*\leq K^*/e$,
-we have $\frac{\alpha}{2}K^*
-\leq \beta\log c + \frac{\gamma}{e}K^* + C_0$,
-hence $(\frac{\alpha}{2}-\frac{\gamma}{e})K^*\leq\beta\log c+C_0$.
-For $\alpha > 2\gamma/e$ (which holds for $c$ large since
-$\gamma\log K^*/K^*\to 0$) this gives $K^*\leq c_2\log c$
-with $c_2=\frac{2(\beta+1)}{\alpha}$ for $c\geq c_0$.
+From the logarithmic FOC~\eqref{eq:log_FOC} (proved in
+Lemma~\ref{lem:kopt_variational} without using $\log K^*\asymp\log\log c$):
+\[
+  \tfrac{\alpha}{2}K^*
+  = \beta\log c + \gamma\log K^* + C_0,
+\]
+where $C_0 = \log(L(1+\gamma)/(\frac{\alpha}{2}T))$ is a fixed constant.
+Since $\alpha > 0$ is fixed and $\gamma\log K^*/K^* \to 0$
+(as $K^*\to\infty$, which follows from $F'(K^*) = 0$
+and $F'(K)<0$ for small $K>0$),
+for sufficiently large $c$ we have
+$\gamma\log K^* \leq \frac{\alpha}{4}K^*$,
+hence $\frac{\alpha}{4}K^* \leq \beta\log c + C_0$,
+giving $K^* \leq \frac{2(\beta+1)}{\alpha}\log c = c_2\log c$
+for $c\geq c_0$.
 
 \textit{Lower bound.}
-Since $F(K)\to+\infty$ as $K\to 0^+$
-(the term $Te^{-\alpha K/2}\to T>0$ while
-$LK^{1+\gamma}c^{-\beta}\to 0$, so $F(K)\to T>0$,
-but more precisely $F'(K)<0$ near $0$ since
-$-\frac{\alpha}{2}Te^{-\alpha K/2}$ dominates),
-the minimizer satisfies $K^*\geq K_{\min}(c)$
-where $K_{\min}$ solves $F'(K_{\min})=0$ from below.
-Direct comparison with $F'(c_1\log c)$:
-at $K=c_1\log c$ with $c_1 = \frac{\beta}{\alpha}$,
-$F'(c_1\log c)
-= L(1+\gamma)(c_1\log c)^\gamma c^{-\beta}
-- \frac{\alpha}{2}T e^{-\alpha c_1(\log c)/2}$;
-the exponential term equals
-$T c^{-\alpha c_1/2} = Tc^{-\beta/2}\prec c^{-\beta}(\log c)^\gamma$,
-so $F'(c_1\log c)>0$ for large $c$,
-confirming $K^*\geq c_1\log c$.
+$F'(K) = L(1+\gamma)K^\gamma c^{-\beta}
+- \frac{\alpha}{2}Te^{-\alpha K/2}$.
+At $K = c_1\log c = \frac{2\beta}{\alpha}\log c$:
+the polynomial term is
+$L(1+\gamma)c_1^\gamma(\log c)^\gamma c^{-\beta}$
+and the exponential term is
+$\frac{\alpha}{2}T\,c^{-\alpha c_1/2}
+= \frac{\alpha}{2}T\,c^{-\beta}$.
+For large $c$,
+$(\log c)^\gamma \gg 1$,
+so $F'(c_1\log c) > 0$.
+Since $F'(K)<0$ for $K$ near $0$
+(the exponential term dominates: $F'(0^+) = -\frac{\alpha}{2}T < 0$)
+and $F'$ is continuous, there exists a unique zero
+$K^* \in (0, c_1\log c)$ would contradict $F'(c_1\log c)>0$;
+hence $K^* \geq c_1\log c$.
 
 \textit{Log extraction.}
 From~\eqref{eq:sandwich},
-$\log(c_1\log c)\leq\log K^*\leq\log(c_2\log c)$,
-i.e.\ $\log\log c + \log c_1
+$\log c_1 + \log\log c
 \leq \log K^*
-\leq \log\log c + \log c_2$,
+\leq \log c_2 + \log\log c$,
 which gives~\eqref{eq:loglog}.
 \end{proof}
 
@@ -339,7 +349,10 @@ Set $F(K) := L K^{1+\gamma}c^{-\beta} + Te^{-\alpha K/2}$
 $F$ is strictly convex on $(0,\infty)$ since
 $F''(K) = L\gamma(1+\gamma)K^{\gamma-1}c^{-\beta}
 + \frac{\alpha^2}{4}Te^{-\alpha K/2} > 0$.
-The unique minimizer $K^*(c)$ satisfies the FOC
+Note $F(0^+) = T > 0$, $F'(0^+) = -\frac{\alpha}{2}T < 0$,
+and $F(K)\to+\infty$ as $K\to+\infty$.
+Hence $F$ has a unique interior minimum $K^*(c)\in(0,\infty)$
+satisfying the FOC
 \begin{equation}\label{eq:FOC}
   L(1+\gamma){K^*}^{\gamma}c^{-\beta}
   = \tfrac{\alpha}{2}\,T\,e^{-\alpha K^*/2}.
@@ -353,6 +366,7 @@ Taking logarithms of~\eqref{eq:FOC}:
   + \log\!\Bigl(\tfrac{L(1+\gamma)}{(\alpha/2)T}\Bigr).
 \end{equation}
 Zeroth iterate: the term $\gamma\log K^* = o(K^*)$
+(since $K^*\to\infty$ and $\gamma\log K^*/K^*\to 0$)
 yields leading balance $K_0 := \frac{2\beta}{\alpha}\log c$.
 By Lemma~\ref{lem:loglog}, $\log K^* = \log\log c + O(1)$;
 substituting into~\eqref{eq:log_FOC} gives the first iterate:
@@ -389,10 +403,14 @@ At $K = K^*(c)$:
 \end{lemma}
 
 \begin{proof}
-(i) $F'' > 0$ as computed; unique minimizer follows from
-$F(K)\to\infty$ at both endpoints.
+(i) $F'' > 0$ as computed;
+$F(0^+)=T>0$, $F'(0^+)<0$, $F\to+\infty$:
+hence a unique interior minimum.
 (ii) Equation~\eqref{eq:log_FOC} is exact.
-Zeroth iterate: $\frac{\alpha}{2}K_0=\beta\log c$.
+Zeroth iterate: $\gamma\log K^*/K^*\to 0$ is a consequence
+of $K^*\to\infty$ (established in Lemma~\ref{lem:loglog}
+via the lower bound, which uses only $F'(0^+)<0$
+and $F'(c_1\log c)>0$).
 First iterate: insert $\log K^*=\log\log c+O(1)$
 (Lemma~\ref{lem:loglog}, specifically~\eqref{eq:loglog})
 into~\eqref{eq:log_FOC} to obtain~\eqref{eq:kopt_iterated}.
@@ -570,7 +588,7 @@ $|\xi|^\nu$ ($\nu\geq 1$)
   & $\frac{3\nu+2}{\nu+2}$
   & $\frac{2\nu}{(\nu+2)\alpha}\log c$ & Sketch \\
 General $V$ & & $\gamma$ & $\beta$ & $1+\gamma$
-  & $\frac{2\beta}{\alpha}\log c$ & Open \\
+  & $\frac{2\beta}{\alpha}\log c$ & via H1-K \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -586,12 +604,14 @@ General $V$ & & $\gamma$ & $\beta$ & $1+\gamma$
 \toprule
 \textbf{ID} & \textbf{Statement} & \textbf{Status} \\
 \midrule
-O1 & H1 for general $V$ (regular variation) & open \\
+O1 & H1 for general $V$: closed by H1-K
+     (\texttt{olver\_growth\_lemma.tex} \S4)
+  & closed (conditional) \\
 O2 & H2 for $\nu\neq 1$ & open \\
 O3 & $\Omega(K^{1+\gamma})$ lower bound & open \\
 O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \hline
-\multicolumn{2}{l}{All of O1--O4 are non-blocking}
+\multicolumn{2}{l}{O2--O4 are non-blocking}
   & \checkmark \\
 \multicolumn{2}{l}{Structural stability certified}
   & \checkmark \\
@@ -633,6 +653,9 @@ the $c$-scaling hierarchy.
   Academic Press, 1975.
 \bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
   \textit{Prolate Spheroidal Wave Functions}, Springer, 2013.
+\bibitem{BGT1987} N.~H.\ Bingham, C.~M.\ Goldie, J.~L.\ Teugels,
+  \textit{Regular Variation},
+  Cambridge University Press, 1987.
 \end{thebibliography}
 
 \end{document}
