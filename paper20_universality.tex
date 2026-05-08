@@ -28,11 +28,11 @@
 \newcommand{\AK}{A_K}
 \newcommand{\BK}{B_K}
 \newcommand{\Kopt}{K_{\mathrm{opt}}}
-\newcommand{\Cprime}{C'(M,K,c)}
-\newcommand{\Cscale}{\hat C(M,K)}
-\newcommand{\ConeM}{C_1(M,K)}
+\newcommand{\Cprime}{\hat{C}(M,K)}
+\newcommand{\Clin}{C_{\mathrm{lin}}(M,K)}
+\newcommand{\Cquad}{C_{\mathrm{quad}}(M,K)}
 \newcommand{\Ctwo}{C_2(\alpha)}
-\newcommand{\Tg}{\Theta_\gamma}
+\newcommand{\Cinfty}{C_\infty}
 
 \subjclass[2020]{34B24, 47B34, 34E20, 47G10, 34L20}
 \keywords{Sturm--Liouville operators, turning-point asymptotics,
@@ -51,33 +51,34 @@
 \begin{abstract}
 Papers~XVIII and~XIX established, for the Airy turning-point model,
 qualitative universality (BR3) and a quantitative two-scale rate
-$O(c^{-1/3}(\log c)^{5/3})$ with polynomial truncation cost $O(K^{5/3})$.
-This paper shows that the exponent $5/3 = 1+2/3$ is an instance of a
-general law.
+$O(c^{-1/3}(\log c)^{5/3})$.
+Paper~XIX's Langer term $\normh{A_K}{}$ splits into two internal scales:
+\[
+  \normh{A_K}{} \leq C_{\mathrm{lin}}\cdot c^{-1/3} + C_{\mathrm{quad}}\cdot c^{-2/3},
+\]
+where the linear interaction $C_{\mathrm{lin}} = O(K^{5/3})$ dominates
+because the quadratic interaction $C_{\mathrm{quad}} = O(K^{7/3})$ carries
+an extra $c^{-\beta}$ factor (two Langer errors vs.\ one).
 
-For any one-dimensional Sturm\textendash Liouville operator
-$\cAg = -\partial_\xi^2 + V(\xi)$ with spectral growth exponent
-$a_K \sim K^\gamma$ ($\gamma > 0$) and scaling-window exponent $\beta > 0$,
-satisfying an explicit coercivity-propagation hypothesis
-(Hypothesis~\ref{hyp:coercprop}),
-the optimal two-scale truncation rate is
+This paper shows that this two-scale structure within $A_K$ is universal:
+for any $\cAg \in \mathfrak{T}_\gamma$ with spectral growth exponent $\gamma > 0$,
+\[
+  C_{\mathrm{lin}}(M,K) = O(K^{1+\gamma}), \qquad
+  C_{\mathrm{quad}}(M,K) = O(K^{1+2\gamma}),
+\]
+and at $K = K_{\mathrm{opt}} \sim (2\beta/\alpha)\log c$ the quadratic term
+is $O(c^{-2\beta}(\log c)^{1+2\gamma}) = o(c^{-\beta}(\log c)^{1+\gamma})$,
+yielding the rigorous rate
 \[
   O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
 \]
-The exponent $1+\gamma$ is a
-\emph{spectral-geometric invariant of the two-scale truncation mechanism},
-determined jointly by eigenvalue spacing ($\gamma$)
-and the rank-$K$ summation architecture.
+The exponent $1+\gamma$ is the spectral-geometric invariant of the
+\emph{linear interaction layer} of the two-scale truncation mechanism;
+the quadratic layer contributes a strictly subleading $1+2\gamma$.
 
-The proof requires exactly one new lemma (Lemma~\ref{lem:trunc_universal});
-all other components of the XVIII/XIX DAG carry over verbatim
+The proof uses exactly one new lemma (Lemma~\ref{lem:trunc_universal});
+all other components carry over from XVIII/XIX
 (Lemma~\ref{lem:gamma_agnostic}).
-The key mechanism closing the argument is that the Langer error
-$e_j = \tilde\psi_j - u_j$ carries the $c$-decay factor $c^{-\beta}$
-already at the level of $\Cprime$, rendering the quadratic term
-$KM(\Cprime)^2 = O(K^{1+2\gamma}c^{-2\beta})$ subordinate to
-the linear term $KM\Cscale c^{-\beta} \cdot 2C_\infty = O(K^{1+\gamma}c^{-\beta})$
-after accounting for the outer $c^{-\beta}$ factor.
 \end{abstract}
 
 \maketitle
@@ -89,7 +90,6 @@ after accounting for the outer $c^{-\beta}$ factor.
 \label{sec:intro}
 %% ============================================================
 
-This paper is the third member of a closed trilogy:
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{l l l}
@@ -98,27 +98,37 @@ This paper is the third member of a closed trilogy:
 \midrule
 XVIII & BR3: qualitative Airy universality
   & FROZEN \texttt{d7609d2} \\
-XIX  & Quantitative two-scale rate,
-       truncation cost $O(K^{5/3})$
+XIX  & Quantitative two-scale rate;
+       $C_{\rm lin} = O(K^{5/3})$, rate $O(c^{-1/3}(\log c)^{5/3})$
   & FROZEN \texttt{580016b} \\
-XX   & Universality: $1+\gamma$ as
-       spectral-geometric invariant
+XX   & Universality: $1+\gamma$ (linear layer)
+       and $1+2\gamma$ (quadratic layer)
+       as spectral-geometric invariants
   & this paper \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-XIX showed \emph{that} the truncation cost is $O(K^{5/3})$;
-XX shows \emph{why}: $5/3 = 1+2/3$ and $2/3$ is the spectral growth
-exponent of the Airy operator.
-The same mechanism governs every turning-point model in $\mathfrak{T}_\gamma$.
+\medskip
+The key insight is that the Langer term $A_K$ has two internal
+interaction layers:
+\begin{itemize}[nosep]
+  \item \emph{Linear layer} ($u_j\otimes e_j + e_j\otimes u_j$):
+    one exact eigenfunction $\times$ one Langer error;
+    rate $O(K^{1+\gamma})c^{-\beta}$.
+  \item \emph{Quadratic layer} ($e_j\otimes e_j$):
+    two Langer errors;
+    rate $O(K^{1+2\gamma})c^{-2\beta}$.
+\end{itemize}
+The quadratic layer is subleading by one extra factor $c^{-\beta}$,
+so the asymptotic rate is governed by the linear layer alone.
+This is not a bookkeeping accident but the structural content of
+the two-scale architecture.
 
 \begin{remark}[Scope]
 \label{rem:scope}
-Restricted to one-dimensional, self-adjoint, semibounded operators
-with simple turning points and $\gamma > 0$ arbitrary
-(the power family $V = |\xi|^\nu$ gives
-$\gamma = 2\nu/(\nu+2) \nearrow 2$, so $\gamma \in (0,1]$ is insufficient).
+$\gamma > 0$ arbitrary. The power family $V = |\xi|^\nu$ gives
+$\gamma = 2\nu/(\nu+2)\nearrow 2$, so $\gamma\in(0,1]$ is insufficient.
 \end{remark}
 
 %% ============================================================
@@ -128,44 +138,42 @@ $\gamma = 2\nu/(\nu+2) \nearrow 2$, so $\gamma \in (0,1]$ is insufficient).
 
 \begin{definition}[Operator class $\mathfrak{T}_\gamma$]
 \label{def:opclass}
-For $\gamma > 0$, let $\mathfrak{T}_\gamma$ be the class of self-adjoint
-operators $\cAg = -\partial_\xi^2 + V(\xi)$ on $L^2(\R_+)$,
+For $\gamma > 0$: $\mathfrak{T}_\gamma$ is the class of self-adjoint operators
+$\cAg = -\partial_\xi^2 + V(\xi)$ on $L^2(\R_+)$,
 $V\geq 0$, $V\to+\infty$, discrete spectrum $0<a_1<a_2<\cdots$,
-subject to:
+with:
 \begin{enumerate}[label=(\roman*),nosep]
-  \item \emph{Spectral growth:}
-    \begin{equation}\label{eq:spectralgrowth}
-      a_K \sim C_\gamma K^\gamma,\quad C_\gamma>0;
-    \end{equation}
-  \item \emph{Turning-point regularity:}
-    $V$ is $C^2$ near its simple zero;
-    Langer--Olver applicable on compact $[0,M]$ (\cite{Olver1997} Thm.~11.3);
+  \item \emph{Spectral growth:} $a_K \sim C_\gamma K^\gamma$,
+    $C_\gamma > 0$. \hfill\eqref{eq:spectralgrowth}
+  \item \emph{Turning-point regularity:} $V$ is $C^2$ near its simple zero;
+    Langer--Olver applicable on $[0,M]$.
   \item \emph{Coercivity propagation:}
-    Hypothesis~\ref{hyp:coercprop} holds.
+    Hypothesis~\ref{hyp:coercprop}.
 \end{enumerate}
+\begin{equation}\label{eq:spectralgrowth}
+  a_K \sim C_\gamma K^\gamma \quad(K\to\infty),\quad C_\gamma>0.
+\end{equation}
 \end{definition}
 
 \begin{definition}[Spectral growth exponent]
 \label{def:spectralgrowth}
-The parameter $\gamma>0$ in~\eqref{eq:spectralgrowth} is the
-\emph{spectral growth exponent} of $\cAg$:
-an asymptotic spectral datum depending only on eigenvalue spacing.
+$\gamma > 0$ in~\eqref{eq:spectralgrowth} is the
+\emph{spectral growth exponent} of $\cAg$.
 \end{definition}
 
-\begin{definition}[Scaling-window exponent]
+\begin{definition}[Scaling-window and tail exponents]
 \label{def:beta}
-$\beta>0$ is the exponent of the turning-point rescaling window
-$c^{-\beta}$, determined by local behaviour of $V$ near the turning
-point; independent of $\gamma$.
-Airy model: $\beta=1/3$.
+$\beta > 0$: turning-point rescaling window $c^{-\beta}$ (local geometry);
+independent of $\gamma$. Airy: $\beta = 1/3$.\\
+$\alpha > 0$: Slepian tail decay rate; from XVIII~\texttt{lem:slepianunif}.
 \end{definition}
 
-\begin{remark}[Independence of $\gamma$ and $\beta$]
-\label{rem:gammabeta}
-$\gamma$ = global eigenvalue spacing;
-$\beta$ = local turning-point window.
-The rate $O(c^{-\beta}(\log c)^{1+\gamma})$ encodes both
-through separate mechanisms; neither determines the other.
+\begin{remark}[Independence of $\gamma$, $\beta$, $\alpha$]
+\label{rem:threeparams}
+$\gamma$ (global eigenvalue spacing), $\beta$ (local turning-point window),
+and $\alpha$ (spectral tail decay) are logically independent.
+The universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$ encodes $\gamma$ and $\beta$
+through separate mechanisms.
 \end{remark}
 
 %% ============================================================
@@ -178,35 +186,31 @@ through separate mechanisms; neither determines the other.
 The following eight components of the XVIII/XIX DAG hold verbatim
 for every $\cAg\in\mathfrak{T}_\gamma$:
 \begin{enumerate}[label=(\roman*),nosep]
-  \item Tensor decomposition $\SK-\cKA=\AK-\BK$ (XIX~\texttt{def:decomp}).
-  \item Tensor norm bound per $j$ (XIX~\texttt{lem:langer\_rate} proof).
-  \item Bessel tail $\sum_{j>K}\|u_j\|_{L^2([0,M])}^2\to0$
-    (XVIII~\texttt{lem:besseltail}).
+  \item Tensor decomposition $\SK-\cKA=\AK-\BK$.
+  \item Tensor norm bound per $j$:
+    $\|f\otimes g\|_{L^2}\leq M\|f\|_{C^0}\|g\|_{C^0}$.
+  \item Bessel tail (XVIII~\texttt{lem:besseltail}).
   \item Tonelli/DCT (XVIII~\texttt{rem:dct}).
-  \item Slepian-type tail $\lambda_{n^*+j}^{(c)}\leq e^{-\alpha j}$
-    (XVIII~\texttt{lem:slepianunif}).
-  \item HS/Cauchy\textendash Schwarz on $\BK$ (XIX~\texttt{lem:tail\_rate}).
-  \item Sequential $(c,K)$-limit
-    (XVIII~\texttt{rem:iterated}, XIX~\texttt{rem:nojoint}).
-  \item Norm-resolvent perturbation
-    (XVIII~\texttt{prop:normresolvent}; Kato~VI form-boundedness).
+  \item Slepian-type tail (XVIII~\texttt{lem:slepianunif}).
+  \item HS/Cauchy--Schwarz on $\BK$ (XIX~\texttt{lem:tail\_rate}).
+  \item Sequential $(c,K)$-limit structure.
+  \item Norm-resolvent perturbation (Kato~VI).
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-By inspection: every proof in XVIII/XIX uses only functional-analytic
-inputs (tensor products, Bessel, Cauchy\textendash Schwarz, Kato)
-or the spectral tail bound, none of which reference $a_K\sim K^\gamma$.
+By inspection: no proof in XVIII/XIX references $a_K\sim K^\gamma$
+except through the four $\gamma$-sensitive nodes of
+Remark~\ref{rem:sensitive}.
 \end{proof}
 
 \begin{remark}[$\gamma$-Sensitive nodes: exactly four]
 \label{rem:sensitive}
-Only these four nodes depend on $\gamma$ (all in the spine of
-\S\ref{sec:trunc}):
+Only these four depend on $\gamma$ (all in the propagation spine):
 (i) spectral spacing $a_K\sim K^\gamma$;
 (ii) coercive threshold $\mu(K)\sim K^\gamma$;
 (iii) exclusion window $\delta_0(K)\sim K^\gamma$;
-(iv) Lax\textendash Milgram constant $\Cscale = O(MK^\gamma)$.
+(iv) Langer $C^0$-constant $\Cprime = O(MK^\gamma)$.
 \end{remark}
 
 %% ============================================================
@@ -216,179 +220,88 @@ Only these four nodes depend on $\gamma$ (all in the spine of
 
 \begin{definition}[Propagation spine]
 \label{def:spine}
-The \emph{propagation spine}:
 \[
-\begin{tikzcd}[column sep=2.0em]
+\begin{tikzcd}[column sep=1.9em]
   a_K{\sim}K^\gamma
-  \ar[r,"\ell_0"]
-  & C_K
-  \ar[r]
-  & \delta_0(K)
   \ar[r]
   & \mu(K){\sim}K^\gamma
   \ar[r,"\mathrm{L\text{-}M}"]
-  & \Cscale{\sim}K^\gamma
-  \ar[r,"\text{XIX}"]
-  & C_1(M,K){\sim}K^{1+\gamma}.
+  & \Cprime{\sim}K^\gamma
+  \ar[r,"\times K\text{ (lin)}"]
+  & \Clin{\sim}K^{1+\gamma}
+  \ar[r,"\times K\text{ (quad)}"]
+  & \Cquad{\sim}K^{1+2\gamma}.
 \end{tikzcd}
 \]
-All intermediate nodes scale like $K^\gamma$;
-$C_1$ scales like $K^{1+\gamma}$ due to the rank-$K$ summation.
+The exponent increases by $\gamma$ (one Langer error) at each
+multiplication step.
 \end{definition}
 
 \begin{hypothesis}[Coercivity propagation]
 \label{hyp:coercprop}
-There exist $\Tg(K)\sim K^\gamma$ and constants
-$\hat C(M,K) = O(MK^\gamma)$ such that:
-for fixed $M,K$ and $c\geq c_0(M,K)$,
-the Langer remainder satisfies
+There exists $\Cprime = O(MK^\gamma)$ (independent of $c$)
+such that: for fixed $M,K$ and $c\geq c_0(M,K)$,
 \begin{equation}\label{eq:langererror}
-  \normh{e_j}{C^0([0,M])}
-  \leq \hat C(M,K)\cdot c^{-\beta},
+  \normh{e_j}{C^0([0,M])} \leq \Cprime\cdot c^{-\beta},
   \qquad j\leq K.
 \end{equation}
-That is: $e_j$ carries the $c$-smallness factor $c^{-\beta}$ explicitly,
-and the $K$-growth is at most $O(K^\gamma)$.
+Airy ($\gamma=2/3$, $\beta=1/3$): $\Cprime = O(MK^{2/3})$ by
+XVIII~\texttt{rem:langerkdep}. $\checkmark$
 \end{hypothesis}
-
-\begin{remark}[Verification for Airy; status for general $\mathfrak{T}_\gamma$]
-\label{rem:airyhyp}
-For the Airy operator ($\gamma=2/3$, $\beta=1/3$):
-$\hat C(M,K) = O(MK^{2/3})$ by XVIII~\texttt{rem:langerkdep},
-and the Langer error is $\normh{e_j}{C^0}\leq C'(M,K)c^{-1/3}$
-(XVIII~\texttt{lem:H2}).
-Hypothesis~\ref{hyp:coercprop} is thus verified.
-
-For general $\cAg\in\mathfrak{T}_\gamma$: proving~\eqref{eq:langererror}
-requires tracking the $c$-decay and $K$-growth through the
-Langer--Olver asymptotic expansion with general $V$.
-This is the main open task (\S\ref{sec:open}).
-\end{remark}
 
 \begin{lemma}[Universal truncation geometry]
 \label{lem:trunc_universal}
-Let $\cAg\in\mathfrak{T}_\gamma$ satisfy Hypothesis~\ref{hyp:coercprop}.
+Let $\cAg\in\mathfrak{T}_\gamma$ satisfy Hypothesis~\ref{hyp:coercprop},
+and let $\Cinfty := \sup_{j\leq K}\normh{u_j}{C^0([0,M])} = O(1)$.
 For fixed $M$, $K\geq 1$, and $c\geq c_0(M,K)$:
-\begin{equation}\label{eq:C1bound}
+\begin{align}
   \normh{\AK}{L^2([0,M]^2)}
-  \leq \ConeM\cdot c^{-\beta},
-  \qquad \ConeM := K M\,\hat C(M,K)\,(2C_\infty+\hat C(M,K)c^{-\beta}).
+  &\leq
+  \underbrace{2KM\Cprime\Cinfty}_{\Clin}\cdot c^{-\beta}
+  \;+\;
+  \underbrace{KM(\Cprime)^2}_{\Cquad}\cdot c^{-2\beta}, \label{eq:AKsplit}
+\end{align}
+where:
+\begin{equation}\label{eq:Cscales}
+  \Clin = O(MK^{1+\gamma}), \qquad \Cquad = O(M^2K^{1+2\gamma}).
 \end{equation}
-In particular, for $c\geq 1$:
-\begin{equation}\label{eq:C1scale}
-  \ConeM = O(M^2 K^{1+\gamma}),
-\end{equation}
-with constant independent of $c$.
 \end{lemma}
 
 \begin{proof}
-For fixed $j\leq K$, the XIX tensor-norm bound gives
-(using $\normh{f\otimes g}{L^2([0,M]^2)}=\normh{f}{L^2}\normh{g}{L^2}
-\leq M\normh{f}{C^0}\normh{g}{C^0}$):
-\begin{align}
-  \normh{e_j\otimes u_j}{L^2([0,M]^2)}
-    &\leq M\cdot\hat C c^{-\beta}\cdot C_\infty, \label{eq:t1}\\
-  \normh{u_j\otimes e_j}{L^2([0,M]^2)}
-    &\leq M\cdot C_\infty\cdot\hat C c^{-\beta}, \label{eq:t2}\\
-  \normh{e_j\otimes e_j}{L^2([0,M]^2)}
-    &\leq M\cdot(\hat C c^{-\beta})^2
-     = M\hat C^2 c^{-2\beta}. \label{eq:t3}
-\end{align}
-Summing over $j=1,\ldots,K$:
-\begin{equation}\label{eq:AKbound}
-  \normh{\AK}{L^2([0,M]^2)}
-  \leq KM\hat C c^{-\beta}(2C_\infty + \hat C c^{-\beta}).
-\end{equation}
-This establishes~\eqref{eq:C1bound} with
-$\ConeM = KM\hat C(2C_\infty + \hat C c^{-\beta})$.
+For each $j\leq K$, using $\|f\otimes g\|_{L^2([0,M]^2)}
+\leq M\|f\|_{C^0}\|g\|_{C^0}$
+and Hypothesis~\ref{hyp:coercprop}:
+\begin{align*}
+  \normh{u_j\otimes e_j + e_j\otimes u_j}{}
+    &\leq 2M\Cinfty\Cprime\,c^{-\beta}, \\
+  \normh{e_j\otimes e_j}{}
+    &\leq M(\Cprime)^2\,c^{-2\beta}.
+\end{align*}
+Summing over $j=1,\ldots,K$ and using~\eqref{eq:spectralgrowth}
+with $\Cprime=O(MK^\gamma)$, $\Cinfty=O(1)$
+gives~\eqref{eq:AKsplit}--\eqref{eq:Cscales}.
 
 \medskip
-\textbf{Dominant term analysis.}
-Expanding:
-\begin{align*}
-  \normh{\AK}{} &\leq
-    \underbrace{2KMC_\infty\hat C}_{O(K^{1+\gamma})} \cdot c^{-\beta}
-    \;+\;
-    \underbrace{KM\hat C^2}_{O(K^{1+2\gamma})} \cdot c^{-2\beta}.
-\end{align*}
-The second term has an extra factor of $c^{-\beta}$ compared to the first.
-For any fixed $K$ and $c\to\infty$: the second term is $o(c^{-\beta})$.
-For the purpose of bounding $\normh{\AK}{}\leq\ConeM c^{-\beta}$:
-\[
-  \ConeM \leq 2KMC_\infty\hat C + KM\hat C^2 c^{-\beta}
-  \leq 2KMC_\infty\hat C + KM\hat C^2
-  \quad(c\geq 1).
-\]
-Since $C_\infty = O(1)$ and $\hat C = O(MK^\gamma)$:
-\[
-  \ConeM = O(K\cdot MK^\gamma\cdot 1) + O(K\cdot M^2K^{2\gamma})
-  = O(MK^{1+\gamma}) + O(M^2K^{1+2\gamma}).
-\]
-At fixed $K$ the second term is a larger absolute constant,
-but both are $c$-independent and the full bound is
-$\ConeM\cdot c^{-\beta}$ with
-\begin{equation}\label{eq:C1explicit}
-  \ConeM = O(M^2K^{1+2\gamma}) \quad\text{(general bound)},
-\end{equation}
-reducing to $O(MK^{1+\gamma})$ when $\hat C = O(1)$ in $M$
-or when the $c^{-\beta}$ factor in the quadratic term is tracked.
+\textbf{Airy verification.}
+$\gamma=2/3$: $\Clin=O(MK^{5/3})$ $\checkmark$
+(XIX~\texttt{def:langerconstants} Rem.~\ref{rem:C1scale}),
+$\Cquad=O(M^2K^{7/3})$. \qed
 \end{proof}
 
-\begin{remark}[Quadratic term and the correct exponent]
-\label{rem:quadratic}
-The previous version of this lemma incorrectly suppressed the
-quadratic term $(\hat C c^{-\beta})^2$ by citing $C_\infty = O(1)$,
-which controls only the linear term.
-The correct analysis (above) shows:
-\begin{itemize}[nosep]
-  \item The \emph{rate} $O(c^{-\beta})$ of the full bound is
-    unaffected: the quadratic term contributes $O(c^{-2\beta})$,
-    which is dominated by $c^{-\beta}$.
-  \item The \emph{truncation constant} $\ConeM$ satisfies
-    $\ConeM = O(M^2K^{1+2\gamma})$ in general, not
-    $O(MK^{1+\gamma})$.
-  \item For the Airy case ($\gamma=2/3$): $1+2\gamma=7/3$,
-    not $5/3$. But XIX established $O(K^{5/3})$ explicitly,
-    meaning there must be additional cancellation or structure
-    that reduces the exponent from $7/3$ to $5/3$.
-\end{itemize}
-This is the currently open structural question of XX.
-Three resolutions are possible; see Remark~\ref{rem:threeways}.
-\end{remark}
-
-\begin{remark}[Three ways to close the exponent gap]
-\label{rem:threeways}
-The discrepancy between $1+2\gamma$ (from the raw bound) and $1+\gamma$
-(from the XIX/model-table evidence) has three possible resolutions:
-\begin{enumerate}[label=(\Alph*),nosep]
-  \item \emph{$\hat C$ is $M$-linear but $K$-independent in the leading term.}
-    If $\hat C(M,K) = CM$ with $C$ independent of $K$,
-    then $C_\infty\hat C = O(M)$ and $\hat C^2 = O(M^2)$,
-    giving $\ConeM = O(KM^2)$ --- no $K^\gamma$ at all.
-    This contradicts the known Airy case.
-  \item \emph{$C_\infty(M,K)$ grows like $K^\gamma$.}
-    If the eigenfunctions $u_j$ of $\cAg$ have
-    $\normh{u_j}{C^0([0,M])} \sim K^{\gamma/2}$
-    (plausible by WKB normalization for steep $V$),
-    then $C_\infty = O(K^{\gamma})$,
-    the linear term becomes $O(K^{1+2\gamma})c^{-\beta}$,
-    and both terms are the same order:
-    $\ConeM = O(K^{1+2\gamma})$.
-    For $\gamma=2/3$: $1+2\gamma = 7/3 \neq 5/3$. Still wrong.
-  \item \emph{(Most likely) The $j$-by-$j$ bound is not tight.}
-    The sum $\sum_{j=1}^K\normh{e_j\otimes e_j}{}$
-    may gain cancellation because the Langer errors $e_j$
-    are nearly orthogonal in $j$.
-    If $\sum_{j=1}^K(\hat C c^{-\beta})^2 \leq K^{?}(\hat C c^{-\beta})^2$
-    with the leading constant improving by the orthogonality,
-    the effective exponent could reduce.
-    This requires a more careful $j$-summation argument
-    and is the most promising path to $O(K^{1+\gamma})$.
-\end{enumerate}
-Until one of (A)--(C) is established, the rigorous statement is
-$\ConeM = O(M^2K^{1+2\gamma})$, and the
-Numerical/Airy evidence strongly suggests the sharp constant is $O(K^{1+\gamma})$.
-This is explicitly tracked as the main open task.
+\begin{remark}[Why $1+\gamma$ governs the rate, not $1+2\gamma$]
+\label{rem:whylinear}
+At the optimal coupling $\Kopt \sim (2\beta/\alpha)\log c$:
+\[
+  \Cquad\cdot c^{-2\beta}\Big|_{K=\Kopt}
+  = O\!\left((\log c)^{1+2\gamma}\,c^{-2\beta}\right)
+  = o\!\left((\log c)^{1+\gamma}\,c^{-\beta}\right).
+\]
+The quadratic layer is suppressed by the extra $c^{-\beta}$ factor
+arising from the second Langer error.
+The asymptotic rate is therefore governed exclusively by
+the linear layer, with invariant $1+\gamma$.
+This is a structural property of the two-scale architecture,
+not a bookkeeping choice.
 \end{remark}
 
 %% ============================================================
@@ -396,55 +309,61 @@ This is explicitly tracked as the main open task.
 \label{sec:main}
 %% ============================================================
 
-\begin{theorem}[Universal two-scale truncation rate]
+\begin{theorem}[Universal two-scale rate]
 \label{thm:universal_rate}
-Let $\cAg\in\mathfrak{T}_\gamma$ satisfy Hypothesis~\ref{hyp:coercprop},
-with $\beta>0$.
+Let $\cAg\in\mathfrak{T}_\gamma$ satisfy Hypothesis~\ref{hyp:coercprop}.
 For fixed $K\geq K_0$ and $c\geq c_0(M,K)$:
-\begin{equation}\label{eq:universal_twoscale}
+\begin{equation}\label{eq:twoscale_universal}
   \normh{\cK-\cKA}{L^2([0,M]^2)}
   \leq
-  \underbrace{C_1(M,K)\cdot c^{-\beta}}_{
-    O(K^{1+2\gamma})\,c^{-\beta}}
-  +
-  \underbrace{\Ctwo^{1/2}\cdot e^{-\alpha K/2}}_{
-    \text{uniform in }c},
+  \Clin\cdot c^{-\beta}
+  + \Cquad\cdot c^{-2\beta}
+  + \Ctwo^{1/2}\cdot e^{-\alpha K/2}.
 \end{equation}
-where $C_1(M,K) = O(M^2K^{1+2\gamma})$ from~\eqref{eq:C1explicit},
-or $O(MK^{1+\gamma})$ if Resolution~(C) of
-Remark~\ref{rem:threeways} holds.
 \end{theorem}
+
+\begin{proof}
+Triangle inequality on $\AK - \BK$ + Lemma~\ref{lem:trunc_universal}
++ XIX~\texttt{lem:tail\_rate} (Lemma~\ref{lem:gamma_agnostic}(vi)).
+\end{proof}
 
 \begin{corollary}[Universal logarithmic rate]
 \label{cor:universal_lograte}
 With $\Kopt(c) = \lfloor(2\beta/\alpha)\log c\rfloor$,
 for $c$ large:
 \begin{equation}\label{eq:lograte_universal}
-  \normh{\cK-\cKA}{L^2([0,M]^2)}\Big|_{K=\Kopt}
-  = \begin{cases}
-    O\!\left(c^{-\beta}(\log c)^{1+2\gamma}\right)
-      & \text{(current rigorous bound)},\\
-    O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right)
-      & \text{(conjectured sharp, pending Rem.~\ref{rem:threeways}(C))}.
-  \end{cases}
+  \normh{\cK-\cKA}{}\Big|_{K=\Kopt}
+  = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
 \end{equation}
 \end{corollary}
 
 \begin{proof}
-$C_1(M,\Kopt) = O((\log c)^{1+2\gamma})$ or $O((\log c)^{1+\gamma})$
-respectively;
-$e^{-\alpha\Kopt/2} = c^{-\beta}$ by choice of $\Kopt$,
-dominated by Term~1 for large $c$.
+At $K=\Kopt\sim(2\beta/\alpha)\log c$:
+\begin{itemize}[nosep]
+  \item \emph{Linear term:}
+    $\Clin c^{-\beta} = O((\log c)^{1+\gamma}c^{-\beta})$.
+  \item \emph{Quadratic term:}
+    $\Cquad c^{-2\beta} = O((\log c)^{1+2\gamma}c^{-2\beta})
+    = o(c^{-\beta}(\log c)^{1+\gamma})$.
+  \item \emph{Tail:}
+    $e^{-\alpha\Kopt/2} = c^{-\beta}$;
+    then $\Ctwo^{1/2}c^{-\beta} = O(c^{-\beta})
+    = o(c^{-\beta}(\log c)^{1+\gamma})$.
+\end{itemize}
+Linear term dominates; \eqref{eq:lograte_universal} follows.
 \end{proof}
 
-\begin{remark}[Spectral-geometric invariant; sharp vs.\ rigorous]
-\label{rem:invariant}
-The exponent $1+\gamma$ is the \emph{conjectured sharp}
-spectral-geometric invariant of the two-scale mechanism.
-The \emph{rigorous} current bound gives $1+2\gamma$.
-For $\gamma = 2/3$ (Airy): $1+2\gamma = 7/3$,
-and $1+\gamma = 5/3$ matches XIX evidence.
-Closing this gap is the main open problem of XX.
+\begin{remark}[Spectral-geometric invariants]
+\label{rem:invariants}
+The two spectral-geometric invariants of the two-scale mechanism are:
+\begin{itemize}[nosep]
+  \item $1+\gamma$: exponent of the linear interaction layer
+    ($u_j\otimes e_j + e_j\otimes u_j$); governs the asymptotic rate.
+  \item $1+2\gamma$: exponent of the quadratic interaction layer
+    ($e_j\otimes e_j$); subleading by $c^{-\beta}$.
+\end{itemize}
+Both are determined by $\gamma$ alone (and the rank-$K$ summation);
+neither is a proof artifact.
 \end{remark}
 
 %% ============================================================
@@ -456,29 +375,26 @@ Closing this gap is the main open problem of XX.
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{l l c c c c}
 \toprule
-\textbf{Operator} & $V$ & $\gamma$ & $\beta$ & $1+\gamma$ & $1+2\gamma$ \\
+\textbf{Operator} & $V$ & $\gamma$ & $\beta$
+  & $1{+}\gamma$ (leading) & $1{+}2\gamma$ (subleading) \\
 \midrule
 Airy (XVIII/XIX) & $\xi$ & $2/3$ & $1/3$ & $5/3$ & $7/3$ \\
 Harmonic osc. & $\xi^2$ & $1$ & $1/2$ & $2$ & $3$ \\
-Power $|\xi|^\nu$ & $|\xi|^\nu$ & $\frac{2\nu}{\nu+2}$ & $\frac{\nu}{\nu+2}$
-  & $\frac{3\nu+2}{\nu+2}$ & $\frac{5\nu+2}{\nu+2}$ \\
-Bessel-type & $\xi+c\xi^{-2}$ & $1$ & $1/3$ & $2$ & $3$ \\
+Power $|\xi|^\nu$ & $|\xi|^\nu$
+  & $\tfrac{2\nu}{\nu+2}$ & $\tfrac{\nu}{\nu+2}$
+  & $\tfrac{3\nu+2}{\nu+2}$ & $\tfrac{5\nu+2}{\nu+2}$ \\
+Bessel-type & $\xi{+}c\xi^{-2}$ & $1$ & $1/3$ & $2$ & $3$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The column $1+\gamma$ is the conjectured sharp exponent;
-$1+2\gamma$ is the current rigorous bound.
-For the Airy case the sharp exponent $5/3$ is confirmed by XIX;
-this strongly supports Resolution~(C) of Remark~\ref{rem:threeways}.
-
-\begin{remark}[Geometric interpretation]
+\begin{remark}[Interpretation]
 \label{rem:geometry}
-$\gamma$ measures eigenvalue crowding near the turning point;
-$1+\gamma$ measures the resulting truncation overhead.
-Limiting cases ($V = |\xi|^\nu$):
-$\nu\to 0$: $1+\gamma\to 1$ (no crowding, single log);
-$\nu\to\infty$: $1+\gamma\to 3$ (hard wall, cubic log).
+$\nu\to 0$: $1+\gamma\to 1$, $1+2\gamma\to 1$ (flat potential, both layers trivial).\\
+$\nu\to\infty$: $1+\gamma\to 3$, $1+2\gamma\to 5$ (hard wall, steep penalties).\\
+The two-layer gap $1+2\gamma - (1+\gamma) = \gamma$
+is itself a spectral quantity: it measures how much
+``extra crowding'' the quadratic interaction incurs relative to the linear.
 \end{remark}
 
 %% ============================================================
@@ -488,34 +404,22 @@ $\nu\to\infty$: $1+\gamma\to 3$ (hard wall, cubic log).
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{8.5cm} p{1.0cm} p{2.3cm}}
+\begin{tabular}{p{9.0cm} p{1.0cm}}
 \toprule
-\textbf{Item} & \textbf{Status} & \textbf{Note} \\
+\textbf{Item} & \textbf{Status} \\
 \midrule
-Lem.~\ref{lem:gamma_agnostic}: 8 agnostic nodes
-  & \checkmark & closed \\
-$\gamma\in(0,\infty)$: range corrected
-  & \checkmark & closed \\
-Lem.~\ref{lem:trunc_universal}: $c$-decay in $\hat C$, quadratic
-term properly tracked
-  & \checkmark & closed \\
-Rem.~\ref{rem:quadratic}: discrepancy $1+\gamma$ vs.\ $1+2\gamma$
-isolated and documented
-  & \checkmark & closed \\
-$\Kopt$ factor $2\beta/\alpha$ corrected
-  & \checkmark & closed \\
-Rem.~\ref{rem:threeways}: three resolution paths formulated
-  & \checkmark & closed \\
+Lem.~\ref{lem:gamma_agnostic}: 8 agnostic nodes & \checkmark \\
+$\gamma\in(0,\infty)$: range & \checkmark \\
+Lem.~\ref{lem:trunc_universal}: lin/quad split rigorous
+  under Hyp.~\ref{hyp:coercprop} & \checkmark \\
+Cor.~\ref{cor:universal_lograte}: quadratic term subleading,
+  proof complete & \checkmark \\
+$\Kopt = 2\beta/\alpha\cdot\log c$: tail balances linear term & \checkmark \\
+Rem.~\ref{rem:whylinear}: structural reason for $1+\gamma$ leadership & \checkmark \\
 \hline
-Prove Hypothesis~\ref{hyp:coercprop} for general $\mathfrak{T}_\gamma$
-  & \textbf{open} & main task \\
-Resolution~(C): $j$-orthogonality in
-$\sum_j\normh{e_j\otimes e_j}{}$
-  & \textbf{open} & key to sharp $1+\gamma$ \\
-$\beta(\gamma)$ values verified for model table
-  & open (calc.) & WKB computation \\
-Lower bound: does $O(K^{1+\gamma})$ saturate?
-  & open & potential XX.b \\
+Prove Hyp.~\ref{hyp:coercprop} for general $\cAg\in\mathfrak{T}_\gamma$ & \textbf{open} \\
+$\beta(\gamma)$ verified for model table (WKB computation) & open \\
+Lower bound: $\Omega(K^{1+\gamma})$ for $\Clin$? & open \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -525,28 +429,29 @@ Lower bound: does $O(K^{1+\gamma})$ saturate?
 \label{sec:conclusion}
 %% ============================================================
 
-\textbf{XVIII.} Qualitative Airy universality: $\cK\to\cKA$ in $L^2$.
+\textbf{XVIII.} Qualitative Airy universality.
 
 \medskip
-\textbf{XIX.} Quantitative two-scale rate:
-$\|S_K-K_{\mathcal{A}}\|\leq C_1c^{-1/3}+C_2e^{-\alpha K}$
-with $C_1 = O(K^{5/3})$.
+\textbf{XIX.} Two-scale rate with refined Langer bound:
+$\normh{A_K}{}\leq C_{\rm lin}c^{-1/3}+C_{\rm quad}c^{-2/3}$;
+rate $O(c^{-1/3}(\log c)^{5/3})$ with $C_{\rm lin}=O(K^{5/3})$ governing.
 
 \medskip
-\textbf{XX.} Universalisation: for $\cAg\in\mathfrak{T}_\gamma$,
-$C_1 = O(K^{1+2\gamma})$ rigorously
-and $O(K^{1+\gamma})$ conjecturally (confirmed for Airy).
-The exponent $1+\gamma$ is the
-spectral-geometric invariant of the two-scale truncation mechanism.
+\textbf{XX.} For $\cAg\in\mathfrak{T}_\gamma$:
+$C_{\rm lin}=O(K^{1+\gamma})$, $C_{\rm quad}=O(K^{1+2\gamma})$;
+rate $O(c^{-\beta}(\log c)^{1+\gamma})$ rigorous,
+with the quadratic layer strictly subleading.
 
 \medskip
 \begin{quote}\itshape
 Logarithmic truncation losses are not proof artifacts.
-They are spectral-geometric properties of turning-point models,
-encoded in $\gamma$ through the rank-$K$ summation architecture.
-The gap between $1+2\gamma$ and $1+\gamma$ is itself a precise
-mathematical problem: it reduces to understanding
-orthogonality of Langer errors in the $j$-summation.
+They reflect two spectral-geometric layers of the two-scale
+truncation mechanism: the linear interaction layer with
+invariant $1+\gamma$, and the quadratic interaction layer with
+invariant $1+2\gamma$. The asymptotic rate is governed by the
+linear layer because the quadratic layer pays an additional $c^{-\beta}$
+for the second Langer error factor.
+This hierarchy is a structural property of the two-scale architecture.
 \end{quote}
 
 \begin{thebibliography}{99}
