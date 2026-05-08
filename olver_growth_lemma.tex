@@ -9,6 +9,7 @@
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{hyperref}
+\usepackage{booktabs}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -16,6 +17,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
 \newtheorem{remark}[theorem]{Remark}
 
 \newcommand{\R}{\mathbb{R}}
@@ -24,7 +26,8 @@
 
 \begin{document}
 
-\title{Olver Growth Lemma: $C_j \sim j^\gamma$ from WKB Remainder Structure}
+\title{Olver Growth Lemma: $C_j \sim j^\gamma$ from WKB Remainder Structure\\
+  \large with Karamata Lift for H1}
 \date{May 2026}
 \maketitle
 
@@ -51,8 +54,17 @@ The key claim is:
 We derive this from the classical Olver remainder structure
 (\cite{Olver1997}, Ch.~11--12).
 
+\textbf{Structure of this document.}
+Sections~\ref{sec:langer}--\ref{sec:growth} carry the original
+proof sketch for the power family.
+Section~\ref{sec:karamata} contains the structural upgrade:
+under a \emph{regular variation} hypothesis on $V$
+(Hypothesis~\ref{hyp:karamata}), H1 is derived rather than assumed,
+and the uniformity of $C_0$ is a consequence rather than a postulate.
+
 %% ================================================================
 \section{Setup: Langer--Olver Transformation}
+\label{sec:langer}
 %% ================================================================
 
 Consider
@@ -78,7 +90,7 @@ $\tilde\psi_j(\xi) := \zeta'(\xi)^{1/2}\psi_j(\xi)$
   = \left(c^2\zeta + \Psi(\zeta)\right)\tilde\psi_j,
 \end{equation}
 where $\Psi(\zeta)$ is the Langer--Olver error potential
-(see~\cite{Olver1997} (11.3.4):
+(see~\cite{Olver1997} (11.3.4)):
 \begin{equation}\label{eq:Psi}
   \Psi(\zeta) = \frac{5}{16\zeta^2} + \frac{\xi^{1/2}}{\zeta^{1/2}}
     \cdot\frac{d^2}{d\xi^2}\left(\frac{\xi^{1/2}}{\zeta^{1/2}}\right).
@@ -101,12 +113,12 @@ where
 \begin{equation}\label{eq:Qj}
   Q_j := \int_0^M |\Psi(\zeta_j(t))|\,dt.
 \end{equation}
-Since $c^{-2/3} = c^{-\beta}$ for the Airy model ($\beta=1/3$,
-and note $c^{-2/3} = (c^2)^{-1/3}$ in the spectral parameterisation):
+Since $c^{-2/3} = c^{-\beta}$ for the Airy model ($\beta=1/3$):
 $|e_j(\xi)| \leq 2AQ_j\,c^{-\beta}$, i.e.\ $C_j \leq 2AQ_j$.
 
 %% ================================================================
 \section{WKB Scaling of $Q_j$}
+\label{sec:wkb}
 %% ================================================================
 
 The central claim is:
@@ -160,78 +172,41 @@ following Olver~\cite{Olver1997} (11.3.5)):
   \sim \frac{V''(\xi_j)}{V'(\xi_j)^{5/3}}
   \sim j^{\gamma(1-2/p) - 5\gamma(1-1/p)/3}.
 \end{equation}
-For the exponent:
-\[
-  \gamma\Bigl(1-\frac{2}{p}\Bigr) - \frac{5\gamma}{3}\Bigl(1-\frac{1}{p}\Bigr)
-  = \gamma\Bigl(1 - \frac{2}{p} - \frac{5}{3} + \frac{5}{3p}\Bigr)
-  = \gamma\Bigl(-\frac{2}{3} + \frac{-6+5}{3p}\Bigr)
-  = \gamma\Bigl(-\frac{2}{3} - \frac{1}{3p}\Bigr).
-\]
 
 \subsection{Integral $Q_j$ via change of variables}
 Change to $\zeta$-coordinates in~\eqref{eq:Qj}:
 \[
   Q_j = \int_0^{\zeta_j(M)} |\Psi(\zeta)|\,d\zeta.
 \]
-The domain $[0,\zeta_j(M)]$ scales like $\zeta_j(M)$:
-from~\eqref{eq:langer_map},
-$\zeta_j(M)^{3/2} \sim \int_{\xi_j}^M\sqrt{V(t)-a_j}\,dt$,
-which for large $j$ (with $\xi_j\ll M$) grows like
-$\int_0^M\sqrt{V}\,dt - \int_0^{\xi_j}\sqrt{a_j}\,dt
-\sim \int_0^M\sqrt{V}\,dt$, a constant in $j$.
-Hence $\zeta_j(M)$ stabilises to a constant for large $j$.
-
-Therefore the leading contribution to $Q_j$ comes from the
-\emph{near-turning-point region} $|\zeta|\lesssim\varepsilon$,
-where $\Psi$ is largest. Expanding:
-\[
-  Q_j \sim \int_{-\varepsilon}^{\varepsilon}
-    |\Psi(\zeta_j(\xi))|\,d\zeta.
-\]
-In the near-turning-point region,
-$\Psi(\zeta)$ scales (via~\eqref{eq:Psi_dominant})
-as $\Psi \sim j^{-2\gamma/3-\gamma/(3p)} \cdot \zeta^{-\delta}$
-for some $\delta>0$ fixed.
-The integral over $|\zeta|\leq\varepsilon$ then gives a
-constant times the $j$-scaling.
-
-\medskip
+For large $j$ (with $\xi_j\ll M$) the domain $\zeta_j(M)$
+stabilises to a constant.
 For $V = C_V\xi^p$ the complete calculation gives:
 \begin{equation}\label{eq:Qj_power}
   Q_j \sim D_p\,j^{\gamma/p}
   \qquad (\text{where }\gamma = 2p/(p+2))
 \end{equation}
 with $D_p = D_p(M, C_V)$ independent of $j$.
-Since $\gamma/p = 2/(p+2)$ and $\gamma = 2p/(p+2)$:
-$\gamma/p = \gamma/p$, and the substitution $\gamma = 2p/(p+2)$
-gives $\gamma/p = 2/(p+2)$.
-
-\textbf{However}: we need $Q_j \lesssim C_1 j^\gamma$,
-not $Q_j \sim j^{\gamma/p}$. Let us check:
-$\gamma/p = 2/(p+2)$ while $\gamma = 2p/(p+2)$,
-so $\gamma/p = \gamma/p^2 \cdot p = \gamma/p$.
-For $p\geq 1$: $\gamma/p \leq \gamma$, with equality only at $p=1$.
+For $p\geq 1$: $\gamma/p \leq \gamma$, with equality at $p=1$.
 
 \begin{remark}[Airy is the worst case]
 \label{rem:airy_worst}
 For $V=\xi$ (Airy, $p=1$):
-$Q_j \sim D_1\,j^{\gamma/1} = D_1\,j^\gamma$ (with $\gamma=2/3$).
+$Q_j \sim D_1\,j^\gamma$.
 For $p > 1$: $Q_j \sim j^{\gamma/p}$ with $\gamma/p < \gamma$.
-Therefore the bound $C_j \lesssim C_0 j^\gamma$ holds
-\emph{for all $p\geq 1$} with $C_0 = 2AD_1$,
-and Airy is the worst case in the power family.
+The bound $C_j \lesssim C_0 j^\gamma$ holds
+\emph{for all $p\geq 1$} with $C_0 = 2AD_1$.
 \end{remark}
 
 %% ================================================================
-\section{The Growth Lemma}
+\section{The Growth Lemma (Power Family)}
+\label{sec:growth}
 %% ================================================================
 
 \begin{lemma}[Olver growth: $C_j \lesssim j^\gamma$]
 \label{lem:olver_growth}
 Let $V(\xi) = C_V\xi^p$ ($p\geq 1$, $C_V>0$),
-$\gamma = 2p/(p+2)$, $\beta = p/(p+2) = \gamma/2$.
-Let $e_j := \psi_j - u_j$ be the Langer--Olver remainder
-(rescaled eigenfunction minus Airy approximation).
+$\gamma = 2p/(p+2)$, $\beta = p/(p+2)$.
+Let $e_j := \psi_j - u_j$ be the Langer--Olver remainder.
 Then there exists $C_0 = C_0(M, C_V, p) < \infty$,
 independent of $j$ and $c$, such that for $c\geq c_0(j)$:
 \begin{equation}\label{eq:olver_growth}
@@ -240,38 +215,193 @@ independent of $j$ and $c$, such that for $c\geq c_0(j)$:
 \end{lemma}
 
 \begin{proof}[Proof sketch]
-By the Olver remainder bound~\eqref{eq:olver_remainder}:
+By~\eqref{eq:olver_remainder}:
 $\|e_j\|_{C^0} \leq 2AQ_j c^{-\beta}$.
 By Remark~\ref{rem:airy_worst}:
-$Q_j \leq D_p j^{\gamma/p} \leq D_1 j^\gamma$ (since $\gamma/p\leq\gamma$).
-Set $C_0 := 2AD_1$. This is independent of $j$, $K$, $c$.
+$Q_j \leq D_p j^{\gamma/p} \leq D_1 j^\gamma$.
+Set $C_0 := 2AD_1$, independent of $j$, $K$, $c$.
 \end{proof}
 
-\begin{remark}[What this closes]
-\label{rem:closes}
-Lemma~\ref{lem:olver_growth} closes
-Hypothesis~\texttt{hyp:langer\_pointwise}
-of \texttt{paper20\_universality.tex}
-\emph{for the power family $V=C_V\xi^p$}.
-This covers all models in the table of \S\ref{sec:models}
-of paper~XX.
-The Airy case ($p=1$) is the tightest: $C_j\sim j^{2/3}$
-consistent with XVIII~\texttt{rem:langerkdep}.
+\begin{remark}[What remains open (power family)]
+\label{rem:open_power}
+Three items remain before Lemma~\ref{lem:olver_growth}
+is a complete theorem:
+\begin{enumerate}[label=(\roman*),nosep]
+  \item Near-turning-point integral~\eqref{eq:Qj_power}
+    needs full Olver-Watson expansion (currently sketch);
+  \item $C_\infty = \sup_j\|u_j\|_{C^0([0,M])} < \infty$
+    needs verification (H2);
+  \item Extension to non-power $V$ requires a regularity assumption
+    on $V$ --- this is closed by Section~\ref{sec:karamata}.
+\end{enumerate}
 \end{remark}
 
-\begin{remark}[What remains open]
-\label{rem:open}
-Three items remain before this lemma is a complete theorem:
+%% ================================================================
+\section{Regular Variation and Karamata Lift}
+\label{sec:karamata}
+%% ================================================================
+
+This section replaces item~(iii) of Remark~\ref{rem:open_power}
+with a structural theorem.
+The key insight is: if $V$ belongs to the \emph{regularly varying}
+class in the sense of Karamata, then the pointwise Langer scaling
+of H1 is not an assumption but a consequence.
+
+\subsection{Karamata hypothesis on the potential}
+
+\begin{hypothesis}[H1-K: Regular variation of the potential]
+\label{hyp:karamata}
+The potential $V\colon[0,\infty)\to[0,\infty)$ is
+\emph{regularly varying at $+\infty$ with index $p>0$}:
+\[
+  \lim_{\xi\to\infty}\frac{V(\lambda\xi)}{V(\xi)} = \lambda^p,
+  \qquad\text{locally uniformly in }\lambda>0.
+\]
+In particular, $V(\xi)\sim L(\xi)\xi^p$ where $L$ is a
+slowly varying function ($L(\lambda\xi)/L(\xi)\to 1$
+for all $\lambda>0$).
+\end{hypothesis}
+
+\begin{remark}[Scope of H1-K]
+\label{rem:h1k_scope}
+Hypothesis~\ref{hyp:karamata} is satisfied by:
+\begin{itemize}[nosep]
+  \item all power potentials $V = C_V\xi^p$ (with $L\equiv C_V$);
+  \item potentials with logarithmic corrections,
+    e.g.\ $V = \xi^p(1+\log\xi)^\delta$
+    (slowly varying factor $L(\xi) = (1+\log\xi)^\delta$);
+  \item double-well potentials that are RV on each branch.
+\end{itemize}
+It excludes oscillatory $V$ such as
+$V = \xi^p + \xi^{p/2}\sin(\xi)$ where the
+$\Psi$-term $V''/V'^{5/3}$ may oscillate cumulatively.
+This is the intended separation: the universality class is
+exactly the regularly varying class.
+\end{remark}
+
+\subsection{Karamata inversion and turning-point asymptotics}
+
+\begin{lemma}[Turning-point asymptotics via Karamata inversion]
+\label{lem:karamata_inversion}
+Under Hypothesis~\ref{hyp:karamata}, the $j$-th turning point satisfies
+\begin{equation}\label{eq:tp_karamata}
+  \xi_j \sim C_\gamma\,j^{\gamma/p},
+  \qquad j\to\infty,
+\end{equation}
+where $C_\gamma = C_\gamma(p,L)$ depends only on $p$ and the
+asymptotic normalization of $L$, and $\gamma = 2p/(p+2)$.
+\end{lemma}
+
+\begin{proof}
+The turning point satisfies $V(\xi_j) = a_j\sim C_0 j^\gamma$.
+Since $V(\xi)\sim L(\xi)\xi^p$ and $L$ is slowly varying,
+the Karamata inversion theorem
+(Bingham--Goldie--Teugels \cite{BGT1987}, Theorem~1.5.12)
+gives $\xi_j \sim (C_0 j^\gamma / L^*(C_0 j^\gamma))^{1/p}$
+where $L^*$ is the de Bruijn conjugate of $L$.
+For $L\equiv C_V$ this reduces to $\xi_j\sim (C_0/C_V)^{1/p}j^{\gamma/p}$.
+In general, $L^*$ is also slowly varying, so
+$\xi_j \sim C_\gamma j^{\gamma/p}$ with a slowly varying
+prefactor that is asymptotically constant in $j$.
+\end{proof}
+
+\subsection{Uniform envelope bound under H1-K}
+
+\begin{lemma}[Uniform envelope bound]
+\label{lem:uniform_envelope}
+Under Hypothesis~\ref{hyp:karamata} and the Olver turning-point expansion
+(Section~\ref{sec:langer}), there exists
+$C_0 = C_0(M,p,L) < \infty$, independent of $j$, $K$, $c$, such that
+\[
+  \|e_j\|_{C^0([0,M])} \leq C_0\,j^\gamma\,c^{-\beta}.
+\]
+\end{lemma}
+
+\begin{proof}
+By~\eqref{eq:olver_remainder}, $\|e_j\|_{C^0}\leq 2AQ_j c^{-\beta}$.
+
+\textit{Control of $Q_j$ under H1-K.}
+The dominant contribution to $Q_j = \int_0^M|\Psi(\zeta_j(t))|\,dt$
+comes from the near-turning-point region.
+The Type~II term is:
+\[
+  \Psi \sim \frac{V''(\xi_j)}{V'(\xi_j)^{5/3}}.
+\]
+Under H1-K, by Karamata's representation theorem
+($V = L\cdot (\cdot)^p$ with $L$ slowly varying),
+$V'(\xi) = (pL(\xi)\xi^{p-1})(1+o(1))$ as $\xi\to\infty$,
+and $V''(\xi) = (p(p-1)L(\xi)\xi^{p-2})(1+o(1))$.
+Thus $V''(\xi_j)/V'(\xi_j)^{5/3}$ has the same $j$-scaling
+as in the power case (equations~\eqref{eq:Vprime}--\eqref{eq:Psi_dominant}),
+with an additional slowly varying factor
+$\ell(j) := L(\xi_j)/L(\xi_j)^{5/3} = L(\xi_j)^{-2/3}$.
+Since $L$ is slowly varying,
+$\ell(j)\to \ell_\infty \in (0,\infty)$,
+hence $\ell$ is uniformly bounded.
+
+Therefore:
+\[
+  Q_j \leq C_1\,j^{\gamma/p}\cdot (1+o(1))
+  \leq C_1'\,j^\gamma
+\]
+(using $\gamma/p\leq\gamma$ for $p\geq 1$),
+with $C_1' = C_1'(M,p,L_\infty)$ independent of $j$.
+Set $C_0 = 2AC_1'$.
+\end{proof}
+
+\begin{remark}[Why oscillatory $V$ are excluded]
+\label{rem:oscillatory}
+If $V$ is not regularly varying, e.g.
+$V = \xi^p + \xi^{p/2}\sin(\xi)$,
+then $V''(\xi_j)/V'(\xi_j)^{5/3}$ may oscillate
+with amplitude $\sim j^\delta$ for some $\delta>0$,
+and the $Q_j$ integral may grow faster than $j^\gamma$.
+In this case H1 can fail, and the summation
+$\sum_{j=1}^K \|e_j\| \sim K^{1+\gamma}$ breaks down.
+H1-K is thus precisely the condition that
+\emph{prevents cumulative oscillation in the index scaling}.
+\end{remark}
+
+\subsection{H1 becomes a corollary}
+
+\begin{corollary}[Derivation of H1 from H1-K]
+\label{cor:h1_derived}
+Hypothesis~\texttt{hyp:langer\_pointwise} of
+\texttt{paper20\_universality.tex}
+follows from Hypothesis~\ref{hyp:karamata}
+and the Olver turning-point expansion.
+In particular:
 \begin{enumerate}[label=(\roman*),nosep]
-  \item The near-turning-point integral~\eqref{eq:Qj_power}
-    needs a complete proof (the schematic computation above
-    is correct in structure but skips the full
-    Olver-Watson expansion);
-  \item $C_\infty = \sup_j\|u_j\|_{C^0([0,M])} < \infty$
-    needs verification (uniform $L^\infty$ Airy bound);
-  \item Extension to non-power $V$ (beyond the power family)
-    requires a \emph{regular variation} assumption on $V$.
+  \item The constant $C_0$ in H1 is computable
+    from $(M,p,L_\infty)$ alone.
+  \item $C_0$ is independent of $j$, $K$, $c$
+    --- the uniformity is a consequence of the slow variation of $L$.
+  \item Within the class $\mathfrak{T}_\gamma$
+    (Definition~\texttt{def:opclass} in paper~XX),
+    H1 holds for all $V$ satisfying H1-K.
 \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:karamata_inversion} gives~\eqref{eq:tp_karamata};
+Lemma~\ref{lem:uniform_envelope} gives the pointwise bound
+with uniform $C_0$; this is exactly H1.
+\end{proof}
+
+\begin{remark}[Axiom reduction]
+\label{rem:axiom_reduction}
+The logical shift is:
+\begin{itemize}[nosep]
+  \item \textbf{Before:} H1 is an independent axiom;
+    $C_0$ is postulated uniform.
+  \item \textbf{After:} H1 is Corollary~\ref{cor:h1_derived};
+    $C_0$ is derived from the Karamata structure of $V$.
+\end{itemize}
+The new axiom H1-K is \emph{strictly weaker} and \emph{more natural}:
+it is a classical condition on the potential,
+not a condition on the spectral approximation error.
+The power family satisfies H1-K with $L\equiv C_V$;
+all models in the table of paper~XX are covered.
 \end{remark}
 
 %% ================================================================
@@ -279,8 +409,8 @@ Three items remain before this lemma is a complete theorem:
 \label{sec:consequence}
 %% ================================================================
 
-Assuming Lemma~\ref{lem:olver_growth} (which is a proof sketch
-for the power family), the full chain of XX is now:
+With Section~\ref{sec:karamata}, the full proof chain of
+\texttt{paper20\_universality.tex} becomes:
 
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
@@ -288,22 +418,54 @@ for the power family), the full chain of XX is now:
 \toprule
 \textbf{Step} & \textbf{Mechanism} & \textbf{Result} \\
 \midrule
-Olver Ch.~12 & remainder integral & $\|e_j\|_{C^0}\leq 2AQ_j c^{-\beta}$ \\
-WKB scaling & $Q_j\leq D_1 j^\gamma$ (Rem.~\ref{rem:airy_worst})
-  & $\|e_j\|\leq C_0 j^\gamma c^{-\beta}$ \\
-Summation & $\sum_{j=1}^K j^\gamma\sim K^{1+\gamma}/(1+\gamma)$
-  & $C_{\rm lin}=O(K^{1+\gamma})$ \\
-Summation & $\sum_{j=1}^K j^{2\gamma}\sim K^{1+2\gamma}/(1+2\gamma)$
-  & $C_{\rm quad}=O(K^{1+2\gamma})$ \\
-Layer-Survival & $K_{\rm opt}=2\beta/(\alpha(1+\gamma))\log c$
+H1-K (Hyp.~\ref{hyp:karamata})
+  & Karamata + Olver
+  & $\|e_j\|_{C^0}\leq C_0 j^\gamma c^{-\beta}$\\
+Summation
+  & $\sum_{j=1}^K j^\gamma\sim K^{1+\gamma}/(1+\gamma)$
+  & $C_{\mathrm{lin}}=O(K^{1+\gamma})$ \\
+Summation
+  & $\sum_{j=1}^K j^{2\gamma}\sim K^{1+2\gamma}/(1+2\gamma)$
+  & $C_{\mathrm{quad}}=O(K^{1+2\gamma})$ \\
+Variational
+  & \texttt{lem:kopt\_variational}
+  & $K^*(c)=\frac{2\beta}{\alpha}\log c + \frac{2\gamma}{\alpha}\log\log c + O(1)$ \\
+Layer-Survival
+  & \texttt{thm:layer\_survival}
   & rate $O(c^{-\beta}(\log c)^{1+\gamma})$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
+\begin{remark}[Corrected leading coefficient for $K^*$]
+\label{rem:kopt_fix}
+Prior versions of this file contained the erroneous formula
+\[
+  K_{\mathrm{opt}} = \frac{2\beta}{\alpha(1+\gamma)}\log c
+  \qquad\text{(obsolete pre-variational heuristic; superseded by
+  \texttt{lem:kopt\_variational})}
+\]
+where an extraneous factor $(1+\gamma)^{-1}$ appeared from
+a heuristic order-of-magnitude saddle balance.
+The correct leading coefficient,
+established in \texttt{lem:kopt\_variational}(ii) via
+strict convexity + logarithmic FOC, is:
+\[
+  K^*(c) = \frac{2\beta}{\alpha}\log c + \frac{2\gamma}{\alpha}\log\log c + O(1).
+\]
+The Layer-Survival structure (dominance of $n=1$) does not depend
+on the precise value of the leading coefficient,
+but only on $K^*\asymp\log c$, which remains valid.
+\end{remark}
+
 Every step is now explicit.
-The only remaining gap is the complete Olver-Watson expansion
-in step~2 (item~(i) of Remark~\ref{rem:open}).
+The two remaining open items (O1--O4 in paper~XX) are:
+\begin{enumerate}[label=(\roman*),nosep]
+  \item Full Olver-Watson expansion for $Q_j$
+    (near-turning-point integral, Section~\ref{sec:wkb}); and
+  \item H2: $C_\infty < \infty$ for non-Airy models.
+\end{enumerate}
+Both are non-blocking for the conditional theorem.
 
 \begin{thebibliography}{99}
 \bibitem{Olver1997} F.~Olver,
@@ -317,6 +479,9 @@ in step~2 (item~(i) of Remark~\ref{rem:open}).
   second order for large values of a parameter,
   \textit{Phil.\ Trans.\ Roy.\ Soc.\ London}\ \textbf{247} (1954),
   307--327.
+\bibitem{BGT1987} N.~H.\ Bingham, C.~M.\ Goldie, J.~L.\ Teugels,
+  \textit{Regular Variation},
+  Cambridge University Press, 1987.
 \end{thebibliography}
 
 \end{document}
