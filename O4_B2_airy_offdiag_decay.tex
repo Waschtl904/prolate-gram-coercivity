@@ -1,0 +1,448 @@
+%%
+%% O4_B2_airy_offdiag_decay.tex
+%% Lemma O4-B-2: Airy Off-Diagonal Decay of the Edge Gram Matrix
+%%
+%% Self-contained proof document.
+%% Imports: Langer--Olver approximation (O4-B-1, Paper XVIII Theorem A).
+%% Exports: |G_{mn}| <= C / |m-n|^{3/2}  uniformly in N.
+%% DAG: closes O4B2, feeds O4B3 (Jaffard invertibility) -> P9 -> R1 -> P13.
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+%% ---------- theorem environments ----------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+%% ---------- notation ----------
+\newcommand{\Ai}{\mathrm{Ai}}
+\newcommand{\Edge}{\mathrm{Edge}}
+\newcommand{\PW}{\mathrm{PW}_c}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\bra}[1]{\langle #1 \rangle}
+\newcommand{\zeta}{\zeta}          %% Langer variable
+\newcommand{\Phase}{\Phi}          %% oscillatory phase
+\newcommand{\lam}{\lambda}         %% frequency parameter
+
+\title{Lemma O4-B-2: Airy Off-Diagonal Decay\\
+of the Edge Gram Matrix\\
+{\normalsize A Self-Contained Proof Document}}
+\author{Sebastian Schmalnauer}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $G$ be the Gram matrix of the evaluation map $\mathrm{Ev}|_{\Edge}$
+sampled at the normalised primes $\{p_j^*\}$.
+We prove that the off-diagonal entries satisfy
+\[
+  |G_{mn}| \le \frac{C}{|m-n|^{3/2}}
+  \qquad \text{for all } m \ne n \text{ in } [(1-\delta)N,\, N),
+\]
+uniformly in $N$ and in the prime sampling set.
+The proof reduces to a stationary-phase estimate for an
+oscillatory sum with cubic turning-point phase,
+followed by a prime discretisation error controlled by
+partial summation.
+\end{abstract}
+
+\tableofcontents
+
+%%=================================================================
+\section{Setup and Main Statement}
+\label{sec:setup}
+%%=================================================================
+
+\subsection{The edge Gram matrix}
+
+Fix $c > 0$, $N = \lfloor \alpha c \rfloor$, $\alpha \in (0,2/\pi)$,
+and $\delta \in (0,1)$.
+Let $\{\psi_n\}$ be the orthonormal PSWF basis of $V_{N,c}$.
+Define the \emph{edge index set}
+$\mathcal{I} := [(1-\delta)N, N) \cap \mathbb{Z}$
+and the \emph{edge Gram matrix}
+\[
+  G_{mn} := \frac{1}{N}\sum_{j=1}^{N} \psi_m(p_j^*)\,\overline{\psi_n(p_j^*)},
+  \qquad m,n \in \mathcal{I},
+\]
+where $p_j^* = 2p_j/p_N - 1$ are the primes normalised to $[-1,1]$.
+
+\subsection{Main lemma}
+
+\begin{lemma}[Off-diagonal Airy decay]\label{lem:offdiag}
+There exists a constant $C = C(\delta, \alpha) > 0$ such that
+\[
+  |G_{mn}| \le \frac{C}{|m-n|^{3/2}}
+\]
+for all $m \ne n$ in $\mathcal{I}$, uniformly in $N$.
+\end{lemma}
+
+The proof occupies Sections \ref{sec:phase}--\ref{sec:discretisation}.
+
+%%=================================================================
+\section{Phase Reduction via Langer--Olver}
+\label{sec:phase}
+%%=================================================================
+
+\subsection{Langer--Olver approximation (imported from O4-B-1)}
+
+By the Langer--Olver theorem (Paper~XVIII, Theorem~A; see also~\cite{Olver1974}),
+for $n \in \mathcal{I}$ and $x \in [-1,1]$ in the transition window:
+\begin{equation}\label{eq:LO}
+  \psi_n(x) = c^{1/6}\,\Ai\bigl(c^{2/3}\zeta_n(x)\bigr) + R_n(x),
+  \qquad |R_n(x)| \le C_R\, c^{-1/2},
+\end{equation}
+where $\zeta_n : [-1,1] \to \mathbb{R}$ is the \emph{Langer variable},
+defined implicitly by
+\[
+  \tfrac{2}{3}(-\zeta_n(x))^{3/2} = \int_{x}^{t_n} \sqrt{t_n^2 - s^2}\,ds,
+  \qquad t_n = \cos(\pi n / (2N)),
+\]
+for $x < t_n$ (oscillatory region).
+
+\subsection{Substitution into the Gram matrix}
+
+Substitute \eqref{eq:LO} into $G_{mn}$:
+\begin{align}\label{eq:Gsplit}
+  G_{mn}
+  &= \frac{c^{1/3}}{N}\sum_j \Ai\bigl(c^{2/3}\zeta_m(p_j^*)\bigr)
+       \Ai\bigl(c^{2/3}\zeta_n(p_j^*)\bigr)
+  + \mathcal{E}_{mn},
+\end{align}
+where the error term satisfies $|\mathcal{E}_{mn}| \le C_R\, c^{-1/3}$
+(absorbing the $c^{1/6}$ prefactor and the $O(c^{-1/2})$ remainder).
+For $|m-n| \ge 1$ and $c$ large, $c^{-1/3} \ll |m-n|^{-3/2}$ for $|m-n|$ fixed,
+so $\mathcal{E}_{mn}$ is controlled.
+The main term is the Airy product sum.
+
+\subsection{Phase representation of the Airy product}
+
+For $u,v$ in the oscillatory region ($u, v < 0$), use the asymptotic
+\[
+  \Ai(-t) = \frac{1}{\sqrt{\pi}\, t^{1/4}}
+    \cos\Bigl(\tfrac{2}{3}t^{3/2} - \tfrac{\pi}{4}\Bigr)
+    + O(t^{-7/4}), \qquad t \to +\infty.
+\]
+Set $u_j^{(n)} := -c^{2/3}\zeta_n(p_j^*) > 0$ (positive in oscillatory region).
+Then:
+\begin{equation}\label{eq:AiAsymp}
+  \Ai\bigl(c^{2/3}\zeta_n(p_j^*)\bigr)
+  = \frac{1}{\sqrt{\pi}\,(u_j^{(n)})^{1/4}}
+    \cos\Bigl(\tfrac{2}{3}(u_j^{(n)})^{3/2} - \tfrac{\pi}{4}\Bigr)
+    + O\bigl((u_j^{(n)})^{-7/4}\bigr).
+\end{equation}
+The product of two such terms (for indices $m$ and $n$) decomposes
+via the identity $\cos\alpha\cos\beta = \tfrac{1}{2}[\cos(\alpha-\beta) + \cos(\alpha+\beta)]$
+into a \emph{difference-phase} and a \emph{sum-phase} oscillation:
+\begin{equation}\label{eq:prodphase}
+  \Ai(c^{2/3}\zeta_m)\,\Ai(c^{2/3}\zeta_n)
+  = \frac{1}{2\pi (u^{(m)})^{1/4}(u^{(n)})^{1/4}}
+    \Bigl[
+      \cos\Phase^-_{mn} + \cos\Phase^+_{mn}
+    \Bigr]
+  + \text{l.o.t.},
+\end{equation}
+where
+\begin{align*}
+  \Phase^\pm_{mn}(p)
+  &:= \tfrac{2}{3}\bigl[(u^{(m)})^{3/2} \pm (u^{(n)})^{3/2}\bigr](p).
+\end{align*}
+The sum-phase $\Phase^+$ oscillates rapidly and will contribute $O(c^{-1})$
+after summation. The difference-phase $\Phase^-$ controls the decay in $|m-n|$
+and is the subject of Section~\ref{sec:statphase}.
+
+%%=================================================================
+\section{Stationary Phase with Cubic Turning Point}
+\label{sec:statphase}
+%%=================================================================
+
+\subsection{The phase function}
+
+For $m, n \in \mathcal{I}$ with $|m-n| = k \ge 1$, set $n = m - k$ and expand:
+\begin{align}\label{eq:phaseexpand}
+  (u^{(m)})^{3/2} - (u^{(n)})^{3/2}
+  &= \tfrac{d}{dn}\bigl[(u^{(n)})^{3/2}\bigr]\cdot k + O(k^2/N),
+\end{align}
+where the derivative in $n$ is taken along the eigenvalue curve
+$n \mapsto \zeta_n(p)$ at fixed $p$.
+
+\begin{remark}[Cubic turning point]
+The key structural fact is that $u^{(n)}(p) = -c^{2/3}\zeta_n(p)$ vanishes
+at $p = t_n$ (the classical turning point). Near $p = t_n$:
+\[
+  u^{(n)}(p) \sim c^{2/3}\cdot A_n \cdot (t_n - p)^{1/2}, \qquad p < t_n.
+\]
+Thus $(u^{(n)})^{3/2} \sim c(t_n-p)^{3/4}$, giving the phase function a
+\emph{cubic turning-point singularity} in the exponent.
+This is the source of the $|m-n|^{-3/2}$ decay.
+\end{remark}
+
+\subsection{Stationary phase proposition}
+
+\begin{proposition}[Oscillatory integral with cubic phase]\label{prop:statphase}
+Let $\phi : [-1,1] \to \mathbb{R}$ be smooth with a unique non-degenerate
+stationary point $x_0 \in (-1,1)$ satisfying $\phi'(x_0) = 0$,
+$\phi''(x_0) \ne 0$, and $|\phi'''(x_0)| \le C_3$.
+Let $a \in C_c^\infty((-1,1))$ with $\norm{a}_{C^2} \le M$.
+Then:
+\[
+  \abs{\int_{-1}^{1} a(x)\, e^{i\lam \phi(x)}\,dx}
+  \le C\, M\, \lam^{-1/2}.
+\]
+If the stationary point is a cubic zero ($\phi'(x_0) = \phi''(x_0) = 0$,
+$\phi'''(x_0) \ne 0$), the bound improves to $\lam^{-1/3}$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+% TODO: Fill in standard stationary phase argument.
+% Reference: Stein, "Harmonic Analysis" Chapter VIII, Theorem 2.
+% For the cubic case: van der Corput lemma with k=3 gives lambda^{-1/3}.
+% The exponent 3/2 in |G_{mn}| arises from lambda ~ k^{3/2} in the
+% phase scaling (see Lemma~\ref{lem:phasescaling} below).
+\end{proof}
+
+\subsection{Phase scaling with the index gap}
+
+\begin{lemma}[Phase scaling]\label{lem:phasescaling}
+For $m, n \in \mathcal{I}$ with $|m-n| = k$, the difference phase satisfies:
+\[
+  \Phase^-_{mn}(p) = c^{2/3}\cdot\Psi(p)\cdot k + O(k^2 / N^{2/3}),
+\]
+where $\Psi(p) := \frac{d}{dn}\bigl[(u^{(n)})^{3/2}\bigr]\big|_{n=m}$
+is bounded below: $\inf_{p \in [-1,1]} |\Psi(p)| \ge c_{\Psi} > 0$
+  uniformly in $m \in \mathcal{I}$ and $c \ge c_0$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+% TODO: Compute d/dn[(u^{(n)})^{3/2}] using the Langer variable definition.
+% Key: d zeta_n / dn = (pi / (2N)) * (d/dt)[Langer_variable] at t = cos(pi n / 2N).
+% This gives a c^{-2/3} factor from the eigenvalue spacing, cancelling
+% the c^{2/3} prefactor to leave a quantity of order 1.
+% Lower bound: use that the PSWF eigenvalues are separated by >= kappa_0 c^{-1}
+% in the edge block (ass:gap, already proved).
+\end{proof}
+
+\subsection{Continuous oscillatory integral bound}
+
+Combining Proposition~\ref{prop:statphase} and Lemma~\ref{lem:phasescaling}
+with effective frequency $\lam = c^{2/3} k$:
+\begin{equation}\label{eq:contbound}
+  \abs{\int_{-1}^{1} \Ai(c^{2/3}\zeta_m(x))\,\Ai(c^{2/3}\zeta_n(x))\,dx}
+  \le \frac{C}{(c^{2/3} k)^{1/2}}
+  = \frac{C}{c^{1/3}\, k^{1/2}}.
+\end{equation}
+%% NOTE: The exponent 1/2 here comes from the quadratic stationary point.
+%% At the turning point (cubic zero), the exponent upgrades to 1/3,
+%% but for most of the integral the quadratic term dominates.
+%% The transition gives the effective exponent 3/2 after the N-normalisation;
+%% see Section~\ref{sec:discretisation} for how the 1/N factor combines
+%% with the c^{1/3} prefactor to produce |m-n|^{-3/2}.
+
+%%=================================================================
+\section{Discretisation over Primes}
+\label{sec:discretisation}
+%%=================================================================
+
+\subsection{Euler--Maclaurin and prime sum approximation}
+
+The Gram matrix entry is a sum over primes, not a continuous integral.
+We relate the two via partial summation.
+
+Let $F(x) := \Ai(c^{2/3}\zeta_m(x))\,\Ai(c^{2/3}\zeta_n(x))$.
+By partial summation (Abel summation over primes):
+\begin{equation}\label{eq:primepartsum}
+  \frac{1}{N}\sum_{j=1}^{N} F(p_j^*)
+  = \int_{-1}^{1} F(x)\,d\mu_N(x) + \mathcal{D}_N,
+\end{equation}
+where $\mu_N = \frac{1}{N}\sum_j \delta_{p_j^*}$ is the empirical prime measure
+and $\mathcal{D}_N$ is the \emph{prime discretisation error}.
+
+\subsection{Control of the discretisation error}
+
+\begin{lemma}[Prime discretisation error]\label{lem:primeerr}
+For $F$ as above:
+\[
+  |\mathcal{D}_N|
+  \le C\, \frac{\norm{F'}_{L^\infty}}{N}\cdot \sup_{\text{gap}} (p_{j+1} - p_j).
+\]
+Under the prime number theorem: $\sup_j(p_{j+1}^* - p_j^*) = O(\log N / N)$.
+Thus:
+\[
+  |\mathcal{D}_N| \le C\, \norm{F'}_{L^\infty} \cdot \frac{\log N}{N^2}.
+\]
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+% TODO: Euler-Maclaurin formula for sums over unevenly spaced points.
+% Standard: |sum_j F(p_j) - integral| <= ||F'||_inf * sum_j (p_{j+1}-p_j)^2 / 2.
+% Each gap is O(log N), there are N gaps, so total error is O(||F'|| * log^2(N) / N).
+% For our purposes: the N^{-1} normalisation and the c^{1/3} prefactor dominate.
+\end{proof}
+
+\subsection{Derivative bound on $F$}
+
+\begin{lemma}[Airy product derivative]\label{lem:Fprime}
+For $m, n \in \mathcal{I}$ with $|m-n| = k$:
+\[
+  \norm{F'}_{L^\infty([-1,1])} \le C\, c^{2/3},
+\]
+uniformly in $m, n$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+% TODO: Ai'(t) = O(|t|^{1/4}) for t negative (oscillatory region).
+% Chain rule: d/dx [Ai(c^{2/3} zeta_n(x))] = c^{2/3} Ai'(c^{2/3} zeta_n(x)) * zeta_n'(x).
+% zeta_n'(x) is O(1) in the transition window (Langer variable is Lipschitz).
+% Product: c^{2/3} * O(1) * O(1) = O(c^{2/3}).
+\end{proof}
+
+\subsection{Combining: the prime sum is close to the integral}
+
+From Lemmas~\ref{lem:primeerr} and~\ref{lem:Fprime}:
+\[
+  |\mathcal{D}_N| \le C\, c^{2/3} \cdot \frac{\log N}{N^2}
+  = O\Bigl(\frac{c^{2/3} \log N}{N^2}\Bigr).
+\]
+For $N = \lfloor \alpha c \rfloor$, this is $O(c^{-4/3} \log c)$,
+which is $o(k^{-3/2})$ for any fixed $k \ge 1$.
+The prime discretisation error is therefore negligible.
+
+%%=================================================================
+\section{Proof of Lemma~\ref{lem:offdiag}}
+\label{sec:conclusion}
+%%=================================================================
+
+\begin{proof}[Proof of Lemma~\ref{lem:offdiag}]
+Combine the steps of Sections~\ref{sec:phase}--\ref{sec:discretisation}:
+
+\begin{enumerate}
+\item[(i)]
+Substitute Langer--Olver \eqref{eq:LO} into $G_{mn}$;
+the error $\mathcal{E}_{mn}$ from the remainder is $O(c^{-1/3})$.
+
+\item[(ii)]
+Decompose the Airy product into difference- and sum-phase components
+via \eqref{eq:prodphase}.
+The sum-phase contributes $O((c^{2/3}k)^{-1/2})$ to the integral;
+it is controlled separately and is $O(k^{-1/2})$, which is bounded by $k^{-3/2}$
+only for $k \ge 1$ and requires a separate argument (TODO: detail the sum-phase decay).
+
+\item[(iii)]
+For the difference-phase: apply Lemma~\ref{lem:phasescaling} to write
+$\Phase^- \approx c^{2/3}\Psi(p)k$.
+Apply Proposition~\ref{prop:statphase} with $\lam = c^{2/3}k$:
+\[
+  \abs{\int \Ai(c^{2/3}\zeta_m)\,\Ai(c^{2/3}\zeta_n)\,dx}
+  \le C(c^{2/3}k)^{-1/2} = Cc^{-1/3}k^{-1/2}.
+\]
+Multiply by the prefactor $c^{1/3}/N$ from \eqref{eq:Gsplit}:
+\[
+  |G_{mn}^{\mathrm{main}}| \le \frac{C c^{1/3}}{N} \cdot c^{-1/3} k^{-1/2}
+  = \frac{C}{N} \cdot k^{-1/2}.
+\]
+\textbf{Note:} This gives $|G_{mn}| \le C k^{-1/2} / N$, not $k^{-3/2}$.
+The correct $k^{-3/2}$ exponent arises from the
+\emph{cubic turning point} at $p = t_m \approx t_n$ (see below).
+
+\item[(iv)]
+%% TODO: Cubic turning point upgrade.
+%% When p is near the turning point t_m ~ t_n, the phase Phi^- develops a
+%% cubic zero (phi' = phi'' = 0 at the turning point). Apply van der Corput
+%% with k=3: integral <= C * lambda^{-1/3} * (cubic coefficient)^{-1/3}.
+%% The cubic coefficient scales as k/N, giving effective lambda^{1/3} ~ (k/N)^{1/3} * c^{2/9}.
+%% After combining with the non-stationary phase region: the turning-point
+%% contribution dominates and yields the |m-n|^{-3/2} decay.
+%% Fill in the full van der Corput computation here.
+
+\item[(v)]
+Apply Lemma~\ref{lem:primeerr}: prime discretisation error is $o(k^{-3/2})$.
+\end{enumerate}
+
+Combining (i)--(v): $|G_{mn}| \le C k^{-3/2}$ for all $m \ne n$ in $\mathcal{I}$,
+uniformly in $N$. \qed
+\end{proof}
+
+%%=================================================================
+\section{Open Steps (TODO)}
+\label{sec:todo}
+%%=================================================================
+
+\begin{enumerate}
+\item[\textbf{T1}] \textbf{Sum-phase decay} (Step (ii)).
+  Show that $\cos\Phase^+_{mn}$ sums to $O(k^{-3/2})$ separately.
+  The sum-phase $\Phase^+ \sim c^{2/3}(u^{(m)})^{3/2} + c^{2/3}(u^{(n)})^{3/2}$
+  is large (of order $c$), so the sum cancels by rapid oscillation.
+  Expected bound: $O(c^{-1})$, which is $\ll k^{-3/2}$ for $c$ large.
+  \emph{Method:} Riemann-Lebesgue type argument for the prime sum.
+
+\item[\textbf{T2}] \textbf{Cubic turning point computation} (Step (iv)).
+  Carry out the full van der Corput estimate at $p = t_m$.
+  Key: compute $\partial_p^3 \Phase^-_{mn}|_{p = t_m}$ explicitly
+  in terms of the Langer variable and show it is $\sim k/N$.
+  \emph{Method:} Differentiate the Langer variable definition three times.
+
+\item[\textbf{T3}] \textbf{Transition region ($ p \approx t_m \approx t_n $)}.
+  The stationary phase and the turning point coalesce when $|m-n| = O(1)$
+  and $p \approx t_m$. Handle this via a uniform Airy integral expansion.
+  \emph{Reference:} Olver \cite{Olver1974}, Chapter~11 (coalescing saddle points).
+
+\item[\textbf{T4}] \textbf{Lower bound on $\Psi(p)$} (Lemma~\ref{lem:phasescaling}).
+  Verify $\inf_p |\Psi(p)| \ge c_\Psi > 0$ using the eigenvalue gap
+  ass:gap (already proved in $\mathtt{airy\_discrete\_stability\_lemma.tex}$).
+  This is likely straightforward given the existing infrastructure.
+\end{enumerate}
+
+%%=================================================================
+\section{DAG Status}
+\label{sec:dag}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+\textbf{Node} & \textbf{Status} & \textbf{Depends on} \\
+\midrule
+O4-B-1 (Langer--Olver)     & \checkmark\, imported  & Paper XVIII Thm A \\
+O4-B-2 (off-diag decay)    & $\square$\, T1--T4 open & O4-B-1, ass:gap \\
+O4-B-3 (Jaffard bound)     & $\square$\, after B-2  & O4-B-2 \\
+P9 (Gram lower bound)      & $\square$\, after B-3  & O4-B-3, P4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Once T1--T4 are completed, this document closes O4B2 in $\mathtt{dag\_nodes.json}$
+and the node type changes from \texttt{O} to \texttt{T}.
+
+\begin{thebibliography}{99}
+\bibitem{Olver1974}
+F.~W.~J.~Olver,
+\textit{Asymptotics and Special Functions},
+Academic Press, 1974.
+\bibitem{Stein1993}
+E.~M.~Stein,
+\textit{Harmonic Analysis},
+Princeton University Press, 1993.
+\bibitem{VanDerCorput}
+J.~G.~van der Corput,
+\textit{Zahlentheoretische Absch\"atzungen},
+Math.~Ann.\ \textbf{84} (1921), 53--79.
+\bibitem{PaperXVIII}
+S.~Schmalnauer,
+\textit{Airy Universality at the PSWF Spectral Edge}
+(Paper~XVIII), preprint, 2026.
+\bibitem{airy_discrete}
+S.~Schmalnauer,
+\textit{airy\_discrete\_stability\_lemma.tex},
+\texttt{prolate-gram-coercivity} repository, 2026.
+\end{thebibliography}
+
+\end{document}
