@@ -416,25 +416,24 @@ Multiply by $c$-admissible prefactors from H1--H2;
 closure by Lemma~\ref{lem:cadm_closure}.
 \end{proof}
 
-\begin{remark}[EM remainder: global growth invariant]
+\begin{remark}[EM remainder: uniform structural property]
 \label{rem:EM_growth}
-All Euler--Maclaurin remainders in this paper have the form
-$R_\sigma(K)=O(K^{\sigma-1})$ with $c$-admissible implied constant
-$C_\sigma=\frac{|B_2|}{12}\sigma(\sigma-1)$.
-In particular:
+The following is a uniform structural property of all
+Euler--Maclaurin remainders used in this paper
+(not an abstract invariance claim):
 \begin{itemize}[nosep]
-  \item every EM remainder is polynomial in $K$
-    with exponent strictly less than the leading term's exponent
-    ($\sigma-1 < \sigma < 1+\sigma$);
-  \item the implied constant is independent of $K$ and $c$
-    (function of $\sigma$ only);
-  \item no $K$-dependent growth amplification enters the
-    constant hierarchy; the variable $K$ appears only as the
-    explicit power in the bound, never inside any constant.
+  \item every EM remainder satisfies $|R_\sigma(K)|\leq C_\sigma K^{\sigma-1}$
+    with exponent $\sigma-1$ strictly less than the leading-term
+    exponent $1+\sigma$;
+  \item the implied constant $C_\sigma=\frac{|B_2|}{12}\sigma(\sigma-1)$
+    is independent of $K$ and $c$ (function of $\sigma$ only);
+  \item $K$ appears only as the explicit power in the bound,
+    never inside any constant; no $K$-dependent growth
+    amplification enters the $c$-admissible constant chain.
 \end{itemize}
-This is a global invariant of the EM expansion used throughout;
-it prevents hidden $K$-dependence from leaking into
-the $c$-admissible constant chain.
+This property holds uniformly across all EM steps in this paper
+and prevents hidden $K$-dependence from leaking into
+the constant hierarchy.
 \end{remark}
 
 %% ============================================================
@@ -524,7 +523,7 @@ all constants $c$-admissible):
 \end{equation}
 
 \emph{Slowly-varying stability
-($\gamma$-uniformity on compact sets).}
+($\gamma$-uniformity: authoritative statement).}
 Let $h(c):=K^*(c)/(\tfrac{2\beta}{\alpha}\log c)\to 1$
 with $|h(c)-1|=O(\log\log c/\log c)$.
 By MVT, the $O$-constant in
@@ -533,10 +532,12 @@ By MVT, the $O$-constant in
 \end{equation}
 is bounded by $(1+\gamma)2^\gamma$,
 finite on every compact $[\gamma_0,\gamma_1]\subset(0,\infty)$.
-(This is the authoritative $\gamma$-uniformity statement;
-all references to compact-$\gamma$ uniformity in this paper
-refer to this bound.)
-No uniformity as $\gamma\to\infty$ is claimed anywhere.
+This is the unique authoritative $\gamma$-uniformity statement
+in this paper; all other references to compact-$\gamma$ uniformity
+refer here.
+Uniformity fails for large $\gamma$ via exponential growth
+of the constant $(1+\gamma)2^\gamma\to\infty$;
+no claim of any kind is made for $\gamma\to\infty$.
 Hence
 \begin{equation}\label{eq:Kstar_power}
   (K^*(c))^{1+\gamma}
@@ -569,7 +570,7 @@ $F(K_{\rm int})-F(K^*)\prec c^{-\beta}(\log c)^{1+\gamma}$.
 \begin{theorem}[Layer-Survival]
 \label{thm:layer_survival}
 For $n\geq 1$, H1, all $K\geq K_0$, $c\geq c_0$:
-$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$
+$\normh{A_K^{(n)}}{}\ \leq C_n K^{1+n\gamma}c^{-n\beta}$
 ($C_n$ $c$-admissible, Lemma~\ref{lem:cadm_closure}).
 Diagonal by Proposition~\ref{prop:substitution_stability}:
 \[
@@ -672,8 +673,8 @@ Closure inventory:
 \begin{itemize}[nosep,leftmargin=1.5em]
   \item $c$-admissible chain, four sources, no hidden dependence
     (Remark~\ref{rem:cadmissible});
-  \item EM remainder: global growth invariant, $K$ only as
-    explicit power, never inside constants
+  \item EM remainder: uniform structural property across all EM steps,
+    $K$ only as explicit power, never inside constants
     (Remark~\ref{rem:EM_growth});
   \item $\BK$ and $C_2(\alpha)$: $c$-free by operator definition
     (Remark~\ref{rem:BK_definition});
@@ -687,7 +688,8 @@ Closure inventory:
     (Proposition~\ref{prop:substitution_stability});
   \item $\gamma$-uniformity: single authoritative bound
     $(1+\gamma)2^\gamma$ on compact sets;
-    no claim for $\gamma\to\infty$
+    constant degenerates as $(1+\gamma)2^\gamma\to\infty$
+    for $\gamma\to\infty$; no claim beyond compact sets
     (Lemma~\ref{lem:diagonal_sub});
   \item $\lambda(c)$: self-consistency certificate only
     (Lemma~\ref{lem:kopt_variational}(ii'));
