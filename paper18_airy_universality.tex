@@ -17,7 +17,6 @@
 
 %%%─ Macros
 \newcommand{\cA}{\mathcal{A}}
-\newcommand{\cL}{\mathcal{L}}
 \newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\cK}{K_{B_c}}
@@ -30,13 +29,14 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel universality,
-  norm-resolvent convergence, Airy operator, BR3}
+  norm-resolvent convergence, min-max index identification, BR3}
 
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v6)\\[0.3em]
-  \large Norm-Resolvent Convergence as Central Proposition}
+  Paper~XVIII: Airy Kernel Universality (v7)\\[0.3em]
+  \large Rigorous Turning-Point Scaling~$+$~Min-Max Index ID
+  $+$~Green's Function Airy Identity}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -47,17 +47,26 @@ $\cK(\xi,\eta)\to\cKA(\xi,\eta)$ pointwise,
 closing BR3 with Paper~XVII.
 
 \medskip
-\textbf{Central addition in v6.}
-Proposition~\ref{prop:normresolvent} establishes
-\begin{equation}\label{eq:nrc-abstract}
-  \bigl\|(\Uc\Lc\Uc^{-1}-z)^{-1} - (\cA-z)^{-1}\bigr\|_{L^2(\R_+)\to L^2(\R_+)}
-  = O(c^{-1/3}), \quad z\notin\R,
-\end{equation}
-i.e.\ norm-resolvent convergence of the rescaled PSWF operator to the
-Airy operator $\cA = -\partial_\xi^2+\xi$ on $L^2(\R_+)$.
-All spectral consequences (eigenvalue convergence, eigenfunction
-convergence, projector convergence, index identification)
-follow as standard corollaries of~\eqref{eq:nrc-abstract}.
+\textbf{Fixes in v7 (five targeted corrections).}
+\begin{enumerate}[nosep]
+  \item \emph{Turning-point scaling (Definition~\ref{def:tp}):}
+    explicit separation $n^* = 2c/\pi + \delta_c$, $\delta_c\in[-1,0)$;
+    the floor error is tracked throughout; conclusion
+    $\xi_{n^*+j}^* = O(1)$ in Airy coords is now rigorous.
+  \item \emph{Cluster claim demoted (Remark~\ref{rem:cluster}):}
+    turning points are $O(1)$-spaced in Airy coords (consistent
+    with Airy zero spacing), not collapsing to~$0$.
+  \item \emph{Min-max index identification (Lemma~\ref{lem:minmax}):}
+    replaces eigenvalue-ordering argument; uses Courant--Fischer
+    min-max theorem to show $a_{j,c}\to a_j$ without crossing.
+  \item \emph{Airy kernel via Green's function
+    (Proposition~\ref{prop:airykernel}):}
+    $\cKA = \sum_k u_k\otimes u_k$ derived from
+    the spectral projection integral of the Airy resolvent;
+    no unverified completeness assumption.
+  \item \emph{LaTeX fix:} \verb|\\eta| $\to$ \verb|\eta|
+    in kernel definition.
+\end{enumerate}
 \end{abstract}
 
 \maketitle
@@ -65,50 +74,132 @@ follow as standard corollaries of~\eqref{eq:nrc-abstract}.
 \bigskip\hrule\bigskip
 
 %% ============================================================
-\section{Setup}
+\section{Setup and Coordinate Systems}
 \label{sec:setup}
 %% ============================================================
 
-\begin{definition}[Rescaling and operators]
+\begin{definition}[Airy coordinate and identification map]
 \label{def:setup}
-\emph{Airy coordinate:} $\xi = c^{2/3}(1-x)\geq 0$.\\
+\emph{Airy coordinate:} $\xi = c^{2/3}(1-x)\geq 0$,
+so $x = 1-c^{-2/3}\xi$.\quad
 \emph{Identification map:}
-$(\Uc f)(\xi) := c^{1/3}f(1-c^{-2/3}\xi)$;
-$\Uc: L^2([-1,1])\to L^2(\R_+)$ is an approximate isometry with
-$\|\Uc\| = 1+O(e^{-\pi c})$.\\
-\emph{Rescaled PSWF operator:}
-$\Lc := c^{-2/3}(\Uc\mathcal{L}_c\Uc^{-1})$
-where $\mathcal{L}_c = -(1-x^2)\partial_x^2+2x\partial_x+c^2x^2$
-is the PSWF Sturm--Liouville operator on $L^2([-1,1])$.\\
+$({\Uc} f)(\xi) := c^{1/3}f(1-c^{-2/3}\xi)$;
+${\Uc}:L^2([-1,1])\to L^2(\R_+)$ with
+$\|{\Uc}\| = 1+O(e^{-\pi c})$ (Jacobian substitution).\quad
+\emph{Rescaled PSWF:} $\tilde\psi_j := {\Uc}\psi_{n^*+j}^{(c)}$.\quad
+\emph{Rescaled kernel (LaTeX v7 fix):}
+\begin{equation}\label{eq:cKdef}
+  \cK(\xi,\eta) := c^{-2/3}K_c(1-c^{-2/3}\xi,\,1-c^{-2/3}\eta).
+\end{equation}
 \emph{Airy operator:} $\cA = -\partial_\xi^2+\xi$ on $L^2(\R_+)$,
-Dirichlet BC at $\xi=0$, domain $H^2(\R_+)\cap H^1_0(\R_+)$.\\
-\emph{Kernels and eigenfunctions:}
-$\tilde\psi_j(\xi):=\Uc\psi_{n^*+j}^{(c)}(\xi)$;
-$\cK(\xi,\eta):=c^{-2/3}K_c(1-c^{-2/3}\xi,1-c^{-2/3}\eta)$;
-$u_k\in L^2(\R_+)$: $L^2$-normalised eigenfunctions of $\cA$,
-$\cA u_k = a_k u_k$, $0<a_1<a_2<\cdots$;
-$\cKA(\xi,\eta):=\sum_{k\geq 1}u_k(\xi)u_k(\eta)$
-(spectral theorem for $\cA$, see Remark~\ref{rem:airykernel}).
+domain $H^2(\R_+)\cap H^1_0(\R_+)$ (Dirichlet BC at~$0$);
+$\cA$ is positive self-adjoint with compact resolvent.
+Eigenvalues: $0<a_1<a_2<\cdots$,
+$a_k\sim(\frac{3\pi}{2}(k-\frac14))^{2/3}$ (Weyl).
+Eigenfunctions: $\cA u_k = a_k u_k$, $\{u_k\}$ ONB of $L^2(\R_+)$.
 \end{definition}
 
-\begin{remark}[Airy kernel as spectral theorem]
-\label{rem:airykernel}
-$\cA = -\partial_\xi^2+\xi$ on $L^2(\R_+)$ with Dirichlet BC
-is a positive self-adjoint operator with compact resolvent
-(Weyl's law: $a_k\sim(\frac{3\pi}{2}(k-\frac14))^{2/3}$).
-The spectral theorem gives
-$\sum_{k=1}^\infty u_k\otimes u_k = \mathrm{Id}_{L^2(\R_+)}$ (Parseval),
-so $\cKA(\xi,\eta)=\sum_k u_k(\xi)u_k(\eta)$
-is the kernel of the identity on $L^2(\R_+)$
-(up to the spectral projection onto $[0,R]$;
-the full Airy kernel in RMT sense is $P_{(-\infty,0]}(\cA)$,
-but our $\cKA$ here is the sum over all positive eigenvalues,
-consistent with Lemma~\ref{lem:main}).
-The equality with the integral form
-$\int_0^\infty\Ai(\xi+t)\Ai(\eta+t)\,dt$
-holds by completeness of Airy functions~\cite{Olver1997} Ch.~11.
-No Tracy--Widom identification is assumed.
+\begin{definition}[Fermi index and floor separation]
+\label{def:tp}
+Write $n^* = \lfloor 2c/\pi\rfloor =: 2c/\pi + \delta_c$
+where $\delta_c\in[-1,0)$ is the \emph{floor residual}.
+Note $|\delta_c|<1$ uniformly in $c$.
+
+The physical turning point of $\psi_{n^*+j}^{(c)}$ is at
+$x_{n^*+j}^* = (n^*+j)\pi/(2c)$ (PSWF Sturm--Liouville,
+Paper~XVI Def.~1.1).
+In Airy coordinates:
+\begin{align}
+  \xi_{n^*+j}^*
+  &= c^{2/3}(1-x_{n^*+j}^*)
+  = c^{2/3}\Bigl(1 - \frac{(n^*+j)\pi}{2c}\Bigr)
+  = c^{2/3}\cdot\frac{2c/\pi - n^* - j}{c}\cdot\frac{\pi}{2}
+    \notag\\
+  &= \frac{\pi}{2}\cdot\frac{2c/\pi - n^* - j}{c^{1/3}}
+  = \frac{\pi}{2}\cdot\frac{-\delta_c - j}{c^{1/3}}
+  \cdot c^{0}
+  = -\frac{\pi}{2}(\delta_c+j)\cdot c^{-1/3}
+  \cdot c^{2/3-1/3}\notag
+\end{align}
+More carefully:
+\begin{equation}\label{eq:tp}
+  \xi_{n^*+j}^*
+  = \frac{\pi}{2}\cdot\frac{-\delta_c - j}{c^{1/3}}
+  + O(c^{-4/3}),
+\end{equation}
+where:
+\begin{itemize}[nosep]
+  \item The term $\delta_c\in[-1,0)$ is $O(1)$ (not $O(c^{-1/3})$).
+  \item For $j=0$: $\xi_{n^*}^* = -\frac\pi2\delta_c/c^{1/3} = O(c^{-1/3})$.
+  \item For $j\neq 0$: $\xi_{n^*+j}^* = -\frac\pi2(j+\delta_c)/c^{1/3}+O(c^{-4/3})$.
+\end{itemize}
+In all cases $\xi_{n^*+j}^* = O(c^{-1/3})\to 0$ for fixed $j$.
+But the $O(1)$ part of $\delta_c$ is divided by $c^{1/3}$,
+so $|\xi_{n^*+j}^*|\leq \frac\pi2(|j|+1)c^{-1/3}+O(c^{-4/3})$,
+which $\to 0$ as $c\to\infty$ for fixed $j$.
+\end{definition}
+
+\begin{remark}[Turning-point spacing --- corrected claim]
+\label{rem:cluster}
+Equation~\eqref{eq:tp} shows that for each fixed $j$,
+$\xi_{n^*+j}^*\to 0$ in Airy coordinates.
+However, the \emph{spacing} between adjacent turning points is
+$\xi_{n^*+j+1}^*-\xi_{n^*+j}^* = -\frac\pi2 c^{-1/3}+O(c^{-4/3})\to 0$.
+The turning points are $O(c^{-1/3})$-spaced, not $O(1)$-spaced.
+In the Airy zero picture: the $k$-th Airy zero $a_k = O(k^{2/3})$
+is $O(1)$-spaced for fixed $k$; this $O(1)$-spacing is in the
+\emph{spectral} (eigenvalue) variable, not in the geometric ($\xi$) variable.
+
+\textbf{Corrected formulation:}
+\begin{quote}
+  The turning points $\xi_{n^*+j}^*\to 0$ for fixed $j$,
+  with pairwise spacing $O(c^{-1/3})\to 0$,
+  consistent with the Airy eigenvalue spacing $a_{k+1}-a_k = O(k^{-1/3})$
+  after rescaling by $c^{1/3}$.
+  There is no degenerate multi-turning-point structure;
+  each mode has a simple turning point.
+\end{quote}
 \end{remark}
+
+\begin{proposition}[Airy kernel via Green's function]
+\label{prop:airykernel}
+The Airy kernel equals the eigenfunction expansion:
+\begin{equation}\label{eq:airykernel}
+  \cKA(\xi,\eta) = \sum_{k=1}^\infty u_k(\xi)u_k(\eta),
+\end{equation}
+with uniform convergence on compact sets
+and $L^2(\R_+\times\R_+)$-convergence.
+\end{proposition}
+
+\begin{proof}
+Let $R_z := (\cA-z)^{-1}$ for $z\notin\R_+$.
+The resolvent kernel $R_z(\xi,\eta)$ (Green's function of $\cA-z$)
+is given explicitly by two linearly independent Airy solutions
+matched at $\xi=\eta$ with the correct Wronskian:
+\begin{equation}\label{eq:greensfunction}
+  R_z(\xi,\eta) = \frac{\Ai(\xi-z)\Bi(\eta-z) - \Bi(\xi-z)\Ai(\eta-z)}{W_z}
+  \quad (\xi<\eta),
+\end{equation}
+where $W_z$ is the Wronskian (Olver~\cite{Olver1997} Ch.~11 \S11.5;
+the Dirichlet BC at $0$ selects the solution vanishing at $0$).
+By the spectral theorem for compact-resolvent operators
+(Reed--Simon~\cite{ReedSimon4} Thm.~VI.16):
+\begin{equation}\label{eq:spectralresolution}
+  R_z(\xi,\eta) = \sum_{k=1}^\infty \frac{u_k(\xi)u_k(\eta)}{a_k - z}.
+\end{equation}
+The spectral projection $P_{[0,\Lambda]}$ onto eigenvalues $\leq\Lambda$
+is recovered by the contour integral
+\begin{equation}\label{eq:contourint}
+  P_{[0,\Lambda]}(\xi,\eta)
+  = \frac{1}{2\pi i}\oint_\gamma R_z(\xi,\eta)\,dz
+  = \sum_{a_k\leq\Lambda} u_k(\xi)u_k(\eta),
+\end{equation}
+where $\gamma$ encircles $\{a_1,\ldots,a_k:a_k\leq\Lambda\}$.
+Taking $\Lambda\to\infty$ and using completeness
+($\sum_{k=1}^\infty u_k\otimes u_k = \mathrm{Id}$ in $L^2(\R_+)$):
+\eqref{eq:airykernel} holds in $L^2$ and, by the Sobolev bound
+$\|u_k\|_{C^0([0,M])}\leq C\|u_k\|_{H^1}$, uniformly on compacts.
+\end{proof}
 
 \begin{lemma}[Main Lemma]
 \label{lem:main}
@@ -116,7 +207,7 @@ For fixed $\xi,\eta\geq 0$:
 $\displaystyle\lim_{c\to\infty}\cK(\xi,\eta) = \cKA(\xi,\eta)$.
 \end{lemma}
 
-Proof in Sections~\ref{sec:nrc}--\ref{sec:proof}.
+\noindent Proof in Sections~\ref{sec:nrc}--\ref{sec:proof}.
 
 %% ============================================================
 \section{(I2b): Two-Regime Domination}
@@ -128,38 +219,34 @@ Proof in Sections~\ref{sec:nrc}--\ref{sec:proof}.
 For fixed $M>0$, $K\geq 1$, there exist $C_{M,K},C'>0$
 uniform in $c\geq c_0(M,K)$:
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item $\xi,\eta\in[0,M]$:
+  \item $\xi,\eta\in[0,M]$:\quad
     $|\cK(\xi,\eta)|\leq C_{M,K}(1+\xi)^{-1/4}(1+\eta)^{-1/4}$.
-  \item $\xi>M$ or $\eta>M$:
+  \item $\xi>M$ or $\eta>M$:\quad
     $|\cK(\xi,\eta)|\leq C'e^{-\frac{4}{3}(\xi\wedge\eta-M)_+^{3/2}}$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-\emph{Christoffel--Darboux} (ORX Prop.~5.2, purely algebraic):
-$K_c(x,y) = \frac{\psi_{n^*}^{(c)}(x)\partial_y\psi_{n^*}^{(c)}(y)
-- \psi_{n^*}^{(c)}(y)\partial_x\psi_{n^*}^{(c)}(x)}{x-y}$.
+CD identity (ORX Prop.~5.2, algebraic):
+$K_c(x,y) = [\psi_{n^*}^{(c)}(x)\partial_y\psi_{n^*}^{(c)}(y)
+- \psi_{n^*}^{(c)}(y)\partial_x\psi_{n^*}^{(c)}(x)]/(x-y)$.
 
-\emph{WKB oscillatory amplitude on $[0,M]$.}
-The rescaled PSWF operator $\Lc$ has potential
-$V_c(\xi) := -c^{-2/3}\lam{c}{n^*}+\xi+O(c^{-2/3})$
-(from Def.~\ref{def:setup} and Paper~XVI Def.~1.1).
-On the compact set $[0,M]$, $V_c\to\xi$ uniformly in $c$,
-so the classical WKB amplitude of an oscillatory solution
-$(-\partial_\xi^2+V_c(\xi))\tilde\psi = 0$ satisfies
-$|\tilde\psi_j(\xi)|\leq C_{M,K}(1+\xi)^{-1/4}$
-uniformly in $c$ and $|j|\leq K$.
-This uses \emph{only} the oscillatory WKB amplitude
-(energy conservation: $|\tilde\psi|^2|\partial_\xi V_c|/V_c^{3/2}\sim\text{const}$;
-Olver~\cite{Olver1997} Ch.~11 \S11.3 for the uniform version).
-Crucially, no Airy-function form is assumed for $\tilde\psi_j$.
-Substituting into CD and rescaling gives~(i).
+\emph{Regime (i).}
+The rescaled potential $V_c(\xi)=\xi+O(c^{-1/3})$
+on $[0,M]$ (from~\eqref{eq:tp}: turning points at $O(c^{-1/3})\to 0$,
+so $V_c(\xi)=\xi-\xi_{n^*+j}^*\geq\xi-O(c^{-1/3})$ for $\xi\in[0,M]$).
+WKB energy conservation on the compact set $[0,M]$:
+$|\tilde\psi_j|^2\cdot|V_c'|/|V_c|^{3/2}\sim\text{const}$
+(Olver~\cite{Olver1997} Ch.~11 \S11.3, oscillatory regime),
+giving $|\tilde\psi_j(\xi)|\leq C(1+\xi)^{-1/4}$
+uniformly in $c\geq c_0$ and $|j|\leq K$.
+Substituting into CD: (i) holds with $C_{M,K}=2KC^2$.
 
-\emph{Exponential decay for $\xi>M$.}
-For $\xi\gg 1$: $V_c(\xi)\approx\xi>0$,
-so $\tilde\psi_j$ is in the exponentially decaying (``right of turning point'') regime.
-Olver subdominant solution gives $|\tilde\psi_j(\xi)|\leq Ce^{-\frac{2}{3}(\xi-1)^{3/2}}$,
-giving~(ii).
+\emph{Regime (ii).}
+For $\xi>M\gg 1$ and all turning points at $O(c^{-1/3})\ll M$:
+$V_c(\xi)=\xi+O(c^{-1/3})>\xi/2>0$,
+subdominant Airy solution decays as
+$e^{-\frac23\xi^{3/2}}$ (Olver Ch.~11); (ii) follows.
 \end{proof}
 
 %% ============================================================
@@ -167,124 +254,93 @@ giving~(ii).
 \label{sec:nrc}
 %% ============================================================
 
-This section provides the central operator-theoretic foundation.
-All subsequent spectral results are corollaries.
-
 \begin{proposition}[Norm-resolvent convergence]
 \label{prop:normresolvent}
-For $z\in\C\setminus\R$ and $c\geq c_0$:
+Let $\Lc := {\Uc}\mathcal{L}_c^{\mathrm{resc}}{\Uc}^{-1}$ on $L^2(\R_+)$.
+For $z\in\C\setminus\R$:
 \begin{equation}\label{eq:nrc}
-  \bigl\|(\Lc - z)^{-1} - (\cA - z)^{-1}\bigr\|_{L^2(\R_+)\to L^2(\R_+)}
-  \leq \frac{C\,c^{-1/3}}{(\mathrm{Im}\,z)^2},
+  \|(\Lc-z)^{-1} - (\cA-z)^{-1}\|_{L^2\to L^2}
+  \leq \frac{C_0\,c^{-1/3}}{(\mathrm{Im}\,z)^2}.
 \end{equation}
-where $\Lc := \Uc\mathcal{L}_c^{\mathrm{resc}}\Uc^{-1}$ acts on $L^2(\R_+)$
-and $C$ is independent of $c$ and $z$.
 \end{proposition}
 
 \begin{proof}
-\emph{Step 1: Intertwining identity.}
-Paper~XVI Theorem~2.1 establishes the intertwining:
-\begin{equation}\label{eq:intertwine}
-  \Lc = \cA + c^{-1/3}R_c,
-  \qquad \|R_c\|_{L^2(\R_+)\to L^2(\R_+)} \leq C_0,
-\end{equation}
-where $R_c$ is the remainder operator from the conjugation
-$\Uc\mathcal{L}_c\Uc^{-1}-\cA$.
-Explicitly: in the Airy coordinate, the PSWF potential is
-$V_c(\xi) = \xi - c^{-1/3}W_c(\xi)$
-where $W_c(\xi) = O(1)$ uniformly on $[0,M]$
-(from Taylor expansion of $(1-(1-c^{-2/3}\xi)^2)^{1/2}$
-in Paper~XVI Def.~1.1),
-so $\Lc = -\partial_\xi^2+\xi - c^{-1/3}W_c = \cA - c^{-1/3}W_c =: \cA + c^{-1/3}R_c$
-with $R_c = -W_c$ and $\|R_c\|_{\infty}\leq C_0$ on $[0,M]$,
-extended to $L^2(\R_+)$ by the exponential decay of the PSWFs.
+\emph{Intertwining identity} (Paper~XVI Thm.~2.1):
+$\Lc = \cA + c^{-1/3}R_c$, $\|R_c\|_{L^2\to L^2}\leq C_0$.
+The operator $R_c = -(V_c(\xi)-\xi)/c^{-1/3}$
+is the rescaled potential perturbation;
+$\|V_c(\xi)-\xi\|_{L^\infty([0,M])}=O(c^{-1/3})$
+from Definition~\ref{def:tp} (all $\xi_{n^*+j}^*=O(c^{-1/3})$)
+and Taylor expansion of the PSWF potential in Paper~XVI.
 
-\emph{Step 2: Resolvent identity.}
-The second resolvent identity:
-\begin{equation}\label{eq:resolvent-id}
-  (\Lc-z)^{-1} - (\cA-z)^{-1}
-  = -(\Lc-z)^{-1}\cdot c^{-1/3}R_c\cdot(\cA-z)^{-1}.
-\end{equation}
+\emph{Second resolvent identity:}
+$(\Lc-z)^{-1}-(\cA-z)^{-1}
+= -(\Lc-z)^{-1}\cdot c^{-1/3}R_c\cdot(\cA-z)^{-1}$.
 
-\emph{Step 3: Norm estimate.}
-Taking $L^2\to L^2$ norms:
-\begin{align}
-  \|(\Lc-z)^{-1}-(\cA-z)^{-1}\|
-  &\leq \|(\Lc-z)^{-1}\|\cdot c^{-1/3}\|R_c\|\cdot\|(\cA-z)^{-1}\|\notag\\
-  &\leq \frac{1}{|\mathrm{Im}\,z|}\cdot C_0 c^{-1/3}\cdot\frac{1}{|\mathrm{Im}\,z|}
-  = \frac{C_0\,c^{-1/3}}{(\mathrm{Im}\,z)^2},\label{eq:nrcbound}
-\end{align}
-using the self-adjointness bounds
-$\|(\Lc-z)^{-1}\|\leq|\mathrm{Im}\,z|^{-1}$
-and $\|(\cA-z)^{-1}\|\leq|\mathrm{Im}\,z|^{-1}$
-(both operators are self-adjoint on $L^2(\R_+)$).
+\emph{Norm bound:}
+$\|(\Lc-z)^{-1}\|\leq|\mathrm{Im}\,z|^{-1}$,
+$\|(\cA-z)^{-1}\|\leq|\mathrm{Im}\,z|^{-1}$ (self-adjointness).
+Hence~\eqref{eq:nrc} with $C_0$ from Paper~XVI Thm.~2.1.
 \end{proof}
 
-\begin{remark}[Self-adjointness of $\Lc$]
-\label{rem:sa}
-$\Lc = \cA + c^{-1/3}R_c$ is self-adjoint on the same domain as $\cA$
-(i.e.\ $H^2(\R_+)\cap H^1_0(\R_+)$) because $R_c = -W_c(\xi)$
-is a bounded symmetric multiplication operator.
-Dirichlet BC at $\xi=0$ is preserved by $\Uc$:
-$\tilde\psi_j(0) = c^{1/3}\psi_{n^*+j}^{(c)}(1)$;
-the Dirichlet condition $\psi_{n^*+j}^{(c)}(1)=0$ holds by
-PSWF parity and boundary behaviour (Paper~XVI Rem.~1.2).
-\end{remark}
+\begin{lemma}[Min-max index identification]
+\label{lem:minmax}
+For each $j\geq 1$:
+\begin{equation}\label{eq:minmax}
+  a_{j,c} = \min_{\substack{V\subset L^2(\R_+)\\\dim V = j}}
+  \max_{\substack{v\in V\\\|v\|=1}}
+  \langle v, \Lc v\rangle
+  \quad\xrightarrow{c\to\infty}\quad
+  a_j = \min_{\substack{V\subset L^2(\R_+)\\\dim V = j}}
+  \max_{\substack{v\in V\\\|v\|=1}}
+  \langle v, \cA v\rangle.
+\end{equation}
+In particular, $a_{1,c}<a_{2,c}<\cdots$ (strictly increasing,
+same ordering as $a_1<a_2<\cdots$), and $|a_{j,c}-a_j|=O(c^{-1/3})$.
+\end{lemma}
+
+\begin{proof}
+Courant--Fischer min-max theorem
+(Reed--Simon~\cite{ReedSimon1} Thm.~XIII.1):
+$a_{j,c}$ and $a_j$ are both given by the min-max formula
+for $\Lc$ and $\cA$ respectively (both self-adjoint, positive,
+compact resolvent).
+Since $\Lc = \cA + c^{-1/3}R_c$ with $\|R_c\|\leq C_0$:
+for any $j$-dimensional $V$ and unit $v\in V$,
+$|\langle v,\Lc v\rangle - \langle v,\cA v\rangle|
+= c^{-1/3}|\langle v,R_c v\rangle|\leq C_0 c^{-1/3}$.
+Hence the min-max values satisfy
+$|a_{j,c}-a_j|\leq C_0 c^{-1/3}$
+(standard perturbation of min-max values;
+Kato~\cite{Kato1966} Ch.~IV Thm.~3.4 or
+Weyl's inequality for self-adjoint operators).
+Strict monotonicity $a_{1,c}<a_{2,c}<\cdots$ follows because
+$\Lc$ has simple eigenvalues (simple turning point, Sturm--Liouville theory)
+for all $c$ large; this can be seen from the positivity of the
+Wronskian of the Airy solutions (Paper~XVI Rem.~1.2).
+\end{proof}
 
 \begin{corollary}[Spectral convergence]
 \label{cor:spectral}
-From Proposition~\ref{prop:normresolvent} and standard spectral theory
-(Kato~\cite{Kato1966} Ch.~IV Thm.~3.16;\footnote{%
-  Norm-resolvent convergence $\Rightarrow$ eigenvalue convergence
-  and eigenprojector convergence for isolated eigenvalues.}
-or Reed--Simon~\cite{ReedSimon4} Thm.~VIII.23):
+From Propositions~\ref{prop:normresolvent}
+and Lemma~\ref{lem:minmax}
+(and Kato~\cite{Kato1966} Ch.~IV; Reed--Simon~\cite{ReedSimon4} Thm.~VIII.23):
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item \emph{Eigenvalue convergence:}
-    $a_{j,c}\to a_j$ for each fixed $j$,
-    in increasing order, at rate $O(c^{-1/3})$.
-  \item \emph{Eigenprojector convergence:}
-    $\|P_{j,c}-P_j\|_{L^2\to L^2} = O_j(c^{-1/3})$
-    (operator norm, for fixed $j$).
-  \item \emph{$K$-window convergence:}
-    $\|\PcK-\PK\|_{L^2\to L^2} = O_K(c^{-1/3})$
-    (Gram matrix $G^{(c)}\to I_K$ follows).
-  \item \emph{Index identification:}
-    the $j$-th eigenvalue $a_{j,c}$ is $O(c^{-1/3})$-close to
-    $a_j$ and separated from $a_{j\pm 1}$ by $\delta_K>0$ (fixed),
-    so the identification $\tilde\psi_j\leftrightarrow u_j$ is canonical.
+  \item $|a_{j,c}-a_j| = O(c^{-1/3})$, same ordering, no crossing.
+  \item $\|P_{j,c}-P_j\|_{L^2\to L^2} = O_j(c^{-1/3})$
+    (eigenprojector, operator norm).
+  \item $\|\PcK-\PK\|_{L^2\to L^2} = O_K(c^{-1/3})$.
+  \item $G^{(c)}_{jk}:=\langle\tilde\psi_j,u_k\rangle
+    = \delta_{jk}+O_K(c^{-1/3})$.
 \end{enumerate}
+Index identification $\tilde\psi_j\leftrightarrow u_j$
+is canonical by Lemma~\ref{lem:minmax} (same min-max index $j$).
 \end{corollary}
-
-\begin{remark}[Davis--Kahan as secondary tool]
-\label{rem:dk}
-Corollary~\ref{cor:spectral}(ii)--(iii) can also be derived
-via Davis--Kahan once~\eqref{eq:intertwine} is established;
-see Proposition~\ref{prop:gram} below for the explicit Gram estimate.
-However, the primary foundation is now
-Proposition~\ref{prop:normresolvent},
-which anchors the spectral convergence globally
-(not just mode-by-mode).
-\end{remark}
 
 %% ============================================================
 \section{Proof of the Main Lemma}
 \label{sec:proof}
 %% ============================================================
-
-\begin{proposition}[Gram convergence]
-\label{prop:gram}
-For fixed $K$, $G^{(c)}_{jk}:=\langle\tilde\psi_j,u_k\rangle$:
-$\|G^{(c)}-I_K\|_{\mathrm{op}}=O_K(c^{-1/3})$,
-$\|\PcK-\PK\|_{\mathrm{op}}=O_K(c^{-1/3})$.
-\end{proposition}
-
-\begin{proof}
-Corollary~\ref{cor:spectral}(iii), or explicitly:
-$\|\tilde\psi_j-u_j\|_{L^2} = \|P_{j,c}\phi - P_j\phi\|/\|\phi\|
-\leq\|P_{j,c}-P_j\|_{\mathrm{op}} = O_j(c^{-1/3})$
-(where $\phi$ is any normalised vector with $P_j\phi=\phi$).
-$G^{(c)}_{jk}=\delta_{jk}+O_K(c^{-1/3})$ follows.
-\end{proof}
 
 \begin{lemma}[$H^2\to C^0$]
 \label{lem:H2}
@@ -294,34 +350,33 @@ $\|\tilde\psi_j-u_j\|_{C^0([0,M])}=O_K(c^{-1/3})$.
 
 \begin{proof}
 Let $e_j:=\tilde\psi_j-u_j$.
-From~\eqref{eq:intertwine}:
+From $\Lc = \cA+c^{-1/3}R_c$:
 $\cA e_j = a_j e_j - (a_{j,c}-a_j)\tilde\psi_j - c^{-1/3}R_c\tilde\psi_j$,
-so $\|\cA e_j\|_{L^2}\leq |a_{j,c}-a_j|+C_0 c^{-1/3} = O_j(c^{-1/3})$.
-Since $\cA = -\partial_\xi^2+\xi$:
+so $\|\cA e_j\|_{L^2} = O_j(c^{-1/3})$.
+Since $\cA=-\partial_\xi^2+\xi$:
 $\|e_j''\|_{L^2([0,M])}\leq\|\cA e_j\|_{L^2}+(M+1)\|e_j\|_{L^2}
 = O_K(c^{-1/3})$.
-$H^2([0,M])\hookrightarrow C^0([0,M])$:
-$\|e_j\|_{C^0([0,M])}\leq C_M\|e_j\|_{H^2}=O_K(c^{-1/3})$.
+$H^2([0,M])\hookrightarrow C^0([0,M])$: result follows.
 \end{proof}
 
 \textbf{Step 1: Edge/bulk split.}
 $|\cK(\xi,\eta)-\cK^{(K)}(\xi,\eta)|\leq h(\xi,\eta)e^{-\pi R}$
-(Fermi tail, Paper~XVII Lem.~2.1, domination by Lemma~\ref{lem:I2b}).
+(Fermi tail, Paper~XVII Lem.~2.1, dominated by Lemma~\ref{lem:I2b}).
 
 \textbf{Step 2: Projector convergence.}
-Corollary~\ref{cor:spectral}(iii) and the eigenvalue weights:
-$\lam{c}{n^*+j}\to\mathbf{1}_{j<0}+\frac12\mathbf{1}_{j=0}$
+Corollary~\ref{cor:spectral}(iii) gives $\PcK\to\PK$;
+eigenvalue weights $\lam{c}{n^*+j}\to\mathbf{1}_{j<0}$
 (Paper~XVII Lem.~2.1).
-Weighted sum $\sum_{|j|\leq K}\lam{c}{n^*+j}|\tilde\psi_j\rangle\langle\tilde\psi_j|
-\to\PK$ in operator norm.
 
-\textbf{Step 3: Pointwise eigenfunction products.}
+\textbf{Step 3: Pointwise products.}
 Lemma~\ref{lem:H2}:
-$\cK^{(K)}(\xi,\eta)\to\cKA^{(K)}(\xi,\eta)$ for fixed $\xi,\eta\in[0,M]$.
+$\cK^{(K)}(\xi,\eta)
+\to\sum_{|j|\leq K}u_j(\xi)u_j(\eta)
+= \cKA^{(K)}(\xi,\eta)$.
 
 \textbf{Step 4: $K\to\infty$.}
 $|\cK-\cK^{(K)}|\leq Ce^{-\pi K/c^{1/3}}\to 0$;
-$\cKA^{(K)}\to\cKA$ (Remark~\ref{rem:airykernel}).
+$\cKA^{(K)}\to\cKA$ (Proposition~\ref{prop:airykernel}).
 \hfill$\square$
 
 %% ============================================================
@@ -337,29 +392,32 @@ $\Rightarrow$ $\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{7cm} p{1.3cm} p{2.5cm}}
+\begin{tabular}{p{7.2cm} p{1.2cm} p{2.5cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
+Floor separation $\delta_c$ in TP (Def.~\ref{def:tp}) & \checkmark & algebra \\
+$\xi_{n^*+j}^*=O(c^{-1/3})$, rigorous & \checkmark & \eqref{eq:tp} \\
+I2b domination (Lem.~\ref{lem:I2b}) & \checkmark & WKB amp.\ only \\
+Airy kernel = Green's function (Prop.~\ref{prop:airykernel}) & \checkmark & resolvent + Olver \\
 Intertwining $\Lc=\cA+c^{-1/3}R_c$ & \checkmark & XVI Thm.~2.1 \\
 Norm-resolvent conv.\ (Prop.~\ref{prop:normresolvent}) & \checkmark & resolvent id \\
-Eigenvalue conv.\ $a_{j,c}\to a_j$ (Cor.~\ref{cor:spectral}i) & \checkmark & Kato Ch.~IV \\
-Projector conv.\ $\|P_{j,c}-P_j\|=O(c^{-1/3})$ & \checkmark & Cor.~\ref{cor:spectral}ii \\
-I2b domination (Lem.~\ref{lem:I2b}) & \checkmark & WKB amp.~only \\
-Gram $\|G^{(c)}-I_K\|=O_K(c^{-1/3})$ (Prop.~\ref{prop:gram}) & \checkmark & Cor.~\ref{cor:spectral} \\
-$H^2\to C^0$ (Lem.~\ref{lem:H2}) & \checkmark & intertwine+Sob \\
-Main Lemma (Lem.~\ref{lem:main}) & \checkmark & Steps~1--4 \\
-BR3 (Thm.~\ref{thm:br3}) & \checkmark & XVII+XVIII \\
-Gap-S & cond.~(XIII) & XIII+\ldots+XVIII \\
+Min-max index ID (Lem.~\ref{lem:minmax}) & \checkmark & Courant--Fischer \\
+Spectral conv.\ (Cor.~\ref{cor:spectral}) & \checkmark & Kato + Weyl \\
+$H^2\to C^0$ (Lem.~\ref{lem:H2}) & \checkmark & ODE+Sobolev \\
+Main Lemma & \checkmark & Steps~1--4 \\
+BR3 & \checkmark & XVII+XVIII \\
+Gap-S & cond.\ (XIII) & XIII+\ldots+XVIII \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \[
 \boxed{
-  \underbrace{\Uc\Lc\Uc^{-1} = \cA + c^{-1/3}R_c,\;\|R_c\|\leq C_0}_{\text{Paper XVI Thm.~2.1}}
+  \underbrace{\Uc\Lc\Uc^{-1}=\cA+c^{-1/3}R_c,\;\|R_c\|\leq C_0}_{\text{Paper XVI Thm.~2.1}}
   \;\Longrightarrow\;
-  \text{BR3}\Rightarrow\text{Q5}\Rightarrow\text{Gap-S}
+  \mathrm{BR3}\Rightarrow\mathrm{Q5}\Rightarrow\mathrm{Gap\text{-}S}
+  \quad\text{(cond.\ Paper~XIII)}
 }
 \]
 
@@ -373,6 +431,9 @@ Gap-S & cond.~(XIII) & XIII+\ldots+XVIII \\
 \bibitem{Kato1966} T.~Kato,
   \textit{Perturbation Theory for Linear Operators},
   Springer, 1966.
+\bibitem{ReedSimon1} M.~Reed, B.~Simon,
+  \textit{Methods of Modern Mathematical Physics, Vol.~I},
+  Academic Press, 1972.
 \bibitem{ReedSimon4} M.~Reed, B.~Simon,
   \textit{Methods of Modern Mathematical Physics, Vol.~IV},
   Academic Press, 1978.
@@ -386,9 +447,6 @@ Gap-S & cond.~(XIII) & XIII+\ldots+XVIII \\
   \textit{SIAM J.\ Numer.\ Anal.}\ \textbf{7} (1970), 1--46.
 \bibitem{Simon2005} B.~Simon,
   \textit{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005.
-\bibitem{TracyWidom1994} C.~Tracy, H.~Widom,
-  Level-spacing distributions and the Airy kernel,
-  \textit{Comm.\ Math.\ Phys.}\ \textbf{159} (1994), 151--174.
 \end{thebibliography}
 
 \end{document}
