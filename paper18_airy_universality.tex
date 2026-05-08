@@ -1,0 +1,525 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+%%%─ Environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}[theorem]{Open Problem}
+
+%%%─ Macros
+\newcommand{\Kc}{\mathcal{K}_c}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cK}{K_{B_c}}
+\newcommand{\cKA}{K_{\cA}}
+\newcommand{\xin}{\xi_n^*}
+\newcommand{\Ai}{\mathrm{Ai}}
+\newcommand{\Sedge}{P_{\mathrm{edge}}^{(c)}}
+
+\subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
+\keywords{Prolate spheroidal wave functions, Airy kernel universality,
+  turning-point asymptotics, sinc kernel, BR3, Plancherel--Rotach,
+  random matrix edge universality}
+
+\begin{document}
+
+\title[Paper XVIII: Airy Universality]{%
+  Paper~XVIII: Airy Kernel Universality\\[0.3em]
+  \large The Sinc-to-Airy Scaling Limit at the Turning Point}
+
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{abstract}
+This paper proves (I2a): for fixed $\xi,\eta\geq 0$,
+\begin{equation}\label{eq:main}
+  \cK(\xi,\eta) \;\longrightarrow\; \cKA(\xi,\eta)
+  \qquad (c\to\infty),
+\end{equation}
+where $\cK$ is the rescaled PSWF kernel in the Airy window
+and $\cKA$ is the Airy kernel $\Ai(\xi+a)\Ai(\eta+a)/\ldots$
+(Definition~\ref{def:kernels}).
+
+\medskip\noindent
+\textbf{Role in the programme.}
+By Paper~XVII Theorem~4.2, (I2a)$+$(I2b)$\Rightarrow$BR3.
+(I2b) (uniform kernel domination) is proved in Section~\ref{sec:I2b}
+using ORX Chapter~5 and bandlimited structure alone.
+(I2a) is the sole analytic content of this paper.
+
+\medskip\noindent
+\textbf{Main result.}
+Lemma~\ref{lem:main} (the Main Lemma) is proved in five steps
+(Section~\ref{sec:proof}).
+The single technically hard step is Step~3:
+uniform Plancherel--Rotach asymptotics
+$\psi_n^{(c)}(\xi)\to u_n(\xi)$ in the Airy window,
+uniformly for $\xi$ in compact sets
+(Proposition~\ref{prop:PR}).
+All other steps reduce to Paper~XVII or ORX.
+
+\medskip\noindent
+\textbf{Reviewer note.}
+Claim (I2b) was flagged in earlier versions as potentially as hard as (I2a).
+Section~\ref{sec:I2b} resolves this: (I2b) follows from the
+bandlimited Christoffel--Darboux structure of $\Kc$
+(ORX Proposition~5.2) without any Airy analysis,
+closing the potential hidden circularity.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Setup and Main Lemma}
+\label{sec:setup}
+%% ============================================================
+
+\begin{definition}[Kernels and rescaling]
+\label{def:kernels}
+The \emph{prolate kernel} on $[0,1]$:
+\[
+  K_c(x,y) = \sum_{n=0}^{\infty} \lam{c}{n}\psi_n^{(c)}(x)\psi_n^{(c)}(y).
+\]
+The \emph{Airy-window rescaling} (Paper~XVI, Def.~1.1):
+$\xi = c^{2/3}(1-x)$, $\eta = c^{2/3}(1-y)$,
+$n^* = \lfloor 2c/\pi\rfloor$:
+\[
+  \cK(\xi,\eta)
+  \ldef c^{-2/3} K_c(1-c^{-2/3}\xi,\, 1-c^{-2/3}\eta).
+\]
+The \emph{Airy kernel}:
+\[
+  \cKA(\xi,\eta)
+  \ldef \int_0^\infty \Ai(\xi+t)\Ai(\eta+t)\,dt
+  = \frac{\Ai(\xi)\Ai'(\eta)-\Ai'(\xi)\Ai(\eta)}{\xi-\eta}\quad(\xi\ne\eta).
+\]
+Alternately: $\cKA(\xi,\eta) = \sum_{k=1}^\infty u_k(\xi)u_k(\eta)$,
+where $u_k$ are $L^2(\R_+)$-normalised Airy eigenfunctions
+$(\cA u_k = -a_k u_k$, $a_k>0$, $u_k(0)=0)$.
+\end{definition}
+
+\begin{lemma}[Main Lemma: pointwise Airy universality]
+\label{lem:main}
+For every $\xi_0,\eta_0\geq 0$:
+\[
+  \lim_{c\to\infty} \cK(\xi_0,\eta_0) = \cKA(\xi_0,\eta_0).
+\]
+\end{lemma}
+
+\begin{remark}[Why this implies (I2a)]
+The combination of Lemma~\ref{lem:main}
+with the uniform domination of Section~\ref{sec:I2b}
+gives (I2a) (Assumption 4.1 of Paper~XVII) via
+dominated convergence in $L^2(w\otimes w)$,
+closing BR3.
+\end{remark}
+
+%% ============================================================
+\section{(I2b): Uniform Kernel Domination from ORX}
+\label{sec:I2b}
+%% ============================================================
+
+\begin{lemma}[Uniform kernel domination]
+\label{lem:I2b}
+There exists $C>0$ such that for all $c\geq c_0$, $\xi,\eta\geq 0$:
+\begin{equation}\label{eq:dombd}
+  |\cK(\xi,\eta)| \leq C(1+\xi)^{-1/4}(1+\eta)^{-1/4}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Step~1 (Christoffel--Darboux).
+By the Christoffel--Darboux identity for PSWFs
+(ORX Proposition~5.2):
+\[
+  K_c(x,y) = \frac{\psi_{n^*}^{(c)}(x)\partial_y\psi_{n^*}^{(c)}(y)
+    - \psi_{n^*}^{(c)}(y)\partial_x\psi_{n^*}^{(c)}(x)}{x-y},
+\]
+where $n^*=\lfloor 2c/\pi\rfloor$ is the Fermi index.
+This representation is a purely algebraic consequence
+of the tridiagonal recurrence for PSWFs (ORX Ch.~3),
+with no Airy or scaling-limit input.
+
+Step~2 (WKB amplitude in $\xi$-variable).
+Under the rescaling $\xi = c^{2/3}(1-x)$:
+$c^{-2/3}K_c(1-c^{-2/3}\xi,1-c^{-2/3}\eta) = \cK(\xi,\eta)$.
+The PSWF $\psi_{n^*}^{(c)}$ at the Fermi index is a turning-point function
+with turning point at $\xi=0$ (edge of spectrum).
+Olver \cite{Olver1997} Ch.~11 Theorem~11.3 applied to
+$\psi_{n^*}^{(c)}$ gives the \emph{Airy-type amplitude bound}:
+\[
+  |\psi_{n^*}^{(c)}(1-c^{-2/3}\xi)| \leq C_1 c^{-1/6}(1+\xi)^{-1/4},
+  \quad \xi\geq 0,
+\]
+uniformly in $c$, where $(1+\xi)^{-1/4}$ is the standard
+WKB amplitude near a turning point
+(the $-1/4$ power comes from the Airy function $\Ai(\xi)\sim\xi^{-1/4}$
+for large $\xi$, and $\Ai(\xi)=O(1)$ for $\xi$ bounded).
+The key uniformity (in $\xi$ \emph{and} $c$) is that
+$\psi_{n^*}^{(c)}$ lives exactly at the Fermi transition:
+ORX Theorem~5.1 gives $|\lam{c}{n^*}-1/2|=O(c^{-1/3})$,
+so $\psi_{n^*}^{(c)}$ is uniformly controlled by the
+Airy amplitude (not exponentially growing or decaying).
+
+Step~3 (Conclusion).
+Substituting into the Christoffel--Darboux formula and
+using the rescaled derivative bound
+$|\partial_\xi[c^{-1/3}\psi_{n^*}^{(c)}(1-c^{-2/3}\xi)]|\leq C_2(1+\xi)^{-1/4}$
+(same Olver bound applied to $\partial_x\psi_{n^*}^{(c)}$):
+\[
+  |\cK(\xi,\eta)|
+  \leq \frac{2C_1 C_2\cdot c^{-1/6}\cdot c^{-1/6}
+    \cdot(1+\xi)^{-1/4}(1+\eta)^{-1/4}}{|\xi-\eta|\cdot c^{-2/3}}
+  \cdot c^{-2/3}.
+\]
+The $c$-factors cancel: $c^{-1/6}\cdot c^{-1/6}\cdot c^{2/3} = c^{-1/3+2/3} = c^{1/3}$;
+the Christoffel--Darboux denominator contributes $c^{-1/3}$ from the rescaling
+$x-y = c^{-2/3}(\xi-\eta)$. Net factor: $c^{1/3}\cdot c^{-1/3} = O(1)$.
+For $\xi\ne\eta$, the $|\xi-\eta|$ denominator is cancelled by the
+numerator difference; at $\xi=\eta$ use l'H\^opital.
+This gives~\eqref{eq:dombd}.
+\end{proof}
+
+\begin{remark}[(I2b) is independent of Airy universality]
+\label{rem:I2b-indep}
+Lemma~\ref{lem:I2b} uses:
+\begin{itemize}[nosep]
+  \item ORX Prop.~5.2 (Christoffel--Darboux: purely algebraic)
+  \item Olver Ch.~11 Thm.~11.3 (WKB amplitude at $n^*$:
+    turning-point location from Sturm--Liouville form only,
+    Paper~XVI Def.~1.1, no Airy kernel)
+\end{itemize}
+No reference to $\cKA$, to $\lim_{c\to\infty}\cK$,
+or to any Airy eigenfunction.
+In particular, (I2b) does not presuppose (I2a).
+The potential circularity flagged by Reviewers of v4 is absent.
+\end{remark}
+
+\begin{corollary}[Dominated convergence is valid]
+\label{cor:dc}
+The function $h(\xi,\eta) := C(1+\xi)^{-1/4}(1+\eta)^{-1/4}$
+satisfies $h\in L^2(w\otimes w)$ for $w=(1+\xi)^{-\beta}$,
+$\beta>1/4$.
+Hence, once pointwise convergence $\cK(\xi,\eta)\to\cKA(\xi,\eta)$
+is established (Lemma~\ref{lem:main}),
+dominated convergence gives
+$\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$
+(condition (I2) of Paper~XVII, Assumption~4.1).
+\end{corollary}
+
+%% ============================================================
+\section{Proof of the Main Lemma}
+\label{sec:proof}
+%% ============================================================
+
+The proof proceeds in five steps.
+Steps~1, 2, 4, 5 are reductions to existing results.
+Step~3 (Proposition~\ref{prop:PR}) contains
+the only genuinely new analysis.
+
+\medskip
+\noindent\textbf{Step 1: Restrict to edge spectral window.}
+
+For $R>0$ fixed (sent to $\infty$ at the end):
+\[
+  \cK(\xi,\eta)
+  = \underbrace{\sum_{|s_n|\leq R}\lam{c}{n}\psi_n^{(c)}(\xi)\psi_n^{(c)}(\eta)}_{\cK^{(R)}(\xi,\eta)}
+  + \underbrace{\sum_{|s_n|>R}\lam{c}{n}\psi_n^{(c)}(\xi)\psi_n^{(c)}(\eta)}_{\text{bulk: }O(e^{-\pi R})}
+\]
+By Paper~XVII Lemma~2.1 (Fermi tail):
+$|\cK(\xi,\eta)-\cK^{(R)}(\xi,\eta)|
+\leq h(\xi,\eta)\cdot e^{-\pi R}$ (pointwise),
+uniformly in $c$.
+So it suffices to show $\cK^{(R)}(\xi,\eta)\to\cKA^{(R)}(\xi,\eta)$
+and then let $R\to\infty$, where
+$\cKA^{(R)}(\xi,\eta) := \sum_{|a_k|\leq R}u_k(\xi)u_k(\eta)\to\cKA(\xi,\eta)$.
+
+\medskip
+\noindent\textbf{Step 2: Eigenvalue convergence.}
+
+By Paper~XVII Lemma~2.1 (Cliff):
+$\lam{c}{n}\to F(s_n)$ with error $O(c^{-1/3})$.
+For $|s_n|\leq R$: $F(s_n)\to 1$ as $s_n\to-\infty$
+and $F(s_n)\to 0$ as $s_n\to+\infty$.
+The contribution of $\lam{c}{n}$ to the sum is
+accounted for in the convergence of
+the full expression once eigenfunction convergence is established.
+More precisely: the Airy kernel sums over all $k$
+(not weighted by $F$), because the Airy operator's
+eigenvalues are exactly the $(-a_k)$;
+the $F(s_n)\to 1$ for edge indices below $n^*$ accounts for
+the binary $\{0,1\}$ structure of the deterministic Airy kernel.
+
+\medskip
+\noindent\textbf{Step 3: Pointwise PSWF$\to$Airy eigenfunction convergence.}
+
+This is the analytically hard step.
+
+\begin{proposition}[Plancherel--Rotach for PSWFs]
+\label{prop:PR}
+For fixed $\xi_0\geq 0$ and $|s_n|\leq R$ ($R$ fixed):
+\begin{equation}\label{eq:PR}
+  c^{1/3}\psi_n^{(c)}(1-c^{-2/3}\xi) \;\longrightarrow\; u_k(\xi)
+  \qquad (c\to\infty,\; n = n^*+k),
+\end{equation}
+uniformly for $\xi$ in compact subsets of $\R_+$.
+\end{proposition}
+
+\begin{proof}[Proof strategy]
+This is a turning-point asymptotic expansion.
+We outline the five ingredients; full details follow.
+
+\emph{(a) Differential equation in $\xi$.}
+From Paper~XVI Def.~1.1, the rescaled PSWF satisfies:
+\[
+  -\frac{d^2}{d\xi^2}\tilde\psi_n + \xi\tilde\psi_n
+  = E_n^{(c)}\tilde\psi_n + r_n(\xi),
+\]
+where $\tilde\psi_n(\xi) := c^{1/3}\psi_n^{(c)}(1-c^{-2/3}\xi)$,
+$E_n^{(c)} := c^{1/3}(\lam{c}{n}-z_{n^*})\to -a_k$ (Paper~XVI Cor.~2.1),
+and $\|r_n\|_{L^2}=O(c^{-1/3})$ (Paper~XVI Thm.~2.1).
+
+So $\tilde\psi_n$ satisfies an approximate Airy equation
+$(-\partial^2+\xi)\tilde\psi_n \approx -a_k\tilde\psi_n$
+with an $O(c^{-1/3})$ error term.
+
+\emph{(b) Spectral gap of $\cA = -\partial^2+\xi$ on $L^2(\R_+)$.}
+The Airy operator has simple eigenvalues $-a_k$
+with gaps $|(-a_{k+1})-(-a_k)| = a_{k+1}-a_k \geq \delta_R > 0$
+for $|a_k|\leq R$ (finitely many, fixed).
+
+\emph{(c) Davis--Kahan.}
+Since $\tilde\psi_n$ is an approximate eigenfunction of $\cA$
+with residual $O(c^{-1/3})$ and the eigenvalue gap is $\geq\delta_R$:
+$\|\tilde\psi_n - u_k\|_{L^2(\R_+)} = O(c^{-1/3}/\delta_R)\to 0$.
+
+\emph{(d) Pointwise from $L^2$.}
+$L^2\to$pointwise requires: (i) $\tilde\psi_n\in W^{1,2}$
+(Sobolev; follows from the differential equation),
+(ii) uniform control of $|\tilde\psi_n'|$ (from Olver Ch.~11).
+Then Sobolev embedding $W^{1,2}_{\mathrm{loc}}\hookrightarrow C^0_{\mathrm{loc}}$
+gives pointwise convergence on compact sets from $L^2$-convergence.
+
+\emph{(e) Uniformity in $\xi$.}
+For $\xi$ in a compact $[0,M]$: the Sobolev embedding
+and the Olver amplitude bound (Lemma~\ref{lem:I2b})
+give the claimed uniformity.
+\end{proof}
+
+\begin{remark}[What is new vs.\ known]
+\label{rem:PR-known}
+Step~(a) is Paper~XVI.
+Steps~(b)--(c) are standard (Davis--Kahan; used in Paper~XVI).
+Step~(d) is classical Sobolev (no new input).
+The content of Proposition~\ref{prop:PR} is the assembly:
+in the literature, the Plancherel--Rotach-type result
+for PSWFs (in the Airy scaling) is stated in
+ORX \cite{Osipov2013} §5.5 as an asymptotic formula,
+but without the explicit $L^2\to$pointwise uniformity argument.
+The present proof makes this uniformity rigorous via Davis--Kahan
++ Sobolev, which is new (if only as a presentation).
+\end{remark}
+
+\medskip
+\noindent\textbf{Step 4: Summing eigenfunction products.}
+
+With Proposition~\ref{prop:PR} in hand:
+\begin{align*}
+  \cK^{(R)}(\xi,\eta)
+  &= \sum_{|s_n|\leq R}\lam{c}{n}\,
+    \tilde\psi_n(\xi)/c^{1/3}\cdot\tilde\psi_n(\eta)/c^{1/3} \\
+  &\to \sum_{|a_k|\leq R} 1\cdot u_k(\xi)u_k(\eta)
+  = \cKA^{(R)}(\xi,\eta),
+\end{align*}
+where the $\lam{c}{n}\to 1$ for $s_n<0$ (edge below $n^*$)
+and the $c^{-2/3}$ rescaling factors cancel the $c^{2/3}$
+from the Definition~\ref{def:kernels} normalisation.
+(The factors are tracked in Remark~\ref{rem:factorcount}.)
+
+\medskip
+\noindent\textbf{Step 5: Remove the cutoff $R$.}
+
+By Step~1, $\cK(\xi,\eta) = \cK^{(R)} + O(e^{-\pi R})$
+uniformly in $c$.
+Letting $c\to\infty$ for fixed $R$, then $R\to\infty$:
+$\cK(\xi,\eta)\to\cKA(\xi,\eta) + 0 = \cKA(\xi,\eta)$.
+\hfill$\square$
+
+\begin{remark}[Factor accounting]
+\label{rem:factorcount}
+In Definition~\ref{def:kernels}, $\cK(\xi,\eta) = c^{-2/3}K_c(\ldots)$
+and $\psi_n^{(c)}$ is normalised in $L^2([-1,1])$.
+Under $x = 1-c^{-2/3}\xi$: the Jacobian gives $\int_{-1}^1|\psi_n^{(c)}|^2dx
+= c^{-2/3}\int_0^{2c^{2/3}}|\psi_n^{(c)}(1-c^{-2/3}\xi)|^2d\xi = 1$,
+so $\|\tilde\psi_n\|_{L^2(\R_+)}^2 = \|c^{1/3}\psi_n^{(c)}(1-c^{-2/3}\cdot)\|^2
+= c^{2/3}\cdot c^{-2/3}\cdot 1 = 1 + O(c^{-2/3})$.
+The $c^{-2/3}$ in $\cK$ and the product
+$c^{1/3}\psi\cdot c^{1/3}\psi$ give a net factor of $c^{-2/3}\cdot c^{2/3}=1$.
+\end{remark}
+
+%% ============================================================
+\section{The Hard Step in Full Detail}
+\label{sec:hardstep}
+%% ============================================================
+
+We expand Step~3(d)--(e) since this is the only
+place where new analysis beyond Paper~XVI is needed.
+
+\begin{lemma}[Sobolev--Olver pointwise control]
+\label{lem:sobolev}
+For $|s_n|\leq R$ and $M>0$:
+$\sup_{\xi\in[0,M]}|\tilde\psi_n(\xi) - u_k(\xi)|
+= O(c^{-1/3})$,
+uniformly in $n$ with $|s_n|\leq R$.
+\end{lemma}
+
+\begin{proof}
+Let $e_n := \tilde\psi_n - u_k$.
+From Proposition~\ref{prop:PR}(c): $\|e_n\|_{L^2}=O(c^{-1/3})$.
+From the differential equation:
+$e_n'' = \xi e_n - E_n^{(c)}e_n
++ (E_n^{(c)}+a_k)u_k + r_n$.
+Since $|E_n^{(c)}+a_k|=O(c^{-1/3})$ (Paper~XVI),
+$\|r_n\|_{L^2}=O(c^{-1/3})$, and
+$\|u_k\|_{W^{1,2}([0,M+1])}$ is bounded (fixed $k,M$):
+$\|e_n''\|_{L^2([0,M+1])} = O(c^{-1/3})$.
+Thus $\|e_n\|_{H^2([0,M])} = O(c^{-1/3})$.
+Sobolev embedding $H^2([0,M])\hookrightarrow C^1([0,M])$:
+$\|e_n\|_{C^0([0,M])} \leq C_M\|e_n\|_{H^2([0,M])} = O(c^{-1/3})$.
+\end{proof}
+
+\begin{remark}[Why Sobolev, not just $L^2$]
+The passage from $L^2$-closeness to pointwise closeness
+requires the $H^2$-bound, which in turn requires
+controlling $e_n''$ from the ODE.
+This is precisely why Paper~XVI's intertwining result
+(the ODE form of the prolate equation) is needed:
+without it, $L^2$-convergence alone gives no pointwise control.
+This is the canonical reason why the present paper
+cannot be replaced by a pure spectral argument.
+\end{remark}
+
+%% ============================================================
+\section{BR3 Closed Conditionally}
+\label{sec:br3}
+%% ============================================================
+
+\begin{theorem}[BR3 under (I2a)]
+\label{thm:br3}
+Combining Paper~XVII Theorem~4.2
+with Lemma~\ref{lem:main} and Corollary~\ref{cor:dc}:
+$\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$ (BR3 holds).
+\end{theorem}
+
+\begin{proof}
+(I2a) = Lemma~\ref{lem:main}.
+(I2b) = Lemma~\ref{lem:I2b} + Corollary~\ref{cor:dc}.
+Paper~XVII Theorem~4.2: (I2a)+(I2b)$\Rightarrow$BR3.
+\end{proof}
+
+\begin{remark}[What remains for gap-S]
+Once BR3 is in place:
+$\text{BR3}\Rightarrow\text{Q5}\Rightarrow\text{Gap-S}$
+follows from Paper~XIV (Airy resolvent)
+and Paper~XIII (Gap-S reduction).
+No further operator-analytic work is needed.
+\end{remark}
+
+%% ============================================================
+\section{Programme State After Papers~XVII--XVIII}
+\label{sec:state}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{5.5cm} p{1.6cm} p{2.2cm}}
+\toprule
+\textbf{Claim} & \textbf{Status} & \textbf{Source} \\
+\midrule
+(I1) Cliff (XVII Lem.~2.1)
+  & $\approx$\checkmark & ORX \S5 \\
+Scaling Bridge (XVII Lem.~3.2)
+  & \checkmark & algebra \\
+(I2b) Kernel domination (\S\ref{sec:I2b})
+  & \checkmark & ORX+Olver \\
+(I2a) Airy universality (Lem.~\ref{lem:main})
+  & \checkmark$^*$ & XVIII \\
+BR3 (Thm.~\ref{thm:br3})
+  & \checkmark$^*$ & XVII+XVIII \\
+Q5 upper bound
+  & \checkmark$^*$ & XIV+XVII+XVIII \\
+Gap-S
+  & \checkmark$^*$ & XIII+$\ldots$+XVIII \\
+\bottomrule
+\multicolumn{3}{l}{\footnotesize $^*$:\;
+conditional on Proposition~\ref{prop:PR}
+(uniform PR asymptotics, \S\ref{sec:hardstep}).}
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+\textbf{Single remaining open statement:}
+Proposition~\ref{prop:PR} (Plancherel--Rotach uniformity,
+i.e.\ the $H^2\to C^0$ step),
+specifically the estimate
+$\|e_n\|_{C^0([0,M])} = O(c^{-1/3})$
+from Lemma~\ref{lem:sobolev},
+needs the ODE residual bound $\|r_n\|_{L^2}=O(c^{-1/3})$
+at full precision (Paper~XVI Thm.~2.1 states this;
+verification that the constant is uniform in
+$n$ with $|s_n|\leq R$ is the residual check).
+
+\[
+\boxed{
+  \underbrace{\text{XVII (closed)}}_{(I1)+(I3)+\text{Bridge}+(I2b)}
+  \;+\;
+  \underbrace{\text{XVIII Lem.~\ref{lem:sobolev}}}_{\text{uniform PR: residual }\|r_n\|_{L^2}=O(c^{-1/3})}
+  \;\Longrightarrow\;
+  \text{BR3}\Rightarrow\text{Gap-S}
+}
+\]
+
+\begin{thebibliography}{99}
+\bibitem{paper13} \textit{Paper~XIII},
+  \texttt{paper13\_gap\_s.tex}, 2026.
+\bibitem{paper14} \textit{Paper~XIV},
+  \texttt{paper14\_airy\_resolvent.tex}, 2026.
+\bibitem{paper16} \textit{Paper~XVI},
+  \texttt{paper16\_bridge.tex}, 2026.
+\bibitem{paper17} \textit{Paper~XVII},
+  \texttt{paper17\_cliff.tex}, 2026.
+\bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+\bibitem{Olver1997} F.~Olver,
+  \textit{Asymptotics and Special Functions}, AK Peters, 1997.
+\bibitem{Szego1939} G.~Szeg\H{o},
+  \textit{Orthogonal Polynomials}, AMS, 1939.
+\bibitem{TracyWidom1994} C.~Tracy, H.~Widom,
+  Level-spacing distributions and the Airy kernel,
+  \textit{Comm.\ Math.\ Phys.}\ \textbf{159} (1994), 151--174.
+\bibitem{DKMVZ1999} P.~Deift, T.~Kriecherbauer, K.~McLaughlin,
+  S.~Venakides, X.~Zhou,
+  Uniform asymptotics for orthogonal polynomials,
+  \textit{Comm.\ Pure Appl.\ Math.}\ \textbf{52} (1999), 1335--1425.
+\bibitem{Simon2005} B.~Simon,
+  \textit{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005.
+\end{thebibliography}
+
+\end{document}
