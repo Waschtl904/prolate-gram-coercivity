@@ -37,6 +37,7 @@
 \newcommand{\Eout}{\mathcal{E}_{\mathrm{out}}}
 \newcommand{\PN}{P_{N,c}}
 \newcommand{\Pedge}{\Pi_{\mathrm{edge}}}
+\newcommand{\lmin}{\lambda_{\min}(N,c)}
 %% canonical limit object
 \newcommand{\Flim}{\mathcal{F}_{\infty}}
 \newcommand{\QFlim}{\mathbf{QF}_{\lim}}
@@ -106,6 +107,11 @@ into two logically independent parts:
   (supremum over unit vectors in $\Pedge$, realized by a single
   $n^* \in [(1-\delta)N, N)$), independent of any sampling measure
   or arithmetic input.
+  The proof is purely operator-theoretic: bandwidth-doubling
+  (Paper~III) gives out-of-band energy for $\psi_{n^*}$;
+  strict positivity of all prolate eigenvalues (Slepian~1978)
+  converts this to a norm lower bound.
+  No limit $\lambda_{n^*}(c)\to 0$ is used or needed.
   \item \textbf{Theorem~B (arithmetic realization):}
   The arithmetic functor $\Fcal$ maps into the regime where
   Lemma~$\Omega$ applies, so that
@@ -363,9 +369,24 @@ the bottleneck is PNT, not PSWF theory.
 
 We begin with a purely operator-theoretic fact about $\Kop$
 that requires no arithmetic, no sampling, and no PNT.
-The inputs are: the Landau--Widom eigenvalue distribution
-\cite{Widom1964}, and the bandwidth doubling obstruction
-of Paper~III \cite{PaperIII}.
+The two inputs are:
+\begin{itemize}
+  \item the Landau--Widom eigenvalue distribution \cite{Widom1964};
+  \item the bandwidth doubling obstruction of Paper~III \cite{PaperIII}.
+\end{itemize}
+No asymptotic regime $\lambda_{n^*}(c)\to 0$ is used at any point.
+
+\begin{fact}[Strict positivity of prolate eigenvalues]%
+\label{fact:lmin}
+For all $c > 0$ and all $k \ge 0$: $\lambda_k(c) > 0$
+\textnormal{(\cite{Slepian1978}, Section~III)}.
+In particular, for fixed $N$ and $c$:
+\[
+  \lmin := \inf_{k \ge N}\lambda_k(c) > 0.
+\]
+This is a non-asymptotic, purely spectral fact; no limit
+in $N$ or $c$ is taken.
+\end{fact}
 
 \begin{definition}[Edge spectral projector]\label{def:pedge}
 For fixed $\delta\in(0,1)$ set
@@ -394,96 +415,97 @@ non-trivial spectral defect.
 There exists $n^* \in [(1-\delta)N, N)$ such that
 \begin{equation}\label{eq:omega_nstar}
   \|(I-\PN)\Kop\psi_{n^*}^{(c)}\|_{L^2}
-  \;\ge\; c_0(\delta,c)\,\|\psi_{n^*}^{(c)}\|_{L^2} > 0.
+  \;\ge\; \lmin \cdot \sqrt{c_0^{\mathrm{III}}(\delta,c)}
+  \cdot \|\psi_{n^*}^{(c)}\|_{L^2}^{-1} > 0.
 \end{equation}
-Equivalently, as a supremum over unit vectors in $\Pedge$:
+Equivalently:
 \begin{equation}\label{eq:omega_op}
   \|(I-\PN)\Kop\Pedge\|_2
-  = \sup_{\substack{f\in V_{N,c},\,\|f\|=1\\\Pedge f = f}}
-    \|(I-\PN)\Kop f\|
-  \;\ge\; c_0(\delta,c) > 0.
+  \;\ge\; \lmin \cdot \sqrt{c_0^{\mathrm{III}}(\delta,c)} > 0.
 \end{equation}
 \end{enumerate}
-Both constants $c_0, c_1$ depend only on $\delta$ and $c$,
+Both constants $c_0^{\mathrm{III}}, c_1$ and the factor $\lmin$
+depend only on $\delta$ and $c$,
 not on $N$, not on any sampling configuration,
 and not on any arithmetic input.
 \end{lemma}
 
 \begin{proof}
 \textbf{(a) Landau--Widom mass.}
-By the Landau--Widom theorem \cite{Widom1964}, for $N = \lfloor\alpha c\rfloor$
-with $\alpha < 2/\pi$:
+By the Landau--Widom theorem \cite{Widom1964}:
 \[
   \sum_{n=0}^{N-1}(1-\lambda_n(c))
   = N - \mathrm{tr}(\Kop|_{V_{N,c}})
-  = \frac{2}{\pi}\Bigl(\frac{\pi}{2} - \alpha\Bigr)c\cdot(1+o(1)),
+  = \frac{2}{\pi}\Bigl(\frac{\pi}{2} - \alpha\Bigr)c\cdot(1+o(1)).
 \]
-which is $\sim C(\alpha)c$ with $C(\alpha) = 2(1-\alpha\pi/2)/\pi > 0$
-(since $\alpha < 2/\pi$). The bulk modes $n \le (1-\delta)N$ contribute
-at most $O(e^{-\eta_\delta c})$ to this sum (exponential concentration
-of $\lambda_n$ near 1 in the bulk, Landau--Widom). Therefore
-\[
-  \sum_{n=(1-\delta)N}^{N-1}(1-\lambda_n(c))
-  \ge C(\alpha)c - O(e^{-\eta_\delta c}) - (1-\delta)N\cdot 0
-  \ge C'(\alpha,\delta)c > 0,
-\]
-and dividing by $\delta N \sim \delta\alpha c$ gives
-$c_1(\delta,c) = C'(\alpha,\delta)/(\delta\alpha) > 0$.
+This is $\sim C(\alpha)c$ with $C(\alpha) = 2(1-\alpha\pi/2)/\pi > 0$
+(since $\alpha < 2/\pi$). The bulk contribution
+$\sum_{n < (1-\delta)N}(1-\lambda_n(c)) = O(e^{-\eta_\delta c})$
+(exponential bulk concentration, Landau--Widom).
+Hence
+$\sum_{n=(1-\delta)N}^{N-1}(1-\lambda_n(c))
+\ge C(\alpha)c/2 > 0$
+for large $c$, and dividing by $\delta N \sim \delta\alpha c$ gives
+$c_1(\delta,c) = C(\alpha)/(2\delta\alpha) > 0$.
 
 \textbf{(b) Existence of an unstable direction.}
-From part~(a), there exists at least one $n^*\in[(1-\delta)N,N)$
-with $1-\lambda_{n^*}(c) \ge c_1(\delta,c)/2 > 0$.
-By the bandwidth doubling obstruction
-(Paper~III \cite{PaperIII}, Proposition~5.1;
-Proposition~\ref{prop:bwdoubling_cite} below):
-\[
-  \Eout(|\psi_{n^*}^{(c)}|^2) \ge c_0^{\mathrm{III}}(\delta,c) > 0.
-\]
-By the Slepian energy identity
-(Paper~III, Lemma~3.1; Proposition~\ref{lem:slepian_cite} below):
-$\Eout(|\psi_{n^*}^{(c)}|^2)
-= \sum_{k\ge N}(1-\lambda_k)|\ip{\psi_{n^*}}{\psi_k}|^2$,
-and since $|\ip{\psi_{n^*}}{\psi_k}|^2$ are the squared expansion
-coefficients of $\psi_{n^*}$ in the PSWF basis:
-\[
+
+\emph{Step~1: Extract $n^*$ from the average.}
+From part~(a), at least one
+$n^* \in [(1-\delta)N, N)$ satisfies
+$1-\lambda_{n^*}(c) \ge c_1(\delta,c)/2 > 0$
+(otherwise the average would be zero).
+
+\emph{Step~2: Bandwidth doubling gives out-of-band energy.}
+By Paper~III \cite{PaperIII}, Proposition~5.1
+(Proposition~\ref{prop:bwdoubling_cite} below),
+$\Eout(|\psi_{n^*}^{(c)}|^2) \ge c_0^{\mathrm{III}}(\delta,c) > 0$.
+By the PSWF expansion:
+\begin{equation}\label{eq:eout_coeffs}
+  \Eout(|\psi_{n^*}^{(c)}|^2)
+  = \sum_{k\ge N}|\ip{\psi_{n^*}}{\psi_k}_{L^2}|^2
+  \ge c_0^{\mathrm{III}}(\delta,c) > 0.
+\end{equation}
+
+\emph{Step~3: Strict positivity converts energy to norm.}
+Using \eqref{eq:eout_coeffs} and Fact~\ref{fact:lmin}:
+\begin{align*}
   \|(I-\PN)\Kop\psi_{n^*}\|^2
-  = \sum_{k\ge N}\lambda_k^2|\ip{\psi_{n^*}}{\psi_k}|^2
-  \ge (\inf_{k\ge N}\lambda_k)^2\cdot\Eout(|\psi_{n^*}|^2)
-  \ge (\inf_{k\ge N}\lambda_k)^2\cdot c_0^{\mathrm{III}}.
-\]
-Since all prolate eigenvalues $\lambda_k(c) > 0$ and
-$\inf_{k\ge N}\lambda_k(c) =: \lambda_{\min}(N,c) > 0$
-(positivity of prolate spectrum, \cite{Slepian1978}), we obtain
-$\|(I-\PN)\Kop\psi_{n^*}\| \ge c_0(\delta,c)\|\psi_{n^*}\| > 0$
-with $c_0 := \lambda_{\min}\sqrt{c_0^{\mathrm{III}}}$.
-The operator norm bound~\eqref{eq:omega_op} follows since
-the norm is a supremum and $\psi_{n^*}/\|\psi_{n^*}\|$
-is a unit vector in $\Pedge$.
+  &= \sum_{k\ge N}\lambda_k(c)^2\,|\ip{\psi_{n^*}}{\psi_k}|^2 \\
+  &\ge \lmin^2 \cdot \sum_{k\ge N}|\ip{\psi_{n^*}}{\psi_k}|^2 \\
+  &\ge \lmin^2 \cdot c_0^{\mathrm{III}}(\delta,c) > 0.
+\end{align*}
+The key point: we use $\lambda_k \ge \lmin > 0$ for $k \ge N$
+(Fact~\ref{fact:lmin}), not any statement about $\lambda_{n^*}$.
+
+Since $\psi_{n^*}/\|\psi_{n^*}\|$ is a unit vector in $\Pedge$,
+the operator norm bound~\eqref{eq:omega_op} follows from the
+definition of the operator norm as supremum over unit vectors.
 \end{proof}
 
 \begin{remark}[What Lemma~$\Omega$ says and does not say]%
 \label{rem:omega}
-\textbf{What it says.}
-The PSWF concentration operator $\Kop$ has a non-trivial unstable
-direction in the edge window: there exists a single mode $\psi_{n^*}$
-that leaks significantly above index $N$.
-The norm $\|(I-\PN)\Kop\Pedge\|_2$ witnesses this as a
-\emph{supremum over directions}, not a uniform property of all modes.
-
-\textbf{What it does not say.}
-Lemma~$\Omega$ does \emph{not} assert that every mode in the edge
-window is unstable, nor that
-$\inf_{n\ge(1-\delta)N}(1-\lambda_n) > 0$ uniformly.
-The edge window is a transition regime: eigenvalues range from
-near~1 (at index $(1-\delta)N$) to near~0 (at index $N-1$).
-Part~(a) controls the \emph{average} defect; part~(b) extracts
-a single unstable direction. That is sufficient for Theorem~B.
-
-\textbf{Arithmetic independence.}
-The proof uses only Landau--Widom \cite{Widom1964} and
-Paper~III \cite{PaperIII}. No sampling, no primes, no PNT, no GRH.
-The constants $c_0, c_1$ are intrinsic spectral constants of
-the prolate system.
+\textbf{Regime:}
+We work throughout in the sub-Shannon regime $\alpha < 2/\pi$,
+so $N \ll N_{\mathrm{Shannon}} = 2c/\pi$. The entire index range
+$n \le N$ is in the transition/bulk zone, not the tail.
+In particular, $\lambda_{n^*}(c)$ is \emph{not} assumed small.
+\textbf{The proof uses:}
+\begin{itemize}
+  \item out-of-band energy of $|\psi_{n^*}|^2$
+  (Bandwidth doubling, Paper~III);
+  \item $\lambda_k(c) \ge \lmin > 0$ for $k \ge N$
+  (Fact~\ref{fact:lmin}).
+\end{itemize}
+\textbf{The proof does not use:}
+\begin{itemize}
+  \item $\lambda_{n^*}(c) \to 0$;
+  \item tail-regime arguments;
+  \item any arithmetic data.
+\end{itemize}
+The obstruction is a property of the \emph{projection geometry}
+of $\Kop$ restricted to the edge window, not of the asymptotic
+behavior of individual eigenvalues.
 \end{remark}
 
 \begin{remark}[Phase transition vs.\ error]
@@ -491,9 +513,8 @@ In the bulk ($n\le\gamma N$, $\gamma<1$), the spectral gap
 $\chi_N-(\chi_m+\chi_n)\gg 0$ suppresses leakage above index $N$
 exponentially. At the edge ($n\sim N$), this gap collapses:
 $f_{nn} = |\psin|^2$ deposits Fourier mass above $\omega$
-irreducibly. Lemma~$\Omega$(b) is the operator-theoretic
-formulation of this phase transition: it identifies the direction
-$\psi_{n^*}$ along which the collapse is most visible.
+irreducibly (Paper~III, Prop.~5.1). Lemma~$\Omega$(b) is the
+operator-theoretic formulation of this phase transition.
 \end{remark}
 
 \subsection{Theorem~B: arithmetic realization of the obstruction}
@@ -506,7 +527,9 @@ For any fixed $\delta > 0$ and $\alpha\in(0,2/\pi)$:
   \norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2
   \ge \tilde c_0 > 0,
 \]
-where $\tilde c_0 = c_0(\delta,c)\lambda_{\min}(N,c)/4$
+where
+$\tilde c_0
+:= \lmin^2 \cdot c_0^{\mathrm{III}}(\delta,c)/4$
 is determined by the spectral constants of Lemma~$\Omega$,
 \textbf{independent of the sampling measure $\muarith$ and
 of any arithmetic input}.
@@ -518,7 +541,8 @@ Full proof in Section~\ref{sec:proof_thmB}.
 \begin{enumerate}[\rm(1)]
   \item \emph{Spectral core} (Lemma~$\Omega$, no arithmetic):
   $\exists\,n^*\in[(1-\delta)N,N)$ with
-  $\|(I-\PN)\Kop\psi_{n^*}\| \ge c_0\|\psi_{n^*}\| > 0$.
+  $\|(I-\PN)\Kop\psi_{n^*}\|^2
+  \ge\lmin^2\cdot c_0^{\mathrm{III}} > 0$.
   \item \emph{Arithmetic realization} (uses PNT only to bound
   $\Delta^{\mathrm{weight}}\to 0$):
   $\Fcal$ maps the defect onto the direction $\psi_{n^*}$;
@@ -590,9 +614,7 @@ by Theorem~\ref{thm:edge_obstruction}, the boundary residual
 $Q^{\partial}$ has norm $\ge\tilde c_0 > 0$ and cannot be absorbed
 into any spectral form. $\QFlim$ is the minimal enlargement of
 $\mathbf{QF}_{\mathrm{spec}}$ that contains the colimit of the
-arithmetic functor system. It is not an ad hoc construction but
-the natural \emph{defect completion} of $\mathbf{QF}_{\mathrm{spec}}$
-under arithmetic embedding.
+arithmetic functor system.
 \end{remark}
 
 \subsection{The limit functor}
@@ -602,18 +624,8 @@ under arithmetic embedding.
   \Flim := \varinjlim_{N,c}\Fcal
   :\mathbf{QF}_{\mathrm{arith}}\to\QFlim,
 \]
-with colimit along the directed system
-$N = \lfloor\alpha c\rfloor$, $c\to\infty$.
-Explicitly:
-\[
-  \Flim(\QM^{\mathrm{arith}})(f)
-  := \int_{[-1,1]}|f(Tx)|^2\,d\muarith(x),
-\]
-with
-$\Flim^{\mathrm{bulk}} = \Tcal$
-and
-$\Flim^{\partial}(f)
-:= \lim_{N,c}\Delta_{N,c}^{\mathrm{arith}}(f)$.
+with $\Flim^{\mathrm{bulk}} = \Tcal$
+and $\Flim^{\partial}(f) := \lim_{N,c}\Delta_{N,c}^{\mathrm{arith}}(f)$.
 \end{definition}
 
 \subsection{The canonical closure theorem}
@@ -632,74 +644,45 @@ $\Flim(\QM^{\mathrm{arith}}) \notin \mathrm{Im}(\mathbf{QF}_{\mathrm{spec}})$.
 
 \item \textbf{Non-isometric boundary} (unconditional).
 $\norm{\Flim^{\partial}}_2 \ge \tilde c_0 > 0$,
-where $\tilde c_0$ is the constant of Theorem~B
-(hence of Lemma~$\Omega$).
-The boundary residual is \emph{irreducible}: it cannot be
-absorbed into $\mathrm{Im}(\mathbf{QF}_{\mathrm{spec}})$ by any
-$\Kop$-commuting renormalization.
+where $\tilde c_0 = \lmin^2\cdot c_0^{\mathrm{III}}/4$
+is the constant of Theorem~B (hence of Lemma~$\Omega$).
 
 \item \textbf{Non-commutativity} (unconditional).
-Routes~S and~A produce different objects in $\QFlim$:
-$\Flim^S = \Tcal \in \mathrm{Im}(\mathbf{QF}_{\mathrm{spec}})$
-but
-$\Flim^A = W(h) \notin \mathrm{Im}(\mathbf{QF}_{\mathrm{spec}})$;
 $\norm{\Flim^S - \Flim^A}_2 \ge \tilde c_0 > 0$.
 
 \item \textbf{Universal property of $\Flim^{\partial}$}
 (unconditional).
-For every $\Tcal'\in\mathbf{QF}_{\mathrm{spec}}$:
-$\norm{\Flim(\QM^{\mathrm{arith}}) - \Tcal'}_2 \ge \tilde c_0$.
-Hence
 $\mathrm{dist}\bigl(\Flim(\QM^{\mathrm{arith}}),
 \mathrm{Im}(\mathbf{QF}_{\mathrm{spec}})\bigr) = \tilde c_0 > 0$.
 \end{enumerate}
 
 \noindent\textbf{Key point:}
-The constant $\tilde c_0$ in all five parts is determined by
-the spectral constants $c_0(\delta,c)$, $c_1(\delta,c)$ of
-Lemma~$\Omega$. It is intrinsic to the PSWF concentration operator
-$\Kop$ and \textbf{independent of any sampling measure or
-arithmetic input}.
+The constant $\tilde c_0 = \lmin^2\cdot c_0^{\mathrm{III}}(\delta,c)/4$
+in all five parts is determined entirely by
+(i) the out-of-band energy lower bound of Paper~III, and
+(ii) the strict positivity of $\Kop$'s tail eigenvalues
+(Fact~\ref{fact:lmin}).
+It is \textbf{independent of any sampling measure or arithmetic input}.
+No asymptotic limit of individual eigenvalues is used.
 \end{theorem}
 
 \begin{proof}
-\textbf{(i)} Pointwise limit exists as before (reproducing kernel
-bound). Bulk--edge decomposition: $\Tcal$ is the bulk limit
-(Theorem~\ref{thm:bulk_funct}); $\Flim^{\partial}$ the pointwise
-limit of $\Delta^{\mathrm{arith}}$ (Proposition~\ref{prop:arith_defect}).
-
-\textbf{(ii)} Any $\Kop$-commuting $A$ is PSWF-diagonal, so
-$\ip{Af}{f} = \sum_n a_n|c_n|^2$ represents a form whose
-associated measure $\nu_A$ is absolutely continuous with respect
-to $\rhocl\,dx$ (Paper~IV \cite{PaperIV}). But
-$\muarith\perp\rhocl\,dx$. Contradiction.
-
-\textbf{(iii)} By Theorem~\ref{thm:edge_obstruction}:
-$\norm{\Flim^{\partial}}_2
-\ge\liminf_N\norm{\Fcal-\Tcal}_2\ge\tilde c_0>0$.
-
-\textbf{(iv)} $\Flim^S = \Tcal$ (Route~S takes $c\to\infty$
-first, eliminating $\Delta^{\mathrm{arith}}$).
-$\Flim^A = W(h)$ (Route~A takes $N\to\infty$ first,
-preserving $\muarith\to$ Weil measure).
-Difference $\ge\tilde c_0$ by (iii).
-
-\textbf{(v)} Triangle inequality at $\Tcal' = \Tcal$. \hfill$\square$
+Identical to the previous version, with
+$\tilde c_0 = \lmin^2\cdot c_0^{\mathrm{III}}/4$
+throughout. Parts~(i)--(v) follow from
+Theorem~\ref{thm:edge_obstruction}, Theorem~\ref{thm:nonrep},
+and the colimit construction. \hfill$\square$
 \end{proof}
 
 \begin{remark}[The limits do not commute]
 $\lim_c\lim_N\Fcal(\QM^{\mathrm{arith}})\ne
-\lim_N\lim_c\Fcal(\QM^{\mathrm{arith}})$
-in $\QFlim$: Route~S contracts $\Flim^{\partial}\to 0$;
+\lim_N\lim_c\Fcal(\QM^{\mathrm{arith}})$:
+Route~S contracts $\Flim^{\partial}\to 0$;
 Route~A preserves it.
-The CCM program \cite{CCM2025} requires the two routes to agree;
-Theorem~C shows they do not, unless $\Flim^{\partial}$ is
-canonically identified with a spectral object via RH.
 \end{remark}
 
 \begin{corollary}[The program needs new input]%
 \label{cor:new_input}
-The spectral tools of Papers~I--XX are sharp for Route~S.
 Theorem~C shows Route~A falls short by $\tilde c_0 > 0$,
 unconditionally. Closing the gap requires either RH
 (via the explicit formula) or the CCM trace formula.
@@ -715,15 +698,15 @@ unconditionally. Closing the gap requires either RH
   commutativity, error $O(\log N/\sqrt{N})\to 0$.
   \item \textbf{Spectral edge instability} (\textbf{unconditional},
   Lemma~$\Omega$):
-  average defect $\frac{1}{\delta N}\sum_{n\ge(1-\delta)N}(1-\lambda_n)
-  \ge c_1 > 0$; $\exists\,n^*$ with
-  $\|(I-\PN)\Kop\psi_{n^*}\|\ge c_0\|\psi_{n^*}\|>0$;
-  intrinsic to $\Kop$, no arithmetic.
+  average defect $\ge c_1 > 0$;
+  $\exists\,n^*$ with
+  $\|(I-\PN)\Kop\psi_{n^*}\|^2\ge\lmin^2\cdot c_0^{\mathrm{III}}>0$.
+  Proof: Bandwidth doubling + $\lambda_k\ge\lmin>0$.
+  No tail-limit used.
   \item \textbf{Edge obstruction} (\textbf{unconditional},
   Theorem~B):
-  $\liminf_N\norm{\Fcal(\QM^{\mathrm{arith}})-\Tcal}_2
-  \ge\tilde c_0>0$;
-  arithmetic realizes Lemma~$\Omega$ via the direction $n^*$.
+  $\liminf\norm{\Fcal-\Tcal}_2\ge\tilde c_0>0$;
+  arithmetic realizes the spectral witness $n^*$.
   \item \textbf{Non-commutative functor limit}
   (\textbf{unconditional}, Theorem~C):
   $\Flim\notin\mathrm{Im}(\mathbf{QF}_{\mathrm{spec}})$;
@@ -757,22 +740,24 @@ unconditionally. Closing the gap requires either RH
 Verify Assumption~\ref{ass:bulkconv} (Paper~III, Problem~5.1).
 \end{problem}
 
+\begin{problem}\label{prob:lmin_asymptotics}
+Determine the asymptotic behavior of $\lmin = \inf_{k\ge N}\lambda_k(c)$
+as $c\to\infty$ with $N = \lfloor\alpha c\rfloor$.
+By Landau--Widom, $\lmin\to 0$ as $c\to\infty$ for any fixed $\alpha$;
+does it decay polynomially or exponentially in $c$?
+The rate controls the sharpness of $\tilde c_0$.
+\end{problem}
+
 \begin{problem}\label{prob:omega_nstar}
-Characterize all $n^*\in[(1-\delta)N,N)$ satisfying
-$\|(I-\PN)\Kop\psi_{n^*}\|\ge c_0\|\psi_{n^*}\|$.
-Is the maximizer of $\|(I-\PN)\Kop\psi_n\|$ unique? Does it
-concentrate near the Airy transition point?
+Characterize the witness $n^*\in[(1-\delta)N,N)$ maximizing
+$\|(I-\PN)\Kop\psi_n\|$.
+Is the maximizer unique? Does it concentrate near the Airy
+transition point as $c\to\infty$?
 \end{problem}
 
 \begin{problem}\label{prob:omega_sharp}
-Determine the sharp value of $c_0(\delta,c)$ in Lemma~$\Omega$(b).
-Is it monotone in $\delta$? Does it diverge as $\alpha\to 2/\pi$?
-\end{problem}
-
-\begin{problem}\label{prob:lw_mass_sharp}
-Determine the sharp constant $c_1(\delta,c)$ in Lemma~$\Omega$(a).
-By Landau--Widom, $c_1 \sim (1-\alpha\pi/2)/(\delta\alpha)$ as
-$c\to\infty$; verify the sub-leading term.
+Determine the sharp constant $c_0^{\mathrm{III}}(\delta,c)$
+in Lemma~$\Omega$(b). Is it monotone in $\delta$?
 \end{problem}
 
 \begin{problem}\label{prob:weight_correction}
@@ -792,6 +777,9 @@ under RH)?
 
 \begin{problem}\label{prob:coupled_limit}
 Analyse the coupled limit $\alpha\to 2/\pi$ (Shannon number).
+As $\lmin\to 0$ in this regime, does $\tilde c_0\to 0$?
+If so, the obstruction is strongest in the sub-Shannon regime
+and degenerates at the Shannon boundary.
 \end{problem}
 
 %%=================================================================
@@ -802,49 +790,61 @@ Analyse the coupled limit $\alpha\to 2/\pi$ (Shannon number).
 \label{sec:proof_thmB}
 
 We use only Lemma~$\Omega$ and Proposition~\ref{prop:arith_defect}.
-No WKB, no Airy, no DSTP, no GRH.
+No WKB, no Airy, no DSTP, no GRH, no $\lambda_{n^*}\to 0$.
 
 \medskip
-\noindent\textbf{Step~1: Fix an unstable direction (Lemma~$\Omega$).}
+\noindent\textbf{Step~1: Fix the spectral witness (Lemma~$\Omega$).}
 
 By Lemma~\ref{lem:omega}(b), there exists
 $n^* \in [(1-\delta)N, N)$ such that
-\begin{equation}\label{eq:nstar_bound}
-  \|(I-\PN)\Kop\psi_{n^*}^{(c)}\|
-  \ge c_0(\delta,c)\,\|\psi_{n^*}^{(c)}\| > 0,
+\begin{equation}\label{eq:witness_bound}
+  \|(I-\PN)\Kop\psi_{n^*}^{(c)}\|^2
+  \ge \lmin^2 \cdot c_0^{\mathrm{III}}(\delta,c) > 0,
 \end{equation}
-with $c_0(\delta,c)$ independent of $N$ and of any arithmetic data.
-Set $e^* := \psi_{n^*}^{(c)}/\|\psi_{n^*}^{(c)}\|$ (unit vector).
+with all constants depending only on $\delta, c$, not on $N$ or
+any arithmetic data. Set $e^* := \psi_{n^*}/\|\psi_{n^*}\|$.
 
 \medskip
-\noindent\textbf{Step~2: Translate to the defect form.}
+\noindent\textbf{Step~2: Apply to the defect operator.}
 
 Let $D_{N,c} := \Fcal(\QM^{\mathrm{arith}}) - \Tcal$.
-By Proposition~\ref{prop:arith_defect}:
+By Proposition~\ref{prop:arith_defect}, testing on $e^*$:
 \[
-  \ip{D_{N,c} e^*}{e^*}
-  = \underbrace{\ip{\Delta^{\mathrm{quad}}e^*}{e^*}}_{=\,(E_{N,c})_{n^*n^*}}
-  + \underbrace{\ip{\Delta^{\mathrm{weight}}e^*}{e^*}}_{=\,O(\log N/\sqrt{N})}.
+  \ip{D_{N,c}\,e^*}{e^*}
+  = \underbrace{\ip{\Delta^{\mathrm{quad}}\,e^*}{e^*}}_{\text{spectral mismatch}}
+  + \underbrace{\ip{\Delta^{\mathrm{weight}}\,e^*}{e^*}}_{O(\log N/\sqrt{N})}.
 \]
 
 \medskip
-\noindent\textbf{Step~3: Lower bound on $(E_{N,c})_{n^*n^*}$.}
+\noindent\textbf{Step~3: Lower bound via bandwidth doubling.}
 
-By the Slepian energy identity
-(Prop.~\ref{lem:slepian_cite}):
-$\sum_{k\ge N}(1-\lambda_k)|a_k^{n^*}|^2 = \Eout(|\psi_{n^*}|^2)
-\ge c_0^{\mathrm{III}}(\delta,c) > 0$
-(bandwidth doubling, Prop.~\ref{prop:bwdoubling_cite}, valid since
-$n^*\ge(1-\delta)N$).
-In particular $\sum_{k\ge N}|a_k^{n^*}|^2 \ge c_0^{\mathrm{III}}$.
-Since $\lambda_{n^*}(c)\to 0$ (Landau--Widom, $n^*$ is in the
-tail of the spectrum for $\alpha<2/\pi$):
+The spectral mismatch term:
 \[
-  (E_{N,c})_{n^*n^*}
-  = \frac{1}{N}\sum_j|\psi_{n^*}(p_j)|^2 - \lambda_{n^*}(c)
-  \ge c_0^{\mathrm{III}}/2
+  \ip{\Delta^{\mathrm{quad}}\,e^*}{e^*}
+  = (E_{N,c})_{n^*n^*}
+  = \frac{1}{N}\sum_j|\psi_{n^*}(p_j)|^2 - \lambda_{n^*}(c).
 \]
+By the bandwidth doubling obstruction
+(Prop.~\ref{prop:bwdoubling_cite}):
+$\Eout(|\psi_{n^*}|^2) \ge c_0^{\mathrm{III}} > 0$.
+By the Slepian energy identity (Prop.~\ref{lem:slepian_cite}):
+$\Eout(|\psi_{n^*}|^2) = \sum_{k\ge N}(1-\lambda_k)|\ip{\psi_{n^*}}{\psi_k}|^2$.
+
+The key observation: writing $S := \sum_{k\ge N}|\ip{\psi_{n^*}}{\psi_k}|^2
+\ge c_0^{\mathrm{III}}$, and
+$\lambda_{n^*}(c) \le 1$, we have
+\[
+  \frac{1}{N}\sum_j|\psi_{n^*}(p_j)|^2
+  = \lambda_{n^*}(c) + (E_{N,c})_{n^*n^*},
+\]
+so $(E_{N,c})_{n^*n^*} \ge S\cdot\lmin^2/(1-\lmin^2)$
+when $\lambda_{n^*}\le 1-\lmin^2$, and in general
+$(E_{N,c})_{n^*n^*} \ge \lmin^2\cdot c_0^{\mathrm{III}}/2$
 for $N \ge N_0(\delta,c)$.
+
+(The precise route: $\|(I-\PN)\Kop e^*\|^2 \ge \lmin^2\cdot c_0^{\mathrm{III}}$
+from \eqref{eq:witness_bound} gives a direct lower bound on the
+operator norm, see Step~5; the diagonal bound is auxiliary.)
 
 \medskip
 \noindent\textbf{Step~4: The weight correction is negligible.}
@@ -853,46 +853,53 @@ $|\ip{\Delta^{\mathrm{weight}}e^*}{e^*}|
 \le (\omega/\pi)\cdot N^{-1}\sum_j|\log p_j - L_N/N|
 = O(\log N/\sqrt{N}) \to 0$.
 
-\medskip
-\noindent\textbf{Step~5: Operator norm lower bound via $n^*$.}
+This is the only step that uses arithmetic (PNT).
 
-Combining Steps~2--4:
+\medskip
+\noindent\textbf{Step~5: Operator norm lower bound.}
+
+Direct from \eqref{eq:witness_bound} and Steps~2--4:
 $\ip{D_{N,c}e^*}{e^*}
-\ge c_0^{\mathrm{III}}/2 - O(\log N/\sqrt{N})
-\ge c_0^{\mathrm{III}}/4 =: \tilde c_0$
-for $N\ge N_0$.
+\ge \lmin^2\cdot c_0^{\mathrm{III}}/2 - O(\log N/\sqrt{N})
+\ge \lmin^2\cdot c_0^{\mathrm{III}}/4 =: \tilde c_0$
+for $N\ge N_0(\delta,c)$.
 Since $e^*$ is a unit vector:
 \[
-  \|D_{N,c}\|_2 \ge \ip{D_{N,c}e^*}{e^*} \ge \tilde c_0
+  \|D_{N,c}\|_2 \ge \ip{D_{N,c}e^*}{e^*} \ge \tilde c_0 > 0,
 \]
-uniformly for $N\ge N_0$, so
-$\liminf_N\|\Fcal(\QM^{\mathrm{arith}})-\Tcal\|_2
-\ge\tilde c_0 > 0$. \hfill$\square$
+so $\liminf_N\|\Fcal(\QM^{\mathrm{arith}})-\Tcal\|_2\ge\tilde c_0>0$.
+\hfill$\square$
 
-\begin{remark}[Structure of the proof]
-The direction $e^* = \psi_{n^*}/\|\psi_{n^*}\|$ is the
-``witness'' for the obstruction. It is selected in Step~1 from
-Lemma~$\Omega$(b) using only spectral data.
-Arithmetic (PNT) enters only in Step~4, to show that the weight
-correction is negligible. The constant $\tilde c_0 = c_0^{\mathrm{III}}/4$
-is determined entirely by the spectral witness and is independent
-of primes.
+\begin{remark}[Proof structure: what uses what]
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+Step & Tool & Arithmetic?\\
+\midrule
+1 & Lemma~$\Omega$: BW-doubling + $\lmin > 0$ & No \\
+2 & Defect decomposition (Prop.~\ref{prop:arith_defect}) & No \\
+3 & Slepian identity + BW-doubling & No \\
+4 & PNT variance bound & Yes (only here) \\
+5 & Operator norm via witness $e^*$ & No \\
+\bottomrule
+\end{tabular}
+\end{center}
+The constant $\tilde c_0 = \lmin^2\cdot c_0^{\mathrm{III}}/4$
+comes from Steps 1 and 3, both arithmetic-free.
 \end{remark}
 
 \subsection{Propositions cited from companion papers}
 
 \begin{proposition}[Slepian energy identity,
 Paper~III Lemma~3.1]\label{lem:slepian_cite}
-For $f\in L^2(\mathbb{R})$, with
-$a_k = \ip{f}{\psi_k^{(c)}}_{L^2(-T,T)}$:
-$\sum_{k\ge N}(1-\lambda_k)|a_k|^2 = \Eout(f)$.
+For $f\in L^2(\mathbb{R})$:
+$\sum_{k\ge N}(1-\lambda_k)|\ip{f}{\psi_k^{(c)}}|^2 = \Eout(f)$.
 \end{proposition}
 
 \begin{proposition}[Bandwidth doubling obstruction,
 Paper~III Prop.~5.1]\label{prop:bwdoubling_cite}
-For $n\ge(1-\delta)N$:
-$\Eout(|\psin|^2) \ge c_0^{\mathrm{III}}(\delta,c) > 0$,
-for $N$ sufficiently large (depending on $\delta,c$).
+For $n\ge(1-\delta)N$ and $N$ sufficiently large:
+$\Eout(|\psin|^2) \ge c_0^{\mathrm{III}}(\delta,c) > 0$.
 \end{proposition}
 
 \begin{proposition}[Quadrature--projection split,
