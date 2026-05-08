@@ -1,6 +1,6 @@
 # DEPENDENCIES — prolate-gram-coercivity
 
-> Stand: Mai 2026 (aktualisiert). Papers I–VIII + alle Begleitnotizen berücksichtigt.
+> Stand: Mai 2026 (aktualisiert). Papers I–XX und aktive Begleitnotizen berücksichtigt.
 
 ---
 
@@ -33,6 +33,21 @@ Paper VIII  (Skalen-separierte Auslöschung)
   ↓  liefert: H2 bedingungslos (ass:gap + Prop.U(U') beide bewiesen)
               Dyadisches Trennungsprinzip (Lemma F) bedingungslos
               Drei-Skalen-Struktur: kombinatorisch / lokal / global
+Paper IX–XVII
+  ↓  liefern: verfeinerte Koerzivitäts-, Resolvent-, Quasimode-, Bridge-
+              und Cliff-Strukturen als technisches Rückgrat des Airy-Programms
+Paper XVIII  (Qualitative Airy-Universalität)
+  ←  INPUT: Papers IX–XVII
+  ↓  liefert: BR3, Zwei-Skalen-Zerlegung, iterierte Limesstruktur
+Paper XIX  (Quantitative Rate)
+  ←  INPUT: Paper XVIII
+  ↓  liefert: lineare/quadratische Interaktionsschichten,
+              O(c^{-1/3}(log c)^{5/3}) im Airy-Fall
+Paper XX  (Universality and Structural Rigidity)
+  ←  INPUT: Paper XIX + reguläre Variation / Karamata-Prinzip
+  ↓  liefert: universelle Rate O(c^{-β}(log c)^{1+γ}),
+              Obstruktionssatz innerhalb M(S1,S2,S3),
+              Realisierungsabbildung R, ρ-Klassifikation, S2/S3-Sprache
 
 Begleitnotizen:
   phase_nondeg_lemma.tex              → H1 Non-Degeneracy (Paper VII) bedingungslos ✅
@@ -54,7 +69,7 @@ Begleitnotizen:
 | Conj. 6.1 (phase) | dist(α^(c),{0,π}) ≥ π/4 | ✅ **BEWIESEN**: α^(c) = π/2 + O(c^{-1/3}) | `phase_nondeg_lemma.tex` |
 | H1 (Paper VII) | Phase summability + Non-Degeneracy | ✅ **BEDINGUNGSLOS** | Paper VII + `phase_nondeg_lemma.tex` |
 | H2 (Paper VII) | Amplitude regularity auf dyadischen Blöcken | ✅ **BEDINGUNGSLOS** | Paper VIII + `airy_discrete_stability_lemma.tex` |
-| H3 (Paper VII) | Uniform bound B-strong | 🔴 **offen** — einzig verbleibende Hauptlücke | Paper VII |
+| H3 (Paper VII) | Uniform bound B-strong | 🔴 **offen** — einzig verbleibende Hauptlücke des frühen Kontraktionsstrangs | Paper VII |
 | DSTP | Discrete Spectral Transfer Property | ✅ verifiziert (Zufalls-/Gauß-Sampling) | Paper I |
 | DSTP ⊥ AX1-AX4 | Logische Unabhängigkeit (Riemann-Zeuge) | ✅ **BEWIESEN** | `ax5_independence_remark.tex` |
 | DSTP (Primes) | DSTP für Primzahl-Sampling | 🔴 offen | Paper I |
@@ -65,6 +80,11 @@ Begleitnotizen:
 | β(∞) | Limes des Zentrierungsparameters β(c) | 📊 empirisch: β(∞) ∈ [-0.30,-0.21] | Paper VIII |
 | Weil-Operator | G_∞ = Weil-Operator | 🔴 offen | Paper II |
 | XRY-Stabilität | XRY-Stabilitätskonjektur | 🔴 offen (bedingt) | Paper II_quad |
+| S2 | Skalenstabilität der Realisierungsabbildung | ✅ als Strukturbedingung formuliert | Paper XX |
+| S3 | Diagonalkompression / zulässige Projektion | ✅ als Strukturbedingung formuliert | Paper XX |
+| thm:universal_rate | Universelle Rate O(c^{-β}(log c)^{1+γ}) in T_γ | ✅ **BEWIESEN** | Paper XX |
+| thm:rate_obstruction | Keine bessere Rate innerhalb M(S1,S2,S3) | ✅ **BEWIESEN** | Paper XX |
+| ρ-Klassifikation | Deformationsklassifikation via Karamata-Grenzwert | 🟡 strukturell definiert; Existenz konkreter Modelle offen | Paper XX + `RESEARCH_DIRECTIONS.md` |
 
 ---
 
@@ -123,6 +143,65 @@ H1 + H2 + H3  →  Theorem 1 (Paper VII)  →  ‖DT_c^(N)‖ ≤ C c^{-1/2} log
 
 ---
 
+## Trilogie XVIII–XX: logische Abhängigkeiten
+
+### Paper XVIII → qualitative Universalität
+
+Benötigt als technisches Rückgrat die vorherigen Airy-/Bridge-/Cliff-Bausteine
+(Papers IX–XVII) und schließt die qualitative Form BR3:
+
+```
+Papers IX–XVII
+  ↓
+Zwei-Skalen-Zerlegung S_K - K_A = A_K - B_K
+  ↓
+iterierter Limes c→∞, dann K→∞
+  ↓
+BR3: ‖K_{B_c} - K_A‖_{L²(w⊗w)} → 0
+```
+
+### Paper XIX → quantitative Rate
+
+```
+Paper XVIII
+  ↓
+A_K = A_K^{lin} + A_K^{quad}
+  ↓
+C_lin = O(K^{5/3}),   C_quad = O(K^{7/3})
+  ↓
+K_opt ~ (log c)/(3α)
+  ↓
+‖K_{B_c} - K_A‖ = O(c^{-1/3}(log c)^{5/3})
+```
+
+### Paper XX → Universalisierung und strukturelle Rigidität
+
+```
+Paper XIX  +  reguläre Variation / Karamata
+  ↓
+A_γ ∈ T_γ,   a_K ~ K^γ,   window c^{-β}
+  ↓
+C_lin = O(K^{1+γ}),   C_quad = O(K^{1+2γ})
+  ↓
+K*(c) ~ (2β/α) log c
+  ↓
+thm:universal_rate
+  ↓
+Rate O(c^{-β}(log c)^{1+γ})
+
+Zusätzlich:
+S1/S2/S3  →  Methodklasse M(S1,S2,S3)
+B  →  R(B) ∈ S/∼_S   via def:realization_map
+S2 ohne Erfüllung  →  lem:S2_knockdown
+innerhalb M(S1,S2,S3)  →  thm:rate_obstruction
+Karamata-Grenzwert vorhanden  →  ρ-Klassifikation definierbar
+```
+
+**Wichtig:** Die ρ-Klassifikation setzt Existenz des Karamata-Grenzwerts voraus.
+Ohne diesen Grenzwert gibt es keine stabile Deformationsklassifikation.
+
+---
+
 ## Was Paper VIII konkret liefert (Drei-Skalen-Struktur)
 
 - **Kombinatorische Skala** (Dyadische Trennung): ass:gap → Lemma F → Kor.C(a) — **bedingungslos** ✅
@@ -158,15 +237,26 @@ Paper V beweist Assumption ass:bulkconv **unconditionally für γ < 1/2** via:
 
 ## Strategische Diagnose (Mai 2026, aktualisiert)
 
+### Früher Kontraktionsstrang (Papers I–VIII)
+
 **Gelöste Probleme seit letztem Update:**
 - Phase Non-Degeneracy → H1 bedingungslos ✅
 - ass:gap → Dyadisches Trennungsprinzip bedingungslos ✅
 - Proposition U(U') → H2 bedingungslos ✅
 - DSTP ⊥ AX1-AX4 konstruktiv bestätigt ✅
 
-**Einzige verbleibende Hauptlücke:** B-strong (`P_{kl} ≤ C₂ c^{1/2}`)
+**Einzige verbleibende Hauptlücke dieses Strangs:** B-strong (`P_{kl} ≤ C₂ c^{1/2}`)
 
-Sobald B-strong fällt: H3 ✅ → Theorem 1 (Paper VII) unbedingt → Kontraktion → Assumption A → vollständige Theorie.
+Sobald B-strong fällt: H3 ✅ → Theorem 1 (Paper VII) unbedingt → Kontraktion → Assumption A.
 
-**Bulk-Programm (γ < 1/2):** abgeschlossen durch Papers IV + V.
-Das verbleibende Problem ist die Kontraktion von DT_c^(N) — ein separater Mechanismus.
+### Gesamtprogramm nach Paper XX
+
+Das Gesamtprogramm ist nicht mehr durch eine einzige analytische Lücke bestimmt.
+Die offene Struktur ist jetzt entlang klassifizierter Achsen parametrisiert:
+
+- **O1** — H1-Minimalität / Envelope-Notwendigkeit innerhalb M(S1,S2,S3)
+- **O3a** — mögliche bessere Rate außerhalb M(S1,S2,S3)
+- **Realisierungsproblem** — konkrete Operatorklassen mit ρ ≠ 0
+- **Stabilitätsproblem** — Deformationen mit schwacher Verletzung von S2
+
+Siehe `RESEARCH_DIRECTIONS.md` für die aktive Planung dieser Richtungen.
