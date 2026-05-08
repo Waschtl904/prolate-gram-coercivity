@@ -16,26 +16,33 @@ that still yields $\Phi_1(K^*(c), c) = O(c^{-\beta}(\log c)^{1+\gamma})$
 with $c$-admissible constants?
 
 **Why this matters:**
-This is the transition from
-> "H1 is sufficient"
-
-to
-> "H1 is minimal within $\mathcal{M}(\mathrm{S1,S2,S3})$".
-
+This is the transition from "H1 is sufficient" to "H1 is minimal within $\mathcal{M}(\mathrm{S1,S2,S3})$".
 That shift has substantially more theoretical weight than further model examples.
 It would close the axiom-economy question for the programme.
 
-**Airy evidence:**
-Abramowitz–Stegun §10.4 confirms $f(j) \equiv 1$ is tight for Airy.
-The general argument requires understanding how $f(j)$ propagates
-through the balance FOC — specifically whether
-$(K^*(c))^{1+\gamma} f(K^*(c))$ can be made $o((\log c)^{1+\gamma})$.
-Since $K^*(c) \sim \frac{2\beta}{\alpha} \log c$,
-this becomes a question about $f(\log c)$,
-i.e. whether $f$ can decay along the logarithmic diagonal.
+**The diagonal compression observation** *(added 2026-05-08)*
 
-**Likely approach:** Reverse FOC analysis;
-show the balance condition forces $f(K^*(c)) \to$ const.
+The decisive mechanism is not the global behavior of $f(j) = o(1)$,
+but its behavior along the *forced diagonal*
+$$j \sim K^*(c) \sim \frac{2\beta}{\alpha} \log c.$$
+The FOC compresses the available degrees of freedom:
+after substitution $j \mapsto K^*(c)$, any asymptotic improvement in $f$
+must survive as $f(K^*(c)) = f\!\left(\frac{2\beta}{\alpha}\log c + O(\log\log c)\right)$.
+Since $K^*(c) \to \infty$ only logarithmically,
+a globally decaying $f$ may still satisfy $f(K^*(c)) \not\to 0$
+at the rate required to improve the leading term.
+
+**Consequence:** O1 is directly coupled to S3.
+The same substitution structure that *generates* the rate
+(S3: diagonal substitution $K \mapsto K^*(c)$)
+also *prevents* its improvement via H1 perturbations.
+Global monotonicity of $f$ is insufficient;
+what matters is whether the improvement remains asymptotically visible
+after projection onto the logarithmic diagonal.
+
+**Likely approach:**
+Reverse FOC analysis: assume $f(K^*(c)) \to 0$ and derive a contradiction
+with the balance equation, or show $K^*(c)$ shifts in a way that absorbs the gain.
 
 ---
 
@@ -57,11 +64,25 @@ If no: the log-loss is a genuine spectral-geometric invariant.
 **(O3b)** Can a uniform lower bound be established
 (currently blocked by absence of H3)?
 
-**Why this is the long-term question:**
-The current rigidity theorem is a *Tauberian* statement:
-given the three structural constraints, the scale is forced.
-A genuine spectral lower bound would require a different proof strategy —
-likely an information-theoretic or entropy argument on eigenfunction localization.
+**The mode shift** *(added 2026-05-08)*
+
+The current paper is Tauberian in structure:
+*given* axioms S1/S2/S3, the scale is forced.
+A genuine lower bound outside $\mathcal{M}$ requires a different mathematical mode:
+not "every method with these properties produces this rate",
+but rather "every approximation must carry this information somewhere".
+
+This suggests the following candidate approaches:
+- **Eigenfunction localization:** concentration of $e_j$ near the turning point
+  forces a minimum information cost that any approximation must pay.
+- **Spectral concentration / Kolmogorov widths:** lower bounds on
+  $n$-widths of the eigenfunction class in $L^2([0,M])$ for large $j$.
+- **Semiclassical barrier arguments:** the WKB barrier at the turning point
+  as an intrinsic obstruction, independent of summation method.
+- **Entropy arguments:** the spectral information content at scale $c$
+  cannot be compressed below a threshold set by the turning-point geometry.
+
+Each of these is a structurally different mode from the current architecture.
 
 ---
 
@@ -71,29 +92,43 @@ likely an information-theoretic or entropy argument on eigenfunction localizatio
 (Definition `def:realization_map`). Its abstract properties are not yet developed.
 
 **The question:**
-Which summation/approximation methods induce $c$-uniformly stable projections
+When does an asymptotic procedure induce a well-defined projection
 $\mathfrak{R}: \mathcal{B} \to \mathcal{S}/{\sim_{\mathcal{S}}}$?
 
-**Candidate abstract framework:**
-A summation method $M$ acting on $\sum_{j=1}^K j^\sigma$
-*induces a stable projection* if:
-1. **Leading-power extraction:** $M[\sum j^\sigma] = a_\sigma K^{1+\sigma} + R_M(K)$
-2. **Uniform remainder:** $|R_M(K)| \leq C_M K^{\sigma-1}$, $C_M$ independent of $K, c$
-3. **Scaling invariance:** $C_M$ independent of all external parameters
+**The projection axiomatics** *(added 2026-05-08)*
 
-Euler–Maclaurin is the canonical example.
-The question is whether this is a *characterization* or merely a sufficient condition.
+Once $\mathfrak{R}$ is understood not as a WKB-specific construction
+but as a general map from analytic bounds to asymptotic classes,
+the following questions become well-posed:
 
-**Possible results:**
-- Classification theorem: which methods satisfy (1)–(3)
-- Stability functor: $\mathfrak{R}_M$ as a functor from summation methods to projection stability classes
-- Obstruction: which structural deformations of $M$ destroy $c$-uniform stability
+1. **Well-definedness:** when does $b(K,c)$ have a unique image in
+   $\mathcal{S}/{\sim_{\mathcal{S}}}$? (Answer for WKB: iff prefactor is $c$-admissible.)
+2. **Stability axioms:** which properties of a summation/regularization method
+   guarantee that the image is $c$-uniformly stable?
+   Candidate axioms: leading-power extraction, uniform remainder control,
+   scaling invariance of coefficients. Is this list complete?
+3. **Projection fidelity:** when does $\mathfrak{R}(b_1 + b_2) = \mathfrak{R}(b_1)$
+   (i.e. when does the dominant term dominate after projection)?
+4. **Collapse conditions:** which deformations of the summation method
+   destroy $c$-uniform stability while preserving the target order $\succ$?
+   (This is exactly `lem:S2_knockdown` in abstract form.)
+5. **Equivalence classes of methods:** when do two different methods
+   induce the same projection $\mathfrak{R}$?
+   This gives an equivalence relation on summation methods,
+   coarser than functional equality.
 
-**Why this extends the theory rather than decorating it:**
+**Why this is not decoration:**
 The four-layer architecture (analytic / projective / asymptotic / ordinal)
 is currently instantiated once, for WKB power-sum bounds.
-A projection theory would make the framework reusable for other operator classes
-where similar two-scale problems arise.
+A projection theory would:
+- make the framework reusable for other operator classes
+  where similar two-scale problems arise
+- give intrinsic meaning to S2 beyond its WKB instantiation
+- connect to existing theory (regular variation, Tauberian theorems,
+  asymptotic algebras) from a new angle
+
+This direction begins to leave Spectral Theory proper
+and move toward a general *asymptotic structure theory*.
 
 ---
 
@@ -102,15 +137,17 @@ where similar two-scale problems arise.
 ```
 O1 (envelope minimality)
   └── self-contained within M(S1,S2,S3)
+  └── directly coupled to S3 (diagonal compression)
   └── requires: reverse FOC analysis on f(log c)
 
 O3a (outside M)
-  └── requires: new proof strategy (entropy / localization)
+  └── requires: new proof mode (localization / entropy / semiclassical)
   └── independent of O1
 
 Direction 3 (projection theory)
-  └── subsumes O1 (as a special case of stable projections)
-  └── gives context for O3a (what it means to leave M)
+  └── subsumes O1 as special case of stable projections
+  └── gives abstract context for O3a (exiting M = losing projection stability)
+  └── connects to regular variation, Tauberian theory, asymptotic algebras
   └── longest horizon; highest abstraction
 ```
 
@@ -118,11 +155,12 @@ Direction 3 (projection theory)
 
 ## Priority assessment
 
-| Direction | Horizon | Blocking O? | Standalone paper? |
+| Direction | Horizon | Closes open claim? | Standalone paper? |
 |---|---|---|---|
-| O1 | Medium | Yes (closes XX) | Yes |
-| O3a | Long | No | Possibly, with H3 |
-| Projection theory | Long | No | Programme paper XXI? |
+| O1 | Medium | Yes (necessity in XX) | Yes |
+| O3a | Long | No (O3a open by design) | Possibly, with H3 |
+| Direction 3 | Long | No | Programme paper XXI? |
 
 *O1 is the natural next target: contained, closes an open claim in XX,
+coupled to S3 via diagonal compression,
 and its resolution (either way) has immediate implications for the programme.*
