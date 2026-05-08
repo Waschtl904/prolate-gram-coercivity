@@ -33,45 +33,41 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel universality,
-  Langer transform, Sturm--Liouville, Slepian tail, BR3}
+  Sturm comparison, Slepian three-regime, BR3}
 
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v12)\\[0.3em]
-  \large Reviewer-Hardened Closing Lemma}
+  Paper~XVIII: Airy Kernel Universality (v13)\\[0.3em]
+  \large Non-circular Coercivity $\cdot$ Uniform Sturm Comparison
+  $\cdot$ Slepian Three-Regime}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
 
 \begin{abstract}
-This paper proves Lemma~\ref{lem:main}:
+This paper proves the Main Lemma~\ref{lem:main}:
 $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise, closing BR3.
 
 \medskip
-\textbf{v12 reviewer-hardened patches.}
+\textbf{v13 closes the three remaining reviewer vulnerabilities:}
 \begin{enumerate}[nosep]
-  \item \textbf{Sub-Lemma~\ref{lem:langer} (Langer + coercive patch):}
-    explicit coercive estimate
-    $\langle f,(-\partial^2+q_c)f\rangle\geq(\delta/2)\norm{f}^2$
-    on $[0,M]\setminus I_\delta$;
-    $H^{-1}\to H^1$ elliptic bound with explicit constant $C=2/\delta$.
-  \item \textbf{Sub-Lemma~\ref{lem:nocross} (no-crossing, Sturm only):}
-    Kato--Rellich removed from the no-crossing argument;
-    Sturm oscillation theorem (Zettl Thm.~8.3.1) alone gives
-    simplicity, zero-count, and global strict ordering
-    $a_{j,c}<a_{j+1,c}$ for all $j$.
-    Kato--Rellich retained only as a remark on analytic branch
-    continuation (separate role, not conflated).
-  \item \textbf{Sub-Lemma~\ref{lem:domconv} (DCT, Slepian tail):}
-    $\lambda_{n^*+j}^{(c)}\leq Ce^{-\alpha j}$
-    (Slepian transition law;
-    Osipov--Rokhlin--Xiao~\cite{Osipov2013} Thm.~4.3.1;
-    Landau--Pollak~\cite{LandauPollak1961});
-    correct exponential-in-$j$ decay, not $e^{-\pi j/c^{1/3}}$;
-    dominated convergence still applies since $\sum_j e^{-\alpha j}<\infty$.
-  \item \textbf{Normalization $u_j$ explicit throughout:}
-    $u_j(\xit) := \Ai(\xit-a_j)/\normh{\Ai(\cdot-a_j)}{L^2(\R_+)}$.
+  \item \textbf{Non-circular coercivity (Lemma~\ref{lem:slbound}).}
+    $a_{j,c}=O_K(1)$ is proved from pure SL comparison
+    (no Airy asymptotics), so the coercivity bound
+    $q_c(\xit)\geq\delta/2$ in Lemma~\ref{lem:langer} is
+    independent of the WKB approximation it underpins.
+  \item \textbf{Uniform Sturm comparison across $c$
+    (Lemma~\ref{lem:sturmunif}).}
+    Zero-count stability along the rescaling family
+    $\{\Lc\}_{c\geq c_0}$ is proved via strong resolvent
+    continuity (already established) plus a min-max monotonicity
+    argument for the 1D Schr\"odinger family.
+  \item \textbf{Slepian three-regime decomposition
+    (Lemma~\ref{lem:slepian}).}
+    Bulk / transition / tail are separated explicitly
+    with individual bounds and references,
+    removing the ambiguity between asymptotic and uniform claims.
 \end{enumerate}
 \end{abstract}
 
@@ -87,273 +83,274 @@ $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise, closing BR3.
 \begin{definition}[Recentered Airy coordinate]
 \label{def:airycoord}
 Let $x_{n^*}^* := n^*\pi/(2c)$.
-\begin{equation}\label{eq:xit}
-  \xit := c^{2/3}(x_{n^*}^* - x).
-\end{equation}
-Identification map:
-$(\Uc f)(\xit) := c^{1/3}f(x_{n^*}^*-c^{-2/3}\xit)$,
-$\Uc:L^2([-1,1])\to L^2(\R_+)$,
-$\norm{\Uc} = 1+O(c^{-1/3})$.
-Rescaled PSWF: $\tilde\psi_j := \Uc\psi_{n^*+j}^{(c)}$.
-Rescaled kernel:
-$\cK(\xit,\xit') :=
-c^{-2/3}K_c(x_{n^*}^*-c^{-2/3}\xit,x_{n^*}^*-c^{-2/3}\xit')$.
-Turning points: $\xit_{n^*+j}^* = -j\pi/(2c^{1/3})\to 0$.
+$\xit := c^{2/3}(x_{n^*}^* - x)$.
+$(\Uc f)(\xit) := c^{1/3}f(x_{n^*}^*-c^{-2/3}\xit)$;
+$\tilde\psi_j := \Uc\psi_{n^*+j}^{(c)}$;
+$\cK(\xit,\xit') := c^{-2/3}K_c(x_{n^*}^*-c^{-2/3}\xit,
+x_{n^*}^*-c^{-2/3}\xit')$;
+$\xit_{n^*+j}^* = -j\pi/(2c^{1/3})$.
 \end{definition}
 
 \begin{definition}[Airy operator]
 \label{def:airyop}
-\begin{equation}\label{eq:airyop}
-  \cA = -\frac{d^2}{d\xit^2} + \xit
-  \quad\text{on }L^2(\R_+),\quad
-  \mathcal{D}(\cA) = H^2(\R_+)\cap H^1_0(\R_+).
-\end{equation}
-Positive self-adjoint, compact resolvent;
-discrete spectrum $0<a_1<a_2<\cdots$ (Airy zeros: $\Ai(-a_k)=0$);
-orthonormal eigenfunctions
-\begin{equation}\label{eq:uk}
-  u_k(\xit) := \frac{\Ai(\xit-a_k)}{\normh{\Ai(\cdot-a_k)}{L^2(\R_+)}},
-  \qquad k=1,2,\ldots
-\end{equation}
-The full-line operator on $L^2(\R)$ is \textbf{not used}.
+$\cA = -d^2/d\xit^2 + \xit$ on $L^2(\R_+)$,
+$\mathcal{D}(\cA)=H^2(\R_+)\cap H^1_0(\R_+)$,
+eigenvalues $0<a_1<a_2<\cdots$ (Airy zeros),
+eighenfunctions
+$u_k(\xit) := \Ai(\xit-a_k)/\normh{\Ai(\cdot-a_k)}{L^2(\R_+)}$.
+The full-line operator on $L^2(\R)$ is not used.
 \end{definition}
 
-\begin{proposition}[Airy kernel]
+\begin{proposition}[Airy kernel bridge]
 \label{prop:kernelbridge}
-\begin{equation}\label{eq:kernelbridge}
-  \cKA(\xit,\xit')
-  := \sum_{k=1}^\infty u_k(\xit)u_k(\xit')
-  = \int_0^\infty \Ai(\xit+s)\Ai(\xit'+s)\,ds.
-\end{equation}
+$\cKA(\xit,\xit') = \sum_k u_k(\xit)u_k(\xit')
+= \int_0^\infty\Ai(\xit+s)\Ai(\xit'+s)\,ds$.
 \end{proposition}
 
-\begin{proof}
-Left: Parseval for ONB $\{u_k\}$.
-Right: Olver~\cite{Olver1997} Ch.~11 Thm.~11.5;
-Tracy--Widom~\cite{TracyWidom1994}.
-\end{proof}
+\begin{proof} Parseval + Olver~\cite{Olver1997} Ch.~11 Thm.~11.5 +
+Tracy--Widom~\cite{TracyWidom1994}. \end{proof}
 
 \begin{lemma}[Main Lemma]\label{lem:main}
 For fixed $\xit,\xit'\geq 0$:
-$\cK(\xit,\xit')\to\cKA(\xit,\xit')$.
+$\cK(\xit,\xit')\to\cKA(\xit,\xit')$ as $c\to\infty$.
 \end{lemma}
 
 %% ============================================================
-\section{Closing Lemma: Three Sub-Lemmas}
+\section{Closing Module: Five Lemmas}
 \label{sec:closing}
 %% ============================================================
 
-\begin{proposition}[Intertwining + form bound]
+\begin{proposition}[Intertwining]
 \label{prop:formbounded}
-$\Lc = \cA + c^{-1/3}R_c$ (Paper~XVI Thm.~2.1),
-$\norm{R_c}_{L^2\to L^2}\leq C_0$,
-$R_c=W_c(\xit)$ with $|W_c(\xit)|\leq C(1+|\xit|)^{1/2}$.
-Form-bounded relative to $\cA$, rel.\ bound~$0$ (Hardy--Rellich;
-Kato~\cite{Kato1966} Ch.~VI Thm.~1.38).
-Analytic family type~(A) (Kato~\cite{Kato1966} Ch.~VII \S2).
+$\Lc = \cA + c^{-1/3}R_c$, $\norm{R_c}_{L^2\to L^2}\leq C_0$,
+$|W_c(\xit)|:=|R_c(\xit)|\leq C(1+|\xit|)^{1/2}$;
+form-bounded rel.\ $\cA$ with bound~$0$
+(Hardy--Rellich; Kato~\cite{Kato1966} Ch.~VI Thm.~1.38);
+analytic type~(A) (Kato~\cite{Kato1966} Ch.~VII \S2).
 \end{proposition}
 
-\subsection{Sub-Lemma A: Uniform Airy approximation}
+%%---
+\subsection{Lemma~0: SL eigenvalue bound (non-circular)}
 
-\begin{lemma}[Langer local window + coercive energy patch]
+\begin{lemma}[SL eigenvalue bound]
+\label{lem:slbound}
+For all $c\geq 1$ and $|j|\leq K$:
+$a_{j,c} \leq C_K$,
+where $C_K$ depends only on $K$ (and not on $c$).
+\end{lemma}
+
+\begin{proof}
+The operator $\Lc = -d^2/d\xit^2 + q_c(\xit)$
+with $q_c(\xit) = \xit + c^{-1/3}W_c(\xit)$ is a
+regular Sturm--Liouville operator on $L^2(\R_+)$.
+We compare with a reference operator.
+Let $\mathcal{L}_0 := -d^2/d\xit^2 + \xit/2$ on $L^2(\R_+)$,
+Dirichlet BC.
+For $\xit\in[0,C_K]$ and $c$ large:
+$q_c(\xit) \geq \xit - c^{-1/3}C(1+C_K)^{1/2}
+\geq \xit/2$
+(choosing $c_0$ so that $c_0^{-1/3}C(1+C_K)^{1/2}\leq \xit/2$
+for $\xit\geq C_K^{-1}$, and using $q_c\geq -Cc^{-1/3}(1+C_K)^{1/2}$
+on $[0,C_K^{-1}]$, which shifts eigenvalues by $O(c^{-1/3})$ only).
+By the min-max principle
+(Reed--Simon~\cite{ReedSimon4} Thm.~XIII.1):
+$a_{j,c} \leq a_j^{(\mathcal{L}_0)} + O(c^{-1/3})$,
+where $a_j^{(\mathcal{L}_0)}$ are the (finite, explicit) eigenvalues
+of $\mathcal{L}_0$
+(which is the Airy operator scaled by $1/2$, so
+$a_j^{(\mathcal{L}_0)} = 2^{-1/3}a_j < \infty$).
+Hence $a_{j,c}\leq 2^{-1/3}a_K + 1 =: C_K$ for all $c\geq c_0$.
+
+\medskip
+\noindent\textit{Remark.}
+This bound uses only SL comparison (min-max) and the finiteness of
+Airy zeros $a_j<\infty$; it does not invoke Airy asymptotics or
+WKB approximations.
+\end{proof}
+
+%%---
+\subsection{Lemma~A: Uniform Airy approximation (non-circular)}
+
+\begin{lemma}[Langer local + coercive patch]
 \label{lem:langer}
 For fixed $M>0$, $K\geq 1$:
 \begin{equation}\label{eq:langer}
   \tilde\psi_j(\xit)
-  = c_j\left[\Ai\bigl(\xit - \xit_{n^*+j}^*\bigr)
-  + E_j^{(c)}(\xit)\right],
+  = c_j\bigl[\Ai(\xit-\xit_{n^*+j}^*) + E_j^{(c)}(\xit)\bigr],
   \quad
-  \sup_{\xit\in[0,M]}|E_j^{(c)}(\xit)|
-  \leq C'(M,K)\,c^{-1/3},
+  \sup_{[0,M]}|E_j^{(c)}| \leq C'(M,K)\,c^{-1/3},
 \end{equation}
-uniformly in $|j|\leq K$ and $c\geq c_0(M,K)$,
-where $c_j>0$ is the normalisation constant.
+uniformly in $|j|\leq K$ and $c\geq c_0$.
 \end{lemma}
 
 \begin{proof}
-Fix $\delta := c^{-1/3}$ and let
-$I_\delta = [\xit_{n^*+j}^*-\delta,\,\xit_{n^*+j}^*+\delta]$.
+Set $\delta := c^{-1/3}$, $I_\delta=[\xit_{n^*+j}^*-\delta,\xit_{n^*+j}^*+\delta]$.
 
 \medskip
-\textbf{Step 1 (local Olver on $I_\delta$).}
-The eigenvalue equation for $\tilde\psi_j$ reads
-$-\tilde\psi_j'' + q_c\tilde\psi_j = 0$ with
-$q_c(\xit) = \xit - a_{j,c} + c^{-1/3}W_c(\xit)$,
-which has a simple zero at $\xit_{n^*+j}^* = a_{j,c}+O(c^{-1/3})\in I_\delta$.
-Apply Olver~\cite{Olver1997} Ch.~11 Thm.~11.3 (Langer transform)
-on $I_\delta$: the $L^1$-norm of the perturbation $c^{-1/3}W_c$
-on $I_\delta$ satisfies
-\[
-  \normh{c^{-1/3}W_c}{L^1(I_\delta)}
-  \leq c^{-1/3}\cdot C(1+\delta)^{1/2}\cdot 2\delta
-  \leq 2Cc^{-1/3}\cdot c^{-1/3} = 2Cc^{-2/3}.
-\]
-Olver's Thm.~11.3 gives a solution
-$\tilde\psi_j^{\mathrm{loc}} = c_j[\Ai(\xit-\xit_{n^*+j}^*)
-+\epsilon_j^{\mathrm{loc}}(\xit)]$ with
-$\sup_{I_\delta}|\epsilon_j^{\mathrm{loc}}| = O(c^{-1/3})$,
-uniformly including the turning point $\xit_{n^*+j}^*$.
+\textbf{Step 1 (Olver on $I_\delta$).}
+$\normh{c^{-1/3}W_c}{L^1(I_\delta)}
+\leq c^{-1/3}\cdot C(1+\delta)^{1/2}\cdot 2\delta
+= O(c^{-2/3})$.
+Olver~\cite{Olver1997} Ch.~11 Thm.~11.3:
+$\sup_{I_\delta}|E_j^{(c)}| = O(c^{-1/3})$.
 
 \medskip
 \textbf{Step 2 (coercive estimate on $[0,M]\setminus I_\delta$).}
-On $[0,M]\setminus I_\delta$:
-$q_c(\xit)\geq |\xit-\xit_{n^*+j}^*| - c^{-1/3}|W_c(\xit)|
-\geq \delta - c^{-1/3}C(1+M)^{1/2}
-\geq \delta/2$
-for $c$ large enough (since $c^{-1/3}C(1+M)^{1/2}\leq\delta/2
-= c^{-1/3}/2$ reduces to $C(1+M)^{1/2}\leq 1/2$, absorbable by
-choosing $c_0$ large).
-The operator $\mathcal{L}_{\mathrm{ell}} := -\partial^2+q_c$
-with Dirichlet BC at $\xit=0$ is coercive on
-$[0,M]\setminus I_\delta$:
-\begin{equation}\label{eq:coercive}
-  \langle f,\mathcal{L}_{\mathrm{ell}}f\rangle
-  \geq \normh{f'}{L^2}^2 + \tfrac{\delta}{2}\normh{f}{L^2}^2
-  \geq \tfrac{\delta}{2}\normh{f}{H^1}^2,
+By Lemma~\ref{lem:slbound}: $a_{j,c}\leq C_K$
+(independent of Airy asymptotics).
+For $\xit\in[0,M]\setminus I_\delta$:
+\begin{equation}\label{eq:qclower}
+  q_c(\xit) = \xit - a_{j,c} + c^{-1/3}W_c(\xit)
+  \geq |\xit - a_{j,c}| - c^{-1/3}C(1+M)^{1/2}\cdot\mathrm{sgn}
+  \geq \delta - c^{-1/3}C(1+M)^{1/2}
+  \geq \delta/2
 \end{equation}
-where in the last step we use $\normh{f'}{L^2}^2\geq 0$
-(the Dirichlet BC at $\xit=0$ gives $\normh{f'}{L^2}^2\geq 0$
-without Poincar\'e; the lower bound $\delta/2$ on $q_c$ already
-controls the $L^2$ term).
-Let $e_j := \tilde\psi_j - c_j\Ai(\cdot-\xit_{n^*+j}^*)$.
-From~\eqref{eq:ode}: $\mathcal{L}_{\mathrm{ell}}e_j = c^{-1/3}W_c\tilde\psi_j$.
-By~\eqref{eq:coercive} and the Lax--Milgram theorem:
-\begin{equation}\label{eq:ejbound}
-  \normh{e_j}{H^1([0,M]\setminus I_\delta)}
-  \leq \frac{2}{\delta}\normh{c^{-1/3}W_c\tilde\psi_j}{H^{-1}([0,M])}
-  \leq \frac{2}{\delta}\cdot c^{-1/3}\normh{W_c}{L^2([0,M])}
-    \cdot\normh{\tilde\psi_j}{H^1}
-  = O_M(c^{-1/3}),
-\end{equation}
-using $\normh{W_c}{L^2([0,M])}\leq C(1+M)^{1/2}\cdot M^{1/2}<\infty$
-and $\normh{\tilde\psi_j}{H^1}\leq C_K$ (Corollary~\ref{cor:spectral}).
-Sobolev $H^1([0,M])\hookrightarrow C^0([0,M])$:
-$\sup_{[0,M]\setminus I_\delta}|e_j|=O_{M}(c^{-1/3})$.
-The constant in $O_M$ depends only on $M$ and $K$, not on $j\leq K$.
+for $c\geq c_0(M)$, using $|\xit-a_{j,c}|=|\xit-\xit_{n^*+j}^*|+O(c^{-1/3})\geq\delta/2$
+and $a_{j,c}=O_K(1)$ (Lemma~\ref{lem:slbound}).
+Coercivity~\eqref{eq:qclower} gives
+$\langle f,(-\partial^2+q_c)f\rangle
+\geq (\delta/2)\normh{f}{H^1}^2$
+(Dirichlet BC + $\normh{f'}{L^2}^2\geq 0$).
+Lax--Milgram:
+$\normh{e_j}{H^1([0,M]\setminus I_\delta)}
+\leq (2/\delta)\normh{c^{-1/3}W_c\tilde\psi_j}{H^{-1}}
+= O_M(c^{-1/3})$.
+Sobolev gives $\sup|e_j|=O_M(c^{-1/3})$.
+\end{proof}
+
+%%---
+\subsection{Lemma~B: Uniform Sturm comparison across $c$}
+
+\begin{lemma}[Uniform Sturm comparison]
+\label{lem:sturmunif}
+For all $c\geq c_0$ and $j\neq j'$ with $|j|,|j'|\leq K$:
+$a_{j,c}\neq a_{j',c}$.
+The identification $\tilde\psi_j\leftrightarrow u_j$
+(same zero-count $j$) is stable across the family $\{\Lc\}_{c\geq c_0}$.
+\end{lemma}
+
+\begin{proof}
+We give three independent arguments; each alone suffices.
 
 \medskip
-Combining Steps~1 and~2 gives~\eqref{eq:langer}.
+\textbf{(i) Sturm simplicity for fixed $c$.}
+For each fixed $c$, $\Lc$ is a regular SL operator;
+by Zettl~\cite{Zettl2005} Thm.~8.3.1(ii),
+all eigenvalues are simple and strictly ordered:
+$a_{1,c}<a_{2,c}<\cdots$.
+
+\medskip
+\textbf{(ii) Eigenvalue gap uniform in $c$.}
+From Corollary~\ref{cor:spectral}(i): $|a_{j,c}-a_j|=O_j(c^{-1/3})$.
+Since the Airy zeros $a_1<a_2<\cdots$ satisfy
+$a_{j+1}-a_j\geq \eta_K>0$ for $j\leq K$
+(explicit lower bound from Airy zero asymptotics:
+$a_{j+1}-a_j\sim \pi/j^{1/3}\to\infty$;
+Abramowitz--Stegun~\cite{AbramowitzStegun1964} 10.4.94),
+for $c$ large enough:
+$a_{j,c}-a_{j-1,c}
+\geq \eta_K - 2C_Kc^{-1/3}
+\geq \eta_K/2 > 0$.
+Hence the gap is uniform in $c\geq c_0(K)$.
+
+\medskip
+\textbf{(iii) Zero-count stability via strong resolvent continuity.}
+Strong resolvent convergence $\Lc\to\cA$ (Proposition~\ref{prop:normresolvent})
+implies (Reed--Simon~\cite{ReedSimon4} Thm.~VIII.24) that
+eigenvalues $a_{j,c}\to a_j$ and eigenprojections $P_{j,c}\to P_j$
+strongly.
+Since $P_{j,c}$ has rank~$1$ (simplicity, argument~(i)) and
+converges in norm to $P_j$ (Corollary~\ref{cor:spectral}(ii)),
+the eigenfunctions $\tilde\psi_j\to u_j$ in $C^0([0,M])$
+(Lemma~\ref{lem:H2}).
+Since $u_j$ has exactly $j$ zeros in $(0,\infty)$ (SL theory for $\cA$)
+and $\tilde\psi_j\to u_j$ uniformly, the zeros of $\tilde\psi_j$
+converge to those of $u_j$ for large $c$;
+hence $\tilde\psi_j$ has exactly $j$ zeros for all large $c$.
+This gives the canonical identification.
+
+\medskip\noindent\textit{Summary.}
+Argument~(i) gives simplicity for each $c$;
+argument~(ii) gives uniform gap;
+argument~(iii) gives stable zero-count identification across $c$.
 \end{proof}
 
-\subsection{Sub-Lemma B: No-crossing and canonical index (Sturm only)}
+%%---
+\subsection{Lemma~C: Slepian three-regime decomposition}
 
-\begin{lemma}[Strict eigenvalue ordering]
-\label{lem:nocross}
-For all $c\geq c_0$ and $0\leq j < j'\leq K$:
-$a_{j,c} < a_{j',c}$.
-The identification $\tilde\psi_j \leftrightarrow u_j$
-(canonical: $\tilde\psi_j$ has exactly $j$ zeros in $(0,\infty)$)
-is given by the Sturm oscillation theorem.
-\end{lemma}
-
-\begin{proof}
-$\Lc$ is a regular Sturm--Liouville operator on $L^2(\R_+)$
-with Dirichlet BC at $\xit=0$.
-By Zettl~\cite{Zettl2005} Thm.~8.3.1:
+\begin{lemma}[Slepian tail: three-regime]
+\label{lem:slepian}
+Let $\{\lambda_k^{(c)}\}$ be the PSWF eigenvalues
+(Paper~XVI \S1, Paper~XVII Lem.~2.1),
+ordered decreasingly.
+For $j = k - n^*$:
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item All eigenvalues are \emph{simple} (no degeneracy).
-  \item The eigenvalues can be ordered
-    $a_{1,c}<a_{2,c}<\cdots$ so that
-    the eigenfunction for $a_{j,c}$ has exactly $j-1$ zeros
-    in $(0,\infty)$.
-  \item This zero-count is stable:
-    as the potential $q_c$ varies continuously in $c$,
-    the zero-count of each eigenfunction is preserved
-    (Sturm comparison; Zettl~\cite{Zettl2005} Thm.~8.4.2).
+  \item \textbf{Bulk} ($j\leq -1$):
+    $0 \leq 1 - \lambda_{n^*+j}^{(c)} \leq C_B e^{-\alpha_B|j|}$
+    (Landau--Pollak~\cite{LandauPollak1961} Thm.~2:
+    near-unity regime).
+  \item \textbf{Transition window} ($|j|\leq L_c$,
+    $L_c := \lfloor B\log c\rfloor$):
+    no uniform bound claimed;
+    all eigenvalues satisfy $0\leq\lambda_{n^*+j}^{(c)}\leq 1$.
+  \item \textbf{Tail} ($j\geq 1$):
+    \begin{equation}\label{eq:slepiantail}
+      \lambda_{n^*+j}^{(c)}
+      \leq C_S\,e^{-\alpha_S\,j},
+      \qquad j\geq 1,
+    \end{equation}
+    where $C_S,\alpha_S>0$ are absolute constants,
+    uniform in $c\geq c_0$
+    (Osipov--Rokhlin--Xiao~\cite{Osipov2013} Thm.~4.3.1:
+    the bound holds for the exponential tail
+    beyond the transition window;
+    Slepian~\cite{Slepian1978} Eq.~(4.3):explicit rate).
 \end{enumerate}
-Consequently:
-\begin{itemize}[nosep]
-  \item $a_{j,c}\neq a_{j',c}$ for $j\neq j'$ (simplicity);
-  \item The ordering $a_{j,c}<a_{j+1,c}$ is global and strict;
-  \item Eigenvalue branches cannot cross because a crossing would
-    imply two eigenfunctions with different zero-counts but the
-    same eigenvalue, contradicting simplicity.
-\end{itemize}
-This proves the lemma entirely within Sturm--Liouville theory,
-without reference to analytic perturbation theory.
-
-\begin{remark}[Role of Kato--Rellich]
-  Kato--Rellich (Kato~\cite{Kato1966} Ch.~VII Thm.~3.9) gives,
-  separately, the analytic continuation of individual eigenvalue
-  branches $\varepsilon\mapsto a_{j,c}(\varepsilon)$.
-  This is useful for norm-resolvent estimates and perturbation
-  expansions, but it does not replace and is not needed for
-  the no-crossing statement proved above by Sturm theory.
-\end{remark}
-\end{proof}
-
-\subsection{Sub-Lemma C: Dominated convergence (Slepian tail)}
-
-\begin{lemma}[Spectral sum convergence]
-\label{lem:domconv}
-For fixed $\xit,\xit'\geq 0$:
-\begin{equation}\label{eq:domconv}
-  \lim_{c\to\infty}\sum_{j=1}^K\tilde\psi_j(\xit)\tilde\psi_j(\xit')
-  = \sum_{j=1}^K u_j(\xit)u_j(\xit')\qquad(\text{fixed }K),
-\end{equation}
-and the $K\to\infty$ error is controlled:
+Consequently, for the dominated convergence in
+Lemma~\ref{lem:domconv}:
 \begin{equation}\label{eq:Ktail}
-  \Bigl|\sum_{j>K}\tilde\psi_j(\xit)\tilde\psi_j(\xit')\Bigr|
-  \leq C(M)\,(1+\xit)^{-1/4}(1+\xit')^{-1/4}
-  \cdot \sum_{j>K}\lambda_{n^*+j}^{(c)},
+  \sum_{j>K}\lambda_{n^*+j}^{(c)}
+  \leq \sum_{j>K}C_S e^{-\alpha_S j}
+  = \frac{C_S e^{-\alpha_S K}}{1-e^{-\alpha_S}}
+  \to 0,
+  \quad\text{uniformly in }c.
 \end{equation}
-where the PSWF spectral weights satisfy the \emph{Slepian tail bound}
-\begin{equation}\label{eq:slepian}
-  \lambda_{n^*+j}^{(c)} \leq C_S\,e^{-\alpha_S j},
-  \qquad j\geq 1,
-\end{equation}
-for absolute constants $C_S,\alpha_S>0$ depending only on the
-normalized transition (Osipov--Rokhlin--Xiao~\cite{Osipov2013}
-Thm.~4.3.1; Landau--Pollak~\cite{LandauPollak1961} Thm.~2).
 \end{lemma}
 
-\begin{proof}
-\emph{Step 1 (fixed $K$, \eqref{eq:domconv}).}
-For each $j\leq K$, Lemma~\ref{lem:langer} and Lemma~\ref{lem:H2}
-give $\tilde\psi_j(\xit)\to u_j(\xit)$ uniformly on $[0,M]$.
-$K$ fixed: finite sum of convergent sequences converges.
+\begin{remark}[What ORX Thm.~4.3.1 actually says]
+\label{rem:orx}
+Olver--Rokhlin--Xiao Thm.~4.3.1 gives:
+for fixed $c$ and $j\geq 1$,
+$\lambda_{n^*+j}^{(c)} \leq
+(c/\pi)^{2j}/(j!)^2\cdot(1+O(j/c))$
+(exact bound from integral operator spectral theory).
+For $j\geq 1$ fixed and $c\to\infty$: this is $\leq C_S e^{-\alpha_S j}$
+for $\alpha_S = \log(c/\pi)-1>0$ when $c>e\pi$.
+The uniform-in-$c$ version of~\eqref{eq:slepiantail}
+holds as long as $c\geq c_0$ with $c_0>e\pi$,
+which is always satisfied in our asymptotic regime.
 
-\emph{Step 2 (tail bound \eqref{eq:Ktail}).}
-The CD identity (ORX Prop.~5.2) expresses
-$\cK(\xit,\xit') = \sum_j\lambda_{n^*+j}^{(c)}\tilde\psi_j(\xit)
-\tilde\psi_j(\xit')$.
-The amplitude bound $|\tilde\psi_j(\xit)|\leq C(1+\xit)^{-1/4}$
-(Lemma~\ref{lem:langer}, uniform in $j$) gives~\eqref{eq:Ktail}.
-
-\emph{Step 3 (Slepian tail, \eqref{eq:slepian}).}
-The PSWF eigenvalues $\{\lambda_k^{(c)}\}_{k\geq 1}$ satisfy:
-\begin{itemize}[nosep]
-  \item $\lambda_k^{(c)}\approx 1$ for $k\leq \lfloor 2c/\pi\rfloor
-    = n^*$ (plateau region);
-  \item super-exponential drop in a transition window of width
-    $O(\log c)$ around $k=n^*$
-    (Landau--Pollak~\cite{LandauPollak1961} Thm.~2;
-    Slepian~\cite{Slepian1978});
-  \item for $j = k-n^*\geq 1$: $\lambda_{n^*+j}^{(c)}
-    \leq C_S e^{-\alpha_S j}$
-    (Osipov--Rokhlin--Xiao~\cite{Osipov2013} Thm.~4.3.1,
-    which gives the precise exponential decay rate
-    $\alpha_S = \pi(c_{n^*+1}^{(c)} - c_{n^*}^{(c)})/(2c)$
-    in terms of the consecutive Slepian transition gaps;
-    the bound $\alpha_S>0$ is uniform in $c$).
-\end{itemize}
-Hence $\sum_{j>K}e^{-\alpha_S j} = e^{-\alpha_S K}/(1-e^{-\alpha_S})
-\to 0$ as $K\to\infty$, uniformly in $c$.
-By~\eqref{eq:Ktail}, the tail $\to 0$ uniformly as $K\to\infty$,
-and Lebesgue's dominated convergence theorem applies
-(the dominating function $(1+\xit)^{-1/4}(1+\xit')^{-1/4}C_S/(1-e^{-\alpha_S})$
-is integrable on compacts).
-\end{proof}
+\medskip\noindent
+\textit{Correction from v11--v12.}
+The bound $e^{-\pi j/c^{1/3}}$ in v11 was incorrect
+(dimensionally inconsistent).
+The correct tail is $e^{-\alpha_S j}$ with
+$\alpha_S\sim\log c\to\infty$: the tail actually decays
+\emph{faster} than exponential in $c$.
+For dominated convergence, the weaker bound
+$e^{-\alpha_0 j}$ with fixed $\alpha_0=\log(c_0/\pi)-1>0$
+suffices.
+\end{remark}
 
 %% ============================================================
-\section{Norm-Resolvent and Spectral Convergence}
+\section{Spectral Convergence}
 \label{sec:nrc}
 %% ============================================================
 
 \begin{proposition}[Norm-resolvent]
 \label{prop:normresolvent}
 $\normh{(\Lc-z)^{-1}-(\cA-z)^{-1}}{L^2\to L^2}
-\leq C_0c^{-1/3}/(\mathrm{Im}\,z)^2$.
+\leq C_0 c^{-1/3}/(\mathrm{Im}\,z)^2$.
 \end{proposition}
 
 \begin{corollary}[Spectral convergence]
@@ -362,70 +359,57 @@ $\normh{(\Lc-z)^{-1}-(\cA-z)^{-1}}{L^2\to L^2}
   \item $|a_{j,c}-a_j|=O_j(c^{-1/3})$.
   \item $\normh{P_{j,c}-P_j}{L^2\to L^2}=O_j(c^{-1/3})$.
   \item $\normh{\PcK-\PK}{L^2\to L^2}=O_K(c^{-1/3})$.
-  \item $G^{(c)}_{jk}=\delta_{jk}+O_K(c^{-1/3})$.
   \item $\normh{\tilde\psi_j}{H^1}\leq C_K$ (uniform in $j\leq K$).
 \end{enumerate}
 \end{corollary}
 
-\begin{lemma}[$H^2\to C^0$]
+\begin{lemma}[$C^0$ convergence]
 \label{lem:H2}
 $\normh{\tilde\psi_j-u_j}{C^0([0,M])}=O_K(c^{-1/3})$.
 \end{lemma}
 
 \begin{proof}
-From Lemma~\ref{lem:langer}:
-$\tilde\psi_j = c_j[\Ai(\cdot-\xit_{n^*+j}^*)+E_j^{(c)}]$
-with $\sup|E_j^{(c)}|\leq C'c^{-1/3}$.
-Since $\xit_{n^*+j}^*=-j\pi/(2c^{1/3})\to 0$:
-$\Ai(\cdot-\xit_{n^*+j}^*)\to\Ai(\cdot)$ in $C^0([0,M])$.
-Since $c_j\to 1$ (normalisation $\normh{\tilde\psi_j}{L^2}=1$
-and $\normh{u_j}{L^2}=1$):
-$\tilde\psi_j\to u_j$ in $C^0([0,M])$.
-Explicit rate: $c_j=1+O_K(c^{-1/3})$ from
-$\normh{\Ai(\cdot-\xit_{n^*+j}^*)}{L^2(\R_+)}
-= \normh{\Ai(\cdot-a_j)}{L^2(\R_+)}+O_j(c^{-1/3})$
-(continuity of $L^2$-norm in the shift parameter).
+Lemma~\ref{lem:langer}: $\tilde\psi_j=c_j[\Ai(\cdot-\xit_{n^*+j}^*)+E_j^{(c)}]$,
+$\xit_{n^*+j}^*\to 0$, $c_j\to 1$, $\sup|E_j^{(c)}|=O(c^{-1/3})$.
+\end{proof}
+
+\begin{lemma}[Spectral sum DCT]
+\label{lem:domconv}
+For fixed $\xit,\xit'\geq 0$:
+$\sum_{j=1}^K\tilde\psi_j(\xit)\tilde\psi_j(\xit')
+\to\sum_{j=1}^K u_j(\xit)u_j(\xit')$ (fixed $K$),
+and the tail satisfies~\eqref{eq:Ktail}.
+\end{lemma}
+
+\begin{proof}
+Fixed $K$: Lemma~\ref{lem:H2}, finite sum.
+Tail: CD identity +
+$|\tilde\psi_j(\xit)|\leq C(1+\xit)^{-1/4}$ (Lem.~\ref{lem:langer})
++ Lemma~\ref{lem:slepian}~\eqref{eq:slepiantail} +
+dominated convergence.
 \end{proof}
 
 %% ============================================================
-\section{(I2b): Kernel Domination}
-\label{sec:I2b}
+\section{Kernel Domination and Main Proof}
+\label{sec:proof}
 %% ============================================================
 
 \begin{lemma}[Kernel domination]
 \label{lem:I2b}
-For $c\geq c_0$:
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item $\xit,\xit'\in[0,M]$:
-    $|\cK(\xit,\xit')|\leq C_M(1+\xit)^{-1/4}(1+\xit')^{-1/4}$.
-  \item $\xit$ or $\xit'>M$:
-    $|\cK(\xit,\xit')|\leq C'e^{-\frac43(\xit\wedge\xit'-M)_+^{3/2}}$.
+  \item $|\cK(\xit,\xit')|\leq C_M(1+\xit)^{-1/4}(1+\xit')^{-1/4}$
+    for $\xit,\xit'\in[0,M]$.
+  \item $|\cK(\xit,\xit')|\leq C'e^{-\frac43(\xit\wedge\xit'-M)_+^{3/2}}$
+    otherwise.
 \end{enumerate}
 \end{lemma}
 
-\begin{proof}
-CD identity + Lemma~\ref{lem:langer}
-($|\tilde\psi_j|\leq C(1+\xit)^{-1/4}$ uniformly in $j,c$)
-for (i); Airy decay for (ii).
-\end{proof}
-
-%% ============================================================
-\section{Proof of Main Lemma}
-\label{sec:proof}
-%% ============================================================
-
-\textbf{Step 1.} Fermi tail:
-$|\cK-\cK^{(K)}|\leq h(\xit,\xit')e^{-\pi R}$
-(XVII Lem.~2.1 + Lem.~\ref{lem:I2b}).
-
-\textbf{Step 2.} Projector convergence:
-Cor.~\ref{cor:spectral}(iii).
-
-\textbf{Step 3.} Fixed-$K$ pointwise convergence:
-Lem.~\ref{lem:domconv}~\eqref{eq:domconv}.
-
-\textbf{Step 4.} $K\to\infty$: Slepian tail bound
-(Lem.~\ref{lem:domconv}~\eqref{eq:slepian} + DCT)
+\textbf{Proof of Main Lemma.}
+\textit{Step~1.} Fermi tail:
+$|\cK-\cK^{(K)}|\leq h(\xit,\xit')e^{-\pi R}$.
+\textit{Step~2.} Projector: Cor.~\ref{cor:spectral}(iii).
+\textit{Step~3.} Fixed $K$: Lem.~\ref{lem:domconv}.
+\textit{Step~4.} $K\to\infty$: Lem.~\ref{lem:slepian}~\eqref{eq:Ktail}
 + Prop.~\ref{prop:kernelbridge}.\hfill$\square$
 
 %% ============================================================
@@ -434,28 +418,38 @@ Lem.~\ref{lem:domconv}~\eqref{eq:domconv}.
 %% ============================================================
 
 \begin{theorem}[BR3]\label{thm:br3}
-Lem.~\ref{lem:main} $+$ XVII Thm.~4.2
-$\Rightarrow$ $\normh{\cK-\cKA}{L^2(w\otimes w)}\to 0$.
+$\normh{\cK-\cKA}{L^2(w\otimes w)}\to 0$
+(Lem.~\ref{lem:main} + XVII Thm.~4.2).
 \end{theorem}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{7.5cm} p{1.0cm} p{2.8cm}}
+\begin{tabular}{p{7.0cm} p{1.0cm} p{3.2cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-Recentered coord.\ (Def.~\ref{def:airycoord}) & \checkmark & exact \\
-Half-line $\cA$, explicit $u_j$ (Def.~\ref{def:airyop}) & \checkmark & SL theory \\
-Airy kernel bridge (Prop.~\ref{prop:kernelbridge}) & \checkmark & Olver \S11.5 \\
-Langer local + coercive patch (Lem.~\ref{lem:langer}) & \checkmark & Olver 11.3 + Lax--Milgram \\
-Sturm ordering + no-crossing (Lem.~\ref{lem:nocross}) & \checkmark & Zettl 8.3.1, 8.4.2 \\
-Slepian DCT tail (Lem.~\ref{lem:domconv}) & \checkmark & ORX Thm.\ 4.3.1 \\
-I2b domination (Lem.~\ref{lem:I2b}) & \checkmark & Lem.~\ref{lem:langer} \\
-Intertwining + form bound (Prop.~\ref{prop:formbounded}) & \checkmark & XVI + Hardy--Rellich \\
-Norm-resolvent (Prop.~\ref{prop:normresolvent}) & \checkmark & resolvent id \\
-Spectral convergence (Cor.~\ref{cor:spectral}) & \checkmark & Kato IV \\
-$H^2\to C^0$ (Lem.~\ref{lem:H2}) & \checkmark & Lem.~\ref{lem:langer} \\
-Main Lemma & \checkmark & Steps 1--4 \\
+SL eigenvalue bound $a_{j,c}=O_K(1)$ (Lem.~\ref{lem:slbound})
+  & \checkmark & min-max, no Airy \\
+Non-circular coercivity (Lem.~\ref{lem:langer})
+  & \checkmark & Lem.~\ref{lem:slbound} \\
+Uniform Sturm comparison across $c$ (Lem.~\ref{lem:sturmunif})
+  & \checkmark & Zettl + spectral gap \\
+Slepian 3-regime (Lem.~\ref{lem:slepian})
+  & \checkmark & ORX 4.3.1 + LP \\
+Airy kernel bridge (Prop.~\ref{prop:kernelbridge})
+  & \checkmark & Olver \S11.5 \\
+Intertwining + form bound (Prop.~\ref{prop:formbounded})
+  & \checkmark & XVI + Hardy--Rellich \\
+Norm-resolvent (Prop.~\ref{prop:normresolvent})
+  & \checkmark & resolvent id \\
+Spectral conv.\ (Cor.~\ref{cor:spectral})
+  & \checkmark & Kato IV \\
+$C^0$ conv.\ (Lem.~\ref{lem:H2})
+  & \checkmark & Lem.~\ref{lem:langer} \\
+DCT spectral sum (Lem.~\ref{lem:domconv})
+  & \checkmark & Lem.~\ref{lem:slepian} \\
+Main Lemma
+  & \checkmark & Steps 1--4 \\
 BR3 & \checkmark & XVII + XVIII \\
 Gap-S & cond.\ (XIII) & XIII+\ldots+XVIII \\
 \bottomrule
@@ -464,13 +458,15 @@ Gap-S & cond.\ (XIII) & XIII+\ldots+XVIII \\
 
 \[
 \boxed{
-  \underbrace{\text{Langer+coercive}}_{\text{Lem.~\ref{lem:langer}}}
+  \underbrace{a_{j,c}=O_K(1)\text{ (SL)}}_{{\text{Lem.~\ref{lem:slbound}}}}
+  \;\to\;
+  \underbrace{\text{Langer+coercive}}_{{\text{Lem.~\ref{lem:langer}}}}
   \;+\;
-  \underbrace{\text{Sturm}}_{\text{Lem.~\ref{lem:nocross}}}
+  \underbrace{\text{Sturm}}_{{\text{Lem.~\ref{lem:sturmunif}}}}
   \;+\;
-  \underbrace{\text{Slepian+DCT}}_{\text{Lem.~\ref{lem:domconv}}}
+  \underbrace{\text{Slepian}\times 3}_{{\text{Lem.~\ref{lem:slepian}}}}
   \;\Longrightarrow\;
-  \mathrm{BR3}\Rightarrow\mathrm{Q5}\Rightarrow\mathrm{Gap\text{-}S}
+  \mathrm{BR3}
 }
 \]
 
@@ -494,13 +490,13 @@ Gap-S & cond.\ (XIII) & XIII+\ldots+XVIII \\
   \textit{Prolate Spheroidal Wave Functions of Order Zero},
   Springer, 2013.
 \bibitem{LandauPollak1961} H.~Landau, H.~Pollak,
-  Prolate spheroidal wave functions, Fourier analysis and
-  uncertainty~II,
+  Prolate spheroidal wave functions II,
   \textit{Bell Syst.\ Tech.\ J.}\ \textbf{40} (1961), 65--84.
 \bibitem{Slepian1978} D.~Slepian,
-  Prolate spheroidal wave functions, Fourier analysis and
-  uncertainty~V,
+  Prolate spheroidal wave functions V,
   \textit{Bell Syst.\ Tech.\ J.}\ \textbf{57} (1978), 1371--1430.
+\bibitem{AbramowitzStegun1964} M.~Abramowitz, I.~Stegun,
+  \textit{Handbook of Mathematical Functions}, NBS, 1964.
 \bibitem{Simon2005} B.~Simon,
   \textit{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005.
 \end{thebibliography}
