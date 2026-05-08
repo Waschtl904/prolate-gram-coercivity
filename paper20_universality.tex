@@ -30,8 +30,8 @@
 \newcommand{\AKlin}{A_K^{\mathrm{lin}}}
 \newcommand{\AKquad}{A_K^{\mathrm{quad}}}
 \newcommand{\BK}{B_K}
-% \Kopt is now an alias for K^* (variational minimizer);
-% the old K_{\mathrm{opt}} notation is retired.
+% \Kopt is an alias for K^* (variational minimizer);
+% the notation K_{\mathrm{opt}} is retired.
 \newcommand{\Kopt}{K^*}
 \newcommand{\Clin}{C_{\mathrm{lin}}(M,K)}
 \newcommand{\Cquad}{C_{\mathrm{quad}}(M,K)}
@@ -78,7 +78,7 @@ The unique minimizer satisfies the iterated asymptotics
 \]
 This expansion is an asymptotic fixed point of the map
 $\Phi(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+O(1)$,
-which is a contraction on $K\asymp\log c$
+which is a contraction along the scaling regime $K\asymp\log c$
 (Lemma~\ref{lem:kopt_variational}(ii')),
 and is stable under $O(1)$ perturbations of the logarithmic FOC
 (Lemma~\ref{lem:stability_kopt}).
@@ -269,6 +269,27 @@ Apply Euler--Maclaurin $\sum_{j=1}^K j^\sigma
 %% ============================================================
 
 %%------------------------------------------------------------
+%% Step 0: K* -> infinity (independent of log-expansion)
+%%------------------------------------------------------------
+\begin{lemma}[$K^*(c)\to\infty$]
+\label{lem:kstar_to_infty}
+Let $F(K) = LK^{1+\gamma}c^{-\beta} + Te^{-\alpha K/2}$
+with $L,T,\alpha>0$, $\gamma>0$, $\beta>0$.
+The unique minimizer $K^*(c)$ satisfies $K^*(c)\to\infty$
+as $c\to\infty$.
+\end{lemma}
+
+\begin{proof}
+$F'(K) = L(1+\gamma)K^\gamma c^{-\beta} - \frac{\alpha}{2}Te^{-\alpha K/2}$.
+For any fixed $K_0 > 0$:
+$F'(K_0) = L(1+\gamma)K_0^\gamma c^{-\beta} - \frac{\alpha}{2}Te^{-\alpha K_0/2}$.
+As $c\to\infty$, the first term $\to 0$ while the second is fixed,
+so $F'(K_0) < 0$ for all sufficiently large $c$.
+Hence $K^*(c) > K_0$ for large $c$.
+Since $K_0$ is arbitrary, $K^*(c)\to\infty$.
+\end{proof}
+
+%%------------------------------------------------------------
 %% Auxiliary: log-of-log isolation (with sandwich)
 %%------------------------------------------------------------
 \begin{lemma}[Logarithm of the minimizer]
@@ -286,8 +307,8 @@ For all $c$ sufficiently large:
 \begin{equation}\label{eq:sandwich}
   c_1 \log c \leq K^*(c) \leq c_2 \log c.
 \end{equation}
-In particular $K^*(c)\to\infty$, and taking logarithms
-of~\eqref{eq:sandwich} yields
+In particular $K^*(c)\to\infty$ (Lemma~\ref{lem:kstar_to_infty}),
+and taking logarithms of~\eqref{eq:sandwich} yields
 \begin{equation}\label{eq:loglog}
   \log K^*(c) = \log\log c + O(1).
 \end{equation}
@@ -295,46 +316,54 @@ of~\eqref{eq:sandwich} yields
 
 \begin{proof}
 \textit{Upper bound.}
-From the logarithmic FOC~\eqref{eq:log_FOC} (proved in
-Lemma~\ref{lem:kopt_variational} without using $\log K^*\asymp\log\log c$):
+From the logarithmic FOC~\eqref{eq:log_FOC}
+(which is proved in Lemma~\ref{lem:kopt_variational}
+using only $F''>0$ and the existence of $K^*$,
+not the sandwich):
 \[
   \tfrac{\alpha}{2}K^*
   = \beta\log c + \gamma\log K^* + C_0,
 \]
 where $C_0 = \log(L(1+\gamma)/(\frac{\alpha}{2}T))$ is a fixed constant.
-Since $\alpha > 0$ is fixed and $\gamma\log K^*/K^* \to 0$
-(as $K^*\to\infty$, which follows from $F'(K^*) = 0$
-and $F'(K)<0$ for small $K>0$),
-for sufficiently large $c$ we have
-$\gamma\log K^* \leq \frac{\alpha}{4}K^*$,
-hence $\frac{\alpha}{4}K^* \leq \beta\log c + C_0$,
-giving $K^* \leq \frac{2(\beta+1)}{\alpha}\log c = c_2\log c$
-for $c\geq c_0$.
+By Lemma~\ref{lem:kstar_to_infty}, $K^*\to\infty$,
+hence $\gamma\log K^*/K^*\to 0$.
+Choose $c_*$ such that $\gamma\log K^*(c)/K^*(c) \leq \alpha/4$
+for all $c\geq c_*$.
+Then $\frac{\alpha}{4}K^* \leq \beta\log c + C_0$,
+yielding $K^* \leq \frac{4(\beta\log c+C_0)}{\alpha}\leq c_2\log c$
+for $c\geq c_0 = c_0(\alpha,\beta,C_0)$.
+(Here $c_2 = 2(\beta+1)/\alpha$ absorbs the constant $C_0$
+for sufficiently large $c$; the choice is uniform in parameters.)
 
 \textit{Lower bound.}
 $F'(K) = L(1+\gamma)K^\gamma c^{-\beta}
 - \frac{\alpha}{2}Te^{-\alpha K/2}$.
-At $K = c_1\log c = \frac{2\beta}{\alpha}\log c$:
-the polynomial term is
-$L(1+\gamma)c_1^\gamma(\log c)^\gamma c^{-\beta}$
-and the exponential term is
-$\frac{\alpha}{2}T\,c^{-\alpha c_1/2}
-= \frac{\alpha}{2}T\,c^{-\beta}$.
-For large $c$,
-$(\log c)^\gamma \gg 1$,
-so $F'(c_1\log c) > 0$.
-Since $F'(K)<0$ for $K$ near $0$
-(the exponential term dominates: $F'(0^+) = -\frac{\alpha}{2}T < 0$)
-and $F'$ is continuous, there exists a unique zero
-$K^* \in (0, c_1\log c)$ would contradict $F'(c_1\log c)>0$;
-hence $K^* \geq c_1\log c$.
+Note $F'(0^+) = -\frac{\alpha}{2}T < 0$.
+At $K = c_1\log c = \frac{2\beta}{\alpha}\log c$,
+noting that $\frac{\alpha}{2}\cdot c_1 = \beta$ so that
+$e^{-\alpha c_1(\log c)/2} = c^{-\beta}$:
+\[
+  F'(c_1\log c)
+  = \Bigl[L(1+\gamma)\Bigl(\tfrac{2\beta}{\alpha}\Bigr)^\gamma (\log c)^\gamma
+    - \tfrac{\alpha}{2}T\Bigr]c^{-\beta}.
+\]
+The bracket equals $(\log c)^\gamma$ times the positive constant
+$L(1+\gamma)(2\beta/\alpha)^\gamma$, minus the fixed constant
+$\frac{\alpha}{2}T$.
+Hence the bracket is positive for all $c \geq c_{**}$,
+where $c_{**}$ depends only on $L, T, \alpha, \beta, \gamma$
+(no further parameters).
+Since $F'(0^+) < 0 < F'(c_1\log c)$ for $c\geq c_{**}$,
+and $F'$ is continuous, the unique zero $K^*$ satisfies
+$K^* \geq c_1\log c$.
 
 \textit{Log extraction.}
 From~\eqref{eq:sandwich},
 $\log c_1 + \log\log c
 \leq \log K^*
 \leq \log c_2 + \log\log c$,
-which gives~\eqref{eq:loglog}.
+which gives~\eqref{eq:loglog} with the $O(1)$ term
+bounded by $\max(|\log c_1|, |\log c_2|)$.
 \end{proof}
 
 %%------------------------------------------------------------
@@ -349,9 +378,9 @@ Set $F(K) := L K^{1+\gamma}c^{-\beta} + Te^{-\alpha K/2}$
 $F$ is strictly convex on $(0,\infty)$ since
 $F''(K) = L\gamma(1+\gamma)K^{\gamma-1}c^{-\beta}
 + \frac{\alpha^2}{4}Te^{-\alpha K/2} > 0$.
-Note $F(0^+) = T > 0$, $F'(0^+) = -\frac{\alpha}{2}T < 0$,
-and $F(K)\to+\infty$ as $K\to+\infty$.
-Hence $F$ has a unique interior minimum $K^*(c)\in(0,\infty)$
+$F(0^+)=T>0$, $F'(0^+)=-\frac{\alpha}{2}T<0$,
+$F(K)\to+\infty$ as $K\to+\infty$:
+hence $F$ has a unique interior minimum $K^*(c)\in(0,\infty)$
 satisfying the FOC
 \begin{equation}\label{eq:FOC}
   L(1+\gamma){K^*}^{\gamma}c^{-\beta}
@@ -365,9 +394,10 @@ Taking logarithms of~\eqref{eq:FOC}:
   = \beta\log c + \gamma\log K^*
   + \log\!\Bigl(\tfrac{L(1+\gamma)}{(\alpha/2)T}\Bigr).
 \end{equation}
-Zeroth iterate: the term $\gamma\log K^* = o(K^*)$
-(since $K^*\to\infty$ and $\gamma\log K^*/K^*\to 0$)
-yields leading balance $K_0 := \frac{2\beta}{\alpha}\log c$.
+By Lemma~\ref{lem:kstar_to_infty}, $K^*\to\infty$,
+hence $\gamma\log K^*/K^*\to 0$;
+this justifies the leading balance $K_0 := \frac{2\beta}{\alpha}\log c$
+without circularity.
 By Lemma~\ref{lem:loglog}, $\log K^* = \log\log c + O(1)$;
 substituting into~\eqref{eq:log_FOC} gives the first iterate:
 \begin{equation}\label{eq:kopt_iterated}
@@ -379,20 +409,25 @@ substituting into~\eqref{eq:log_FOC} gives the first iterate:
 In particular, $K^*(c)\sim\frac{2\beta}{\alpha}\log c$,
 and $\gamma$ does not appear in the leading coefficient.
 
-\textup{(ii')} \textbf{Fixpoint form and asymptotic contraction.}
+\textup{(ii')} \textbf{Fixpoint form and contraction along regime.}
 Equation~\eqref{eq:log_FOC} is equivalently written as
 \begin{equation}\label{eq:fixpoint}
   K = \Phi(K) := \frac{2\beta}{\alpha}\log c
   + \frac{2\gamma}{\alpha}\log K + O(1).
 \end{equation}
-On the asymptotic regime $K\asymp\log c$ one has
+For $K$ in the admissible scaling regime $K\asymp\log c$
+(guaranteed by the sandwich~\eqref{eq:sandwich}):
 \begin{equation}\label{eq:contraction}
   \Phi'(K) = \frac{2\gamma}{\alpha K}
-  = O\!\left(\frac{1}{\log c}\right) \to 0,
+  = O\!\left(\frac{1}{\log c}\right) \to 0.
 \end{equation}
-so $\Phi$ is an asymptotic contraction.
-The iteration $K_{n+1}=\Phi(K_n)$, started from $K_0$,
-converges to $K^*$ and justifies~\eqref{eq:kopt_iterated}
+Hence $\Phi$ is a contraction along this regime:
+starting from $K_0 = \frac{2\beta}{\alpha}\log c$,
+the iteration $K_{n+1}=\Phi(K_n)$ stays in the regime
+$K_n\asymp\log c$ at every step
+(since $\Phi(K_0)\asymp\log c$ and
+$|\Phi'|\leq\frac{1}{2}$ for $c$ large),
+and converges to $K^*$, justifying~\eqref{eq:kopt_iterated}
 without circularity.
 
 \textup{(iii)} \textbf{Value at $K^*$.}
@@ -407,17 +442,20 @@ At $K = K^*(c)$:
 $F(0^+)=T>0$, $F'(0^+)<0$, $F\to+\infty$:
 hence a unique interior minimum.
 (ii) Equation~\eqref{eq:log_FOC} is exact.
-Zeroth iterate: $\gamma\log K^*/K^*\to 0$ is a consequence
-of $K^*\to\infty$ (established in Lemma~\ref{lem:loglog}
-via the lower bound, which uses only $F'(0^+)<0$
-and $F'(c_1\log c)>0$).
-First iterate: insert $\log K^*=\log\log c+O(1)$
-(Lemma~\ref{lem:loglog}, specifically~\eqref{eq:loglog})
+$K^*\to\infty$ by Lemma~\ref{lem:kstar_to_infty}
+(proved independently of the log-expansion);
+$\gamma\log K^*/K^*\to 0$ follows.
+Insert $\log K^*=\log\log c+O(1)$
+(Lemma~\ref{lem:loglog}~\eqref{eq:loglog})
 into~\eqref{eq:log_FOC} to obtain~\eqref{eq:kopt_iterated}.
-(ii') $\Phi'(K)=2\gamma/(\alpha K)$; for $K\asymp\log c$
-this is $O(1/\log c)$, confirming contraction;
-the sandwich~\eqref{eq:sandwich} guarantees
-$K\asymp\log c$ is the relevant regime.
+(ii') The sandwich~\eqref{eq:sandwich} confines $K^*\asymp\log c$.
+At $K_0 = \frac{2\beta}{\alpha}\log c$:
+$\Phi(K_0)\asymp\log c$.
+Since $|\Phi'(K)|\leq\frac{2\gamma}{\alpha c_1\log c}\leq\frac{1}{2}$
+for $c$ large (using $c_1 = 2\beta/\alpha$), each iterate
+remains in the regime and contraction holds by the Banach
+fixed-point theorem applied to the interval
+$[c_1\log c, c_2\log c]$.
 (iii) $L(K^*)^{1+\gamma}c^{-\beta}
 = L\bigl(\frac{2\beta}{\alpha}\log c\bigr)^{1+\gamma}
 c^{-\beta}(1+o(1))
@@ -456,26 +494,28 @@ $\tfrac{\alpha}{2}(K_1-K_2)
 By the mean value theorem,
 $|\log K_1 - \log K_2| \leq |K_1-K_2|/\min(K_1,K_2)$.
 By Lemma~\ref{lem:loglog} (sandwich~\eqref{eq:sandwich}),
-$\min(K_1,K_2)\geq c_1\log c$, so
+$\min(K_1,K_2)\geq c_1\log c = \frac{2\beta}{\alpha}\log c$, so
 $\tfrac{\alpha}{2}|K_1-K_2|
-\leq \frac{\gamma}{c_1\log c}|K_1-K_2| + D$.
+\leq \frac{\gamma\alpha}{2\beta\log c}|K_1-K_2| + D$.
 For $c$ sufficiently large,
-$\gamma/(c_1\log c) < \alpha/4$,
+$\frac{\gamma\alpha}{2\beta\log c} < \alpha/4$,
 hence $|K_1-K_2|\leq \frac{4D}{\alpha} = O(1)$.
 \end{proof}
 
-\begin{remark}[Discrete floor projection]
+\begin{remark}[Discrete projection: continuous minimizer controls integer minimizer]
 \label{rem:kopt_discrete}
-Lemma~\ref{lem:kopt_variational} minimizes $F$ over
-$\R_+$. For $K_{\rm int}=\lfloor K^*\rceil\in\N$:
-$F''(K^*) = O(c^{-\beta}(\log c)^{\gamma-1})$;
-Taylor expansion gives
-$F(K_{\rm int}) - F(K^*)
-\leq \tfrac{1}{8}F''(K^*)
-= O(c^{-\beta}(\log c)^{\gamma-1})
-\prec c^{-\beta}(\log c)^{1+\gamma}$
+Lemma~\ref{lem:kopt_variational} minimizes $F$ over $\R_+$.
+The integer projection $K_{\rm int}=\lfloor K^*\rceil\in\N$
+satisfies $|K_{\rm int}-K^*|\leq\frac{1}{2}$, and by Taylor:
+\[
+  F(K_{\rm int}) - F(K^*)
+  \leq \tfrac{1}{8}F''(K^*) = O(c^{-\beta}(\log c)^{\gamma-1})
+  \prec c^{-\beta}(\log c)^{1+\gamma}
+\]
 in $\mathcal{S}$ (Definition~\ref{def:scale}).
-Hence Corollary~\ref{cor:universal_lograte}
+Hence the continuous minimizer controls the integer minimizer
+up to a term that is asymptotically negligible relative to $F(K^*)$,
+and Corollary~\ref{cor:universal_lograte}
 holds for $K=K_{\rm int}\in\N$.
 \end{remark}
 
