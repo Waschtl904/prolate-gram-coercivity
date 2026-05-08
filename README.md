@@ -52,7 +52,7 @@ of the programme. It explains:
 | XVII | `paper17_cliff.tex` | Cliff estimates | frozen |
 | XVIII | `paper18_airy_universality.tex` | BR3: qualitative Airy universality | **FROZEN d7609d2** |
 | XIX | `paper19_quantitative_rate.tex` | Two-scale rate; $C_{\rm lin}$/$C_{\rm quad}$ split; $O(c^{-1/3}(\log c)^{5/3})$ | **FROZEN** |
-| XX | `paper20_universality.tex` | Universal layer-survival; $1+\gamma$, $1+2\gamma$ invariants | **active** |
+| XX | `paper20_universality.tex` | Universality and Structural Rigidity of Turning-Point Truncation Geometry | **arXiv-ready** |
 
 ---
 
@@ -90,6 +90,11 @@ The Layer-Survival Selection Principle explains the selection
 mechanism: $1+2\gamma > 1+\gamma$ algebraically, but the quadratic
 layer pays $c^{-2\beta}$ (two Langer errors) and falls below the
 $c$-horizon at $K_{\rm opt}$.
+
+Paper XX additionally introduces the method class $\mathcal{M}(\mathrm{S1,S2,S3})$,
+the realization map $\mathfrak{R}: \mathcal{B} \to \mathcal{S}/\!\sim_{\mathcal{S}}$,
+and establishes a structural rigidity theorem: no method in
+$\mathcal{M}(\mathrm{S1,S2,S3})$ achieves a rate $o(c^{-\beta}(\log c)^{1+\gamma})$.
 
 ---
 
@@ -133,12 +138,22 @@ a_K ~ K^gamma  -->  mu(K) ~ K^gamma  -->  C_hat ~ K^gamma
 
 ## Open Problems
 
-1. Prove Hypothesis (coercivity propagation)
-   for general $\mathcal{A}_\gamma \in \mathfrak{T}_\gamma$.
-2. Compute $\beta(\gamma)$ from WKB theory for the model family.
-3. Lower bound $\Omega(K^{1+\gamma})$ for $C_{\rm lin}$
-   (sharpness of the spectral-geometric invariant).
+Open problems are classified and maintained in [`RESEARCH_DIRECTIONS.md`](RESEARCH_DIRECTIONS.md).
+The two primary open directions after Paper XX are:
+
+- **O1** — Necessity of H1 (envelope minimality within $\mathcal{M}(\mathrm{S1,S2,S3})$):
+  does $f(j) = o(1)$ in the eigenfunction bound improve the rate?
+  Reduces to the question of which information survives the S3 diagonal
+  projection $j \mapsto K^*(c) \sim (2\beta/\alpha)\log c$.
+
+- **O3a** — Rate optimality outside $\mathcal{M}(\mathrm{S1,S2,S3})$:
+  does there exist a method outside the class achieving
+  $o(c^{-\beta}(\log c)^{1+\gamma})$? Requires an information-theoretic
+  or semiclassical lower bound, beyond the Tauberian argument of Paper XX.
+
+Additional directions (realization problem for $\rho \neq 0$ classes,
+S2$^\epsilon$ stability) are documented in `RESEARCH_DIRECTIONS.md`.
 
 ---
 
-*Programme: prolate-gram-coercivity, May 2026.*
+*Programme: prolate-gram-coercivity. Author: Sebastian Schmalnauer, Vienna. May 2026.*
