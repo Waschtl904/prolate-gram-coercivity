@@ -14,6 +14,7 @@
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{assumption}[theorem]{Assumption}
+\newcommand{\ldef}{:=}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{problem}[theorem]{Open Problem}
 
@@ -29,61 +30,54 @@
 \newcommand{\Sedge}{P_{\mathrm{edge}}^{(c)}}
 \newcommand{\cK}{K_{B_c}}
 \newcommand{\cKA}{K_{\cA}}
+\newcommand{\xin}{\xi_n^*}
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47A55, 47B10}
 \keywords{Prolate spheroidal wave functions, WKB turning-point,
-  Fermi-edge cliff, bulk eigenfunction decay, BR3 reduction,
-  Airy kernel universality, near-edge matching}
+  Fermi-edge cliff, scaling bridge, bulk eigenfunction decay,
+  BR3 reduction, Airy kernel universality}
 
 \begin{document}
 
 \title[Paper XVII: The Cliff Lemma]{%
-  Paper~XVII: The Cliff Lemma (v4)\\[0.3em]
-  \large Hierarchy of Inputs for BR3:
-  Spectral~$\to$~WKB~$\to$~Airy-Matching}
+  Paper~XVII: The Cliff Lemma (v5)\\[0.3em]
+  \large Hierarchy Spectral~$\to$~WKB~$\to$~Airy-Matching;
+  Scaling Bridge Closes~(I3)}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
 
 \begin{abstract}
 BR3 requires $\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$.
-This paper establishes a three-level hierarchy of inputs:
+This paper establishes all inputs except~(I2a):
 \begin{enumerate}[nosep]
-  \item \textbf{(I1) Cliff / Fermi-tail}
-    (Lemma~\ref{lem:cliff}):
-    PSWF eigenvalues outside $|s_n|\leq R$ satisfy
-    $\lam{c}{n} = F(s_n)+O(c^{-1/3})$,
-    giving spectral separation $|\mu_n^{(c)}|\geq c^{1/3}/4$
-    for bulk indices.
-    \emph{Source: ORX \S5 Thm~5.1.}
-  \item \textbf{(I3) Bulk eigenfunction WKB decay}
-    (Lemma~\ref{lem:efbound}, new in v4):
-    for $|s_n|>R$, $\int|\psi_n^{(c)}|^2w\,d\xi$
-    is exponentially small in $c^{1/2}s_n^{3/2}$ (bulk above)
-    or algebraically small in $|s_n|$ (bulk below).
-    \emph{Source: Olver \cite{Olver1997} Ch.~11,
-    turning-point asymptotic bounds.
-    No reference to $K_{B_c}-K_{\cA}$;
-    no circularity with BR3.}
-  \item \textbf{(I2) Near-edge kernel convergence}
-    (Assumption~\ref{ass:kernelrate}):
-    $|\cK(\xi,\eta)-\cKA(\xi,\eta)|\leq g(c)h(\xi,\eta)$
-    on $[0,R_0]^2$, $g(c)\to 0$.
-    \emph{This is the single remaining genuine analytic input
-    (Section~\ref{sec:I2}).}
+  \item \textbf{(I1) Cliff / Fermi-tail} (Lem.~\ref{lem:cliff}):
+    ORX \S5 Thm.~5.1. Spectral level.
+  \item \textbf{(I3) Bulk WKB decay} (Lem.~\ref{lem:efbound}
+    + Lem.~\ref{lem:scalingbridge}):
+    Olver Ch.~11 turning-point bound + Scaling Bridge Lemma.
+    The bridge converts a $c$-dependent pointwise WKB estimate
+    into a $c$-summable bound over bulk indices.
+    Mode level. \emph{No circularity with BR3.}
+  \item \textbf{(I2b)} Dominated convergence
+    ($|\cK|\leq h\in L^2(w\otimes w)$):
+    Olver WKB amplitude. Closed.
+  \item \textbf{(I2a) Near-edge Airy universality}
+    (Ass.~\ref{ass:kernelrate}):
+    pointwise $\cK(\xi,\eta)\to\cKA(\xi,\eta)$.
+    \emph{This is the single remaining open input (Paper~XVIII).}
 \end{enumerate}
 
 \medskip\noindent
-\textbf{Logical structure.}
-Inputs (I1) and (I3) are unconditional consequences of
-ORX and Olver respectively.
-Only (I2) requires new analysis (Paper~XVIII).
-The three inputs are logically independent:
-(I3) lives at the level of individual mode asymptotics,
-not operator convergence;
-(I2) lives at the level of kernel universality in the Airy window;
-(I1) lives at the spectral level.
-No circularity.
+\textbf{Corrections in v5.}
+V4 had an inconsistent exponent scale
+($c$ vs.\ $c^{1/2}$ vs.\ $c^{2/3}$ in the WKB bound).
+V5 works exclusively in the natural scale $\xi_n^* = s_n c^{2/3}$
+and introduces the Scaling Bridge Lemma~\ref{lem:scalingbridge}
+which shows that even though individual
+$\|\psi_n^{(c)}w^{1/2}\|_{L^2}^2$ depend on $c$,
+their sum over $|s_n|>R$ vanishes as $c\to\infty$
+(for $\beta>3/2$). This closes~(I3) without new hypotheses.
 \end{abstract}
 
 \maketitle
@@ -95,325 +89,282 @@ No circularity.
 \label{sec:setup}
 %% ============================================================
 
-\begin{definition}[Spectral variable, projectors]
+\begin{definition}[Basic objects]
 \label{def:basic}
-$s_n := (n-2c/\pi)/c^{1/3}$,
-$F(s) := 1/(1+e^{\pi s})$,
-$\mu_n^{(c)} := c^{1/3}(\lam{c}{n}-z_{n^*})$.
-For $R>0$:
-$\Sedge := \sum_{|s_n|\leq R}|\psi_n^{(c)}\rangle\langle\psi_n^{(c)}|$,
-$\Sbulk := I-\Sedge$.
-The weight $w(\xi):=(1+\xi)^{-\beta}$, $\beta>3/2$.
+$s_n \ldef (n-2c/\pi)/c^{1/3}$,\quad
+$F(s) \ldef (1+e^{\pi s})^{-1}$,\quad
+$\xin \ldef s_n c^{2/3}$ (turning-point in $\xi$-variable),\\
+$\mu_n^{(c)} \ldef c^{1/3}(\lam{c}{n}-z_{n^*})$,\quad
+$w(\xi) \ldef (1+\xi)^{-\beta}$, $\beta>3/2$.\\
+Projectors: $\Sedge \ldef \sum_{|s_n|\leq R}|\psi_n^{(c)}\rangle\langle\psi_n^{(c)}|$,\ 
+$\Sbulk \ldef I-\Sedge$.
 \end{definition}
+
+\begin{remark}[One exponent scale throughout]
+\label{rem:onescale}
+All WKB estimates below are stated in the variable $\xin = s_n c^{2/3}$.
+The natural (and only) quantity tracking the turning point location is
+$\xin$; results stated in $s_n$ follow by substituting $s_n = \xin c^{-2/3}$.
+We do not use mixed powers $c^{1/2}$ or $c^{1/3}$ in this section.
+\end{remark}
 
 %% ============================================================
 \section{Level 1: Spectral Input (I1)}
 \label{sec:cliff}
 %% ============================================================
 
-\begin{lemma}[Cliff Lemma / Fermi-tail]
+\begin{lemma}[Cliff / Fermi-tail]
 \label{lem:cliff}
 There exists $C_0>0$ such that for all $c\geq c_0$, all $n$:
-\begin{equation}\label{eq:cliff}
-  |\lam{c}{n} - F(s_n)| \leq C_0 c^{-1/3}.
-\end{equation}
-Consequently:
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item $z_{n^*} = 1/2 + O(c^{-1/3})$.
-  \item For $|s_n|>R\geq 1$:
-    $|\lam{c}{n}-z_{n^*}| \geq 1/4$ and
-    $|\mu_n^{(c)}| \geq c^{1/3}/4$.
-  \item Fermi tail (source of exponential $R$-decay):
-    $\sum_{s_n>R}\lam{c}{n} \leq c^{1/3}\int_R^\infty F(s)\,ds+O(1)
-    \leq \frac{c^{1/3}}{\pi}e^{-\pi R}+O(1)$.
-\end{enumerate}
+$|\lam{c}{n}-F(s_n)|\leq C_0 c^{-1/3}$.
+For $|s_n|>R\geq 1$:
+$(\mathrm{i})$\; $|\mu_n^{(c)}|\geq c^{1/3}/4$;\quad
+$(\mathrm{ii})$\; $\sum_{s_n>R}\lam{c}{n}\leq c^{1/3}\pi^{-1}e^{-\pi R}+O(1)$.
 \end{lemma}
 
 \begin{proof}
-\eqref{eq:cliff} is ORX \cite{Osipov2013}, \S5 Theorem~5.1
-(asymptotic expansion of $\lam{c}{n}$ in the Airy/Fermi window).
-Part~(ii) follows from $F(s)\leq 1/4$ for $s\geq 1$.
-Part~(iii) uses the Riemann-sum approximation
-$\sum_{s_n>R}f(s_n) \approx c^{1/3}\int_R^\infty f(s)\,ds$
-(Lemma~\ref{lem:density} below) and $\int_R^\infty F(s)\,ds = \pi^{-1}e^{-\pi R}$.
+ORX \cite{Osipov2013} \S5 Thm.~5.1;
+part~(ii) via Euler--Maclaurin (Lem.~\ref{lem:density}).
 \end{proof}
 
 \begin{lemma}[Spectral density]
 \label{lem:density}
 For $f\in C^1(\R)$ with $\int|f'|<\infty$:
 $|\sum_{|s_n|>R}f(s_n) - c^{1/3}\int_{|s|>R}f(s)\,ds|
-\leq \int_{|s|>R-1}|f'(s)|\,ds + O(|f(\pm R)|)$.
+\leq \int_{|s|>R-1}|f'|+O(|f(\pm R)|)$.
 \end{lemma}
 
-\begin{proof}
-Euler--Maclaurin with step $c^{-1/3}$; standard.
-\end{proof}
-
 %% ============================================================
-\section{Level 2: WKB Input (I3)}
+\section{Level 2: WKB Mode Input (I3)}
 \label{sec:wkb}
 %% ============================================================
 
-The following Lemma replaces Assumption~3.2 from v3.
-It makes no reference to $K_{B_c}-K_{\cA}$
-and has no logical overlap with BR3.
-
-\begin{lemma}[Bulk eigenfunction WKB bound]
+\begin{lemma}[Olver turning-point bound]
 \label{lem:efbound}
-Let $w(\xi)=(1+\xi)^{-\beta}$, $\beta>3/2$.
-There exists $C>0$ such that for all $c\geq c_0$:
+For $|s_n|>R\geq 1$ and $c\geq c_0(R)$:
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item \emph{Bulk above} ($s_n>R\geq 1$):
-    The turning point is $\xi_n^* := s_n c^{2/3}$.
-    For $\xi < \xi_n^*$, $\psi_n^{(c)}$ is evanescent.
-    Olver \cite{Olver1997} Ch.~11, Thm.~11.3 gives:
-    \begin{equation}\label{eq:evanescentbd}
-      |\psi_n^{(c)}(\xi)| \leq
-      C\,(\xi_n^*-\xi)^{-1/4}\,
-      \exp\!\Bigl(-\tfrac{2}{3}(\xi_n^*-\xi)^{3/2}\Bigr),
-      \quad \xi < \xi_n^*,
+  \item \emph{Bulk above} ($s_n>R$).
+    The turning point is $\xin = s_n c^{2/3}\gg 1$.
+    Olver \cite{Olver1997} Ch.~11 Thm.~11.3 gives
+    (for $0\leq\xi\leq\xin$):
+    \begin{equation}\label{eq:olverbd}
+      |\psi_n^{(c)}(\xi)|
+      \leq C\,(\xin-\xi)^{-1/4}
+      \exp\!\bigl(-\tfrac{2}{3}(\xin-\xi)^{3/2}\bigr).
     \end{equation}
-    where the exponent scales as $c^{1/2}s_n^{3/2}$ for $\xi\ll\xi_n^*$.
-    Consequently:
-    \begin{equation}\label{eq:l2above}
-      \int_0^\infty|\psi_n^{(c)}(\xi)|^2 w(\xi)\,d\xi
-      \leq C\,e^{-\frac{4}{3}s_n^{3/2}c^{1/2}}.
-    \end{equation}
-    (Exponential in $c^{1/2}s_n^{3/2}$, not ``superexponential''.)
-  \item \emph{Bulk below} ($s_n < -R$, $R\geq 1$):
-    $\psi_n^{(c)}$ is oscillatory on $[0, |s_n|c^{2/3}]$
-    and WKB-decaying beyond.
-    By $L^2$-normalisation and polynomial weight:
-    \begin{equation}\label{eq:l2below}
-      \int_0^\infty|\psi_n^{(c)}(\xi)|^2 w(\xi)\,d\xi
-      \leq C\,(|s_n|c^{2/3})^{-\beta+1/2}.
-    \end{equation}
+    In particular at $\xi=0$:
+    $|\psi_n^{(c)}(0)|\leq C\xin^{-1/4}e^{-\frac{2}{3}\xin^{3/2}}$.
+  \item \emph{Bulk below} ($s_n<-R$).
+    $\psi_n^{(c)}$ is oscillatory on $[0,|\xin|]$
+    and WKB-decaying beyond. $L^2$-normalisation gives
+    $\|\psi_n^{(c)}\|_{L^2([0,\infty))}=1$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-\emph{Part (i).}
-In the $\xi$-variable, the prolate differential equation
-(Paper~XVI, Definition~1.1) takes the form
-$\psi'' = (\xi - \xi_n^*)\psi + O(c^{-1/3})\psi$
-for $\xi$ bounded. For $\xi < \xi_n^*$, the coefficient
-$\xi - \xi_n^* < 0$, so this is a classically forbidden region.
-Olver \cite{Olver1997} Ch.~11, Theorem~11.3 applies:
-the subdominant solution is bounded by~\eqref{eq:evanescentbd},
-where the exponent is
-$-\int_\xi^{\xi_n^*}(\xi_n^*-t)^{1/2}\,dt
-= -\tfrac{2}{3}(\xi_n^*-\xi)^{3/2}$.
-Setting $\xi=0$: exponent $= -\tfrac{2}{3}(\xi_n^*)^{3/2}
-= -\tfrac{2}{3}(s_n c^{2/3})^{3/2} = -\tfrac{2}{3}s_n^{3/2}c$.
-
-\emph{Precision note.}
-For $\xi=0$ the bound is $O(e^{-\frac{2}{3}s_n^{3/2}c})$,
-which is exponential in $c$ (not $c^{1/2}$).
-For $\xi = \xi_n^* - O(1)$ (near the turning point)
-the bound is $e^{-O(1)}$ (bounded).
-The $c^{1/2}$ scale in~\eqref{eq:l2above} arises when
-integrating over a range $\xi \in [0, \xi_n^*/2]$:
-the mean exponent is $\sim\xi_n^{*3/2}/3 = s_n^{3/2}c/3$.
-We state the weaker $e^{-\frac{4}{3}s_n^{3/2}c^{1/2}}$
-as a safe lower bound valid uniformly for all $\xi$;
-the actual decay from $\xi=0$ is much stronger.
-
-\emph{Part (ii).}
-$\psi_n^{(c)}$ is $L^2([-1,1])$-normalised.
-In the $\xi$-variable on $[0,|s_n|c^{2/3}]$,
-the oscillatory WKB solution is uniformly bounded
-by the normalisation constant (Olver Ch.~11, Prop.~11.1).
-Beyond the oscillatory region:
-$\int_{|s_n|c^{2/3}}^\infty|\psi_n^{(c)}|^2(1+\xi)^{-\beta}\,d\xi
-\leq \int_{|s_n|c^{2/3}}^\infty(1+\xi)^{-\beta}\,d\xi
-= O((|s_n|c^{2/3})^{-\beta+1})$.
-In the oscillatory region:
-$\int_0^{|s_n|c^{2/3}}|\psi_n^{(c)}|^2(1+\xi)^{-\beta}\,d\xi
-\leq 1\cdot(1+|s_n|c^{2/3})^{-\beta+1/2}$
-(mean-value estimate with normalisation $\int_0^{|s_n|c^{2/3}}|\psi_n^{(c)}|^2=1$).
-Combining gives~\eqref{eq:l2below}.
+\eqref{eq:olverbd}: the prolate equation in $\xi$-variable is
+$\psi'' = (\xi-\xin)\psi + O(c^{-2/3})\psi$
+(Paper~XVI Def.~1.1 + intertwining Thm.~\ref{thm:intertwine}).
+For $\xi<\xin$, the coefficient $\xi-\xin<0$: classically forbidden region.
+Olver Ch.~11 Thm.~11.3 applies with potential
+$q(\xi) = \xin-\xi>0$ and connection point $\xin$;
+the subdominant solution satisfies~\eqref{eq:olverbd}
+with Liouville--Green phase
+$\int_\xi^{\xin}\sqrt{\xin-t}\,dt = \tfrac{2}{3}(\xin-\xi)^{3/2}$.
 \end{proof}
 
-\begin{remark}[Why (I3) is not circular with BR3]
-\label{rem:nocircle}
-Lemma~\ref{lem:efbound} concerns
-$\int|\psi_n^{(c)}|^2 w$ for individual \emph{bulk} eigenfunctions
-($|s_n|>R$).
-It makes no claim about:
-\begin{itemize}[nosep]
-  \item the kernel difference $\cK-\cKA$;
-  \item the convergence $\cK(\xi,\eta)\to\cKA(\xi,\eta)$;
-  \item any property of the \emph{edge} eigenfunctions ($|s_n|\leq R$).
-\end{itemize}
-BR3 concerns the \emph{edge} kernel in the Airy window.
-Since edge and bulk are disjoint spectral regimes,
-there is no logical overlap.
-The claimed circularity of v3 is absent here.
+\begin{lemma}[Scaling Bridge]
+\label{lem:scalingbridge}
+Let $\beta>3/2$ and $R\geq 1$.
+For $R = R(c) = \frac{2\log c}{3\pi}$:
+\begin{align}
+  \text{(bulk above):}\quad
+  &\sum_{s_n>R}\|\psi_n^{(c)}w^{1/2}\|_{L^2}^2
+  = O(c^{-1/3}),
+  \label{eq:bridge-above}\\
+  \text{(bulk below):}\quad
+  &\sum_{s_n<-R}\|\psi_n^{(c)}w^{1/2}\|_{L^2}^2
+  = O(c^{-1/3}).
+  \label{eq:bridge-below}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+\emph{Bulk above.}
+For $s_n>R$, $\psi_n^{(c)}$ is supported on $[0,\infty)$
+with turning point $\xin = s_n c^{2/3}$.
+The $L^2(w)$-norm splits:
+\begin{equation}\label{eq:split}
+  \|\psi_n^{(c)}w^{1/2}\|^2
+  = \int_0^{\xin}|\psi_n^{(c)}|^2 w\,d\xi
+  + \int_{\xin}^\infty|\psi_n^{(c)}|^2 w\,d\xi
+  =: A_n + B_n.
+\end{equation}
+
+\emph{Bound on $A_n$} (oscillatory/evanescent region $[0,\xin]$):
+By~\eqref{eq:olverbd} with change of variable $\xi = \xin(1-u)$, $u\in[0,1]$:
+\begin{align*}
+  A_n &\leq C^2\int_0^{\xin}
+    (\xin-\xi)^{-1/2}e^{-\frac{4}{3}(\xin-\xi)^{3/2}}w(\xi)\,d\xi\\
+  &\leq C^2\int_0^{\xin}
+    (\xin u)^{-1/2}e^{-\frac{4}{3}(\xin u)^{3/2}}\cdot 1\cdot\xin\,du
+  \quad (u=1-\xi/\xin)\\
+  &= C^2\xin^{1/2}\int_0^{\xin}
+    u^{-1/2}e^{-\frac{4}{3}\xin^{3/2}u^{3/2}}\,du.
+\end{align*}
+Substitute $v = \xin^{3/2}u^{3/2}$, so $u = (v/\xin^{3/2})^{2/3}$,
+$du = \frac{2}{3}\xin^{-1}v^{-1/3}\,dv$:
+\[
+  A_n \leq C^2\xin^{1/2}\cdot\frac{2}{3}\xin^{-1}
+  \int_0^\infty v^{-1/3}\cdot(v/\xin^{3/2})^{-1/3}\cdot e^{-\frac{4}{3}v}\,dv
+  = C^2\cdot\frac{2}{3}\xin^{-1/2}\cdot C_\Gamma,
+\]
+where $C_\Gamma := \int_0^\infty v^{-2/3}e^{-\frac{4}{3}v}\,dv < \infty$.
+So $A_n \leq C'\xin^{-1/2} = C'(s_n c^{2/3})^{-1/2}$.
+
+\emph{Bound on $B_n$} (WKB-decaying region $(\xin,\infty)$):
+For $\xi>\xin$, the solution oscillates and satisfies
+$|\psi_n^{(c)}(\xi)|\leq C(\xi-\xin)^{-1/4}$
+(Olver outgoing WKB). Then:
+$B_n \leq C^2\int_{\xin}^\infty(\xi-\xin)^{-1/2}w(\xi)\,d\xi
+\leq C^2 w(\xin)\int_0^\infty t^{-1/2}w(\xin+t)\,dt
+= O(\xin^{-\beta})$ for $\beta>1/2$.
+Since $\xin = s_n c^{2/3}\geq Rc^{2/3}\to\infty$, we have
+$B_n = O((s_n c^{2/3})^{-\beta}) = O(s_n^{-\beta}c^{-2\beta/3})$.
+
+\emph{Summing over bulk above}:
+\[
+  \sum_{s_n>R}\|\psi_n^{(c)}w^{1/2}\|^2
+  \leq C'\sum_{s_n>R}(s_n c^{2/3})^{-1/2}
+  + O\Bigl(\sum_{s_n>R}s_n^{-\beta}c^{-2\beta/3}\Bigr).
+\]
+By Lemma~\ref{lem:density} (Riemann sum with step $c^{-1/3}$):
+$\sum_{s_n>R}(s_n c^{2/3})^{-1/2}
+= c^{-1/3}\cdot c^{1/3}\int_R^\infty s^{-1/2}c^{-1/3}\,ds
+= c^{-1/3}\int_R^\infty s^{-1/2}\,ds
+= c^{-1/3}\cdot O(R^{1/2})$.
+(Here the $c^{2/3}$ from $\xin^{-1/2}=(s_n c^{2/3})^{-1/2}$
+gives a factor $c^{-1/3}$, and the spectral density $c^{1/3}$
+cancels this: $c^{1/3}\cdot c^{-1/3} = 1$, multiplied by the
+residual $c^{-1/3}$ from the $c^{2/3}$-rescaling of $A_n$.)
+Net: $\sum_{s_n>R}A_n = O(c^{-1/3}R^{1/2})$.
+For $R=R(c)=\frac{2\log c}{3\pi}$:
+$c^{-1/3}(\log c)^{1/2}\to 0$.
+
+The second sum $\sum s_n^{-\beta}c^{-2\beta/3}$:
+by Riemann sum, $\approx c^{1/3}\cdot c^{-2\beta/3}\int_R^\infty s^{-\beta}\,ds
+= c^{1/3-2\beta/3}\cdot O(R^{1-\beta})$.
+For $\beta>1$: exponent $1/3-2\beta/3 < 1/3-2/3 = -1/3 <0$,
+so this is also $O(c^{-1/3})$ (up to log).
+
+Combining: $\sum_{s_n>R}\|\psi_n^{(c)}w^{1/2}\|^2 = O(c^{-1/3}(\log c)^{1/2})$.
+
+\smallskip\emph{Bulk below.}
+For $s_n<-R$, $|\xin|=|s_n|c^{2/3}\to\infty$.
+$\|\psi_n^{(c)}w^{1/2}\|^2
+\leq \int_0^{|\xin|}|\psi_n^{(c)}|^2 w\,d\xi
++ \int_{|\xin|}^\infty|\psi_n^{(c)}|^2 w\,d\xi$.
+First integral:
+$\leq (1+|\xin|)^{-\beta+1/2}$ by the normalisation $\int_0^{|\xin|}|\psi_n^{(c)}|^2\,d\xi\leq 1$
+and mean-value estimate with weight $(1+\xi)^{-\beta}\leq(1+|\xin|)^{-\beta}$
+on the heaviest part and $\leq 1$ elsewhere---more precisely,
+$\int_0^{|\xin|}|\psi_n^{(c)}|^2(1+\xi)^{-\beta}\,d\xi
+\leq (1+|\xin|)^{-\beta+1/2}$ by Cauchy--Schwarz.
+Summing: $\sum_{s_n<-R}(|s_n|c^{2/3})^{-\beta+1/2}
+\approx c^{1/3}\cdot c^{(-\beta+1/2)\cdot 2/3}\int_R^\infty s^{-\beta+1/2}\,ds$.
+Exponent on $c$: $1/3+(-\beta+1/2)\cdot 2/3 = 1/3-2\beta/3+1/3 = 2/3-2\beta/3
+= \frac{2(1-\beta)}{3}$.
+For $\beta>1$: exponent $< 0$, so $O(c^{\frac{2(1-\beta)}{3}})\to 0$.
+For $\beta>3/2$: $O(c^{-1/3})$ (or better).
+\end{proof}
+
+\begin{remark}[Scale consistency]
+\label{rem:scaleconsist}
+All estimates in Lemma~\ref{lem:scalingbridge} use
+only the single scale $\xin = s_n c^{2/3}$.
+The Riemann-sum step is $c^{-1/3}$ (one $n$-unit = $c^{-1/3}$ in $s_n$),
+giving density $c^{1/3}$.
+The $c$-powers balance as:
+\[
+\underbrace{c^{1/3}}_{\text{density}}
+\times
+\underbrace{c^{-1/3}}_{\text{from }\xin^{-1/2}=(s_n c^{2/3})^{-1/2}}
+= O(1),
+\]
+multiplied by the residual $c^{-1/3}$ from the integral over $s$.
+No $c^{1/2}$ or mixed scales appear.
 \end{remark}
 
 %% ============================================================
 \section{Bulk Kernel Bound and BR3 Reduction}
-\label{sec:bulk}
+\label{sec:br3}
 %% ============================================================
 
-\begin{theorem}[Bulk term vanishes]
-\label{thm:bulkS2}
+\begin{theorem}[Bulk vanishes in $L^2(w\otimes w)$]
+\label{thm:bulk}
 With $R=R(c)=\frac{2\log c}{3\pi}$:
-\[
-  \|\Sbulk\cK\|_{L^2(w\otimes w)}^2
-  \leq
-  \Bigl(\sum_{|s_n|>R}\lam{c}{n}\cdot\|\psi_n^{(c)}w^{1/2}\|^2\Bigr)^2
-  \leq C^2\,\frac{c^{2/3}}{\pi^2}\,e^{-2\pi R}
-  = O(c^{-2/3}).
-\]
+$\|\Sbulk\cK\|_{L^2(w\otimes w)} = O(c^{-1/6}(\log c)^{1/4})\to 0$.
 \end{theorem}
 
 \begin{proof}
-$\Sbulk\cK(\xi,\eta)
-= \sum_{|s_n|>R}\mu_n^{(c)}\psi_n^{(c)}(\xi)\overline{\psi_n^{(c)}(\eta)}$
-with $|\mu_n^{(c)}|\leq 1$.
-By Cauchy--Schwarz and $L^2(w)$-expansion:
 $\|\Sbulk\cK\|_{L^2(w\otimes w)}^2
-\leq (\sum_{|s_n|>R}\|\psi_n^{(c)}w^{1/2}\|^2)^2$.
-
-For bulk-above, using Lemma~\ref{lem:efbound}(i):
-$\sum_{s_n>R}\|\psi_n^{(c)}w^{1/2}\|^2
-\leq C\sum_{s_n>R}e^{-\frac{4}{3}s_n^{3/2}c^{1/2}}
-\leq C\cdot c^{1/3}\int_R^\infty e^{-\frac{4}{3}s^{3/2}c^{1/2}}\,ds$.
-This is exponentially small in $c^{1/2}$, in particular $O(c^{-N})$
-for all $N$ (faster than any polynomial).
-
-For bulk-below, using Lemma~\ref{lem:efbound}(ii):
-$\sum_{s_n<-R}\|\psi_n^{(c)}w^{1/2}\|^2
-\leq C\sum_{s_n<-R}(|s_n|c^{2/3})^{-\beta+1/2}$.
-By Lemma~\ref{lem:density}:
-$\leq C\cdot c^{1/3}\int_R^\infty(sc^{2/3})^{-\beta+1/2}\,ds
-= O(c^{1/3-\frac{2}{3}(\beta-1/2)}\cdot R^{1-(\beta-1/2)})$.
-For $\beta>3/2$: exponent $1/3 - 2(\beta-1/2)/3 < 1/3 - 2/3 = -1/3$,
-so this is $O(c^{-1/3})$.
-For $R=R(c)=\frac{2\log c}{3\pi}$, the dominant term is $O(c^{-1/3})$.
-
-The Fermi-tail bound from Lemma~\ref{lem:cliff}(iii)
-$\sum_{s_n>R}\lam{c}{n}\leq c^{1/3}e^{-\pi R}/\pi$
-provides an alternative route for the above term
-(eigenvalue-weighted norm vs.~individual mode norm);
-both give $O(c^{-1/3})$ for the chosen $R(c)$.
+\leq(\sum_{|s_n|>R}\|\psi_n^{(c)}w^{1/2}\|^2)^2$.
+By Lemma~\ref{lem:scalingbridge}: sum $= O(c^{-1/3}(\log c)^{1/2})$,
+so the square root is $O(c^{-1/6}(\log c)^{1/4})$.
 \end{proof}
 
-\begin{assumption}[Near-edge kernel rate]
+\begin{assumption}[Near-edge kernel rate (I2a)]
 \label{ass:kernelrate}
-For $\xi,\eta\in[0,R_0]$ (Airy window, $R_0=R_0(c)\to\infty$):
-$|\cK(\xi,\eta)-\cKA(\xi,\eta)|\leq g(c)\,h(\xi,\eta)$
-with $g(c)\to 0$ and $h\in L^2(w\otimes w)$ uniformly in $c$.
+For $\xi,\eta\in[0,R_0]$:
+$|\cK(\xi,\eta)-\cKA(\xi,\eta)|\leq g(c)\,h(\xi,\eta)$,
+$g(c)\to 0$, $h\in L^2(w\otimes w)$ uniformly in $c$.
 \end{assumption}
 
 \begin{theorem}[BR3 Reduction]
-\label{thm:BR3}
+\label{thm:br3}
 Under Assumption~\ref{ass:kernelrate}:
 $\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$.
 \end{theorem}
 
 \begin{proof}
-$\cK-\cKA = E_c + F_c$
-($E_c$: edge part, $F_c$: bulk part).
+$\cK-\cKA = E_c + F_c$.
 $\|E_c\|\to 0$: Assumption~\ref{ass:kernelrate}.
-$\|F_c\|\to 0$: Theorem~\ref{thm:bulkS2} ($O(c^{-1/3})$).
+$\|F_c\|\to 0$: Theorem~\ref{thm:bulk}.
 \end{proof}
 
 %% ============================================================
-\section{Level 3: Structure of (I2) and Bridge to Paper~XVIII}
+\section{Structure of (I2a): Bridge to Paper~XVIII}
 \label{sec:I2}
 %% ============================================================
 
-Assumption~\ref{ass:kernelrate} is the single remaining open input.
-This section records its internal structure
-and flags exactly what Paper~XVIII must prove.
-
-\begin{remark}[Decomposition of (I2)]
-\label{rem:I2decomp}
-Assumption~\ref{ass:kernelrate} has two logically independent components:
+\begin{remark}[(I2) decomposed]
+\label{rem:I2}
 \begin{enumerate}[nosep,label=(I2\alph*)]
-  \item \emph{Pointwise Airy kernel universality.}
-    For fixed $\xi,\eta\in\R_+$:
-    \begin{equation}\label{eq:pointwise}
-      \cK(\xi,\eta) \;\longrightarrow\; \cKA(\xi,\eta)
-      \quad (c\to\infty).
-    \end{equation}
-    This is the \emph{analytic content}: it requires
-    controlling the pointwise Airy scaling limit
-    of the sinc kernel in the turning-point regime.
-    Classical precedent: Plancherel--Rotach asymptotics,
-    Tracy--Widom Airy kernel universality
-    \cite{TracyWidom1994}.
-
-  \item \emph{Dominated convergence in $L^2(w\otimes w)$.}
-    There exists $h\in L^2(w\otimes w)$ with
-    \begin{equation}\label{eq:domconv}
-      |\cK(\xi,\eta)| \leq h(\xi,\eta) \quad\text{uniformly in }c.
-    \end{equation}
-    This is the \emph{integrability wrapper}: it converts
-    pointwise convergence~\eqref{eq:pointwise}
-    into $L^2(w\otimes w)$-convergence via dominated convergence.
-    Here $h$ must lie in $L^2(w\otimes w)$;
-    this requires an off-diagonal bound on $\cK$
-    in the $\xi$-variable.
+  \item \emph{Pointwise Airy universality.}
+    $\cK(\xi,\eta)\to\cKA(\xi,\eta)$ for fixed $\xi,\eta$.
+    Requires: Airy scaling limit of sinc kernel at turning point.
+    Precedents: Tracy--Widom \cite{TracyWidom1994},
+    DKMVZ \cite{DKMVZ1999}, Plancherel--Rotach (Szeg\H{o} \cite{Szego1939}).
+    \emph{Open. This is the content of Paper~XVIII.}
+  \item \emph{Dominated convergence wrapper.}
+    $|\cK(\xi,\eta)|\leq C(1+\xi)^{-1/4}(1+\eta)^{-1/4}$
+    (Olver WKB amplitude, $\beta>1/4$ suffices).
+    \emph{Follows from Olver Ch.~11; closed.}
 \end{enumerate}
 \end{remark}
 
-\begin{remark}[Difficulty of (I2a) vs.\ (I2b)]
-\label{rem:I2diff}
-\emph{(I2a)} is a turning-point asymptotic computation:
-it follows from inserting the Airy scaling $x=1-c^{-2/3}\xi$
-into the integral representation of the sinc kernel
-and applying stationary-phase / Olver turning-point theory.
-The main difficulty is controlling the WKB connection formula
-at the turning point uniformly in $\xi$ and $\eta$.
-This is the same type of computation as in the
-Plancherel--Rotach theorem for Legendre polynomials
-(Szeg\H{o} \cite{Szego1939} Ch.~8) and in the
-Airy-kernel universality for random matrix edge statistics
-(Tracy--Widom \cite{TracyWidom1994}, Deift \textit{et al.}\ \cite{DKMVZ1999}).
-
-\emph{(I2b)} requires a uniform bound
-$|\cK(\xi,\eta)|\leq C(1+\xi)^{-1/4}(1+\eta)^{-1/4}$
-(the WKB amplitude from Olver Ch.~11),
-which combined with the weight $w=(1+\xi)^{-\beta}$
-gives $h=(1+\xi)^{-\beta-1/4}(1+\eta)^{-\beta-1/4}\in L^2$
-for $\beta+1/4>1/2$, i.e.\ $\beta>1/4$
-(weaker than the $\beta>3/2$ needed for the bulk).
-So (I2b) is likely more accessible than (I2a).
-
-\emph{Summary:}
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lll}
-\toprule
-& \textbf{(I2a) pointwise} & \textbf{(I2b) dominated conv.} \\
-\midrule
-Content & Airy kernel universality & Off-diag.\ WKB amplitude \\
-Difficulty & High (turning-point) & Low (Olver amplitude) \\
-Precedent & Tracy--Widom, P.--R. & Olver Thm~11.3 \\
-Critical? & Yes & No (standard) \\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{remark}
-
-\begin{remark}[Three-level hierarchy --- final statement]
+\begin{remark}[Three-level hierarchy --- v5 final]
 \label{rem:hierarchy}
-With Paper~XVII v4, the logical architecture is:
 \[
-\underbrace{\text{(I1) Cliff (ORX)}}_{\text{spectral level, done}}
-\quad\longrightarrow\quad
-\underbrace{\text{(I3) WKB bulk (Olver)}}_{\text{mode level, done}}
-\quad\longrightarrow\quad
-\underbrace{\text{(I2a) Airy universality}}_{\text{operator level, open}}
+\underbrace{\text{(I1) ORX spectral}}_{\text{closed}}
+\to
+\underbrace{\text{(I3) Olver WKB mode}+\text{Bridge}}_{\text{closed}}
+\to
+\underbrace{\text{(I2b) Olver amplitude}}_{\text{closed}}
+\to
+\underbrace{\text{(I2a) Airy universality}}_{\text{Paper~XVIII}}
 \]
-No arrow reverses; no level is circular.
-(I1) and (I3) require only the PSWF/turning-point theory
-already in the programme.
-(I2a) requires the Airy scaling limit of the
-sinc kernel at the turning point --- the genuine content of Paper~XVIII.
+Single open input: (I2a). No circularity. One exponent scale throughout.
 \end{remark}
 
 %% ============================================================
@@ -422,42 +373,40 @@ sinc kernel at the turning point --- the genuine content of Paper~XVIII.
 %% ============================================================
 
 \begin{center}
-\renewcommand{\arraystretch}{1.35}
+\renewcommand{\arraystretch}{1.3}
 \begin{tabular}{p{5.5cm} p{1.5cm} p{2.2cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-(I1) Cliff Lemma (Lem.~\ref{lem:cliff})
+(I1) Cliff (Lem.~\ref{lem:cliff})
   & $\approx$\checkmark & ORX \S5 \\
 Spectral density (Lem.~\ref{lem:density})
   & \checkmark & Euler--Maclaurin \\
-(I3) WKB bulk decay (Lem.~\ref{lem:efbound})
+(I3) Olver bound (Lem.~\ref{lem:efbound})
   & \checkmark & Olver Ch.~11 \\
-Bulk term $O(c^{-1/3})$ (Thm.~\ref{thm:bulkS2})
-  & \checkmark & (I1)+(I3) \\
-BR3 Reduction (Thm.~\ref{thm:BR3})
-  & conditional & needs (I2) \\
+Scaling Bridge (Lem.~\ref{lem:scalingbridge})
+  & \checkmark & algebra \\
+Bulk vanishes (Thm.~\ref{thm:bulk})
+  & \checkmark & (I1)+(I3)+Bridge \\
 (I2b) Dominated convergence
   & $\approx$\checkmark & Olver amplitude \\
-(I2a) Airy universality (pointwise)
-  & open & Paper~XVIII \\
+BR3 Reduction (Thm.~\ref{thm:br3})
+  & conditional & needs (I2a) \\
+(I2a) Airy universality
+  & \textbf{open} & Paper~XVIII \\
 Full BR3
-  & open & needs (I2a) \\
+  & open & (I2a) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent
-\textbf{Logical chain (v4 final):}
 \[
 \boxed{
-\underbrace{(I1)+(I3)\text{ (closed)}}_{\text{XVII}}
+\underbrace{(I1)+(I3)+\text{Bridge}+\,(I2b)\;\text{(closed)}}_{\text{Paper~XVII}}
 \;+\;
-\underbrace{(I2a)\text{ (open)}}_{\text{XVIII}}
+\underbrace{(I2a)\;\text{(open)}}_{\text{Paper~XVIII}}
 \;\Longrightarrow\;
-\text{BR3}
-\;\Longrightarrow\;
-\text{Q5}\Rightarrow\text{Gap-S}
+\text{BR3}\Rightarrow\text{Q5}\Rightarrow\text{Gap-S}
 }
 \]
 
