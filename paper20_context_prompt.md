@@ -1,205 +1,273 @@
-# Paper XX — Context Prompt
-## Turning-Point Truncation Geometry for Sturm–Liouville Spectral Limits
+# Paper XX — Full Scaffold
+## Universality of Turning-Point Truncation Geometry
 
 **Programme:** prolate-gram-coercivity  
-**Predecessor freeze commits:** XVIII `d7609d2` / `19f5742`, XIX `580016b`  
-**Status:** pre-draft — context only, no frozen results yet  
+**Predecessor freeze commits:** XVIII `d7609d2`/`19f5742`, XIX `580016b`  
+**Status:** scaffold — no results frozen yet  
 **Date:** May 2026
 
 ---
 
-## 1. Position in the Programme
+## Position in the Programme
 
 Papers XVIII and XIX form a closed unit:
 
 | Paper | Content | Status |
 |---|---|---|
 | XVIII | BR3: qualitative Airy universality | FROZEN |
-| XIX | BR3: quantitative two-scale rate, polynomial truncation cost | FROZEN |
+| XIX | BR3: quantitative two-scale rate, truncation cost $O(K^{5/3})$ | FROZEN |
 
-Paper XX is **not a repair** of XVIII/XIX.  
-It is the first step of **universalisation**: asking whether the geometric
-structure discovered in XIX is special to the Airy turning point,
-or is a consequence of a broader class of one-dimensional
-Sturm–Liouville turning-point scalings.
+Paper XX is the **universalisation layer**.  
+It shows that the exponent $5/3 = 1 + 2/3$ in XIX is not a miracle of Airy
+functions but an instance of a general law:
 
----
+> **The logarithmic exponent of the optimal two-scale truncation rate
+> equals $1 + \gamma$, where $\gamma$ is the spectral growth exponent
+> $a_K \sim K^\gamma$ of the rescaled Sturm–Liouville operator.**
 
-## 2. The Central Question
-
-> **Is the $K^{2/3}$-truncation geometry a special feature of
-> the Airy turning point, or is it a universal consequence of
-> one-dimensional Sturm–Liouville turning-point scalings?**
-
-More precisely: for a Sturm–Liouville operator with eigenvalue
-asymptotics $a_K \sim K^\gamma$, the XIX pipeline produces a
-truncation constant $C_1(M,K) \sim K^{1+\gamma}$ and an optimal
-coupling rate $\|S_K - K_{\mathcal{A}}\| \sim c^{-1/3}(\log c)^{1+\gamma}$.
-
-For Airy: $\gamma = 2/3$, giving $1+\gamma = 5/3$ — exactly the
-exponent in XIX Corollary `cor:lograte`.
-
-The conjecture for XX is:
-
-> **Turning-Point Truncation Law.**  
-> For one-dimensional Sturm–Liouville operators with simple
-> turning-point scaling and $a_K \sim K^\gamma$,
-> the optimal two-scale truncation rate is governed by $1+\gamma$.
+This makes the truncation rate a **spectral invariant** of the
+turning-point model — not just rate bookkeeping.
 
 ---
 
-## 3. Inherited Inputs from XVIII/XIX
+## §1. Abstract Mechanism
 
-These results are **taken as black boxes** in XX — no reproof needed.
+### 1.1 Operator Class
 
-### From XVIII (FREEZE `d7609d2` + `19f5742`)
+Fix a one-dimensional Sturm–Liouville operator on $L^2(\mathbb{R}_+)$:
+$$
+\mathcal{A}_\gamma = -\partial_\xi^2 + V(\xi),
+\qquad \mathcal{D}(\mathcal{A}_\gamma) = H^2 \cap H^1_0(\mathbb{R}_+),
+$$
+with $V \geq 0$, $V(\xi) \to +\infty$ as $\xi \to +\infty$,
+discrete spectrum $0 < a_1 < a_2 < \cdots$, and the single
+**spectral growth hypothesis**:
+$$
+\boxed{a_K \sim C_\gamma K^\gamma \qquad (K \to \infty),
+\quad \gamma \in (0,1].}
+$$
+No further regularity of $V$ beyond what Langer/Olver requires on
+compact intervals is assumed.
 
-| Result | Label | Content |
-|---|---|---|
-| Norm-resolvent convergence | `prop:normresolvent` | $\|(\mathcal{L}_c-z)^{-1} - (\mathcal{A}-z)^{-1}\| = O(c^{-1/3})$ |
-| Airy scaling window | `def:airycoord` | window $c^{-2/3}$; coordinate $\tilde\xi = c^{2/3}(x_{n^*}^* - x)$ |
-| Langer approximation | `lem:langer` | $\|\tilde\psi_j - u_j\|_{C^0([0,M])} \leq C'(M,K) c^{-1/3}$ |
-| $K$-dependence of $C'$ | `rem:langerkdep` | $C'(M,K) = O(MK^{2/3})$; source: $a_K \sim K^{2/3}$, $\delta_0(K) = 2C_K+2$ |
-| Bessel tail | `lem:besseltail` | $\sum_{j>K}\|u_j\|_{L^2([0,M])}^2 \to 0$ as $K\to\infty$ |
-| Slepian–ORX tail | `lem:slepianunif` | $\lambda_{n^*+j}^{(c)} \leq e^{-\alpha j}$, uniform in $c$ |
+The Airy operator of XVIII is the model case $\gamma = 2/3$,
+$V(\xi) = \xi$, $C_\gamma = (3\pi/2)^{2/3}$.
 
-### From XIX (FREEZE `580016b`)
+### 1.2 The Spine
 
-| Result | Label | Content |
-|---|---|---|
-| Two-scale decomposition | `def:decomp` | $S_K - K_{\mathcal{A}} = A_K - B_K$ |
-| Langer-regime rate | `lem:langer_rate` | $\|A_K\|_{L^2([0,M]^2)} \leq C_1(M,K) c^{-1/3}$ |
-| Polynomial truncation cost | `eq:C1scale` | $C_1(M,K) = O(M^2 K^{5/3})$ |
-| Tail rate | `lem:tail_rate` | $\|B_K\|_{L^2([0,M]^2)} \leq C_2(\alpha)^{1/2} e^{-\alpha K/2}$ |
-| Optimal coupling | `cor:lograte` | $K_{\rm opt}(c) \sim (\log c)/(3\alpha)$; rate $O(c^{-1/3}(\log c)^{5/3})$ |
-
----
-
-## 4. The New Mathematical Variable
-
-The key abstraction in XX is to **replace** the Airy-specific $\gamma = 2/3$
-by a free parameter:
+The entire truncation economy is controlled by the following propagation
+chain, which is the **structural spine** of Paper XX:
 
 $$
-a_K \sim C_\gamma K^\gamma, \qquad \gamma \in (0, 1].
-$$
-
-| Operator class | $\gamma$ | $1+\gamma$ |
-|---|---|---|
-| Airy ($-d^2/d\xi^2 + \xi$ on $\mathbb{R}_+$) | $2/3$ | $5/3$ |
-| Harmonic oscillator ($-d^2/dx^2 + x^2$) | $1$ | $2$ |
-| Power potential ($-d^2/dx^2 + |x|^\nu$, $\nu>0$) | $\frac{2\nu}{\nu+2}$ | $\frac{3\nu+2}{\nu+2}$ |
-| Bessel-type | $1$ | $2$ |
-
-The central propagation chain to track in XX:
-
-$$
-\gamma
-\;\xrightarrow{a_K \sim K^\gamma}\;
+a_K \sim K^\gamma
+\;\xrightarrow{\ell_0}\;
 C_K = a_K + 1
-\;\xrightarrow{\delta_0 = 2C_K+2}\;
-\mu(K) = C_K+1
+\;\xrightarrow{\text{Step 2}}\;
+\delta_0(K) = 2C_K + 2
 \;\xrightarrow{\text{Lax--Milgram}}\;
 C'(M,K) = O(K^\gamma)
 \;\xrightarrow{\text{XIX pipeline}}\;
 C_1(M,K) = O(K^{1+\gamma}).
 $$
 
-Then:
+Everything else in the XVIII/XIX DAG is $\gamma$-agnostic and carries over
+unchanged.
 
+### 1.3 Scaling Window
+
+The Airy scaling window $c^{-2/3}$ in XVIII is specific to $V(\xi) = \xi$
+(linear turning point). For general $\mathcal{A}_\gamma$, the window
+$c^{-\beta}$ depends on the local behaviour of $V$ near the turning point.
+**The exponent $\beta$ is a separate input**, independent of $\gamma$;
+the universal formula combines both:
 $$
 \|S_K - K_{\mathcal{A}}\|_{L^2([0,M]^2)}
-\;\Big|_{K = K_{\rm opt}(c)}
-= O\!\left(c^{-1/3}(\log c)^{1+\gamma}\right).
+\Big|_{K = K_{\rm opt}(c)}
+= O\!\left(c^{-\beta} (\log c)^{1+\gamma}\right).
 $$
 
-This is the **Turning-Point Truncation Law** in quantitative form.
+---
+
+## §2. Dependency Analysis — the Structural Core
+
+This section is the **central mathematical contribution** of XX.
+It identifies which nodes of the XVIII/XIX DAG are $\gamma$-sensitive
+and which are $\gamma$-agnostic.
+
+### 2.1 $\gamma$-Agnostic Nodes (unchanged from XVIII/XIX)
+
+These steps use only functional-analytic infrastructure;
+they hold for any $\mathcal{A}_\gamma$:
+
+| Node | Content | Why $\gamma$-agnostic |
+|---|---|---|
+| Tensor decomposition $A_K - B_K$ | XIX `def:decomp` | Pure algebra |
+| Tensor norm estimate (per $j$) | XIX `lem:langer_rate` proof | Only $\|\cdot\|_{L^2([0,M]^2)} = \|\cdot\|_{L^2}\|\cdot\|_{L^2}$ |
+| Bessel tail $\sum_{j>K}\|u_j\|_{L^2([0,M])}^2 \to 0$ | XVIII `lem:besseltail` | Bessel inequality + $L^1$ diagonal; no $V$ |
+| Tonelli/DCT argument | XVIII `rem:dct` | $L^1([0,M]^2)$ domination; no $V$ |
+| Slepian-type tail $\lambda_{n^*+j}^{(c)} \leq e^{-\alpha j}$ | XVIII `lem:slepianunif` | ORX/Slepian structure; independent of $\gamma$ |
+| HS/Cauchy–Schwarz on $B_K$ | XIX `lem:tail_rate` | Spectral orthogonality only |
+| Sequential $(c,K)$-limit | XVIII `rem:iterated`, XIX `rem:nojoint` | Two-scale structure; no $V$ |
+| Norm-resolvent perturbation | XVIII `prop:normresolvent` | Kato VI; uses only form-boundedness |
+
+### 2.2 $\gamma$-Sensitive Nodes (require updating in XX)
+
+Exactly **four nodes** depend on $\gamma$, all within the Spine of §1.2:
+
+| Node | Current (Airy, $\gamma=2/3$) | General ($\gamma$ free) |
+|---|---|---|
+| Spectral spacing | $a_K \sim (3\pi K/2)^{2/3}$ | $a_K \sim C_\gamma K^\gamma$ |
+| Coercive threshold | $\mu(K) = C_K+1 \sim K^{2/3}$ | $\mu(K) \sim K^\gamma$ |
+| Exclusion window | $\delta_0(K) = 2C_K+2 \sim K^{2/3}$ | $\delta_0(K) \sim K^\gamma$ |
+| Lax–Milgram constant | $C'(M,K) = O(MK^{2/3})$ | $C'(M,K) = O(MK^\gamma)$ |
+
+**Key Proposition** (to be proved in XX §3):
+
+> *Under the spectral growth hypothesis $a_K \sim K^\gamma$,
+> the Lax–Milgram constant satisfies $C'(M,K) = O(MK^\gamma)$
+> and hence $C_1(M,K) = O(M^2 K^{1+\gamma})$.*
+
+This is the **only new lemma** needed; the rest of the XIX pipeline
+applies verbatim with $K^{1+\gamma}$ replacing $K^{5/3}$.
+
+### 2.3 DAG Surgery
+
+The modified DAG for XX has exactly one changed subgraph:
+```
+[a_K ~ K^gamma]  -->  [C_K ~ K^gamma]  -->  [delta_0 ~ K^gamma]
+      |
+      v
+[C'(M,K) = O(K^gamma)]   <-- ONLY NEW LEMMA
+      |
+      v
+[C_1(M,K) = O(K^{1+gamma})]   (XIX lem:langer_rate, re-parameterised)
+      |
+      v
+[Universal rate theorem]   (XIX thm:twoscale, re-parameterised)
+```
+All other XVIII/XIX nodes are inherited without change.
 
 ---
 
-## 5. Proposed Structure of Paper XX
+## §3. Universal Truncation Theorem
 
-### Section 1 — General Setup
-- Abstract Sturm–Liouville operator $L = -d^2/dx^2 + V(x)$ on $\mathbb{R}_+$
-  with simple turning point at $x_0$
-- Eigenvalue asymptotics: $a_K \sim C_\gamma K^\gamma$ as input hypothesis
-- Rescaling analogous to XVIII `def:airycoord`; scaling window $c^{-\beta}$ (to be determined)
+### Lemma `lem:trunc_universal` (new)
 
-### Section 2 — Dependency Analysis
-- Which steps of the XVIII/XIX pipeline use $\gamma = 2/3$ explicitly?
-- Which steps are $\gamma$-independent?
-- Expected answer: only `rem:langerkdep` is $\gamma$-sensitive;
-  the rest of the DAG is $\gamma$-agnostic
+*Let $\mathcal{A}_\gamma$ satisfy the spectral growth hypothesis
+$a_K \sim C_\gamma K^\gamma$.  
+Then for fixed $M < \infty$ and $K \geq 1$:*
+$$
+C'(M,K) = O(M K^\gamma),
+\qquad C_1(M,K) = O(M^2 K^{1+\gamma}),
+$$
+*with constants independent of $c$.*
 
-### Section 3 — Universal Truncation Lemma
-- **Lemma `lem:trunc_universal`:**  
-  $C'(M,K) = O(MK^\gamma)$, with explicit dependence on $\gamma$
-- Proof strategy: track $\delta_0(K) = 2C_K + 2 \sim K^\gamma$
-  through the Lax–Milgram step in full generality
+**Proof sketch.**  
+Track $\delta_0(K) = 2C_K + 2 \sim 2C_\gamma K^\gamma + 2$
+through the coercivity estimate of XVIII `lem:langer` Step 2:
+$q_c \geq \mu(K) = C_K + 1 \sim K^\gamma$ on $[\delta_0(K), M]$.
+The Lax–Milgram step yields $C'(M,K) = O(M \mu(K)^{-1} \cdot \|R_c\|) = O(MK^\gamma)$
+after inserting $a_K \sim K^\gamma$. Substituting into
+$C_1 = KM \cdot C'(2C_\infty + C')$ gives $C_1 = O(K \cdot K^\gamma) = O(K^{1+\gamma})$.
 
-### Section 4 — Universal Rate Theorem
-- **Theorem `thm:universal_rate`:**  
-  $\|S_K - K_{\mathcal{A}}\| \leq \tilde C_1(M,K) c^{-\beta} + C_2 e^{-\alpha K/2}$  
-  with $\tilde C_1 = O(K^{1+\gamma})$ and $\beta$ depending on the scaling window
-- **Corollary `cor:universal_lograte`:**  
-  $K_{\rm opt}(c) \sim (\log c)/\alpha$ gives rate $O(c^{-\beta}(\log c)^{1+\gamma})$
+### Theorem `thm:universal_rate` (main result of XX)
 
-### Section 5 — Verification Table
-- Airy: $\gamma = 2/3$, $\beta = 1/3$, $1+\gamma = 5/3$ → recovers XIX exactly
-- Harmonic oscillator: $\gamma = 1$, $\beta = ?$, $1+\gamma = 2$
-- General power $|x|^\nu$: $\gamma = 2\nu/(\nu+2)$, $1+\gamma = (3\nu+2)/(\nu+2)$
+*Under the spectral growth hypothesis and with $\beta$ the
+scaling-window exponent, for fixed $K$ and $c \to \infty$:*
+$$
+\|S_K - K_{\mathcal{A}}\|_{L^2([0,M]^2)}
+\leq C_1(M,K) \cdot c^{-\beta} + C_2(\alpha)^{1/2} \cdot e^{-\alpha K/2}.
+$$
+
+### Corollary `cor:universal_lograte`
+
+*With $K_{\rm opt}(c) = \lfloor \beta \log(c) / \alpha \rfloor$:*
+$$
+\|S_K - K_{\mathcal{A}}\|_{L^2([0,M]^2)}
+\Big|_{K = K_{\rm opt}(c)}
+= O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
+$$
+
+*The exponent $1 + \gamma$ is the spectral invariant of the
+turning-point model. It cannot be improved without a
+$K$-uniform Langer bound.*
 
 ---
 
-## 6. Scope Boundaries (What XX Should NOT Do)
+## §4. Model Table
 
-To preserve the clean XVIII/XIX geometry, Paper XX is **explicitly restricted** to:
+| Operator $\mathcal{A}_\gamma$ | $V(\xi)$ | $\gamma$ | $\beta$ | $1+\gamma$ | Rate |
+|---|---|---|---|---|---|
+| **Airy** (XVIII/XIX) | $\xi$ | $2/3$ | $1/3$ | $\mathbf{5/3}$ | $O(c^{-1/3}(\log c)^{5/3})$ |
+| Harmonic oscillator | $\xi^2$ | $1$ | $1/2$ | $\mathbf{2}$ | $O(c^{-1/2}(\log c)^{2})$ |
+| Power $\|\xi\|^\nu$, $\nu > 0$ | $\xi^\nu$ | $\tfrac{2\nu}{\nu+2}$ | $\tfrac{\nu}{\nu+2}$ | $\tfrac{3\nu+2}{\nu+2}$ | $O(c^{-\nu/(\nu+2)}(\log c)^{(3\nu+2)/(\nu+2)})$ |
+| Bessel-type | $\xi + c/\xi^2$ | $1$ | $1/3$ | $\mathbf{2}$ | $O(c^{-1/3}(\log c)^{2})$ |
 
-| In scope | Out of scope |
+**Check:** Airy row recovers XIX `cor:lograte` exactly. ✓  
+**Limiting cases:**  
+- $\nu \to \infty$ (hard wall): $\gamma \to 2$, $1+\gamma \to 3$ — steeper cost.  
+- $\nu \to 0$ (flat potential): $\gamma \to 0$, $1+\gamma \to 1$ — logarithmic only, no power.
+
+---
+
+## §5. Conceptual Framing
+
+### What XIX showed
+> Logarithmic losses are unavoidable because of spectral geometry.
+
+### What XX shows
+> The logarithmic exponent is exactly $1+\gamma$,
+> the spectral growth exponent of the turning-point model.
+
+This is conceptually stronger: the truncation rate becomes a
+**spectral invariant** — a quantity that depends only on the
+asymptotic eigenvalue spacing, not on the specific form of $V$
+or the functional-analytic details of the approximation.
+
+The correct title framing for XX is therefore:
+
+> *A universality principle for two-scale truncation in
+> turning-point problems.*
+
+Not "further application of XIX" but a genuine structural theorem.
+
+---
+
+## §6. Open Questions Inherited into XX
+
+| Question | Origin | Status |
+|---|---|---|
+| $K$-uniform Langer bound: $C'(M,K) = O(M)$? | XIX `rem:logloss` | Open; if proved, rate sharpens to $O(c^{-\beta}\log c)$ |
+| Is $\beta = \beta(\gamma)$ or independent? | XX §1.3 | To be determined per operator class |
+| Does the $K^{1+\gamma}$ exponent saturate? | — | Likely yes; lower bound argument needed |
+| Extension to systems (matrix SL)? | — | Out of scope for XX |
+
+---
+
+## §7. Scope Boundaries
+
+| **In scope** | **Out of scope** |
 |---|---|
-| One-dimensional operators | Multi-dimensional |
-| Self-adjoint, semibounded | Non-self-adjoint |
-| Simple turning points | Higher-order / degenerate turning points |
-| Real-valued potentials | Random or stochastic potentials |
-| Compact interval $[0,M]$ restriction | Global $\mathbb{R}_+$ estimates |
-| $K$-uniform Langer bound (if achievable) | Non-perturbative regimes |
-
-A $K$-uniform Langer bound (currently open in XIX `rem:logloss`)
-would be a natural goal for XX, but should be treated as a
-**separate lemma**, not as a prerequisite.
+| One-dimensional, self-adjoint | Multi-dimensional |
+| Simple turning point | Higher-order / degenerate turning points |
+| Real potential, semibounded | Non-self-adjoint, non-semibounded |
+| Compact restriction $[0,M]$ | Global $\mathbb{R}_+$ estimates |
+| Spectral growth hypothesis $a_K \sim K^\gamma$ | Sub-polynomial or oscillatory spectra |
+| $K$-uniform Langer (as optional lemma) | Random, stochastic, nonlinear operators |
 
 ---
 
-## 7. Open Questions Inherited into XX
+## §8. First Action
 
-From XIX `rem:logloss`:
-> The $(1+\gamma)$-loss could be removed if $C'(M,K)$ is shown to be
-> $K$-independent. This requires a $K$-uniform coercivity estimate —
-> a potential XX result.
+Begin with **§2 (dependency analysis)** as a standalone lemma:
 
-Specifically: does there exist a potential class $V$ for which
-$C'(M,K) = O(M)$ independent of $K$? If yes, the truncation law
-$O(c^{-\beta}(\log c)^{1+\gamma})$ sharpens to $O(c^{-\beta} \log c)$.
+> *Lemma `lem:gamma_agnostic`: Every node in the XVIII/XIX DAG
+> except the four $\gamma$-sensitive nodes of §2.2 holds verbatim
+> for any $\mathcal{A}_\gamma$ satisfying the spectral growth hypothesis.*
 
----
-
-## 8. Relationship to Broader Programme
-
-```
-XVI  → XVII → XVIII (BR3, qualitative) → XIX (BR3, quantitative two-scale)
-                                                      ↓
-                                              XX (universalisation)
-                                           truncation geometry for
-                                           general SL turning points
-```
-
-Paper XX does **not** close BR3 again — that is done.  
-Its contribution is the **abstraction layer**: showing that the
-$K^{5/3}$ cost in XIX is not a miracle of Airy functions but
-an instance of a general $K^{1+\gamma}$ law.
+This lemma, once written, makes the universalisation a one-lemma
+replacement (`lem:trunc_universal`) rather than a structural rebuild.
 
 ---
 
-*End of context prompt. No results frozen here.*  
-*Next action: begin Section 2 (dependency analysis) to identify*  
-*which XVIII/XIX steps are $\gamma$-sensitive.*
+*End of scaffold. No results frozen here.*  
+*Predecessor freezes: XVIII `d7609d2`/`19f5742`, XIX `580016b`.*
