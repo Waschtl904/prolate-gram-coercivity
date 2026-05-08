@@ -39,7 +39,7 @@
 
 \title[Paper XVIII: Airy Universality]{%
   Paper~XVIII: Airy Kernel Universality\\[0.3em]
-  \large \textsc{Final Version} --- BR3 Closed}
+  \large \textsc{Freeze Version} --- BR3 Closed}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -84,9 +84,9 @@ turning-point shift $\xit_{n^*+j}^*=-j\pi/(2c^{1/3})$ (XVI Lem.~3.2).
 \label{def:airyop}
 $\cA=-d^2/d\xit^2+\xit$ on $L^2(\R_+)$,
 $\mathcal{D}(\cA)=H^2\cap H^1_0$;
-eighenvalues $0<a_1<a_2<\cdots$
+eigenvalues $0<a_1<a_2<\cdots$
 ($a_k\sim(3\pi k/2)^{2/3}$);
-eighenfunctions $u_k=\Ai(\cdot-a_k)/\normh{\Ai(\cdot-a_k)}{L^2(\R_+)}$,
+eigenfunctions $u_k=\Ai(\cdot-a_k)/\normh{\Ai(\cdot-a_k)}{L^2(\R_+)}$,
 $\normh{u_k}{L^2(\R_+)}=1$.
 \end{definition}
 
@@ -342,24 +342,21 @@ $\sup|E_j^{(c)}|=O(c^{-1/3})$.
 \label{lem:besseltail}
 Let $\{u_j\}$ be the $L^2(\R_+)$-ONB of Airy eigenfunctions
 (Definition~\ref{def:airyop}). For every $M<\infty$:
-\begin{equation}\label{eq:besseltail}
+\begin{equation}\label{eq:besseltailconv}
   \sum_{j>K}\normh{u_j}{L^2([0,M])}^2 \to 0
   \quad\text{as }K\to\infty.
 \end{equation}
 \end{lemma}
 \begin{proof}
 Set $b_j:=\normh{u_j}{L^2([0,M])}^2\in[0,1]$.
-By Bessel's inequality in $L^2(\R_+)$
-(RS~\cite{ReedSimon2} Prop.~II.4)
-applied to $f=\mathbf{1}_{[0,M]}\cdot\cKA(\cdot,\cdot)^{1/2}$
-in each variable, the partial sums
-$T_K:=\sum_{j=1}^K b_j$
+The partial sums $T_K:=\sum_{j=1}^K b_j$
 are monotone non-decreasing and bounded:
 \[
   T_K \leq \int_0^M\cKA(\xit,\xit)\,d\xit
   \leq C'\int_0^M(1+\xit)^{-1/2}\,d\xit <\infty
 \]
-(using~\eqref{eq:diagbound}).
+(Bessel's inequality in $L^2(\R_+)$, RS~\cite{ReedSimon2} Prop.~II.4,
+plus~\eqref{eq:diagbound}).
 Hence $T_K\nearrow T_\infty<\infty$,
 and $\sum_{j>K}b_j = T_\infty-T_K\to 0$.
 \end{proof}
@@ -402,15 +399,14 @@ For all $K\geq 1$ and $(\xit,\xit')\in[0,M]^2$:
 \end{equation}
 (using~\eqref{eq:diagbound}; $h\notin L^1(\R_+^2)$ globally).
 
-\textit{Step 3: $L^2$-convergence.}
+\textit{Step 3: $L^2$-convergence via Lemma~\ref{lem:besseltail}.}
 Write $\SK=\sum_{j=1}^K P_j\otimes P_j$,
 $P_j=\langle u_j,\cdot\rangle u_j$ in $L^2(\R_+)$.
-Then
+By Cauchy--Schwarz on the kernel expansion:
 \begin{equation}\label{eq:L2conv}
   \normh{\cKA-\SK}{L^2([0,M]^2)}^2
   \leq \sum_{j>K}\normh{u_j}{L^2([0,M])}^2
-  \cdot\sum_{j>K}\normh{u_j}{L^2([0,M])}^2
-  \to 0
+  \;\to\; 0
 \end{equation}
 by Lemma~\ref{lem:besseltail}.
 Since the $L^2([0,M]^2)$-limit is unique,
