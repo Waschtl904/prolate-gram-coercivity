@@ -80,6 +80,9 @@ $K = K^*(c)$ is carried out by a single explicit lemma
 where coupled scaling is introduced;
 logarithmic instability under exponentiation is controlled
 by an explicit slowly-varying substitution estimate.
+All implied constants are $c$-admissible
+(operator-intrinsic or deriving from H1--H2 with no $c$-dependence;
+see Remark~\ref{rem:cadmissible}).
 All results are conditional on H1--H2.
 \end{abstract}
 
@@ -115,6 +118,30 @@ H1--H2 are imposed axioms, not derived for general $V$.
 Realization: verified for Airy; sketch for power family; open in general.
 \end{remark}
 
+\begin{remark}[$c$-admissible constants]
+\label{rem:cadmissible}
+We call a constant \emph{$c$-admissible} if it is independent of
+the approximation parameter $c$.
+All constants appearing in this paper are $c$-admissible:
+\begin{itemize}[nosep]
+  \item $C_0$, $C_\infty$: operator-intrinsic, $c$-free by H1--H2.
+  \item $C_\sigma = \frac{|B_2|}{12}\sigma(\sigma-1)$:
+    depends only on the exponent $\sigma$, not on $K$ or $c$
+    (Lemma~\ref{lem:trunc_universal}, eq.~\eqref{eq:EM_remainder}).
+  \item $C_{\rm lin} = \frac{2MC_\infty C_0}{1+\gamma}$,
+    $C_{\rm quad} = \frac{MC_0^2}{1+2\gamma}$:
+    products of $c$-admissible quantities.
+  \item $C_2(\alpha) = \sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$:
+    operator-intrinsic; depends only on $\cAg\in\mathfrak{T}_\gamma$
+    and the decay rate $\alpha$, not on $c$
+    (Lemma~\ref{lem:gamma_agnostic}(v)).
+    In particular, $c$ is only an approximation parameter
+    in this paper, not a spectral parameter of $\cAg$.
+\end{itemize}
+The chain $C_0,C_\infty \to C_{\rm lin},C_{\rm quad} \to C_{\rm tail}$
+is therefore completely $c$-free.
+\end{remark}
+
 \begin{remark}[Two-regime structure and quantifier discipline]
 \label{rem:diagonal_regime}
 The paper is organized in two strictly separated regimes:
@@ -124,9 +151,8 @@ The paper is organized in two strictly separated regimes:
     (Lemmas~\ref{lem:gamma_agnostic}--\ref{lem:trunc_universal},
     Theorem~\ref{thm:universal_rate})
     hold for all $K\geq K_0$, $c\geq c_0$, with $K$ and $c$ independent.
-    All implied constants are independent of $K$ and $c$;
-    see the explicit Euler--Maclaurin remainder bound
-    in Lemma~\ref{lem:trunc_universal}.
+    All implied constants are $c$-admissible
+    (Remark~\ref{rem:cadmissible}).
   \item \textbf{Diagonal regime.}
     For each fixed $c$, the variational problem
     $\min_{K\in[c_1\log c,\,c_2\log c]} F(K;c)$
@@ -236,7 +262,7 @@ No substitution arrows appear outside this node.
     it does not use expansion~\eqref{eq:kopt_iterated}.
   \item Lemma~\ref{lem:diagonal_sub} is the unique node
     receiving both a fixed-parameter $O(K^{1+\gamma}c^{-\beta})$
-    bound (with $K,c$-independent constant from
+    bound (with $c$-admissible constant from
     Lemma~\ref{lem:trunc_universal}) and the diagonal
     $K^*(c)\sim\frac{2\beta}{\alpha}\log c$;
     it outputs $O(c^{-\beta}(\log c)^{1+\gamma})$.
@@ -257,6 +283,9 @@ $\cAg=-\partial_\xi^2+V(\xi)$ on $L^2(\R_+)$,
 $V\geq 0$, $V\to+\infty$, discrete spectrum,
 satisfying (i) $a_j\sim C_\gamma j^\gamma$;
 (ii) $V\in C^2$, simple turning points; (iii) H1; (iv) H2.
+The parameter $c$ in this paper is an approximation
+scale parameter, not a spectral parameter of $\cAg$;
+operators in $\mathfrak{T}_\gamma$ are defined independently of $c$.
 \end{definition}
 
 \begin{hypothesis}[H1: Pointwise Langer scaling]
@@ -271,7 +300,9 @@ general: H1-K (ibid., Cor.~\texttt{cor:h1\_derived}).
 
 \begin{hypothesis}[H2: $C_\infty$ boundedness]
 \label{hyp:Cinfty}
-$C_\infty=\sup_{j\geq 1}\|u_j\|_{C^0([0,M])}<\infty$.
+$C_\infty=\sup_{j\geq 1}\|u_j\|_{C^0([0,M])}<\infty$,
+where the $u_j$ are eigenfunctions of $\cAg$
+(operator-intrinsic, independent of $c$).
 \emph{Status:} Airy: standard; power family: WKB; general: open.
 \end{hypothesis}
 
@@ -283,12 +314,20 @@ $C_\infty=\sup_{j\geq 1}\|u_j\|_{C^0([0,M])}<\infty$.
 \begin{lemma}[$\gamma$-Agnostic nodes]
 \label{lem:gamma_agnostic}
 Without H1--H2, for all $\cAg\in\mathfrak{T}_\gamma$:
-(i) $\SK-\cKA=\AK-\BK$;
-(ii) tensor norm bound;
-(iii) Bessel tail;
-(iv) Tonelli/DCT;
-(v) $\|\BK\|\leq\Ctwo^{1/2}e^{-\alpha K/2}$;
-(vi) Kato norm-resolvent.
+\begin{itemize}[nosep]
+\item[(i)] $\SK-\cKA=\AK-\BK$;
+\item[(ii)] tensor norm bound;
+\item[(iii)] Bessel tail;
+\item[(iv)] Tonelli/DCT;
+\item[(v)] $\|\BK\|\leq\Ctwo^{1/2}e^{-\alpha K/2}$,
+  where
+  $C_2(\alpha) := \sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$.
+  This supremum depends only on $\cAg\in\mathfrak{T}_\gamma$
+  and the decay rate $\alpha$;
+  it is independent of the approximation parameter $c$,
+  since $\BK$ is determined by the spectral data of $\cAg$ alone.
+\item[(vi)] Kato norm-resolvent.
+\end{itemize}
 \end{lemma}
 
 %% ============================================================
@@ -304,8 +343,8 @@ Under H1--H2, there exist constants
   \qquad
   C_{\rm quad} = \frac{MC_0^2}{1+2\gamma},
 \]
-both independent of $K$ and $c$, such that
-for all $K\geq 1$, $c\geq c_0$:
+both $c$-admissible (Remark~\ref{rem:cadmissible}),
+such that for all $K\geq 1$, $c\geq c_0$:
 \begin{align}
   \normh{\AKlin}{}
     &\leq C_{\rm lin}\,K^{1+\gamma}c^{-\beta}
@@ -314,36 +353,30 @@ for all $K\geq 1$, $c\geq c_0$:
     &\leq C_{\rm quad}\,K^{1+2\gamma}c^{-2\beta}
     + C_{\sigma,2}\,K^{2\gamma}c^{-2\beta},\label{eq:AKquad}
 \end{align}
-where $C_{\sigma,1}, C_{\sigma,2}$ are also independent of $K$ and $c$.
+where $C_{\sigma,1} = \tfrac{1}{2}C_0 C_\infty$
+and $C_{\sigma,2} = \tfrac{1}{2}C_0^2$
+are also $c$-admissible.
 \end{lemma}
 
 \begin{proof}
-Apply the Euler--Maclaurin formula to $\sum_{j=1}^K j^\sigma$
-with $\sigma = \gamma$ (for the linear term) and $\sigma = 2\gamma$
-(for the quadratic term):
+Apply the Euler--Maclaurin formula to $\sum_{j=1}^K j^\sigma$:
 \begin{equation}\label{eq:EM}
   \sum_{j=1}^K j^\sigma
   = \frac{K^{1+\sigma}}{1+\sigma}
   + \frac{1}{2}K^\sigma
   + R_\sigma(K),
 \end{equation}
-where the remainder satisfies
+where
 \begin{equation}\label{eq:EM_remainder}
   |R_\sigma(K)| \leq C_\sigma\,K^{\sigma-1},
   \qquad
   C_\sigma = \frac{|B_2|}{12}\,\sigma(\sigma-1),
+  \quad B_2 = \tfrac{1}{6}.
 \end{equation}
-with $B_2 = \tfrac{1}{6}$ the second Bernoulli number.
-The constant $C_\sigma$ depends only on $\sigma$, not on $K$
-or on any external parameter such as $c$.
-This makes the leading constant and all subsequent
-error terms in~\eqref{eq:AKlin}--\eqref{eq:AKquad}
-uniform in both $K$ and $c$.
-The constants $C_{\rm lin}, C_{\rm quad}$ are read off from
-the leading term of~\eqref{eq:EM} after multiplying by
-$C_0 C_\infty c^{-\beta}$ and $C_0^2 c^{-2\beta}$ respectively;
-$C_{\sigma,1} = \frac{1}{2}C_0 C_\infty$ and
-$C_{\sigma,2} = \frac{1}{2}C_0^2$ come from the middle term.
+$C_\sigma$ depends only on $\sigma$, not on $K$ or $c$.
+Multiplying by the $c$-admissible prefactors from H1--H2
+yields~\eqref{eq:AKlin}--\eqref{eq:AKquad} with explicit
+$c$-admissible constants as stated.
 \end{proof}
 
 %% ============================================================
@@ -377,15 +410,11 @@ for all sufficiently large $c$:
 
 \begin{proof}
 \emph{Upper.}
-Logarithmic FOC:
-$\tfrac{\alpha}{2}K^*=\beta\log c+\gamma\log K^*+C_0$.
-$g(c):=\gamma(\log K^*(c))/K^*(c)\to 0$ monotonically
-(since $K^*\to\infty$ and $(\log t)/t\searrow 0$);
-hence $\exists c_0$: $g(c)\leq\alpha/4$,
-giving $K^*\leq c_2\log c$.
+$\tfrac{\alpha}{2}K^*=\beta\log c+\gamma\log K^*+C_0$;
+$g(c):=\gamma(\log K^*(c))/K^*(c)\to 0$ monotonically;
+hence $\exists c_0$: $g(c)\leq\alpha/4$, giving $K^*\leq c_2\log c$.
 \emph{Lower.}
-$F'(c_1\log c;c)=[L(1+\gamma)(2\beta/\alpha)^\gamma(\log c)^\gamma
--\tfrac{\alpha}{2}T]c^{-\beta}>0$ for large $c$;
+$F'(c_1\log c;c)>0$ for large $c$;
 $F'(0^+)<0$ gives $K^*\geq c_1\log c$.
 \end{proof}
 
@@ -396,8 +425,7 @@ $F'(0^+)<0$ gives $K^*\geq c_1\log c$.
 (on the restricted domain).}
 By Lemma~\ref{lem:loglog}, $K^*(c)\in[c_1\log c,c_2\log c]$
 for all large $c$.
-For each fixed $c$, the functional $F(\,\cdot\,;c)$
-is strictly convex on this window:
+For each fixed $c$, $F(\,\cdot\,;c)$ is strictly convex on this window:
 \[
   F''(K;c)
   = L\gamma(1+\gamma)K^{\gamma-1}c^{-\beta}
@@ -405,12 +433,11 @@ is strictly convex on this window:
   > 0
   \quad\forall K\in[c_1\log c,\,c_2\log c].
 \]
-Note: $F''(K;c)\to 0$ as $c\to\infty$ for fixed $K$;
+$F''(K;c)\to 0$ as $c\to\infty$ for fixed $K$;
 no uniform-in-$c$ convexity is claimed or needed.
-Strict convexity at each fixed $c$, on the window
-determined by the sandwich lemma,
-is sufficient for uniqueness of the minimizer $K^*(c)$.
-The unique minimizer satisfies
+Strict convexity at each fixed $c$, on the sandwich window,
+is sufficient for uniqueness of the minimizer $K^*(c)$,
+which satisfies
 \begin{equation}\label{eq:FOC}
   L(1+\gamma){K^*}^\gamma c^{-\beta}=\tfrac{\alpha}{2}T e^{-\alpha K^*/2}.
 \end{equation}
@@ -420,11 +447,9 @@ Logarithm of~\eqref{eq:FOC}:
 \begin{equation}\label{eq:log_FOC}
   \tfrac{\alpha}{2}K^*=\beta\log c+\gamma\log K^*+C_1.
 \end{equation}
-Derivation without circularity (DAG: Remark~\ref{rem:dag_nocycle}):
+Derivation (no circularity; DAG: Remark~\ref{rem:dag_nocycle}):
 \begin{itemize}[nosep]
-  \item Step~1: $K^*\to\infty$
-    (Lemma~\ref{lem:kstar_to_infty}, independent of any expansion)
-    $\Rightarrow\gamma\log K^*/K^*\to 0
+  \item Step~1: $K^*\to\infty\Rightarrow\gamma\log K^*/K^*\to 0
     \Rightarrow K_0=\frac{2\beta}{\alpha}\log c$.
   \item Step~2: sandwich~\eqref{eq:sandwich}
     $\Rightarrow\log K^*=\log\log c+O(1)$.
@@ -436,19 +461,15 @@ Derivation without circularity (DAG: Remark~\ref{rem:dag_nocycle}):
 
 \textup{(ii')} \textbf{Local regularity of the iteration
 (non-uniform, pointwise in $c$).}
-Equation~\eqref{eq:log_FOC} is equivalent to $K^*=\Phi_c(K^*)$ with
-$\Phi_c(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+C_1$.
-$\Phi_c$ is not a uniform contraction in $c$:
-$|\Phi_c'(K^*(c))|=\frac{2\gamma}{\alpha K^*(c)}\to 0$,
-so contraction strength vanishes asymptotically.
-For each fixed $c\geq c_0$, $\Phi_c$ has Lipschitz constant
-$\lambda(c)<\tfrac{1}{2}$ on $[c_1\log c, c_2\log c]$.
-The unique fixed point of $\Phi_c$ coincides with $K^*(c)$
-by uniqueness from~\textup{(i)}, not by contraction strength.
-Purpose: certify that iteration~\textup{(ii)} operates within
-$[c_1\log c,c_2\log c]$; provide convergence rate $\lambda(c)$;
-confirm regime self-consistency.
-No new asymptotic information is generated.
+$\Phi_c(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+C_1$;
+not a uniform contraction in $c$:
+$|\Phi_c'(K^*(c))|=\frac{2\gamma}{\alpha K^*(c)}\to 0$.
+For each fixed $c$, Lipschitz constant $\lambda(c)<\tfrac{1}{2}$
+on $[c_1\log c, c_2\log c]$.
+Unique fixed point $=K^*(c)$ by uniqueness from~(i),
+not by contraction strength.
+Purpose: certify regime self-consistency;
+no new asymptotic information.
 
 \textup{(iii)} $F(K^*;c)=O(c^{-\beta}(\log c)^{1+\gamma})$.
 \end{lemma}
@@ -460,8 +481,7 @@ shifts $K^*$ by $O(1)$.
 \end{lemma}
 
 \begin{proof}
-MVT on the difference of two solutions with $\min K_i\geq c_1\log c$;
-for large $c$: $|K_1-K_2|\leq 4D/\alpha=O(1)$.
+MVT; for large $c$: $|K_1-K_2|\leq 4D/\alpha=O(1)$.
 \end{proof}
 
 %% ============================================================
@@ -474,90 +494,72 @@ for large $c$: $|K_1-K_2|\leq 4D/\alpha=O(1)$.
 This is the unique lemma where $K$ and $c$ are coupled.
 
 \emph{Hypothesis.}
-There exist constants $C_{\rm lin}, C_{\rm quad}, C_{\rm tail}$
-independent of $K$ and $c$ such that for all $K\geq K_0$,
-$c\geq c_0$:
+There exist $c$-admissible constants
+$C_{\rm lin}, C_{\rm quad}, C_{\rm tail}$
+(Remark~\ref{rem:cadmissible};
+from Lemmas~\ref{lem:trunc_universal} and~\ref{lem:gamma_agnostic}(v))
+such that for all $K\geq K_0$, $c\geq c_0$:
 \begin{equation}\label{eq:fixed_param_bound}
   \normh{\cK-\cKA}{}
   \leq C_{\rm lin}\,K^{1+\gamma}c^{-\beta}
   + C_{\rm quad}\,K^{1+2\gamma}c^{-2\beta}
   + C_{\rm tail}\,e^{-\alpha K/2}.
 \end{equation}
-These constants are inherited from Lemma~\ref{lem:trunc_universal}
-($C_{\rm lin}, C_{\rm quad}$, with explicit EM remainder~\eqref{eq:EM_remainder})
-and Lemma~\ref{lem:gamma_agnostic}(v)
-($C_{\rm tail} = \Ctwo^{1/2}$).
 
 \emph{Slowly-varying substitution stability.}
-Let
-\[
-  h(c) := \frac{K^*(c)}{\frac{2\beta}{\alpha}\log c}.
-\]
-By~\eqref{eq:kopt_iterated}, as $c\to\infty$:
+Let $h(c) := K^*(c)\big/\bigl(\tfrac{2\beta}{\alpha}\log c\bigr)$.
+By~\eqref{eq:kopt_iterated}:
 \begin{equation}\label{eq:h_rate}
-  h(c) \to 1
-  \quad\text{and}\quad
-  |h(c) - 1|
-  = O\!\left(\frac{\log\log c}{\log c}\right).
+  h(c) \to 1,
+  \qquad
+  |h(c) - 1| = O\!\left(\frac{\log\log c}{\log c}\right).
 \end{equation}
-For every fixed $\gamma > 0$, by the mean-value inequality
+For every fixed $\gamma > 0$, by the MVT
 $(1+u)^{1+\gamma} = 1 + O(|u|)$ for $|u|\leq\tfrac{1}{2}$:
 \begin{equation}\label{eq:hgamma}
-  h(c)^{1+\gamma}
-  = 1 + O\!\left(\frac{\log\log c}{\log c}\right),
+  h(c)^{1+\gamma} = 1 + O\!\left(\frac{\log\log c}{\log c}\right),
 \end{equation}
-and consequently
 \begin{equation}\label{eq:Kstar_power}
   (K^*(c))^{1+\gamma}
-  = \left(\frac{2\beta}{\alpha}\log c\right)^{1+\gamma}
-  \!\left(1 + O\!\left(\frac{\log\log c}{\log c}\right)\right).
+  = \Bigl(\tfrac{2\beta}{\alpha}\log c\Bigr)^{1+\gamma}
+  \Bigl(1 + O\Bigl(\tfrac{\log\log c}{\log c}\Bigr)\Bigr).
 \end{equation}
-This controls the logarithmic instability under exponentiation:
-the relative error in substituting $K^*(c)$ for
-$\frac{2\beta}{\alpha}\log c$ in a power $(\cdot)^{1+\gamma}$
-is $O(\log\log c/\log c)$, which is $o(1)$ and does not
-degrade the asymptotic order of any term in~\eqref{eq:fixed_param_bound}.
+Relative error $O(\log\log c/\log c) = o(1)$;
+the asymptotic order of each term in~\eqref{eq:fixed_param_bound}
+is preserved.
 
 \emph{Conclusion.}
-Let $K=K^*(c)$ (Lemma~\ref{lem:kopt_variational}(ii)).
-Then, as $c\to\infty$:
+At $K=K^*(c)$ (Lemma~\ref{lem:kopt_variational}(ii)),
+as $c\to\infty$:
 \begin{itemize}[nosep]
   \item[\textup{(i)}] By~\eqref{eq:Kstar_power}:
     $K^*(c)^{1+\gamma}c^{-\beta}
-    = \bigl(\frac{2\beta}{\alpha}\bigr)^{1+\gamma}
-    c^{-\beta}(\log c)^{1+\gamma}\bigl(1+O(\tfrac{\log\log c}{\log c})\bigr)
     = O(c^{-\beta}(\log c)^{1+\gamma})$.
   \item[\textup{(ii)}] $K^*(c)^{1+2\gamma}c^{-2\beta}
     \prec c^{-\beta}(\log c)^{1+\gamma}$:
-    ratio $= K^*(c)^\gamma c^{-\beta}
-    = O((\log c)^\gamma c^{-\beta})\to 0$
-    (Proposition~\ref{prop:asymp_order}).
+    ratio $= O((\log c)^\gamma c^{-\beta})\to 0$.
   \item[\textup{(iii)}] $C_{\rm tail}\,e^{-\alpha K^*(c)/2}
-    = C'\,c^{-\beta}(\log c)^{-\gamma}
     \prec c^{-\beta}(\log c)^{1+\gamma}$:
     ratio $= O((\log c)^{-(1+2\gamma)})\to 0$.
-  \item[\textup{(iv)}] Hence $\normh{\cK-\cKA}{}
-    = O(c^{-\beta}(\log c)^{1+\gamma})$,
-    with the linear term~\textup{(i)} dominant.
+  \item[\textup{(iv)}] $\normh{\cK-\cKA}{}
+    = O(c^{-\beta}(\log c)^{1+\gamma})$;
+    linear term~(i) dominant.
 \end{itemize}
 \end{lemma}
 
 \begin{proof}
-Items (i)--(iii): ratios computed explicitly above;
-dominance verified for these specific pairs
+Ratios in (ii)--(iii) computed explicitly.
+(iv): asymptotic addition
+(Proposition~\ref{prop:scale_algebra});
+dominance verified per pair
 (Remark~\ref{rem:scale_regime}).
-(iv): since (i)/(ii) and (i)/(iii) both $\to\infty$,
-asymptotic addition
-(Proposition~\ref{prop:scale_algebra})
-gives sum $= O(\text{term (i)})$.
 \end{proof}
 
 \begin{remark}[Discrete projection]
 \label{rem:kopt_discrete}
 $K_{\rm int}=\lfloor K^*\rceil$:
-$F(K_{\rm int})-F(K^*)=O(c^{-\beta}(\log c)^{\gamma-1})
-\prec c^{-\beta}(\log c)^{1+\gamma}$
-(ratio $= O((\log c)^{-2})\to 0$).
+$F(K_{\rm int})-F(K^*)\prec c^{-\beta}(\log c)^{1+\gamma}$
+(ratio $O((\log c)^{-2})\to 0$).
 \end{remark}
 
 %% ============================================================
@@ -567,20 +569,17 @@ $F(K_{\rm int})-F(K^*)=O(c^{-\beta}(\log c)^{\gamma-1})
 
 \begin{theorem}[Layer-Survival]
 \label{thm:layer_survival}
-For $n\geq 1$, under H1, and for all fixed $K\geq K_0$, $c\geq c_0$:
-$\normh{A_K^{(n)}}{}\leq C_n\,K^{1+n\gamma}c^{-n\beta}$
-with constant $C_n$ independent of $K,c$
-(Euler--Maclaurin, as in Lemma~\ref{lem:trunc_universal}).
+For $n\geq 1$, under H1, all $K\geq K_0$, $c\geq c_0$:
+$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$
+with $c$-admissible $C_n$.
 Diagonal evaluation via Lemma~\ref{lem:diagonal_sub}
-(applying the slowly-varying stability~\eqref{eq:Kstar_power}
-with exponent $1+n\gamma$):
+(applying~\eqref{eq:Kstar_power} with exponent $1+n\gamma$):
 \[
   \normh{A_K^{(n)}}{}_{K=K^*(c)}
   = O(c^{-n\beta}(\log c)^{1+n\gamma})
   \prec c^{-\beta}(\log c)^{1+\gamma}
-  \quad(n\geq 2)
+  \quad(n\geq 2);
 \]
-by Proposition~\ref{prop:asymp_order};
 the rate is governed by $n=1$.
 \end{theorem}
 
@@ -591,30 +590,26 @@ the rate is governed by $n=1$.
 
 \begin{theorem}[Two-scale rate, fixed-parameter]
 \label{thm:universal_rate}
-For $\cAg\in\mathfrak{T}_\gamma$,
-all $K\geq K_0$, $c\geq c_0$:
+For $\cAg\in\mathfrak{T}_\gamma$, all $K\geq K_0$, $c\geq c_0$:
 \[
   \normh{\cK-\cKA}{}
   \leq C_{\rm lin}\,K^{1+\gamma}c^{-\beta}
   + C_{\rm quad}\,K^{1+2\gamma}c^{-2\beta}
   + \Ctwo^{1/2}e^{-\alpha K/2},
 \]
-with constants $C_{\rm lin}, C_{\rm quad}$ from
-Lemma~\ref{lem:trunc_universal} (explicit, independent of $K$ and $c$).
+all constants $c$-admissible
+(Remark~\ref{rem:cadmissible}).
 \end{theorem}
 
 \begin{corollary}[Universal logarithmic rate]
 \label{cor:universal_lograte}
-Apply Lemma~\ref{lem:diagonal_sub}
-(with $C_{\rm lin}, C_{\rm quad}$ from Theorem~\ref{thm:universal_rate})
+Apply Lemma~\ref{lem:diagonal_sub} to Theorem~\ref{thm:universal_rate}
 at $K=K_{\rm int}=\lfloor K^*(c)\rceil$:
 \[
   \normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma}).
 \]
-The leading constant is
-$C_{\rm lin}\bigl(\frac{2\beta}{\alpha}\bigr)^{1+\gamma}$;
-all three contributions and their dominance relations
-are explicitly computed in Lemma~\ref{lem:diagonal_sub}(i)--(iii).
+Leading constant:
+$C_{\rm lin}\bigl(\frac{2\beta}{\alpha}\bigr)^{1+\gamma}$ ($c$-admissible).
 \end{corollary}
 
 \begin{remark}[Spectral-geometric invariants]
@@ -628,14 +623,12 @@ but governs the log-exponent and log-log correction.
 \begin{remark}[O3: sharpness gap and axiom status]
 \label{rem:O3_sharpness}
 \begin{itemize}[nosep]
-  \item \textbf{O3a} (independent of H1--H2, true open problem):
-    does $\exists\,\cAg\in\mathfrak{T}_\gamma$ with
+  \item \textbf{O3a}: does $\exists\,\cAg\in\mathfrak{T}_\gamma$ with
     $\normh{\AKlin}{}=\Omega(K^{1+\gamma}c^{-\beta})$?
-  \item \textbf{O3b} (would require H3, not imposed):
-    a uniform lower bound for all $\cAg\in\mathfrak{T}_\gamma$
-    requires a positive-mass / non-cancellation condition
-    on the spectral measure; this is a genuinely new axiom
-    not implied by H1 or H2.
+    (Open, independent of H1--H2.)
+  \item \textbf{O3b}: uniform lower bound would require H3
+    (positive-mass / non-cancellation on spectral measure;
+    genuinely new axiom, not imposed).
 \end{itemize}
 Neither blocks any upper-bound conclusion.
 \end{remark}
@@ -698,23 +691,22 @@ O4 & Olver-Watson sketch$\to$proof & open \\
 
 \textbf{XVIII:} Qualitative BR3.\quad
 \textbf{XIX:} Airy rate $O(c^{-1/3}(\log c)^{5/3})$.\quad
-\textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$
-with fully explicit uniform analysis layer:
+\textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$:
 \begin{itemize}[nosep,leftmargin=1.5em]
-  \item fixed-parameter operator bounds with
-    $K,c$-independent constants via explicit EM remainder
-    (Lemma~\ref{lem:trunc_universal}, eq.~\eqref{eq:EM_remainder});
-  \item fixed-$c$ variational $K^*$ on window $[c_1\log c,c_2\log c]$,
-    pointwise-in-$c$ convexity;
+  \item $c$-admissible constant chain
+    $C_0,C_\infty\to C_{\rm lin},C_{\rm quad}\to C_{\rm tail}$
+    (Remark~\ref{rem:cadmissible});
+  \item fixed-parameter bounds uniform in $K,c$
+    via explicit EM remainder~\eqref{eq:EM_remainder};
+  \item fixed-$c$ variational $K^*$ on window $[c_1\log c,c_2\log c]$;
   \item slowly-varying substitution stability
-    (eqs.~\eqref{eq:h_rate}--\eqref{eq:Kstar_power})
-    controlling log-log instability under exponentiation;
+    (eqs.~\eqref{eq:h_rate}--\eqref{eq:Kstar_power});
   \item single diagonal substitution lemma
     (Lemma~\ref{lem:diagonal_sub}) as unique coupling point;
-  \item regime-dependent asymptotic ordering, verified per pair;
+  \item regime-dependent ordering, verified per pair;
   \item local iteration regularity, non-uniform contraction explicit;
-  \item acyclic DAG (Section~\ref{sec:dag_logical});
-  \item Layer-Survival; invariants $1+\gamma$, $1+2\gamma$.
+  \item acyclic DAG; Layer-Survival;
+    invariants $1+\gamma$, $1+2\gamma$.
 \end{itemize}
 
 \bigskip
