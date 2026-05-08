@@ -76,10 +76,12 @@ The unique minimizer satisfies the iterated asymptotics
   \qquad\text{so in particular}\quad
   K^*(c)\sim\frac{2\beta}{\alpha}\log c.
 \]
-This expansion is an asymptotic fixed point of the map
+This expansion is derived as the unique fixed point of
 $\Phi(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+O(1)$,
-which is a contraction along the scaling regime $K\asymp\log c$
-(Lemma~\ref{lem:kopt_variational}(ii')),
+whose Lipschitz constant $\Phi'(K)=\frac{2\gamma}{\alpha K}$
+decays to zero along the scaling regime $K\asymp\log c$
+(parameter-dependent asymptotic contraction,
+Lemma~\ref{lem:kopt_variational}(ii')),
 and is stable under $O(1)$ perturbations of the logarithmic FOC
 (Lemma~\ref{lem:stability_kopt}).
 The integer projection $K_{\rm int}=\lfloor K^*\rceil$
@@ -269,7 +271,7 @@ Apply Euler--Maclaurin $\sum_{j=1}^K j^\sigma
 %% ============================================================
 
 %%------------------------------------------------------------
-%% Step 0: K* -> infinity (independent of log-expansion)
+%% Step 0: K* -> infinity (logically prior to all log-arguments)
 %%------------------------------------------------------------
 \begin{lemma}[$K^*(c)\to\infty$]
 \label{lem:kstar_to_infty}
@@ -317,53 +319,47 @@ and taking logarithms of~\eqref{eq:sandwich} yields
 \begin{proof}
 \textit{Upper bound.}
 From the logarithmic FOC~\eqref{eq:log_FOC}
-(which is proved in Lemma~\ref{lem:kopt_variational}
-using only $F''>0$ and the existence of $K^*$,
-not the sandwich):
+(proved in Lemma~\ref{lem:kopt_variational}
+using only $F''>0$ and existence of $K^*$, not the sandwich):
 \[
   \tfrac{\alpha}{2}K^*
   = \beta\log c + \gamma\log K^* + C_0,
 \]
 where $C_0 = \log(L(1+\gamma)/(\frac{\alpha}{2}T))$ is a fixed constant.
-By Lemma~\ref{lem:kstar_to_infty}, $K^*\to\infty$,
-hence $\gamma\log K^*/K^*\to 0$.
-Choose $c_*$ such that $\gamma\log K^*(c)/K^*(c) \leq \alpha/4$
-for all $c\geq c_*$.
-Then $\frac{\alpha}{4}K^* \leq \beta\log c + C_0$,
-yielding $K^* \leq \frac{4(\beta\log c+C_0)}{\alpha}\leq c_2\log c$
-for $c\geq c_0 = c_0(\alpha,\beta,C_0)$.
-(Here $c_2 = 2(\beta+1)/\alpha$ absorbs the constant $C_0$
-for sufficiently large $c$; the choice is uniform in parameters.)
+By Lemma~\ref{lem:kstar_to_infty}, $K^*\to\infty$
+(independently of any log-rate assumption),
+hence $g(c) := \gamma\log K^*(c)/K^*(c) \to 0$ as $c\to\infty$.
+Define $c_* := \inf\{c : g(c) \leq \alpha/4\}$;
+by the above, $c_* < \infty$ depends only on $\alpha,\beta,\gamma,L,T$
+(the same parameters as $K^*$ itself).
+For $c \geq c_*$:
+$\frac{\alpha}{4}K^* \leq \beta\log c + C_0$,
+so $K^* \leq \frac{4(\beta\log c+C_0)}{\alpha} \leq c_2\log c$
+for $c \geq c_0(\alpha,\beta,C_0)$.
 
 \textit{Lower bound.}
 $F'(K) = L(1+\gamma)K^\gamma c^{-\beta}
 - \frac{\alpha}{2}Te^{-\alpha K/2}$.
 Note $F'(0^+) = -\frac{\alpha}{2}T < 0$.
 At $K = c_1\log c = \frac{2\beta}{\alpha}\log c$,
-noting that $\frac{\alpha}{2}\cdot c_1 = \beta$ so that
+using $\frac{\alpha}{2}\cdot c_1 = \beta$ so
 $e^{-\alpha c_1(\log c)/2} = c^{-\beta}$:
 \[
   F'(c_1\log c)
   = \Bigl[L(1+\gamma)\Bigl(\tfrac{2\beta}{\alpha}\Bigr)^\gamma (\log c)^\gamma
     - \tfrac{\alpha}{2}T\Bigr]c^{-\beta}.
 \]
-The bracket equals $(\log c)^\gamma$ times the positive constant
-$L(1+\gamma)(2\beta/\alpha)^\gamma$, minus the fixed constant
-$\frac{\alpha}{2}T$.
-Hence the bracket is positive for all $c \geq c_{**}$,
-where $c_{**}$ depends only on $L, T, \alpha, \beta, \gamma$
-(no further parameters).
+The bracket is positive for all $c \geq c_{**}$,
+where $c_{**}$ depends only on $L, T, \alpha, \beta, \gamma$.
 Since $F'(0^+) < 0 < F'(c_1\log c)$ for $c\geq c_{**}$,
-and $F'$ is continuous, the unique zero $K^*$ satisfies
-$K^* \geq c_1\log c$.
+the unique zero $K^*$ satisfies $K^* \geq c_1\log c$.
 
 \textit{Log extraction.}
-From~\eqref{eq:sandwich},
+From~\eqref{eq:sandwich}:
 $\log c_1 + \log\log c
 \leq \log K^*
 \leq \log c_2 + \log\log c$,
-which gives~\eqref{eq:loglog} with the $O(1)$ term
-bounded by $\max(|\log c_1|, |\log c_2|)$.
+giving~\eqref{eq:loglog} with $|O(1)| \leq \max(|\log c_1|,|\log c_2|)$.
 \end{proof}
 
 %%------------------------------------------------------------
@@ -387,19 +383,32 @@ satisfying the FOC
   = \tfrac{\alpha}{2}\,T\,e^{-\alpha K^*/2}.
 \end{equation}
 
-\textup{(ii)} \textbf{Iterated asymptotics.}
+\textup{(ii)} \textbf{Iterated asymptotics via fixed-point iteration.}
 Taking logarithms of~\eqref{eq:FOC}:
 \begin{equation}\label{eq:log_FOC}
   \frac{\alpha}{2}K^*
   = \beta\log c + \gamma\log K^*
   + \log\!\Bigl(\tfrac{L(1+\gamma)}{(\alpha/2)T}\Bigr).
 \end{equation}
-By Lemma~\ref{lem:kstar_to_infty}, $K^*\to\infty$,
-hence $\gamma\log K^*/K^*\to 0$;
-this justifies the leading balance $K_0 := \frac{2\beta}{\alpha}\log c$
-without circularity.
-By Lemma~\ref{lem:loglog}, $\log K^* = \log\log c + O(1)$;
-substituting into~\eqref{eq:log_FOC} gives the first iterate:
+This is equivalently the fixed-point equation $K^* = \Phi(K^*)$ with
+\begin{equation}\label{eq:fixpoint}
+  \Phi(K) := \frac{2\beta}{\alpha}\log c
+  + \frac{2\gamma}{\alpha}\log K + C_1,
+  \quad C_1 = \frac{2}{\alpha}\log\!\Bigl(\tfrac{L(1+\gamma)}{(\alpha/2)T}\Bigr).
+\end{equation}
+The expansion~\eqref{eq:kopt_iterated} is derived as follows,
+without a priori assuming $K^*\asymp\log c$:
+\begin{itemize}[nosep]
+  \item \emph{Zeroth iterate.}
+    By Lemma~\ref{lem:kstar_to_infty}, $K^*\to\infty$,
+    so $\gamma\log K^*/K^*\to 0$;
+    the dominant balance in~\eqref{eq:log_FOC} gives
+    $K_0 := \frac{2\beta}{\alpha}\log c$.
+  \item \emph{First iterate.}
+    The sandwich~\eqref{eq:sandwich} gives
+    $\log K^* = \log\log c + O(1)$ (Lemma~\ref{lem:loglog}).
+    Substituting into~\eqref{eq:log_FOC}:
+\end{itemize}
 \begin{equation}\label{eq:kopt_iterated}
   K^*(c) = \frac{2\beta}{\alpha}\log c
            + \frac{2\gamma}{\alpha}\log\log c
@@ -409,26 +418,23 @@ substituting into~\eqref{eq:log_FOC} gives the first iterate:
 In particular, $K^*(c)\sim\frac{2\beta}{\alpha}\log c$,
 and $\gamma$ does not appear in the leading coefficient.
 
-\textup{(ii')} \textbf{Fixpoint form and contraction along regime.}
-Equation~\eqref{eq:log_FOC} is equivalently written as
-\begin{equation}\label{eq:fixpoint}
-  K = \Phi(K) := \frac{2\beta}{\alpha}\log c
-  + \frac{2\gamma}{\alpha}\log K + O(1).
-\end{equation}
-For $K$ in the admissible scaling regime $K\asymp\log c$
-(guaranteed by the sandwich~\eqref{eq:sandwich}):
+\textup{(ii')} \textbf{Parameter-dependent asymptotic contraction.}
+On the invariant region $\mathcal{I}(c) := [c_1\log c, c_2\log c]$
+(guaranteed non-empty for large $c$ by~\eqref{eq:sandwich}),
+$\Phi$ maps $\mathcal{I}(c)$ into itself for large $c$, and
 \begin{equation}\label{eq:contraction}
-  \Phi'(K) = \frac{2\gamma}{\alpha K}
-  = O\!\left(\frac{1}{\log c}\right) \to 0.
+  \sup_{K\in\mathcal{I}(c)}|\Phi'(K)|
+  = \frac{2\gamma}{\alpha c_1 \log c}
+  \xrightarrow{c\to\infty} 0.
 \end{equation}
-Hence $\Phi$ is a contraction along this regime:
-starting from $K_0 = \frac{2\beta}{\alpha}\log c$,
-the iteration $K_{n+1}=\Phi(K_n)$ stays in the regime
-$K_n\asymp\log c$ at every step
-(since $\Phi(K_0)\asymp\log c$ and
-$|\Phi'|\leq\frac{1}{2}$ for $c$ large),
-and converges to $K^*$, justifying~\eqref{eq:kopt_iterated}
-without circularity.
+In particular, $|\Phi'|\leq\frac{1}{2}$ for all $c\geq c_0(\alpha,\beta,\gamma)$.
+This is a \emph{parameter-dependent} contraction:
+the Lipschitz constant depends on $c$ and tends to zero,
+so the contraction is not uniform over all $c$,
+but for each fixed large $c$ the map $\Phi(\,\cdot\,;c)$
+is a strict contraction on $\mathcal{I}(c)$.
+The iteration $K_{n+1}=\Phi(K_n)$ converges to $K^*$
+and provides an independent derivation of~\eqref{eq:kopt_iterated}.
 
 \textup{(iii)} \textbf{Value at $K^*$.}
 At $K = K^*(c)$:
@@ -440,22 +446,20 @@ At $K = K^*(c)$:
 \begin{proof}
 (i) $F'' > 0$ as computed;
 $F(0^+)=T>0$, $F'(0^+)<0$, $F\to+\infty$:
-hence a unique interior minimum.
-(ii) Equation~\eqref{eq:log_FOC} is exact.
-$K^*\to\infty$ by Lemma~\ref{lem:kstar_to_infty}
-(proved independently of the log-expansion);
-$\gamma\log K^*/K^*\to 0$ follows.
-Insert $\log K^*=\log\log c+O(1)$
-(Lemma~\ref{lem:loglog}~\eqref{eq:loglog})
-into~\eqref{eq:log_FOC} to obtain~\eqref{eq:kopt_iterated}.
-(ii') The sandwich~\eqref{eq:sandwich} confines $K^*\asymp\log c$.
-At $K_0 = \frac{2\beta}{\alpha}\log c$:
-$\Phi(K_0)\asymp\log c$.
-Since $|\Phi'(K)|\leq\frac{2\gamma}{\alpha c_1\log c}\leq\frac{1}{2}$
-for $c$ large (using $c_1 = 2\beta/\alpha$), each iterate
-remains in the regime and contraction holds by the Banach
-fixed-point theorem applied to the interval
-$[c_1\log c, c_2\log c]$.
+unique interior minimum.
+(ii) \eqref{eq:log_FOC} is exact.
+The fixed-point structure~\eqref{eq:fixpoint} is algebraically equivalent.
+Zeroth iterate: $K^*\to\infty$ (Lemma~\ref{lem:kstar_to_infty},
+proved independently); $\gamma\log K^*/K^*\to 0$ follows.
+First iterate: $\log K^*=\log\log c+O(1)$ (Lemma~\ref{lem:loglog}).
+(ii') $\Phi$ maps $\mathcal{I}(c)$ into itself:
+for $K\in\mathcal{I}(c)$,
+$\Phi(K)\in[\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log(c_1\log c)+C_1,\,
+\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log(c_2\log c)+C_1]
+\subseteq\mathcal{I}(c)$ for large $c$.
+$|\Phi'(K)|\leq\frac{2\gamma}{\alpha c_1\log c}\leq\frac{1}{2}$ for large $c$.
+Contraction on $\mathcal{I}(c)$ (a complete metric space under $|\cdot|$)
+follows; $K^*$ is the unique fixed point.
 (iii) $L(K^*)^{1+\gamma}c^{-\beta}
 = L\bigl(\frac{2\beta}{\alpha}\log c\bigr)^{1+\gamma}
 c^{-\beta}(1+o(1))
@@ -514,7 +518,7 @@ satisfies $|K_{\rm int}-K^*|\leq\frac{1}{2}$, and by Taylor:
 \]
 in $\mathcal{S}$ (Definition~\ref{def:scale}).
 Hence the continuous minimizer controls the integer minimizer
-up to a term that is asymptotically negligible relative to $F(K^*)$,
+up to a term asymptotically negligible relative to $F(K^*)$,
 and Corollary~\ref{cor:universal_lograte}
 holds for $K=K_{\rm int}\in\N$.
 \end{remark}
@@ -526,7 +530,8 @@ by heuristic order-of-magnitude balance.
 Lemma~\ref{lem:kopt_variational} replaces this
 with a strictly convex functional, a FOC,
 an iterated asymptotic expansion~\eqref{eq:kopt_iterated}
-justified by the contraction~\eqref{eq:contraction},
+justified by the fixed-point structure~\eqref{eq:fixpoint}
+and parameter-dependent contraction~\eqref{eq:contraction},
 and a stability certificate (Lemma~\ref{lem:stability_kopt}).
 The sandwich~\eqref{eq:sandwich} provides an
 explicit two-sided bound on $K^*$ prior to any
@@ -607,6 +612,25 @@ log-log correction~\eqref{eq:kopt_iterated}
 to the optimal truncation.
 \end{remark}
 
+\begin{remark}[O3: sharpness and the lower-bound gap]
+\label{rem:O3_sharpness}
+The rate $O(c^{-\beta}(\log c)^{1+\gamma})$ is an upper bound.
+A matching lower bound $\Omega(K^{1+\gamma})$ for the Langer term
+(O3 in Section~\ref{sec:open}) would establish sharpness.
+The gap is structural: the upper bound uses
+$\sum_{j=1}^K j^\gamma \leq \frac{K^{1+\gamma}}{1+\gamma} + O(K^\gamma)$
+(Euler--Maclaurin), while a lower bound requires a
+positive-mass condition on the spectral measure below threshold,
+i.e.\ that eigenfunction concentrations do not cancel.
+Within $\mathfrak{T}_\gamma$ this is plausible but not proved;
+a concrete obstruction would require constructing
+$\cAg\in\mathfrak{T}_\gamma$ with
+$\normh{\AKlin}{} = o(K^{1+\gamma}c^{-\beta})$,
+which appears impossible under H1 but is not ruled out
+by the current axioms.
+\textit{Status:} open; non-blocking for all upper-bound conclusions.
+\end{remark}
+
 %% ============================================================
 \section{Model Family and H1 Status}
 \label{sec:models}
@@ -648,7 +672,9 @@ O1 & H1 for general $V$: closed by H1-K
      (\texttt{olver\_growth\_lemma.tex} \S4)
   & closed (conditional) \\
 O2 & H2 for $\nu\neq 1$ & open \\
-O3 & $\Omega(K^{1+\gamma})$ lower bound & open \\
+O3 & $\Omega(K^{1+\gamma})$ lower bound
+     (see Remark~\ref{rem:O3_sharpness})
+  & open \\
 O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \hline
 \multicolumn{2}{l}{O2--O4 are non-blocking}
@@ -667,8 +693,9 @@ O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \textbf{XVIII:} Qualitative BR3.
 \textbf{XIX:} Airy rate $O(c^{-1/3}(\log c)^{5/3})$.
 \textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$;
-variational $K^*$ with sandwich bounds, contraction-certified
-iterated asymptotics, and $O(1)$-stability;
+variational $K^*$ with sandwich bounds,
+parameter-dependent asymptotic contraction,
+and $O(1)$-stability;
 Layer-Survival; two invariants $1+\gamma$, $1+2\gamma$.
 Structural stability: \texttt{structural\_stability\_metatheorem.tex}.
 
