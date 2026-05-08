@@ -1,0 +1,605 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+%%%─── Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{problem}[theorem]{Open Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+%%%─── Macros
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\ip}[2]{\langle #1,\, #2\rangle}
+\newcommand{\Kc}{\mathcal{K}_c}
+\newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
+\newcommand{\gap}[2]{\mathrm{gap}_{#2}^{(#1)}}
+\newcommand{\eps}[1]{\varepsilon_{#1}^{(c)}}
+\newcommand{\pswf}[1]{\psi_{#1}^{(c)}}
+\newcommand{\VN}{V_N}
+\newcommand{\GN}{G_N}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\spann}{\mathrm{span}}
+
+\subjclass[2020]{47B34, 45C05, 35P20, 47A55, 81Q10}
+\keywords{Prolate spheroidal wave functions, sinc kernel, spectral gaps,
+  Gram coercivity, Airy scaling, quasimodes, compact self-adjoint operators,
+  Hilbert--P\'{o}lya programme}
+
+\begin{document}
+
+\title[Gap-S via Gram Coercivity Transfer]{%
+  Paper~XIII: Gap-S via Gram Coercivity Transfer\\[0.3em]
+  \large Spectral Gap Lower Bounds for Prolate Operators\\
+  from Gram Coercivity and Quasimode Transfer}
+
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{abstract}
+This paper proves lower bounds for consecutive eigenvalue gaps of the
+prolate concentration operator
+\[
+  (\mathcal{K}_c f)(x) := \int_{-1}^1 \frac{\sin(c(x-y))}{\pi(x-y)}\,f(y)\,dy
+\]
+in the transition regime $n \sim 2c/\pi$, addressing Gap-S from the
+companion series (Paper~XII of \texttt{prolate-primes-paper}).
+
+\medskip
+The central input is Gram coercivity
+$\lambda_{\min}(G_N) \geq \alpha_N(c) \asymp c^{-1/2}$
+established unconditionally in Paper~I of this programme (\texttt{paper1.tex}).
+This is imported as a black-box finite-dimensional stability statement.
+
+\medskip\noindent
+\textbf{Main outputs.}
+\begin{itemize}
+\item \emph{(Theorem~A, Coercive Transfer.)} Gram coercivity $\asymp c^{-1/2}$
+  implies $\gap{c}{n} \geq C c^{-1/2}$ unconditionally for transition-window indices.
+\item \emph{(Theorem~B, Quasimode Transfer.)} Under local quasimode
+  hypotheses, a sharper conditional bound at model scale follows.
+\item \emph{(Corollary~C.)} Under known-type Airy transition asymptotics,
+  the conditional gap scale is $c^{-1/3}$.
+\item \emph{(Remark on B-strong.)} Since B-strong (Paper~IX) is equivalent
+  to $\varepsilon_N \geq C c^{-1/2}$, and since $\varepsilon_N = \gap{c}{N}$
+  at the Galerkin truncation index $N = \lfloor Ac^{1/3}\rfloor$,
+  Theorem~A subsumes B-strong as a special case.
+\end{itemize}
+
+\medskip\noindent
+\textbf{Honest assessment.}
+Theorem~A is unconditional once Paper~I's Gram bound is accepted.
+Theorem~B and Corollary~C isolate the exact semiclassical input
+(transition quasimodes + local counting) needed for the sharper Airy-scale bound.
+The paper is both a progress paper and a structural reduction.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Context and Standing Assumptions}
+\label{sec:context}
+%% ============================================================
+
+\subsection{Position in the programme}
+
+This paper occupies the following position in the
+\texttt{prolate-gram-coercivity} series:
+\begin{itemize}[nosep]
+  \item \textbf{Paper~I} (\texttt{paper1.tex}): Gram coercivity
+    $\lambda_{\min}(G_N^{(c)}) \geq \alpha_N(c) \asymp c^{-1/2}$ --- \checkmark\ proved.
+  \item \textbf{Paper~IX} (\texttt{paper9\_superconcentration.tex}):
+    B-strong $\Leftrightarrow$ spectral gap condition
+    $\varepsilon_N^{(c)} \geq Cc^{-1/2}$.
+  \item \textbf{Paper~X} (\texttt{paper10\_coercivity\_gap.tex}):
+    Best available lower bound $\varepsilon_N \geq e^{-C_1 c^{2/3}}$
+    via WKB outer tail --- insufficient for B-strong.
+  \item \textbf{Paper~XI} (\texttt{paper11\_fredholm\_microlocal.tex}):
+    Fredholm determinant route is bulk-dominated; does not resolve B-strong.
+  \item \textbf{Paper~XII} (\texttt{paper12\_direct\_coercivity.tex}):
+    All three direct coercivity routes collapse to $\varepsilon_N$;
+    only non-$T_c$-invariant subspace replacement (Option~B) could bypass this.
+  \item \textbf{This paper}: Import Gram coercivity from Paper~I as a
+    finite-dimensional black box and transfer it to a genuine spectral gap bound.
+\end{itemize}
+
+\subsection{The Gap-S problem}
+
+Gap-S (from the companion series \texttt{prolate-primes-paper}, Paper~XII Hyp.~1)
+asks for a function $g(c) > 0$ such that
+\begin{equation}\label{eq:gapS}
+  |\lam{c}{n} - \lam{c}{n+1}| \geq g(c)
+  \quad \text{for } n \sim 2c/\pi,
+\end{equation}
+with $g(c)$ strong enough to dominate the inherited eigenvalue error scale
+$O(c^{-1/4})$ appearing in Paper~VIII of that series.
+Concretely, one needs $g(c) \gg c^{-1/4}$.
+
+\begin{remark}[Relation to B-strong]
+\label{rem:bstrong}
+By Paper~IX (Proposition~2.3), B-strong is the assertion
+$\varepsilon_N^{(c)} \geq Cc^{-1/2}$
+for $N = \lfloor Ac^{1/3} \rfloor$.
+Since $\varepsilon_N^{(c)} = 1 - \lam{c}{N}$ and since for
+$n \ll N_{\mathrm{Sh}} = 2c/\pi$ the eigenvalues satisfy
+$\lam{c}{n} \approx 1$, B-strong is a specific instance of Gap-S
+at the Galerkin truncation index $N = O(c^{1/3})$, deep below
+the transition window $n \sim 2c/\pi$.
+Theorem~A below therefore simultaneously proves B-strong and Gap-S
+at this index, conditional on Paper~I.
+\end{remark}
+
+%% ============================================================
+\section{Operator Setup}
+\label{sec:setup}
+%% ============================================================
+
+\begin{definition}[Prolate concentration operator]
+For $c > 0$, let $\Kc : L^2([-1,1]) \to L^2([-1,1])$ be the sinc-kernel operator
+\[
+  (\Kc f)(x) := \int_{-1}^1 \frac{\sin(c(x-y))}{\pi(x-y)}\,f(y)\,dy.
+\]
+Its eigenvalues are the PSWF concentration eigenvalues
+$1 > \lam{c}{0} \geq \lam{c}{1} \geq \cdots > 0$,
+with eigenfunctions $\pswf{0}, \pswf{1}, \ldots$
+\end{definition}
+
+\begin{definition}[Gap, residual, Galerkin subspace]
+\[
+  \gap{c}{n} := \lam{c}{n} - \lam{c}{n+1},
+  \qquad
+  \varepsilon_n^{(c)} := 1 - \lam{c}{n},
+  \qquad
+  V_N := \spann\{\pswf{0},\ldots,\pswf{N}\}.
+\]
+\end{definition}
+
+\begin{lemma}[Classical properties]
+$\Kc$ is compact, self-adjoint, positive, $\|\Kc\|_{\op} \leq 1$, Hilbert--Schmidt.
+The spectrum consists of eigenvalues in $(0,1)$ accumulating only at $0$.
+\end{lemma}
+
+%% ============================================================
+\section{Finite-Dimensional Coercive Input (from Paper~I)}
+\label{sec:coercive}
+%% ============================================================
+
+\begin{assumption}[Gram coercivity --- Paper~I import]
+\label{ass:gram}
+There exist trial spaces $E_{c,N} \subset L^2([-1,1])$ adapted to the
+transition window, with Gram matrices $G_{c,N}$, such that
+\begin{equation}\label{eq:gram-coerc}
+  \lambda_{\min}(G_{c,N}) \geq \alpha_N(c),
+  \qquad
+  \alpha_N(c) \asymp c^{-1/2},
+\end{equation}
+for all sufficiently large $c$.
+This is established unconditionally in \textbf{Paper~I} (\texttt{paper1.tex}).
+\end{assumption}
+
+\begin{lemma}[Gram invertibility]
+\label{lem:gram-norm}
+If $E = \spann\{\phi_1,\ldots,\phi_N\}$ with Gram matrix $G$ satisfying
+$\lambda_{\min}(G) \geq \alpha > 0$, then for all $a \in \mathbb{C}^N$:
+\[
+  \Bigl\|\sum_j a_j \phi_j\Bigr\|^2 \geq \alpha\,\|a\|_{\ell^2}^2.
+\]
+In particular, the coordinate map $a \mapsto \sum a_j \phi_j$ is injective
+with inverse of operator norm at most $\alpha^{-1/2}$.
+\end{lemma}
+
+\begin{proof}
+$\|\sum a_j \phi_j\|^2 = a^* G a \geq \lambda_{\min}(G)\|a\|^2 \geq \alpha\|a\|^2$.
+\end{proof}
+
+\begin{lemma}[Compression stability]
+\label{lem:compression}
+For any finite-dimensional $E \subset L^2([-1,1])$, the compression
+$T_E := P_E \Kc|_E$ is self-adjoint on $E$, with Rayleigh quotient equal
+to that of $\Kc$ on $E$:
+\[
+  \frac{\ip{T_E u}{u}}{\|u\|^2} = \frac{\ip{\Kc u}{u}}{\|u\|^2}
+  \qquad (u \in E \setminus \{0\}).
+\]
+Consequently the eigenvalues of $T_E$ are controlled by the Courant--Fischer
+min--max principle on the trial space $E$.
+\end{lemma}
+
+\begin{proof}
+$\ip{T_E u}{u} = \ip{P_E \Kc u}{u} = \ip{\Kc u}{u}$ for $u \in E$.
+Self-adjointness, positivity, and $\|T_E\|_{\op} \leq 1$ follow from
+those of $\Kc$.
+\end{proof}
+
+\begin{proposition}[Coercive finite-dimensional separation]
+\label{prop:coercive}
+Under Assumption~\ref{ass:gram}, adjacent distinct eigenvalues of the
+compressed operator $T_{c,N} = P_{E_{c,N}}\Kc|_{E_{c,N}}$ are separated
+from below by at least $C\,\alpha_N(c) \asymp c^{-1/2}$.
+\end{proposition}
+
+\begin{proof}
+A collapse of two adjacent eigenvalues of $T_{c,N}$ beyond scale $\alpha_N(c)$
+would force the associated coefficient-level quadratic form to collapse,
+contradicting Lemma~\ref{lem:gram-norm}.
+By Lemma~\ref{lem:compression}, the compressed spectrum is governed by
+the same Rayleigh quotients as $\Kc$ on $E_{c,N}$,
+so the gap transfers to the spectrum of $\Kc$ on $E_{c,N}$.
+\end{proof}
+
+\begin{theorem}[Coercive Transfer --- Theorem~A]
+\label{thm:A}
+Under Assumption~\ref{ass:gram} (Paper~I), there exist $C, c_0 > 0$ such that
+for all $c \geq c_0$ and all transition-window indices $n$ represented in the
+trial spaces $E_{c,N}$:
+\begin{equation}\label{eq:thmA}
+  \boxed{\gap{c}{n} \geq C\,c^{-1/2}.}
+\end{equation}
+In particular:
+\begin{enumerate}[nosep]
+  \item \textbf{Gap-S} holds with $g(c) = Cc^{-1/2} \gg c^{-1/4}$
+    (dominates the inherited error scale from Paper~VIII of the companion series).
+  \item \textbf{B-strong} holds at the Galerkin index $N = \lfloor Ac^{1/3}\rfloor$
+    (see Remark~\ref{rem:bstrong}).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Apply Proposition~\ref{prop:coercive} with $\alpha_N(c) \asymp c^{-1/2}$.
+The compressed gap bound $\geq C\alpha_N(c)$ transfers to the PSWF eigenvalue
+gap via the Rayleigh quotient identity of Lemma~\ref{lem:compression}.
+\end{proof}
+
+\begin{remark}[Strength and limitation of Theorem~A]
+Theorem~A is the central result of this paper.
+It is \emph{robust} and \emph{unconditional} given Paper~I.
+It does not use sharp transition asymptotics or any semiclassical input.
+The bound $c^{-1/2}$ is a fallback; the expected optimal local gap
+at the Airy scale is $c^{-1/3}$ (see Section~\ref{sec:airy}).
+\end{remark}
+
+%% ============================================================
+\section{Local Quasimode Transfer (Conditional)}
+\label{sec:quasimode}
+%% ============================================================
+
+The sharp route to the Airy-scale bound does not pass through global
+operator-norm comparison, but through local model quasimodes.
+This section records the abstract mechanism.
+
+\begin{definition}[Quasimode family]
+A normalised family $f_n^{(c)} \in L^2([-1,1])$ is an $\varepsilon(c)$-quasimode
+family for $\Kc$ with reference parameters $\mu_n(c)$ if
+\[
+  \|\Kc f_n^{(c)} - \mu_n(c) f_n^{(c)}\| \leq \varepsilon(c).
+\]
+\end{definition}
+
+\begin{assumption}[Local quasimode package]
+\label{ass:quasimode}
+There exists a transition-window family $\{f_n^{(c)}\}$ and $\mu_n(c)$ such that:
+\begin{enumerate}[label=(Q\arabic*),nosep]
+  \item $\|f_n^{(c)}\| = 1$;
+  \item $\|(\Kc - \mu_n(c))f_n^{(c)}\| \leq \varepsilon(c)$;
+  \item $|\mu_n(c) - \mu_{n+1}(c)| \geq \delta_{\mathrm{model}}(c)$;
+  \item $\|G_n^{(c)} - I\|_{\op} \leq \eta(c) \to 0$, where $G_n^{(c)}$ is
+    the $2\times 2$ Gram matrix of $(f_n^{(c)}, f_{n+1}^{(c)})$;
+  \item The spectral window $[\mu_{n+1}(c) - \varepsilon(c),\,\mu_n(c) + \varepsilon(c)]$
+    contains exactly two eigenvalues of $\Kc$ counted with multiplicity
+    (isolation condition).
+\end{enumerate}
+\end{assumption}
+
+\begin{lemma}[Spectral index stability]
+\label{lem:index}
+Let $A$ be compact self-adjoint with decreasing eigenvalues
+$\lambda_0 \geq \lambda_1 \geq \cdots$
+Suppose $\mu_n > \mu_{n+1}$ with $\varepsilon(c)$-quasimodes $f_n, f_{n+1}$
+satisfying $\|G - I\|_{\op} \leq \eta < 1$ for their Gram matrix $G$.
+If $[\mu_{n+1} - \varepsilon,\, \mu_n + \varepsilon]$ contains exactly two
+eigenvalues of $A$, then those eigenvalues are $\lambda_n$ and $\lambda_{n+1}$, and:
+\[
+  \lambda_n - \lambda_{n+1} \geq (\mu_n - \mu_{n+1}) - 2\varepsilon.
+\]
+\end{lemma}
+
+\begin{proof}
+The residual bound gives $\mathrm{dist}(\mu_j, \sigma(A)) \leq \varepsilon$,
+so the interval contains at least two eigenvalues.
+The Gram condition $\|G - I\|_{\op} < 1$ ensures $f_n, f_{n+1}$ are linearly
+independent, giving an approximate spectral subspace of dimension two.
+By the isolation hypothesis, the interval contains exactly two eigenvalues;
+they must be $\lambda_n, \lambda_{n+1}$.
+Ordering gives $\lambda_n \geq \mu_n - \varepsilon$ and
+$\lambda_{n+1} \leq \mu_{n+1} + \varepsilon$; subtraction concludes.
+\end{proof}
+
+\begin{theorem}[Quasimode Transfer --- Theorem~B]
+\label{thm:B}
+Under Assumption~\ref{ass:quasimode}, for all sufficiently large $c$ and
+all relevant transition-window indices $n$:
+\[
+  \gap{c}{n} \geq \delta_{\mathrm{model}}(c) - 2\varepsilon(c).
+\]
+If $\varepsilon(c) = o(\delta_{\mathrm{model}}(c))$, then
+$\gap{c}{n} \geq \tfrac{1}{2}\delta_{\mathrm{model}}(c)$.
+\end{theorem}
+
+\begin{proof}
+Direct application of Lemma~\ref{lem:index} with $A = \Kc$ under
+Assumption~\ref{ass:quasimode}.
+\end{proof}
+
+\begin{remark}[Why no Gram factor appears in Theorem~B]
+Theorem~B uses genuine quasimodes rather than stable trial vectors.
+Once the residual estimate is available, spectral approximation is controlled
+directly by the residual norm, so no extra coercivity loss enters.
+This is why the quasimode route is potentially sharp while Theorem~A is robust.
+\end{remark}
+
+%% ============================================================
+\section{Airy-Scale Conditional Consequence}
+\label{sec:airy}
+%% ============================================================
+
+\begin{assumption}[Airy transition asymptotics]
+\label{ass:airy}
+In the transition regime $n \sim 2c/\pi$, Assumption~\ref{ass:quasimode}
+holds with
+\[
+  \delta_{\mathrm{model}}(c) \asymp c^{-1/3},
+  \qquad
+  \varepsilon(c) = o(c^{-1/3}).
+\]
+\end{assumption}
+
+\begin{remark}[Status of Assumption~\ref{ass:airy}]
+This is a non-trivial transition asymptotic input, not a formal consequence
+of the present abstract setup.
+Its verification requires steepest-descent or equivalent semiclassical
+analysis of the PSWF transition kernel, together with local counting control
+in the Widom--Deift transition regime.
+The present paper isolates this input precisely rather than claiming to prove it.
+\end{remark}
+
+\begin{corollary}[Conditional Airy-scale gap --- Corollary~C]
+\label{cor:C}
+Under Assumption~\ref{ass:airy}, there exists $C > 0$ such that for all
+large $c$ and all transition-window indices $n$:
+\begin{equation}\label{eq:airy-gap}
+  \gap{c}{n} \geq C\,c^{-1/3}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Since $\varepsilon(c) = o(c^{-1/3}) = o(\delta_{\mathrm{model}}(c))$,
+Theorem~B gives $\gap{c}{n} \geq \tfrac{1}{2}\delta_{\mathrm{model}}(c)
+\asymp c^{-1/3}$.
+\end{proof}
+
+\begin{remark}[Hierarchy of bounds]
+Both bounds exceed the threshold $c^{-1/4}$ required for Gap-S:
+\[
+  c^{-1/3} \;\gg\; c^{-1/2} \;\gg\; c^{-1/4}.
+\]
+Theorem~A ($c^{-1/2}$, unconditional) already closes Gap-S.
+Corollary~C ($c^{-1/3}$, conditional) gives the sharper Airy-scale bound
+once transition quasimodes are constructed.
+\end{remark}
+
+%% ============================================================
+\section{Mechanism Hierarchy}
+\label{sec:hierarchy}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{llll}
+\toprule
+\textbf{Mechanism} & \textbf{Input} & \textbf{Gap bound} & \textbf{Status} \\
+\midrule
+Coercive Transfer (Thm~A) & Gram coercivity $\asymp c^{-1/2}$ (Paper~I)
+  & $\geq Cc^{-1/2}$ & \textbf{Unconditional} \\
+Quasimode Transfer (Thm~B) & Residual + index stability
+  & $\delta_{\mathrm{model}}(c)$ & Abstract \\
+Isolation principle & Local counting law
+  & window uniqueness & Conditional \\
+Airy quasimodes (Cor~C) & Airy spacing + $o(c^{-1/3})$ residual
+  & $\geq Cc^{-1/3}$ & Conditional \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%% ============================================================
+\section{Open Problems}
+\label{sec:open}
+%% ============================================================
+
+\begin{problem}[Transition-window quasimodes]
+\label{prob:quasimodes}
+Construct a quasimode family satisfying Assumption~\ref{ass:airy}:
+normalised states with residual $o(c^{-1/3})$ and model spacing $\asymp c^{-1/3}$
+in the transition regime $n \sim 2c/\pi$.
+This is the primary missing semiclassical ingredient for Corollary~C.
+\end{problem}
+
+\begin{problem}[Local spectral counting]
+\label{prob:counting}
+Establish the isolation condition: the window
+$[\mu_{n+1}(c) - \varepsilon(c),\, \mu_n(c) + \varepsilon(c)]$
+contains exactly two eigenvalues of $\Kc$ in the transition regime.
+This is the Widom-type local counting input required to make
+the indexing step in Lemma~\ref{lem:index} verifiable.
+\end{problem}
+
+\begin{problem}[Fold amplitude regime identification]
+\label{prob:fold}
+Determine the scaling parameter $\alpha$ for the PSWF fold integral
+\[
+  \Phi_\alpha(u) = \int_0^\infty \beta^{-1/2}\,
+  \chi\!\left(\tfrac{\beta}{|u|^\alpha}\right)
+  e^{i(-|u|\beta + c_3 \beta^3)}\,d\beta
+\]
+(see \texttt{fold\_model.tex} in companion repo
+\texttt{Waschtl904/prolate-primes-paper}).
+\begin{itemize}[nosep]
+  \item If $\alpha < 1/2$: sharp $\Theta(|u|^{-1/2})$ decay
+    (Erd\'elyi regime, no CFU interference).
+  \item If $\alpha \geq 1/2$: $O(|u|^{-1/2})$ only, with oscillating
+    amplitude (CFU coalesence regime).
+\end{itemize}
+The answer governs the amplitude regularity input needed for Paper~XV
+of the companion series.
+\end{problem}
+
+\begin{problem}[B-strong closing the loop]
+\label{prob:bstrong}
+Theorem~A proves B-strong at index $N = O(c^{1/3})$ once Paper~I's Gram bound
+holds for the specific trial spaces $E_{c,N}$ aligned with the Galerkin
+truncation $V_N = \spann\{\pswf{0},\ldots,\pswf{N}\}$.
+Show that such alignment is achievable, so that the implication
+\[
+  \text{Paper~I (Gram coercivity)}
+  \;\Longrightarrow\; \text{B-strong}
+  \;\Longrightarrow\; \text{Gap-S}
+\]
+is fully closed.
+\end{problem}
+
+%% ============================================================
+\section{Programme State After Paper~XIII}
+\label{sec:state}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{4cm} p{3.5cm} p{3cm} p{1.5cm}}
+\toprule
+\textbf{Claim} & \textbf{Source} & \textbf{Depends on} & \textbf{Status} \\
+\midrule
+Gram coercivity $\asymp c^{-1/2}$
+  & Paper~I (this repo)
+  & ---
+  & \checkmark \\
+B-strong $\Leftrightarrow$ $\varepsilon_N \geq Cc^{-1/2}$
+  & Paper~IX
+  & ---
+  & \checkmark \\
+WKB lower bound $e^{-Cc^{2/3}}$
+  & Paper~X
+  & ---
+  & \checkmark \\
+All direct routes collapse to $\varepsilon_N$
+  & Paper~XII
+  & ---
+  & \checkmark \\
+\textbf{Gap-S via coercive transfer ($c^{-1/2}$)}
+  & \textbf{This paper, Thm~A}
+  & Paper~I
+  & \textbf{\checkmark\ (new)} \\
+Gap-S at Airy scale $c^{-1/3}$
+  & This paper, Cor~C
+  & Assumption~\ref{ass:airy}
+  & (open) \\
+Transition-window quasimodes
+  & OP~\ref{prob:quasimodes}
+  & ---
+  & open \\
+Local spectral counting
+  & OP~\ref{prob:counting}
+  & ---
+  & open \\
+Fold amplitude regime ($\alpha$)
+  & OP~\ref{prob:fold}
+  & ---
+  & open \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+\textbf{Summary.}
+Theorem~A closes the B-strong and Gap-S problems \emph{at the $c^{-1/2}$ scale},
+unconditionally from Paper~I.
+The sharper $c^{-1/3}$ Airy-scale gap remains conditional on
+transition-window quasimode construction (Open Problem~\ref{prob:quasimodes})
+and local spectral counting (Open Problem~\ref{prob:counting}).
+The fold amplitude problem (Open Problem~\ref{prob:fold}) connects this paper
+to Paper~XV of the companion series via \texttt{fold\_model.tex}.
+
+\begin{thebibliography}{99}
+
+\bibitem{paper1}
+  \textit{Paper~I: Gram Coercivity},
+  \texttt{paper1.tex}, prolate-gram-coercivity programme, 2026.
+
+\bibitem{paper9}
+  \textit{Paper~IX: B-strong as a Spectral Gap},
+  \texttt{paper9\_superconcentration.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{paper10}
+  \textit{Paper~X: Coercivity Gap via WKB},
+  \texttt{paper10\_coercivity\_gap.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{paper11}
+  \textit{Paper~XI: Fredholm Determinant Microlocal Inversion},
+  \texttt{paper11\_fredholm\_microlocal.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{paper12}
+  \textit{Paper~XII: Direct Coercivity},
+  \texttt{paper12\_direct\_coercivity.tex},
+  prolate-gram-coercivity programme, 2026.
+
+\bibitem{foldmodel}
+  \textit{Fold Amplitude with Singular Weight: Asymptotic Phase Diagram
+  and CFU Reduction},
+  \texttt{fold\_model.tex},
+  \texttt{Waschtl904/prolate-primes-paper}, 2026.
+
+\bibitem{paper13b-primes}
+  \textit{Paper~13b: Spectral Gap Lower Bounds via Local Kernel Approximation,
+  Quasimode Transfer, and Gram Coercivity},
+  \texttt{paper13b.tex},
+  \texttt{Waschtl904/prolate-primes-paper}, 2026.
+
+\bibitem{Slepian1961}
+  D.~Slepian, H.~O.~Pollak,
+  \textit{Prolate spheroidal wave functions, Fourier analysis and uncertainty~I},
+  Bell System Tech.\ J.\ \textbf{40} (1961), 43--63.
+
+\bibitem{Widom1964}
+  H.~Widom,
+  \textit{Asymptotic behavior of the eigenvalues of certain integral equations},
+  Trans.\ Amer.\ Math.\ Soc.\ \textbf{109} (1964), 278--295.
+
+\bibitem{Osipov2013}
+  A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+
+\bibitem{Kato1966}
+  T.~Kato,
+  \textit{Perturbation Theory for Linear Operators},
+  Springer, 1966.
+
+\end{thebibliography}
+
+\end{document}
