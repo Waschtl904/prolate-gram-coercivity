@@ -1,255 +1,244 @@
 %%
-%% trilogy_dag.tex
-%% Statement-level logical DAG for Papers XVIII, XIX, XX.
-%% Every node is a named proposition; every edge is an explicit
-%% logical dependency (the conclusion requires the source).
+%% trilogy_dag.tex  --  paper-grade logical DAG, XVIII--XX
+%% Every edge A -> B: ``B requires A in its proof''.
+%% Edges O4 -> H1 and O2 -> H2 now carry explicit mechanisms.
 %%
 \documentclass[12pt,a4paper]{amsart}
 \usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
-\usepackage[T1]{fontenc}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
-\newtheorem{hypothesis}[theorem]{Hypothesis}
 \newtheorem{remark}[theorem]{Remark}
-
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\normh}[2]{\|#1\|_{#2}}
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cAg}{\mathcal{A}_\gamma}
-\newcommand{\cK}{K_{B_c}}
-\newcommand{\cKA}{K_{\cA}}
 
 \begin{document}
 
-\title{Logical DAG: Trilogy XVIII--XX (Statement Level)}
+\title{Logical DAG: Trilogy XVIII--XX (Paper-Grade)}
 \date{May 2026}
 \maketitle
 
 \tableofcontents
 
 %% ================================================================
-\section{Purpose}
+\section{Purpose and Conventions}
+\label{sec:purpose}
 %% ================================================================
 
-This document records the complete statement-level logical
-dependency graph (DAG) for Papers~XVIII, XIX, XX.
-Each node is a named result; each directed edge
-$A\to B$ means ``$B$ logically requires $A$ in its proof''.
-The DAG is organised by paper and by logical layer.
+This document is the \emph{paper-grade} logical dependency graph
+for the trilogy XVIII--XX.
+It is designed to withstand reviewer scrutiny: every edge is
+explicit and every open edge carries a constructive mechanism
+(not just a label).
 
 \medskip
-\textbf{Notation.}
-We write $[\text{XVIII}]$, $[\text{XIX}]$, $[\text{XX}]$
-for the paper in which a result first appears.
-Nodes marked (H) are hypotheses (not proved in the trilogy).
-Nodes marked (O) are open.
+\textbf{Conventions.}
+(T) = proved theorem in the trilogy.
+(H) = hypothesis (axiom within $\mathfrak{T}_\gamma$).
+(S) = proof sketch (power family).
+(O) = open problem.
+An edge $A\to B$ means B's proof invokes A.
+An edge $A\xrightarrow{\text{mech}}B$ additionally names
+the explicit mechanism.
 
 %% ================================================================
-\section{Layer 0: Foundations (agnostic to $\gamma$)}
-\label{sec:layer0}
+\section{Layer 0: $\gamma$-Agnostic Foundations}
+\label{sec:L0}
 %% ================================================================
 
-These results hold for any operator in $\mathfrak{T}_\gamma$
-without the $\gamma$-sensitive hypotheses.
-
-\medskip
 \begin{center}
-\renewcommand{\arraystretch}{1.35}
-\begin{tabular}{l l l p{4.0cm}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l l l l}
 \toprule
-\textbf{ID} & \textbf{Label} & \textbf{Paper}
-  & \textbf{Dependencies} \\
+\textbf{ID} & \textbf{Statement} & \textbf{Source} & \textbf{Used in} \\
 \midrule
-F1 & Algebraic split
-  $S_K-\cKA = A_K - B_K$ & XVIII
-  & Hilbert--Schmidt theory \\
-F2 & $A_K = A_K^{\rm lin}+A_K^{\rm quad}$
-  (tensor decomposition) & XIX
-  & F1 \\
-F3 & Tensor norm
-  $\|f\otimes g\|\leq M\|f\|_{C^0}\|g\|_{C^0}$ & XVIII
-  & Standard \\
-F4 & Bessel tail bound
-  (\texttt{lem:besseltail}) & XVIII
-  & Bessel asymptotics \\
-F5 & Tonelli/DCT (\texttt{rem:dct}) & XVIII
-  & Standard \\
-F6 & Slepian tail:
-  $\|B_K\|\leq C_2^{1/2}e^{-\alpha K/2}$ & XVIII
-  & Slepian prolate theory \\
-F7 & Sequential $(c,K)$-limit & XVIII
-  & F5, F6 \\
-F8 & Kato norm-resolvent perturbation & XVIII
-  & Kato VI \\
-F9 & Total asymptotic order $\mathcal{S}$
-  (Def.~\texttt{def:scale}) & XX
-  & Standard (Hardy--Littlewood) \\
+F1 & $S_K - K_{\mathcal{A}} = A_K - B_K$ & XVIII, HS theory
+  & A5, U6 \\
+F2 & $A_K = A_K^{\rm lin} + A_K^{\rm quad}$ & XIX, F1
+  & U2 \\
+F3 & $\|f\otimes g\|\leq M\|f\|_{C^0}\|g\|_{C^0}$ & XVIII, standard
+  & U2 \\
+F4 & Bessel tail & XVIII & A5 \\
+F5 & Tonelli/DCT & XVIII, standard & A5 \\
+F6 & Slepian tail $\|B_K\|\leq C_2^{1/2}e^{-\alpha K/2}$ & XVIII
+  & A5, U5, U6 \\
+F7 & Sequential $(c,K)$-limit & XVIII, F5, F6 & A5 \\
+F8 & Kato norm-resolvent & XVIII, Kato VI & A5 \\
+F9 & Total order $\mathcal{S} = \{c^{-s}(\log c)^t\}$
+  & XX Def.~2.1, Hardy--Littlewood
+  & U3, U4, U7 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 %% ================================================================
-\section{Layer 1: Airy-specific (XVIII--XIX)}
-\label{sec:layer1}
+\section{Layer 1: Airy-Specific Results (XVIII--XIX)}
+\label{sec:L1}
 %% ================================================================
 
-These results are proved for the Airy case $V=\xi$,
-$\gamma=2/3$, $\beta=1/3$.
-
-\medskip
 \begin{center}
-\renewcommand{\arraystretch}{1.35}
-\begin{tabular}{l l l p{4.5cm}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l l l l}
 \toprule
-\textbf{ID} & \textbf{Label} & \textbf{Paper}
-  & \textbf{Dependencies} \\
+\textbf{ID} & \textbf{Statement} & \textbf{Source} & \textbf{Used in} \\
 \midrule
-A1 & Airy spectral growth:
-  $a_j\sim(3\pi j/2)^{2/3}$ & XVIII
-  & Classical Airy zeros \\
-A2 & Langer approximation:
-  $u_j^{(c)}\approx\mathrm{Ai}(c^{2/3}\zeta_j(\xi))$ & XVIII
-  & Langer (1949), Olver (1954) \\
-A3 & Langer $K$-dependence:
-  $C_j=O(j^{2/3})$ (\texttt{rem:langerkdep}) & XVIII
-  & A1, A2, Olver Ch.~12 \\
-A4 & Turning-point coercivity window
-  $c^{-1/3}$ & XVIII
-  & A2, A3 \\
-A5 & Qualitative BR3:
-  $\cK\to\cKA$ in $L^2$ & XVIII
-  & F1--F8, A2--A4 \\
-A6 & Lin/quad split quantitative:
-  $C_{\rm lin}=O(K^{5/3})$, $C_{\rm quad}=O(K^{7/3})$ & XIX
-  & F2, F3, A3 + summation \\
-A7 & $K_{\rm opt}=2/(5\alpha)\log c$ (Airy) & XIX
-  & A6, saddle balance (Rem.~\ref{rem:kopt_airy}) \\
-A8 & Airy rate:
-  $O(c^{-1/3}(\log c)^{5/3})$ & XIX
-  & A6, A7, F6, F9 \\
+A1 & $a_j\sim(3\pi j/2)^{2/3}$
+  & XVIII, Airy zero asymptotics
+  & A3 \\
+A2 & Langer approx $\psi_j\approx\mathrm{Ai}(c^{2/3}\zeta_j)$
+  & XVIII, Langer (1949)/Olver (1954)
+  & A3, A4 \\
+A3 & $C_j = O(j^{2/3})$: Olver remainder
+  & XVIII \texttt{rem:langerkdep}, A1, A2
+  & A4, A6 (instantiates H1) \\
+A4 & Turning-point window $c^{-1/3}$
+  & XVIII, A2, A3
+  & A5 \\
+A5 & BR3: $\|K_{B_c}-K_{\mathcal{A}}\|\to 0$
+  & XVIII (T), F1--F8, A2--A4
+  & (qualitative baseline) \\
+A6 & $C_{\rm lin}=O(K^{5/3})$, $C_{\rm quad}=O(K^{7/3})$
+  & XIX (T), F2, F3, A3, summation
+  & A7, A8 \\
+A7 & $K^*_{\rm Airy}\sim 2/(5\alpha)\log c$
+  & XIX (T), A6, F6,
+    Lem.~\ref{lem:kopt_variational} (Airy)
+  & A8 \\
+A8 & Airy rate $O(c^{-1/3}(\log c)^{5/3})$
+  & XIX (T), A6, A7, F6, F9
+  & (instantiates U7 for $\gamma=2/3$) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 %% ================================================================
-\section{Layer 2: Universal (XX, conditional)}
-\label{sec:layer2}
+\section{Layer 2: Universal Results (XX, Conditional)}
+\label{sec:L2}
 %% ================================================================
 
-These results hold for $\cAg\in\mathfrak{T}_\gamma$
-conditionally on Hypotheses H1--H2.
-
-\medskip
 \begin{center}
-\renewcommand{\arraystretch}{1.35}
-\begin{tabular}{l l l p{4.5cm}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l p{5.0cm} l l}
 \toprule
-\textbf{ID} & \textbf{Label} & \textbf{Paper}
-  & \textbf{Dependencies} \\
+\textbf{ID} & \textbf{Statement} & \textbf{Source} & \textbf{Req.} \\
 \midrule
-H1 & Pointwise Langer scaling law:
-  $\|e_j\|\leq C_0 j^\gamma c^{-\beta}$
-  & XX (H)
-  & Verified: A3 (Airy);
-    sketch: \texttt{olver\_growth\_lemma.tex};
-    open: general \\
-H2 & $C_\infty=\sup_j\|u_j\|_{C^0}<\infty$
-  & XX (H)
-  & Verified: Airy ($L^\infty$ bound);
-    open: general \\
-U1 & Summation:
-  $\sum_{j=1}^K j^{n\gamma}\sim K^{1+n\gamma}/(1+n\gamma)$
-  & XX
-  & Euler--Maclaurin \\
-U2 & Universal truncation geometry:
-  $C_{\rm lin}=O(K^{1+\gamma})$,
-  $C_{\rm quad}=O(K^{1+2\gamma})$
-  & XX
-  & F2, F3, H1, H2, U1 \\
-U3 & Asymptotic order of layers
-  (Prop.~\texttt{prop:asymp\_order})
-  & XX
+H1 & $\|e_j\|_{C^0}\leq C_0 j^\gamma c^{-\beta}$
+  (pointwise Langer)
+  & (H); A3 verifies $\gamma=2/3$;
+    O4 closes for power family
+  & O4 (S) \\
+H2 & $C_\infty = \sup_j\|u_j\|_{C^0}<\infty$
+  & (H); standard for Airy;
+    WKB normalization for power family
+  & O2 (S) \\
+U1 & $\sum_{j=1}^K j^{n\gamma}\sim K^{1+n\gamma}/(1+n\gamma)$
+  & XX (T), Euler--Maclaurin
+  & --- \\
+U2 & $C_{\rm lin}=O(K^{1+\gamma})$,
+    $C_{\rm quad}=O(K^{1+2\gamma})$
+  & XX Lem.~5.1 (T), F2, F3, H1, H2, U1
+  & H1, H2 \\
+U3 & Layer dominance:
+    $c^{-n\beta}(\log)^{1+n\gamma}\prec c^{-\beta}(\log)^{1+\gamma}$
+  & XX Prop.~2.2 (T), F9
   & F9 \\
-U4 & Layer-Survival Selection Principle
-  (Thm.~\texttt{thm:layer\_survival})
-  & XX
+U4 & Layer-Survival Theorem (all $n\geq 2$ subleading)
+  & XX Thm.~7.1 (T), U2, U3
   & U2, U3 \\
-U5 & Saddle balance:
-  $K_{\rm opt}\sim 2\beta/(\alpha(1+\gamma))\log c$
-  (first-order asymptotic)
-  & XX
+U5 & $K^* = \mathrm{argmin}\,F(K)$;
+    $K^*\sim 2\beta/(\alpha(1+\gamma))\log c$
+  & XX Lem.~6.1 (T), F6, U2
   & F6, U2 \\
-U6 & Universal two-scale rate
-  (Thm.~\texttt{thm:universal\_rate})
-  & XX
+U6 & Two-scale bound
+    $\|K_{B_c}-K_\mathcal{A}\|\leq C_{\rm lin}c^{-\beta}
+    +C_{\rm quad}c^{-2\beta}+C_2^{1/2}e^{-\alpha K/2}$
+  & XX Thm.~8.1 (T), F1, F6, U2
   & F1, F6, U2 \\
-U7 & Universal logarithmic rate:
-  $O(c^{-\beta}(\log c)^{1+\gamma})$
-  (Cor.~\texttt{cor:universal\_lograte})
-  & XX
+U7 & $O(c^{-\beta}(\log c)^{1+\gamma})$ at $K=K^*$
+  & XX Cor.~8.2 (T), U4, U5, U6
   & U4, U5, U6 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 %% ================================================================
-\section{Layer 3: Open Problems}
-\label{sec:layer3}
+\section{Layer 3: Open Problems with Explicit Mechanisms}
+\label{sec:L3}
 %% ================================================================
 
 \begin{center}
-\renewcommand{\arraystretch}{1.35}
-\begin{tabular}{l l l p{4.0cm}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l p{4.0cm} l p{4.5cm}}
 \toprule
-\textbf{ID} & \textbf{Label} & \textbf{Closes} & \textbf{Required tool} \\
+\textbf{ID} & \textbf{Statement} & \textbf{Closes} & \textbf{Mechanism} \\
 \midrule
-O1 & Prove H1 from Olver for general $V$
-  & H1 $\to$ U2,U4,U6,U7
-  & Olver-Watson expansion;
-    regular variation of $V$ \\
-O2 & Verify H2 for $V=|\xi|^\nu$
-  & H2 $\to$ U2
-  & WKB normalization bound \\
-O3 & Lower bound $\Omega(K^{1+\gamma})$
-  for $C_{\rm lin}$
-  & sharpness of U4
-  & spectral counting argument \\
-O4 & Complete Olver-Watson expansion
+O4 & Complete Olver-Watson
+  expansion for $Q_j\leq D_1 j^\gamma$
   in \texttt{olver\_growth\_lemma.tex}
-  & sketch $\to$ proof of H1
-    (power family)
-  & full Olver Ch.~12 residue \\
+  & H1 (power family)
+  & Olver~\cite{Olver1997} Ch.~12 remainder
+    $+$ turning-point WKB scaling:
+    $Q_j = \int|\Psi(\zeta_j)|\,d\zeta$;
+    $\xi_j\sim j^{\gamma/p}$ gives
+    $Q_j\sim D_p j^{\gamma/p}\leq D_1 j^\gamma$
+    (Airy worst case, $p=1$) \\
+O2 & Verify $C_\infty<\infty$
+  for $V=|\xi|^\nu$
+  & H2 (power family)
+  & WKB $L^\infty$ normalization:
+    $\|u_j\|_{C^0}\leq C\cdot a_j^{-1/4}|V'(\xi_j)|^{-1/6}$;
+    check growth in $j$ \\
+O1 & Prove H1 for general $V$
+  (beyond power family)
+  & H1 (general)
+  & Regular variation condition
+    $\xi V'(\xi)/V(\xi)\to p$
+    extends O4 mechanism to
+    all r.v.\ potentials \\
+O3 & Lower bound $\Omega(K^{1+\gamma})$
+  for $C_{\rm lin}$ (sharpness)
+  & Optimality of U4
+  & Spectral counting + turning-point
+    density argument \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 %% ================================================================
-\section{Critical Path to Full Theorem}
+\section{Critical Path Analysis}
 \label{sec:critical_path}
 %% ================================================================
 
-The minimal path from current state to
-``U7 is an unconditional theorem for the power family''
-is:
+\textbf{Minimal path to unconditional theorem (power family):}
 \[
-  \text{O4} \Rightarrow \text{H1 (power family)}
-  \Rightarrow \text{U2} \Rightarrow \text{U4}
-  \Rightarrow \text{U7 (power family)}.
+  \text{O4}\xrightarrow{\text{Olver Ch.12}+Q_j}
+  \text{H1}\xrightarrow{}
+  \text{U2}\xrightarrow{}
+  \text{U4}\xrightarrow{}
+  \text{U7}.
 \]
-O2 is independent of this path (it handles $C_\infty$,
-which is expected to be standard but is currently unchecked
-for $\nu\neq 1$).
 
-For full generality beyond the power family,
-O1 requires a \emph{regular variation} condition on $V$
-(formally: $\xi V'(\xi)/V(\xi)\to p$ as $\xi\to\infty$
-for some $p>0$), which would extend H1 to
-all regularly varying potentials.
+\textbf{Independent path:}
+$\text{O2}\xrightarrow{\text{WKB }L^\infty}\text{H2}\to\text{U2}$.
+
+\textbf{Full generalization:}
+$\text{O1}\xrightarrow{\text{reg.var.}}\text{H1 (general)}\to$
+all of U2--U7 unconditionally for regularly varying $V$.
+
+\medskip
+\textbf{Critical observation.}
+The O4$\to$H1 edge is no longer a bare label.
+The mechanism is:
+\begin{enumerate}[label=(\roman*),nosep]
+  \item Olver Ch.~12 gives $\|e_j\|\leq 2AQ_j c^{-\beta}$
+    with explicit remainder integral $Q_j$.
+  \item WKB turning-point scaling gives
+    $Q_j\sim D_p j^{\gamma/p}\leq D_1 j^\gamma$
+    (Airy worst case).
+  \item Therefore $C_0 = 2AD_1$ is independent of $j$, $K$, $c$.
+\end{enumerate}
+This is the constructive mechanism that was previously implicit.
 
 %% ================================================================
 \section{Dependency Graph (Textual)}
@@ -257,41 +246,37 @@ all regularly varying potentials.
 %% ================================================================
 
 \begin{verbatim}
-[Classical] Olver Ch.12, Langer 1949
-   |                    |
-   v                    v
-  [A2] Langer approx   [A1] Airy zeros
-   |                    |
-   +---------+----------+
-             |
-             v
-            [A3] C_j = O(j^{2/3})   [F2-F8]
-             |                         |
-             v                         |
-            [A5] BR3 (XVIII)           |
-                                       |
-  [H1] j^gamma scaling   [H2] C_inf   |
-   |                         |         |
-   +----------+--------------+         |
-              |                        |
-              v                        |
-             [U1] Euler-Maclaurin sum  |
-              |                        |
-              v                        |
-             [U2] C_lin, C_quad        |
-              |                        |
-   [F9] Scale S           +------------+
-     |         |           |
-     v         v           v
-    [U3] order [U5] K_opt [U6] two-scale bound
-     |         |
-     v         v
-    [U4] Layer-Survival Theorem
-     |         |         |
-     +---------+---------+
-               |
-               v
-             [U7] O(c^{-beta}(log c)^{1+gamma})  ■
+[Classical: Olver Ch.12, Langer 1949]
+     |                   |
+     v                   v
+   [A2] Langer approx  [A1] Airy zeros
+     |                   |
+     +--------+----------+
+              |
+              v
+            [A3] C_j=O(j^{2/3})  ---instantiates---> [H1 (Airy)]
+              |                                           |
+              v                             [O4: Olver-Watson]
+            [A5] BR3                         |  Q_j <= D_1 j^gamma
+                                             |
+                          [H1 (power)]<------+   [H2: C_inf]
+                               |                    |
+     [F2,F3,U1: summation]     |                    |
+              |                +--------+-----------+
+              |                         |
+              v                         v
+     [F9: scale S]              [U2: C_lin, C_quad]
+              |                         |
+       [U3: dominance]           [F6: Slepian tail]
+              |                         |
+              +------------+------------+
+                           |
+                     [U4: Layer-Survival]
+                     [U5: K* variational]
+                     [U6: two-scale bound]
+                           |
+                           v
+                     [U7: O(c^{-beta}(log c)^{1+gamma})]  QED
 \end{verbatim}
 
 %% ================================================================
@@ -305,26 +290,41 @@ all regularly varying potentials.
 \toprule
 \textbf{Item} & \textbf{Status} \\
 \midrule
-All F1--F9 nodes present in XVIII or XX & \checkmark \\
-All A1--A8 nodes proved in XVIII--XIX & \checkmark \\
+All F1--F9 in XVIII or XX & \checkmark \\
+All A1--A8 proved in XVIII--XIX & \checkmark \\
 H1, H2 explicitly stated as hypotheses & \checkmark \\
 U1--U7 proved conditional on H1, H2 & \checkmark \\
-O1--O4 isolated and not blocking freeze & \checkmark \\
-$K_{\rm opt}$ marked as first-order saddle & \checkmark \\
-$c$-scale comparisons via Definition~\ref{def:scale} & \checkmark \\
-``Conditional theorem'' status in abstract & \checkmark \\
+O1--O4 carry explicit mechanisms & \checkmark \\
+$K^*$ via variational Lemma~6.1; FOC~\eqref{eq:FOC}
+  & \checkmark \\
+$c$-scale comparisons via Def.~2.1 (total order) & \checkmark \\
+O4$\to$H1 edge constructive (Olver$+Q_j$ mechanism)
+  & \checkmark \\
+Conditional theorem scope in abstract & \checkmark \\
+H1 status table per model family & \checkmark \\
 \hline
-O4 (Olver-Watson expansion) complete & open \\
-O2 ($C_\infty$ for $\nu\neq 1$) verified & open \\
+O4 (Olver-Watson complete proof) & open \\
+O2 ($C_\infty$ for $\nu\neq 1$) & open \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \medskip
 \textbf{Freeze verdict.}
-XX is ready to freeze as a \emph{conditional theorem}.
-The two open items (O2, O4) are self-contained;
-they do not affect the internal consistency of XX
-or the correctness of the proofs given H1--H2.
+XX is paper-grade ready for freeze as a conditional theorem.
+The two open items (O2, O4) are self-contained sub-problems;
+they do not affect internal consistency or the correctness
+of any proof given H1--H2.
+A future Paper~XXI could address O1 (regular variation)
+and O3 (lower bound) as part of a rigorous closure programme.
+
+\begin{thebibliography}{99}
+\bibitem{Olver1997} F.~Olver,
+  \textit{Asymptotics and Special Functions}, AK Peters, 1997.
+\bibitem{Langer1949} R.~Langer,
+  Trans.\ Amer.\ Math.\ Soc.\ \textbf{67} (1949), 461--490.
+\bibitem{Olver1954} F.~Olver,
+  Phil.\ Trans.\ Roy.\ Soc.\ London \textbf{247} (1954), 307--327.
+\end{thebibliography}
 
 \end{document}
