@@ -76,13 +76,13 @@ The unique minimizer satisfies the iterated asymptotics
   \qquad\text{so in particular}\quad
   K^*(c)\sim\frac{2\beta}{\alpha}\log c.
 \]
-This expansion is derived as the unique fixed point of
-$\Phi(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+O(1)$,
-whose Lipschitz constant $\Phi'(K)=\frac{2\gamma}{\alpha K}$
-decays to zero along the scaling regime $K\asymp\log c$
-(parameter-dependent asymptotic contraction,
-applied pointwise in $c$ for each fixed large $c$;
-Lemma~\ref{lem:kopt_variational}(ii')),
+All operator bounds are derived for fixed $K$ and $c$
+and then evaluated along the coupled scaling
+$K = K^*(c)$, $c\to\infty$
+(diagonal asymptotic regime, Remark~\ref{rem:diagonal_regime}).
+The expansion is certified by a parameter-dependent contraction,
+applied pointwise in $c$
+(Lemma~\ref{lem:kopt_variational}(ii')),
 and is stable under $O(1)$ perturbations of the logarithmic FOC
 (Lemma~\ref{lem:stability_kopt}).
 The integer projection $K_{\rm int}=\lfloor K^*\rceil$
@@ -92,13 +92,13 @@ satisfies $F(K_{\rm int}) = F(K^*)\cdot(1+o(1))$
 The Layer-Survival Selection Principle
 (Theorem~\ref{thm:layer_survival}) shows that
 for every $n\geq 2$,
-layer~$n$ is $\prec$ layer~$1$ in $\mathcal{S}$.
+layer~$n$ is $\prec$ layer~$1$ in $\mathcal{S}$,
+where $\mathcal{S}$ is a formally closed asymptotic scale
+(Proposition~\ref{prop:scale_algebra}).
 Hence: $\normh{\cK-\cKA}{}|_{K=\Kopt}
 = O(c^{-\beta}(\log c)^{1+\gamma})$.
 
-All results are theorems conditional on H1--H2;
-the structural stability of the theory is certified
-by \texttt{structural\_stability\_metatheorem.tex}.
+All results are theorems conditional on H1--H2.
 \end{abstract}
 
 \maketitle
@@ -144,6 +144,28 @@ H1--H2 are imposed, not derived for general $V$.
 Formal certification: \texttt{structural\_stability\_metatheorem.tex}.
 \end{remark}
 
+\begin{remark}[Diagonal asymptotic regime]
+\label{rem:diagonal_regime}
+This paper works throughout in a \emph{diagonal asymptotic regime}:
+all operator bounds (Lemmas~\ref{lem:gamma_agnostic}--\ref{lem:trunc_universal})
+are derived for \emph{fixed} $K\geq 1$ and $c\geq c_0$,
+with no joint limit assumed.
+The coupled scaling $K = K^*(c)\sim\frac{2\beta}{\alpha}\log c$
+is introduced only in Section~\ref{sec:kopt} and
+evaluated as $c\to\infty$ along this curve.
+Consequently:
+\begin{itemize}[nosep]
+  \item intermediate inequalities are valid uniformly in $(K,c)$
+    in the stated parameter range;
+  \item the final rate is obtained by substituting
+    $K = K^*(c)$ into these uniform bounds;
+  \item no two-parameter joint limit $(K,c)\to(\infty,\infty)$
+    is ever taken simultaneously.
+\end{itemize}
+All $O(\cdot)$ and $\prec$ notation refers to the limit
+$c\to\infty$ along the diagonal $K = K^*(c)$.
+\end{remark}
+
 %% ============================================================
 \section{Asymptotic Scale and Order}
 \label{sec:asymp}
@@ -156,6 +178,31 @@ totally ordered by:
 $c^{-s_1}(\log c)^{t_1} \succ c^{-s_2}(\log c)^{t_2}$
 iff $s_1<s_2$, or ($s_1=s_2$ and $t_1>t_2$), as $c\to\infty$.
 \end{definition}
+
+\begin{proposition}[Algebraic stability of $\mathcal{S}$]
+\label{prop:scale_algebra}
+$\mathcal{S}$ is closed under the two operations used in this paper:
+\begin{itemize}[nosep]
+\item[\textup{(i)}] \textbf{Multiplication:}
+  $c^{-s_1}(\log c)^{t_1}\cdot c^{-s_2}(\log c)^{t_2}
+  = c^{-(s_1+s_2)}(\log c)^{t_1+t_2}\in\mathcal{S}$.
+\item[\textup{(ii)}] \textbf{Asymptotic addition (dominant-term rule):}
+  if $f\succ g$ then $f+g\sim f$ as $c\to\infty$;
+  in particular $f+g\in O(f)$,
+  and the order of $f+g$ in $\mathcal{S}$ equals
+  $\max_{\prec}(f,g) = f$.
+\end{itemize}
+Hence every finite sum and product of elements of $\mathcal{S}$
+has a well-defined leading term in $\mathcal{S}$,
+and all $\prec$ comparisons in this paper are stable
+under addition and multiplication.
+\end{proposition}
+
+\begin{proof}
+(i) Direct computation.
+(ii) $f\succ g$ means $g/f\to 0$, so $(f+g)/f = 1 + g/f \to 1$;
+hence $f+g\sim f$ and $f+g\in O(f)$.
+\end{proof}
 
 \begin{proposition}[Layer dominance]
 \label{prop:asymp_order}
@@ -176,6 +223,7 @@ This comparison is used in exactly two places:
 (i) Proposition~\ref{prop:asymp_order};
 (ii) Corollary~\ref{cor:universal_lograte}(iii)
 (tail $\prec$ linear).
+Both are instances of Proposition~\ref{prop:scale_algebra}(i).
 \end{remark}
 
 %% ============================================================
@@ -246,7 +294,8 @@ without H1--H2:
 
 \begin{lemma}[Universal truncation geometry]
 \label{lem:trunc_universal}
-Under H1--H2, for $K\geq 1$, $c\geq c_0$:
+Under H1--H2, for fixed $K\geq 1$ and $c\geq c_0$
+(see Remark~\ref{rem:diagonal_regime}):
 \begin{align}
   \normh{\AKlin}{}
     &\leq \frac{2MC_\infty C_0}{1+\gamma}K^{1+\gamma}c^{-\beta}
@@ -388,7 +437,7 @@ satisfying the FOC
   = \tfrac{\alpha}{2}\,T\,e^{-\alpha K^*/2}.
 \end{equation}
 
-\textup{(ii)} \textbf{Iterated asymptotics via fixed-point iteration.}
+\textup{(ii)} \textbf{Iterated asymptotics.}
 Taking logarithms of~\eqref{eq:FOC}:
 \begin{equation}\label{eq:log_FOC}
   \frac{\alpha}{2}K^*
@@ -401,18 +450,17 @@ This is equivalently the fixed-point equation $K^* = \Phi(K^*)$ with
   + \frac{2\gamma}{\alpha}\log K + C_1,
   \quad C_1 = \frac{2}{\alpha}\log\!\Bigl(\tfrac{L(1+\gamma)}{(\alpha/2)T}\Bigr).
 \end{equation}
-The expansion~\eqref{eq:kopt_iterated} is derived as follows,
+The expansion~\eqref{eq:kopt_iterated} is derived iteratively,
 without a priori assuming $K^*\asymp\log c$:
 \begin{itemize}[nosep]
   \item \emph{Zeroth iterate.}
     By Lemma~\ref{lem:kstar_to_infty}, $K^*\to\infty$,
     so $\gamma\log K^*/K^*\to 0$;
-    the dominant balance in~\eqref{eq:log_FOC} gives
-    $K_0 := \frac{2\beta}{\alpha}\log c$.
+    dominant balance in~\eqref{eq:log_FOC} gives
+    $K_0 = \frac{2\beta}{\alpha}\log c$.
   \item \emph{First iterate.}
-    The sandwich~\eqref{eq:sandwich} gives
-    $\log K^* = \log\log c + O(1)$ (Lemma~\ref{lem:loglog}).
-    Substituting into~\eqref{eq:log_FOC}:
+    Lemma~\ref{lem:loglog} gives $\log K^* = \log\log c + O(1)$;
+    substituting into~\eqref{eq:log_FOC}:
 \end{itemize}
 \begin{equation}\label{eq:kopt_iterated}
   K^*(c) = \frac{2\beta}{\alpha}\log c
@@ -423,27 +471,30 @@ without a priori assuming $K^*\asymp\log c$:
 In particular, $K^*(c)\sim\frac{2\beta}{\alpha}\log c$,
 and $\gamma$ does not appear in the leading coefficient.
 
-\textup{(ii')} \textbf{Parameter-dependent asymptotic contraction.}
+\textup{(ii')} \textbf{Independent consistency check via contraction.}
+The derivation in~\textup{(ii)} determines the expansion
+solely from the iterative structure of~\eqref{eq:log_FOC}.
+The following argument provides an \emph{independent} confirmation
+via metric fixed-point theory, and simultaneously certifies
+that the iteration remains inside the correct scaling regime.
+
 On the invariant region $\mathcal{I}(c) := [c_1\log c, c_2\log c]$
-(guaranteed non-empty for large $c$ by~\eqref{eq:sandwich}),
+(non-empty for large $c$ by~\eqref{eq:sandwich}),
 $\Phi$ maps $\mathcal{I}(c)$ into itself for large $c$, and
 \begin{equation}\label{eq:contraction}
   \sup_{K\in\mathcal{I}(c)}|\Phi'(K)|
   = \frac{2\gamma}{\alpha c_1 \log c}
   \xrightarrow{c\to\infty} 0.
 \end{equation}
-For each fixed $c \geq c_0$, the Lipschitz constant
-$\lambda(c) := \frac{2\gamma}{\alpha c_1\log c} \leq \frac{1}{2}$,
-so $\Phi(\,\cdot\,;c)$ is a strict contraction on the
-complete metric space $(\mathcal{I}(c), |\cdot|)$
+For each fixed $c \geq c_0$, $\lambda(c) := \frac{2\gamma}{\alpha c_1\log c}
+\leq \frac{1}{2}$, so $\Phi(\,\cdot\,;c)$ is a strict contraction
+on the complete metric space $(\mathcal{I}(c), |\cdot|)$
 (Banach fixed-point theorem applied pointwise in $c$;
 the interval $\mathcal{I}(c)$ and Lipschitz constant $\lambda(c)$
 both depend on $c$, so this is \emph{not} a uniform contraction
 over all $c$ simultaneously).
-The unique fixed point is $K^*(c)$,
-and the iteration $K_{n+1}=\Phi(K_n)$, started from any
-$K_0\in\mathcal{I}(c)$, converges at rate $\lambda(c)^n\to 0$.
-This provides an independent derivation of~\eqref{eq:kopt_iterated}.
+The unique fixed point coincides with $K^*(c)$ from~\textup{(ii)},
+confirming~\eqref{eq:kopt_iterated} independently.
 
 \textup{(iii)} \textbf{Value at $K^*$.}
 At $K = K^*(c)$:
@@ -457,24 +508,23 @@ At $K = K^*(c)$:
 $F(0^+)=T>0$, $F'(0^+)<0$, $F\to+\infty$:
 unique interior minimum.
 (ii) \eqref{eq:log_FOC} is exact.
-The fixed-point structure~\eqref{eq:fixpoint} is algebraically equivalent.
-Zeroth iterate: $K^*\to\infty$ (Lemma~\ref{lem:kstar_to_infty},
-proved independently); $\gamma\log K^*/K^*\to 0$ follows.
-First iterate: $\log K^*=\log\log c+O(1)$ (Lemma~\ref{lem:loglog}).
-(ii') For each fixed large $c$:
-$\Phi$ maps $\mathcal{I}(c)$ into itself since
-$\Phi(c_i\log c)\in\mathcal{I}(c)$ for $i=1,2$ and large $c$.
-$|\Phi'(K)|=\frac{2\gamma}{\alpha K}\leq\frac{2\gamma}{\alpha c_1\log c}
-=\frac{\gamma}{\beta\log c}\leq\frac{1}{2}$ for $c\geq c_0$.
-Banach fixed-point theorem on $(\mathcal{I}(c),|\cdot|)$
-(a closed bounded interval, hence complete)
-gives a unique fixed point $K^*(c)\in\mathcal{I}(c)$,
-confirming~\eqref{eq:kopt_iterated} for each fixed large $c$.
-(The application is pointwise in $c$; uniformity over all $c$
-is not claimed or needed.)
+Zeroth iterate: $K^*\to\infty$ by Lemma~\ref{lem:kstar_to_infty}
+(proved independently of any log-expansion);
+$\gamma\log K^*/K^*\to 0$ follows.
+First iterate: $\log K^*=\log\log c+O(1)$ (Lemma~\ref{lem:loglog});
+substitute into~\eqref{eq:log_FOC} to obtain~\eqref{eq:kopt_iterated}.
+(ii') The expansion~\eqref{eq:kopt_iterated} is already established
+in~\textup{(ii)}; the contraction argument is an independent check.
+For each fixed large $c$:
+$\Phi(c_i\log c)\in\mathcal{I}(c)$ for $i=1,2$,
+so $\Phi$ maps $\mathcal{I}(c)$ into itself.
+$|\Phi'(K)|\leq\frac{2\gamma}{\alpha c_1\log c}=\frac{\gamma}{\beta\log c}
+\leq\frac{1}{2}$ for $c\geq c_0$.
+Banach FPT on $(\mathcal{I}(c),|\cdot|)$ gives a unique fixed point;
+this fixed point equals $K^*(c)$ by uniqueness from~\textup{(i)}.
+(The application is pointwise in $c$;
+uniformity over all $c$ is not claimed or needed.)
 (iii) $L(K^*)^{1+\gamma}c^{-\beta}
-= L\bigl(\frac{2\beta}{\alpha}\log c\bigr)^{1+\gamma}
-c^{-\beta}(1+o(1))
 = O(c^{-\beta}(\log c)^{1+\gamma})$.
 \end{proof}
 
@@ -492,62 +542,40 @@ Then
   K^*(c) - \widetilde K^*(c) = O(1).
 \]
 In particular, the two-term expansion~\eqref{eq:kopt_iterated}
-is stable under all such perturbations,
-and all conclusions of Lemma~\ref{lem:kopt_variational}
-and Corollary~\ref{cor:universal_lograte} remain valid.
+is stable under all such perturbations.
 \end{lemma}
 
 \begin{proof}
-Let $K_1=K^*$ and $K_2=\widetilde K^*$ solve
-\[
-  \tfrac{\alpha}{2}K_i = \beta\log c + \gamma\log K_i + C_i,
-  \quad i=1,2,
-\]
-with $|C_1-C_2|\leq D$ for some fixed $D$.
-Subtracting:
-$\tfrac{\alpha}{2}(K_1-K_2)
-= \gamma(\log K_1 - \log K_2) + (C_1-C_2)$.
-By the mean value theorem,
-$|\log K_1 - \log K_2| \leq |K_1-K_2|/\min(K_1,K_2)$.
-By Lemma~\ref{lem:loglog} (sandwich~\eqref{eq:sandwich}),
-$\min(K_1,K_2)\geq c_1\log c = \frac{2\beta}{\alpha}\log c$, so
+Let $K_i$ solve $\tfrac{\alpha}{2}K_i = \beta\log c + \gamma\log K_i + C_i$,
+$i=1,2$, with $|C_1-C_2|\leq D$.
+Subtracting and applying MVT:
 $\tfrac{\alpha}{2}|K_1-K_2|
-\leq \frac{\gamma\alpha}{2\beta\log c}|K_1-K_2| + D$.
-For $c$ sufficiently large,
-$\frac{\gamma\alpha}{2\beta\log c} < \alpha/4$,
-hence $|K_1-K_2|\leq \frac{4D}{\alpha} = O(1)$.
+\leq \frac{\gamma}{\min(K_1,K_2)}|K_1-K_2| + D
+\leq \frac{\gamma\alpha}{2\beta\log c}|K_1-K_2| + D$
+(using $\min(K_i)\geq c_1\log c$ from~\eqref{eq:sandwich}).
+For large $c$, $\frac{\gamma\alpha}{2\beta\log c}<\frac{\alpha}{4}$,
+giving $|K_1-K_2|\leq \frac{4D}{\alpha} = O(1)$.
 \end{proof}
 
-\begin{remark}[Discrete projection: continuous minimizer controls integer minimizer]
+\begin{remark}[Discrete projection]
 \label{rem:kopt_discrete}
-Lemma~\ref{lem:kopt_variational} minimizes $F$ over $\R_+$.
-The integer projection $K_{\rm int}=\lfloor K^*\rceil\in\N$
-satisfies $|K_{\rm int}-K^*|\leq\frac{1}{2}$, and by Taylor:
-\[
-  F(K_{\rm int}) - F(K^*)
-  \leq \tfrac{1}{8}F''(K^*) = O(c^{-\beta}(\log c)^{\gamma-1})
-  \prec c^{-\beta}(\log c)^{1+\gamma}
-\]
-in $\mathcal{S}$ (Definition~\ref{def:scale}).
-Hence the continuous minimizer controls the integer minimizer
-up to a term asymptotically negligible relative to $F(K^*)$,
-and Corollary~\ref{cor:universal_lograte}
-holds for $K=K_{\rm int}\in\N$.
+$K_{\rm int}=\lfloor K^*\rceil$ satisfies
+$F(K_{\rm int})-F(K^*)\leq\frac{1}{8}F''(K^*)
+= O(c^{-\beta}(\log c)^{\gamma-1})
+\prec c^{-\beta}(\log c)^{1+\gamma}$
+(Proposition~\ref{prop:scale_algebra}(ii)),
+so Corollary~\ref{cor:universal_lograte} holds for $K_{\rm int}\in\N$.
 \end{remark}
 
 \begin{remark}[Variational replaces heuristic saddle]
 \label{rem:variational_vs_heuristic}
-Prior to commit \texttt{679b3f2}, $\Kopt$ was obtained
-by heuristic order-of-magnitude balance.
-Lemma~\ref{lem:kopt_variational} replaces this
-with a strictly convex functional, a FOC,
-an iterated asymptotic expansion~\eqref{eq:kopt_iterated}
-justified by the fixed-point structure~\eqref{eq:fixpoint}
-and parameter-dependent contraction~\eqref{eq:contraction},
-and a stability certificate (Lemma~\ref{lem:stability_kopt}).
-The sandwich~\eqref{eq:sandwich} provides an
-explicit two-sided bound on $K^*$ prior to any
-logarithmic manipulation.
+Lemma~\ref{lem:kopt_variational} replaces heuristic
+order-of-magnitude balance with:
+a strictly convex functional;
+a FOC and sandwich~\eqref{eq:sandwich} prior to any log-manipulation;
+iterative expansion~\eqref{eq:kopt_iterated};
+independent consistency check via contraction;
+stability certificate (Lemma~\ref{lem:stability_kopt}).
 \end{remark}
 
 %% ============================================================
@@ -559,8 +587,9 @@ logarithmic manipulation.
 \label{thm:layer_survival}
 For $n\geq 1$, under H1,
 $\normh{A_K^{(n)}}{}
-= O(K^{1+n\gamma}c^{-n\beta})$.
-At $K=K^*\sim\frac{2\beta}{\alpha}\log c$:
+= O(K^{1+n\gamma}c^{-n\beta})$
+for fixed $K,c$ (Remark~\ref{rem:diagonal_regime}).
+Evaluated at $K=K^*\sim\frac{2\beta}{\alpha}\log c$:
 $\normh{A_K^{(n)}}{}
 = O(c^{-n\beta}(\log c)^{1+n\gamma})
 \prec c^{-\beta}(\log c)^{1+\gamma}$
@@ -570,9 +599,10 @@ The rate is governed by $n=1$ alone.
 
 \smallskip
 \textit{Mechanism:}
-each additional Langer factor adds $+\beta$ to the
-$c$-exponent and $+\gamma$ to the log-exponent;
+each additional Langer factor contributes $+\beta$ to
+the $c$-exponent and $+\gamma$ to the log-exponent;
 $c^{-\beta}\succ(\log c)^m$ for all $m$
+(Proposition~\ref{prop:scale_algebra}(i))
 $\Rightarrow$ $c$-hierarchy always selects $n=1$.
 \end{theorem}
 
@@ -583,7 +613,7 @@ $\Rightarrow$ $c$-hierarchy always selects $n=1$.
 
 \begin{theorem}[Two-scale rate]
 \label{thm:universal_rate}
-For $\cAg\in\mathfrak{T}_\gamma$, $K\geq K_0$, $c\geq c_0$:
+For $\cAg\in\mathfrak{T}_\gamma$, fixed $K\geq K_0$, $c\geq c_0$:
 \[
   \normh{\cK-\cKA}{}
   \leq \Clin c^{-\beta}
@@ -594,8 +624,9 @@ For $\cAg\in\mathfrak{T}_\gamma$, $K\geq K_0$, $c\geq c_0$:
 
 \begin{corollary}[Universal logarithmic rate]
 \label{cor:universal_lograte}
-With $K=K_{\rm int}=\lfloor K^*(c)\rceil$
-(Remark~\ref{rem:kopt_discrete}):
+Evaluating Theorem~\ref{thm:universal_rate} along
+the diagonal $K=K_{\rm int}=\lfloor K^*(c)\rceil$
+(Remarks~\ref{rem:diagonal_regime},~\ref{rem:kopt_discrete}):
 $\normh{\cK-\cKA}{}
 = O(c^{-\beta}(\log c)^{1+\gamma})$.
 The three contributions:
@@ -604,7 +635,9 @@ The three contributions:
   (Proposition~\ref{prop:asymp_order});
 \textup{(iii)} tail $O(e^{-\alpha K^*/2})
   = O(c^{-\beta}(\log c)^{-\gamma})
-  \prec$ linear (Remark~\ref{rem:scales}(ii)).
+  \prec$ linear
+  (Proposition~\ref{prop:scale_algebra}(i) and
+  Remark~\ref{rem:scales}(ii)).
 \end{corollary}
 
 \begin{remark}[Spectral-geometric invariants]
@@ -614,26 +647,22 @@ governed by turning-point crowding.
 $1+2\gamma$: quadratic-layer exponent;
 subleading by one factor $c^{-\beta}$;
 gap $\gamma$ = crowding cost per Langer interaction.
-
-\smallskip
-Note: $\gamma$ does not appear in the leading saddle
-coefficient $2\beta/\alpha$ of $K^*$
-(Lemma~\ref{lem:kopt_variational}(ii));
+$\gamma$ does not appear in the leading saddle
+coefficient $2\beta/\alpha$ of $K^*$;
 it governs the log-exponent of the rate and the
-log-log correction~\eqref{eq:kopt_iterated}
-to the optimal truncation.
+log-log correction~\eqref{eq:kopt_iterated}.
 \end{remark}
 
 \begin{remark}[O3: sharpness and the lower-bound gap]
 \label{rem:O3_sharpness}
 The rate $O(c^{-\beta}(\log c)^{1+\gamma})$ is an upper bound.
-A matching lower bound $\Omega(K^{1+\gamma})$ for the Langer term
-(O3 in Section~\ref{sec:open}) would establish sharpness.
-The gap is structural: the upper bound uses
-$\sum_{j=1}^K j^\gamma \leq \frac{K^{1+\gamma}}{1+\gamma} + O(K^\gamma)$
-(Euler--Maclaurin), while a lower bound requires a
+A matching lower bound would establish sharpness and
+clarify whether the exponent $1+\gamma$ reflects
+geometric crowding of eigenfunctions or only a worst-case
+envelope of summation bounds.
+The gap is structural: a lower bound requires a
 positive-mass condition on the spectral measure below threshold,
-i.e.\ that eigenfunction concentrations do not cancel.
+ensuring that eigenfunction concentrations do not cancel.
 Within $\mathfrak{T}_\gamma$ this is plausible but not proved;
 a concrete obstruction would require constructing
 $\cAg\in\mathfrak{T}_\gamma$ with
@@ -705,12 +734,12 @@ O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \textbf{XVIII:} Qualitative BR3.
 \textbf{XIX:} Airy rate $O(c^{-1/3}(\log c)^{5/3})$.
 \textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$;
-variational $K^*$ with sandwich bounds,
-parameter-dependent asymptotic contraction
-(applied pointwise in $c$),
-and $O(1)$-stability;
+variational $K^*$ with sandwich bounds;
+diagonal asymptotic regime (Remark~\ref{rem:diagonal_regime});
+formal scale algebra (Proposition~\ref{prop:scale_algebra});
+parameter-dependent contraction as independent consistency check;
+$O(1)$-stability;
 Layer-Survival; two invariants $1+\gamma$, $1+2\gamma$.
-Structural stability: \texttt{structural\_stability\_metatheorem.tex}.
 
 \bigskip
 \begin{quote}\itshape\large
