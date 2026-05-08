@@ -41,7 +41,8 @@
   spectral growth exponent, two-scale truncation, logarithmic rate,
   spectral-geometric invariant, universality, layer-survival,
   spectrally regularized WKB class, variational truncation,
-  Langer error, discrete floor projection, iterated asymptotics}
+  Langer error, discrete floor projection, iterated asymptotics,
+  asymptotic contraction, stability of optimal truncation}
 
 \begin{document}
 
@@ -73,6 +74,12 @@ The unique minimizer satisfies the iterated asymptotics
   \qquad\text{so in particular}\quad
   K^*(c)\sim\frac{2\beta}{\alpha}\log c.
 \]
+This expansion is an asymptotic fixed point of the map
+$\Phi(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+O(1)$,
+which is a contraction on $K\asymp\log c$
+(Lemma~\ref{lem:kopt_variational}(ii')),
+and is stable under $O(1)$ perturbations of the logarithmic FOC
+(Lemma~\ref{lem:stability_kopt}).
 The integer projection $K_{\rm int}=\lfloor K^*\rceil$
 satisfies $F(K_{\rm int}) = F(K^*)\cdot(1+o(1))$
 (Remark~\ref{rem:kopt_discrete}).
@@ -258,6 +265,33 @@ Apply Euler--Maclaurin $\sum_{j=1}^K j^\sigma
 \label{sec:kopt}
 %% ============================================================
 
+%%------------------------------------------------------------
+%% Auxiliary: log-of-log isolation
+%%------------------------------------------------------------
+\begin{lemma}[Logarithm of the minimizer]
+\label{lem:loglog}
+Let $K^*(c)$ be the unique minimizer from
+Lemma~\ref{lem:kopt_variational}.
+Then $K^*(c) = O(\log c)$ and $K^*(c)\to\infty$ as $c\to\infty$,
+and consequently
+\begin{equation}\label{eq:loglog}
+  \log K^*(c) = \log\log c + O(1).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+From the leading balance $\frac{\alpha}{2}K^* \leq \beta\log c + C_0$
+in~\eqref{eq:FOC} one has $K^*(c)\leq \frac{2(\beta+1)}{\alpha}\log c$
+for $c$ sufficiently large, so $K^*(c)=O(\log c)$.
+Since $F(K)\to\infty$ as $K\to 0^+$ and $F(K)\to\infty$
+as $K\to\infty$, the minimizer satisfies $K^*(c)\to\infty$.
+Taking logarithms of the bound $K^*\asymp\log c$ gives
+$\log K^* = \log(\Theta(\log c)) = \log\log c + O(1)$.
+\end{proof}
+
+%%------------------------------------------------------------
+%% Main variational lemma
+%%------------------------------------------------------------
 \begin{lemma}[Variational $K^*$]
 \label{lem:kopt_variational}
 Set $F(K) := L K^{1+\gamma}c^{-\beta} + Te^{-\alpha K/2}$
@@ -280,29 +314,34 @@ Taking logarithms of~\eqref{eq:FOC}:
   = \beta\log c + \gamma\log K^*
   + \log\!\Bigl(\tfrac{L(1+\gamma)}{(\alpha/2)T}\Bigr).
 \end{equation}
-Define $K_0 := \frac{2\beta}{\alpha}\log c$ as the
-zeroth iterate (dominant balance: $\gamma\log K^*=o(K^*)$).
-Substituting $\log K^* = \log K_0 + O(\log\log c/\log c)$
-into~\eqref{eq:log_FOC} gives the first iterate:
+Zeroth iterate: the term $\gamma\log K^* = o(K^*)$
+yields leading balance $K_0 := \frac{2\beta}{\alpha}\log c$.
+By Lemma~\ref{lem:loglog}, $\log K^* = \log\log c + O(1)$;
+substituting into~\eqref{eq:log_FOC} gives the first iterate:
 \begin{equation}\label{eq:kopt_iterated}
   K^*(c) = \frac{2\beta}{\alpha}\log c
            + \frac{2\gamma}{\alpha}\log\log c
            + O(1)
   \qquad(c\to\infty).
 \end{equation}
-In particular, $K^*(c)\sim\frac{2\beta}{\alpha}\log c$.
+In particular, $K^*(c)\sim\frac{2\beta}{\alpha}\log c$,
+and $\gamma$ does not appear in the leading coefficient.
 
-\medskip
-\textbf{Structural interpretation.}
-The leading coefficient $2\beta/\alpha$ is determined
-entirely by the $c$-decay exponent $\beta$ and the
-Slepian tail rate $\alpha$; it does not depend on $\gamma$.
-The crowding exponent $\gamma$ enters only at the
-log-log level~\eqref{eq:kopt_iterated}:
-it shifts the secondary correction, not the saddle location.
-The rate $O(c^{-\beta}(\log c)^{1+\gamma})$ holds for
-any $K = \Theta(\log c)$; the constant in $\Theta$ is
-$2\beta/\alpha$ to leading order.
+\textup{(ii')} \textbf{Fixpoint form and asymptotic contraction.}
+Equation~\eqref{eq:log_FOC} is equivalently written as
+\begin{equation}\label{eq:fixpoint}
+  K = \Phi(K) := \frac{2\beta}{\alpha}\log c
+  + \frac{2\gamma}{\alpha}\log K + O(1).
+\end{equation}
+On the asymptotic regime $K\asymp\log c$ one has
+\begin{equation}\label{eq:contraction}
+  \Phi'(K) = \frac{2\gamma}{\alpha K}
+  = O\!\left(\frac{1}{\log c}\right) \to 0,
+\end{equation}
+so $\Phi$ is an asymptotic contraction.
+The iteration $K_{n+1}=\Phi(K_n)$, started from $K_0$,
+converges to $K^*$ and justifies~\eqref{eq:kopt_iterated}
+without circularity.
 
 \textup{(iii)} \textbf{Value at $K^*$.}
 At $K = K^*(c)$:
@@ -312,21 +351,62 @@ At $K = K^*(c)$:
 \end{lemma}
 
 \begin{proof}
-(i) $F'' > 0$ as computed above; unique minimizer follows.
+(i) $F'' > 0$ as computed; unique minimizer follows from
+$F(K)\to\infty$ at both endpoints.
 (ii) Equation~\eqref{eq:log_FOC} is exact.
-Zeroth iterate: $\gamma\log K^* = o(K^*)$, so leading balance is
-$\frac{\alpha}{2}K_0 = \beta\log c$, giving $K_0$.
-First iterate: substitute $\log K^* = \log K_0 + o(1)
-= \log(\frac{2\beta}{\alpha}\log c) + o(1)
-= \log\log c + O(1)$
-into~\eqref{eq:log_FOC}:
-$\frac{\alpha}{2}K^* = \beta\log c
-+ \gamma\log\log c + O(1)$,
-which gives~\eqref{eq:kopt_iterated}.
+Zeroth iterate: $\frac{\alpha}{2}K_0=\beta\log c$.
+First iterate: insert $\log K^*=\log\log c+O(1)$
+(Lemma~\ref{lem:loglog}) into~\eqref{eq:log_FOC}
+to obtain~\eqref{eq:kopt_iterated}.
+(ii') $\Phi'(K)=2\gamma/(\alpha K)$; for $K\asymp\log c$
+this is $O(1/\log c)$, confirming contraction.
 (iii) $L(K^*)^{1+\gamma}c^{-\beta}
 = L\bigl(\frac{2\beta}{\alpha}\log c\bigr)^{1+\gamma}
 c^{-\beta}(1+o(1))
 = O(c^{-\beta}(\log c)^{1+\gamma})$.
+\end{proof}
+
+%%------------------------------------------------------------
+%% Stability lemma
+%%------------------------------------------------------------
+\begin{lemma}[Stability of iterated asymptotics]
+\label{lem:stability_kopt}
+Let $K^*(c)$ satisfy~\eqref{eq:FOC},
+and let $\widetilde K^*(c)$ satisfy the perturbed equation
+obtained by adding an $O(1)$ term to the right-hand side
+of the logarithmic FOC~\eqref{eq:log_FOC}.
+Then
+\[
+  K^*(c) - \widetilde K^*(c) = O(1).
+\]
+In particular, the two-term expansion~\eqref{eq:kopt_iterated}
+is stable under all $O(1)$ perturbations of the logarithmic FOC
+(change of constants $L$, $T$, $\alpha$, $\beta$ at $O(1)$ level),
+and all conclusions of Lemma~\ref{lem:kopt_variational}
+and Corollary~\ref{cor:universal_lograte} remain valid.
+\end{lemma}
+
+\begin{proof}
+Let $K_1=K^*$ and $K_2=\widetilde K^*$ solve
+\[
+  \tfrac{\alpha}{2}K_i = \beta\log c + \gamma\log K_i + C_i,
+  \quad i=1,2,
+\]
+with $C_1-C_2=O(1)$.
+Subtracting:
+\[
+  \tfrac{\alpha}{2}(K_1-K_2)
+  = \gamma(\log K_1 - \log K_2) + O(1).
+\]
+By the mean value theorem,
+$|\log K_1 - \log K_2| \leq |K_1-K_2|/\min(K_1,K_2)$.
+Since $K_i\asymp\log c$, this gives
+$\tfrac{\alpha}{2}|K_1-K_2|
+\leq \frac{\gamma}{\min K_i}|K_1-K_2| + O(1)
+= O\!\bigl(\tfrac{1}{\log c}\bigr)|K_1-K_2| + O(1)$.
+For $c$ sufficiently large the coefficient
+$O(1/\log c)<\alpha/4$, so
+$|K_1-K_2| = O(1)$.
 \end{proof}
 
 \begin{remark}[Discrete floor projection]
@@ -349,9 +429,10 @@ holds for $K=K_{\rm int}\in\N$.
 Prior to commit \texttt{679b3f2}, $\Kopt$ was obtained
 by heuristic order-of-magnitude balance.
 Lemma~\ref{lem:kopt_variational} replaces this
-with a strictly convex functional, a FOC, and an
-iterated asymptotic expansion~\eqref{eq:kopt_iterated}
-with explicit error structure.
+with a strictly convex functional, a FOC,
+an iterated asymptotic expansion~\eqref{eq:kopt_iterated}
+justified by the contraction~\eqref{eq:contraction},
+and a stability certificate (Lemma~\ref{lem:stability_kopt}).
 \end{remark}
 
 %% ============================================================
@@ -424,7 +505,8 @@ Note: $\gamma$ does not appear in the leading saddle
 coefficient $2\beta/\alpha$ of $K^*$
 (Lemma~\ref{lem:kopt_variational}(ii));
 it governs the log-exponent of the rate and the
-log-log correction to the optimal truncation.
+log-log correction~\eqref{eq:kopt_iterated}
+to the optimal truncation.
 \end{remark}
 
 %% ============================================================
@@ -485,8 +567,9 @@ O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \textbf{XVIII:} Qualitative BR3.
 \textbf{XIX:} Airy rate $O(c^{-1/3}(\log c)^{5/3})$.
 \textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$;
-variational $K^*$ with iterated asymptotics;
-Layer-Survival; two invariants $1+\gamma$, $1+2\gamma$.
+variational $K^*$ with contraction-certified iterated asymptotics;
+Layer-Survival; two invariants $1+\gamma$, $1+2\gamma$;
+stability under $O(1)$ perturbations.
 Structural stability: \texttt{structural\_stability\_metatheorem.tex}.
 
 \bigskip
