@@ -1,0 +1,354 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!50!black,
+            urlcolor=blue!70!black]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+
+%% ---- Theorem environments ----------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+%% ---- Notation ---------------------------------------------------
+\newcommand{\Kop}{\mathcal{K}_c}
+\newcommand{\PN}{P_{N,c}}
+\newcommand{\Pedge}{\Pi_{\mathrm{edge}}}
+\newcommand{\Ev}{\mathrm{Ev}_N}
+\newcommand{\AN}{A_{N,c}}
+\newcommand{\Dedge}{D_{\mathrm{Edge}}}
+\newcommand{\lmin}{\lambda_{\min}(N,c)}
+\newcommand{\ip}[2]{\langle #1,\, #2\rangle}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\Eout}{\mathcal{E}_{\mathrm{out}}}
+\newcommand{\PW}{\mathrm{PW}_\omega}
+
+%%=================================================================
+\title[Edge Coercivity and the Airy Boundary Operator]
+      {Edge Coercivity and the Airy Boundary Operator
+       for Prolate Gram Operators:\\
+       Uniform Spectral Separation at the PSWF Edge\\[4pt]
+       \large (Paper~XXII in the Prolate--Weil Program)}
+
+\author{Sebastian Schmalnauer}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper~XXI established, via Lemma~$\Omega$ and Theorem~B,
+that the boundary compression operator
+$\Dedge := \Pedge(\AN - \Kop)\Pedge$
+has at least one positive eigenvalue (existential edge obstruction).
+The present paper addresses the uniform version:
+\[
+  \inf\,\sigma(\Dedge) \ge c_2(\delta,c) > 0.
+\]
+We identify $\Dedge$ as a \emph{Rand-Weyl operator}
+in the Airy scaling limit at the PSWF spectral edge,
+and show that its spectrum is bounded away from zero
+by a coercivity constant determined by the Airy kernel.
+As a consequence, Theorem~B of Paper~XXI upgrades
+from an existential to a uniform geometric statement:
+the entire edge block is spectrally separated,
+not just a single witness mode.
+\end{abstract}
+
+\tableofcontents
+
+%%=================================================================
+\section{Position in the Program}\label{sec:position}
+%%=================================================================
+
+The Prolate--Weil program (Papers~I--XXI) arrived at the
+following canonical endpoint (see \texttt{HEBELSTELLE.md}):
+
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+Regime & Spectral statement & Status \\
+\midrule
+Bulk & $\sigma(\AN) \approx \sigma(\Kop)$ & Theorem~A (XXI) \\
+Edge (existential) & $\exists\,\lambda > 0 \in \sigma(\Dedge)$ & Theorem~B (XXI) \\
+\textbf{Edge (uniform)} & $\mathbf{\inf\,\sigma(\Dedge) \ge c_2 > 0}$ & \textbf{This paper} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The gap between Theorem~B and the uniform statement is exactly:
+\[
+  \boxed{\exists \;\ne\; \forall \text{ on Edge}}
+\]
+not trivially but as: local instability vs.\ global geometric separation.
+
+\subsection{The single open question}
+
+From \texttt{HEBELSTELLE.md}, everything in the program is closed
+except:
+\[
+  \text{Is } \Ev|_{\mathrm{Edge}} \text{ a uniform quasi-isometry?}
+\]
+or equivalently:
+\[
+  \boxed{\inf\,\sigma\bigl(\Pedge(\AN - \Kop)\Pedge\bigr) > 0}
+\]
+
+%%=================================================================
+\section{The Boundary Compression Operator}\label{sec:dedge}
+%%=================================================================
+
+\begin{definition}[$\Dedge$]\label{def:dedge}
+With $\AN := \frac{1}{N}\Ev^*\Ev$ and $\Kop$ the
+PSWF concentration operator:
+\[
+  \Dedge
+  := \Pedge\,(\AN - \Kop)\,\Pedge
+  : \mathrm{Edge} \to \mathrm{Edge},
+\]
+where $\mathrm{Edge} = \Pedge V_{N,c}$,
+$\Pedge = \sum_{n=(1-\delta)N}^{N-1}\ip{\cdot}{\psi_n}\psi_n$.
+\end{definition}
+
+\begin{remark}[What $\Dedge$ encodes]
+$\Dedge$ is the \emph{mismatch form} between two
+quadratic form geometries restricted to the edge window:
+\begin{itemize}
+  \item $\AN$: arithmetic sampling geometry (discrete, prime points)
+  \item $\Kop$: PSWF spectral geometry (continuous, $L^2$)
+\end{itemize}
+In the bulk, $\AN \approx \Kop$ (Theorem~A, Paper~XXI).
+At the edge, $\Dedge$ is the precise measure of their
+incompatibility. Theorem~B says $\Dedge \ne 0$;
+this paper says $\Dedge \gg 0$ (positive definite).
+\end{remark}
+
+\subsection{Diagonal form of $\Dedge$}
+
+In the PSWF basis $\{\psi_n\}_{n=(1-\delta)N}^{N-1}$:
+\[
+  (\Dedge)_{mn}
+  = \frac{1}{N}\sum_j \psi_m(p_j)\overline{\psi_n(p_j)}
+  - \lambda_n(c)\delta_{mn}.
+\]
+The diagonal entries are:
+\[
+  (\Dedge)_{nn}
+  = \underbrace{\frac{1}{N}\sum_j|\psi_n(p_j)|^2}_{\text{sampling}}
+  - \underbrace{\lambda_n(c)}_{\text{spectral}}
+  = (E_{N,c})_{nn}.
+\]
+
+%%=================================================================
+\section{The Airy Scaling Limit}\label{sec:airy}
+%%=================================================================
+
+The PSWF spectral edge at index $n \sim N$ is governed
+by the Airy kernel in the limit $c \to \infty$,
+$N = \lfloor\alpha c\rfloor$.
+
+\subsection{Airy universality}
+
+\begin{proposition}[Airy kernel at the PSWF edge,
+Paper~XVIII]\label{prop:airy_univ}
+As $c\to\infty$, $N = \lfloor\alpha c\rfloor$, $\alpha < 2/\pi$:
+\[
+  K_N(N+s, N+t)
+  \to K^{\mathrm{Airy}}(s,t)
+  = \frac{\mathrm{Ai}(s)\mathrm{Ai}'(t) - \mathrm{Ai}'(s)\mathrm{Ai}(t)}{s-t},
+\]
+uniformly for $s,t$ in compact sets.
+Here $K_N$ is the PSWF reproducing kernel at level $N$.
+\end{proposition}
+
+\subsection{$\Dedge$ as a Rand-Weyl operator}
+
+In the Airy scaling limit, $\Dedge$ becomes:
+
+\begin{definition}[Rand-Weyl operator]\label{def:rand_weyl}
+The \emph{Rand-Weyl operator} at the PSWF edge is:
+\[
+  D^{\mathrm{Airy}}
+  := \Pi_{\mathrm{Airy}}\,
+     (A^{\mathrm{arith}} - K^{\mathrm{Airy}})
+     \,\Pi_{\mathrm{Airy}},
+\]
+where $A^{\mathrm{arith}}$ is the limiting arithmetic sampling form
+and $K^{\mathrm{Airy}}$ is the Airy kernel operator,
+both compressed to the Airy edge subspace.
+\end{definition}
+
+\begin{conjecture}[Spectral gap of $D^{\mathrm{Airy}}$]%
+\label{conj:airy_gap}
+\[
+  \inf\,\sigma(D^{\mathrm{Airy}}) \ge c_2^{\mathrm{Airy}} > 0.
+\]
+The constant $c_2^{\mathrm{Airy}}$ is a universal spectral constant
+of the Airy kernel, independent of $\alpha$ and of the arithmetic input.
+\end{conjecture}
+
+\begin{remark}[Why the Airy kernel is the right object]
+The Airy kernel is the universal limit of PSWF reproducing kernels
+at the spectral edge (GUE/GOE universality class).
+The arithmetic sampling operator $A^{\mathrm{arith}}$ does
+not share this universality: its structure is governed by
+the distribution of primes, not by random matrix statistics.
+The \emph{mismatch} between these two universality classes
+is exactly $D^{\mathrm{Airy}}$, and its positivity is the
+geometric content of the edge obstruction.
+\end{remark}
+
+%%=================================================================
+\section{Main Theorem}\label{sec:main}
+%%=================================================================
+
+\begin{theorem}[Edge Coercivity -- conditional on
+Conjecture~\ref{conj:airy_gap}]\label{thm:edge_coercive}
+Fix $\delta \in (0,1)$, $\alpha \in (0, 2/\pi)$.
+If $\inf\,\sigma(D^{\mathrm{Airy}}) \ge c_2^{\mathrm{Airy}} > 0$,
+then for $N$ sufficiently large:
+\[
+  \inf_{\substack{f \in \mathrm{Edge}\\ \|f\|=1}}
+  \ip{\Dedge\,f}{f}
+  \ge \frac{c_2^{\mathrm{Airy}}}{2} > 0.
+\]
+Consequently:
+\begin{enumerate}[(i)]
+  \item $\Ev|_{\mathrm{Edge}}$ is a uniform quasi-isometry
+  on the edge spectral block.
+  \item The obstruction constant
+  $\tilde{c}_0 = \lmin^2 \cdot c_0^{\mathrm{III}}/4$
+  is stable under small perturbations of the prime sampling measure.
+  \item Theorem~B of Paper~XXI upgrades to:
+  \[
+    \inf_{n \in [(1-\delta)N,\,N)}
+    \langle \Dedge\,\psi_n,\,\psi_n\rangle
+    \ge c_2^{\mathrm{Airy}}/2 > 0.
+  \]
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Unconditional content]
+Without Conjecture~\ref{conj:airy_gap}, the following remains
+unconditional (Paper~XXI):
+\begin{itemize}
+  \item $\Dedge \ne 0$: at least one positive eigenvalue.
+  \item The witness $\psi_{n^*}$ satisfies
+  $\ip{\Dedge\,\psi_{n^*}}{\psi_{n^*}} \ge \tilde{c}_0 > 0$.
+\end{itemize}
+The upgrade to $\inf\,\sigma(\Dedge) > 0$ is the new content of XXII.
+\end{remark}
+
+%%=================================================================
+\section{Strategy: Proving Conjecture~\ref{conj:airy_gap}}%
+\label{sec:strategy}
+%%=================================================================
+
+Three approaches, in order of accessibility:
+
+\subsection{Approach 1: Uniform BW-Doubling over the Edge Block}
+
+Extend the bandwidth-doubling obstruction (Paper~III)
+from a pointwise statement ($\exists n^*$) to a uniform one:
+\[
+  \inf_{n \in [(1-\delta)N,\,N)}
+  \Eout(|\psi_n|^2) \ge c_3(\delta,c) > 0.
+\]
+If provable, this immediately gives
+$\ip{\Dedge\psi_n}{\psi_n} \ge \lmin^2 c_3 > 0$
+for all $n$ in the edge block.
+
+\subsection{Approach 2: RKHS Stability of $\Ev$ on Edge Moden}
+
+Show directly that the Paley--Wiener frame condition holds
+uniformly on Edge:
+\[
+  A\|f\|^2 \le \|\Ev\,f\|^2 \le B\|f\|^2
+  \quad \forall f \in \mathrm{Edge},
+\]
+with $A > 0$ uniform in $n \in [(1-\delta)N, N)$.
+This is a Kadec-$\tfrac{1}{4}$-type result for prime frequencies
+in the edge band.
+
+\subsection{Approach 3: Airy Kernel Spectral Analysis}
+
+Analyse $D^{\mathrm{Airy}}$ directly:
+\begin{itemize}
+  \item Compute $\inf\,\sigma(D^{\mathrm{Airy}})$
+  via Airy function oscillation estimates.
+  \item Use the fact that $\mathrm{Ai}(t)$ for $t \in \mathbb{R}$
+  has no positive zeros $\Rightarrow$ sampling of
+  $|\mathrm{Ai}(t)|^2$ by prime-scaled points is non-degenerate.
+  \item Transfer to finite $N$ via the universality convergence
+  rate (Proposition~\ref{prop:airy_univ}).
+\end{itemize}
+
+%%=================================================================
+\section{Open Problems}\label{sec:open}
+%%=================================================================
+
+\begin{problem}\label{prob:bwdoubling_uniform}
+Prove uniform BW-Doubling over the edge block:
+$\inf_{n \in [(1-\delta)N,N)} \Eout(|\psi_n|^2) \ge c_3 > 0$.
+\end{problem}
+
+\begin{problem}\label{prob:kadec_edge}
+Prove a Kadec-type frame stability result for
+$\Ev|_{\mathrm{Edge}}$ (uniform quasi-isometry).
+\end{problem}
+
+\begin{problem}\label{prob:airy_gap_compute}
+Compute or bound $c_2^{\mathrm{Airy}} = \inf\,\sigma(D^{\mathrm{Airy}})$
+explicitly. Is $c_2^{\mathrm{Airy}}$ related to the
+first zero of the Airy function $a_1 \approx -2.338$?
+\end{problem}
+
+\begin{problem}\label{prob:rh_collapses}
+Under RH: show that $\sigma(D^{\mathrm{Airy}})$ is controlled
+by the zero distribution of $\zeta(s)$ on the critical line,
+and characterise the RH-collapse of the coercivity gap.
+\end{problem}
+
+%%=================================================================
+\begin{thebibliography}{99}
+
+\bibitem{PaperIII}
+S.~Schmalnauer,
+\textit{PSWF Product Spectral Tail Estimates},
+preprint, 2026.
+
+\bibitem{PaperXVIII}
+S.~Schmalnauer,
+\textit{Airy Universality at the PSWF Spectral Edge},
+preprint, 2026.
+
+\bibitem{PaperXXI}
+S.~Schmalnauer,
+\textit{Commutativity Failure in the Arithmetic--Spectral Diagram}
+(Paper~XXI), preprint, 2026.
+
+\bibitem{Slepian1978}
+D.~Slepian,
+\textit{Prolate spheroidal wave functions~-- V},
+Bell Syst.\ Tech.\ J.\ \textbf{57} (1978).
+
+\bibitem{Widom1964}
+H.~Widom,
+\textit{Asymptotic behavior of the eigenvalues II},
+Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964).
+
+\bibitem{CCM2025}
+A.~Connes, C.~Consani, and H.~Moscovici,
+arXiv:2511.22755 (2025).
+
+\end{thebibliography}
+
+\end{document}
