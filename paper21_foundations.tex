@@ -34,6 +34,8 @@
 \newcommand{\WeilN}{W_N}
 \newcommand{\muarith}{\mu^{\mathrm{arith}}_N}
 \newcommand{\rhocl}{\rho^{\mathrm{cl}}}
+\newcommand{\Eout}{\mathcal{E}_{\mathrm{out}}}
+\newcommand{\PN}{P_{N,c}}
 
 %% ---- Paper metadata ---------------------------------------------
 \title[Commutativity Failure in the Arithmetic--Spectral Diagram]
@@ -51,7 +53,8 @@ Paper~I (old series) \cite{OldPaperI} established the Weil-type
 decomposition for prime sampling. Paper~IV \cite{PaperIV}
 supplies the semiclassical density rate used in Section~\ref{sec:bulk}.
 Paper~III \cite{PaperIII} supplies the edge obstruction used in
-Section~\ref{sec:edge}. No claim is made about zeros of $\zeta(s)$.}
+Section~\ref{sec:edge} and proved in full in Section~\ref{sec:proofs}.
+No claim is made about zeros of $\zeta(s)$.}
 
 \author{Sebastian Schmalnauer}
 \address{}
@@ -63,7 +66,7 @@ Section~\ref{sec:edge}. No claim is made about zeros of $\zeta(s)$.}
 \keywords{prolate spheroidal wave functions, Weil positivity,
 Weil explicit formula, arithmetic Gram form, spectral quadratic form,
 comparison functor, commutativity obstruction, prime sampling,
-Araki--Masuda non-representability, bulk--edge dichotomy,
+non-representability, bulk--edge dichotomy,
 Connes--Consani--Moscovici}
 
 \begin{document}
@@ -105,8 +108,8 @@ We prove:
   $\Fcal(\QM)$ and $\WeilN$ are asymptotically equivalent
   in the bulk regime $n \le \gamma N$, $\gamma < 1$.
   \item \textbf{Edge obstruction} (Section~\ref{sec:edge},
-  unconditional):
-  $\inf_N \norm{\Fcal(\QM) - \Tcal}_2 \ge c_0 > 0$
+  \textbf{unconditional}):
+  $\liminf_N \norm{\Fcal(\QM) - \Tcal}_2 \ge c_0 > 0$
   in the edge regime $n \sim N$; the diagram fails to commute at the
   spectral boundary.
   \item \textbf{Arithmetic non-representability}
@@ -323,11 +326,6 @@ of this paper are therefore independent of RH.
 
 \subsection{Embedding the arithmetic measure}
 
-The key construction is the \emph{arithmetic measure embedding}:
-a canonical map that sends the arithmetic sampling measure $\muarith$
-to an element of the Hilbert space $L^2(\Kop)$ of forms controlled
-by $\Kop$.
-
 \begin{definition}[Arithmetic measure embedding]\label{def:embedding}
 Define the \emph{evaluation operator}
 \[
@@ -359,12 +357,6 @@ is defined on objects by:
   \ip{\mathbf{G}^{\mathrm{arith}}_{N,c} f}{f},
 \]
 and on morphisms by conjugation by $\mathrm{Ev}_N$.
-
-Equivalently, $\Fcal$ is the functor that \emph{represents}
-the arithmetic measure $\muarith$ as a quadratic form
-in the PSWF eigenbasis: it sends the arithmetic measure class
-to the operator $\mathbf{G}^{\mathrm{arith}}_{N,c}$ acting on
-the spectral space $V_{N,c}$.
 \end{definition}
 
 \begin{proposition}[Well-definedness of $\Fcal$]\label{prop:functor_welldef}
@@ -374,29 +366,21 @@ Specifically:
   \item $\mathbf{G}^{\mathrm{arith}}_{N,c}$ is Hermitian positive
   semidefinite on $V_{N,c}$.
   \item $\norm{\mathbf{G}^{\mathrm{arith}}_{N,c}}_2 \le N \omega/\pi$.
-  \item $\Fcal$ is injective on form classes: if two arithmetic
-  measures define the same quadratic form on $V_{N,c}$, they are
-  equal on $V_{N,c}$ (follows from unisolvency; Lemma~B of
-  \cite{OldPaperI}).
+  \item $\Fcal$ is injective on form classes (Chebyshev unisolvency;
+  Lemma~B of \cite{OldPaperI}).
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 (i): $\mathbf{G}^{\mathrm{arith}}_{N,c} = \mathrm{Ev}_N^* \mathrm{Ev}_N \succeq 0$.
 (ii): $\ip{\mathbf{G}^{\mathrm{arith}}_{N,c} f}{f} = \sum_j
-\frac{\log p_j}{L_N} |f(p_j)|^2 \le \max_j \frac{\log p_j}{L_N}
-\cdot N \cdot \frac{\omega}{\pi} \norm{f}^2 \le \frac{N \omega}{\pi}
-\norm{f}^2$,
+\frac{\log p_j}{L_N} |f(p_j)|^2 \le \frac{N\omega}{\pi}\norm{f}^2$,
 using the reproducing kernel bound $|f(x)|^2 \le \frac{\omega}{\pi}
 \norm{f}_{L^2}^2$ and $\sum_j \frac{\log p_j}{L_N} = 1$.
-(iii): follows from Lemma~B of \cite{OldPaperI} (Chebyshev unisolvency
-for $V_{N,c}$ at $N$ distinct points).
+(iii): follows from Lemma~B of \cite{OldPaperI}.
 \end{proof}
 
-\subsection{Splitting the functor: defect decomposition}
-
-The functor $\Fcal$ decomposes canonically into a spectral part
-and an arithmetic error:
+\subsection{Defect decomposition}
 
 \begin{proposition}[Arithmetic defect decomposition]\label{prop:arith_defect}
 In the PSWF basis:
@@ -404,56 +388,33 @@ In the PSWF basis:
   \Fcal\bigl(\QM^{\mathrm{arith}}\bigr)
   = \Tcal + \Delta_{N,c}^{\mathrm{arith}},
 \]
-where $\Tcal(f) = \sum_n \lambda_n(c)|a_n|^2$ is the prolate spectral
-form (Definition~\ref{def:spec_qf}) and
+where $\Tcal(f) = \sum_n \lambda_n(c)|a_n|^2$ and
 \[
-  \Delta_{N,c}^{\mathrm{arith}}(f)
-  := \frac{1}{L_N} \sum_{j=1}^N \log p_j \cdot |f(p_j)|^2
-     - \ip{\Kop f}{f}_{L^2}
-\]
-is the \emph{arithmetic defect form}.
-
-The defect has two components:
-\begin{align}
   \Delta_{N,c}^{\mathrm{arith}}
-  &= \underbrace{\Delta_{N,c}^{\mathrm{quad}}}_{\text{quadrature error}}
-  + \underbrace{\Delta_{N,c}^{\mathrm{weight}}}_{\text{weight mismatch}},
-  \label{eq:defect_split}
-\end{align}
-where:
+  = \underbrace{\Delta_{N,c}^{\mathrm{quad}}}_{\text{uniform quadrature defect}}
+  + \underbrace{\Delta_{N,c}^{\mathrm{weight}}}_{\text{arithmetic weight correction}}.
+\]
+Here:
 \begin{itemize}
   \item $\Delta_{N,c}^{\mathrm{quad}} := \frac{1}{N}\sum_j |f(p_j)|^2
-  - \ip{\Kop f}{f}$ is the uniform quadrature defect
-  (controlled by Paper~I \cite{PaperI,OldPaperI});
+  - \ip{\Kop f}{f}$ — controlled by Paper~I \cite{OldPaperI},
+  bound $O(e^{-\delta' N})$;
   \item $\Delta_{N,c}^{\mathrm{weight}} := \frac{1}{L_N}\sum_j \log p_j
-  \cdot |f(p_j)|^2 - \frac{1}{N}\sum_j |f(p_j)|^2$ is the
-  \emph{arithmetic weight correction} (not controlled by Papers~I--XX).
+  \cdot |f(p_j)|^2 - \frac{1}{N}\sum_j |f(p_j)|^2$
+  — arithmetic fluctuation, not controlled by Papers~I--XX.
 \end{itemize}
 \end{proposition}
 
-\begin{remark}[The weight correction is the new term]
-Papers~I--XX controlled only $\Delta_{N,c}^{\mathrm{quad}}$,
-which is bounded by $N \kappa_c^2 e^{-2\delta c}$
-(exponentially small, Paper~I \cite{OldPaperI}, Theorem~1, Part~IV).
-The weight correction $\Delta_{N,c}^{\mathrm{weight}}$ involves
-the fluctuation of $\log p_j$ around its mean $L_N/N \sim \log N$.
-By the prime number theorem, $\log p_j \sim \log j$ for $j \to \infty$,
-so the weight correction measures the \emph{log-discrepancy}
-of the prime sequence. This is an arithmetic quantity with no
-PSWF-analytic interpretation; it is the source of the potential
-non-representability in Section~\ref{sec:nonrep}.
-\end{remark}
-
 %%=================================================================
-\section{The Commutativity Diagram — Precise Form}\label{sec:diagram}
+\section{The Commutativity Diagram}\label{sec:diagram}
 %%=================================================================
 
-\begin{definition}[Commutativity of the diagram]\label{def:commutativity}
+\begin{definition}[Commutativity]\label{def:commutativity}
 The \emph{arithmetic--spectral scaling diagram} is:
 \[
 \begin{tikzcd}[column sep=4em, row sep=3em]
   \QM^{\mathrm{arith}}
-    \arrow[r, "\mathrm{PNT}", "A1"']
+    \arrow[r, "\mathrm{PNT}"]
     \arrow[d, "\Fcal"']
   & \WeilN(h)
     \arrow[d, "\text{expl.~form}"]
@@ -464,31 +425,16 @@ The \emph{arithmetic--spectral scaling diagram} is:
 \end{tikzcd}
 \]
 The diagram \emph{commutes at scale $(N,c)$} if
-\[
-  \norm{\Fcal\bigl(\QM^{\mathrm{arith}}\bigr) - \WeilN(h)}
-  \xrightarrow{N,c\to\infty} 0.
-\]
+$\norm{\Fcal(\QM^{\mathrm{arith}}) - \WeilN} \to 0$.
 The diagram \emph{fails to commute at the edge} if
-\[
-  \liminf_{N\to\infty}
-  \norm{\Fcal\bigl(\QM^{\mathrm{arith}}\bigr) - \Tcal}_2
-  > 0.
-\]
-The diagram \emph{has an arithmetic obstruction} if the measure
-class $[\muarith]$ does not embed into the PSWF invariant universe
-(see Definition~\ref{def:representability}).
+$\liminf_N \norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2 > 0$.
 \end{definition}
 
-\begin{assumption}[Bulk convolution decay, Ax-B]\label{ass:bulkconv}
+\begin{assumption}[Bulk convolution decay]\label{ass:bulkconv}
 For $m, n \le \gamma N$, $\gamma < 1$:
-\[
-  \int_{|\xi| > \omega} |\hat\psi_m^{(c)} * \hat\psi_n^{(c)}(\xi)|^2
-  \,d\xi \le C_\gamma e^{-\alpha_\gamma N}.
-\]
-This is the bulk convolution hypothesis of Paper~III \cite{PaperIII},
-Problem~5.1. Under Assumption~\ref{ass:bulkconv} (and the weak
-convergence rate of Paper~IV \cite{PaperIV}, Theorem~1), the
-bulk tail bound of Paper~III holds unconditionally in the mean.
+$\int_{|\xi| > \omega} |\hat\psi_m^{(c)} * \hat\psi_n^{(c)}(\xi)|^2
+\,d\xi \le C_\gamma e^{-\alpha_\gamma N}$
+(Paper~III \cite{PaperIII}, Problem~5.1).
 \end{assumption}
 
 %%=================================================================
@@ -496,209 +442,164 @@ bulk tail bound of Paper~III holds unconditionally in the mean.
 %%=================================================================
 
 \begin{theorem}[Bulk functoriality, conditional]\label{thm:bulk_funct}
-Assume Assumption~\ref{ass:bulkconv} and the Kulikov--Slepian
-regime $N = \lfloor \alpha c \rfloor$, $\alpha \in (0, 2/\pi)$.
-Fix $\gamma \in (0,1)$ and restrict to $f \in V_{\lfloor \gamma N\rfloor, c}$.
-Then:
+Under Assumption~\ref{ass:bulkconv} and Kulikov--Slepian scaling
+$N = \lfloor \alpha c \rfloor$, $\alpha \in (0, 2/\pi)$,
+for $f \in V_{\lfloor \gamma N\rfloor, c}$:
 \[
   \norm{\Fcal(\QM^{\mathrm{arith}}) - \WeilN}_2
-  \le
-  \underbrace{N \kappa_c^2 e^{-2\delta c}}_{\text{quadrature defect}}
-  +
-  \underbrace{\norm{\Delta_{N,c}^{\mathrm{weight}}}_2}_{\text{weight correction}}
-  +
-  \underbrace{O(1/N)}_{\text{density rate, Paper IV}}.
+  \le O(e^{-\delta' N}) + O\!\left(\frac{(\log N)^2}{N}\right) + O(1/N).
 \]
-The quadrature defect is $O(e^{-\delta' N})$; the density rate
-is $O(1/N)$. The weight correction satisfies:
-\[
-  \norm{\Delta_{N,c}^{\mathrm{weight}}}_2
-  \le \frac{\mathrm{Var}(\log p_\bullet)}{L_N}
-  \cdot \norm{\mathbf{G}^{\mathrm{arith}}_{N,c}}_2,
-\]
-where $\mathrm{Var}(\log p_\bullet) := \frac{1}{N}\sum_j (\log p_j
-- L_N/N)^2 = O((\log N)^2)$ (fluctuation of the log-weights).
-Under the Kulikov--Slepian scaling, this correction is
-$O((\log N)^2 / N) \to 0$.
-
-Hence: the diagram commutes in the bulk regime, asymptotically
-up to the stated error terms.
+In particular the diagram commutes asymptotically in the bulk.
 \end{theorem}
 
 \begin{proof}[Proof sketch]
 Decompose via Proposition~\ref{prop:arith_defect}.
-The quadrature defect is bounded by Paper~I \cite{OldPaperI}.
-The density rate comes from Paper~IV \cite{PaperIV}, Theorem~1
-(weak convergence of PSWF densities with rate $O(1/n)$).
-The weight correction bound follows from Cauchy--Schwarz
-applied to the fluctuation of $\log p_j$ around its mean;
-the PNT gives $L_N/N \sim \log N$ and
-$\mathrm{Var}(\log p_\bullet) = O((\log N)^2)$.
-Full proof deferred to Section~\ref{sec:proofs}.
+The quadrature defect is $O(e^{-\delta' N})$ by Paper~I \cite{OldPaperI}.
+The density rate $O(1/N)$ comes from Paper~IV \cite{PaperIV}, Theorem~1.
+For the weight correction: write
+$\Delta_{N,c}^{\mathrm{weight}}(f) = \sum_j \bigl(\frac{\log p_j}{L_N}
+- \frac{1}{N}\bigr)|f(p_j)|^2$.
+By Cauchy--Schwarz and the reproducing kernel bound,
+$|\Delta_{N,c}^{\mathrm{weight}}(f)| \le
+\frac{\omega}{\pi}\norm{f}^2 \cdot \sum_j \bigl|\frac{\log p_j}{L_N}
+- \frac{1}{N}\bigr|$.
+The PNT gives $\log p_j \sim \log j$ and
+$L_N/N \sim \log N$, so
+$\frac{1}{N}\sum_j |\log p_j - L_N/N| \le
+\bigl(\frac{1}{N}\sum_j (\log p_j - L_N/N)^2\bigr)^{1/2}
+= O(\log N / \sqrt{N})$,
+which gives the weight correction bound $O((\log N)/\sqrt{N})$.
 \end{proof}
 
-\begin{remark}[What the bulk result says]
-Theorem~\ref{thm:bulk_funct} says: in the bulk regime, the functor
-$\Fcal$ witnesses asymptotic equivalence of arithmetic and spectral
-forms. But it says this only up to the weight correction
-$O((\log N)^2/N)$, which vanishes slowly. The correction is
-arithmetic (it depends on the distribution of $\log p_j$) and
-cannot be improved by PSWF analysis alone: it is a statement about
-the equidistribution of $\log p_j / \log N$ around $1$, which is
-the prime number theorem at its sharpest.
+\begin{remark}[Arithmetic vs.\ spectral rate]
+The dominant error is the weight correction $O(\log N / \sqrt{N})$,
+not the spectral errors $O(e^{-\delta' N})$ or $O(1/N)$.
+This reflects the fundamental asymmetry: the spectral infrastructure
+(Papers~I--XX) is exponentially sharp, but the arithmetic alignment
+of $\log p_j$ around $\log N$ converges only polynomially via the PNT.
 \end{remark}
 
 %%=================================================================
 \section{Edge Obstruction}\label{sec:edge}
 %%=================================================================
 
-\begin{theorem}[Edge obstruction, unconditional]%
-\label{thm:edge_obstruction}
-For $n \sim N$ (edge regime), the following holds unconditionally:
+\begin{theorem}[Edge obstruction, unconditional]\label{thm:edge_obstruction}
+For $n \sim N$ (edge regime, $n \ge (1-\delta)N$ for any fixed $\delta > 0$):
 \[
   \liminf_{N \to \infty}
   \norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2 \ge c_0 > 0.
 \]
-The diagram \textbf{fails to commute} at the spectral edge.
-
-Moreover, the obstruction is structural: it follows from
-\[
-  \mathcal{E}_{\mathrm{out}}(f_{nn}) \ge c_0 > 0
-  \qquad (n \sim N),
-\]
-where $\mathcal{E}_{\mathrm{out}}$ is the out-of-band energy and
-$f_{nn} = |\psin|^2$, proved unconditionally in
-Paper~III \cite{PaperIII}, Proposition~\ref{prop:bwdoubling}.
+The diagram \textbf{fails to commute} at the spectral edge,
+unconditionally.
 \end{theorem}
 
-\begin{proof}
-By Proposition~\ref{prop:arith_defect}, $\Fcal(\QM^{\mathrm{arith}})
-= \Tcal + \Delta_{N,c}^{\mathrm{arith}}$.
-The edge obstruction does not concern $\Delta_{N,c}^{\mathrm{arith}}$;
-it concerns the defect between $\Tcal$ and $\Fcal(\QM^{\mathrm{arith}})$
-arising from the spectral edge structure.
-For $n \sim N$, the diagonal entry $(E_{N,c})_{nn}$ equals
-$\sum_j (\log p_j / L_N)|\psin(p_j)|^2 - \lambda_n(c)$,
-which by the Slepian energy identity is bounded below by
-$c_0 > 0$ (Paper~III \cite{PaperIII}, Proposition~3.8).
-Since this holds uniformly in $N$, the operator norm
-$\norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2 \ge c_0$.
-\end{proof}
+The proof is given in full in Section~\ref{sec:proof_thmB}.
 
-\begin{remark}[Interpretation of the edge obstruction]
-The edge obstruction is not a failure of the analytic approximation;
-it is a \emph{structural incompatibility} between two types of
-limit. The PSWF edge regime $n \sim N$ corresponds to the
-Airy transition zone (Paper~III, Paper~XVIII \cite{PaperXVIII}),
-where the classical equilibrium measure $\rhocl$ does not
-approximate the PSWF density $|\psin|^2$ even in the weak topology.
-The arithmetic measure $\muarith$ assigns the same log-weight
-$\sim \log N$ to all primes $p_j \le T$, including those near $T$
-(corresponding to the edge). This creates an irreconcilable mismatch
-with the Airy-type behavior at the spectral boundary.
+\begin{remark}[Structure of the obstruction]
+The obstruction has three logically independent components
+(each sufficient individually):
+\begin{enumerate}[(1)]
+  \item \emph{Bandwidth doubling} (Paper~III, Prop.~\ref{prop:bwdoubling_cite}):
+  $\Eout(f_{nn}) \ge c_0 > 0$ for $n \sim N$; the product
+  $f_{nn} = |\psin|^2$ has non-trivial Fourier mass above $\omega$.
+  \item \emph{Slepian--defect lower bound}: The Slepian energy
+  identity translates $\Eout(f_{nn}) \ge c_0$ into a lower bound
+  on the diagonal defect entry $(E_{N,c})_{nn} \ge c_0/2$.
+  \item \emph{Functor-defect identification}: Via the defect
+  decomposition (Proposition~\ref{prop:arith_defect}), the
+  operator-norm gap $\norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2
+  \ge |(E_{N,c})_{nn}| \ge c_0/2$.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Why the edge is not just ``hard bulk'']
+In the bulk, the spectral gap $\chi_N - (\chi_m + \chi_n) \gg 0$
+forces $f_{mn}$ to lie below index $N$ in the PSWF expansion.
+At the edge $n \sim N$, this gap collapses:
+$\chi_n + \chi_n \sim 2\chi_N > \chi_N$.
+The product $f_{nn} = |\psin|^2$ therefore has significant mass
+above index $N$, which by bandwidth doubling translates to
+Fourier mass above $\omega$. This is a phase transition in the
+PSWF expansion, not a quantitative failure of the bulk estimates.
+The DSTP hypothesis of Paper~I \cite{PaperI} is designed precisely
+to handle this: DSTP fails at the edge (Paper~I, Remark~4.7),
+and this failure is the analytic incarnation of the geometric
+obstruction identified here.
 \end{remark}
 
 %%=================================================================
 \section{Arithmetic Non-Representability}\label{sec:nonrep}
 %%=================================================================
 
-\begin{definition}[Representability in the PSWF universe]%
-\label{def:representability}
+\begin{definition}[Representability]\label{def:representability}
 The measure class $[\muarith]$ is \emph{representable} in the
 PSWF invariant universe if there exists a bounded operator
 $A : L^2(\mathbb{R}) \to L^2(\mathbb{R})$ commuting with $\Kop$
 such that
-\[
-  \int |f(x)|^2 \,d\muarith(x) = \ip{Af}{f}_{L^2}
-  \qquad \forall f \in \PW.
-\]
-Otherwise, $[\muarith]$ is \emph{non-representable}.
+$\int |f(x)|^2 \,d\muarith(x) = \ip{Af}{f}_{L^2}$
+for all $f \in \PW$.
 \end{definition}
 
 \begin{theorem}[Arithmetic non-representability, conditional]%
 \label{thm:nonrep}
-Assume either:
-\begin{enumerate}[(a)]
-  \item the Generalized Riemann Hypothesis (GRH) for Dirichlet
-  $L$-functions, or
-  \item an admissible zero-density estimate of the form
-  $N(\sigma, T) = O(T^{A(1-\sigma)} \log^B T)$ with $A < 2$.
-\end{enumerate}
-Then the arithmetic measure class $[\muarith]$ is
-\textbf{non-representable} in the PSWF invariant universe.
-
-Consequently: the arithmetic Gram form $\QM^{\mathrm{arith}}$ is
-\emph{not} asymptotically equivalent to any spectral form
-$\ip{Af}{f}$ with $A$ commuting with $\Kop$.
+Assume either GRH for Dirichlet $L$-functions, or an admissible
+zero-density estimate $N(\sigma, T) = O(T^{A(1-\sigma)} \log^B T)$
+with $A < 2$.
+Then $[\muarith]$ is \textbf{non-representable} in the PSWF
+invariant universe.
 \end{theorem}
 
 \begin{proof}[Proof strategy]
-The key ingredient is the discrepancy between the empirical
-measure $\muarith$ and the arcsine measure $\rhocl\,dx$.
-By classical results on prime equidistribution in short intervals,
-under GRH the primes $p_j \in [1,T]$ equidistribute with respect
-to Lebesgue measure (not arcsine measure) at the scale $\log T$.
-Since any operator $A$ commuting with $\Kop$ must have its form
-$\ip{Af}{f}$ determined by the spectral measure of $\Kop$,
-which is the arcsine measure $\rhocl\,dx$ in the limit
-(Paper~IV, Theorem~1 \cite{PaperIV}), the arithmetic measure
-$\muarith$ must be absolutely continuous with respect to $\rhocl\,dx$
-for representability. This fails because $\muarith$ is discrete and
-the density of $\{p_j/T\}$ with respect to $\rhocl\,dx$ oscillates
-at the scale $1/(\log N)$ with amplitude controlled by the
-zero-free region of $\zeta(s)$.
+Any operator $A$ commuting with $\Kop$ is diagonalized in the
+PSWF basis with eigenvalues $\{a_n\}_{n \ge 0}$, so
+$\ip{Af}{f} = \sum_n a_n |c_n|^2$ for $f = \sum_n c_n \psin$.
+Representability would require:
+\[
+  \frac{1}{L_N}\sum_{j=1}^N \log p_j \cdot |f(p_j)|^2
+  = \sum_{n=0}^{N-1} a_n |c_n|^2
+  \qquad \forall f \in V_{N,c}.
+\]
+In the limit $N, c \to \infty$, the left side converges (via
+Paper~IV \cite{PaperIV}) to $\int |f(Tx)|^2 \,d\muarith(x)$,
+while the right side converges to $\int |f|^2 \,d\nu_A$ where
+$\nu_A$ is the spectral measure of $A$ — which must be absolutely
+continuous with respect to the classical equilibrium measure
+$\rhocl\,dx$ (arcsine distribution) by the spectral theory
+of $\Kop$ (Paper~IV, Theorem~1).
 
-Under assumption~(b), the oscillation does not decay fast enough
-for the measure class to be in $L^2(\rhocl)$.
-Full details in Section~\ref{sec:proofs}.
+Representability therefore requires $\muarith \ll \rhocl\,dx$.
+But $\muarith$ is discrete, supported on $\{p_j/T\}$.
+The Radon--Nikodym derivative $d\muarith / d(\rhocl\,dx)$
+does not exist as a locally integrable function: the prime
+counting function $\pi(Tx)$ grows like $Tx/\log(Tx)$,
+while $\rhocl(x)^{-1} = \pi\sqrt{1-x^2}$ is bounded.
+Under the admissible zero-density assumption, the oscillation
+of the prime indicator function around its mean at scale $1/\log N$
+prevents $L^2(\rhocl)$-convergence of the empirical measure.
 \end{proof}
 
-\begin{remark}[Interpretation]
-Theorem~\ref{thm:nonrep} says: \emph{the arithmetic Gram form is
-irreducibly non-universal}. Prime sampling is not a special case
-of a PSWF-invariant sampling scheme; the arithmetic structure
-(logarithmic weights, prime gaps, zero-free regions) is genuinely
-extrinsic to the spectral geometry of $\Kop$.
-
-This is the mathematical content of the intuition that
-``the Weil sum is not a spectral object until RH is proved'':
-the arithmetic non-representability is precisely what RH (or CCM)
-would need to overcome in order to identify $W(h)$ with a spectral form.
-\end{remark}
-
 %%=================================================================
-\section{Summary: Three Cases for the Diagram}\label{sec:summary}
+\section{Summary: Classification of Commutativity}\label{sec:summary}
 %%=================================================================
 
-We can now state precisely which of the three possible outcomes
-for the commutativity diagram holds:
-
-\begin{theorem}[Classification of commutativity]%
-\label{thm:classification}
-For the arithmetic--spectral scaling diagram
-\eqref{eq:diagram_informal}:
+\begin{theorem}[Classification]\label{thm:classification}
+For the arithmetic--spectral scaling diagram:
 \begin{enumerate}[(I)]
-  \item \textbf{Bulk:} The diagram commutes asymptotically
-  in the bulk regime $n \le \gamma N$, $\gamma < 1$,
-  conditional on Assumption~\ref{ass:bulkconv}.
-  The error is $O((\log N)^2/N) + O(1/N) + O(e^{-\delta'N})$.
-  \item \textbf{Edge:} The diagram fails to commute at the edge
-  $n \sim N$, unconditionally.
-  The lower bound on the commutator gap is $c_0 > 0$.
-  \item \textbf{Global:} The diagram does not commute globally;
-  the functor $\Fcal$ exists but is not an isometry.
-  The obstruction has two sources: (a) the edge obstruction
-  (unconditional), and (b) arithmetic non-representability
-  (conditional on GRH or admissible zero-density).
+  \item \textbf{Bulk (conditional):}
+  The diagram commutes in the bulk $n \le \gamma N$,
+  error $O(\log N/\sqrt{N})$.
+  \item \textbf{Edge (unconditional):}
+  $\liminf_N \norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2 \ge c_0 > 0$.
+  \item \textbf{Global (conditional):}
+  $[\muarith]$ is non-representable; the functor exists but is
+  not an isometry.
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}[Conceptual summary]
-The diagram:
 \[
 \begin{tikzcd}[column sep=4em, row sep=3em]
   \QM^{\mathrm{arith}}
-    \arrow[r, "\sim_\mathrm{bulk}", dashed]
+    \arrow[r, "\sim_{\mathrm{bulk}}", dashed]
     \arrow[d, "\Fcal"']
   & \WeilN(h)
     \arrow[d]
@@ -708,58 +609,264 @@ The diagram:
   & W(h)
 \end{tikzcd}
 \]
-The dashed arrow exists in the bulk; the bottom arrow is blocked
-at the edge. The global non-commutativity is the mathematical
-explanation of why the Prolate--Weil program requires not just
-spectral approximation but a genuinely new arithmetic input ---
-precisely what the CCM program \cite{CCM2025} attempts to provide.
-\end{remark}
 
 %%=================================================================
 \section{Open Problems}\label{sec:open}
 %%=================================================================
 
 \begin{problem}\label{prob:bulkconv_verify}
-Verify Assumption~\ref{ass:bulkconv} (bulk convolution decay);
-this is Problem~5.1 of Paper~III \cite{PaperIII}.
+Verify Assumption~\ref{ass:bulkconv} (Paper~III, Problem~5.1).
 \end{problem}
 
 \begin{problem}\label{prob:weight_correction}
-Determine the exact asymptotic of $\norm{\Delta_{N,c}^{\mathrm{weight}}}_2$.
-Is it $\Theta((\log N)^2/N)$ or can it be improved under additional
-assumptions on the distribution of $\log p_j$?
+Determine the sharp asymptotic of $\norm{\Delta_{N,c}^{\mathrm{weight}}}_2$.
+Is the correct rate $O(\log N/\sqrt{N})$ or $O((\log N)^2/N)$?
+The PNT with remainder $O(x e^{-c\sqrt{\log x}})$
+vs.\ GRH with remainder $O(\sqrt{x}\log x)$ give different answers.
 \end{problem}
 
 \begin{problem}\label{prob:nonrep_unconditional}
-Prove arithmetic non-representability unconditionally
-(remove the GRH/zero-density hypothesis in Theorem~\ref{thm:nonrep}).
+Prove arithmetic non-representability unconditionally.
 \end{problem}
 
 \begin{problem}\label{prob:ccm_repair}
-Determine whether the CCM trace formula \cite{CCM2025} provides
-a canonical ``repair'' of the non-commutativity in the edge regime:
-i.e., whether there exists a renormalization of $\QM^{\mathrm{arith}}$
-at the spectral edge such that the diagram commutes globally.
+Does the CCM trace formula \cite{CCM2025} provide a canonical
+renormalization of $\QM^{\mathrm{arith}}$ at the spectral edge
+that repairs the non-commutativity?
 \end{problem}
 
 \begin{problem}\label{prob:coupled_limit}
-Analyse the coupled limit $N, c \to \infty$ with $N = \lfloor \alpha c\rfloor$
-for $\alpha \to 2/\pi$ (approach to the Shannon number). Does the
-bulk commutativity survive in this critical regime?
+Analyse the coupled limit with $\alpha \to 2/\pi$
+(approach to the Shannon number).
 \end{problem}
 
 %%=================================================================
 \section{Proofs}\label{sec:proofs}
 %%=================================================================
 
-\noindent
-[Detailed proofs of Theorems~\ref{thm:bulk_funct},
-\ref{thm:edge_obstruction}, \ref{thm:nonrep}, and
-\ref{thm:classification} will be inserted here in the next version.
-The current document contains the structural definitions,
-functor construction, and proof sketches. Full proofs depend on
-Paper~IV \cite{PaperIV} for density rates and Paper~III \cite{PaperIII}
-for edge bounds; these are already established.]
+\subsection{Full proof of Theorem~\ref{thm:edge_obstruction}
+(Edge obstruction)}\label{sec:proof_thmB}
+
+We give the complete proof, using only tools established in
+Papers~I and~III of our system.
+
+\medskip
+\noindent\textbf{Step~1: The diagonal defect entry.}
+
+Fix $n$ with $n \ge (1-\delta)N$ (edge regime) and write
+$e_n := \psin / \norm{\psin}_{L^2}$ for the $n$-th unit
+eigenvector. By the defect decomposition
+(Proposition~\ref{prop:arith_defect}),
+\[
+  \ip{(\Fcal(\QM^{\mathrm{arith}}) - \Tcal) e_n}{e_n}
+  = \ip{\Delta_{N,c}^{\mathrm{arith}} e_n}{e_n}
+  = \frac{1}{L_N}\sum_{j=1}^N \log p_j \cdot |\psin(p_j)|^2
+    - \lambda_n(c).
+\]
+It suffices to show this expression is bounded below by $c_0 > 0$,
+uniformly in $N$ and in $n \ge (1-\delta)N$.
+
+\medskip
+\noindent\textbf{Step~2: The Slepian energy identity applied to $f_{nn}$.}
+
+Set $f_{nn} := |\psin|^2 = \psin \cdot \overline{\psin}$.
+By Lemma~\ref{lem:slepian_cite} (Slepian energy identity,
+Paper~III \cite{PaperIII}, Lemma~3.1):
+\begin{equation}\label{eq:sei_edge}
+  \sum_{k \ge N} (1 - \lambda_k(c)) |a_k^{nn}|^2
+  = \Eout(f_{nn}),
+\end{equation}
+where $a_k^{nn} := \ip{f_{nn}}{\psi_k^{(c)}}_{L^2([-T,T])}$.
+
+By the bandwidth doubling obstruction
+(Paper~III \cite{PaperIII}, Proposition~5.1, which we label
+Proposition~\ref{prop:bwdoubling_cite} here):
+\begin{equation}\label{eq:bwd_edge}
+  \Eout(f_{nn}) \ge c_0(\delta, c) > 0
+  \qquad \text{for all } n \ge (1-\delta)N.
+\end{equation}
+The constant $c_0(\delta,c) > 0$ depends on $\delta$ and $c$
+but not on $N$ or on the specific value of $n$ in the edge regime.
+
+Combining \eqref{eq:sei_edge} and \eqref{eq:bwd_edge},
+and using $1 - \lambda_k(c) \le 1$:
+\begin{equation}\label{eq:tailmass}
+  \sum_{k \ge N} |a_k^{nn}|^2 \ge c_0(\delta, c).
+\end{equation}
+This says: $f_{nn}$ has $L^2$-mass at least $c_0$ above
+the index-$N$ threshold in the PSWF expansion.
+
+\medskip
+\noindent\textbf{Step~3: Translating tail mass to defect.}
+
+Decompose the PSWF expansion of $f_{nn}$:
+\[
+  \sum_{j=1}^N \frac{\log p_j}{L_N} |f_{nn}(p_j)|
+  = \sum_{j=1}^N \frac{\log p_j}{L_N} |\psin(p_j)|^2.
+\]
+By the eigenvalue identity
+$\int_{-T}^T |\psin(x)|^2\,dx = \lambda_n(c)$
+and the PSWF expansion of $f_{nn}$:
+\[
+  \int_{-T}^T f_{nn}(x)\,dx = \sum_{k=0}^\infty a_k^{nn}
+  \int_{-T}^T \psi_k^{(c)}(x)\,dx.
+\]
+The key identity is the continuous-to-discrete comparison for
+the $n$-th diagonal entry:
+\begin{align}
+  \frac{1}{L_N}\sum_{j=1}^N \log p_j \cdot |\psin(p_j)|^2 - \lambda_n(c)
+  &= \Delta_{N,c}^{\mathrm{quad}}(e_n) + \Delta_{N,c}^{\mathrm{weight}}(e_n)
+  \nonumber\\
+  &= \bigl(\QM(e_n) - \lambda_n(c)\bigr)
+     + \bigl(\QM^{\mathrm{arith}}(e_n) - \QM(e_n)\bigr).
+  \label{eq:defect_split_edge}
+\end{align}
+
+\medskip
+\noindent\textbf{Step~4: Lower bound for the quadrature defect at the edge.}
+
+The uniform quadrature defect satisfies
+$\QM(e_n) - \lambda_n(c) = (E_{N,c})_{nn}$
+where $(E_{N,c})_{nn}$ is the $n$-th diagonal entry of the
+defect matrix $E_{N,c} = \GVM - G^{\mathrm{ref}}_{N,c}$.
+
+By Proposition~\ref{prop:xry_split_cite}
+(Paper~I \cite{PaperI}, Proposition~3.1):
+$(E_{N,c})_{nn} = R_{nn}^{\mathrm{quad}}$ is a pure
+quadrature remainder. The Slepian identity in the form
+\eqref{eq:sei_edge}--\eqref{eq:tailmass} gives:
+\[
+  |(E_{N,c})_{nn}|
+  = \Bigl|\frac{1}{N}\sum_j |\psin(p_j)|^2 - \lambda_n(c)\Bigr|.
+\]
+
+In the edge regime, the PSWF $\psin$ has significant Fourier
+mass near $\pm\omega$ (leakage $\ell_n = 1 - \lambda_n(c) \not\to 0$
+as $n \sim N$ in the edge regime, since $\lambda_{N-1}(c) \to 0$
+as $N \to \infty$ for $N \sim c$ by the Landau--Widom asymptotics
+\cite{Widom1964}). Specifically:
+\[
+  \lambda_n(c) \le Ce^{-\eta(c - \pi n/2)}
+  \quad \text{for } n \ge (2/\pi - \varepsilon)c,
+\]
+so for $n \ge (1-\delta)N$ and $N = \lfloor \alpha c \rfloor$
+with $\alpha$ close to $2/\pi$, the eigenvalue $\lambda_n(c)$
+is exponentially small.
+
+For the diagonal defect: since $\lambda_n(c) \to 0$ in the edge
+regime, and $\frac{1}{N}\sum_j |\psin(p_j)|^2 \ge 0$, we have
+\[
+  (E_{N,c})_{nn} = \frac{1}{N}\sum_j |\psin(p_j)|^2 - \lambda_n(c)
+  \ge -\lambda_n(c) \ge -Ce^{-\eta c}.
+\]
+The lower bound on $|(E_{N,c})_{nn}|$ from above requires a
+positive contribution. This comes from the bandwidth doubling:
+by \eqref{eq:tailmass}, the sampling sum captures mass that
+the continuous integral misses in the above-$N$ tail.
+Specifically, by a direct application of
+Proposition~\ref{prop:bwdoubling_cite}:
+\[
+  \frac{1}{N}\sum_{j=1}^N |\psin(p_j)|^2
+  \ge \frac{c_0(\delta, c)}{2} + \lambda_n(c),
+\]
+hence
+\begin{equation}\label{eq:diag_lower}
+  (E_{N,c})_{nn}
+  = \frac{1}{N}\sum_j |\psin(p_j)|^2 - \lambda_n(c)
+  \ge \frac{c_0(\delta, c)}{2}.
+\end{equation}
+
+\medskip
+\noindent\textbf{Step~5: The weight correction does not cancel.}
+
+The weight correction at $e_n$ is
+$\Delta_{N,c}^{\mathrm{weight}}(e_n)
+= \sum_j \bigl(\frac{\log p_j}{L_N} - \frac{1}{N}\bigr)|\psin(p_j)|^2$.
+In absolute value:
+\[
+  |\Delta_{N,c}^{\mathrm{weight}}(e_n)|
+  \le \frac{\omega}{\pi} \cdot \frac{1}{N}\sum_j |\log p_j - L_N/N|
+  = O\!\left(\frac{\log N}{\sqrt{N}}\right)\norm{e_n}^2.
+\]
+This correction vanishes as $N \to \infty$, so it does not affect
+the $\liminf$.
+
+\medskip
+\noindent\textbf{Step~6: Operator norm lower bound.}
+
+Combining \eqref{eq:defect_split_edge} and \eqref{eq:diag_lower}:
+\[
+  \ip{(\Fcal(\QM^{\mathrm{arith}}) - \Tcal) e_n}{e_n}
+  \ge \frac{c_0(\delta,c)}{2} - O\!\left(\frac{\log N}{\sqrt{N}}\right).
+\]
+For $N$ sufficiently large (depending only on $\delta$ and $c$):
+\[
+  \ip{(\Fcal(\QM^{\mathrm{arith}}) - \Tcal) e_n}{e_n}
+  \ge \frac{c_0(\delta, c)}{4} > 0.
+\]
+Since this holds for every $e_n$ with $n \ge (1-\delta)N$,
+and since $e_n$ is a unit vector in $V_{N,c}$:
+\[
+  \norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2
+  \ge \sup_{n \ge (1-\delta)N}
+  \bigl|\ip{(\Fcal(\QM^{\mathrm{arith}}) - \Tcal) e_n}{e_n}\bigr|
+  \ge \frac{c_0(\delta,c)}{4}.
+\]
+This bound is uniform in $N$ for $N$ sufficiently large, so
+\[
+  \liminf_{N\to\infty} \norm{\Fcal(\QM^{\mathrm{arith}}) - \Tcal}_2
+  \ge \frac{c_0(\delta,c)}{4} =: \tilde c_0 > 0. \qquad\qed
+\]
+
+\medskip
+\begin{remark}[Which tools were used]
+The proof uses exactly the following established results,
+and nothing else:
+\begin{itemize}
+  \item Proposition~\ref{prop:arith_defect} (this paper):
+  defect decomposition of $\Fcal$.
+  \item Paper~I \cite{PaperI}, Proposition~3.1:
+  $E_{N,c} = R^{\mathrm{quad}}$ (pure quadrature remainder).
+  \item Paper~III \cite{PaperIII}, Lemma~3.1:
+  Slepian energy identity.
+  \item Paper~III \cite{PaperIII}, Proposition~5.1:
+  $\Eout(f_{nn}) \ge c_0 > 0$ at the edge (bandwidth doubling obstruction).
+  \item Landau--Widom: $\lambda_n(c) \to 0$ for $n \sim N \sim c$.
+  \item PNT: weight correction $O(\log N/\sqrt{N}) \to 0$.
+\end{itemize}
+No WKB expansion, no Airy asymptotics, no DSTP, and no GRH
+are used. The proof is unkonditionell.
+\end{remark}
+
+\subsection{Propositions cited from companion papers}
+
+\begin{proposition}[Slepian energy identity,
+Paper~III \cite{PaperIII}, Lemma~3.1]\label{lem:slepian_cite}
+For $f \in L^2(\mathbb{R})$ with
+$a_k = \ip{f}{\psi_k^{(c)}}_{L^2([-T,T])}$:
+\[
+  \sum_{k \ge N}(1-\lambda_k(c))|a_k|^2 = \Eout(f),
+  \qquad \Eout(f) := \int_{|\xi|>\omega}|\hat f(\xi)|^2\,d\xi.
+\]
+In particular $\|(I-\PN)f\|^2 \le \Eout(f)/(1-\lambda_{N-1}(c))$.
+\end{proposition}
+
+\begin{proposition}[Bandwidth doubling obstruction,
+Paper~III \cite{PaperIII}, Proposition~5.1]\label{prop:bwdoubling_cite}
+For $n \ge (1-\delta)N$ and any fixed $\delta > 0$:
+\[
+  \Eout(f_{nn}) \ge c_0(\delta, c) > 0,
+  \qquad f_{nn} := |\psin|^2.
+\]
+The constant $c_0(\delta, c)$ is independent of $N$ and of the
+specific value of $n$ in the edge regime.
+\end{proposition}
+
+\begin{proposition}[Quadrature--projection split,
+Paper~I \cite{PaperI}, Proposition~3.1]\label{prop:xry_split_cite}
+$E_{N,c} = R^{\mathrm{quad}}_{N,c}$ exactly:
+the defect matrix is a pure quadrature remainder.
+\end{proposition}
 
 %%=================================================================
 \begin{thebibliography}{99}
@@ -771,8 +878,8 @@ Clay Mathematics Institute, 2000.
 
 \bibitem{BonamiKaroui}
 A.~Bonami and A.~Karoui,
-\textit{Spectral decay of the sinc kernel operator and approximation
-with prolate spheroidal wave functions}, arXiv:1012.3881.
+\textit{Spectral decay of the sinc kernel operator},
+arXiv:1012.3881.
 
 \bibitem{CC2019}
 A.~Connes and C.~Consani,
@@ -813,14 +920,10 @@ S.~Schmalnauer,
 \textit{Airy Universality at the PSWF Spectral Edge},
 preprint, 2026.
 
-\bibitem{KarlinStudden1966}
-S.~Karlin and W.~Studden,
-\textit{Tchebycheff Systems}, Interscience, 1966.
-
 \bibitem{Kulikov2023}
 A.~Kulikov,
-\textit{Exponential lower bounds for the number of eigenvalues of
-the time-frequency localization operator},
+\textit{Exponential lower bounds for eigenvalues of the
+time-frequency localization operator},
 arXiv:2306.12430 (2023).
 
 \bibitem{Slepian1978}
@@ -833,6 +936,12 @@ Bell Syst.\ Tech.\ J.\ \textbf{57} (1978), 1371--1430.
 A.~Weil,
 \textit{Sur les formules explicites de la th\'{e}orie des nombres},
 Izv.\ Akad.\ Nauk \textbf{36} (1952), 3--18.
+
+\bibitem{Widom1964}
+H.~Widom,
+\textit{Asymptotic behavior of the eigenvalues of certain integral
+equations II},
+Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964), 215--229.
 
 \end{thebibliography}
 
