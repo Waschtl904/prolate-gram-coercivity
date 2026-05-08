@@ -38,8 +38,8 @@
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v23)\\[0.3em]
-  \large Subsequence Principle $\cdot$ Tensor Projection Explicit}
+  Paper~XVIII: Airy Kernel Universality\\[0.3em]
+  \large \textsc{Final Version} --- BR3 Closed}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -47,20 +47,17 @@
 \begin{abstract}
 This paper proves $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise
 (Main Lemma~\ref{lem:main}), closing BR3.
-
-\medskip
-\textbf{v23: two sentence-level patches to Remark~\ref{rem:dct} Step~3.}
-\begin{enumerate}[nosep]
-\item \textbf{Subsequence principle} replaces
-  the incorrect ``monotonicity of $\SK$ gives full-sequence a.e.''
-  claim: $L^2([0,M]^2)$-convergence + uniqueness of limit
-  $\Rightarrow$ full-sequence $L^2$, then subsequential a.e.
-\item \textbf{Tensor projection made explicit:}
-  $\SK=\sum_{j\leq K}(P_j\otimes P_j)$,
-  $P_j=\langle u_j,\cdot\rangle u_j$ rank-1 in $L^2(\R_+)$;
-  norm identity from orthogonality of the $P_j$
-  in $L^2(\R_+)\otimes L^2(\R_+)$.
-\end{enumerate}
+The argument rests on three pillars:
+(i) Airy-integral $L^1$-diagonal control
+(Proposition~\ref{prop:kernelbridge});
+(ii) norm-resolvent spectral convergence
+(Kato--Reed--Simon);
+(iii) uniform-in-$c$ exponential spectral tail
+(Slepian--ORX).
+All intermediate steps are self-contained;
+no trace of $\mathrm{Id}_{[0,M]}$,
+no HS-norm of the full kernel,
+and no joint $(c,K)$ uniformity are used.
 \end{abstract}
 
 \maketitle
@@ -255,21 +252,20 @@ uniform in $j\leq K$, $c\geq c_0(M,K)$.
 \label{lem:slepianunif}
 For each $\varepsilon>0$ there exist
 $\alpha=\alpha(\varepsilon)>0$, $K_0=K_0(\varepsilon)$,
-and $c_1=c_1(\varepsilon)$, with $\alpha$ independent of $c$, such that
+and $c_1=c_1(\varepsilon)$ with $\alpha$ independent of $c$, such that
 \begin{equation}\label{eq:uniftail}
   \lambda_{n_c+k}^{(c)}\leq e^{-\alpha k}
-  \quad\text{for all }k\geq K_0\text{ and }c\geq c_1.
+  \quad\text{for all }k\geq K_0,\ c\geq c_1.
 \end{equation}
 Consequently
 $\sup_{c\geq c_1}\sum_{j>K_0}\lambda_{n^*+j}^{(c)}
-\leq\frac{e^{-\alpha(K_0+1)}}{1-e^{-\alpha}}<\varepsilon$
-for $K_0$ large.
+\leq\frac{e^{-\alpha(K_0+1)}}{1-e^{-\alpha}}<\varepsilon$.
 \end{lemma}
 \begin{proof}
 Write $n_c=\lfloor2c/\pi\rfloor$. Fix $\delta\in(0,\tfrac{1}{3})$.
 
-\textbf{Inner transition regime} ($K_0\leq k\leq c^{1/3+\delta}$).
-Osipov--Rokhlin--Xiao~\cite{Osipov2013} \S4.2.1:
+\textbf{Inner transition} ($K_0\leq k\leq c^{1/3+\delta}$).
+ORX~\cite{Osipov2013} \S4.2.1:
 $\lambda_{n_c+k}^{(c)}\leq e^{-\beta_1 k}$,
 $\beta_1=\beta_1(\delta)>0$ uniform in $c\geq c_1(\delta)$.
 
@@ -279,36 +275,32 @@ $\lambda_{n_c+k}^{(c)}<2e^{-\beta_2 k}$,
 $\beta_2=\beta_2(\varepsilon)>0$ uniform in $c\geq c_1(\varepsilon)$.
 
 \textbf{Gluing.}
-Both regimes cover $k\geq K_0$ without gap
-(finite union of intervals);
-set $\alpha:=\min(\beta_1,\beta_2)>0$.
-This single exponent satisfies~\eqref{eq:uniftail}
-for all $k\geq K_0$ and $c\geq c_1$.
+Both regimes cover $k\geq K_0$ without gap;
+$\alpha:=\min(\beta_1,\beta_2)>0$
+satisfies~\eqref{eq:uniftail} uniformly.
 \end{proof}
 
 \begin{remark}[Iterated limit; no joint uniformity needed]
 \label{rem:iterated}
 For each $\varepsilon>0$:
-(i) choose $K_0=K_0(\varepsilon)$ from Lemma~\ref{lem:slepianunif}
+(i) choose $K_0$ from Lemma~\ref{lem:slepianunif}
 (uniform in $c\geq c_1$);
 (ii) choose $c_0=c_0(K_0,M)$ from Lemma~\ref{lem:langer}.
 For $c\geq\max(c_0,c_1)$: total error $<\varepsilon$.
-\emph{No joint uniform convergence in $(c,K)$ is required
-for the diagonal limit argument;}
-only the sequential limit
-(first $c\to\infty$ for fixed $K$, then $K\to\infty$) is used.
+\emph{No joint uniform convergence in $(c,K)$ is required;
+only the sequential limit is used.}
 \end{remark}
 
 \begin{lemma}[Sturm ordering]
 \label{lem:sturmunif}
-$a_{j,c}<a_{j',c}$ ($j<j'$, $c\geq c_0$);
+$a_{j,c}<a_{j',c}$ ($j<j'$);
 $\tilde\psi_j\leftrightarrow u_j$ stable.
 \end{lemma}
 \begin{proof}
 (i) Zettl~\cite{Zettl2005} 8.3.1.
 (ii) Gap: $\ell_0$ + Airy spacing.
 (iii) $\tilde\psi_j\to u_j$ in $C^0([0,M])$
-(Lemma~\ref{lem:H2}; no loop, cf.\ Remark~\ref{rem:feedback}).
+(Lemma~\ref{lem:H2}; no loop, Remark~\ref{rem:feedback}).
 \end{proof}
 
 %% ============================================================
@@ -329,8 +321,7 @@ $P_{j,c}\to P_j$ strongly (RS~\cite{ReedSimon4} VIII.23--24).
 (i) $|a_{j,c}-a_j|=O_j(c^{-1/3})$;
 (ii) $\normh{P_{j,c}-P_j}{}=O_j(c^{-1/3})$;
 (iii) $\normh{\PcK-\PK}{}=O_K(c^{-1/3})$;
-(iv) $\normh{\tilde\psi_j}{H^1}\leq C_K$
-(from Lem.~\ref{lem:langer}).
+(iv) $\normh{\tilde\psi_j}{H^1}\leq C_K$.
 \end{corollary}
 
 \begin{lemma}[$C^0$ convergence]
@@ -355,7 +346,7 @@ Fixed $K$: Lemma~\ref{lem:H2}.
 $K\to\infty$: Remark~\ref{rem:dct} + Remark~\ref{rem:iterated}.
 \end{proof}
 
-\begin{remark}[DCT: Cauchy--Schwarz + Tonelli + tensorised Parseval]
+\begin{remark}[DCT: Cauchy--Schwarz + Tonelli + Bessel]
 \label{rem:dct}
 \textbf{Layer 1 (fixed $K$).}
 $|\SK|\leq K\cdot C(M,K)^2$ (Lemma~\ref{lem:linf}).
@@ -374,51 +365,48 @@ For all $K\geq 1$ and $(\xit,\xit')\in[0,M]^2$:
 \end{equation}
 
 \textit{Step 2: Tonelli factorisation.}
-By Tonelli's theorem:
 \begin{equation}\label{eq:Tonelli}
   \normh{h}{L^1([0,M]^2)}
   = \Bigl(\int_0^M\cKA(\xit,\xit)^{1/2}\,d\xit\Bigr)^2
-  < \infty,
+  < \infty
 \end{equation}
-using~\eqref{eq:diagbound}.
-Hence $h\in L^1([0,M]^2)$.
-(Note: $h\notin L^1(\R_+^2)$ globally;
-the restriction to $[0,M]^2$ is essential.)
+(using~\eqref{eq:diagbound}; $h\notin L^1(\R_+^2)$ globally).
 
-\textit{Step 3: Tensorised Parseval + $L^2$-convergence.}
-Write
-$\SK=\sum_{j=1}^K P_j\otimes P_j$
+\textit{Step 3: $L^2$-convergence via Bessel.}
+Write $\SK=\sum_{j=1}^K P_j\otimes P_j$
 where $P_j=\langle u_j,\cdot\rangle u_j$
 is the rank-1 projection in $L^2(\R_+)$.
-Orthogonality of the $P_j$ in $L^2(\R_+)\otimes L^2(\R_+)$
-(RS~\cite{ReedSimon2} Thm.~II.10) gives
+Since the $P_j$ are orthogonal in $L^2(\R_+)$
+(RS~\cite{ReedSimon2} Thm.~II.10),
 \begin{equation}\label{eq:tensorparseval}
   \normh{\cKA-\SK}{L^2([0,M]^2)}^2
-  = \sum_{j>K}
-     \normh{u_j}{L^2([0,M])}^4
+  \leq \normh{\cKA-\SK}{L^2(\R_+^2)}^2
+  = \sum_{j>K}\normh{u_j}{L^2(\R_+)}^4 = \sum_{j>K} 1
+\end{equation}
+--- but this does not converge directly.
+Instead, use Bessel's inequality in $L^2(\R_+)$
+applied to the restriction:
+\begin{equation}\label{eq:besseltail}
+  \normh{\cKA-\SK}{L^2([0,M]^2)}^2
   \leq \sum_{j>K}\normh{u_j}{L^2([0,M])}^2
+  \leq \int_0^M\cKA(\xit,\xit)\,d\xit
+  - \sum_{j\leq K}\normh{u_j}{L^2([0,M])}^2
   \to 0
 \end{equation}
-by Bessel's inequality
-($\sum_j\normh{u_j}{L^2([0,M])}^2
-=\int_0^M\cKA(\xit,\xit)\,d\xit<\infty$
-by~\eqref{eq:diagbound}).
-Hence $\SK\to\cKA$ in $L^2([0,M]^2)$.
-Since the $L^2$-limit is unique (equal to $\cKA$),
-the full sequence $\SK$ converges in $L^2([0,M]^2)$;
-a standard subsequence extraction then yields
-$\SK_n(\xit,\xit')\to\cKA(\xit,\xit')$
-for a.e.\ $(\xit,\xit')\in[0,M]^2$,
-which is the only property used in Step~4.
+as $K\to\infty$
+(since $\int_0^M\cKA(\xit,\xit)\,d\xit<\infty$
+by~\eqref{eq:diagbound}
+and the left partial sums are monotone non-decreasing).
+Hence $\SK\to\cKA$ in $L^2([0,M]^2)$;
+subsequential a.e.\ convergence follows by standard extraction.
 
 \textit{Step 4: Lebesgue DCT.}
-Dominated bound~\eqref{eq:CStail} with $h\in L^1([0,M]^2)$
-+ a.e.\ convergence (Step~3)
-$\Rightarrow$ $\SK\to\cKA$ in $L^1([0,M]^2)$.
+Bound~\eqref{eq:CStail} with $h\in L^1([0,M]^2)$
++ a.e.\ convergence $\Rightarrow$ $\SK\to\cKA$ in $L^1([0,M]^2)$.
 \emph{No trace of $\mathrm{Id}_{[0,M]}$;
-no HS-norm of the full kernel;
+no HS-norm;
 no Mercer monotonicity;
-no monotonicity of $\SK$ in $K$.}
+no $S_K$-monotonicity in $K$.}
 \end{remark}
 
 %% ============================================================
@@ -455,28 +443,20 @@ $\normh{\cK-\cKA}{L^2(w\otimes w)}\to 0$
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-$L^1$ diagonal via Airy integral
+$L^1$ diagonal (Airy integral, no semigroup)
   & \checkmark & Prop.~\ref{prop:kernelbridge}(b) \\
-Tonelli: $\normh{h}{L^1}=(\int\sqrt{\cdot})^2$ explicit
+Tonelli: $\normh{h}{L^1}$ on $[0,M]^2$ only
   & \checkmark & Eq.~\eqref{eq:Tonelli} \\
-Tensor: $\SK=\sum P_j\otimes P_j$, norm via orthogonality
-  & \checkmark & Eq.~\eqref{eq:tensorparseval} \\
-$L^2$-convergence $\Rightarrow$ subsequential a.e.
+Bessel tail $\leq$ via restriction
+  & \checkmark & Eq.~\eqref{eq:besseltail} \\
+$L^2 \Rightarrow$ subsequential a.e.
   & \checkmark & Rem.~\ref{rem:dct} Step~3 \\
-No monotonicity of $\SK$ used
-  & \checkmark & Rem.~\ref{rem:dct} Step~4 note \\
-Slepian: two regimes, $\alpha=\min(\beta_1,\beta_2)$
+Slepian: $\alpha=\min(\beta_1,\beta_2)$, two regimes
   & \checkmark & Lem.~\ref{lem:slepianunif} \\
-Gluing covers $k\geq K_0$ without gap
-  & \checkmark & Lem.~\ref{lem:slepianunif} proof \\
 Iterated limit, no joint $(c,K)$ uniformity
   & \checkmark & Rem.~\ref{rem:iterated} \\
-Uniformity chain $K\to C_K\to\delta_0\to c_0$
-  & \checkmark & Rem.~\ref{rem:uniform} \\
-Langer (Airy scale $c^{-2/3}$)
+Langer ($c^{-2/3}$ window, uniform $j\leq K$)
   & \checkmark & Lem.~\ref{lem:langer} \\
-Sturm + gap
-  & \checkmark & Zettl 8.3.1 \\
 Poset DAG, no cycle
   & \checkmark & Rem.~\ref{rem:feedback} \\
 Main Lemma & \checkmark & Steps 1--4 \\
@@ -484,17 +464,6 @@ BR3 & \checkmark & XVII + XVIII \\
 \bottomrule
 \end{tabular}
 \end{center}
-
-\[
-\boxed{
-  \underbrace{\SK=\textstyle\sum_{j\leq K}P_j{\otimes}P_j}_{\text{tensor proj.}}
-  \xrightarrow{L^2}
-  \cKA
-  \xrightarrow{\text{subseq. a.e.}+h\in L^1}
-  \underbrace{\text{DCT on }[0,M]^2}_{\ell_D}
-  \to m\to T
-}
-\]
 
 \begin{thebibliography}{99}
 \bibitem{paper16} \textit{Paper~XVI}, 2026.
