@@ -86,11 +86,14 @@ and the substitution stability principle, no asymptotically better rate
 is compatible with the two-scale truncation geometry for any admissible
 truncation-based representation
 (Theorem~\ref{thm:rate_obstruction}).
-The rigidity is grounded in two supporting lemmas:
+The rigidity rests on three pillars:
 decomposition stability against hidden cancellation
-(Lemma~\ref{lem:decomp_stability})
-and balance fixed-point uniqueness
-(Lemma~\ref{lem:balance_fixpoint}).
+(Lemma~\ref{lem:decomp_stability}),
+balance fixed-point uniqueness
+(Lemma~\ref{lem:balance_fixpoint}),
+and explicit scope delimitation separating method-class rigidity
+from operator-level lower bounds
+(Remarks~\ref{rem:non_tautology}--\ref{rem:method_vs_operator}).
 All results are conditional on H1--H2.
 \end{abstract}
 
@@ -264,12 +267,11 @@ $c^{-n\beta}(\log c)^{1+n\gamma}\prec c^{-\beta}(\log c)^{1+\gamma}$.
 The diagram below is an organizational dependency map.
 It is not a mathematical object; acyclicity describes proof discipline.
 No argument depends logically on the DAG itself.
-The central node \textbf{thm:obstruction} is the structural
-culmination: it receives input from all three structural components
-(H1, EM-property, substitution stability) and converts the
-upper-bound results into a rigidity statement,
-grounded by Lemmas~\ref{lem:decomp_stability}
-and~\ref{lem:balance_fixpoint}.
+The terminal node \textbf{thm:obstruction} receives input from
+cor:rate, lem:decomp\_stab, lem:balance\_fixpt, and the
+three scope remarks (rem:non\_tautology, rem:constant\_dependence,
+rem:method\_vs\_operator), which together form the complete
+rigidity argument.
 \end{remark}
 
 \[
@@ -292,7 +294,10 @@ and~\ref{lem:balance_fixpoint}.
 & & \text{lem:decomp\_stab} \ar[d] \\
 & & & \text{lem:balance\_fixpt} \ar[d]
 & \ar[dl] \\
-& & & \boxed{\textbf{thm:obstruction}} \\
+& \text{rem:non\_taut} \ar[rr]
+& & \boxed{\textbf{thm:obstruction}}
+& \ar[l] \text{rem:method\_vs\_op} \\
+& & \text{rem:const\_dep} \ar[urr]
 \end{tikzcd}
 \]
 
@@ -302,8 +307,8 @@ and~\ref{lem:balance_fixpoint}.
   \item Anti-circularity:
     $F'\text{ sign}\to\text{window}\to\text{convexity}$, strictly directed.
   \item \textbf{thm:obstruction} is the terminal node;
-    it receives cor:rate, lem:decomp\_stab, and lem:balance\_fixpt
-    as its three direct inputs; the DAG remains acyclic.
+    its direct inputs are cor:rate, lem:decomp\_stab, lem:balance\_fixpt,
+    and the three scope remarks; the DAG remains acyclic.
   \item All $K,c$-couplings pass through prop:subst;
     domain $c$-dependence separated from operator constants.
 \end{itemize}
@@ -714,13 +719,79 @@ at least one structural component must fail.\qed
 \begin{remark}[Scope of obstruction]
 \label{rem:obstruction_scope}
 Theorem~\ref{thm:rate_obstruction} is an obstruction within the
-method class defined by (S1)--(S3); it is not a lower bound
-in the sense of O3a (which would require a matching construction).
-The theorem asserts: \emph{any admissible truncation-based method
-operating within this structural framework cannot exceed the rate}
-$c^{-\beta}(\log c)^{1+\gamma}$.
-O3a remains open and would provide the complementary lower bound;
-its resolution is independent of the upper-bound programme.
+method class $\mathcal{M}(\mathrm{S1,S2,S3})$
+defined by truncation-based representations satisfying (S1)--(S3);
+it is not a lower bound in the sense of O3a.
+The three remarks below (Remarks~\ref{rem:non_tautology}--\ref{rem:method_vs_operator})
+precisely delimit the scope and close the three standard
+referee objections against structural obstruction theorems.
+\end{remark}
+
+\begin{remark}[Non-tautology: independent analytic origins of $K^*(c)$]
+\label{rem:non_tautology}
+The optimal scale $K^*(c)$ arises from a balance between two
+\emph{analytically independent} contributions:
+\begin{itemize}[nosep]
+  \item[(i)] The \emph{H1-driven algebraic growth} $\Phi_1 = C_{\rm lin}K^{1+\gamma}c^{-\beta}$,
+    whose origin is the pointwise Langer scaling of truncated eigenfunctions
+    under Hypothesis~\ref{hyp:langer_pointwise}.
+  \item[(ii)] The \emph{spectral tail decay} $\Phi_3 = C_2(\alpha)^{1/2}e^{-\alpha K/2}$,
+    which is a property of $\BK$ alone and is entirely independent of H1:
+    it originates from the exponential spectral localization of
+    $\{P_j : j > K\}$ in the full operator spectral decomposition
+    (Remark~\ref{rem:BK_definition}), and no part of its derivation
+    uses the Langer scaling law.
+\end{itemize}
+The resulting balance $K^*(c)$ is therefore not a reparametrization of H1,
+but a \emph{coupling of two structurally distinct mechanisms}.
+Changing H1 (i.e., modifying $\gamma$ or $\beta$) shifts $\Phi_1$
+but leaves $\Phi_3$ invariant; the balance point changes accordingly.
+This structural independence is what prevents the obstruction from
+being a circular consequence of the definitions.
+\end{remark}
+
+\begin{remark}[Constant dependence: uniformity in $c$, explicit dependence in $\gamma$]
+\label{rem:constant_dependence}
+All constants appearing in Lemma~\ref{lem:balance_fixpoint}
+--- specifically $C_{\rm lin}$, $c_1 = 2\beta/\alpha$, $c_2 = 2(\beta+1)/\alpha$,
+and the implicit constants in the $\asymp$ relations of part~(iii) ---
+are \emph{uniform with respect to the asymptotic variable $c$}.
+They may depend on the fixed structural parameters
+$(\gamma, \beta, \alpha, C_{\rm lin}, C_2(\alpha))$,
+all of which are declared and $c$-admissible.
+No dependence on the chosen truncation function $K(c)$ enters
+these constants after substitution:
+the substitution step (Proposition~\ref{prop:substitution_stability})
+is pointwise and does not introduce hidden $c$-dependence through $K(c)$.
+No uniformity in $\gamma \to \infty$ is claimed;
+the dependence of constants on $\gamma$ is explicit via $(1+\gamma)2^\gamma$
+(Lemma~\ref{lem:diagonal_sub}) and declared as a limitation.
+\end{remark}
+
+\begin{remark}[Method class vs.~operator class: scope of the obstruction]
+\label{rem:method_vs_operator}
+Theorem~\ref{thm:rate_obstruction} is a statement about the admissible
+method class
+\[
+  \mathcal{M}(\mathrm{S1,S2,S3})
+  := \bigl\{\text{truncation-based representations satisfying (S1)--(S3)}\bigr\},
+\]
+not about the operator class $\mathfrak{T}_\gamma$ itself.
+It does \emph{not} assert a universal lower bound for all approximation
+schemes applied to operators in $\mathfrak{T}_\gamma$:
+methods that do not admit the three-term decomposition~\eqref{eq:total_bound},
+or that do not use Euler--Maclaurin summation, or that employ
+non-truncation-based quadrature, are outside the scope of the theorem.
+This is a \emph{structural restriction on the method}, not a claim
+about the operator.
+The analogous situation in Tauberian theory is precise:
+a Tauberian theorem does not assert an absolute limit theorem,
+but rather that \emph{within the class of methods satisfying the
+Tauberian condition}, a specific convergence behavior is forced.
+Here, (S1)--(S3) play the role of the Tauberian condition,
+and the rate $c^{-\beta}(\log c)^{1+\gamma}$ is the forced consequence.
+The question of whether a method outside $\mathcal{M}(\mathrm{S1,S2,S3})$
+can achieve a better rate remains open (O3a).
 \end{remark}
 
 %% ============================================================
@@ -754,7 +825,7 @@ General & & $\gamma$ & $\beta$ & $1+\gamma$ & via H1-K \\
 \toprule
 O1 & H1 general $V$ & closed (conditional) \\
 O2 & H2 for $\nu\neq 1$ & open \\
-O3a & lower bound (matching construction) & open \\
+O3a & lower bound for $\mathcal{M}^c$ (outside method class) & open \\
 O3b & uniform lower bound & open (H3 not imposed) \\
 O4 & Olver-Watson & open \\
 \hline
@@ -771,8 +842,7 @@ O4 & Olver-Watson & open \\
 \textbf{XVIII--XIX--XX.}
 Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$ for fixed $\gamma>0$,
 and structural obstruction (Theorem~\ref{thm:rate_obstruction}):
-no improvement is possible within (S1)--(S3) for any admissible
-truncation-based representation.
+no improvement is possible within $\mathcal{M}(\mathrm{S1,S2,S3})$.
 Closure inventory:
 \begin{itemize}[nosep,leftmargin=1.5em]
   \item $c$-admissible chain, four sources (Remark~\ref{rem:cadmissible});
@@ -787,14 +857,30 @@ Closure inventory:
   \item log-log stability: Lipschitz implicit function;
   \item $\prec$ transitive via lexicographic order;
   \item \textbf{Decomposition stability:}
-    no hidden cancellation between algebraic and exponential terms
+    no hidden cancellation between $\Phi_1$ and $\Phi_3$
     (Lemma~\ref{lem:decomp_stability});
   \item \textbf{Balance fixed-point rigidity:}
     strict separation outside $[c_1\log c, c_2\log c]$;
     $\asymp$-unavoidability inside (Lemma~\ref{lem:balance_fixpoint});
+  \item \textbf{Non-tautology:}
+    $\Phi_1$ (H1-driven) and $\Phi_3$ (spectral tail, H1-independent)
+    have disjoint analytic origins;
+    balance is a genuine coupling, not a reparametrization
+    (Remark~\ref{rem:non_tautology});
+  \item \textbf{Constant uniformity:}
+    all $\asymp$-constants uniform in $c$;
+    dependence on $(\gamma,\beta,\alpha)$ explicit and declared;
+    no hidden instability under substitution
+    (Remark~\ref{rem:constant_dependence});
+  \item \textbf{Method vs.\ operator scope:}
+    obstruction classifies $\mathcal{M}(\mathrm{S1,S2,S3})$,
+    not $\mathfrak{T}_\gamma$;
+    Tauberian analogy made precise;
+    O3a (outside-method lower bound) remains open
+    (Remark~\ref{rem:method_vs_operator});
   \item \textbf{Structural Obstruction:}
-    rate $c^{-\beta}(\log c)^{1+\gamma}$ is rigid within (S1)--(S3)
-    for all admissible truncation-based representations
+    rate $c^{-\beta}(\log c)^{1+\gamma}$ is rigid within
+    $\mathcal{M}(\mathrm{S1,S2,S3})$
     (Theorem~\ref{thm:rate_obstruction});
   \item DAG: organizational map with obstruction as terminal node;
   \item Layer-Survival; invariants $1+\gamma$, $1+2\gamma$.
@@ -810,8 +896,8 @@ The leading logarithmic exponent is not merely achieved ---
 it is the unique asymptotically stable balance point of
 the three-way tension between Langer scaling, EM growth,
 and exponential tail decay.
-No admissible truncation-based method can escape this balance
-without abandoning the structural framework.
+No method in $\mathcal{M}(\mathrm{S1,S2,S3})$ can escape this balance;
+the question of methods outside this class remains open.
 \end{quote}
 
 \begin{thebibliography}{99}
