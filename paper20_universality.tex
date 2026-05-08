@@ -37,11 +37,11 @@
 \newcommand{\Cquad}{C_{\mathrm{quad}}(M,K)}
 \newcommand{\Ctwo}{C_2(\alpha)}
 \newcommand{\Cinfty}{C_\infty}
-%%% Central notation (used throughout; must appear identically everywhere)
-% \Phi_1, \Phi_3, \Psi  -- truncation terms and their sum
+%%% Central notation (must appear identically throughout):
+% \Phi_1, \Phi_3, \Psi       -- truncation terms and their sum
 % \mathcal{M}(\mathrm{S1,S2,S3})  -- method class
-% \mathfrak{R}  -- realization map
-% c\text{-uniform stability}  -- stability property of \mathfrak{R}
+% \mathfrak{R}               -- realization map
+% c\text{-uniform stability} -- stability property of \mathfrak{R}
 
 \subjclass[2020]{34B24, 47B34, 34E20, 47G10, 34L20}
 \keywords{Sturm--Liouville operators, turning-point asymptotics,
@@ -59,19 +59,14 @@
 
 \begin{document}
 
-%%% Title note: alternative shorter form for consideration:
-%%% "Universality and Structural Rigidity of Turning-Point Truncation Geometry"
-\title[Paper XX: Universality of Turning-Point Truncation Geometry]{%
-  Paper~XX: Universality of Turning-Point Truncation Geometry\\[0.3em]
-  \large Spectral-Geometric Invariants, Two-Scale Logarithmic Losses,
-  and Structural Obstruction to Rate Improvement}
+\title{Universality and Structural Rigidity of
+  Turning-Point Truncation Geometry}
 
-\author{\textit{prolate-gram-coercivity programme}}
+\author{Sebastian Schmalnauer}
+\address{Vienna, Austria}
+\email{sebastian.schmalnauer@gmx.at}
 \date{May 2026}
 
-%%% ============================================================
-%%% ABSTRACT (arXiv version: tightened to four logical units)
-%%% ============================================================
 \begin{abstract}
 For operators $\cAg$ in the spectrally regularized WKB class
 $\mathfrak{T}_\gamma$ (Definition~\ref{def:opclass}),
@@ -116,9 +111,9 @@ All results are conditional on H1--H2.
 %% ============================================================
 
 %%% Status vocabulary (unified throughout):
-%%%   theorem        -- unconditional within stated hypotheses
-%%%   conditional    -- depends on H1--H2 or \mathfrak{T}_\gamma
-%%%   open           -- not established in this paper
+%%%   theorem     -- unconditional within stated hypotheses
+%%%   conditional -- depends on H1--H2 or \mathfrak{T}_\gamma
+%%%   open        -- not established in this paper
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -388,7 +383,6 @@ cor:rate, lem:decomp\_stab, lem:balance\_fixpt,
 lem:S2\_knockdown, lem:H1\_rigidity, and three scope remarks.
 \end{remark}
 
-%% DAG: font=small added for legibility at 100% zoom
 \[
 \begin{tikzcd}[row sep=2.0em, column sep=1.1em,
   every arrow/.append style={-Latex},
@@ -953,17 +947,16 @@ Closure inventory:
 \begin{itemize}[nosep,leftmargin=1.5em]
   \item $c$-admissible chain, four sources (Remark~\ref{rem:cadmissible});
   \item \textbf{S1:} exponent generation;
-  \item \textbf{S2:} $c$-uniform stability of the realization map
-    $\mathfrak{R}$ (Definition~\ref{def:realization_map});
+  \item \textbf{S2:} $c$-uniform stability of $\mathfrak{R}$
+    (Definition~\ref{def:realization_map});
     removal destroys the image of bounds under $\mathfrak{R}$,
     not the preorder $\succ$ on $\mathcal{S}$
     (Lemma~\ref{lem:S2_knockdown}, Remark~\ref{rem:scale_admissibility});
   \item \textbf{S3:} diagonal projection;
   \item Preorder $\succ$: unconditionally well-defined on index pairs;
     $c$-uniform stability of $\mathfrak{R}$ is a separate condition (S2);
-  \item Decomposition stability (Lemma~\ref{lem:decomp_stability});
-    balance fixed-point (Lemma~\ref{lem:balance_fixpoint});
-    H1 exponent rigidity (Lemma~\ref{lem:H1_rigidity});
+  \item Decomposition stability; balance fixed-point;
+    H1 exponent rigidity;
   \item Non-tautology, constant uniformity, method/operator scope;
   \item O1: Airy closed, general open.
 \end{itemize}
@@ -979,58 +972,67 @@ Remove any one, and the balance fixed-point system
 ceases to have a well-posed conclusion.
 \end{quote}
 
+%% ============================================================
+\section*{Acknowledgements}
+%% ============================================================
+
+This paper is part of the \textit{prolate-gram-coercivity programme},
+a long-term project developing spectral-geometric invariants
+for WKB-class Sturm--Liouville operators.
+All source files are maintained at
+\texttt{https://github.com/Waschtl904/prolate-gram-coercivity}.
+
 \begin{thebibliography}{99}
 
 \bibitem{paper18}
-Schmalnauer, S.
+S.~Schmalnauer,
 \textit{Paper~XVIII: Qualitative Airy Universality and BR3 for
-Spectrally Regularized WKB Operators}.
-Manuscript, prolate-gram-coercivity programme, 2026.
+Spectrally Regularized WKB Operators},
+manuscript, prolate-gram-coercivity programme, 2026.
 \texttt{https://github.com/Waschtl904/prolate-gram-coercivity}
 
 \bibitem{paper19}
-Schmalnauer, S.
+S.~Schmalnauer,
 \textit{Paper~XIX: Two-Scale Truncation Rate and Linear/Quadratic
-Langer Splitting for $\mathfrak{T}_\gamma$}.
-Manuscript, prolate-gram-coercivity programme, 2026.
+Langer Splitting for $\mathfrak{T}_\gamma$},
+manuscript, prolate-gram-coercivity programme, 2026.
 \texttt{https://github.com/Waschtl904/prolate-gram-coercivity}
 
 \bibitem{Kato1966}
 T.~Kato,
-\textit{Perturbation Theory for Linear Operators}.
+\textit{Perturbation Theory for Linear Operators},
 Springer, Berlin, 1966.
 
 \bibitem{Olver1997}
 F.~W.~J.~Olver,
-\textit{Asymptotics and Special Functions}.
+\textit{Asymptotics and Special Functions},
 AK Peters, Wellesley, 1997.
 
 \bibitem{Zettl2005}
 A.~Zettl,
-\textit{Sturm--Liouville Theory}.
+\textit{Sturm--Liouville Theory},
 American Mathematical Society, Providence, 2005.
 
 \bibitem{ReedSimon2}
 M.~Reed, B.~Simon,
-\textit{Methods of Modern Mathematical Physics II: Fourier Analysis,
-Self-Adjointness}.
+\textit{Methods of Modern Mathematical Physics~II: Fourier Analysis,
+Self-Adjointness},
 Academic Press, New York, 1975.
 
 \bibitem{Osipov2013}
 A.~Osipov, V.~Rokhlin, H.~Xiao,
-\textit{Prolate Spheroidal Wave Functions of Order Zero}.
+\textit{Prolate Spheroidal Wave Functions of Order Zero},
 Springer, New York, 2013.
 
 \bibitem{BGT1987}
 N.~H.~Bingham, C.~M.~Goldie, J.~L.~Teugels,
-\textit{Regular Variation}.
+\textit{Regular Variation},
 Cambridge University Press, Cambridge, 1987.
 
 \bibitem{AbramowitzStegun}
 M.~Abramowitz, I.~A.~Stegun (eds.),
-\textit{Handbook of Mathematical Functions with Formulas, Graphs,
-and Mathematical Tables}.
-National Bureau of Standards, Washington, D.C., 1964.
+\textit{Handbook of Mathematical Functions},
+National Bureau of Standards, Washington~D.C., 1964.
 
 \end{thebibliography}
 
