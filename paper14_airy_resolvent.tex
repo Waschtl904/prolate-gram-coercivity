@@ -6,7 +6,7 @@
 \usepackage{hyperref}
 \usepackage{booktabs}
 
-%%%─── Theorem environments
+%%%─ Environments
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
@@ -19,76 +19,74 @@
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
-%%%─── Macros
+%%%─ Macros
 \newcommand{\Kc}{\mathcal{K}_c}
 \newcommand{\Tr}{\mathrm{Tr}}
 \newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
-\newcommand{\gap}[2]{\mathrm{gap}_{#2}^{(#1)}}
+\newcommand{\cA}{\mathcal{A}}
 \newcommand{\Ai}{\mathrm{Ai}}
 \newcommand{\Bi}{\mathrm{Bi}}
-\newcommand{\op}{\mathrm{op}}
-\newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
-\newcommand{\cA}{\mathcal{A}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\tr}{\mathrm{tr}}
 
 \subjclass[2020]{47B34, 45C05, 35P20, 47A55, 34E20, 60G55}
 \keywords{Prolate spheroidal wave functions, sinc kernel, resolvent asymptotics,
-  Airy operator, Airy point process, double-scaling limit,
-  zeta-regularised determinant, spectral counting}
+Airy operator, double-scaling limit, spectral counting, Fredholm determinant}
 
 \begin{document}
 
 \title[Paper XIV: Airy Resolvent for Sinc Kernel]{%
-  Paper~XIV: Airy Resolvent Asymptotics for the Sinc Kernel Operator\\[0.3em]
-  \large Edge Universality and the Local Spectral Counting Condition}
+ Paper~XIV: Airy Resolvent Asymptotics for the Sinc Kernel Operator\\[0.3em]
+ \large An Honest Gap Analysis}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
 
 \begin{abstract}
-Paper~XIII identified condition~(Q5) ---
-the local spectral counting statement in a $c^{-1/3}$-scale window ---
-as the primary obstruction to Gap-S.
-In its binary form $N_\varphi(c) = 2$, condition~(Q5) is
-too fragile as a deterministic claim:
-it depends sensitively on window calibration and index matching,
-and has no universal character.
+This paper provides a rigorous account of what is and what is \emph{not}
+established in the programme to prove condition~(Q5) via resolvent
+asymptotics.
 
 \medskip\noindent
-\textbf{Revised target.}
-This paper replaces the binary count by a structural convergence statement:
-\begin{equation*}
-  \text{(Q5$'$):}\quad
-  \text{The local eigenvalue process of $\Kc$ converges,
-  in the Airy double-scaling limit, to the Airy point process.}
-\end{equation*}
-From this convergence, the binary count $N_\varphi(c) = 2 + O(c^{-1/3})$
-follows as a \emph{secondary consequence} for windows calibrated to
-contain exactly two Airy eigenvalues.
-
-\medskip\noindent
-\textbf{Analytic programme.}
-The approach uses the Helffer--Sj\"ostrand functional calculus:
-\[
-  N_\varphi(c) = -\frac{1}{\pi}\int_\C \partial_{\bar z}\tilde\varphi_c(z)\,
-  \Tr[(\Kc-z)^{-1}]\,d^2z.
-\]
-The central conjecture (Conjecture~\ref{conj:resolvent}) asserts
-that $\Tr[(\Kc - z)^{-1}]$ converges, in the double-scaling regime,
-to $\Tr[(\cA - \zeta)^{-1}]$ plus controllable error.
-This converts (Q5$'$) into a \emph{resolvent trace asymptotics problem}.
-
-\medskip\noindent
-\textbf{Three main gaps} (precisely identified):
+\textbf{What this paper does.}
 \begin{enumerate}[nosep]
-  \item Bridge Lemma (Lemma~\ref{lem:bridge}): kernel convergence
-    in $L^2 \Rightarrow$ resolvent convergence in trace norm
-    (the analytic core, currently a placeholder).
-  \item Regularisation of $\det(\cA - \zeta)$ for the Fredholm route
-    (Section~\ref{sec:fredholm}).
-  \item Scale separation: why exactly three scales
-    $c, c^{2/3}, c^{1/3}$ dominate (Section~\ref{sec:scales}).
+ \item Derives the double-scaling structure $(c, c^{2/3}, c^{1/3})$
+ from the PSWE turning-point analysis (unconditional).
+ \item Identifies the \emph{correct} target: not the deterministic
+ count $N_\varphi(c)=2$, but the spectral measure
+ convergence statement~(Q5$''$) below.
+ \item Introduces the Bridge Lemma (Lemma~\ref{lem:bridge})
+ as a conditional implication: $L^2$ kernel convergence with rate
+ $\Rightarrow$ trace-norm resolvent convergence.
+ \item Provides a rigorous regularisation framework for $\det(\cA-\zeta)$.
+ \item Explicitly lists five open sub-problems whose resolution
+ would complete the programme.
 \end{enumerate}
+
+\medskip\noindent
+\textbf{What this paper does NOT do.}
+\begin{itemize}[nosep]
+ \item It does \emph{not} prove that the sinc resolvent converges
+ to the Airy resolvent in trace norm (open: Problem~\ref{prob:bridge}).
+ \item It does \emph{not} prove that the bulk term $T_0$ is holomorphic
+ in $\zeta$ (open: Problem~\ref{prob:bulksep}).
+ \item It does \emph{not} prove $N_\varphi(c)=2$ (this requires all of
+ the above plus a matching argument, Problem~\ref{prob:matching}).
+\end{itemize}
+
+\medskip\noindent
+\textbf{Revised target (Q5$''$).}
+For a smooth test function $\varphi \in C_c^\infty(\R)$,
+\begin{equation*}
+ \Tr[\varphi(c^{1/3}(\Kc - z_{n^*}))] \;\longrightarrow\;
+ \Tr[\varphi(\cA)] \quad \text{as } c\to\infty,
+\end{equation*}
+where $\cA = -d^2/d\xi^2 + \xi$ on $L^2(\R_+)$.
+This is spectral measure convergence in the double-scaling variable.
+The binary count $N_\varphi(c)=2$ follows as a \emph{secondary consequence}
+only after an additional matching argument (Section~\ref{sec:matching}).
 \end{abstract}
 
 \maketitle
@@ -96,269 +94,240 @@ This converts (Q5$'$) into a \emph{resolvent trace asymptotics problem}.
 \bigskip\hrule\bigskip
 
 %% ============================================================
-\section{Setup: From Q5 to a Structural Convergence Target}
-\label{sec:setup}
+\section{The Three Scales: Unconditional Derivation}
+\label{sec:scales}
 %% ============================================================
 
-\subsection{The operator and transition regime}
+The prolate spheroidal wave equation (PSWE) is
+\begin{equation}\label{eq:PSWE}
+ \frac{d}{dx}\bigl[(1-x^2)\psi'\bigr] + [\chi_n - c^2 x^2]\psi = 0,
+ \quad x\in[-1,1],
+\end{equation}
+with turning point $x_0 = \sqrt{\chi_n}/c$.
+In the transition regime $n^* \sim 2c/\pi$,
+the turning point approaches $x_0 \to 1^-$.
 
-$(\Kc f)(x) = \int_{-1}^1 \frac{\sin(c(x-y))}{\pi(x-y)} f(y)\,dy$,
-eigenvalues $1 > \lam{c}{0} \geq \lam{c}{1} \geq \cdots > 0$,
-transition index $n^* \sim 2c/\pi$.
+\begin{lemma}[Scale derivation --- unconditional]
+\label{lem:scales}
+Let $x = 1 - c^{-2/3}\xi$ with $\xi = O(1)$, and write
+$\chi_n = c^2 - 2c^{4/3}\tau + O(c^{2/3})$ where
+$\tau = (n - 2c/\pi)c^{-1/3}/\pi^{-1}$.
+Then equation~\eqref{eq:PSWE} transforms to
+\begin{equation}\label{eq:Airyform}
+ \frac{d^2\psi}{d\xi^2} = (\xi - \tau)\psi + O(c^{-1/3})
+\end{equation}
+in leading order as $c\to\infty$.
+Consequently:
+\begin{enumerate}[nosep,label=(\roman*)]
+ \item the spatial scale of the transition region is $c^{-2/3}$;
+ \item the spectral scale (eigenvalue spacing near $n^*$) is $c^{-1/3}$;
+ \item the bulk density scale is $c$ (Weyl: $\Tr[\Kc] \sim 2c/\pi$).
+\end{enumerate}
+These are the unique scales compatible with~\eqref{eq:Airyform};
+no other scales appear at leading order.
+\end{lemma}
 
-\subsection{Why \texorpdfstring{$N_\varphi(c) = 2$}{N=2} is fragile}
+\begin{proof}
+Standard computation: insert $x = 1-c^{-2/3}\xi$ into~\eqref{eq:PSWE},
+expand $(1-x^2) = 2c^{-2/3}\xi + O(c^{-4/3})$
+and $c^2 x^2 = c^2 - 2c^{4/3}\xi + O(c^{2/3})$.
+Dividing by the leading coefficient gives~\eqref{eq:Airyform}.
+\end{proof}
 
-\begin{remark}[Fragility of the binary count]
-\label{rem:fragility}
-The Airy operator $\cA = -d^2/d\xi^2 + \xi$ on $L^2(\R_+)$
-has eigenvalues $\{-a_k\}_{k\geq 1}$
-with spacings $a_{k+1} - a_k \sim \pi/\sqrt{a_k}$ for large $k$.
-For the first zeros: $a_1 \approx 2.338$, $a_2 \approx 4.088$,
-$a_3 \approx 5.521$, with spacing $a_2 - a_1 \approx 1.75$.
-The claim $N_\varphi(c) = 2$ requires:
-\begin{itemize}[nosep]
-  \item \emph{Window calibration:}
-    $\zeta_0$ chosen so that $[-\zeta_0, \zeta_0]$ contains
-    $\{-a_1, -a_2\}$ but not $-a_3$.
-    This is possible for $1.75 < 2\zeta_0 < 3.18$, a finite interval
-    of valid $\zeta_0$-values.
-  \item \emph{Index matching:}
-    The transition index $n^*$ corresponds to the $k$-th Airy eigenvalue
-    for the correct $k$. This matching is not automatic and depends on
-    sub-leading terms in the Weyl law.
-\end{itemize}
-\emph{Conclusion:}
-The deterministic claim $N_\varphi(c) = 2$ is not a robust asymptotic
-principle but a calibration-dependent consequence.
-The robust statement is Conjecture~\ref{conj:pointprocess} below.
+\begin{remark}[This is the only unconditional result of Paper~XIV]
+Lemma~\ref{lem:scales} is proved without further assumptions.
+All remaining results are conditional (conjectural or placeholder).
 \end{remark}
 
-\subsection{The revised target: Airy point process convergence}
+%% ============================================================
+\section{The Correct Target: Spectral Measure Convergence}
+\label{sec:target}
+%% ============================================================
 
-\begin{definition}[Airy point process]
-The \emph{Airy point process} $\mathrm{APP}$ is the determinantal
-point process on $\R$ with kernel
-\begin{equation}\label{eq:Airykernel}
-  K_{\Ai}(s,t) =
-  \frac{\Ai(s)\Ai'(t) - \Ai'(s)\Ai(t)}{s-t}
-  = \int_0^\infty \Ai(s+u)\Ai(t+u)\,du.
+\begin{definition}[Scaled spectral measure]
+\label{def:specmeas}
+For $c > 0$, define the scaled spectral measure of $\Kc$ near $n^*$:
+\begin{equation}\label{eq:specmeas}
+ \mu_c := \sum_j \delta_{c^{1/3}(\lam{c}{j} - z_{n^*})},
 \end{equation}
-Its support is the set of Airy zeros $\{-a_k\}_{k\geq 1}$.
+where $z_{n^*} = \lam{c}{n^*}$ is the transition eigenvalue.
 \end{definition}
 
-\begin{conjecture}[Airy point process convergence for $\Kc$]
-\label{conj:pointprocess}
-Let $\xi_j^{(c)} := c^{1/3}(\lam{c}{n^*+j} - z_{n^*})$ be the
-rescaled eigenvalues near the transition index $n^*$.
-Then, as $c \to \infty$, the point process
-$\sum_j \delta_{\xi_j^{(c)}}$ converges weakly to the Airy point process.
+\begin{remark}[Why $N_\varphi(c)=2$ is unstable as a primary target]
+\label{rem:fragility}
+The binary claim $N_\varphi(c) = 2$ requires:
+\begin{enumerate}[nosep,label=(F\arabic*)]
+ \item \emph{Centering:} $z_{n^*}$ lies between the first two Airy
+ eigenvalues $\{-a_k\}$ in the $\zeta$-variable.
+ \item \emph{Window calibration:} $\zeta_0$ is chosen so that
+ $[-\zeta_0,\zeta_0]$ contains $\{-a_1,-a_2\}$ but not $-a_3$.
+ For the Airy zeros ($a_1\approx 2.34$, $a_2\approx 4.09$,
+ $a_3\approx 5.52$), this requires $\zeta_0 \in (2.04,\,2.76)$;
+ it is a finite-width interval, not an asymptotic regime.
+ \item \emph{Matching:} the transition index $n^*$ corresponds to the
+ correct Airy eigenvalue label $k$.
+ This is a sub-leading Weyl-law condition on $n^* - 2c/\pi$
+ that is \emph{not} determined by leading-order asymptotics alone.
+\end{enumerate}
+None of (F1)--(F3) is automatic.
+The claim $N_\varphi(c)=2$ is therefore a consequence,
+not a starting point, of the programme.
+\end{remark}
+
+\begin{conjecture}[Spectral measure convergence --- primary target]
+\label{conj:specmeas}
+For every $\varphi \in C_c^\infty(\R)$,
+\begin{equation}\label{eq:Q5pp}
+ \int \varphi\,d\mu_c
+ \;=\; \Tr[\varphi(c^{1/3}(\Kc - z_{n^*}))]
+ \;\longrightarrow\;
+ \Tr[\varphi(\cA)]
+ \;=\; \sum_k \varphi(-a_k)
+ \quad (c\to\infty).
+\end{equation}
+This is condition~\textbf{(Q5$''$)} of this paper.
 \end{conjecture}
 
-\begin{remark}[Status of Conjecture~\ref{conj:pointprocess}]
-This is the \emph{analogue of the GUE edge universality} for the
-prolate concentration operator.
-For the GUE, this follows from Riemann--Hilbert analysis
-(Deift--Kriecherbauer--McLaughlin--Venakides--Zhou~\cite{DKMVZ1999}).
-For the sinc kernel on $[-1,1]$, the corresponding Riemann--Hilbert
-analysis is \emph{not known}: the kernel is not of convolution type
-on the full line, and direct universality transfer fails.
-Conjecture~\ref{conj:pointprocess} is the deepest open problem
-of this paper.
+\begin{remark}[Relation to Airy point process]
+Conjecture~\ref{conj:specmeas} is a \emph{vague topology} convergence
+of measures, weaker than weak convergence of point processes.
+It is the minimal condition needed to extract counting information.
+The Airy point process convergence (Paper~XIV-v1 Conj.\ 1.3)
+is a strictly stronger statement and is not assumed here.
 \end{remark}
 
-\begin{corollary}[Q5 as secondary consequence]
-\label{cor:Q5}
-Assume Conjecture~\ref{conj:pointprocess}.
-Then for any $\zeta_0 \in (1.75/2,\, 3.18/2)$ and $c$ large,
-\[
-  N_\varphi(c)
-  := \#\bigl\{j : \xi_j^{(c)} \in [-\zeta_0,\zeta_0]\bigr\}
-  \to \#\bigl\{k : -a_k \in [-\zeta_0,\zeta_0]\bigr\} = 2.
-\]
-In particular $N_\varphi(c) = 2$ for all large $c$,
-which is condition~(Q5) of Paper~XIII.
-\end{corollary}
+\subsection{From spectral measure to binary count: the matching problem}
+\label{sec:matching}
+
+\begin{problem}[Matching and binary count]
+\label{prob:matching}
+Assume Conjecture~\ref{conj:specmeas}.
+To conclude $N_\varphi(c) = 2$ for large $c$, one additionally needs:
+\begin{enumerate}[nosep,label=(M\arabic*)]
+ \item \emph{Uniform rate:}
+ $|\int\varphi\,d\mu_c - \sum_k\varphi(-a_k)| = O(c^{-\alpha})$
+ for some $\alpha>0$, with constant independent of $\varphi$.
+ \item \emph{Index matching:}
+ The index $n^*$ satisfies $n^* - 2c/\pi = c^{1/3}\tau_0 + o(c^{1/3})$
+ for a specific $\tau_0$ determined by the first Airy zero $a_1$.
+ This requires sub-leading Weyl asymptotics for $\Kc$.
+ \item \emph{Window calibration (F2) above.}
+\end{enumerate}
+(M2) is a \emph{new open problem} not present in Papers~I--XIII.
+\end{problem}
 
 %% ============================================================
-\section{The Double-Scaling Limit and Resolvent Expansion}
-\label{sec:doublescaling}
+\section{The Resolvent Programme}
+\label{sec:resolvent}
 %% ============================================================
 
-\subsection{Scaling ansatz}
+\subsection{The Helffer--Sj\"ostrand approach}
 
-\begin{equation}\label{eq:scaling}
-  x = 1 - c^{-2/3}\xi, \quad
-  y = 1 - c^{-2/3}\eta, \quad
-  z = z_{n^*} + c^{-1/3}\zeta,
+For $\varphi \in C_c^\infty(\R)$ with almost-analytic extension $\tilde\varphi$:
+\begin{equation}\label{eq:HS}
+ \Tr[\varphi(c^{1/3}(\Kc - z_{n^*}))]
+ = -\frac{1}{\pi}\int_\C \partial_{\bar\zeta}\tilde\varphi(\zeta)\,
+ \Tr[(\Kc - z_{n^*} - c^{-1/3}\zeta)^{-1}]\,d^2\zeta.
 \end{equation}
-with $\xi,\eta \in [0,c^{2/3}]$ (the scaled interval $[-1,1]$)
-and $\zeta \in \C \setminus \R$.
-
-\subsection{Why exactly three scales: the scale separation argument}
-\label{sec:scales}
-
-\begin{remark}[Scale structure from PSWE]
-\label{rem:scales}
-The three scales $c, c^{2/3}, c^{1/3}$ in the resolvent expansion
-are not assumed but \emph{derived} from the PSWE turning-point structure.
-The prolate spheroidal wave equation is
-\begin{equation}\label{eq:PSWE}
-  \frac{d}{dx}[(1-x^2)\psi'] + [\chi_n - c^2 x^2]\psi = 0,
+For this to converge to $\Tr[\varphi(\cA)]$, one needs:
+\begin{equation}\label{eq:traceconv}
+ \Tr[(\Kc - z_{n^*} - c^{-1/3}\zeta)^{-1}]
+ \;\longrightarrow\;
+ c^{1/3}\Tr[(\cA - \zeta)^{-1}]
+ \quad \text{as } c\to\infty,
 \end{equation}
-with turning point at $x = x_0 = \sqrt{\chi_n}/c \to 1^-$
-as $n \to n^*$.
-Near $x = 1$, substituting $x = 1 - c^{-2/3}\xi$ and
-$\chi_n = c^2 - 2c^{4/3}\tau_n + O(c^{2/3})$ (where
-$\tau_n \sim (n - 2c/\pi)\cdot c^{-1/3}$) transforms~\eqref{eq:PSWE} into
-\begin{equation}\label{eq:Airyasymp}
-  \psi'' = (\xi + \tau_n)\psi + O(c^{-1/3}),
-\end{equation}
-the Airy equation shifted by $\tau_n$.
-\emph{The three scales arise as:}
-\begin{itemize}[nosep]
-  \item $c$: Weyl-level bulk density $\Tr[\Kc] \sim 2c/\pi$;
-  \item $c^{2/3}$: spatial scale of turning-point region ($x \sim 1 - c^{-2/3}$);
-  \item $c^{1/3}$: spectral scale of transition ($\lambda_{n^*} \sim z_{n^*} \pm c^{-1/3}$).
-\end{itemize}
-These are the unique scales compatible with~\eqref{eq:Airyasymp};
-no other scales arise to leading order.
-This derivation justifies the ansatz in
-Conjecture~\ref{conj:resolvent} below.
-\end{remark}
+locally uniformly for $\zeta \in \C\setminus\R$,
+at least in a suitable integrated-in-$\zeta$ sense.
 
-\subsection{The central conjecture}
-
-\begin{conjecture}[Resolvent trace expansion]
-\label{conj:resolvent}
-In the double-scaling regime~\eqref{eq:scaling},
-\begin{equation}\label{eq:resolventexp}
-  \Tr\bigl[(\Kc - z_{n^*} - c^{-1/3}\zeta)^{-1}\bigr]
-  \;=\;
-  c\cdot T_0 \;+\;
-  c^{2/3}\cdot \Tr\bigl[(\cA - \zeta)^{-1}\bigr]
-  \;+\; O(c^{1/3})
-\end{equation}
-uniformly for $\zeta$ in compact subsets of $\C\setminus\R$,
-where $T_0$ is the bulk trace density (independent of $\zeta$)
-and $\cA = -d^2/d\xi^2 + \xi$ on $L^2(\R_+)$ with Dirichlet BC.
-\end{conjecture}
-
-\begin{remark}[What the conjecture says and does not say]
-\label{rem:conjstatus}
-Conjecture~\ref{conj:resolvent} is \emph{not} a formal consequence
-of the Airy approximation~\eqref{eq:Airyasymp} alone.
-It requires additionally:
-\begin{itemize}[nosep]
-  \item that bulk and edge contributions to the trace are
-    \emph{analytically separable} (not automatic for kernels on
-    compact intervals; see Remark~\ref{rem:bulkedge});
-  \item that the error in~\eqref{eq:Airyasymp} propagates
-    to an $O(c^{1/3})$ error in the trace (Bridge Lemma, below);
-  \item that $T_0$ is holomorphic in $\zeta$ (bulk separation).
-\end{itemize}
-Each of these is a genuine open sub-problem.
-\end{remark}
-
-\begin{remark}[Bulk--edge separation for compact kernels]
+\begin{remark}[The bulk--edge separation problem]
 \label{rem:bulkedge}
-For translation-invariant kernels on $\R$ (sine kernel, Bessel kernel),
-bulk and edge contributions are analytically separated by
-the support of the kernel.
-For the sinc kernel on $[-1,1]$, the kernel is \emph{not}
-translation-invariant: contributions from $x,y$ near $\pm 1$
-(edge) and $x,y$ near $0$ (bulk) are coupled through the
-Fourier restriction to $[-1,1]$.
-A rigorous bulk--edge separation requires an explicit
-\emph{microlocal decomposition} of the kernel, which is the
-analytic content of step~(S1).
-\end{remark}
-
-\subsection{From resolvent expansion to trace asymptotics}
-
-Assuming Conjecture~\ref{conj:resolvent} and applying
-Helffer--Sj\"ostrand with $z = z_{n^*} + c^{-1/3}\zeta$:
-\begin{align}\label{eq:tracedecomp}
-  N_\varphi(c)
-  &= -\frac{c^{-1/3}}{\pi}\int_\C
-    \partial_{\bar\zeta}\tilde\varphi(\zeta)\,
-    \Tr[(\Kc - z_{n^*} - c^{-1/3}\zeta)^{-1}]\,d^2\zeta \notag\\
-  &= \underbrace{-\frac{c^{-1/3}\cdot c}{\pi}
-    \int_\C \partial_{\bar\zeta}\tilde\varphi\cdot T_0\,d^2\zeta}_{=\,0}
-  \;-\;
-  \frac{c^{-1/3}\cdot c^{2/3}}{\pi}
-  \int_\C \partial_{\bar\zeta}\tilde\varphi(\zeta)\,
-  \Tr[(\cA-\zeta)^{-1}]\,d^2\zeta
-  \;+\; O(c^{-1/3}).
-\end{align}
-The $c$-term vanishes because $T_0$ is holomorphic in $\zeta$
-(if bulk separation holds).
-The remaining $c^{1/3}$-prefactor cancels to $1$:
-\begin{equation}\label{eq:NAifinal}
-  N_\varphi(c)
-  \;=\;
-  \#\bigl\{\text{eigenvalues of }\cA\text{ in }\mathrm{supp}(\varphi)\bigr\}
-  \;+\; O(c^{-1/3}).
+Let $z = z_{n^*} + c^{-1/3}\zeta$.
+The full resolvent trace decomposes heuristically as
+\begin{equation}\label{eq:decomp}
+ \Tr[(\Kc - z)^{-1}]
+ \sim c\cdot T_0(z) + c^{2/3}\cdot \Tr[(\cA-\zeta)^{-1}] + \ldots
 \end{equation}
-Corollary~\ref{cor:Q5} then follows from window calibration.
-
-%% ============================================================
-\section{The Bridge Lemma: Kernel $\to$ Trace-Norm Convergence}
-\label{sec:bridge}
-%% ============================================================
-
-\begin{remark}[Why operator-norm convergence is insufficient]
-Strong resolvent convergence $\Kc^{(\mathrm{sc})} \to \cA$
-(which may follow from form convergence of the PSWE to the Airy ODE)
-gives operator-norm convergence of the resolvent.
-However, the Helffer--Sj\"ostrand formula requires
-\emph{trace-norm} convergence.
-The gap between the two is:
-\[
-  \|(B-\zeta)^{-1} - (\cA-\zeta)^{-1}\|_{\mathrm{tr}}
-  \leq \|(B-\cA)\|_{\mathrm{tr}} \cdot \|(B-\zeta)^{-1}\|_{\op}
-  \cdot \|(\cA-\zeta)^{-1}\|_{\op},
-\]
-so trace-norm resolvent convergence follows from
-\emph{trace-norm convergence of the operators themselves}.
-The quantitative form needed is:
-$\|\Kc^{(\mathrm{sc})} - \cA\|_{\mathrm{tr}} = O(c^{-1/3})$.
+The term $c\cdot T_0(z)$ represents the bulk contribution
+(eigenvalues far from $z_{n^*}$).
+\textbf{Critical gap:}
+$T_0(z)$ is \emph{not automatically holomorphic in $\zeta$}.
+Writing $z = z_{n^*} + c^{-1/3}\zeta$,
+the function $z \mapsto T_0(z)$ is meromorphic in $z$
+(poles at all bulk eigenvalues),
+but its dependence on $\zeta$ enters both through $z$ explicitly
+and through the implicit dependence of $z_{n^*}$ on $c$.
+The claim that the $c\cdot T_0$ term vanishes from~\eqref{eq:HS}
+after integrating against $\partial_{\bar\zeta}\tilde\varphi$
+requires a \emph{microlocal separation argument}:
+the bulk resolvent must be shown to be analytic (in $\zeta$)
+after localisation to the edge region.
+This is the content of Problem~\ref{prob:bulksep}.
 \end{remark}
 
-\begin{lemma}[Bridge Lemma --- placeholder]
+\begin{problem}[Bulk--edge microlocal separation]
+\label{prob:bulksep}
+Define a microlocal cutoff $\chi_c$ separating bulk
+($|\lam{c}{j} - z_{n^*}| \gg c^{-1/3}$) from edge contributions.
+Prove:
+\begin{enumerate}[nosep,label=(B\arabic*)]
+ \item The bulk part $T_0^{(\mathrm{cut})}(\zeta)
+ := \sum_{j:\,|\lam{c}{j}-z_{n^*}|>Rc^{-1/3}}
+ (\lam{c}{j} - z_{n^*} - c^{-1/3}\zeta)^{-1}$
+ is holomorphic in $\zeta$ for $|\zeta| < R/2$.
+ \item Its contribution to~\eqref{eq:HS} is $O(c^{-1/3})$
+ after integration against $\partial_{\bar\zeta}\tilde\varphi$.
+\end{enumerate}
+\end{problem}
+
+\subsection{The Bridge Lemma}
+
+\begin{lemma}[Bridge Lemma --- conditional]
 \label{lem:bridge}
-Let $\Kc^{(\mathrm{sc})}$ be the scaled operator obtained from $\Kc$
-by the substitution~\eqref{eq:scaling}, acting on $L^2([0,c^{2/3}])$,
-extended by zero to $L^2(\R_+)$.
-Assume:
-\begin{enumerate}[label=(B\arabic*),nosep]
-  \item The kernel of $\Kc^{(\mathrm{sc})}$ converges in $L^2(\R_+^2)$
-    to the kernel of the spectral projection $P_{(-\infty,0]}(\cA)$;
-  \item The $L^2$-error satisfies $\|K_c^{(\mathrm{sc})} - K_{\cA}\|_{L^2} = O(c^{-1/3})$.
+Let $B_c := c^{1/3}(\Kc - z_{n^*})|_{\mathrm{edge}}$ be the
+edge-localised scaled operator (formal; defined up to Problem~\ref{prob:bulksep}).
+Suppose:
+\begin{enumerate}[label=(BR\arabic*),nosep]
+ \item The operator $B_c$ converges in \emph{strong resolvent sense}
+ to $\cA$ as $c\to\infty$.
+ \item The family $(B_c - \zeta)^{-1}$ is uniformly trace-norm
+ bounded for $\zeta$ in compact subsets of $\C\setminus\R$,
+ with bound $\|(B_c-\zeta)^{-1}\|_{\tr} \leq C(K)|\mathrm{Im}\,\zeta|^{-1}$.
+ \item The difference $(B_c - \cA)(\cA - \zeta)^{-2}$ is trace class
+ with $\|(B_c - \cA)(\cA-\zeta)^{-2}\|_{\tr} = O(c^{-\alpha})$
+ for some $\alpha > 0$.
 \end{enumerate}
 Then:
 \begin{equation}\label{eq:bridgeconclusion}
-  \|\Kc^{(\mathrm{sc})} - P_{(-\infty,0]}(\cA)\|_{\mathrm{tr}}
-  = O(c^{-1/3}),
+ \bigl|\Tr[(B_c - \zeta)^{-1}] - \Tr[(\cA-\zeta)^{-1}]\bigr|
+ = O(c^{-\alpha}|\mathrm{Im}\,\zeta|^{-2})
 \end{equation}
-and consequently
-\begin{equation}\label{eq:resolventtracebound}
-  \bigl|\Tr[(\Kc^{(\mathrm{sc})}-\zeta)^{-1}] - \Tr[(\cA-\zeta)^{-1}]\bigr|
-  = O\bigl(c^{-1/3} |\mathrm{Im}(\zeta)|^{-2}\bigr)
-\end{equation}
-for $\zeta \in \C\setminus\R$.
+and Conjecture~\ref{conj:specmeas} holds for $\varphi \in C_c^\infty$
+with support in a compact subset of $\R$.
 \end{lemma}
 
-\begin{remark}[Status of Lemma~\ref{lem:bridge}]
-\textbf{This is a placeholder lemma.}
-The stated form is correct as an implication chain:
-$(B1) + (B2) \Rightarrow \eqref{eq:bridgeconclusion}
-\Rightarrow \eqref{eq:resolventtracebound}$.
-The content, which is not yet proved, is conditions~(B1) and~(B2).
-Verifying~(B2) is the analytic core of this paper.
-It requires: precise asymptotics of the sinc kernel
-$K_c(1-c^{-2/3}\xi, 1-c^{-2/3}\eta)$ near $\xi,\eta = 0$,
-and an $L^2$-rate of convergence to the Airy spectral projection kernel.
-This is step~(S1) of the programme; it is currently open.
+\begin{proof}[Proof (conditional on (BR1)--(BR3))]
+The resolvent identity gives
+$(B_c-\zeta)^{-1} - (\cA-\zeta)^{-1}
+ = (\cA-\zeta)^{-1}(\cA-B_c)(B_c-\zeta)^{-1}$.
+Taking trace norms and applying (BR3):
+$\|(B_c-\zeta)^{-1}-(\cA-\zeta)^{-1}\|_{\tr}
+\leq \|(\cA-B_c)(\cA-\zeta)^{-2}\|_{\tr}\cdot
+\|(B_c-\zeta)^{-1}\|_{\op}\cdot\|(\cA-\zeta)\|_{\op}$,
+which gives~\eqref{eq:bridgeconclusion}.
+Plugging into~\eqref{eq:HS} and using $|\partial_{\bar\zeta}\tilde\varphi| \leq C_N|\mathrm{Im}\,\zeta|^N$
+gives the trace convergence.
+\end{proof}
+
+\begin{remark}[Status of conditions (BR1)--(BR3)]
+Condition (BR1) may follow from form convergence of the PSWE
+to the Airy equation (Lemma~\ref{lem:scales}), using Kato's
+theory of convergence of quadratic forms~\cite{Kato1966}.
+Conditions (BR2) and (BR3) are the genuinely new requirements:
+(BR2) requires a uniform Schatten-class bound for the edge resolvent,
+and (BR3) requires that the \emph{difference} of the two operators
+(sinc edge minus Airy) is trace class after regularisation.
+Neither is standard and neither follows from (BR1) alone.
+This is the analytic core of Paper~XIV.
 \end{remark}
 
 %% ============================================================
@@ -366,181 +335,118 @@ This is step~(S1) of the programme; it is currently open.
 \label{sec:fredholm}
 %% ============================================================
 
-\subsection{The regularisation problem}
+\subsection{Regularisation of $\det(\cA - \zeta)$}
 
-\begin{remark}[Why $\det(\cA - \zeta)$ requires regularisation]
+\begin{remark}[The Airy determinant requires regularisation]
 \label{rem:detreg}
-$\cA$ is an unbounded self-adjoint operator with
-$\sigma(\cA) = \{-a_k\}_{k\geq 1} \to +\infty$.
-The expression $\det(\cA - \zeta)$ is therefore not a
-classical Fredholm determinant (which requires a trace-class perturbation).
-Three standard regularisation strategies are available:
-\begin{enumerate}[label=(R\arabic*),nosep]
-  \item \textbf{Relative Fredholm determinant.}
-    Fix a reference operator $\cA_0$ with known determinant
-    (e.g.\ harmonic oscillator) and define
-    $\det\bigl[(\cA-\zeta)(\cA_0-\zeta)^{-1}\bigr]$,
-    which is a legitimate Fredholm determinant if
-    $(\cA-\cA_0)(\cA_0-\zeta)^{-1}$ is trace class.
-  \item \textbf{Zeta-regularised determinant.}
-    $\det_\zeta(\cA - \zeta) := \exp(-\partial_s|_{s=0} \zeta_{\cA}(s,\zeta))$,
-    where $\zeta_{\cA}(s,\zeta) := \sum_k (-a_k - \zeta)^{-s}$.
-    This is the standard approach in spectral geometry.
-  \item \textbf{Simon's modified determinant.}
-    $\det_2(I + B) := \det((I+B)e^{-B})$ for $B$ Hilbert--Schmidt
-    (Simon~\cite{Simon2005}).
-\end{enumerate}
-For the Fredholm route of Section~\ref{sec:fredholmroute},
-strategy~(R1) is most natural: it connects the zero structure
-of $\det[(\Kc - \lambda)P_{\mathrm{edge}}]$ directly to
-the relative determinant via the scaling limit.
+Since $\cA$ is unbounded with $\sigma(\cA) = \{-a_k\} \to +\infty$,
+the expression $\det(\cA-\zeta)$ is not a Fredholm determinant
+in the classical sense.
+We use the \emph{relative Fredholm determinant}:
+\begin{equation}\label{eq:reldet}
+ D_\cA^{\mathrm{rel}}(\zeta;\zeta_0)
+ := \det\bigl[(\cA-\zeta)(\cA-\zeta_0)^{-1}\bigr],
+\end{equation}
+where $\zeta_0 \notin \sigma(\cA)$ is a fixed reference point.
+Since $(\cA-\zeta)(\cA-\zeta_0)^{-1} = I + (\zeta_0-\zeta)(\cA-\zeta_0)^{-1}$
+and $(\cA-\zeta_0)^{-1}$ is trace class
+(as $\cA$ has discrete spectrum with $\sum_k a_k^{-p} < \infty$ for $p>3/2$),
+$D_\cA^{\mathrm{rel}}(\zeta;\zeta_0)$ is a genuine Fredholm determinant
+in the sense of Simon~\cite{Simon2005}.
+Its zeros in $\zeta$ are exactly the eigenvalues $\{-a_k\}$,
+independent of $\zeta_0$.
 \end{remark}
 
-\subsection{The Fredholm route to Q5}
-\label{sec:fredholmroute}
+\subsection{Fredholm conjecture and Rouch\'{e} argument}
 
-Let $P_{\mathrm{edge}}$ be the spectral projection of $\Kc$
-onto eigenvalues near $z_{n^*}$ (within $2\zeta_0 c^{-1/3}$).
-Define the \emph{edge Fredholm determinant}
-\begin{equation}\label{eq:edgedet}
-  D_{\mathrm{edge}}(c,\lambda)
-  := \det\bigl(I - \lambda \Kc P_{\mathrm{edge}}\bigr).
-\end{equation}
-This is a polynomial in $\lambda$ of degree $N_{\mathrm{edge}}$
-(the rank of $P_{\mathrm{edge}}$).
-
-\begin{conjecture}[Fredholm convergence]
+\begin{conjecture}[Fredholm convergence --- conditional on bulk separation]
 \label{conj:fredholm}
-In the double-scaling limit, $D_{\mathrm{edge}}(c,\cdot)$
-converges (after appropriate normalisation) to the
-Airy Fredholm determinant
-\begin{equation}\label{eq:AiryFred}
-  D_{\Ai}(\zeta) :=
-  \det\bigl(I - P_{(-\infty,\zeta]} K_{\Ai}\bigr),
+Assume Problem~\ref{prob:bulksep} is resolved.
+Let $D_{\mathrm{edge}}^{(c)}(\zeta)
+:= \det[(B_c - \zeta)(B_c - \zeta_0)^{-1}]$
+(relative determinant of the edge operator).
+Then
+\begin{equation}\label{eq:fredconv}
+ D_{\mathrm{edge}}^{(c)}(\zeta)
+ \;\longrightarrow\;
+ D_\cA^{\mathrm{rel}}(\zeta;\zeta_0)
 \end{equation}
-where $K_{\Ai}$ is the Airy kernel operator on $L^2(\R)$
-and $P_{(-\infty,\zeta]}$ is multiplication by
-$\mathbf{1}_{(-\infty,\zeta]}$.
-Here $D_{\Ai}(\zeta)$ is the \emph{Tracy--Widom distribution function},
-which is well-defined as a genuine Fredholm determinant
-(trace-class perturbation).
+uniformly on compact subsets of $\C$,
+with rate $O(c^{-\alpha})$ (same $\alpha$ as in Bridge Lemma).
 \end{conjecture}
 
 \begin{remark}[Rouch\'{e} argument --- conditional]
-If Conjecture~\ref{conj:fredholm} holds with error $O(c^{-1/3})$
-in Fredholm norm, then by Rouch\'{e}'s theorem
-for operator-valued analytic functions (Gohberg--Krein~\cite{GohKre1969}),
-the zeros of $D_{\mathrm{edge}}(c,\cdot)$ near $z_{n^*}$
-converge to the zeros of $D_{\Ai}(\cdot)$,
-which are exactly the Airy eigenvalues.
-Local counting of PSWF eigenvalues then follows
-from counting zeros of the Airy Fredholm determinant.
+If Conjecture~\ref{conj:fredholm} holds,
+then by operator-valued Rouch\'{e} (Gohberg--Krein~\cite{GohKre1969}),
+for any contour $\Gamma$ enclosing a finite set of Airy eigenvalues
+and avoiding all others,
+the number of zeros of $D_{\mathrm{edge}}^{(c)}$ inside $\Gamma$
+equals the number of zeros of $D_\cA^{\mathrm{rel}}$ inside $\Gamma$
+for $c$ large enough.
+This gives a finite count of PSWF eigenvalues near $z_{n^*}$
+\emph{in terms of Airy zeros},
+but still requires the index matching (Problem~\ref{prob:matching})
+to conclude that exactly two eigenvalues lie in a given $c^{-1/3}$-window.
 \end{remark}
 
 %% ============================================================
-\section{Programme: Steps and Status}
-\label{sec:programme}
+\section{Open Problems: Honest Summary}
+\label{sec:open}
 %% ============================================================
 
-\subsection{Logical chain}
-
-\[
-\boxed{
-  \text{(S1): kernel conv.}
-  \Rightarrow
-  \text{(S2): trace-norm conv.}
-  \Rightarrow
-  \text{Conj.~\ref{conj:resolvent}}
-  \Rightarrow
-  \text{(Q5$'$)}
-  \Rightarrow
-  \text{(Q5)}
-  \Rightarrow
-  \text{Gap-S}
-}
-\]
-
-Alternative route:
-\[
-  \text{(S1)} \Rightarrow \text{Conj.~\ref{conj:fredholm}}
-  \Rightarrow \text{Rouch\'{e}}
-  \Rightarrow \text{(Q5)} \Rightarrow \text{Gap-S.}
-\]
-
-\subsection{Step-by-step status}
-
-\begin{center}
-\renewcommand{\arraystretch}{1.35}
-\begin{tabular}{p{0.5cm}p{4.2cm}p{3.2cm}l}
-\toprule
-& \textbf{Content} & \textbf{Key tool} & \textbf{Status}\\
-\midrule
-(S1) & Sinc kernel $\to$ Airy kernel, $L^2$-rate $O(c^{-1/3})$
-  & PSWE turning-point asym.
-  & open \\
-(S2) & Trace-norm resolvent conv., Bridge Lemma~\ref{lem:bridge}
-  & $\|(B-\cA)(\cA-\zeta)^{-2}\|_{\mathrm{tr}}$
-  & open (hardest) \\
-(S3) & Bulk separation: $T_0$ holomorphic in $\zeta$
-  & Microlocal decomp.
-  & open \\
-(S4) & Window: $[-\zeta_0,\zeta_0] \supset \{-a_1,-a_2\}$, not $-a_3$
-  & Zeros of $\Ai$: $a_2{-}a_1 \approx 1.75$
-  & \checkmark\ (literature) \\
-Conj.~\ref{conj:resolvent}
-  & Trace expansion $= c T_0 + c^{2/3}\Tr(\cA{-}\zeta)^{-1} + O(c^{1/3})$
-  & (S1)--(S3)
-  & conjectural \\
-Conj.~\ref{conj:pointprocess}
-  & Airy point process convergence
-  & RHP / universality
-  & open (deepest) \\
-Conj.~\ref{conj:fredholm}
-  & $D_{\mathrm{edge}} \to D_{\Ai}$
-  & Det.\ asymptotics
-  & conjectural \\
-(Q5-upper) & No crowding: $N_\varphi \leq 2 + O(c^{-1/3})$
-  & Full expansion
-  & open \\
-(Q5-lower) & No escape: $N_\varphi \geq 2 - O(c^{-1/3})$
-  & Quasimode injection
-  & open (easier) \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\subsection{Open problems}
-
-\begin{problem}[Kernel convergence rate]
-\label{prob:S1}
-Prove $\|K_c^{(\mathrm{sc})}(\xi,\eta) - K_{\cA}(\xi,\eta)\|_{L^2(\R_+^2)} = O(c^{-1/3})$.
+\begin{problem}[Strong resolvent convergence (BR1)]
+\label{prob:BR1}
+Prove that the edge-scaled operator $B_c$ converges to $\cA$
+in strong resolvent sense.
+Approach: show quadratic form convergence
+$\mathfrak{q}[B_c](u,u) \to \mathfrak{q}[\cA](u,u)$
+for $u \in H^1_0(\R_+)$, using Lemma~\ref{lem:scales}.
 \end{problem}
 
-\begin{problem}[Bridge Lemma: conditions (B1)--(B2)]
+\begin{problem}[Trace-class difference (BR3) --- core problem]
 \label{prob:bridge}
-Verify the hypotheses of Lemma~\ref{lem:bridge}.
+Prove $\|(B_c - \cA)(\cA-\zeta)^{-2}\|_{\tr} = O(c^{-\alpha})$.
+This requires:
+\begin{enumerate}[nosep,label=(\roman*)]
+ \item $L^2$-kernel convergence of $\Kc^{(\mathrm{sc})}$ to $P_{(-\infty,0]}(\cA)$
+ with rate;
+ \item upgrading $L^2$ kernel convergence to Schatten-$p$ convergence;
+ \item applying Simon's interpolation~\cite{Simon2005} to obtain trace-class.
+\end{enumerate}
+\emph{This is the deepest analytic problem in Paper~XIV.}
 \end{problem}
 
-\begin{problem}[Bulk--edge microlocal separation]
-\label{prob:bulkedge}
-Construct a microlocal decomposition separating bulk
-and edge contributions to $\Tr[(\Kc-z)^{-1}]$
-for $z$ near $z_{n^*}$.
+\begin{problem}[Bulk--edge separation]
+\label{prob:bulksep2}
+See Problem~\ref{prob:bulksep} above.
+Remarks: for the sinc kernel on $[-1,1]$,
+bulk and edge are not microlocally separated by support
+(unlike for the sine kernel on $\R$).
+A Fourier restriction argument or pseudodifferential
+calculus adapted to $[-1,1]$ is needed.
 \end{problem}
 
-\begin{problem}[Airy point process universality for $\Kc$]
-\label{prob:APP}
-Prove Conjecture~\ref{conj:pointprocess}.
-This is the structural analogue of GUE edge universality
-for the prolate concentration operator.
+\begin{problem}[Sub-leading Weyl law and index matching]
+\label{prob:matching2}
+See Problem~\ref{prob:matching}.
+Specifically: prove that
+\[
+ n^* - \frac{2c}{\pi} = c^{1/3}\tau_0 + o(c^{1/3})
+\]
+where $\tau_0$ is determined by the Airy zero $a_1$ and the phase
+condition of the PSWE at the turning point.
+This is a sub-leading asymptotic for the PSWF count;
+not known from current literature.
 \end{problem}
 
 \begin{problem}[(Q5-lower) via quasimode injection]
 \label{prob:lower}
-Prove $N_\varphi(c) \geq 2 - O(c^{-1/3})$
+Under Conjecture~\ref{conj:specmeas},
+prove the lower bound $N_\varphi(c) \geq 2 - O(c^{-\alpha})$
 by constructing two approximate eigenvectors
-$f_n^{(c)}, f_{n+1}^{(c)}$ with centres in $W_c$
-and residual $o(c^{-1/3})$.
+$f_{n^*}^{(c)}, f_{n^*+1}^{(c)}$ in the Airy regime
+with residual $O(c^{-1/3-\varepsilon})$.
+This is the \emph{accessible} direction of (Q5).
 \end{problem}
 
 %% ============================================================
@@ -549,73 +455,64 @@ and residual $o(c^{-1/3})$.
 %% ============================================================
 
 \begin{center}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{p{4.2cm}p{2.8cm}l}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{4.5cm} p{1.8cm} p{1.5cm}}
 \toprule
-\textbf{Claim} & \textbf{Source} & \textbf{Status}\\
+\textbf{Claim} & \textbf{Type} & \textbf{Status}\\
 \midrule
-Scale structure: $c, c^{2/3}, c^{1/3}$
-  & Rem.~\ref{rem:scales} & \checkmark\ derived \\
-$N=2$ is calibration-dependent
-  & Rem.~\ref{rem:fragility} & \checkmark\ clarified \\
-Bridge Lemma (form)
-  & Lem.~\ref{lem:bridge} & \checkmark\ (conditional) \\
-Airy det.\ regularisation
-  & Rem.~\ref{rem:detreg} & \checkmark\ identified \\
-Kernel conv.\ (S1)
-  & Prob.~\ref{prob:S1} & open \\
-Trace-norm Bridge (S2)
-  & Prob.~\ref{prob:bridge} & open (hardest) \\
-Bulk separation (S3)
-  & Prob.~\ref{prob:bulkedge} & open \\
-Airy point process
-  & Prob.~\ref{prob:APP} & open (deepest) \\
-(Q5-lower)
-  & Prob.~\ref{prob:lower} & open (accessible) \\
+Three scales from PSWE (Lem.~\ref{lem:scales}) & deductive & \checkmark\\
+Relative Airy det.\ well-defined (Rem.~\ref{rem:detreg}) & algebraic & \checkmark\\
+Bulk holomorphicity not automatic (Rem.~\ref{rem:bulkedge}) & structural & \checkmark\\
+Bridge Lemma form (Lem.~\ref{lem:bridge}) & conditional & \checkmark\\
+$N=2$ fragility identified (Rem.~\ref{rem:fragility}) & structural & \checkmark\\
+Strong resolvent conv.\ (BR1) (Prob.~\ref{prob:BR1}) & analytic & open\\
+Trace-class difference (BR3) (Prob.~\ref{prob:bridge}) & analytic & open (hardest)\\
+Bulk--edge separation (Prob.~\ref{prob:bulksep2}) & analytic & open\\
+Index matching (Prob.~\ref{prob:matching2}) & Weyl theory & open (new!)\\
+(Q5-lower) quasimode (Prob.~\ref{prob:lower}) & constructive & open (accessible)\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip
-\noindent\textbf{What Paper~XIV establishes unconditionally.}
-\begin{enumerate}[nosep]
-  \item The scale structure $c, c^{2/3}, c^{1/3}$ is derived from PSWE,
-    not postulated.
-  \item The fragility of the binary count $N_\varphi = 2$
-    is identified and the correct structural target
-    (Airy point process convergence) is formulated.
-  \item The Bridge Lemma gives the correct implication chain
-    from kernel convergence to trace asymptotics.
-  \item The Fredholm determinant route is
-    given a rigorous regularisation framework.
-\end{enumerate}
+\medskip\noindent
+\textbf{Logical chain for Gap-S:}
+\[
+ \underbrace{\text{(BR1)+(BR3)}+\text{bulk sep.}+\text{matching}}_{
+ \text{four open problems}}
+ \;\Longrightarrow\;
+ \text{(Q5$''$)}
+ \;\Longrightarrow\;
+ N_\varphi(c)=2
+ \;\Longrightarrow\;
+ \text{Gap-S \emph{(Thm.~B, Paper~XIII).}}
+\]
 
 \begin{thebibliography}{99}
 \bibitem{paper13} \textit{Paper~XIII: Obstructions to Gap-S},
-  \texttt{paper13\_gap\_s.tex}, 2026.
+ \texttt{paper13\_gap\_s.tex}, 2026.
 \bibitem{Kato1966} T.~Kato, \textit{Perturbation Theory for Linear Operators},
-  Springer, 1966.
+ Springer, 1966.
 \bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
-  \textit{Prolate Spheroidal Wave Functions of Order Zero}, Springer, 2013.
-\bibitem{Widom1964} H.~Widom, \textit{Asymptotic behavior of the eigenvalues
-  of certain integral equations},
-  Trans.\ Amer.\ Math.\ Soc.\ \textbf{109} (1964), 278--295.
+ \textit{Prolate Spheroidal Wave Functions of Order Zero}, Springer, 2013.
+\bibitem{Widom1964} H.~Widom,
+ \textit{Asymptotic behavior of the eigenvalues of certain integral equations},
+ Trans.\ Amer.\ Math.\ Soc.\ \textbf{109} (1964), 278--295.
 \bibitem{TracyWidom1994} C.~Tracy, H.~Widom,
-  \textit{Level-spacing distributions and the Airy kernel},
-  Comm.\ Math.\ Phys.\ \textbf{159} (1994), 151--174.
+ \textit{Level-spacing distributions and the Airy kernel},
+ Comm.\ Math.\ Phys.\ \textbf{159} (1994), 151--174.
 \bibitem{DKMVZ1999} P.~Deift, T.~Kriecherbauer, K.~McLaughlin,
-  S.~Venakides, X.~Zhou,
-  \textit{Uniform asymptotics for polynomials orthogonal with respect
-  to varying exponential weights},
-  Comm.\ Pure Appl.\ Math.\ \textbf{52} (1999), 1335--1425.
-\bibitem{HelSjo1989} B.~Helffer, J.~Sj\"ostrand,
-  \textit{\'Equation de Schr\"odinger avec champ magn\'etique},
-  Lecture Notes in Physics \textbf{345}, Springer, 1989.
-\bibitem{Simon2005} B.~Simon, \textit{Trace Ideals and Their Applications},
-  2nd ed., AMS, 2005.
+ S.~Venakides, X.~Zhou,
+ \textit{Uniform asymptotics for polynomials orthogonal with respect
+ to varying exponential weights},
+ Comm.\ Pure Appl.\ Math.\ \textbf{52} (1999), 1335--1425.
+\bibitem{Simon2005} B.~Simon,
+ \textit{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005.
 \bibitem{GohKre1969} I.~Gohberg, M.~Krein,
-  \textit{Introduction to the Theory of Linear Nonselfadjoint Operators},
-  AMS, 1969.
+ \textit{Introduction to the Theory of Linear Nonselfadjoint Operators},
+ AMS, 1969.
+\bibitem{HelSjo1989} B.~Helffer, J.~Sj\"ostrand,
+ \textit{\'Equation de Schr\"odinger avec champ magn\'etique},
+ Lecture Notes in Physics \textbf{345}, Springer, 1989.
 \end{thebibliography}
 
 \end{document}
