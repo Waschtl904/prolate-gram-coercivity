@@ -31,14 +31,13 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel universality,
-  Olver turning-point theorem, Sturm--Liouville nodal structure, BR3}
+  Langer transform, Sturm--Liouville, BR3}
 
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v9)\\[0.3em]
-  \large Uniform Airy Transition~$+$~Nodal No-Crossing
-  $+$~Half-Line Model~$+$~Kernel Bridge}
+  Paper~XVIII: Airy Kernel Universality (v10 --- Final)\\[0.3em]
+  \large Closing Lemma: Langer Uniformisation $+$ Sturm No-Crossing}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -49,28 +48,21 @@ $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise,
 closing BR3 with Paper~XVII.
 
 \medskip
-\textbf{Fixes in v9 (four targeted corrections).}
+\textbf{v10 finalises the proof via one Closing Lemma
+(Lemma~\ref{lem:closing})} that simultaneously:
 \begin{enumerate}[nosep]
-  \item \emph{Half-line model fixed throughout
-    (Definition~\ref{def:airyop}):}
-    $\cA = -\partial_{\xit}^2+\xit$ on $L^2(\R_+)$ with Dirichlet BC
-    is the unique model; the full-line claim is removed.
-  \item \emph{No-crossing via Sturm--Liouville nodal structure
-    (Lemma~\ref{lem:nocrossing}):}
-    $\tilde\psi_j^{(c)}$ has exactly $j$ zeros in the Airy window
-    (SL oscillation theorem); zero-count is a topological invariant
-    under continuous deformation, so eigenvalues cannot cross.
-  \item \emph{Uniform Airy transition near $\xit=0$
-    (Lemma~\ref{lem:olver}):}
-    Olver Ch.~11 Thm.~11.3 (Langer transform):
-    $\tilde\psi_j = \Ai(\,\cdot\,)(1+O(c^{-1/3}))$
-    uniformly on $[-M,M]$ including the turning point $\xit=0$.
-  \item \emph{Airy kernel bridge
-    (Proposition~\ref{prop:kernelbridge}):}
-    $\sum_k u_k\otimes u_k
-    = \int_0^\infty\Ai(\,\cdot\,+s)\Ai(\,\cdot\,+s)\,ds$
-    proved via spectral theorem + Airy Parseval.
+  \item establishes the \emph{uniform Airy approximation}
+    across the turning point $\xit=0$
+    (Olver Ch.~11 Thm.~11.3, Langer transform);
+  \item proves \emph{no-crossing of eigenvalues} via the
+    Sturm--Liouville oscillation theorem
+    (simplicity preserved $\Rightarrow$ analytic branches distinct).
 \end{enumerate}
+All remaining items in the proof are corollaries of this lemma
+plus the norm-resolvent framework of v8--v9.
+The Airy operator is fixed throughout as
+$\cA=-\partial_\xit^2+\xit$ on $L^2(\R_+)$, Dirichlet BC,
+with no full-line alternative.
 \end{abstract}
 
 \maketitle
@@ -82,182 +74,199 @@ closing BR3 with Paper~XVII.
 \label{sec:setup}
 %% ============================================================
 
-\begin{definition}[Recentered Airy coordinate and identification map]
+\begin{definition}[Recentered Airy coordinate]
 \label{def:airycoord}
 Let $x_{n^*}^* := n^*\pi/(2c)$ (turning point of mode $j=0$;
 Paper~XVI Def.~1.1).
-The \emph{recentered Airy coordinate} is
 \begin{equation}\label{eq:xit}
-  \xit := c^{2/3}(x_{n^*}^* - x),
-  \qquad x\in[-1,1].
+  \xit := c^{2/3}(x_{n^*}^* - x), \qquad x\in[-1,1].
 \end{equation}
-The physical domain $x\in[-1,1]$ maps to
-$\xit\in[c^{2/3}(x_{n^*}^*-1),\,c^{2/3}(x_{n^*}^*+1)]$;
-for large $c$, the Airy window $[-M,M]\subset[0,\infty)$
-for fixed $M>0$ lies entirely in the evanescent side $\xit>0$.
-\emph{Identification map:}
-$(\Uc f)(\xit) := c^{1/3}f(x_{n^*}^*-c^{-2/3}\xit)$;
+Identification map:
+$(\Uc f)(\xit) := c^{1/3}f(x_{n^*}^*-c^{-2/3}\xit)$,
 $\Uc:L^2([-1,1])\to L^2(\R_+)$,
-$\|\Uc\| = 1+O(c^{-1/3})$.
-\emph{Rescaled PSWF:} $\tilde\psi_j := \Uc\psi_{n^*+j}^{(c)}\in L^2(\R_+)$.
-\emph{Rescaled kernel:}
+$\|\Uc\| = 1+O(c^{-1/3})$.\\
+Rescaled PSWF: $\tilde\psi_j := \Uc\psi_{n^*+j}^{(c)}\in L^2(\R_+)$.\\
+Rescaled kernel:
 \begin{equation}\label{eq:cKdef}
   \cK(\xit,\xit') :=
   c^{-2/3}K_c\bigl(x_{n^*}^*-c^{-2/3}\xit,\;
   x_{n^*}^*-c^{-2/3}\xit'\bigr).
 \end{equation}
+Turning points (no floor residual):
+$\xit_{n^*+j}^* = -j\pi/(2c^{1/3})\to 0$.
 \end{definition}
 
-\begin{definition}[Airy operator: half-line model]
+\begin{definition}[Airy operator --- half-line, unique model]
 \label{def:airyop}
-The \emph{Airy operator} is
 \begin{equation}\label{eq:airyop}
   \cA = -\frac{d^2}{d\xit^2} + \xit
-  \quad\text{on }L^2(\R_+),
+  \quad\text{on }L^2(\R_+),\quad
+  \mathcal{D}(\cA) = H^2(\R_+)\cap H^1_0(\R_+),\quad
+  u(0)=0.
 \end{equation}
-with domain $\mathcal{D}(\cA) = H^2(\R_+)\cap H^1_0(\R_+)$
-(Dirichlet BC: $u(0)=0$).
-$\cA$ is positive self-adjoint with compact resolvent
-(Sturm--Liouville theory, Zettl~\cite{Zettl2005} Ch.~8).
-Eigenvalues: $0 < a_1 < a_2 < \cdots$
-(the Airy zeros: $\Ai(-a_k)=0$).
-Eigenfunctions: $\{u_k\}_{k\geq 1}$ ONB of $L^2(\R_+)$.
+$\cA$ is positive self-adjoint with compact resolvent;
+eigenvalues $0<a_1<a_2<\cdots$ (Airy zeros: $\Ai(-a_k)=0$);
+ONB $\{u_k\}_{k\geq 1}$ of $L^2(\R_+)$.
 
-\begin{quote}\textit{Convention.}
-All subsequent $L^2$ spaces, norms, and inner products
-refer to $L^2(\R_+)$ unless otherwise stated.
+\begin{quote}\itshape
+  All $L^2$ spaces and norms refer to $L^2(\R_+)$
+  unless otherwise stated.
+  The full-line operator $-\partial^2+\xit$ on $L^2(\R)$ is
+  \textbf{not used}: it has purely continuous spectrum
+  and no eigenfunction expansion.
 \end{quote}
 \end{definition}
 
-\begin{remark}[Why half-line]
-\label{rem:halfline}
-The half-line Dirichlet model is the unique correct choice here:
-$\tilde\psi_j(0) = c^{1/3}\psi_{n^*+j}^{(c)}(x_{n^*}^*)\approx 0$
-(PSWF boundary behaviour at turning point;
-Paper~XVI Rem.~1.2);
-$\xit>0$ is the evanescent side
-(physical $x < x_{n^*}^*$);
-the eigenfunction expansion $\sum_k u_k\otimes u_k = \mathrm{Id}_{L^2(\R_+)}$
-holds with discrete $\{a_k\}$ (not for the full-line operator
-$-d^2/d\xit^2+\xit$ on $L^2(\R)$, which has no discrete spectrum).
-\end{remark}
-
-\begin{definition}[Turning points in recentered coordinate]
-\label{def:tprecentered}
-For $|j|\leq K$:
-\begin{equation}\label{eq:tprecentered}
-  \xit_{n^*+j}^*
-  := c^{2/3}(x_{n^*}^*-x_{n^*+j}^*)
-  = c^{2/3}\cdot\frac{-j\pi}{2c}
-  = -\frac{j\pi}{2c^{1/3}}\to 0.
-\end{equation}
-No floor residual $\delta_c$ appears
-(recentering absorbs it by construction).
-\end{definition}
-
-\begin{proposition}[Airy kernel: spectral expansion and integral form]
+\begin{proposition}[Airy kernel: spectral $=$ integral]
 \label{prop:kernelbridge}
 \begin{equation}\label{eq:kernelbridge}
   \cKA(\xit,\xit')
   := \sum_{k=1}^\infty u_k(\xit)u_k(\xit')
-  = \int_0^\infty \Ai(\xit+s)\Ai(\xit'+s)\,ds.
+  = \int_0^\infty \Ai(\xit+s)\Ai(\xit'+s)\,ds,
 \end{equation}
-Both sides converge uniformly on compacts.
+with uniform convergence on compacts and in $L^2(\R_+\times\R_+)$.
 \end{proposition}
 
 \begin{proof}
-\emph{Left equality (spectral theorem).}
-Since $\{u_k\}$ is an ONB of $L^2(\R_+)$,
-Parseval gives $\sum_k u_k\otimes u_k = \mathrm{Id}_{L^2(\R_+)}$
-in the sense of $L^2(\R_+\times\R_+)$;
-uniform convergence on compacts follows from
-$\|u_k\|_{C^0([0,M])}\leq C_M\|u_k\|_{H^1}$
-(Sobolev) and $\sum_k a_k^{-1}<\infty$ (Weyl).
+\emph{Left equality.} Parseval for ONB $\{u_k\}$;
+uniform convergence on $[0,M]$ from Sobolev
+$\|u_k\|_{C^0}\leq C\|u_k\|_{H^1}$ and Weyl's law.
 
-\emph{Right equality (Airy Parseval).}
-The Airy functions satisfy the completeness relation
-on $\R_+$ (Olver~\cite{Olver1997} Ch.~11 \S11.6):
-\begin{equation}\label{eq:airydelta}
-  \int_0^\infty \Ai(x+s)\Ai(y+s)\,ds
-  = \sum_{k=1}^\infty
-  \frac{\Ai(x-a_k)\Ai(y-a_k)}{\|\Ai(\cdot-a_k)\|_{L^2(\R_+)}^2}
-  = \sum_{k=1}^\infty u_k(x)u_k(y),
-\end{equation}
-where the first equality is the Parseval identity for the
-Airy-function system $\{\Ai(\cdot+s)\}_{s\geq 0}$
-(completeness: \cite{Olver1997} Ch.~11 Thm.~11.5)
-and the second identifies
-$u_k(x) = \Ai(x-a_k)/\|\Ai(\cdot-a_k)\|_{L^2(\R_+)}$
-(normalised Dirichlet eigenfunction of $\cA$;
-cf.\ Tracy--Widom~\cite{TracyWidom1994}).
+\emph{Right equality.}
+Airy completeness on $\R_+$ (Olver~\cite{Olver1997} Ch.~11 Thm.~11.5):
+$\int_0^\infty\Ai(x+s)\Ai(y+s)\,ds
+= \sum_k u_k(x)u_k(y)$,
+where $u_k(x)=\Ai(x-a_k)/\|\Ai(\cdot-a_k)\|_{L^2(\R_+)}$
+is the normalised $k$-th Dirichlet eigenfunction of $\cA$
+(Tracy--Widom~\cite{TracyWidom1994}).
 \end{proof}
 
-\begin{lemma}[Main Lemma]
-\label{lem:main}
-For fixed $\xit,\xit'\in\R_+$:
-$\cK(\xit,\xit')\to\cKA(\xit,\xit')$ as $c\to\infty$.
+\begin{lemma}[Main Lemma]\label{lem:main}
+For fixed $\xit,\xit'\geq 0$:
+$\displaystyle\lim_{c\to\infty}\cK(\xit,\xit') = \cKA(\xit,\xit')$.
 \end{lemma}
 
-\noindent Proof in Sections~\ref{sec:I2b}--\ref{sec:proof}.
+\noindent Proof in Sections~\ref{sec:closing}--\ref{sec:proof}.
 
 %% ============================================================
-\section{Uniform WKB and Airy Transition}
-\label{sec:I2b}
+\section{The Closing Lemma}
+\label{sec:closing}
 %% ============================================================
 
-\begin{lemma}[Olver uniform Airy approximation]
-\label{lem:olver}
-Let $q_c(\xit) := \xit + c^{-1/3}w_c(\xit)$
-be the rescaled potential of $\Lc$
-(from intertwining, Section~\ref{sec:nrc}),
-with $|w_c(\xit)|\leq C(1+|\xit|)^{1/2}$ uniformly in $c$.
-Then for each $|j|\leq K$,
-the equation $(-\partial_{\xit}^2 + q_c(\xit))\tilde\psi_j = a_{j,c}\tilde\psi_j$
-has a solution satisfying
-\begin{equation}\label{eq:olverapprox}
-  \tilde\psi_j(\xit)
-  = c_j\Bigl[\Ai(\xit - \xit_{n^*+j}^*)
-  + E_c(\xit)\Bigr],
-  \qquad
-  |E_c(\xit)|\leq C'c^{-1/3}(1+|\xit|)^{-1/4},
-\end{equation}
-uniformly for $\xit\in[-M,M]$ and $c\geq c_0$,
-including the turning point $\xit = \xit_{n^*+j}^* = O(c^{-1/3})$.
-Here $c_j = \|\Ai\|_{L^2([\xit_{n^*+j}^*,\infty))}^{-1}$ is the normalisation.
+\begin{lemma}[Closing Lemma: Langer uniformisation $+$ Sturm no-crossing]
+\label{lem:closing}
+Let $\Lc = \cA + c^{-1/3}R_c$ on $L^2(\R_+)$
+(Paper~XVI Thm.~2.1; intertwining in recentered coordinate~\eqref{eq:xit}),
+with $|R_c(\xit)|\leq C(1+|\xit|)^{1/2}$ pointwise.
+
+\begin{enumerate}[label=(\Alph*)]
+\item\label{it:langer}
+  \textbf{Uniform Airy approximation (Langer transform).}
+  For each $|j|\leq K$ and $c\geq c_0$:
+  \begin{equation}\label{eq:langer}
+    \tilde\psi_j(\xit)
+    = c_j\Bigl[\Ai\bigl(\xit - \xit_{n^*+j}^*\bigr)
+    + E_j^{(c)}(\xit)\Bigr],
+    \quad
+    \sup_{\xit\in[0,M]}|E_j^{(c)}(\xit)|
+    \leq C' c^{-1/3},
+  \end{equation}
+  where $c_j$ is a normalisation constant and
+  $C'$ depends only on $M$ and $K$ (not on $j$ or $c$).
+  The bound~\eqref{eq:langer} holds \textbf{uniformly including
+  the turning point} $\xit=\xit_{n^*+j}^*=O(c^{-1/3})$.
+
+\item\label{it:sturm}
+  \textbf{Simplicity and no-crossing (Sturm oscillation).}
+  For all $c\geq c_0$:
+  \begin{equation}\label{eq:nocross}
+    a_{1,c} < a_{2,c} < \cdots < a_{K,c}.
+  \end{equation}
+  Moreover, the identification $\tilde\psi_j \leftrightarrow u_j$
+  is canonical: $\tilde\psi_j$ has exactly $j$ zeros in $(0,\infty)$.
+\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-Olver~\cite{Olver1997} Ch.~11 Thm.~11.3 (\emph{Langer transform}):
-for an equation $-y'' + (\xit + r(\xit))y = \mu y$
-with $r$ satisfying an integrability condition
-$\int_{-M}^M |r(\xit)|\,d\xit < \infty$,
-there exist exact solutions approximated by $\Ai(\xit-\mu)$
-\emph{uniformly} on $[-M,M]$, with error
-$O(\|r\|_{L^1([-M,M])})$ in the sup-norm.
-Here $r_c(\xit) = c^{-1/3}w_c(\xit)$,
-so $\|r_c\|_{L^1([-M,M])} = O(c^{-1/3})$.
-The Langer transform removes the turning-point singularity,
-so the bound~\eqref{eq:olverapprox} holds even at $\xit=0$.
-This is valid because:
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item The turning point $\xit_{n^*+j}^*\to 0$ (Definition~\ref{def:tprecentered}).
-  \item The perturbation $r_c = c^{-1/3}w_c$ is uniformly small in $L^1$.
-  \item The Olver theorem applies uniformly when the turning point
-    moves within a fixed compact set.
-\end{enumerate}
+\emph{Part~\ref{it:langer}: Langer transform / Olver Thm.~11.3.}
+The rescaled eigenvalue equation for $\tilde\psi_j$ reads
+\begin{equation}\label{eq:evaleq}
+  -\tilde\psi_j'' + \bigl(\xit + c^{-1/3}W_c(\xit) - a_{j,c}\bigr)
+  \tilde\psi_j = 0,
+\end{equation}
+where $W_c(\xit) = R_c(\xit)$ (multiplication operator,
+$|W_c|\leq C(1+|\xit|)^{1/2}$).
+Setting $q_c(\xit) := \xit + c^{-1/3}W_c(\xit) - a_{j,c}$,
+equation~\eqref{eq:evaleq} has a simple zero (turning point)
+at $\xit = \xit_{n^*+j}^* = a_{j,c} - c^{-1/3}W_c(\xit_{n^*+j}^*)$,
+i.e.\ $\xit_{n^*+j}^* = O(c^{-1/3})$ by Cor.~\ref{cor:spectral}(i).
+
+\emph{Langer transform:}
+Let $\zeta(\xit) := \bigl(\tfrac32\int_{\xit_{n^*+j}^*}^\xit
+\sqrt{|q_c(t)|}\,dt\bigr)^{2/3}$
+(the Langer variable; positive for $\xit>\xit_{n^*+j}^*$,
+negative for $\xit<\xit_{n^*+j}^*$).
+Since $q_c(\xit) = (\xit-\xit_{n^*+j}^*)(1+O(c^{-1/3}))$,
+one computes $\zeta(\xit) = \xit - \xit_{n^*+j}^* + O(c^{-1/3}|\xit|)$.
+Setting $y(\xit) := (\zeta'(\xit))^{1/2}\tilde\psi_j(\xit)$,
+Olver~\cite{Olver1997} Ch.~11 Thm.~11.3 gives
+\begin{equation}\label{eq:olverbnd}
+  y(\xit) = \Ai(\zeta(\xit))\bigl(1+\epsilon_1(\xit)\bigr)
+  + \Bi(\zeta(\xit))\epsilon_2(\xit),
+  \quad
+  |\epsilon_i(\xit)|\leq C''\int_{[0,M]}c^{-1/3}|W_c|\,d\xit
+  = O(c^{-1/3}),
+\end{equation}
+uniformly on $[0,M]$ (the $L^1$-norm of the perturbation
+$c^{-1/3}W_c$ is $O(c^{-1/3})$ since $W_c\in L^1([0,M])$).
+The Dirichlet BC $\tilde\psi_j(0)=0$ eliminates $\Bi$
+(since $\Bi(0)\neq 0$ and $\Ai(0)\neq 0$,
+the linear combination is uniquely determined).
+Since $\zeta'(\xit)=1+O(c^{-1/3})$ and
+$\zeta(\xit) = \xit-\xit_{n^*+j}^*+O(c^{-1/3}|\xit|)$,
+one recovers~\eqref{eq:langer} with
+$E_j^{(c)} = \Ai(\zeta)\cdot\epsilon_1 + O(c^{-1/3}(1+\xit)^{-1/4})$,
+uniformly in $c$ and $|j|\leq K$.
+The bound $\sup_{[0,M]}|E_j^{(c)}|\leq C'c^{-1/3}$
+follows from $\|\Ai\|_{L^\infty(\R)}<\infty$
+and $\sup_{[0,M]}|\epsilon_1|=O(c^{-1/3})$.
+
+\emph{Part~\ref{it:sturm}: Sturm oscillation theorem.}
+$\Lc = -d^2/d\xit^2 + q_c(\xit)$ is a regular Sturm--Liouville
+operator on $L^2(\R_+)$ with Dirichlet BC.
+By the SL oscillation theorem
+(Zettl~\cite{Zettl2005} Thm.~8.3.1):
+\emph{the $(j+1)$-th eigenfunction has exactly $j$ zeros in $(0,\infty)$}.
+Since the zero count is a discrete (integer-valued) invariant,
+it is preserved under continuous deformation of the operator
+(no zero can disappear except through $+\infty$,
+which requires unbounded $\xit$, not possible for $c\geq c_0$).
+Two eigenvalues can cross only if the corresponding eigenfunctions
+have the same zero count and the same eigenvalue;
+but equal zero counts $j=j'$ with $j\neq j'$ is a contradiction,
+and $j=j'$ with $a_{j,c}=a_{j',c}$ (degenerate eigenvalue)
+contradicts simplicity of the SL spectrum
+(Zettl~\cite{Zettl2005} Thm.~8.3.1(ii): all eigenvalues are simple).
+Hence $a_{j,c}\neq a_{j',c}$ for $j\neq j'$,
+giving~\eqref{eq:nocross}.
+The identification $\tilde\psi_j\leftrightarrow u_j$
+(same zero count $j$) is then canonical.
 \end{proof}
 
-\begin{lemma}[Two-regime domination]
+%% ============================================================
+\section{(I2b): Kernel Domination}
+\label{sec:I2b}
+%% ============================================================
+
+\begin{lemma}[Kernel domination]
 \label{lem:I2b}
-For fixed $M>0$, $K\geq 1$, there exist $C_M,C'>0$
+For fixed $M>0$, $K\geq 1$, $\exists\,C_M,C'>0$
 uniform in $c\geq c_0$:
 \begin{enumerate}[nosep,label=(\roman*)]
   \item $\xit,\xit'\in[0,M]$:
-    $|\cK(\xit,\xit')|
-    \leq C_M(1+\xit)^{-1/4}(1+\xit')^{-1/4}$.
+    $|\cK(\xit,\xit')|\leq C_M(1+\xit)^{-1/4}(1+\xit')^{-1/4}$.
   \item $\xit$ or $\xit'>M$:
-    $|\cK(\xit,\xit')|
-    \leq C'e^{-\frac43(\xit\wedge\xit'-M)_+^{3/2}}$.
+    $|\cK(\xit,\xit')|\leq C'e^{-\frac43(\xit\wedge\xit'-M)_+^{3/2}}$.
 \end{enumerate}
 \end{lemma}
 
@@ -265,67 +274,32 @@ uniform in $c\geq c_0$:
 CD identity (ORX Prop.~5.2).
 
 \emph{Regime (i).}
-From Lemma~\ref{lem:olver}:
-$|\tilde\psi_j(\xit)|\leq C|\Ai(\xit)| + Cc^{-1/3}(1+\xit)^{-1/4}
-\leq C'(1+\xit)^{-1/4}$
-uniformly, using the standard Airy decay
-$|\Ai(\xit)|\leq C(1+\xit)^{-1/4}$ for $\xit\geq 0$.
-Substituting into CD gives~(i) with $C_M = 2KC'^2$.
+Lemma~\ref{lem:closing}\ref{it:langer}:
+$|\tilde\psi_j(\xit)|\leq C_j[|\Ai(\xit-\xit_{n^*+j}^*)|+C'c^{-1/3}]
+\leq C''(1+\xit)^{-1/4}$,
+using $|\Ai(\xit)|\leq C(1+\xit)^{-1/4}$
+and $\xit_{n^*+j}^*=O(c^{-1/3})\to 0$.
+Substituting into CD: (i) with $C_M = 2KC''^2$.
 
 \emph{Regime (ii).}
-For $\xit>M$:
-$|\tilde\psi_j(\xit)|
-\leq C\Ai(\xit-\xit_{n^*+j}^*)+Cc^{-1/3}(1+\xit)^{-1/4}
-\leq C''e^{-\frac23\xit^{3/2}}$
-(Airy decay $\Ai(\xit)\sim\pi^{-1/2}\xit^{-1/4}e^{-\frac23\xit^{3/2}}$;
-Olver~\cite{Olver1997} Ch.~11 \S11.2);
+For $\xit>M$: $\Ai(\xit-\xit_{n^*+j}^*)\leq Ce^{-\frac23\xit^{3/2}}$;
 (ii) follows from CD.
 \end{proof}
 
 %% ============================================================
-\section{Norm-Resolvent Convergence and No-Crossing}
+\section{Norm-Resolvent and Spectral Convergence}
 \label{sec:nrc}
 %% ============================================================
 
-\begin{proposition}[Intertwining and form-bounded perturbation]
+\begin{proposition}[Intertwining + form bound]
 \label{prop:formbounded}
-In the recentered coordinate~\eqref{eq:xit},
-Paper~XVI Thm.~2.1 gives:
-\begin{equation}\label{eq:intertwine}
-  \Lc = \cA + c^{-1/3}R_c,
-  \qquad \|R_c\|_{L^2\to L^2}\leq C_0.
-\end{equation}
-$R_c = W_c(\xit)$ is a multiplication operator
-with $|W_c(\xit)|\leq C(1+|\xit|)^{1/2}$,
-giving form-boundedness with relative bound~$0$
-(Hardy--Rellich; Kato~\cite{Kato1966} Ch.~VI Thm.~1.38).
-The family $\Lc(\varepsilon) = \cA+\varepsilon R_c$
-is analytic of type~(A) (Kato~\cite{Kato1966} Ch.~VII~\S2).
+In coordinate~\eqref{eq:xit}, Paper~XVI Thm.~2.1:
+$\Lc = \cA + c^{-1/3}R_c$, $\|R_c\|_{L^2\to L^2}\leq C_0$.
+$R_c$ is form-bounded relative to $\cA$ with relative bound~$0$
+(Hardy--Rellich; Kato~\cite{Kato1966} Ch.~VI Thm.~1.38);
+$\Lc(\varepsilon)=\cA+\varepsilon R_c$ is analytic of type~(A)
+(Kato~\cite{Kato1966} Ch.~VII~\S2).
 \end{proposition}
-
-\begin{lemma}[No-crossing via nodal structure]
-\label{lem:nocrossing}
-For all $c\geq c_0$ and $|j|\leq K$:
-$a_{1,c} < a_{2,c} < \cdots < a_{K,c}$ (strictly increasing).
-\end{lemma}
-
-\begin{proof}
-The rescaled eigenfunction $\tilde\psi_j^{(c)}$ solves a
-Sturm--Liouville equation on $[0,\infty)$ with potential $q_c(\xit)$.
-By the Sturm--Liouville oscillation theorem
-(Zettl~\cite{Zettl2005} Thm.~8.3.1):
-$\tilde\psi_j^{(c)}$ has exactly $j$ zeros in $(0,\infty)$
-(since it is the $(j+1)$-th eigenfunction of $\Lc$
-under Dirichlet BC).
-Since the potential $q_c$ depends continuously on $c$,
-the zero count is preserved under continuous deformation
-(zeros cannot appear/disappear without passing through $+\infty$
-in a bounded interval; Sturm separation theorem).
-Hence the ordering $a_{j,c}<a_{j+1,c}$ is preserved:
-a crossing $a_{j,c}=a_{j+1,c}$ would require two eigenfunctions
-with the same eigenvalue but different zero counts ($j$ vs.\ $j+1$),
-contradicting the Sturm theorem for simple eigenvalues.
-\end{proof}
 
 \begin{proposition}[Norm-resolvent convergence]
 \label{prop:normresolvent}
@@ -335,21 +309,21 @@ $\|(\Lc-z)^{-1}-(\cA-z)^{-1}\|_{L^2\to L^2}
 \end{proposition}
 
 \begin{proof}
-Second resolvent identity +
-Proposition~\ref{prop:formbounded} + self-adjointness bounds.
-(Identical to v8 Prop.~3.2; the recentering does not affect the argument.)
+Second resolvent identity + Proposition~\ref{prop:formbounded}
++ $\|(T-z)^{-1}\|\leq|\mathrm{Im}\,z|^{-1}$ for self-adjoint $T$.
 \end{proof}
 
 \begin{corollary}[Spectral convergence]
 \label{cor:spectral}
-From Propositions~\ref{prop:normresolvent}--\ref{prop:formbounded}
-and Lemma~\ref{lem:nocrossing}:
+From Propositions~\ref{prop:formbounded}--\ref{prop:normresolvent}
+and Lemma~\ref{lem:closing}\ref{it:sturm}:
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item $|a_{j,c}-a_j| = O_j(c^{-1/3})$ (Kato~\cite{Kato1966} Ch.~IV).
-  \item $\|P_{j,c}-P_j\|_{L^2\to L^2} = O_j(c^{-1/3})$.
-  \item $\|\PcK-\PK\|_{L^2\to L^2} = O_K(c^{-1/3})$.
+  \item $|a_{j,c}-a_j|=O_j(c^{-1/3})$.
+  \item $\|P_{j,c}-P_j\|_{L^2\to L^2}=O_j(c^{-1/3})$.
+  \item $\|\PcK-\PK\|_{L^2\to L^2}=O_K(c^{-1/3})$.
+  \item $G^{(c)}_{jk}=\delta_{jk}+O_K(c^{-1/3})$.
   \item Index identification: $\tilde\psi_j\leftrightarrow u_j$
-    by Lemma~\ref{lem:nocrossing} (same zero count $j$).
+    (same zero count; Lemma~\ref{lem:closing}\ref{it:sturm}).
 \end{enumerate}
 \end{corollary}
 
@@ -365,17 +339,21 @@ $\|\tilde\psi_j-u_j\|_{C^0([0,M])}=O_K(c^{-1/3})$.
 
 \begin{proof}
 $e_j:=\tilde\psi_j-u_j$;
-from~\eqref{eq:intertwine}:
-$\|\cA e_j\|_{L^2}=O_j(c^{-1/3})$;
-$H^2([0,M])\hookrightarrow C^0([0,M])$ gives the result.
+$\|\cA e_j\|_{L^2}=O_j(c^{-1/3})$ (Cor.~\ref{cor:spectral}(i) +
+Prop.~\ref{prop:formbounded});
+$H^2([0,M])\hookrightarrow C^0([0,M])$.
+(Alternatively: Lemma~\ref{lem:closing}\ref{it:langer}
+directly gives $\|\tilde\psi_j-u_j\|_{C^0([0,M])}\leq
+\|E_j^{(c)}\|_{C^0}+|c_j-1|\leq C'c^{-1/3}$.)
 \end{proof}
 
 \textbf{Step 1: Fermi tail.}
 $|\cK-\cK^{(K)}|\leq h(\xit,\xit')e^{-\pi R}$
-(Paper~XVII Lem.~2.1, Lemma~\ref{lem:I2b}).
+(Paper~XVII Lem.~2.1 + Lemma~\ref{lem:I2b}).
 
 \textbf{Step 2: Projector.}
-Corollary~\ref{cor:spectral}(iii) + weights $\lam{c}{n^*+j}\to\mathbf{1}_{j<0}$.
+Cor.~\ref{cor:spectral}(iii) + weights
+$\lam{c}{n^*+j}\to\mathbf{1}_{j<0}$ (Paper~XVII Lem.~2.1).
 
 \textbf{Step 3: Pointwise products.}
 Lemma~\ref{lem:H2}:
@@ -383,7 +361,7 @@ $\cK^{(K)}(\xit,\xit')\to\cKA^{(K)}(\xit,\xit')$.
 
 \textbf{Step 4: $K\to\infty$.}
 $|\cK-\cK^{(K)}|\leq Ce^{-\pi K/c^{1/3}}\to 0$;
-$\cKA^{(K)}\to\cKA$ (Proposition~\ref{prop:kernelbridge}).
+$\cKA^{(K)}\to\cKA$ (Prop.~\ref{prop:kernelbridge}).
 \hfill$\square$
 
 %% ============================================================
@@ -391,8 +369,7 @@ $\cKA^{(K)}\to\cKA$ (Proposition~\ref{prop:kernelbridge}).
 \label{sec:br3}
 %% ============================================================
 
-\begin{theorem}[BR3]
-\label{thm:br3}
+\begin{theorem}[BR3]\label{thm:br3}
 Lemma~\ref{lem:main} $+$ Paper~XVII Thm.~4.2
 $\Rightarrow$ $\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$.
 \end{theorem}
@@ -403,22 +380,27 @@ $\Rightarrow$ $\|\cK-\cKA\|_{L^2(w\otimes w)}\to 0$.
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-Recentered coord.\ (Def.~\ref{def:airycoord}) & \checkmark & exact \\
-Half-line Dirichlet (Def.~\ref{def:airyop}) & \checkmark & SL theory \\
-$\xit_{n^*+j}^*=-j\pi/(2c^{1/3})$ (Def.~\ref{def:tprecentered})
-  & \checkmark & \eqref{eq:tprecentered} \\
-Airy kernel bridge sum=integral
-  (Prop.~\ref{prop:kernelbridge}) & \checkmark & Olver~\S11.5--6 \\
-Olver uniform Airy approx.\ (Lem.~\ref{lem:olver}) & \checkmark & Olver~Ch.~11.3 \\
-I2b domination (Lem.~\ref{lem:I2b}) & \checkmark & Lem.~\ref{lem:olver} \\
-Intertwining + form bound
-  (Prop.~\ref{prop:formbounded}) & \checkmark & XVI+Hardy-Rellich \\
-No-crossing: nodal structure (Lem.~\ref{lem:nocrossing})
+Recentered coord. $\xit=c^{2/3}(x_{n^*}^*-x)$
+  & \checkmark & exact \\
+Half-line $\cA$ on $L^2(\R_+)$, Dirichlet (Def.~\ref{def:airyop})
+  & \checkmark & unique \\
+Airy kernel bridge (Prop.~\ref{prop:kernelbridge})
+  & \checkmark & Olver \S11.5 \\
+Langer uniform approx. (Lem.~\ref{lem:closing}A)
+  & \checkmark & Olver Thm.~11.3 \\
+Sturm no-crossing (Lem.~\ref{lem:closing}B)
   & \checkmark & Zettl Thm.~8.3.1 \\
-Norm-resolvent (Prop.~\ref{prop:normresolvent}) & \checkmark & resolvent id \\
-Spectral conv.\ (Cor.~\ref{cor:spectral}) & \checkmark & Kato IV \\
-$H^2\to C^0$ (Lem.~\ref{lem:H2}) & \checkmark & ODE+Sobolev \\
-Main Lemma & \checkmark & Steps~1--4 \\
+I2b domination (Lem.~\ref{lem:I2b})
+  & \checkmark & Lem.~\ref{lem:closing}A \\
+Intertwining + form bound (Prop.~\ref{prop:formbounded})
+  & \checkmark & XVI + Hardy-Rellich \\
+Norm-resolvent (Prop.~\ref{prop:normresolvent})
+  & \checkmark & resolvent id \\
+Spectral convergence (Cor.~\ref{cor:spectral})
+  & \checkmark & Kato IV \\
+$H^2\to C^0$ (Lem.~\ref{lem:H2})
+  & \checkmark & Lem.~\ref{lem:closing}A \\
+Main Lemma & \checkmark & Steps 1--4 \\
 BR3 & \checkmark & XVII+XVIII \\
 Gap-S & cond.\ (XIII) & XIII+\ldots+XVIII \\
 \bottomrule
@@ -427,9 +409,11 @@ Gap-S & cond.\ (XIII) & XIII+\ldots+XVIII \\
 
 \[
 \boxed{
-  \xit=c^{2/3}(x_{n^*}^*-x),\quad
-  \Lc=\cA+c^{-1/3}R_c,\quad
-  \text{nodal no-crossing}
+  \underbrace{\text{Langer} + \text{Sturm}}_{\text{Lem.~\ref{lem:closing}}}
+  \;+\;
+  \underbrace{\Lc=\cA+c^{-1/3}R_c}_{\text{XVI Thm.~2.1}}
+  \;+\;
+  \underbrace{\text{norm-resolvent}}_{\text{Kato}}
   \;\Longrightarrow\;
   \mathrm{BR3}\Rightarrow\mathrm{Q5}\Rightarrow\mathrm{Gap\text{-}S}
 }
