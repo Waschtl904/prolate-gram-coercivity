@@ -6,7 +6,9 @@ spheroidal wave functions (PSWFs), with connections to operator-theoretic
 approaches to Weil positivity.
 
 **Current state: Papers I–VIII complete. Hypotheses H1 and H2 of Paper VII are now unconditional.
-The sole remaining open problem is B-strong.**
+The sole remaining gap in the original programme is B-strong.
+Airy Edge Programme (Papers XIII–XVI): unconditional lower bound (Q5-lower) proved;
+bridge to trace-norm control in progress.**
 
 ---
 
@@ -41,6 +43,10 @@ remaining gap.
 | `paper6.tex` | Galerkin norm estimates; No-Go theorem; B-strong framework | Complete |
 | `paper7_skeleton.tex` | Dyadic cancellation for PSWF Galerkin operators; H1 unconditional | Complete |
 | `paper8_scale_separated.tex` | Scale-separated dyadic cancellation; H2 unconditional; three-scale architecture | **Submission-ready** |
+| `paper13_gap_s.tex` | Gap-S obstruction; reduction of frame stability to (Q5) | Complete |
+| `paper14_airy_resolvent.tex` | Airy resolvent asymptotics; Framework paper: open problems map | Framework |
+| `paper15_quasimode.tex` | Quasimode construction; unconditional (Q5-lower): $N_\varphi \geq 2$ | **Proved ✅** |
+| `paper16_bridge.tex` | Bridge Reduction Lemma; quasimode stability ⇒ quadratic form convergence | **BR1-finite ✅** |
 
 Companion notes (proved results, ready to insert into papers):
 
@@ -65,21 +71,77 @@ Internal documentation:
 
 ---
 
-## What is Now Unconditional
+## Airy Edge Programme (Papers XIII–XVI)
+
+This sub-programme addresses **condition (Q5)**:
+how many eigenvalues of $\mathcal{K}_c$ lie in a $c^{-1/3}$-window
+near the transition point $z_{n^*}$?
+The answer drives Gap-S (Paper XIII, Theorem B) and hence the full
+frame stability theory.
+
+### Three-Layer Architecture
+
+| Layer | Paper | Content | Status |
+|---|---|---|---|
+| **I. Local / Existential** | XV | Airy quasimodes → $N_\varphi \geq 2$ unconditionally | ✅ **Proved** |
+| **II. Form Stability** | XVI | Quasimode stability ⇒ quadratic form convergence (BR1-finite) | ✅ **Proved** |
+| **II. Form Stability** | XVI | $L^2$ kernel rate ⇒ strong resolvent conv.\ (BR1-global) | ⚠️ Conditional |
+| **III. Global / Trace** | XIV | Weighted kernel conv.\ ⇒ trace-norm conv.\ (BR3) | 🔴 Open (hardest) |
+| **III. Global / Trace** | XIV | $N_\varphi \leq 2$ (upper count) | 🔴 Open (needs BR3) |
+
+### Logical Chain (Papers XIII–XVI → Gap-S)
+
+```
+Paper XV (unconditional)
+  Spectral ID Principle + Airy quasimodes
+      ↓ [Paper XVI, Thm 2.1, unconditional]
+  BR1-finite: form convergence on Airy subspaces
+      ↓ [Paper XVI, Thm 3.2, + L² kernel rate assumption]
+  BR1-global: strong resolvent convergence
+      ↓ [Paper XIV, + BR3: weighted kernel convergence]
+  Trace-norm resolvent convergence
+      ↓ [Paper XIV, Helffer–Sjöstrand]
+  (Q5): N_φ(c) = 2 + O(c^{-1/3})
+      ↓ [Paper XIII, Theorem B]
+  Gap-S
+```
+
+### What Is Unconditional After Papers XV–XVI
+
+- **Spectral Identification Principle** (XVI, Prop. 1.1):
+  the PSWE→$\mathcal{K}_c$ transfer is rigorous via shared eigenbasis. ✅
+- **Spectral concentration** (XVI, Cor. 1.3):
+  Airy quasimodes concentrate on $\psi_{n^*+k}^{(c)}$ with error $O(c^{-1/3})$. ✅
+- **Form convergence on finite subspaces** (XVI, Thm. 2.1):
+  $\mathfrak{q}[B_c](u,v) \to \mathfrak{q}[\mathcal{A}](u,v)$ on Airy-generated subspaces,
+  rate $O(c^{-1/6})$. ✅
+- **(Q5-lower)** (XV, Thm. 1.1):
+  $N_\varphi(c) \geq 2$ for all large $c$. ✅
+
+### Open Problems (Airy Edge Programme)
+
+| Problem | Location | Difficulty |
+|---|---|---|
+| $L^2$ kernel rate (Ass. 3.1, XVI) | XVI §3 | Medium — Olver-type PSWE asymptotics |
+| Bulk–edge microlocal separation | XIV, Prob. 4 | Hard |
+| BR3: weighted kernel convergence | XIV, Prob. 4.1; XVI, Prob. 4.1 | **Hardest** |
+| Index matching: sub-leading Weyl | XIV, Prob. 4.4 | Medium–hard (new) |
+| (Q5-upper): $N_\varphi \leq 2$ | XIV | Needs BR3 |
+
+---
+
+## What is Now Unconditional (Full Programme)
 
 The following results hold **without any remaining assumptions**:
 
 - **ass:bulkconv** (Assumption 2.4, Paper III): proved for γ < 1/2 via Bridge Lemma (Paper V) ✅
-- **Phase Non-Degeneracy**: α^(c) = π/2 + O(c^{−1/3}), so dist(α^(c), {0,π}) ≥ π/4 for all large c;
-  Conjecture 6.1 of Paper VI proved (`phase_nondeg_lemma.tex`) ✅
-- **Proposition U and U'** (Paper VIII): ||λ_l − F_Ai(x_l)|| ≤ C₁c^{−2/3} and the discrete
-  derivative stability bound, both proved (`airy_discrete_stability_lemma.tex`) ✅
-- **ass:gap** (Assumption 1, Paper VIII): uniform spectral gap λ_l − λ_{l+1} ≥ κ₀ (c/2)^{−1/3}
-  with κ₀ = c_min/2, proved unconditionally (`airy_discrete_stability_lemma.tex`) ✅
-- **H1** (Paper VII, phase hypothesis): unconditional ✅
-- **H2** (Paper VII/VIII, amplitude regularity): unconditional via ass:gap + Prop. U' ✅
-- **Lemma F** (Dyadic Separation Principle, Paper VIII): unconditional ✅
-- **Corollary C** (Paper VIII): unconditional ✅
+- **Phase Non-Degeneracy**: α^(c) = π/2 + O(c^{−1/3}), dist(α^(c), {0,π}) ≥ π/4 for all large c ✅
+- **Proposition U and U'** (Paper VIII): Airy discrete stability bounds unconditional ✅
+- **ass:gap** (Paper VIII): uniform spectral gap unconditional ✅
+- **H1, H2** (Paper VII/VIII): unconditional ✅
+- **Lemma F, Corollary C** (Paper VIII): unconditional ✅
+- **(Q5-lower)**: $N_\varphi(c) \geq 2$ for all large $c$ (Paper XV) ✅
+- **BR1-finite**: form convergence on Airy subspaces (Paper XVI) ✅
 
 ---
 
@@ -94,53 +156,28 @@ of the dyadic cancellation mechanism:
 | Local Airy `(c/2)^{−1/3}` | Airy / WKB | Proposition U(U'), Lemma A | ✅ Unconditional |
 | Global Landau–Widom `(log c)^{2/3}` | erfc profile | Conjecture ULW | 📊 Empirical only |
 
-The key algebraic mechanism: in Corollary C, Term 1, the factor `(c/2)^{−1/3}`
-cancels exactly between numerator and denominator, yielding an O(2^{−m}) bound
-**independent of c**.
-
-### Empirical evidence (Conjecture ULW)
-
-Numerical evidence for the **Landau–Widom global scaling law**:
-```
-λ_l ≈ (1/2) erfc( ln2 · (l − N_Sh − β(c)) / S(c) ),   S(c) = (log c/π)^{2/3}
-```
-with cross-bandwidth residuals ≈ 2·10^{−2} across c ∈ {50, 100, 200},
-decreasing with c. The centering parameter β(c) drifts slowly;
-its limit β(∞) ∈ [−0.30, −0.21] (empirical) is an open problem.
-
 ---
 
 ## Open Problems (May 2026)
 
-The program now has a single remaining structural gap:
-
-### The Sole Remaining Gap
+### Gap in Original Programme
 
 | Problem | Location | Status |
 |---|---|---|
-| **B-strong**: `P_{kl} ≤ C₂ c^{1/2}` in the transition zone | Paper VI/VII H3 | 🔴 Open |
+| **B-strong**: `P_{kl} ≤ C₂ c^{1/2}` in transition zone | Paper VI/VII H3 | 🔴 Open |
 
-Once B-strong is proved: H3 ✅ → Theorem 1 (Paper VII) unconditional → contraction estimate
-`‖DT_c^(N)‖ ≤ C c^{−1/2} log c < 1` for large c → Assumption A → complete theory.
+### Airy Edge Programme
 
-**Why B-strong is hard:** two concrete failure modes (Paper VI, Remark 5.2):
-- Non-uniform stationary phase in the transition zone
-- Correlated Airy factors (eigenvalue spacing and amplitude not independent)
+See table in § Airy Edge Programme above.
 
-**Route:** WKB/Airy matching at s* = 1 − c^{−2/3}, model problem formulation —
-likely a paper-level problem.
-
-### Secondary Open Problems
+### Secondary
 
 | Problem | Evidence / Status |
 |---|---|
 | **Conjecture ULW**: erfc global scaling law | Numerical residuals ≈ 2·10^{−2} |
 | Limit of β(c) as c → ∞ | Fitting suggests β(∞) ∈ [−0.30, −0.21] |
-| Bridge Lemma extension to γ ≥ 1/2 | Geometry breaks; stationary phase route open |
-| Off-diagonal decay (Assumption 3.1, Paper III) | Edge regime; Airy methods needed |
+| Bridge Lemma extension to γ ≥ 1/2 | Geometry breaks; stationary phase open |
 | Weil operator identification G_∞ (Paper II) | Structural; medium term |
-| XRY stability conjecture (Paper II_quad) | Conditional; medium term |
-| DSTP for prime sampling (Paper I) | Long term |
 
 ---
 
@@ -166,17 +203,18 @@ Assumption A → complete frame stability theory
 
 ───────────────────────────────────────────────
 
-Paper IV (PSWF equidistribution)
-    ↓ supplies Prüfer amplitude inputs
-Paper V (Bridge Lemma)
-    ↓ proves ass:bulkconv unconditionally for γ < 1/2
-Paper III (spectral tail bounds)
-    ↓ conditional bulk tail bound (edge regime open)
-Paper II_quad + XRY stability conjecture
+Paper XV (unconditional)
+    ↓ Airy quasimodes + Spectral ID Principle
+Paper XVI, Thm 2.1 (unconditional)
+    ↓ BR1-finite: form convergence on Airy subspaces
+Paper XVI, Thm 3.2 (+ L² kernel rate, open)
+    ↓ BR1-global: strong resolvent convergence
+Paper XIV (+ BR3: weighted kernel conv., open)
+    ↓ Trace-norm resolvent convergence
+    ↓ (Q5): N_φ(c) = 2 + O(c^{-1/3})
+Paper XIII, Theorem B
     ↓
-Paper I (frame stability under DSTP)
-    ↓
-Conditional frame stability for PSWF-Gauss sampling
+  Gap-S
 ```
 
 ---
@@ -186,6 +224,10 @@ Conditional frame stability for PSWF-Gauss sampling
 - Osipov–Rokhlin–Xiao (2013): *Prolate Spheroidal Wave Functions of Order Zero*, Springer
 - Slepian (1978): *Prolate spheroidal wave functions, Fourier analysis, and uncertainty V*, Bell Syst. Tech. J.
 - Xiao–Rokhlin–Yarvin (2001): *Prolate spheroidal wave functions, quadrature, and interpolation*, Inverse Problems
+- Kato (1966): *Perturbation Theory for Linear Operators*, Springer
+- Simon (2005): *Trace Ideals and Their Applications*, 2nd ed., AMS
+- Olver (1997): *Asymptotics and Special Functions*, AK Peters
+- Tracy–Widom (1994): Level-spacing distributions and the Airy kernel, Comm. Math. Phys. **159**
 - Connes–Consani–Moscovici (2022, 2025): UV prolate spectrum and zeros of zeta, PNAS; arXiv:2511.22755
 - Levitan–Sargsjan (1991): *Sturm–Liouville and Dirac Operators*, Kluwer
 - Weil (1952): *Sur les formules explicites de la théorie des nombres*
