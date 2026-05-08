@@ -1,0 +1,563 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+%%%─── Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{problem}[theorem]{Open Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%%%─── Macros
+\newcommand{\Kc}{\mathcal{K}_c}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
+\newcommand{\gap}[2]{\mathrm{gap}_{#2}^{(#1)}}
+\newcommand{\Ai}{\mathrm{Ai}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+
+\subjclass[2020]{47B34, 45C05, 35P20, 47A55, 34E20, 81Q20}
+\keywords{Prolate spheroidal wave functions, sinc kernel, resolvent asymptotics,
+  Airy operator, double-scaling limit, Fredholm determinant, spectral counting}
+
+\begin{document}
+
+\title[Paper XIV: Airy Resolvent for Sinc Kernel]{%
+  Paper~XIV: Airy Resolvent Asymptotics for the Sinc Kernel Operator\\[0.3em]
+  \large Towards a Proof of the Local Spectral Counting Condition~(Q5)}
+
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{abstract}
+Paper~XIII identified condition~(Q5) --- the local spectral counting
+statement $N_\varphi(c) = 2$ in a $c^{-1/3}$-scale transition window ---
+as the primary obstruction to Gap-S.
+In its binary form, (Q5) is a reformulation of the spectral problem,
+not a reduction from independent principles.
+This paper initiates the programme to convert~(Q5) into a genuine
+reduction by controlling
+\[
+  \Tr[\varphi_c(\Kc)] =
+  -\frac{1}{\pi}\int_{\C}\partial_{\bar z}\tilde\varphi_c(z)\,
+  \Tr[(\Kc - z)^{-1}]\,d^2z
+\]
+directly from the integral-operator structure of~$\Kc$.
+
+\medskip\noindent
+\textbf{Central target.}
+Derive the leading asymptotic expansion
+\[
+  \Tr[(\Kc - z)^{-1}] \sim
+  c\cdot R_0(z) + c^{2/3}\cdot R_{\mathrm{Ai}}(z;\,\xi) + O(c^{1/3})
+\]
+in the double-scaling regime
+$z = z_n + c^{-1/3}\zeta$, $z_n = \lam{c}{n}$,
+where $R_{\mathrm{Ai}}$ is the resolvent of the Airy operator
+$\mathcal{A} = -d^2/d\xi^2 + \xi$ on $L^2(\R_+)$.
+
+\medskip\noindent
+\textbf{If achieved}, this gives:
+\begin{itemize}
+  \item $N_\varphi(c) = \Tr[\varphi_c(\Kc)] = 2 + O(c^{-1/3})$
+    for cutoffs $\varphi_c$ adapted to the $c^{-1/3}$-window;
+  \item condition~(Q5) from integral-operator asymptotics alone,
+    independent of the eigenvalues themselves;
+  \item Gap-S under the remaining assumptions of Theorem~B (Paper~XIII).
+\end{itemize}
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Setup and Goal}
+\label{sec:setup}
+%% ============================================================
+
+\subsection{The operator and the transition regime}
+
+The prolate concentration operator is
+\begin{equation}\label{eq:Kc}
+  (\Kc f)(x) = \int_{-1}^1 \frac{\sin(c(x-y))}{\pi(x-y)} f(y)\,dy,
+  \quad f \in L^2([-1,1]),
+\end{equation}
+with eigenvalues $1 > \lam{c}{0} \geq \lam{c}{1} \geq \cdots > 0$
+and the Weyl-type count
+\begin{equation}\label{eq:Weyl}
+  \#\{n : \lam{c}{n} > \mu\} \sim \frac{2c}{\pi}\quad (\mu \approx 1/2,\;c\to\infty).
+\end{equation}
+The \emph{transition index} satisfies $n^* \sim 2c/\pi$;
+the \emph{transition regime} is $n = n^* + k$ with $k \sim c^{1/3}$.
+
+\subsection{The missing theorem}
+
+Define the \emph{transition window} centred at $z_n^* := \lam{c}{n^*}$:
+\begin{equation}\label{eq:window}
+  W_c(\zeta_0) :=
+  \bigl[z_n^* - \zeta_0 c^{-1/3},\; z_n^* + \zeta_0 c^{-1/3}\bigr],
+  \quad \zeta_0 > 0 \text{ fixed}.
+\end{equation}
+For a smooth cutoff $\varphi_c \in C_c^\infty(W_c(\zeta_0))$, $0 \leq \varphi_c \leq 1$,
+equal to $1$ on $W_c(\zeta_0/2)$, define
+\begin{equation}\label{eq:smoothcount}
+  N_\varphi(c) := \Tr[\varphi_c(\Kc)] = \sum_j \varphi_c(\lam{c}{j}).
+\end{equation}
+
+\begin{problem}[Main target of Paper~XIV]
+\label{prob:main}
+Prove
+\begin{equation}\label{eq:target}
+  N_\varphi(c) = 2 + O(c^{-1/3})
+\end{equation}
+from the integral-operator structure of $\Kc$,
+without reference to the individual eigenvalues $\lam{c}{j}$.
+\end{problem}
+
+This is condition~(Q5) of Paper~XIII~\cite{paper13},
+now reformulated as a \emph{trace asymptotics problem}.
+
+%% ============================================================
+\section{The Double-Scaling Limit}
+\label{sec:doublescaling}
+%% ============================================================
+
+\subsection{Scaling ansatz}
+
+In the transition regime, the natural variables are:
+\begin{equation}\label{eq:scaling}
+  x = 1 - c^{-2/3}\xi, \quad
+  y = 1 - c^{-2/3}\eta, \quad
+  z = z_n^* + c^{-1/3}\zeta,
+\end{equation}
+where $\xi,\eta \in \R_+$ and $\zeta \in \C\setminus\R$.
+This is the \emph{Airy double-scaling}: the spatial variable
+scales as $c^{-2/3}$ (same as classical turning-point scale),
+and the spectral variable scales as $c^{-1/3}$.
+
+\begin{remark}[Motivation from random matrix theory]
+For the GUE and the sine kernel, an analogous double-scaling at the
+spectral edge produces the Airy kernel operator
+\begin{equation}\label{eq:Airykernel}
+  K_{\Ai}(\xi,\eta) =
+  \frac{\Ai(\xi)\Ai'(\eta) - \Ai'(\xi)\Ai(\eta)}{\xi - \eta}
+\end{equation}
+as the universal limiting kernel (Tracy--Widom).
+For the sinc kernel $K_c(x,y) = \sin(c(x-y))/(\pi(x-y))$,
+a similar but distinct double-scaling at the endpoint $x=\pm 1$
+produces (heuristically) a modified Airy-type operator.
+The key difference: the sinc kernel is not translation-invariant
+on $[-1,1]$, so universality does not follow automatically.
+\end{remark}
+
+\subsection{The target resolvent expansion}
+
+Let $R(z;c) := (\Kc - z)^{-1}$ for $\mathrm{Im}(z) \neq 0$.
+In the double-scaling limit~\eqref{eq:scaling}, we expect:
+\begin{equation}\label{eq:resolventexp}
+  \boxed{
+  R(z_n^* + c^{-1/3}\zeta;\, c)
+  \;\sim\;
+  c\cdot R_0(z_n^*)
+  \;+\;
+  c^{2/3}\cdot R_{\mathrm{Ai}}(\zeta)
+  \;+\;
+  c^{1/3}\cdot R_1(\zeta)
+  \;+\; O(1)
+  }
+\end{equation}
+in an appropriate operator norm, where:
+\begin{enumerate}[label=(\roman*)]
+  \item $R_0(z_n^*)$: the \emph{bulk resolvent}, capturing the
+    global eigenvalue density away from the transition;
+  \item $R_{\mathrm{Ai}}(\zeta) = (\mathcal{A} - \zeta)^{-1}$:
+    the \emph{Airy resolvent}, where
+    $\mathcal{A} = -d^2/d\xi^2 + \xi$ on $L^2(\R_+)$
+    with Dirichlet boundary condition at $\xi=0$;
+  \item $R_1(\zeta)$: a correction term depending on the
+    specific geometry of the interval $[-1,1]$;
+    this term is absent for the sine kernel on $\R$.
+\end{enumerate}
+
+\begin{remark}[Status of \eqref{eq:resolventexp}]
+Expansion~\eqref{eq:resolventexp} is a \emph{conjecture}.
+It is motivated by:
+\begin{itemize}[nosep]
+  \item The Tracy--Widom scaling for the GUE hard edge;
+  \item Semiclassical turning-point theory for the differential
+    equation satisfied by PSWFs
+    (prolate spheroidal wave equation, PSWE);
+  \item The Widom-type formula for the global trace:
+    $\Tr[\Kc] \sim 2c/\pi + O(\log c)$ (Widom~\cite{Widom1964}).
+\end{itemize}
+Verifying~\eqref{eq:resolventexp} rigorously is the central analytic
+goal of this paper.
+\end{remark}
+
+\subsection{Trace asymptotics from the resolvent expansion}
+
+Assume~\eqref{eq:resolventexp} holds in trace norm.
+Applying the Helffer--Sj\"ostrand formula
+\begin{equation}\label{eq:HS}
+  N_\varphi(c) =
+  -\frac{1}{\pi}\int_{\C}\partial_{\bar z}\tilde\varphi_c(z)\,
+  \Tr[R(z;c)]\,d^2z
+\end{equation}
+with $\tilde\varphi_c$ an almost-analytic extension of $\varphi_c$
+supported in a $c^{-1/3}$-neighbourhood of $W_c$, and
+changing variables $z = z_n^* + c^{-1/3}\zeta$:
+\begin{equation}\label{eq:tracescaled}
+  N_\varphi(c) =
+  -\frac{c^{-1/3}}{\pi}\int_{\C}
+  \partial_{\bar\zeta}\tilde\varphi(\zeta)\,
+  \Tr[R(z_n^*+c^{-1/3}\zeta;c)]\,d^2\zeta.
+\end{equation}
+Inserting~\eqref{eq:resolventexp}:
+\begin{equation}\label{eq:traceexpand}
+  N_\varphi(c) \sim
+  \underbrace{-\frac{c^{2/3}}{\pi}\int_\C
+    \partial_{\bar\zeta}\tilde\varphi\cdot
+    \Tr[R_0]\,d^2\zeta}_{=\,0 \;(\text{$R_0$ holomorphic in }\zeta)}
+  \;+\;
+  \underbrace{-\frac{1}{\pi}\int_\C
+    \partial_{\bar\zeta}\tilde\varphi(\zeta)\cdot
+    \Tr[R_{\mathrm{Ai}}(\zeta)]\,d^2\zeta}_{=:\,N_{\mathrm{Ai}}(\varphi)}
+  \;+\; O(c^{-1/3}).
+\end{equation}
+The key step: the $c^{2/3}$-term vanishes because $R_0$ is
+holomorphic in $\zeta$ (bulk contribution).
+The leading term is then:
+\begin{equation}\label{eq:NAi}
+  N_{\mathrm{Ai}}(\varphi)
+  = -\frac{1}{\pi}\int_\C \partial_{\bar\zeta}\tilde\varphi(\zeta)\cdot
+  \Tr[(\mathcal{A}-\zeta)^{-1}]\,d^2\zeta
+  = \#\{\text{eigenvalues of }\mathcal{A}\text{ in }\mathrm{supp}(\varphi)\}.
+\end{equation}
+
+\begin{proposition}[Key reduction --- conditional on \eqref{eq:resolventexp}]
+\label{prop:keyreduction}
+Assume the resolvent expansion~\eqref{eq:resolventexp} holds in trace norm
+for $\zeta$ in a compact set and $c \to \infty$.
+Then:
+\[
+  N_\varphi(c) = N_{\mathrm{Ai}}(\varphi) + O(c^{-1/3}),
+\]
+where $N_{\mathrm{Ai}}(\varphi)$ counts eigenvalues of the Airy operator
+$\mathcal{A} = -d^2/d\xi^2 + \xi$ on $L^2(\R_+)$ in the window $\varphi$.
+In particular, if $\varphi$ is adapted to an interval containing
+exactly two consecutive zeros of the Airy function $\Ai$,
+then $N_\varphi(c) = 2 + O(c^{-1/3})$,
+i.e.\ condition~(Q5) holds.
+\end{proposition}
+
+\begin{remark}[Why two eigenvalues]
+The Airy operator $\mathcal{A}$ on $L^2(\R_+)$ with Dirichlet BC
+has eigenvalues at the zeros $-a_k$ of $\Ai$ ($a_1 < a_2 < \cdots$).
+Consecutive eigenvalue spacings satisfy
+$a_{k+1} - a_k \sim \pi / \sqrt{a_k} \to 0$ as $k\to\infty$,
+but for the \emph{first few} zeros the spacings are of order $1$
+(in the $c^{-1/3}$-scaled variable).
+A window of width $\sim c^{-1/3}$ in the original variable
+corresponds to a window of width $\sim 1$ in the $\zeta$-variable,
+which generically contains exactly one Airy eigenvalue.
+The count of $2$ requires the window to straddle two Airy zeros;
+this is the content of matching the PSWF transition index $n^*$
+to the correct Airy eigenvalue.
+\end{remark}
+
+%% ============================================================
+\section{The Airy Operator as Limit}
+\label{sec:airyop}
+%% ============================================================
+
+\subsection{The prolate spheroidal wave equation near the turning point}
+
+PSWFs $\psi_n^{(c)}$ satisfy the PSWE:
+\begin{equation}\label{eq:PSWE}
+  \frac{d}{dx}\bigl[(1-x^2)\psi'\bigr] + \bigl[\chi_n - c^2 x^2\bigr]\psi = 0,
+  \quad x \in [-1,1],
+\end{equation}
+where $\chi_n = \chi_n(c)$ is the $n$-th prolate eigenvalue.
+In the transition regime $n \sim 2c/\pi$, $x$ near $\pm 1$,
+the substitution $x = 1 - c^{-2/3}\xi$ and
+$\chi_n = c^2 - 2c^{4/3}(n - 2c/\pi)/\pi + \cdots$ transforms~\eqref{eq:PSWE} into
+\begin{equation}\label{eq:Airyeq}
+  \frac{d^2 u}{d\xi^2} = \xi \cdot u + o(1),
+  \quad \xi \in [0,\infty),
+\end{equation}
+which is precisely the Airy equation.
+The Airy operator $\mathcal{A} = -d^2/d\xi^2 + \xi$ therefore
+emerges as the \emph{leading-order limit} of the PSWE in the
+double-scaling regime.
+
+\begin{remark}[Known results]
+The Airy approximation for PSWFs near the turning point is
+known heuristically (Osipov--Rokhlin--Xiao~\cite{Osipov2013})
+and asymptotically at the level of individual functions.
+What is \emph{not} known is the trace-norm convergence of the
+corresponding resolvent, which is the analytic core of this paper.
+\end{remark}
+
+\subsection{The Airy operator and its resolvent}
+
+\begin{definition}[Airy operator]
+$\mathcal{A} := -d^2/d\xi^2 + \xi$ on $L^2(\R_+)$
+with domain $H^2(\R_+) \cap H^1_0(\R_+)$.
+\end{definition}
+
+$\mathcal{A}$ is self-adjoint and has discrete spectrum
+$\{-a_k : k \geq 1\}$ where $0 < a_1 < a_2 < \cdots$ are the
+positive zeros of $\Ai(-\cdot)$.
+Eigenfunctions: $u_k(\xi) = c_k \Ai(\xi - a_k)$.
+Resolvent for $\zeta \notin \{-a_k\}$:
+\begin{equation}\label{eq:Airyres}
+  (\mathcal{A}-\zeta)^{-1}u(\xi)
+  = \int_0^\infty G_{\mathcal{A}}(\xi,\eta;\zeta)\,u(\eta)\,d\eta,
+\end{equation}
+where $G_{\mathcal{A}}$ is the Green's function of the Airy equation
+with Dirichlet BC, explicitly:
+\begin{equation}\label{eq:AiryGreen}
+  G_{\mathcal{A}}(\xi,\eta;\zeta)
+  = \frac{\pi\,\Ai(\xi_>-\zeta)\,\Bi(\xi_<-\zeta)
+         - \pi\,\Bi(\xi_>-\zeta)\,\Ai(\xi_<-\zeta)}
+         {W[\Ai,\Bi](\cdot-\zeta)},
+\end{equation}
+with $\xi_< = \min(\xi,\eta)$, $\xi_> = \max(\xi,\eta)$.
+
+\begin{remark}[Trace of Airy resolvent]
+$\Tr[(\mathcal{A}-\zeta)^{-1}] = \sum_k \frac{1}{-a_k - \zeta}$
+has poles exactly at the Airy eigenvalues $\{-a_k\}$
+and encodes the eigenvalue counting via the residue theorem:
+\[
+  \#\{k : -a_k \in U\}
+  = \frac{1}{2\pi i}\oint_{\partial U} \Tr[(\mathcal{A}-\zeta)^{-1}]\,d\zeta
+\]
+for any contour $\partial U$ avoiding $\{-a_k\}$.
+This is the mechanism by which resolvent control yields counting control.
+\end{remark}
+
+%% ============================================================
+\section{The Resolvent Convergence Programme}
+\label{sec:programme}
+%% ============================================================
+
+\subsection{Steps required}
+
+To establish Proposition~\ref{prop:keyreduction} rigorously,
+the following chain of statements is required:
+
+\begin{enumerate}[label=\textbf{(S\arabic*)},leftmargin=2.5em]
+\item\label{S1} \textbf{Scaled kernel convergence.}
+  In the double-scaling~\eqref{eq:scaling}, the kernel of $\Kc$ satisfies
+  \[
+    c^{-2/3} K_c(1-c^{-2/3}\xi,\; 1-c^{-2/3}\eta)
+    \xrightarrow{c\to\infty} K_{\mathcal{A}}(\xi,\eta)
+  \]
+  in $L^2(\R_+ \times \R_+)$ or in an appropriate trace-class sense,
+  where $K_{\mathcal{A}}$ is the spectral projection kernel of $\mathcal{A}$
+  below some threshold.
+
+\item\label{S2} \textbf{Scaled resolvent convergence.}
+  The scaled resolvent
+  \[
+    c^{1/3}(\Kc - z_n^* - c^{-1/3}\zeta)^{-1}\big|_{\text{scaled domain}}
+    \to (\mathcal{A} - \zeta)^{-1}
+  \]
+  in trace-norm on the scaled domain,
+  uniformly for $\zeta$ in compact subsets of $\C\setminus\R$.
+
+\item\label{S3} \textbf{Trace-norm bound for the tail.}
+  The contribution from the bulk (eigenvalues far from $W_c$)
+  to $\Tr[\varphi_c(\Kc)]$ is $O(c^{-1/3})$.
+
+\item\label{S4} \textbf{Window calibration.}
+  The window $W_c(\zeta_0)$ in the $\zeta$-variable corresponds to
+  an interval $[-\zeta_0, \zeta_0]$ containing exactly two zeros
+  of $\Ai(-\cdot)$ for the appropriate $\zeta_0 > 0$
+  (i.e.\ $[-\zeta_0,\zeta_0] \supset \{-a_1,-a_2\}$
+  but $-a_3 \notin [-\zeta_0,\zeta_0]$).
+\end{enumerate}
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llp{4cm}l}
+\toprule
+\textbf{Step} & \textbf{Content} & \textbf{Key tool} & \textbf{Status}\\
+\midrule
+\ref{S1} & Kernel convergence & PSWE turning-point asymptotics & open \\
+\ref{S2} & Resolvent convergence & Trace-norm perturbation theory & open \\
+\ref{S3} & Tail control & Weyl remainder, Gram stability & open \\
+\ref{S4} & Window calibration & Zeros of $\Ai$: known explicitly & \checkmark\ (literature) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{The leading analytic difficulty: step (S2)}
+
+Step~\ref{S2} is the hardest. The core obstacle is:
+
+\begin{problem}[Trace-norm resolvent convergence]
+\label{prob:tracenorm}
+Let $\Kc^{(\mathrm{sc})}$ denote the scaled version of $\Kc$
+on $L^2([0,c^{2/3}])$ (after the substitution~\eqref{eq:scaling}).
+Prove:
+\begin{equation}\label{eq:tracenormconvergence}
+  \bigl\|(\Kc^{(\mathrm{sc})} - \zeta)^{-1} - (\mathcal{A}-\zeta)^{-1}\bigr\|_{\mathrm{tr}}
+  = O(c^{-1/3})
+\end{equation}
+uniformly for $\zeta$ in compact subsets of $\C\setminus\R$.
+\end{problem}
+
+\begin{remark}[Why trace-norm, not operator-norm]
+Operator-norm convergence of the resolvent would follow from
+strong resolvent convergence of $\Kc^{(\mathrm{sc})}$ to $\mathcal{A}$,
+which may be accessible via form convergence (PSWE $\to$ Airy ODE).
+However, for the trace formula~\eqref{eq:HS} to apply,
+one needs trace-norm (= nuclear norm) convergence.
+This requires $\|(\Kc^{(\mathrm{sc})} - \mathcal{A})\cdot(\mathcal{A}-\zeta)^{-2}\|_{\mathrm{tr}} = O(c^{-1/3})$,
+which in turn requires: the difference of the two kernels
+has a controlled $L^2$-trace,
+depending on the rate of kernel convergence in step~\ref{S1}.
+\end{remark}
+
+\subsection{The upper vs.\ lower counting bound}
+
+Proposition~\ref{prop:keyreduction} splits (Q5) into two separate inequalities:
+
+\begin{problem}[(Q5-upper): No spectral crowding]
+\label{prob:upper}
+Prove $N_\varphi(c) \leq 2 + O(c^{-1/3})$
+(at most two eigenvalues in $W_c$).
+This is the harder direction: it requires
+the \emph{full} resolvent expansion~\eqref{eq:resolventexp}
+to exclude extra eigenvalues crowding the window.
+\end{problem}
+
+\begin{problem}[(Q5-lower): No eigenvalue escape]
+\label{prob:lower}
+Prove $N_\varphi(c) \geq 2 - O(c^{-1/3})$
+(at least two eigenvalues in $W_c$).
+This is the easier direction: quasimode injection.
+If two approximate eigenvectors $f_n^{(c)}, f_{n+1}^{(c)}$
+with centre $\mu_n, \mu_{n+1} \in W_c$ and residual $\varepsilon = o(c^{-1/3})$ exist,
+then $\Tr[\varphi_c(\Kc)] \geq 2 - O(\varepsilon/c^{-1/3})$.
+\end{problem}
+
+%% ============================================================
+\section{Connection to Fredholm Determinants}
+\label{sec:fredholm}
+%% ============================================================
+
+An equivalent formulation of the resolvent programme uses
+the Fredholm determinant $D_c(\lambda) := \det(I - \lambda \Kc)$.
+
+\begin{remark}[Fredholm determinant and local zeros]
+For $\mathrm{Im}(z) \neq 0$:
+\[
+  \frac{d}{dz}\log D_c(1/z) = \frac{1}{z^2}\Tr[(\Kc - z)^{-1}].
+\]
+Local eigenvalue counting in $W_c$ corresponds to counting zeros of
+$\lambda \mapsto D_c(1/\lambda)$ in a $c^{-1/3}$-neighbourhood.
+In the double-scaling limit, the prediction is:
+\begin{equation}\label{eq:Dscaling}
+  \log D_c(1/(z_n^* + c^{-1/3}\zeta))
+  \sim \log D_{\mathcal{A}}(\zeta) + O(c^{-1/3} \log c),
+\end{equation}
+where $D_{\mathcal{A}}(\zeta) := \det(\mathcal{A} - \zeta)$
+(suitably regularised Fredholm determinant of the Airy operator).
+The zeros of $D_{\mathcal{A}}$ are precisely the Airy eigenvalues $\{-a_k\}$,
+and a Rouché-type argument would then identify local zeros of
+$D_c$ with those of $D_{\mathcal{A}}$.
+This is the cleanest route to (Q5) if~\eqref{eq:Dscaling} can be established.
+\end{remark}
+
+%% ============================================================
+\section{Programme State and Open Problems}
+\label{sec:state}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{4.0cm} p{3.2cm} p{2.5cm} l}
+\toprule
+\textbf{Claim} & \textbf{Content} & \textbf{Tool} & \textbf{Status}\\
+\midrule
+Kernel convergence (S1)
+  & Sinc $\to$ Airy in $L^2$
+  & PSWE asymptotics & open \\
+Resolvent convergence (S2)
+  & Trace-norm, $O(c^{-1/3})$
+  & Perturbation theory & open (hardest) \\
+Tail control (S3)
+  & Bulk contrib.\ $O(c^{-1/3})$
+  & Weyl + Gram & open \\
+Window calibration (S4)
+  & 2 Airy zeros in $W_c$
+  & Zeros of $\Ai$
+  & \checkmark\ known \\
+Prop.~\ref{prop:keyreduction}
+  & $N_\varphi = 2+O(c^{-1/3})$
+  & (S1)--(S4)
+  & conditional \\
+(Q5-upper) (Prob.~\ref{prob:upper})
+  & No crowding
+  & Full expansion & open (hard) \\
+(Q5-lower) (Prob.~\ref{prob:lower})
+  & No escape
+  & Quasimode injection & open (easier) \\
+Fredholm route (Rem.~4.1)
+  & Rouché for $D_c$
+  & Det.\ asymptotics & open \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+\textbf{Logical chain (Paper XIV goal):}
+\[
+  \text{(S1) + (S2) + (S3) + (S4)}
+  \;\Longrightarrow\;
+  N_\varphi(c) = 2 + O(c^{-1/3})
+  \;\Longrightarrow\;
+  \text{(Q5)}
+  \;\Longrightarrow\;
+  \text{Gap-S (via Theorem~B, Paper~XIII).}
+\]
+
+\begin{thebibliography}{99}
+\bibitem{paper1} \textit{Paper~I: Gram Coercivity}, \texttt{paper1.tex}, 2026.
+\bibitem{paper13} \textit{Paper~XIII: Obstructions to Gap-S},
+  \texttt{paper13\_gap\_s.tex}, 2026.
+\bibitem{Kato1966} T.~Kato, \textit{Perturbation Theory for Linear Operators},
+  Springer, 1966.
+\bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero}, Springer, 2013.
+\bibitem{Widom1964} H.~Widom, \textit{Asymptotic behavior of the eigenvalues
+  of certain integral equations},
+  Trans.\ Amer.\ Math.\ Soc.\ \textbf{109} (1964), 278--295.
+\bibitem{TracyWidom1994} C.~Tracy, H.~Widom, \textit{Level-spacing
+  distributions and the Airy kernel},
+  Comm.\ Math.\ Phys.\ \textbf{159} (1994), 151--174.
+\bibitem{HelSjo1989} B.~Helffer, J.~Sj\"ostrand,
+  \textit{\'Equation de Schr\"odinger avec champ magn\'etique},
+  Lecture Notes in Physics \textbf{345}, Springer, 1989.
+\bibitem{Simon2005} B.~Simon, \textit{Trace Ideals and Their Applications},
+  2nd ed., AMS, 2005.
+\end{thebibliography}
+
+\end{document}
