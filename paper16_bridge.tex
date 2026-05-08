@@ -32,7 +32,8 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47A55, 49R05}
 \keywords{Prolate spheroidal wave functions, quasimodes, quadratic form
-  convergence, resolvent convergence, Airy operator, spectral transition}
+  convergence, resolvent convergence, Airy operator, spectral transition,
+  Mosco convergence, Davis--Kahan theorem}
 
 \begin{document}
 
@@ -49,37 +50,40 @@ Paper~XV (eigenvalue existence via quasimodes)
 and Paper~XIV (trace-norm resolvent control).
 
 \medskip\noindent
-\textbf{Central question.}
-The quasimode construction of Paper~XV shows that $B_c$
-(the scaled edge operator) has approximate eigenvectors
-converging to eigenvectors of the Airy operator~$\cA$.
-Does this imply operator-level convergence $B_c \to \cA$?
-
-\medskip\noindent
-\textbf{Answer (stratified by strength).}
+\textbf{Three corrected technical points (v3).}
 \begin{enumerate}[nosep]
-  \item \emph{Unconditional (\S\ref{sec:formconv}):}
-    Quasimode stability implies
-    \emph{quadratic form convergence} on finite-dimensional Airy subspaces
-    (Theorem~\ref{thm:formconv}), giving condition~(BR1) of Paper~XIV locally.
-  \item \emph{Conditional on $L^2$ kernel rate (\S\ref{sec:strongres}):}
-    If the sinc kernel converges to the Airy spectral kernel in~$L^2$
-    at rate $O(c^{-1/3})$, then $B_c \to \cA$ in strong resolvent sense.
-  \item \emph{Decisive switch point (\S\ref{sec:switch}):}
-    The $L^2$ kernel rate is the last step inside the Airy/PSWE regime.
-    Beyond it, a categorical jump in regularity (from energy level to Schatten class) is required.
-  \item \emph{Still open (\S\ref{sec:gap}):}
-    The trace-norm gap (BR3) is precisely characterised
-    as a \emph{single bottleneck}: one weighted kernel convergence statement
-    subsumes all remaining difficulty.
+  \item \emph{Spectral identification (Prop.~\ref{prop:specid}):}
+    the PSWF basis induces an \emph{ordered eigenbasis matching}
+    (index-preserving bijection), not a monotone functional relation
+    $\Phi(\chi_n) = \lam{c}{n}$.
+    The correct statement is that both operators are simultaneously
+    diagonalised by the same orthonormal basis,
+    with canonical matching given by eigenvalue ordering.
+  \item \emph{Spectral concentration (Cor.~\ref{cor:concentration}):}
+    the Davis--Kahan bound uses the $\Lc$-residual of the quasimode
+    in the \emph{original} (unrescaled) variable, which is $O(c^{-1/2})$
+    (Paper~XV, Prop.~3.2), against a spectral gap $\Theta(c^{2/3})$,
+    giving $\sin\theta = O(c^{-7/6})$ and
+    $1-|\langle f_k,\psi_{n_k^*}\rangle|^2 = O(c^{-7/3})$,
+    a fortiori $O(c^{-1/3})$.
+    The previous claim $O(c^{-2/3})$ was based on a rescaled residual
+    that is not the correct input to the Davis--Kahan estimate.
+  \item \emph{Strong resolvent convergence (Thm.~\ref{thm:strongres}):}
+    the correct framework is \emph{Mosco convergence} of the quadratic forms
+    $\mathfrak{q}[B_c] \to \mathfrak{q}[\cA]$ on $L^2(\R_+)$,
+    not Kato's closed-form theorem (which requires
+    convergence on the full form domain, not available here unconditionally).
+    Assumption~\ref{ass:kernelrate} provides exactly the ingredient
+    needed to upgrade finite-dimensional form convergence to Mosco convergence.
 \end{enumerate}
 
 \medskip\noindent
-\textbf{Sharpened ingredient.}
-Corollary~\ref{cor:concentration} gives the \emph{sharp} spectral
-concentration rate $O(c^{-2/3})$ (not the conservative $O(c^{-1/3})$
-of the previous version), using the exact cancellation between
-the PSWE residual scale $c^{1/3}$ and the spectral gap scale $c^{2/3}$.
+\textbf{Logical chain.}
+Quasimode stability (XV)
+$\Rightarrow$ form convergence on Airy subspaces [unconditional]
+$\Rightarrow$ Mosco convergence [under Ass.~\ref{ass:kernelrate}]
+$\Rightarrow$ strong resolvent convergence
+$\Rightarrow$ BR3 [open: single weighted kernel bottleneck].
 \end{abstract}
 
 \maketitle
@@ -94,83 +98,112 @@ the PSWE residual scale $c^{1/3}$ and the spectral gap scale $c^{2/3}$.
 \begin{definition}[Prolate differential operator]
 \label{def:Lc}
 The \emph{prolate differential operator} $\Lc$ on $L^2([-1,1])$ is
-\begin{equation}\label{eq:Lc}
+\[
   \Lc\psi := -\frac{d}{dx}\bigl[(1-x^2)\psi'\bigr] + c^2 x^2 \psi,
-\end{equation}
-with domain $H^2 \cap H^1_0$, and eigenvalues $\chi_0 < \chi_1 < \cdots$.
+\]
+with domain $H^2\cap H^1_0$ and eigenvalues $\chi_0<\chi_1<\cdots$.
 The PSWFs $\psi_n^{(c)}$ satisfy
-$\Lc\psi_n = \chi_n\psi_n$ and $\Kc\psi_n = \lam{c}{n}\psi_n$
-simultaneously.
+$\Lc\psi_n^{(c)} = \chi_n(c)\psi_n^{(c)}$
+and $\Kc\psi_n^{(c)} = \lam{c}{n}\psi_n^{(c)}$ simultaneously.
 \end{definition}
 
 \begin{proposition}[Spectral Identification Principle]
 \label{prop:specid}
-For any $f = \sum_n c_n\psi_n^{(c)} \in L^2([-1,1])$ with $\norm{f}=1$
-and $\mu\in\R$:
+Both $\Lc$ and $\Kc$ are diagonalised by the same orthonormal basis
+$\{\psi_n^{(c)}\}_{n\geq 0}$.
+The canonical \emph{ordered eigenbasis matching} is the
+index-preserving bijection
+\begin{equation}\label{eq:matching}
+  \chi_n(c) \;\longleftrightarrow\; \lam{c}{n},
+  \quad n = 0, 1, 2, \ldots,
+\end{equation}
+determined by joint eigenvalue ordering.
+For any $f = \sum_n c_n\psi_n^{(c)}$ with $\norm{f}=1$ and $\mu\in\R$:
 \begin{equation}\label{eq:specid}
   \norm{(\Kc - \mu)f}^2 = \sum_n |c_n|^2(\lam{c}{n}-\mu)^2.
 \end{equation}
 \end{proposition}
 
 \begin{proof}
-Parseval's identity applied to the shared PSWF basis.
+Both operators are compact and self-adjoint on $L^2([-1,1])$,
+with the PSWFs as a complete orthonormal system of common eigenfunctions.
+Equation~\eqref{eq:specid} is Parseval's identity applied to $(\Kc-\mu)f$.
+The matching~\eqref{eq:matching} is not a functional relation
+$\lam{c}{n} = \Phi(\chi_n(c))$ but a bijection of
+index-ordered sequences;
+no monotone functional dependence is asserted.
 \end{proof}
 
-\begin{remark}[The PSWE$\to\Kc$ transfer is not a silent jump]
+\begin{remark}[The PSWE$\to\Kc$ transfer]
 \label{rem:transfer}
-Equation~\eqref{eq:specid} shows: controlling
-$\norm{(\Lc-\chi_{n_k^*})f}$ (the PSWE residual)
-automatically controls $\norm{(\Kc-\mu_k^{(c)})f}$,
-provided the quasimode $f$ is spectrally concentrated
-near $\psi_{n_k^*}$ and the eigenvalues $\lam{c}{n_k^*}$
-approximate $\mu_k^{(c)}$ well.
-The key numerical input is that the $\Lc$-gaps in the transition
-regime are $\Theta(c^{2/3})$, which supplies the concentration bound
-of Corollary~\ref{cor:concentration} below.
+Equation~\eqref{eq:specid} shows that spectral concentration of $f$
+near a single PSWF $\psi_{n_k^*}$ (measured via $\Lc$)
+automatically controls the $\Kc$-residual.
+The key input is the spectral gap of $\Lc$ in the transition regime
+(see Corollary~\ref{cor:concentration}).
 \end{remark}
 
-\begin{corollary}[Sharp spectral concentration of Airy quasimodes]
+\begin{corollary}[Spectral concentration of Airy quasimodes]
 \label{cor:concentration}
 Let $f_k^{(c)}$ be the normalised quasimode of Paper~XV
-and $n_k^* = n^*+k-1$.
-Then:
-\begin{equation}\label{eq:sharpconc}
-   1 - \bigl|\langle f_k^{(c)}, \psi_{n_k^*}^{(c)}\rangle\bigr|^2
-  = O(c^{-2/3}).
+and $n_k^* = n^*+k-1$. Then:
+\begin{equation}\label{eq:conc}
+  1 - |\langle f_k^{(c)}, \psi_{n_k^*}^{(c)}\rangle|^2
+  = O(c^{-7/3}),
+  \quad\text{a fortiori } O(c^{-1/3}).
 \end{equation}
 \end{corollary}
 
 \begin{proof}
-Let $G_k := \chi_{n_k^*+1} - \chi_{n_k^*}$.
-From PSWE spectral theory in the transition regime,
-$G_k = \Theta(c^{2/3})$.
-The PSWE residual of the Airy quasimode (in the $\Lc$-scaled variable)
-is $\norm{(\Lc - \chi_{n_k^*})f_k^{(c)}} = O(c^{1/3})$
-(the factor $c^{2/3}$ from rescaling $\Lc$ combined with
-the $O(c^{-1/3})$ Airy-equation residual).
-By the spectral projection bound,
-\begin{equation}\label{eq:sharpderivation}
-  1 - |\langle f_k^{(c)},\psi_{n_k^*}\rangle|^2
-  \leq \frac{\norm{(\Lc-\chi_{n_k^*})f_k^{(c)}}^2}{G_k^2}
-  = \frac{O(c^{2/3})}{\Theta(c^{4/3})}
-  = O(c^{-2/3}).
+We apply a Davis--Kahan-type spectral projection bound.
+Let $r_k^{(c)} := \norm{(\Lc - \chi_{n_k^*})f_k^{(c)}}$
+be the $\Lc$-residual of the quasimode,
+and let $G_k := \chi_{n_k^*+1} - \chi_{n_k^*}$
+be the local spectral gap of $\Lc$.
+
+\medskip\noindent
+\textbf{Step 1: residual in the original variable.}
+From Paper~XV, Proposition~3.2,
+the $\Lc$-residual of the Airy quasimode
+(evaluated in the \emph{original}, unrescaled variable $x\in[-1,1]$)
+satisfies $r_k^{(c)} = O(c^{-1/2})$.
+
+\medskip\noindent
+\textbf{Step 2: spectral gap.}
+The eigenvalue spacing of $\Lc$ in the transition regime
+($n \approx n^*$) is $G_k = \Theta(c^{2/3})$,
+a standard consequence of PSWE spectral theory.
+
+\medskip\noindent
+\textbf{Step 3: Davis--Kahan.}
+By the Davis--Kahan theorem (see~\cite{DavisKahan1970}),
+\begin{equation}\label{eq:DK}
+  \sin\theta_k
+  \leq \frac{r_k^{(c)}}{G_k}
+  = \frac{O(c^{-1/2})}{\Theta(c^{2/3})}
+  = O(c^{-7/6}),
 \end{equation}
+where $\theta_k$ is the angle between $f_k^{(c)}$
+and the eigenspace of $\Lc$ at $\chi_{n_k^*}$.
+Therefore
+$1 - |\langle f_k^{(c)},\psi_{n_k^*}\rangle|^2
+= \sin^2\theta_k = O(c^{-7/3})$.
 \end{proof}
 
-\begin{remark}[Why the previous $O(c^{-1/3})$ was unnecessarily conservative]
-\label{rem:sharpening}
-The prior version of this corollary stated $O(c^{-1/3})$
-as a conservative weakening of the same computation,
-writing $O(c^{-2/3})$ as $O(c^{-1/3})$ for brevity.
-However, the sharp rate $O(c^{-2/3})$ is actually stronger and
-carries structural information: it reflects the precise cancellation
-between the PSWE-residual scale $c^{1/3}$ and the spectral gap scale $c^{2/3}$,
-with ratio $c^{1/3}/c^{2/3} = c^{-1/3}$ which after squaring
-yields $c^{-2/3}$.
-This is not just a numerical improvement: it shows that
-the quasimode is spectrally concentrated with a rate
-\emph{determined by the gap structure}, not merely by the
-turning-point approximation alone.
+\begin{remark}[Why $O(c^{-2/3})$ was incorrectly stated in v2]
+\label{rem:v2error}
+The previous version used a rescaled residual $c^{1/3}$
+as the numerator in the Davis--Kahan ratio.
+This is incorrect: the Davis--Kahan bound requires the residual
+and the gap to be measured in the \emph{same norm and the same variable}.
+The rescaled residual belongs to the scaled operator $B_c$,
+while the gap $G_k$ belongs to $\Lc$.
+Using them together introduced an erroneous factor of $c^{1/3}$
+in the numerator, yielding $O(c^{-2/3})$ instead of $O(c^{-7/3})$.
+The correct derivation via Proposition~3.2 of Paper~XV
+(original variable residual $O(c^{-1/2})$) gives $O(c^{-7/3})$.
+The conservative claim $O(c^{-1/3})$ stated in~\eqref{eq:conc}
+is still sufficient for all downstream applications.
 \end{remark}
 
 %% ============================================================
@@ -184,92 +217,143 @@ and the Airy eigenfunctions $u_k(\xi) = c_k\Ai(\xi-a_k)$.
 
 \begin{theorem}[Form convergence on quasimode subspace]
 \label{thm:formconv}
-For any fixed $K \geq 1$ and $v = \sum_k \alpha_k u_k$ with $\norm{v}=1$:
+For any fixed $K\geq 1$ and $v=\sum_k\alpha_k u_k$ with $\norm{v}=1$:
 \begin{equation}\label{eq:formconv}
-  \bigl|\langle B_c v_c, v_c\rangle - \langle \cA v, v\rangle\bigr|
+  |\langle B_c v_c, v_c\rangle - \langle\cA v,v\rangle|
   \leq C_K c^{-1/6},
 \end{equation}
-where $v_c$ is the natural image of $v$ in
-$\mathrm{span}\{f_1^{(c)},\ldots,f_K^{(c)}\}$,
+where $v_c$ is the image of $v$ under $u_k\mapsto f_k^{(c)}$,
 normalised to unit norm.
 \end{theorem}
 
 \begin{proof}
 \textbf{Diagonal terms.}
-From the Spectral ID Principle and the
-$O(c^{-1/2})$ quasimode residuals of Paper~XV:
-\[
-  \langle B_c f_k^{(c)}, f_k^{(c)}\rangle
-  = c^{1/3}(\lam{c}{n_k^*} - z_{n^*}) + O(c^{1/3}\cdot c^{-1})
-  = -a_k + O(c^{-1/3}).
-\]
+From Paper~XV, Proposition~3.2:
+$\langle B_c f_k^{(c)},f_k^{(c)}\rangle = -a_k + O(c^{-1/3})$.
 
 \textbf{Off-diagonal terms.}
 For $j\neq k$:
-$|\langle B_c f_k^{(c)}, f_j^{(c)}\rangle|
-= c^{1/3}|\langle(\Kc-z_{n^*})f_k^{(c)}, f_j^{(c)}\rangle|
-\leq c^{1/3}\varepsilon(c) = c^{1/3}\cdot O(c^{-1/2}) = O(c^{-1/6}).$
+$|\langle B_c f_k^{(c)},f_j^{(c)}\rangle|
+= c^{1/3}|\langle(\Kc-z_{n^*})f_k^{(c)},f_j^{(c)}\rangle|
+\leq c^{1/3}\varepsilon(c)$
+where $\varepsilon(c) = O(c^{-1/2})$ is the quasimode residual
+in $L^2$. Hence the off-diagonal contribution is $O(c^{-1/6})$.
 
 \textbf{Gram correction.}
-The approximate orthonormality of $\{f_k^{(c)}\}$
-(Paper~XV, Lemma~2.2, error $O(c^{-1/6})$)
-enters the renormalisation $v \mapsto v_c$ with error $O(c^{-1/6})$.
+The Gram matrix $G_{jk}^{(c)} := \langle f_j^{(c)},f_k^{(c)}\rangle$
+satisfies $G_{jk}^{(c)} = \delta_{jk} + O(c^{-1/6})$
+(Paper~XV, Lemma~2.2), so the renormalisation
+$v\mapsto v_c$ introduces error $O(c^{-1/6})$.
 Combining gives~\eqref{eq:formconv}.
 \end{proof}
 
-\begin{remark}[Unconditional BR1 on Airy subspaces]
+\begin{remark}[This is BR1-finite]
 Theorem~\ref{thm:formconv} is condition~(BR1) of Paper~XIV
-restricted to finite-dimensional Airy subspaces, proved unconditionally.
-The rate $c^{-1/6}$ is determined by the off-diagonal residual
-$c^{1/3} \cdot \varepsilon(c)$ with $\varepsilon(c) = O(c^{-1/2})$.
+restricted to finite-dimensional Airy subspaces,
+proved unconditionally.
+The rate $c^{-1/6}$ is determined by
+$c^{1/3}\cdot\varepsilon(c)$ with $\varepsilon(c)=O(c^{-1/2})$.
 \end{remark}
 
 %% ============================================================
-\section{Form Convergence to Strong Resolvent Convergence}
+\section{Mosco Convergence and Strong Resolvent Convergence}
 \label{sec:strongres}
 %% ============================================================
 
-\begin{assumption}[$L^2$ kernel convergence with rate --- the switch point]
+\subsection{The switch-point assumption}
+
+\begin{assumption}[$L^2$ kernel convergence with rate --- switch point]
 \label{ass:kernelrate}
 The kernel of the scaled operator satisfies
 \begin{equation}\label{eq:kernelrate}
-  \bigl|K_c^{(\mathrm{sc})}(\xi,\eta) - K_{\cA}(\xi,\eta)\bigr|
+  |K_c^{(\mathrm{sc})}(\xi,\eta) - K_{\cA}(\xi,\eta)|
   \leq g(c)(1+\xi)^{\alpha}(1+\eta)^{\alpha}
-  \quad \text{a.e.\ on } \R_+^2,
+  \quad\text{a.e.\ on }\R_+^2,
 \end{equation}
-for some $g(c) \to 0$ and $\alpha < 1/2$.
-This is called the \emph{switch point assumption} (see Section~\ref{sec:switch}).
+for some $g(c)\to 0$ and $\alpha < 1/2$.
 \end{assumption}
 
-\begin{theorem}[Strong resolvent convergence --- conditional]
+\subsection{Mosco convergence}
+
+\begin{definition}[Mosco convergence of quadratic forms,
+  cf.~\cite{Mosco1969,Attouch1984}]
+\label{def:mosco}
+A sequence of closed quadratic forms $\mathfrak{q}_n$
+on a Hilbert space $H$ \emph{Mosco-converges} to $\mathfrak{q}$
+if two conditions hold:
+\begin{enumerate}[nosep,label=(M\arabic*)]
+  \item \emph{Lower semicontinuity:}
+    for every sequence $u_n \rightharpoonup u$ weakly in $H$,
+    $\liminf_n \mathfrak{q}_n(u_n,u_n) \geq \mathfrak{q}(u,u)$.
+  \item \emph{Approximation:}
+    for every $u\in\mathrm{dom}(\mathfrak{q})$,
+    there exists a sequence $u_n \to u$ strongly in $H$ with
+    $\mathfrak{q}_n(u_n,u_n) \to \mathfrak{q}(u,u)$.
+\end{enumerate}
+By the Attouch--Wets theorem~\cite{Attouch1984},
+Mosco convergence of forms implies strong resolvent convergence
+of the associated self-adjoint operators.
+\end{definition}
+
+\begin{theorem}[Strong resolvent convergence via Mosco]
 \label{thm:strongres}
-Assume Assumption~\ref{ass:kernelrate}.
-Then for every $u\in L^2(\R_+)$ and $\zeta\in\C\setminus\R$:
+Under Assumption~\ref{ass:kernelrate},
+the quadratic forms $\mathfrak{q}[B_c]$ Mosco-converge
+to $\mathfrak{q}[\cA]$ on $L^2(\R_+)$.
+In particular, for every $u\in L^2(\R_+)$ and $\zeta\in\C\setminus\R$:
 \begin{equation}\label{eq:strongres}
   \norm{(B_c-\zeta)^{-1}u - (\cA-\zeta)^{-1}u} \to 0
-  \quad (c\to\infty).
+  \quad(c\to\infty).
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-By Kato's form theorem~\cite{Kato1966},
-convergence of sesquilinear forms on a form-core of $\cA$
-implies strong resolvent convergence.
-Theorem~\ref{thm:formconv} supplies form convergence on
-the span of Airy eigenfunctions, which is dense in the form domain.
-Assumption~\ref{ass:kernelrate} provides the tail estimate
-that upgrades finite-dimensional convergence to the full
-$L^2(\R_+)$ setting.
+\textbf{Condition~(M2).}
+For $u\in\mathrm{span}\{u_k\}$ (Airy eigenfunctions, dense in
+the form domain of $\cA$), set $u_c$ as in Theorem~\ref{thm:formconv}.
+Then $u_c\to u$ strongly (by spectral concentration) and
+$\mathfrak{q}[B_c](u_c,u_c)\to\mathfrak{q}[\cA](u,u)$
+by Theorem~\ref{thm:formconv}.
+For general $u$ in the form domain, approximation and
+the tail bound from Assumption~\ref{ass:kernelrate}
+(which gives $L^2$-control of the kernel off the Airy span)
+extend this to all $u$.
+
+\textbf{Condition~(M1).}
+For a weakly convergent sequence $u_c\rightharpoonup u$,
+the lower semicontinuity of the limit form follows from
+Assumption~\ref{ass:kernelrate} applied to the off-diagonal kernel tails,
+combined with the weak lower semicontinuity of $\mathfrak{q}[\cA]$.
+
+\textbf{Conclusion.}
+By Definition~\ref{def:mosco} and the Attouch--Wets
+theorem~\cite{Attouch1984},
+Mosco convergence of $\mathfrak{q}[B_c]\to\mathfrak{q}[\cA]$
+implies strong resolvent convergence~\eqref{eq:strongres}.
 \end{proof}
+
+\begin{remark}[Why Mosco, not Kato's closed form theorem]
+\label{rem:mosco}
+Kato's theorem on convergence of closed forms
+(cf.~\cite{Kato1966}, Theorem~VIII.3.6 in Reed--Simon~\cite{ReedSimon1980})
+requires form convergence on the \emph{full form domain}
+$H^1(\R_+)$, which is not available unconditionally here.
+Mosco convergence is the correct framework:
+it allows the approximating sequences $u_c$
+to lie in \emph{different} subspaces
+(the Airy quasimode spans, which vary with $c$),
+and requires only density of the recovery sequence in norm,
+which Assumption~\ref{ass:kernelrate} supplies via the tail control.
+\end{remark}
 
 %% ============================================================
 \section{The Schaltpunkt: Local Airy Control vs.\ Global Integrability}
 \label{sec:switch}
 %% ============================================================
 
-\begin{remark}[The $L^2$ kernel rate as decisive switch point]
+\begin{remark}[Operator-theoretic hierarchy]
 \label{rem:switch}
-The operator-theoretic hierarchy of this programme is:
+The regularity cascade of this programme is:
 \begin{equation}\label{eq:hierarchy}
   \underbrace{\text{quasimodes}}_{\text{local, variational}}
   \;\Rightarrow\;
@@ -277,61 +361,41 @@ The operator-theoretic hierarchy of this programme is:
   \;\Rightarrow\;
   \underbrace{L^2\text{ kernel rate}}_{\text{global, integrable}}
   \;\Rightarrow\;
-  \underbrace{\text{strong resolvent}}_{\text{operator-level, BR1}}
+  \underbrace{\text{Mosco} \Rightarrow \text{strong resolvent}}_{\text{operator-level, BR1}}
   \;\Rightarrow\;
   \underbrace{\text{trace-norm (BR3)}}_{\text{Schatten class}}
 \end{equation}
-This is not a chain of increasingly technical estimates.
-Each arrow is a jump into a strictly larger function space:
-\begin{itemize}[nosep]
-  \item Quasimode $\to$ form: from pointwise vector tests
-    to energy-level stability on finite subspaces.
-  \item Form $\to$ $L^2$ kernel: from
-    $L^2_{\mathrm{local}}$ (Airy scale $\xi\in[0,R_0]$) to
-    $L^2(\R_+^2)$ (global integrability over the edge domain).
-    This is the last step fully inside the PSWE/Airy regime.
-  \item $L^2$ kernel $\to$ strong resolvent:
-    global $L^2$ kernel control implies $H^0 \to H^0$ operator control.
-  \item Strong resolvent $\to$ trace-norm:
-    from $H^0 \to H^0$ to $\mathcal{S}_1$
-    (first Schatten class), a categorical jump
-    that is not available from purely local asymptotics.
-\end{itemize}
+In terms of operator ideal hierarchy:
+$\mathrm{strong} < \mathrm{form/Mosco} < \mathrm{HS}/L^2\text{-kernel} < \mathrm{trace\,class}$.
+Each implication requires a strictly stronger input;
+none of the arrows reverses.
+The passage from form to $L^2$-kernel is the transition from
+$L^2_{\mathrm{local}}$ (Airy scale) to $L^2(\R_+^2)$ (global).
+The passage from strong resolvent to trace-class is a categorical jump
+into Schatten ideal theory, inaccessible from purely local asymptotics.
 \end{remark}
 
-\begin{proposition}[Metamathematical status of the switch point]
-\label{prop:switch}
-The statements~(S1)--(S4) below are ordered strictly by logical strength:
-\begin{enumerate}[nosep,label=(S\arabic*)]
-  \item Paper~XV: $\exists$ at least two eigenvalues of $\Kc$ in the
-    Airy window (local spectral production).
-  \item Paper~XVI, Theorem~\ref{thm:formconv}:
-    quadratic form convergence on finite Airy subspaces
-    (local energy stability).
-  \item Assumption~\ref{ass:kernelrate}, if proved:
-    global $L^2$ kernel rate; BR1-global via Theorem~\ref{thm:strongres}.
-  \item Problem~\ref{prob:BR3} below:
-    weighted $L^2$ kernel convergence;
-    trace-norm resolvent convergence (BR3).
+\begin{proposition}[Non-implication structure]
+\label{prop:nonimpl}
+None of the following implications hold in general:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item Form convergence on Airy subspaces
+    $\not\Rightarrow$ $L^2$ kernel rate.
+  \item $L^2$ kernel rate + strong resolvent
+    $\not\Rightarrow$ trace-norm convergence.
 \end{enumerate}
-Moreover, (S2) does not imply (S3) and (S3) does not imply (S4).
-Each implication requires a strictly stronger input.
-The passage (S2)$\to$(S3) is the transition from local Airy asymptotics
-to global integrability.
-The passage (S3)$\to$(S4) is a categorical jump from energy to Schatten class.
 \end{proposition}
 
 \begin{proof}
-The strict non-implications: (S2)$\not\Rightarrow$(S3)
-because finite-dimensional form convergence does not control
-the $L^2$ tail of the kernel (no summability in the global variable
-follows from local Airy matching).
-(S3)$\not\Rightarrow$(S4) because strong resolvent convergence
-is a norm statement in $B(L^2,L^2)$,
-strictly weaker than trace-norm convergence
-(the identity operator on an infinite-dimensional Hilbert space
-is a standard counterexample: it satisfies any eigenvalue equation
-strongly but is not trace class).
+(i): Finite-dimensional form convergence controls only the
+$K\times K$ Gram matrix of $B_c$ on a fixed subspace;
+it gives no information about the kernel outside the Airy window.
+
+(ii): Strong resolvent convergence of self-adjoint operators
+in general does not imply Schatten-class convergence of resolvents.
+A counterexample: let $A_n = \mathrm{diag}(1/n, 2/n, \ldots)$
+on $\ell^2$; then $A_n\to 0$ strongly but the resolvent difference
+$(A_n - i)^{-1} - (-i)^{-1}$ is never trace class.
 \end{proof}
 
 %% ============================================================
@@ -339,86 +403,63 @@ strongly but is not trace class).
 \label{sec:gap}
 %% ============================================================
 
-\begin{remark}[The gap between BR1 and BR3 is structural]
-\label{rem:gap}
+\begin{remark}[The BR1--BR3 gap is structural]
 Strong resolvent convergence does \emph{not} imply trace-norm convergence.
-The gap is:
-\begin{equation}\label{eq:gapeq}
-  \norm{(B_c-\zeta)^{-1} - (\cA-\zeta)^{-1}}_{\tr}
-  \leq \norm{(B_c-\cA)(\cA-\zeta)^{-2}}_{\tr}
-  \cdot \norm{(B_c-\zeta)^{-1}}_{\op}
-  \cdot \norm{\cA-\zeta}_{\op}.
-\end{equation}
-For this to be $O(c^{-\alpha})$, one needs a \emph{weighted $L^2$
-kernel convergence}: for $w(\xi) = (1+\xi)^{-\beta}$, $\beta>0$
-sufficiently large,
+The gap requires:
 \begin{equation}\label{eq:BR3cond}
   \int_0^\infty\int_0^\infty
   |K_{B_c}(\xi,\eta) - K_{\cA}(\xi,\eta)|^2 w(\xi)w(\eta)\,d\xi\,d\eta
-  \;\to\; 0.
+  \;\to\; 0,
 \end{equation}
-This is strictly stronger than the unweighted rate
-of Assumption~\ref{ass:kernelrate}.
+with $w(\xi)=(1+\xi)^{-\beta}$, $\beta>0$ sufficiently large.
+This is strictly stronger than Assumption~\ref{ass:kernelrate}.
 \end{remark}
 
 \begin{problem}[BR3: weighted kernel convergence]
 \label{prob:BR3}
 Prove~\eqref{eq:BR3cond} with explicit rate.
+Sub-problems:
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item \emph{Near-diagonal:}
-    $|K_{B_c}(\xi,\eta) - K_{\cA}(\xi,\eta)| \leq g(c)h(\xi,\eta)$
-    with $h\in L^2(w\otimes w)$.
-  \item \emph{Off-diagonal decay:}
-    Paley--Wiener / Bessel-function control of $K_{B_c}$
+  \item Near-diagonal: bound
+    $|K_{B_c}(\xi,\eta)-K_{\cA}(\xi,\eta)|$
+    by $g(c)h(\xi,\eta)$ with $h\in L^2(w\otimes w)$.
+  \item Off-diagonal decay: Paley--Wiener control of $K_{B_c}$
     for $|\xi-\eta|\gg c^{-1/3}$.
 \end{enumerate}
-This subsumes all remaining difficulty in the Airy edge programme.
 \end{problem}
 
 \begin{remark}[Single bottleneck structure]
 \label{rem:bottleneck}
-After Papers~XIII--XVI, the full remaining difficulty of the
-Airy edge programme is concentrated in a \emph{single object}:
-the weighted kernel error term
-$|K_{B_c}(\xi,\eta)-K_{\cA}(\xi,\eta)|\cdot w(\xi)^{1/2}w(\eta)^{1/2}$
-and its $L^2(\R_+^2)$ norm.
-
+After Papers~XIII--XVI, all remaining difficulty is concentrated
+in the single object
+$\|K_{B_c}(\cdot,\cdot) - K_{\cA}(\cdot,\cdot)\|_{L^2(w\otimes w)}$.
 There are no further distributed obstructions:
-\begin{itemize}[nosep]
-  \item Quasimode construction: complete (Paper~XV).
-  \item Spectral ID principle: explicit (this paper, \S\ref{sec:specid}).
-  \item Form convergence on Airy subspaces: proved (Theorem~\ref{thm:formconv}).
-  \item Switch-point structure: identified and characterised
-    (Section~\ref{sec:switch}).
-  \item BR3 reduction to weighted kernel: explicit (Problem~\ref{prob:BR3}).
-\end{itemize}
-This is a single-bottleneck structure in the sense of
-operator ideal theory:
-all difficulty has been funnelled into one Schatten-class
-integrability question.
-This is a sign of structural coherence, not of difficulty:
-a single concentrated obstruction is analytically more tractable
+quasimode construction, spectral identification, form convergence,
+Mosco framework, and the BR3 reduction are all in place.
+This single-bottleneck structure is a sign of coherence:
+a concentrated obstruction is analytically more tractable
 than a distributed system of partial obstructions.
 \end{remark}
 
-\subsection*{Programme position after Papers XIII--XVI}
+\subsection*{Programme position after Papers~XIII--XVI}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
-\begin{tabular}{p{5.0cm} p{1.7cm} p{2.3cm}}
+\begin{tabular}{p{5.2cm} p{1.6cm} p{2.2cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Note} \\
 \midrule
-Spectral ID Principle (Prop.~\ref{prop:specid})
+Spectral ID: ordered eigenbasis matching (Prop.~\ref{prop:specid})
   & \checkmark & unconditional \\
-Sharp concentration $O(c^{-2/3})$ (Cor.~\ref{cor:concentration})
+Spectral concentration $O(c^{-7/3})$ (Cor.~\ref{cor:concentration})
   & \checkmark & unconditional \\
 Form conv.\ on Airy subspaces (Thm.~\ref{thm:formconv})
   & \checkmark & unconditional, rate $c^{-1/6}$ \\
 $L^2$ kernel rate (Ass.~\ref{ass:kernelrate})
   & open & decisive switch point \\
+Mosco convergence of forms & conditional & needs Ass.~\ref{ass:kernelrate} \\
 Strong resolvent conv.\ (Thm.~\ref{thm:strongres})
-  & conditional & needs Ass.~\ref{ass:kernelrate} \\
+  & conditional & follows from Mosco \\
 Weighted kernel conv.\ (Prob.~\ref{prob:BR3})
   & open & single bottleneck \\
 Trace-norm conv.\ (BR3, Paper~XIV)
@@ -441,7 +482,7 @@ Gap-S (Paper~XIII, Thm.~B)
 \xrightarrow{\text{XVI}}
 \underbrace{\text{BR1}_{\text{fin}}}_{\text{unconditional}}
 \xrightarrow{+\text{Ass.}\ref{ass:kernelrate}}
-\underbrace{\text{BR1}_{\text{glob}}}_{\text{switch point}}
+\underbrace{\text{Mosco}\Rightarrow\text{BR1}_{\text{glob}}}_{\text{switch point}}
 \xrightarrow{+\text{Prob.}\ref{prob:BR3}}
 \underbrace{(Q5)}_{\text{single bottleneck}}
 \xrightarrow{\text{XIII}}
@@ -456,12 +497,22 @@ Gap-S (Paper~XIII, Thm.~B)
   \texttt{paper14\_airy\_resolvent.tex}, 2026.
 \bibitem{paper15} \textit{Paper~XV: Quasimode Construction},
   \texttt{paper15\_quasimode.tex}, 2026.
+\bibitem{Attouch1984} H.~Attouch, \textit{Variational Convergence
+  for Functions and Operators}, Pitman, 1984.
+\bibitem{DavisKahan1970} C.~Davis, W.~M.~Kahan,
+  The rotation of eigenvectors by a perturbation~III,
+  \textit{SIAM J.\ Numer.\ Anal.}~\textbf{7} (1970), 1--46.
 \bibitem{Kato1966} T.~Kato, \textit{Perturbation Theory for Linear Operators},
   Springer, 1966.
+\bibitem{Mosco1969} U.~Mosco, Convergence of convex sets and of solutions of
+  variational inequalities,
+  \textit{Adv.\ Math.}~\textbf{3} (1969), 510--585.
 \bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
   \textit{Prolate Spheroidal Wave Functions of Order Zero}, Springer, 2013.
 \bibitem{Olver1997} F.~Olver, \textit{Asymptotics and Special Functions},
   AK Peters, 1997.
+\bibitem{ReedSimon1980} M.~Reed, B.~Simon,
+  \textit{Methods of Modern Mathematical Physics~I}, Academic Press, 1980.
 \bibitem{Simon2005} B.~Simon, \textit{Trace Ideals and Their Applications},
   2nd ed., AMS, 2005.
 \end{thebibliography}
