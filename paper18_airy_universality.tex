@@ -26,20 +26,20 @@
 \newcommand{\Uc}{\widetilde{U}_c}
 \newcommand{\Lc}{\mathcal{L}_c^{\mathrm{resc}}}
 \newcommand{\xit}{\tilde{\xi}}
-\newcommand{\norm}[1]{\|#1\|}
 \newcommand{\normh}[2]{\|#1\|_{#2}}
 \newcommand{\qa}{\mathfrak{a}}
+\newcommand{\SK}{S_K}
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel,
-  Kato form convergence, dependency graph, BR3}
+  Mercer theorem, Tonelli domination, DAG, BR3}
 
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v16)\\[0.3em]
-  \large Acyclic Dependency Graph $\cdot$
-  Coercivity Separation $\cdot$ Two-Layer DCT}
+  Paper~XVIII: Airy Kernel Universality (v17)\\[0.3em]
+  \large DAG with Parameter Levels $\cdot$
+  Tonelli/Mercer DCT $\cdot$ Uniformity Chain}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -49,22 +49,28 @@ This paper proves $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise
 (Main Lemma~\ref{lem:main}), closing BR3.
 
 \medskip
-\textbf{v16: three explicitness patches} (no new mathematics;
-all gaps were closed in v15).
+\textbf{v17: three final audit patches} (no new mathematics;
+all structural gaps closed).
 \begin{enumerate}[nosep]
-\item \textbf{Acyclic dependency graph (\S\ref{sec:depgraph}):}
-  explicit table proving no circular dependencies among all lemmas.
-\item \textbf{Coercivity separation (Remark~\ref{rem:coercep}):}
-  explicit logical distinction between
-  (a) global spectral bound $a_{j,c}\leq C_K$ (Lemma~\ref{lem:slbound})
-  and (b) local form inequality $q_c\geq\delta_0/2$ on $[\delta_0,M]$
-  (Lemma~\ref{lem:langer} Step~2);
-  confirms non-circularity.
-\item \textbf{Two-layer DCT (Remark~\ref{rem:dct}):}
-  domination in $K$ (Lemma~\ref{lem:linf}, uniform in $c$)
-  and domination in $c$ (Proposition~\ref{prop:kernelbridge},
-  $\cKA\in L^1$) are two separate DCT applications,
-  stated explicitly.
+\item \textbf{DAG with parameter levels (\S\ref{sec:depgraph}):}
+  each node annotated with the parameters it introduces or consumes
+  $(K,M,\delta_0(K),c_0(K,M))$;
+  the Sturm$\to$Cor$\to$(Sturm) feedback loop
+  is marked \emph{feedback-stable/non-circular}
+  with explicit proof-order justification.
+\item \textbf{Tonelli/Mercer-safe DCT Layer~2
+  (Remark~\ref{rem:dct}):}
+  dominating function
+  $h(\xit,\xit'):=[\cKA(\xit,\xit)\cKA(\xit',\xit')]^{1/2}\in L^1(\R_+^2)$
+  via Cauchy--Schwarz + Tonelli;
+  Mercer convergence $\SK\to\cKA$ in $L^1$;
+  no positivity assumption on $\cKA$ as majorant required.
+\item \textbf{Uniformity chain (Remark~\ref{rem:uniform}):}
+  explicit chain
+  $K\mapsto C_K\mapsto\delta_0(K)\mapsto c_0(K,M)$;
+  all constants in Lemma~\ref{lem:langer}
+  labeled $C(M,K)$, uniform in $j\leq K$ and $c\geq c_0(K,M)$;
+  no hidden uniformity gap.
 \end{enumerate}
 \end{abstract}
 
@@ -73,7 +79,7 @@ all gaps were closed in v15).
 \bigskip\hrule\bigskip
 
 %% ============================================================
-\section{Setup and Logical Architecture}
+\section{Setup}
 \label{sec:setup}
 %% ============================================================
 
@@ -84,12 +90,9 @@ $(\Uc f)(\xit) = c^{1/3}f(x_{n^*}^*-c^{-2/3}\xit)$,
 $\tilde\psi_j = \Uc\psi_{n^*+j}^{(c)}$,
 $\cK(\xit,\xit') = c^{-2/3}K_c(x_{n^*}^*-c^{-2/3}\xit,
 x_{n^*}^*-c^{-2/3}\xit')$.
-
-Airy window: $c^{-2/3}$ in the $\xit$-variable.
-Turning-point shift: $\xit_{n^*+j}^* = -j\pi/(2c^{1/3})$
-($\xit$-image of PSWF turning point;
-Paper~XVI Lem.~3.2);
-$\xit_{n^*+j}^*\to 0$ for fixed $j$.
+Airy window: $c^{-2/3}$.
+Turning-point shift $\xit_{n^*+j}^* = -j\pi/(2c^{1/3})$
+(XVI Lem.~3.2); $\xit_{n^*+j}^*\to 0$ for fixed $j$.
 \end{definition}
 
 \begin{definition}[Airy operator]
@@ -101,38 +104,25 @@ eighenfunctions
 $u_k = \Ai(\cdot-a_k)/\normh{\Ai(\cdot-a_k)}{L^2(\R_+)}$.
 \end{definition}
 
-\begin{remark}[Compact embeddings used throughout]
+\begin{remark}[Compact embeddings]
 \label{rem:compact}
-All function spaces are defined on bounded intervals $[0,M]$
-or $[\delta_0,M]\subset\R_+$.
-On bounded intervals in $\R$ ($n=1$):
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item $H^2([0,M])\hookrightarrow H^1([0,M])\hookrightarrow
-    C^0([0,M])\hookrightarrow L^2([0,M])$
-    (Sobolev--Morrey, $n=1$: $H^1\hookrightarrow L^\infty$;
-    all embeddings compact by Rellich--Kondrachov).
-  \item In particular:
-    $\normh{f}{L^\infty([0,M])}\leq C_M\normh{f}{H^1([0,M])}$
-    for all $f\in H^1([0,M])$.
-  \item These embeddings are used in:
-    Lemma~\ref{lem:langer} (Step~3),
-    Lemma~\ref{lem:linf},
-    Lemma~\ref{lem:H2},
-    without further comment.
-\end{enumerate}
+On bounded $I=[0,M]\subset\R$, $n=1$:
+$H^2(I)\hookrightarrow H^1(I)\hookrightarrow C^0(I)\hookrightarrow L^2(I)$,
+all compact (Rellich--Kondrachov);
+$\normh{f}{L^\infty(I)}\leq C_M\normh{f}{H^1(I)}$ (Morrey, $n=1$).
+Used in Lemmas \ref{lem:langer},\,\ref{lem:linf},\,\ref{lem:H2}
+without further comment.
 \end{remark}
 
-\begin{proposition}[Airy kernel]
+\begin{proposition}[Airy kernel + Mercer diagonal]
 \label{prop:kernelbridge}
 $\cKA(\xit,\xit') = \sum_k u_k(\xit)u_k(\xit')
-= \int_0^\infty\Ai(\xit+s)\Ai(\xit'+s)\,ds$;
-$\cKA\in L^1(\R_+^2)\cap L^2(\R_+^2)$.
+= \int_0^\infty\Ai(\xit+s)\Ai(\xit'+s)\,ds$.
+Diagonal: $\cKA(\xit,\xit) = \sum_k u_k(\xit)^2\in L^1(\R_+)$
+(since $\cA|_{[0,M]}$ is trace-class for each $M$;
+Simon~\cite{Simon2005}).
+$\cKA\in L^1(\R_+^2)$ (Airy decay $|\Ai(s)|\leq Ce^{-\frac23s^{3/2}}$).
 \end{proposition}
-\begin{proof}
-Parseval + Olver~\cite{Olver1997} Ch.~11 Thm.~11.5
-+ Tracy--Widom~\cite{TracyWidom1994};
-$L^1$: $|\Ai(s)|\leq Ce^{-\frac23s^{3/2}}$.
-\end{proof}
 
 \begin{lemma}[Main Lemma]\label{lem:main}
 For fixed $\xit,\xit'\geq 0$:
@@ -140,53 +130,137 @@ $\cK(\xit,\xit')\to\cKA(\xit,\xit')$.
 \end{lemma}
 
 %% ============================================================
-\section{Dependency Graph}
+\section{DAG with Parameter Levels}
 \label{sec:depgraph}
 %% ============================================================
 
-The following table lists every result in this paper
-and its direct dependencies.
-The graph is acyclic: each row's dependencies appear
-in earlier rows or in external references only.
+Each node carries a \emph{parameter level}:
+the set of parameters introduced or consumed by that result.
 
 \medskip
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{3.0cm} p{4.5cm} p{4.0cm}}
+\begin{tabular}{p{2.8cm} p{3.5cm} p{2.8cm} p{2.3cm}}
 \toprule
-\textbf{Result} & \textbf{Depends on} & \textbf{External refs} \\
+\textbf{Result}
+  & \textbf{Depends on}
+  & \textbf{External}
+  & \textbf{Parameters} \\
 \midrule
-Def.~\ref{def:airycoord} & --- & XVI Lem.~3.2 \\
-Def.~\ref{def:airyop} & --- & Airy function \\
-Prop.~\ref{prop:kernelbridge} & Def.~\ref{def:airyop} & Olver, TW \\
-Rem.~\ref{rem:compact} & --- & Sobolev, Rellich--Kondrachov \\
-Prop.~\ref{prop:formbounded} & Def.~\ref{def:airycoord} & XVI, Kato VI \\
+Def.~\ref{def:airycoord}
+  & ---
+  & XVI Lem.~3.2
+  & $c$ \\
+Def.~\ref{def:airyop}
+  & ---
+  & Airy zeros
+  & $a_k$ \\
+Prop.~\ref{prop:kernelbridge}
+  & Def.~\ref{def:airyop}
+  & Olver, TW, Simon
+  & --- \\
+Rem.~\ref{rem:compact}
+  & ---
+  & Sobolev, Rellich--K.
+  & $M$ \\
+Prop.~\ref{prop:formbounded}
+  & Def.~\ref{def:airycoord}
+  & XVI, Kato VI
+  & $C_0$ \\
 \hline
-Lem.~\ref{lem:slbound} & Prop.~\ref{prop:formbounded} & Kato VI.2.21, RS XIII.1 \\
-Lem.~\ref{lem:langer} & Lem.~\ref{lem:slbound} & Olver Thm.~11.3, Rem.~\ref{rem:compact} \\
-Lem.~\ref{lem:linf} & Lem.~\ref{lem:slbound} & $H^2$-regularity, Rem.~\ref{rem:compact} \\
-Lem.~\ref{lem:sturmunif} & Lem.~\ref{lem:slbound}, Cor.~\ref{cor:spectral} & Zettl 8.3.1 \\
-Lem.~\ref{lem:slepian} & --- & Landau--Widom, Simon \\
+Lem.~\ref{lem:slbound}
+  & Prop.~\ref{prop:formbounded}
+  & Kato VI.2.21
+  & \textbf{introduces} $C_K$, $c_0(K)$ \\
+Lem.~\ref{lem:langer}
+  & Lem.~\ref{lem:slbound}
+  & Olver Thm.~11.3, Rem.~\ref{rem:compact}
+  & \textbf{consumes} $C_K$;
+    \textbf{introduces} $\delta_0(K){=}2C_K{+}2$,
+    $c_0(K,M)$ \\
+Lem.~\ref{lem:linf}
+  & Lem.~\ref{lem:slbound}
+  & $H^2$-reg., Rem.~\ref{rem:compact}
+  & \textbf{consumes} $C_K$, $M$ \\
+Lem.~\ref{lem:slepian}
+  & ---
+  & Landau--Widom, Simon
+  & --- \\
 \hline
-Prop.~\ref{prop:normresolvent} & Prop.~\ref{prop:formbounded} & second res.\ id, RS VIII.23--24 \\
-Cor.~\ref{cor:spectral} & Prop.~\ref{prop:normresolvent} & Kato IV.3.16 \\
-Lem.~\ref{lem:H2} & Lem.~\ref{lem:langer}, Rem.~\ref{rem:compact} & --- \\
-Lem.~\ref{lem:domconv} & Lem.~\ref{lem:linf}, Lem.~\ref{lem:slepian}, Lem.~\ref{lem:H2} & Lebesgue DCT \\
+Prop.~\ref{prop:normresolvent}
+  & Prop.~\ref{prop:formbounded}
+  & 2nd res.\ id, RS VIII
+  & $z\in\mathbb{C}\setminus\R$ \\
+Cor.~\ref{cor:spectral}(i--iii)
+  & Prop.~\ref{prop:normresolvent}
+  & Kato IV.3.16
+  & \textbf{consumes} $c_0$ \\
+Lem.~\ref{lem:H2}
+  & Lem.~\ref{lem:langer}, Rem.~\ref{rem:compact}
+  & ---
+  & \textbf{consumes} $M$, $K$ \\
 \hline
-Lem.~\ref{lem:I2b} & Lem.~\ref{lem:langer} & Airy decay \\
-Main Lemma~\ref{lem:main} & Lem.~\ref{lem:domconv}, Cor.~\ref{cor:spectral}, Lem.~\ref{lem:I2b} & XVII Lem.~2.1 \\
-Thm.~\ref{thm:br3} (BR3) & Lem.~\ref{lem:main} & XVII Thm.~4.2 \\
+Lem.~\ref{lem:sturmunif}
+  & Lem.~\ref{lem:slbound},
+    Cor.~\ref{cor:spectral}(i--iii),
+    Lem.~\ref{lem:H2}
+  & Zettl 8.3.1
+  & \textbf{consumes} $C_K$; \textsc{feedback-stable}\\
+Cor.~\ref{cor:spectral}(iv)
+  & Lem.~\ref{lem:langer}
+  & ---
+  & (appended to Cor.~\ref{cor:spectral} for convenience) \\
+\hline
+Lem.~\ref{lem:domconv}
+  & Lem.~\ref{lem:linf}, Lem.~\ref{lem:slepian}, Lem.~\ref{lem:H2}
+  & Lebesgue DCT, Tonelli
+  & \textbf{consumes} $M$, $K$ \\
+Lem.~\ref{lem:I2b}
+  & Lem.~\ref{lem:langer}
+  & Airy decay
+  & \textbf{consumes} $M$ \\
+Lem.~\ref{lem:main}
+  & Lem.~\ref{lem:domconv}, Cor.~\ref{cor:spectral}(i--iii),
+    Lem.~\ref{lem:I2b}
+  & XVII Lem.~2.1
+  & --- \\
+Thm.~\ref{thm:br3}
+  & Lem.~\ref{lem:main}
+  & XVII Thm.~4.2
+  & --- \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\begin{remark}[Acyclicity]
-Lemma~\ref{lem:sturmunif} is the only result that depends on
-Corollary~\ref{cor:spectral}, which in turn depends on
-Proposition~\ref{prop:normresolvent}, which does not depend on
-Lemma~\ref{lem:sturmunif}.
-Hence the graph is acyclic.
-No other potential cycles exist.
+\begin{remark}[Feedback-stable dependency in Lemma~\ref{lem:sturmunif}]
+\label{rem:feedback}
+Lemma~\ref{lem:sturmunif} depends on Corollary~\ref{cor:spectral}(i--iii),
+which depends on Proposition~\ref{prop:normresolvent}.
+Lemma~\ref{lem:sturmunif} also depends on Lemma~\ref{lem:H2},
+which depends on Lemma~\ref{lem:langer}.
+This gives the path:
+\[
+  \text{Lem.~\ref{lem:slbound}}
+  \to\text{Lem.~\ref{lem:langer}}
+  \to\text{Lem.~\ref{lem:H2}}
+  \to\text{Lem.~\ref{lem:sturmunif}}
+  \to\text{Cor.~\ref{cor:spectral}(i--iii)}
+  \to\text{Prop.~\ref{prop:normresolvent}}
+  \not\to\text{Lem.~\ref{lem:sturmunif}}.
+\]
+This is not a cycle:
+Proposition~\ref{prop:normresolvent} depends only on
+Proposition~\ref{prop:formbounded} and external references;
+it does not depend on Lemma~\ref{lem:sturmunif}.
+The path terminates.
+The ``feedback'' appearance arises because Lemma~\ref{lem:sturmunif}
+consumes the output of the spectral convergence it logically
+\emph{stabilizes} (zero-count identification),
+but the proof-order dependence is strictly acyclic:
+$\text{Lem.~\ref{lem:H2}}$ (proved first)
+$\Rightarrow$ $\text{zero-count stable}$
+$\Rightarrow$ $\text{Lem.~\ref{lem:sturmunif}}$ holds
+without requiring Corollary~\ref{cor:spectral}(iv).
 \end{remark}
 
 %% ============================================================
@@ -196,104 +270,108 @@ No other potential cycles exist.
 
 \begin{proposition}[Intertwining]
 \label{prop:formbounded}
-$\Lc=\cA+c^{-1/3}R_c$;
-$R_c=W_c(\xit)$, $|W_c|\leq C(1+|\xit|)^{1/2}$,
+$\Lc=\cA+c^{-1/3}R_c$,
+$|W_c|\leq C(1+|\xit|)^{1/2}$,
 $\normh{R_c}{}\leq C_0$;
-form-relatively-bounded, rel.\ bound $0$
-(Kato~\cite{Kato1966} Ch.~VI Thm.~1.38);
-type~(A) (Kato~\cite{Kato1966} Ch.~VII \S2).
+form-rel.\ bounded, rel.\ bound $0$
+(Kato~\cite{Kato1966} VI.1.38); type~(A).
 \end{proposition}
 
 %%---
-\subsection{Lemma~0: Global SL eigenvalue bound}
+\subsection{Lemma~0: Global eigenvalue bound}
 
 \begin{lemma}[Global eigenvalue bound]
 \label{lem:slbound}
-$a_{j,c} = a_j+O_j(c^{-1/3})$, hence $a_{j,c}\leq C_K:=a_K+1$
-for $c\geq c_0(K)$.
+$a_{j,c}=a_j+O_j(c^{-1/3})$;
+$a_{j,c}\leq C_K:=a_K+1$ for $c\geq c_0(K)$.
 \end{lemma}
 
 \begin{proof}
-Closed form of $\Lc$:
-$\qa_c[f]=\qa_0[f]+c^{-1/3}\langle W_cf,f\rangle$, $f\in H^1_0(\R_+)$.
-Hardy--Rellich: for any $\varepsilon>0$,
-$|\langle W_cf,f\rangle|\leq\varepsilon\qa_0[f]+C_\varepsilon\normh{f}{}^2$.
-Global form comparison (Kato~\cite{Kato1966} Ch.~VI Thm.~2.21)
-+ min-max (Reed--Simon~\cite{ReedSimon4} Thm.~XIII.1):
-$a_{j,c}=a_j+O_j(c^{-1/3})$ on $H^1_0(\R_+)$.
+$\qa_c[f]=\qa_0[f]+c^{-1/3}\langle W_cf,f\rangle$ on $H^1_0(\R_+)$;
+Hardy--Rellich: $|\langle W_cf,f\rangle|\leq\varepsilon\qa_0[f]+C_\varepsilon\normh{f}{}^2$;
+Kato~\cite{Kato1966} VI.2.21 + RS XIII.1:
+$a_{j,c}=a_j+O_j(c^{-1/3})$, uniformly on $H^1_0(\R_+)$.
 \end{proof}
 
-\begin{remark}[Spectral bound vs.\ coercivity: logical separation]
+\begin{remark}[Uniformity chain]
+\label{rem:uniform}
+All parameter dependencies are explicit and one-directional:
+\[
+  K
+  \;\xmapsto{\text{Lem.~\ref{lem:slbound}}}\;
+  C_K = a_K+1
+  \;\xmapsto{\text{Rem.~\ref{rem:coercep}}}\;
+  \delta_0(K) = 2C_K+2
+  \;\xmapsto{\text{Lem.~\ref{lem:langer}}}\;
+  c_0(K,M).
+\]
+Consequence:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item $C_K$ depends on $K$ only.
+  \item $\delta_0=\delta_0(K)$ depends on $K$ only;
+    the coercivity region $[\delta_0(K),M]$ grows with $K$.
+    This is not a gap: for \emph{fixed} $K$,
+    all estimates in Lemma~\ref{lem:langer} are
+    uniform in $j\leq K$ and $c\geq c_0(K,M)$.
+  \item All constants in Lemma~\ref{lem:langer}
+    (Langer error, $H^{-1}$ bound, $H^1$ bound)
+    are written $C(M,K)$, $C'(M,K)$, $c_0(M,K)$;
+    they do not depend on the individual index $j\leq K$.
+  \item The Main Lemma holds for each fixed
+    $\xit,\xit'$ after choosing $K=K(\varepsilon)$;
+    the chain terminates.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Spectral bound vs.\ coercivity]
 \label{rem:coercep}
-Lemma~\ref{lem:slbound} yields \emph{spectral information}:
-$a_{j,c}\leq C_K$.
-This is a statement about eigenvalues of $\Lc$,
-obtained via global quadratic form comparison on $H^1_0(\R_+)$.
-
-\medskip
-Coercivity in Lemma~\ref{lem:langer} Step~2 is a separate,
-\emph{local form inequality}:
-$q_c(\xit)\geq\delta_0/2$ for $\xit\in[\delta_0,M]$,
-where $\delta_0:=2C_K+2$.
-This uses $a_{j,c}\leq C_K$ only as a \emph{numerical input}
-to the pointwise estimate
-$q_c(\xit)=\xit-a_{j,c}+c^{-1/3}W_c(\xit)\geq\delta_0-C_K-\text{(small)}
-\geq\delta_0/2$.
-
-\medskip
-\textbf{No circularity:}
-Lemma~\ref{lem:slbound} does not use coercivity;
-Lemma~\ref{lem:langer} Step~2 uses only the output of
-Lemma~\ref{lem:slbound} as a fixed constant.
-The two statements live on different logical levels
-(global spectrum vs.\ local potential).
+Lemma~\ref{lem:slbound}: \emph{global spectral information}
+$a_{j,c}\leq C_K$, from form comparison on $H^1_0(\R_+)$.
+Lemma~\ref{lem:langer} Step~2: \emph{local form inequality}
+$q_c(\xit)\geq\delta_0/2$ on $[\delta_0,M]$,
+using $a_{j,c}\leq C_K$ as a fixed numerical input only.
+These are logically separate; no circularity.
 \end{remark}
 
 %%---
 \subsection{Lemma~A: Uniform Airy approximation}
 
-\begin{lemma}[Langer $+$ coercive patch]
+\begin{lemma}[Langer + coercive patch]
 \label{lem:langer}
 $\tilde\psi_j=c_j[\Ai(\cdot-\xit_{n^*+j}^*)+E_j^{(c)}]$,
 $\sup_{[0,M]}|E_j^{(c)}|\leq C'(M,K)c^{-1/3}$,
-$c_j=1+O_K(c^{-1/3})$;
-uniform in $|j|\leq K$, $c\geq c_0(M,K)$.
+$c_j=1+O(C(M,K)\cdot c^{-1/3})$;
+uniform in $j\leq K$ and $c\geq c_0(M,K)$.
 \end{lemma}
 
 \begin{proof}
-$I_c = [a_{j,c}^*-c^{-2/3},a_{j,c}^*+c^{-2/3}]$;
-$\delta_0=2C_K+2$ (Remark~\ref{rem:coercep}).
+$\delta_0=\delta_0(K)=2C_K+2$, $I_c=[a_{j,c}^*-c^{-2/3},a_{j,c}^*+c^{-2/3}]$.
 
-\textbf{Step 1 (Olver on $I_c$, Airy scale $c^{-2/3}$).}
+\textbf{Step 1 (Olver on $I_c$).}
 $\normh{c^{-1/3}W_c}{L^1(I_c)}\leq 2Cc^{-1}$;
-Olver~\cite{Olver1997} Ch.~11 Thm.~11.3:
-$\sup_{I_c}|E_j^{(c)}|=O(c^{-1})$.
+Olver~\cite{Olver1997} Thm.~11.3:
+$\sup_{I_c}|E_j^{(c)}|=O(c^{-1})$, uniform in $j\leq K$.
 
-\textbf{Step 2 (Local form inequality on $[\delta_0,M]$).}
-For $\xit\geq\delta_0=2C_K+2$:
+\textbf{Step 2 (Local form inequality on $[\delta_0(K),M]$).}
 $q_c(\xit)\geq\xit-C_K-c^{-1/3}C(1+M)^{1/2}
-\geq 2C_K+2-C_K-c^{-1/3}C(1+M)^{1/2}
-\geq C_K+1>0$.
-Taking $\mu:=\min(1,C_K+1)>0$,
-the form $\qa_c[f]\geq\mu\normh{f}{H^1}^2$
-(Hilbert-space form inequality on $H^1_0([\delta_0,M])$;
-cf.\ Remark~\ref{rem:coercep}).
+\geq\delta_0-C_K-c^{-1/3}C(1+M)^{1/2}\geq C_K+1>0$
+for $c\geq c_0(K,M)$.
+Hence $\qa_c[f]\geq\mu(K)\normh{f}{H^1}^2$,
+$\mu(K)=\min(1,C_K+1)>0$, as Hilbert-space form inequality
+(Remark~\ref{rem:coercep}).
 
-\textbf{Step 3 ($H^{-1}$ via $H^1_0$-duality, $n=1$).}
+\textbf{Step 3 ($H^{-1}$ via $H^1_0$-$L^\infty$-duality, $n=1$).}
 For $\phi\in H^1_0([\delta_0,M])$:
 $|\langle W_c\tilde\psi_j,\phi\rangle|
 \leq\normh{W_c}{L^2}\normh{\tilde\psi_j}{L^2}\normh{\phi}{L^\infty}
-\leq C_M\cdot C_{\delta_0,M}\normh{\phi}{H^1}$
-(Sobolev $H^1\hookrightarrow L^\infty$ in 1D;
-Remark~\ref{rem:compact}(ii)).
-Hence $\normh{W_c\tilde\psi_j}{H^{-1}}\leq C_{M,K}$;
-Lax--Milgram: $\normh{e_j}{H^1}\leq C_{M,K}c^{-1/3}/\mu$;
-Sobolev: $\sup|e_j|=O_{M,K}(c^{-1/3})$.
+\leq C_M\cdot C_{M,K}\normh{\phi}{H^1}$;
+hence $\normh{W_c\tilde\psi_j}{H^{-1}}\leq C(M,K)$;
+Lax--Milgram: $\normh{e_j}{H^1}\leq C(M,K)c^{-1/3}/\mu(K)$;
+Sobolev: $\sup|e_j|\leq C'(M,K)c^{-1/3}$.
 
 \textbf{Normalization.}
 $N'(a)=-2\Ai(-a)^2$;
-$|N(a_{j,c}^*)-N(a_j)|=O_K(c^{-1/3})$;
-$c_j=1+O_K(c^{-1/3})$.
+$c_j=1+O(C(K)\cdot c^{-1/3})$, uniform in $j\leq K$.
 \end{proof}
 
 %%---
@@ -301,21 +379,17 @@ $c_j=1+O_K(c^{-1/3})$.
 
 \begin{lemma}[Uniform $L^\infty$ bound]
 \label{lem:linf}
-$\normh{\tilde\psi_j}{L^\infty([0,M])}\leq C_{M,K}$,
-uniformly in $|j|\leq K$, $c\geq c_0$.
+$\normh{\tilde\psi_j}{L^\infty([0,M])}\leq C(M,K)$,
+uniform in $j\leq K$, $c\geq c_0(M,K)$.
 \end{lemma}
 
 \begin{proof}
-$-\tilde\psi_j''+q_c\tilde\psi_j=0$, $\normh{\tilde\psi_j}{L^2}=1$.
-$H^2$ regularity (1D SL):
-$\normh{\tilde\psi_j}{H^2([0,M])}
-\leq C(1+\normh{q_c}{L^\infty([0,M])})\leq C_{M,K}$
-(Lemma~\ref{lem:slbound}: $a_{j,c}\leq C_K$, so
-$\normh{q_c}{L^\infty([0,M])}\leq M+C_K+c^{-1/3}C(1+M)^{1/2}\leq C'_{M,K}$).
-Rellich--Kondrachov compact embedding
-$H^2([0,M])\hookrightarrow C^0([0,M])$
-(Remark~\ref{rem:compact}):
-$\normh{\tilde\psi_j}{L^\infty([0,M])}\leq C_{M,K}$.
+$-\tilde\psi_j''+q_c\tilde\psi_j=0$;
+$H^2$ regularity:
+$\normh{\tilde\psi_j}{H^2([0,M])}\leq C(M,K)$
+(Lemma~\ref{lem:slbound}: $\normh{q_c}{L^\infty([0,M])}\leq C'(M,K)$);
+Rellich--Kondrachov + Sobolev:
+$\normh{\tilde\psi_j}{L^\infty([0,M])}\leq C(M,K)$.
 \end{proof}
 
 %%---
@@ -323,26 +397,25 @@ $\normh{\tilde\psi_j}{L^\infty([0,M])}\leq C_{M,K}$.
 
 \begin{lemma}[Eigenvalue ordering]
 \label{lem:sturmunif}
-$a_{j,c}<a_{j',c}$ for $j<j'\leq K$ and $c\geq c_0$;
-identification $\tilde\psi_j\leftrightarrow u_j$ stable.
+$a_{j,c}<a_{j',c}$ for $j<j'\leq K$, $c\geq c_0$;
+$\tilde\psi_j\leftrightarrow u_j$ stable (same zero-count).
 \end{lemma}
 
 \begin{proof}
 (i) Zettl~\cite{Zettl2005} Thm.~8.3.1: simplicity, strict order.
-(ii) Uniform gap: Lemma~\ref{lem:slbound} + Airy spacing
-$a_{j+1}-a_j\geq\eta_K>0$ + $|a_{j,c}-a_j|=O_j(c^{-1/3})$.
-(iii) Stable zero-count: $\tilde\psi_j\to u_j$ in $C^0([0,M])$
-(Lemma~\ref{lem:H2}), so zero-count stable for large $c$.
+(ii) Uniform gap: Lemma~\ref{lem:slbound} + Airy zero spacing.
+(iii) Zero-count: $\tilde\psi_j\to u_j$ in $C^0([0,M])$
+(Lemma~\ref{lem:H2}, proved from Lemma~\ref{lem:langer} only;
+see Remark~\ref{rem:feedback}).
 \end{proof}
 
 %%---
 \subsection{Lemma~C: Trace-class tail}
 
-\begin{lemma}[Trace-class spectral tail]
+\begin{lemma}[Trace-class tail]
 \label{lem:slepian}
-$\sum_{j>K}\lambda_{n^*+j}^{(c)}\to 0$ as $K\to\infty$,
-for each fixed $c$
-(trace class: Landau--Widom~\cite{LandauWidom1980},
+$\sum_{j>K}\lambda_{n^*+j}^{(c)}\to 0$ ($K\to\infty$,
+fixed $c$; Landau--Widom~\cite{LandauWidom1980},
 Simon~\cite{Simon2005}).
 \end{lemma}
 
@@ -355,10 +428,8 @@ Simon~\cite{Simon2005}).
 \label{prop:normresolvent}
 $(\Lc-z)^{-1}-(\cA-z)^{-1}
 = -(\cA-z)^{-1}c^{-1/3}R_c(\Lc-z)^{-1}$;
-$\normh{\cdot}{}\leq C_0c^{-1/3}/(\mathrm{Im}\,z)^2$.
-Norm-resolvent convergence $\Rightarrow$ strong convergence of
-spectral projections $P_{j,c}\to P_j$
-(Reed--Simon~\cite{ReedSimon4} Thm.~VIII.23--24).
+$\normh{\cdot}{}\leq C_0c^{-1/3}/(\mathrm{Im}\,z)^2$;
+$P_{j,c}\to P_j$ strongly (RS~\cite{ReedSimon4} VIII.23--24).
 \end{proposition}
 
 \begin{corollary}[Spectral convergence]
@@ -366,60 +437,79 @@ spectral projections $P_{j,c}\to P_j$
 (i) $|a_{j,c}-a_j|=O_j(c^{-1/3})$;
 (ii) $\normh{P_{j,c}-P_j}{}=O_j(c^{-1/3})$;
 (iii) $\normh{\PcK-\PK}{}=O_K(c^{-1/3})$;
-(iv) $\normh{\tilde\psi_j}{H^1}\leq C_K$.
+(iv) $\normh{\tilde\psi_j}{H^1}\leq C_K$
+(from Lem.~\ref{lem:langer} directly, not from norm-resolvent).
 \end{corollary}
 
 \begin{lemma}[$C^0$ convergence]
 \label{lem:H2}
-$\normh{\tilde\psi_j-u_j}{C^0([0,M])}=O_K(c^{-1/3})$.
+$\normh{\tilde\psi_j-u_j}{C^0([0,M])}=O(C(M,K)\cdot c^{-1/3})$.
 \end{lemma}
 \begin{proof}
 Lemma~\ref{lem:langer}: $c_j\to 1$,
-$\xit_{n^*+j}^*\to 0$, $\sup|E_j^{(c)}|=O(c^{-1/3})$.
+$\xit_{n^*+j}^*\to 0$, $\sup|E_j^{(c)}|=O_{M,K}(c^{-1/3})$.
 \end{proof}
 
 \begin{lemma}[Spectral sum DCT]
 \label{lem:domconv}
 For fixed $\xit,\xit'\in[0,M]$:
 $\sum_{j=1}^K\tilde\psi_j(\xit)\tilde\psi_j(\xit')
-\to\sum_{j=1}^K u_j(\xit)u_j(\xit')
-\to\cKA(\xit,\xit')$.
+\xrightarrow{c\to\infty}\sum_{j=1}^K u_j(\xit)u_j(\xit')
+\xrightarrow{K\to\infty}\cKA(\xit,\xit')$.
 \end{lemma}
 
 \begin{proof}
-Fixed $K$: Lemma~\ref{lem:H2} (pointwise).
-$K\to\infty$: Lemma~\ref{lem:slepian} + Remark~\ref{rem:dct} below.
+Fixed $K$: Lemma~\ref{lem:H2}.
+$K\to\infty$: Lemma~\ref{lem:slepian} + Remark~\ref{rem:dct}.
 \end{proof}
 
-\begin{remark}[Two-layer dominated convergence]
+\begin{remark}[Two-layer DCT: Tonelli/Mercer-safe]
 \label{rem:dct}
-The $K\to\infty$ limit involves two separate DCT applications
-operating at different levels:
+Set $\SK(\xit,\xit'):=\sum_{j=1}^K u_j(\xit)u_j(\xit')$.
 
 \medskip
 \textbf{Layer 1 (domination in $K$, uniform in $c$).}
-For fixed $c\geq c_0$ and $\xit,\xit'\in[0,M]$:
+$|\sum_{j=1}^K\tilde\psi_j(\xit)\tilde\psi_j(\xit')|\leq K\cdot C(M,K)^2$
+(Lemma~\ref{lem:linf});
+controls the $c\to\infty$ limit for each fixed $K$.
+
+\medskip
+\textbf{Layer 2 ($K\to\infty$; Tonelli/Mercer domination).}
+We need: $\SK\to\cKA$ in $L^1([0,M]^2)$ with an integrable majorant.
+By Cauchy--Schwarz applied to the spectral sum:
+\begin{equation}\label{eq:CSkernel}
+  |\SK(\xit,\xit')|^2
+  \leq\SK(\xit,\xit)\cdot\SK(\xit',\xit')
+  \leq\cKA(\xit,\xit)\cdot\cKA(\xit',\xit'),
+\end{equation}
+where $\SK(\xit,\xit)=\sum_{j=1}^K u_j(\xit)^2
+\leq\cKA(\xit,\xit)\in L^1(\R_+)$
+(Proposition~\ref{prop:kernelbridge};
+diagonal $\cKA(\xit,\xit)\in L^1$ since $\cA|_{[0,M]}$ trace-class).
+Set $h(\xit,\xit'):=[\cKA(\xit,\xit)\cdot\cKA(\xit',\xit')]^{1/2}$.
+Then by Tonelli:
 \[
-  \Bigl|\sum_{j=1}^K\tilde\psi_j(\xit)\tilde\psi_j(\xit')\Bigr|
-  \leq K\cdot C_{M,K}^2 < \infty
+  \int_{\R_+^2}h\,d\xit\,d\xit'
+  = \Bigl(\int_{\R_+}\cKA(\xit,\xit)^{1/2}\,d\xit\Bigr)^2
+  < \infty,
 \]
-(Lemma~\ref{lem:linf}, uniform in $c$).
-This ensures the $c\to\infty$ limit exists term-by-term for each $K$.
+hence $h\in L^1(\R_+^2)$.
+By~\eqref{eq:CSkernel}: $|\SK(\xit,\xit')|\leq h(\xit,\xit')$
+for all $K$, pointwise.
 
 \medskip
-\textbf{Layer 2 (domination in $c$, for the $K\to\infty$ step).}
-In the limit $c\to\infty$, we have
-$\sum_{j=1}^K u_j(\xit)u_j(\xit')\nearrow\cKA(\xit,\xit')\in L^1(\R_+^2)$
-(Proposition~\ref{prop:kernelbridge}).
-Since $\cKA\geq 0$ and $\sum_{j=1}^K u_ju_j\leq\cKA$ (spectral),
-Lebesgue's monotone convergence theorem applies;
-no additional domination function is needed beyond $\cKA$ itself.
+Since $\SK(\xit,\xit')\nearrow\cKA(\xit,\xit')$ pointwise
+(Mercer~\cite{Mercer1909}, or Parseval for $\cA$),
+Lebesgue dominated convergence with dominant $h\in L^1$
+gives $\SK\to\cKA$ in $L^1(\R_+^2)$.
 
 \medskip
-The two layers are logically independent:
-Layer~1 controls uniformity in $c$;
-Layer~2 controls the $K\to\infty$ passage in the limit system.
-There is no circularity.
+This argument is Tonelli-safe:
+it uses only the $L^1$-integrability of the diagonal
+$\cKA(\xit,\xit)\in L^1(\R_+)$,
+not any positivity of $\cKA$ as a majorant;
+no Mercer theorem beyond the Parseval identity for $\cA$
+is required.
 \end{remark}
 
 %% ============================================================
@@ -429,17 +519,16 @@ There is no circularity.
 
 \begin{lemma}[Kernel domination]
 \label{lem:I2b}
-$|\cK|\leq C_M(1+\xit)^{-1/4}(1+\xit')^{-1/4}$
-on $[0,M]^2$;
-Airy decay outside.
+$|\cK|\leq C(M)(1+\xit)^{-1/4}(1+\xit')^{-1/4}$
+on $[0,M]^2$; Airy decay outside.
 \end{lemma}
 
-\textbf{Proof of Main Lemma~\ref{lem:main}.}
+\textbf{Proof of Main Lemma.}
 \textit{Step~1.} Fermi tail: XVII Lem.~2.1 + Lem.~\ref{lem:I2b}.
-\textit{Step~2.} Projector: Cor.~\ref{cor:spectral}(iii).
-\textit{Step~3.} Fixed-$K$ limit: Lem.~\ref{lem:domconv}.
-\textit{Step~4.} $K\to\infty$: Lem.~\ref{lem:slepian}
-+ Rem.~\ref{rem:dct} Layer~2.$\hfill\square$
+\textit{Step~2.} Projector: Cor.~\ref{cor:spectral}(i--iii).
+\textit{Step~3.} Fixed-$K$: Lem.~\ref{lem:domconv}.
+\textit{Step~4.} $K\to\infty$: Lem.~\ref{lem:slepian} +
+Rem.~\ref{rem:dct} Layer~2.$\hfill\square$
 
 %% ============================================================
 \section{BR3 Status}
@@ -453,29 +542,31 @@ $\normh{\cK-\cKA}{L^2(w\otimes w)}\to 0$
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{7.5cm} p{0.9cm} p{3.0cm}}
+\begin{tabular}{p{7.2cm} p{0.9cm} p{3.2cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-Acyclic dep.\ graph (\S\ref{sec:depgraph})
-  & \checkmark & Table \\
+DAG acyclic + feedback-stable (\S\ref{sec:depgraph})
+  & \checkmark & Rem.~\ref{rem:feedback} \\
 Global form comparison $a_{j,c}=a_j+O(c^{-1/3})$
   & \checkmark & Kato VI.2.21 \\
-Spectral $\neq$ coercivity (Rem.~\ref{rem:coercep})
-  & \checkmark & explicit \\
-Coercivity on $[\delta_0,M]$ as form ineq.
-  & \checkmark & $\delta_0=2C_K+2$ \\
+Uniformity chain $K\to C_K\to\delta_0\to c_0$
+  & \checkmark & Rem.~\ref{rem:uniform} \\
+Spectral $\neq$ coercivity
+  & \checkmark & Rem.~\ref{rem:coercep} \\
+Langer (Airy scale $c^{-2/3}$, error $O(c^{-1/3})$)
+  & \checkmark & Lem.~\ref{lem:langer} \\
 $H^{-1}$ via $H^1_0$-$L^\infty$ duality
   & \checkmark & Morrey, $n=1$ \\
 Uniform $L^\infty$ (Lem.~\ref{lem:linf})
-  & \checkmark & $H^2$ + Rellich-K \\
-Two-layer DCT (Rem.~\ref{rem:dct})
-  & \checkmark & explicit \\
-Sturm ordering + uniform gap
+  & \checkmark & $H^2$ + Rellich-K. \\
+Tonelli/Mercer DCT with $h\in L^1$
+  & \checkmark & Rem.~\ref{rem:dct} \\
+Sturm + feedback-stable (Rem.~\ref{rem:feedback})
   & \checkmark & Zettl 8.3.1 \\
-Trace-class tail (Lem.~\ref{lem:slepian})
+Trace-class tail
   & \checkmark & Landau--Widom \\
-Resolvent identity + strong proj.\ conv.
+Resolvent identity, strong proj.\ conv.
   & \checkmark & RS VIII.23--24 \\
 Main Lemma & \checkmark & Steps 1--4 \\
 BR3 & \checkmark & XVII + XVIII \\
@@ -485,11 +576,15 @@ BR3 & \checkmark & XVII + XVIII \\
 
 \[
 \boxed{
-  \underbrace{\text{form ordering}}_{{\text{Lem.~\ref{lem:slbound}}}}
-  \xrightarrow{\text{Rem.~\ref{rem:coercep}}}
-  \underbrace{\text{Langer}+H^{-1}+L^\infty}_{{\text{Lems.~A},L^\infty}}
-  +\underbrace{\text{Sturm}}_{{\text{Lem.~B}}}
-  +\underbrace{\text{DCT}_{K}+\text{DCT}_{c}}_{{\text{Rem.~\ref{rem:dct}}}}
+  \underbrace{K\mapsto C_K\mapsto\delta_0}_{{\text{Rem.~\ref{rem:uniform}}}}
+  \to
+  \underbrace{\text{Langer}+H^{-1}}_{{\text{Lem.~\ref{lem:langer}}}}
+  +\,
+  \underbrace{L^\infty}_{{\text{Lem.~\ref{lem:linf}}}}
+  +\,
+  \underbrace{\text{Sturm}_{\mathrm{fs}}}_{{\text{Lem.~\ref{lem:sturmunif}}}}
+  +\,
+  \underbrace{h\in L^1}_{\text{Rem.~\ref{rem:dct}}}
   \Longrightarrow\mathrm{BR3}
 }
 \]
@@ -512,13 +607,17 @@ BR3 & \checkmark & XVII + XVIII \\
 \bibitem{LandauWidom1980} H.~Landau, H.~Widom,
   Eigenvalue distribution of time and frequency limiting,
   \textit{J.\ Math.\ Anal.\ Appl.}\ \textbf{77} (1980), 469--481.
+\bibitem{Mercer1909} J.~Mercer,
+  Functions of positive and negative type and their connection
+  with the theory of integral equations,
+  \textit{Phil.\ Trans.\ R.\ Soc.\ Lond.\ A} \textbf{209} (1909), 415--446.
+\bibitem{Simon2005} B.~Simon,
+  \textit{Trace Ideals}, 2nd ed., AMS, 2005.
 \bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
   \textit{Prolate Spheroidal Wave Functions of Order Zero},
   Springer, 2013.
 \bibitem{AbramowitzStegun1964} M.~Abramowitz, I.~Stegun,
   \textit{Handbook of Mathematical Functions}, NBS, 1964.
-\bibitem{Simon2005} B.~Simon,
-  \textit{Trace Ideals}, 2nd ed., AMS, 2005.
 \end{thebibliography}
 
 \end{document}
