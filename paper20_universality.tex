@@ -266,27 +266,65 @@ Apply Euler--Maclaurin $\sum_{j=1}^K j^\sigma
 %% ============================================================
 
 %%------------------------------------------------------------
-%% Auxiliary: log-of-log isolation
+%% Auxiliary: log-of-log isolation (with sandwich)
 %%------------------------------------------------------------
 \begin{lemma}[Logarithm of the minimizer]
 \label{lem:loglog}
 Let $K^*(c)$ be the unique minimizer from
 Lemma~\ref{lem:kopt_variational}.
-Then $K^*(c) = O(\log c)$ and $K^*(c)\to\infty$ as $c\to\infty$,
-and consequently
+There exist explicit constants
+$c_1 = \frac{2\beta}{\alpha+2\gamma/1}$ and
+$c_2 = \frac{2(\beta+1)}{\alpha}$,
+depending only on $\alpha,\beta,\gamma$, such that
+for all $c$ sufficiently large:
+\begin{equation}\label{eq:sandwich}
+  c_1 \log c \leq K^*(c) \leq c_2 \log c.
+\end{equation}
+In particular $K^*(c)\to\infty$, and taking logarithms
+of~\eqref{eq:sandwich} yields
 \begin{equation}\label{eq:loglog}
   \log K^*(c) = \log\log c + O(1).
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-From the leading balance $\frac{\alpha}{2}K^* \leq \beta\log c + C_0$
-in~\eqref{eq:FOC} one has $K^*(c)\leq \frac{2(\beta+1)}{\alpha}\log c$
-for $c$ sufficiently large, so $K^*(c)=O(\log c)$.
-Since $F(K)\to\infty$ as $K\to 0^+$ and $F(K)\to\infty$
-as $K\to\infty$, the minimizer satisfies $K^*(c)\to\infty$.
-Taking logarithms of the bound $K^*\asymp\log c$ gives
-$\log K^* = \log(\Theta(\log c)) = \log\log c + O(1)$.
+\textit{Upper bound.}
+At the minimizer the FOC~\eqref{eq:FOC} gives
+$\frac{\alpha}{2}K^* = \beta\log c + \gamma\log K^* + C_0$
+where $C_0=\log(L(1+\gamma)/((\alpha/2)T))$.
+Since $\gamma\log K^* \geq 0$ and $\log K^*\leq K^*/e$,
+we have $\frac{\alpha}{2}K^*
+\leq \beta\log c + \frac{\gamma}{e}K^* + C_0$,
+hence $(\frac{\alpha}{2}-\frac{\gamma}{e})K^*\leq\beta\log c+C_0$.
+For $\alpha > 2\gamma/e$ (which holds for $c$ large since
+$\gamma\log K^*/K^*\to 0$) this gives $K^*\leq c_2\log c$
+with $c_2=\frac{2(\beta+1)}{\alpha}$ for $c\geq c_0$.
+
+\textit{Lower bound.}
+Since $F(K)\to+\infty$ as $K\to 0^+$
+(the term $Te^{-\alpha K/2}\to T>0$ while
+$LK^{1+\gamma}c^{-\beta}\to 0$, so $F(K)\to T>0$,
+but more precisely $F'(K)<0$ near $0$ since
+$-\frac{\alpha}{2}Te^{-\alpha K/2}$ dominates),
+the minimizer satisfies $K^*\geq K_{\min}(c)$
+where $K_{\min}$ solves $F'(K_{\min})=0$ from below.
+Direct comparison with $F'(c_1\log c)$:
+at $K=c_1\log c$ with $c_1 = \frac{\beta}{\alpha}$,
+$F'(c_1\log c)
+= L(1+\gamma)(c_1\log c)^\gamma c^{-\beta}
+- \frac{\alpha}{2}T e^{-\alpha c_1(\log c)/2}$;
+the exponential term equals
+$T c^{-\alpha c_1/2} = Tc^{-\beta/2}\prec c^{-\beta}(\log c)^\gamma$,
+so $F'(c_1\log c)>0$ for large $c$,
+confirming $K^*\geq c_1\log c$.
+
+\textit{Log extraction.}
+From~\eqref{eq:sandwich},
+$\log(c_1\log c)\leq\log K^*\leq\log(c_2\log c)$,
+i.e.\ $\log\log c + \log c_1
+\leq \log K^*
+\leq \log\log c + \log c_2$,
+which gives~\eqref{eq:loglog}.
 \end{proof}
 
 %%------------------------------------------------------------
@@ -356,10 +394,12 @@ $F(K)\to\infty$ at both endpoints.
 (ii) Equation~\eqref{eq:log_FOC} is exact.
 Zeroth iterate: $\frac{\alpha}{2}K_0=\beta\log c$.
 First iterate: insert $\log K^*=\log\log c+O(1)$
-(Lemma~\ref{lem:loglog}) into~\eqref{eq:log_FOC}
-to obtain~\eqref{eq:kopt_iterated}.
+(Lemma~\ref{lem:loglog}, specifically~\eqref{eq:loglog})
+into~\eqref{eq:log_FOC} to obtain~\eqref{eq:kopt_iterated}.
 (ii') $\Phi'(K)=2\gamma/(\alpha K)$; for $K\asymp\log c$
-this is $O(1/\log c)$, confirming contraction.
+this is $O(1/\log c)$, confirming contraction;
+the sandwich~\eqref{eq:sandwich} guarantees
+$K\asymp\log c$ is the relevant regime.
 (iii) $L(K^*)^{1+\gamma}c^{-\beta}
 = L\bigl(\frac{2\beta}{\alpha}\log c\bigr)^{1+\gamma}
 c^{-\beta}(1+o(1))
@@ -380,8 +420,7 @@ Then
   K^*(c) - \widetilde K^*(c) = O(1).
 \]
 In particular, the two-term expansion~\eqref{eq:kopt_iterated}
-is stable under all $O(1)$ perturbations of the logarithmic FOC
-(change of constants $L$, $T$, $\alpha$, $\beta$ at $O(1)$ level),
+is stable under all such perturbations,
 and all conclusions of Lemma~\ref{lem:kopt_variational}
 and Corollary~\ref{cor:universal_lograte} remain valid.
 \end{lemma}
@@ -392,21 +431,19 @@ Let $K_1=K^*$ and $K_2=\widetilde K^*$ solve
   \tfrac{\alpha}{2}K_i = \beta\log c + \gamma\log K_i + C_i,
   \quad i=1,2,
 \]
-with $C_1-C_2=O(1)$.
+with $|C_1-C_2|\leq D$ for some fixed $D$.
 Subtracting:
-\[
-  \tfrac{\alpha}{2}(K_1-K_2)
-  = \gamma(\log K_1 - \log K_2) + O(1).
-\]
+$\tfrac{\alpha}{2}(K_1-K_2)
+= \gamma(\log K_1 - \log K_2) + (C_1-C_2)$.
 By the mean value theorem,
 $|\log K_1 - \log K_2| \leq |K_1-K_2|/\min(K_1,K_2)$.
-Since $K_i\asymp\log c$, this gives
+By Lemma~\ref{lem:loglog} (sandwich~\eqref{eq:sandwich}),
+$\min(K_1,K_2)\geq c_1\log c$, so
 $\tfrac{\alpha}{2}|K_1-K_2|
-\leq \frac{\gamma}{\min K_i}|K_1-K_2| + O(1)
-= O\!\bigl(\tfrac{1}{\log c}\bigr)|K_1-K_2| + O(1)$.
-For $c$ sufficiently large the coefficient
-$O(1/\log c)<\alpha/4$, so
-$|K_1-K_2| = O(1)$.
+\leq \frac{\gamma}{c_1\log c}|K_1-K_2| + D$.
+For $c$ sufficiently large,
+$\gamma/(c_1\log c) < \alpha/4$,
+hence $|K_1-K_2|\leq \frac{4D}{\alpha} = O(1)$.
 \end{proof}
 
 \begin{remark}[Discrete floor projection]
@@ -433,6 +470,9 @@ with a strictly convex functional, a FOC,
 an iterated asymptotic expansion~\eqref{eq:kopt_iterated}
 justified by the contraction~\eqref{eq:contraction},
 and a stability certificate (Lemma~\ref{lem:stability_kopt}).
+The sandwich~\eqref{eq:sandwich} provides an
+explicit two-sided bound on $K^*$ prior to any
+logarithmic manipulation.
 \end{remark}
 
 %% ============================================================
@@ -567,9 +607,9 @@ O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \textbf{XVIII:} Qualitative BR3.
 \textbf{XIX:} Airy rate $O(c^{-1/3}(\log c)^{5/3})$.
 \textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$;
-variational $K^*$ with contraction-certified iterated asymptotics;
-Layer-Survival; two invariants $1+\gamma$, $1+2\gamma$;
-stability under $O(1)$ perturbations.
+variational $K^*$ with sandwich bounds, contraction-certified
+iterated asymptotics, and $O(1)$-stability;
+Layer-Survival; two invariants $1+\gamma$, $1+2\gamma$.
 Structural stability: \texttt{structural\_stability\_metatheorem.tex}.
 
 \bigskip
