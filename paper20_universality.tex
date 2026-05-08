@@ -79,10 +79,11 @@ $K = K^*(c)$ is carried out by a single explicit lemma
 (Lemma~\ref{lem:diagonal_sub}), which is the unique point
 where coupled scaling is introduced;
 logarithmic instability under exponentiation is controlled
-by an explicit slowly-varying substitution estimate.
+by an explicit slowly-varying substitution estimate,
+uniform in $\gamma$ on compact subsets of $(0,\infty)$.
 All implied constants are $c$-admissible
 (operator-intrinsic or deriving from H1--H2 with no $c$-dependence;
-see Remark~\ref{rem:cadmissible}).
+see Remark~\ref{rem:cadmissible} and Lemma~\ref{lem:cadm_closure}).
 All results are conditional on H1--H2.
 \end{abstract}
 
@@ -122,24 +123,65 @@ Realization: verified for Airy; sketch for power family; open in general.
 \label{rem:cadmissible}
 We call a constant \emph{$c$-admissible} if it is independent of
 the approximation parameter $c$.
-All constants appearing in this paper are $c$-admissible:
+There are three sources of $c$-admissibility in this paper:
 \begin{itemize}[nosep]
-  \item $C_0$, $C_\infty$: operator-intrinsic, $c$-free by H1--H2.
-  \item $C_\sigma = \frac{|B_2|}{12}\sigma(\sigma-1)$:
-    depends only on the exponent $\sigma$, not on $K$ or $c$
-    (Lemma~\ref{lem:trunc_universal}, eq.~\eqref{eq:EM_remainder}).
-  \item $C_{\rm lin} = \frac{2MC_\infty C_0}{1+\gamma}$,
-    $C_{\rm quad} = \frac{MC_0^2}{1+2\gamma}$:
-    products of $c$-admissible quantities.
-  \item $C_2(\alpha) = \sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$:
-    operator-intrinsic; depends only on $\cAg\in\mathfrak{T}_\gamma$
-    and the decay rate $\alpha$, not on $c$
-    (Lemma~\ref{lem:gamma_agnostic}(v)).
-    In particular, $c$ is only an approximation parameter
-    in this paper, not a spectral parameter of $\cAg$.
+  \item \textbf{Axiomatic:} $C_0$, $C_\infty$ are declared $c$-free
+    by H1 and H2 respectively (operator-intrinsic).
+  \item \textbf{Analytic:} $C_\sigma = \frac{|B_2|}{12}\sigma(\sigma-1)$
+    depends only on the Euler--Maclaurin exponent $\sigma$,
+    not on $K$ or $c$ (Lemma~\ref{lem:trunc_universal},
+    eq.~\eqref{eq:EM_remainder}).
+  \item \textbf{Derived:} products and finite sums of $c$-admissible
+    constants are $c$-admissible
+    (Lemma~\ref{lem:cadm_closure}).
+    In particular: $C_{\rm lin} = \frac{2MC_\infty C_0}{1+\gamma}$,
+    $C_{\rm quad} = \frac{MC_0^2}{1+2\gamma}$,
+    $C_{\sigma,1}$, $C_{\sigma,2}$ all fall under this case.
+  \item \textbf{Operator-intrinsic:}
+    $C_2(\alpha) = \sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$
+    is $c$-admissible because $\BK$ is defined at the level of
+    the operator $\cAg$ (spectral projections of $\cAg$ alone,
+    no truncation or approximation parameter involved);
+    see Lemma~\ref{lem:gamma_agnostic}(v) and
+    Remark~\ref{rem:BK_definition}.
 \end{itemize}
 The chain $C_0,C_\infty \to C_{\rm lin},C_{\rm quad} \to C_{\rm tail}$
 is therefore completely $c$-free.
+\end{remark}
+
+\begin{lemma}[$c$-admissible closure]
+\label{lem:cadm_closure}
+The class of $c$-admissible constants
+(Definition: independent of the approximation parameter $c$)
+is closed under finite products and finite sums.
+\end{lemma}
+
+\begin{proof}
+If $A$ and $B$ are independent of $c$, so are $AB$ and $A+B$.
+\qed
+\end{proof}
+
+\begin{remark}[Two sources of $c$-dependence, strictly separated]
+\label{rem:dag_csplit}
+In this paper, $c$ appears in two logically distinct roles:
+\begin{itemize}[nosep]
+  \item \textbf{Operator estimates (fixed-parameter regime):}
+    $c$ appears only as a scaling factor in the operator bounds
+    (e.g.\ $c^{-\beta}$ in Theorem~\ref{thm:universal_rate}).
+    All constants multiplying these powers are $c$-admissible.
+    $K$ and $c$ are independent in this regime.
+  \item \textbf{Domain restriction (diagonal regime):}
+    $c$ appears in the sandwich window $[c_1\log c, c_2\log c]$
+    and in the definition of $K^*(c)$ via the fixed-$c$ FOC.
+    This is $c$-dependence in the \emph{domain of optimization},
+    not in the operator geometry.
+\end{itemize}
+These two roles are disjoint.
+Domain dependence on $c$ does not introduce $c$-dependence
+into any operator constant.
+The transition from fixed-parameter to diagonal is performed
+by exactly one lemma (Lemma~\ref{lem:diagonal_sub}),
+which is the sole point where both roles interact.
 \end{remark}
 
 \begin{remark}[Two-regime structure and quantifier discipline]
@@ -152,7 +194,7 @@ The paper is organized in two strictly separated regimes:
     Theorem~\ref{thm:universal_rate})
     hold for all $K\geq K_0$, $c\geq c_0$, with $K$ and $c$ independent.
     All implied constants are $c$-admissible
-    (Remark~\ref{rem:cadmissible}).
+    (Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure}).
   \item \textbf{Diagonal regime.}
     For each fixed $c$, the variational problem
     $\min_{K\in[c_1\log c,\,c_2\log c]} F(K;c)$
@@ -162,7 +204,8 @@ The paper is organized in two strictly separated regimes:
 \end{itemize}
 The transition between regimes is performed
 by exactly one lemma (Lemma~\ref{lem:diagonal_sub}),
-which is the sole point where $K$ and $c$ are coupled.
+which is the sole point where $K$ and $c$ are coupled
+(see Remark~\ref{rem:dag_csplit} for the precise separation).
 \end{remark}
 
 %% ============================================================
@@ -266,6 +309,10 @@ No substitution arrows appear outside this node.
     Lemma~\ref{lem:trunc_universal}) and the diagonal
     $K^*(c)\sim\frac{2\beta}{\alpha}\log c$;
     it outputs $O(c^{-\beta}(\log c)^{1+\gamma})$.
+  \item The domain window $[c_1\log c, c_2\log c]$ introduces
+    $c$-dependence only in the optimization domain,
+    not in any operator constant
+    (Remark~\ref{rem:dag_csplit}).
   \item (ii') uses only inputs already in the upstream DAG;
     it produces no new asymptotic information.
 \end{itemize}
@@ -286,6 +333,9 @@ satisfying (i) $a_j\sim C_\gamma j^\gamma$;
 The parameter $c$ in this paper is an approximation
 scale parameter, not a spectral parameter of $\cAg$;
 operators in $\mathfrak{T}_\gamma$ are defined independently of $c$.
+All operator-intrinsic objects (eigenfunctions, spectral projections,
+operator norms of spectral remainder terms) are therefore $c$-free
+at the level of definition, before any approximation is applied.
 \end{definition}
 
 \begin{hypothesis}[H1: Pointwise Langer scaling]
@@ -311,6 +361,18 @@ where the $u_j$ are eigenfunctions of $\cAg$
 \label{sec:opdecomp}
 %% ============================================================
 
+\begin{remark}[Definition-level $c$-independence of $\BK$]
+\label{rem:BK_definition}
+$\BK$ is defined as the spectral remainder of $\cAg$
+after truncation at index $K$:
+it is a functional of the spectral projections
+$\{P_j : j > K\}$ of $\cAg$ alone.
+No approximation parameter $c$ enters the definition of $\BK$.
+In particular, $C_2(\alpha) = \sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$
+is a constant of the operator $\cAg$ and the decay rate $\alpha$;
+it is $c$-admissible by definition, not merely by argument.
+\end{remark}
+
 \begin{lemma}[$\gamma$-Agnostic nodes]
 \label{lem:gamma_agnostic}
 Without H1--H2, for all $\cAg\in\mathfrak{T}_\gamma$:
@@ -322,10 +384,9 @@ Without H1--H2, for all $\cAg\in\mathfrak{T}_\gamma$:
 \item[(v)] $\|\BK\|\leq\Ctwo^{1/2}e^{-\alpha K/2}$,
   where
   $C_2(\alpha) := \sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$.
-  This supremum depends only on $\cAg\in\mathfrak{T}_\gamma$
-  and the decay rate $\alpha$;
-  it is independent of the approximation parameter $c$,
-  since $\BK$ is determined by the spectral data of $\cAg$ alone.
+  By Remark~\ref{rem:BK_definition}, $C_2(\alpha)$ is $c$-admissible:
+  it depends only on $\cAg\in\mathfrak{T}_\gamma$
+  and the decay rate $\alpha$.
 \item[(vi)] Kato norm-resolvent.
 \end{itemize}
 \end{lemma}
@@ -343,7 +404,8 @@ Under H1--H2, there exist constants
   \qquad
   C_{\rm quad} = \frac{MC_0^2}{1+2\gamma},
 \]
-both $c$-admissible (Remark~\ref{rem:cadmissible}),
+both $c$-admissible by Lemma~\ref{lem:cadm_closure}
+(products of $c$-admissible quantities from H1--H2),
 such that for all $K\geq 1$, $c\geq c_0$:
 \begin{align}
   \normh{\AKlin}{}
@@ -355,7 +417,7 @@ such that for all $K\geq 1$, $c\geq c_0$:
 \end{align}
 where $C_{\sigma,1} = \tfrac{1}{2}C_0 C_\infty$
 and $C_{\sigma,2} = \tfrac{1}{2}C_0^2$
-are also $c$-admissible.
+are also $c$-admissible (Lemma~\ref{lem:cadm_closure}).
 \end{lemma}
 
 \begin{proof}
@@ -376,7 +438,8 @@ where
 $C_\sigma$ depends only on $\sigma$, not on $K$ or $c$.
 Multiplying by the $c$-admissible prefactors from H1--H2
 yields~\eqref{eq:AKlin}--\eqref{eq:AKquad} with explicit
-$c$-admissible constants as stated.
+$c$-admissible constants; closure under products by
+Lemma~\ref{lem:cadm_closure}.
 \end{proof}
 
 %% ============================================================
@@ -460,16 +523,24 @@ Derivation (no circularity; DAG: Remark~\ref{rem:dag_nocycle}):
 \end{equation}
 
 \textup{(ii')} \textbf{Local regularity of the iteration
-(non-uniform, pointwise in $c$).}
-$\Phi_c(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+C_1$;
-not a uniform contraction in $c$:
-$|\Phi_c'(K^*(c))|=\frac{2\gamma}{\alpha K^*(c)}\to 0$.
-For each fixed $c$, Lipschitz constant $\lambda(c)<\tfrac{1}{2}$
-on $[c_1\log c, c_2\log c]$.
-Unique fixed point $=K^*(c)$ by uniqueness from~(i),
-not by contraction strength.
-Purpose: certify regime self-consistency;
-no new asymptotic information.
+(non-uniform, pointwise in $c$); role of $\lambda(c)$.}
+$\Phi_c(K)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log K+C_1$.
+For each fixed $c$, the Lipschitz constant of $\Phi_c$ on
+$[c_1\log c, c_2\log c]$ satisfies
+$\lambda(c) := |\Phi_c'(K^*(c))| = \frac{2\gamma}{\alpha K^*(c)} \to 0$.
+Hence $\lambda(c) < \tfrac{1}{2}$ for large $c$,
+certifying that the fixed-point iteration is locally contractive
+at each fixed $c$ (regime self-consistency).
+\emph{Remark on role:}
+The unique fixed point $K^*(c)$ is established by part~(i)
+(strict convexity / uniqueness of zero of $F'$),
+not by the Banach fixed-point theorem.
+The bound $\lambda(c)<\tfrac{1}{2}$ is not used for existence;
+it certifies only that the iteration map $\Phi_c$
+does not amplify perturbations at the solution,
+i.e.\ that the iterated expansion~\eqref{eq:kopt_iterated}
+is self-consistent.
+No conclusion depends on $\lambda(c)$ being small uniformly in $c$.
 
 \textup{(iii)} $F(K^*;c)=O(c^{-\beta}(\log c)^{1+\gamma})$.
 \end{lemma}
@@ -496,7 +567,7 @@ This is the unique lemma where $K$ and $c$ are coupled.
 \emph{Hypothesis.}
 There exist $c$-admissible constants
 $C_{\rm lin}, C_{\rm quad}, C_{\rm tail}$
-(Remark~\ref{rem:cadmissible};
+(Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure};
 from Lemmas~\ref{lem:trunc_universal} and~\ref{lem:gamma_agnostic}(v))
 such that for all $K\geq K_0$, $c\geq c_0$:
 \begin{equation}\label{eq:fixed_param_bound}
@@ -506,7 +577,7 @@ such that for all $K\geq K_0$, $c\geq c_0$:
   + C_{\rm tail}\,e^{-\alpha K/2}.
 \end{equation}
 
-\emph{Slowly-varying substitution stability.}
+\emph{Slowly-varying substitution stability (uniform in $\gamma$).}
 Let $h(c) := K^*(c)\big/\bigl(\tfrac{2\beta}{\alpha}\log c\bigr)$.
 By~\eqref{eq:kopt_iterated}:
 \begin{equation}\label{eq:h_rate}
@@ -515,18 +586,24 @@ By~\eqref{eq:kopt_iterated}:
   |h(c) - 1| = O\!\left(\frac{\log\log c}{\log c}\right).
 \end{equation}
 For every fixed $\gamma > 0$, by the MVT
-$(1+u)^{1+\gamma} = 1 + O(|u|)$ for $|u|\leq\tfrac{1}{2}$:
+$(1+u)^{1+\gamma} = 1 + (1+\gamma)\theta^{\gamma} u$
+for some $\theta$ between $1$ and $1+u$,
+with $|u| = |h(c)-1| \leq \tfrac{1}{2}$ for large $c$:
+the implied $O$-constant in
 \begin{equation}\label{eq:hgamma}
-  h(c)^{1+\gamma} = 1 + O\!\left(\frac{\log\log c}{\log c}\right),
+  h(c)^{1+\gamma} = 1 + O\!\left(\frac{\log\log c}{\log c}\right)
 \end{equation}
+equals $(1+\gamma)\cdot\sup_{|u|\leq 1/2}(1+u)^\gamma \leq (1+\gamma)\cdot 2^\gamma$,
+which is bounded on every compact subset $\gamma\in[\gamma_0,\gamma_1]$
+with $0 < \gamma_0 \leq \gamma_1 < \infty$.
+Hence~\eqref{eq:hgamma} and
 \begin{equation}\label{eq:Kstar_power}
   (K^*(c))^{1+\gamma}
   = \Bigl(\tfrac{2\beta}{\alpha}\log c\Bigr)^{1+\gamma}
-  \Bigl(1 + O\Bigl(\tfrac{\log\log c}{\log c}\Bigr)\Bigr).
+  \Bigl(1 + O\Bigl(\tfrac{\log\log c}{\log c}\Bigr)\Bigr)
 \end{equation}
-Relative error $O(\log\log c/\log c) = o(1)$;
-the asymptotic order of each term in~\eqref{eq:fixed_param_bound}
-is preserved.
+hold uniformly in $\gamma$ on compact subsets of $(0,\infty)$.
+For fixed $\gamma$, relative error $O(\log\log c/\log c) = o(1)$.
 
 \emph{Conclusion.}
 At $K=K^*(c)$ (Lemma~\ref{lem:kopt_variational}(ii)),
@@ -570,8 +647,8 @@ $F(K_{\rm int})-F(K^*)\prec c^{-\beta}(\log c)^{1+\gamma}$
 \begin{theorem}[Layer-Survival]
 \label{thm:layer_survival}
 For $n\geq 1$, under H1, all $K\geq K_0$, $c\geq c_0$:
-$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$
-with $c$-admissible $C_n$.
+$\normh{A_K^{(n)}}{}}\leq C_n K^{1+n\gamma}c^{-n\beta}$
+with $c$-admissible $C_n$ (Lemma~\ref{lem:cadm_closure}).
 Diagonal evaluation via Lemma~\ref{lem:diagonal_sub}
 (applying~\eqref{eq:Kstar_power} with exponent $1+n\gamma$):
 \[
@@ -598,7 +675,7 @@ For $\cAg\in\mathfrak{T}_\gamma$, all $K\geq K_0$, $c\geq c_0$:
   + \Ctwo^{1/2}e^{-\alpha K/2},
 \]
 all constants $c$-admissible
-(Remark~\ref{rem:cadmissible}).
+(Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure}).
 \end{theorem}
 
 \begin{corollary}[Universal logarithmic rate]
@@ -695,16 +772,23 @@ O4 & Olver-Watson sketch$\to$proof & open \\
 \begin{itemize}[nosep,leftmargin=1.5em]
   \item $c$-admissible constant chain
     $C_0,C_\infty\to C_{\rm lin},C_{\rm quad}\to C_{\rm tail}$
-    (Remark~\ref{rem:cadmissible});
+    (Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure});
+  \item three sources of $c$-admissibility: axiomatic (H1/H2),
+    analytic (EM), operator-intrinsic ($\BK$ definition);
+  \item domain $c$-dependence ($[c_1\log c, c_2\log c]$) strictly
+    separated from operator $c$-dependence
+    (Remark~\ref{rem:dag_csplit});
   \item fixed-parameter bounds uniform in $K,c$
     via explicit EM remainder~\eqref{eq:EM_remainder};
   \item fixed-$c$ variational $K^*$ on window $[c_1\log c,c_2\log c]$;
-  \item slowly-varying substitution stability
+  \item slowly-varying substitution stability, uniform in $\gamma$
+    on compact subsets
     (eqs.~\eqref{eq:h_rate}--\eqref{eq:Kstar_power});
+  \item $\lambda(c)<\tfrac{1}{2}$ is a self-consistency certificate,
+    not an existence argument (Lemma~\ref{lem:kopt_variational}(ii'));
   \item single diagonal substitution lemma
     (Lemma~\ref{lem:diagonal_sub}) as unique coupling point;
   \item regime-dependent ordering, verified per pair;
-  \item local iteration regularity, non-uniform contraction explicit;
   \item acyclic DAG; Layer-Survival;
     invariants $1+\gamma$, $1+2\gamma$.
 \end{itemize}
