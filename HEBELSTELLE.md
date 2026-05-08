@@ -8,158 +8,169 @@ Freiheitsgrad** reduziert.
 
 ---
 
-## Die Hebelstelle (formal)
+## Die eine strukturelle Gleichung (Kipppunkt)
 
-Sie sitzt im Übergang
-
-$$
-\underbrace{\psi_{n^*}}_{\text{PSWF, rein spektral}}
-\xrightarrow{\;\mathrm{Ev}_N\;}
-\underbrace{\bigl(\psi_{n^*}(p_j)\bigr)_{j=1}^N}_{\text{diskrete Primstellen-Probe}}
-\xrightarrow{\;\text{quad. Form}\;}
-(E_{N,c})_{n^*n^*}
-$$
-
-Kritische Frage:
+Theorem B kippt genau dort, wo gilt:
 
 $$
-\boxed{\|\mathrm{Ev}_N \psi_{n^*}\|^2 \not\ll \|\psi_{n^*}\|^2
-\quad \text{im Edge-Regime } n^* \sim N}
+\boxed{
+\underbrace{\frac{1}{N}\sum_{j=1}^N |\psi_{n^*}(p_j)|^2}_{\text{arithmetische Probe des Edge-Modus}}
+\;=\;
+\underbrace{\lambda_{n^*}(c)}_{\text{spektraler Erwartungswert}}
+\;+\;
+\underbrace{(E_{N,c})_{n^*n^*}}_{\text{sichtbarer Defekt}}
+}
 $$
 
-oder äquivalent: Der Defektterm
+Der **Defekt** $(E_{N,c})_{n^*n^*}$ ist genau dann $> 0$,
+wenn $\mathrm{Ev}_N$ den Edge-Modus $\psi_{n^*}$
+**nicht vollständig im Eigenraum von** $\mathcal{K}_c$ sieht:
 
 $$
-(E_{N,c})_{n^*n^*}
-= \frac{1}{N}\sum_j |\psi_{n^*}(p_j)|^2 - \lambda_{n^*}(c)
+\text{Theorem B gilt} \iff
+\frac{1}{N}\sum_j |\psi_{n^*}(p_j)|^2
+\not\approx \lambda_{n^*}(c)
 $$
 
-muss **nicht verschwinden**, obwohl $\psi_{n^*}$ im Übergangsregime liegt.
+Anders gesagt:
+
+> **Theorem B kippt genau dann, wenn die Primstellen
+> den Edge-Modus $\psi_{n^*}$ so samplen, als wäre er
+> ein Bulk-Modus** (d.h. als hätte er out-of-band Energie Null).
 
 ---
 
-## Warum genau hier
+## Drei äquivalente Formen des Kipppunkts
 
-Alles andere im Paper ist jetzt strukturell geschlossen:
-
-| Komponente | Status | Referenz |
+| Form | Aussage | Sphäre |
 |---|---|---|
-| Spektralpositivität $\lambda_k > 0$ | ✔ hart | Slepian 1978, Fact 6.3 |
-| BW-Doubling Obstruction | ✔ hart | Paper III, Prop 5.1 |
-| Landau–Widom Mittelwert | ✔ hart | Widom 1964 |
-| Funktorstruktur $\mathcal{F}$ | ✔ hart | Paper XXI, §3 |
-| PNT-Gewichtskorrektur → 0 | ✔ hart | PNT-Varianzschranke |
-| **$\mathrm{Ev}_N$ auf Edge-Moden** | **⚠ offen** | **← Hebelstelle** |
+| **Sampling** | $\|\mathrm{Ev}_N \psi_{n^*}\|^2 \not\approx \lambda_{n^*}(c)\cdot N$ | RKHS-Stabilität |
+| **Operator** | $\langle \mathrm{Ev}_N^* \mathrm{Ev}_N \psi_{n^*}, \psi_{n^*}\rangle \ne \langle \mathcal{K}_c \psi_{n^*}, \psi_{n^*}\rangle$ | Kommutator-Versagen |
+| **Spektral** | $\mu_{\text{arith}}(|\psi_{n^*}|^2) \ne \lambda_{n^*}(c)$ | Massklass-Singularität |
 
-Der Evaluationsoperator $\mathrm{Ev}_N$ ist definiert als
-
-$$
-\mathrm{Ev}_N : V_{N,c} \to \mathbb{C}^N,
-\quad f \mapsto \bigl(\sqrt{\log p_j / L_N} \cdot f(p_j)\bigr)_j.
-$$
-
-Im **Bulk-Regime** ($n \ll N$) ist die Stabilität
-$\|\mathrm{Ev}_N f\|^2 \approx \|f\|^2$
-sichergestellt durch Quadraturkontrolle (Paper I).
-
-Im **Edge-Regime** ($n^* \sim N$) fehlt diese Kontrolle:
-die PSWF-Funktionen $\psi_{n^*}$ haben nichttriviale
-out-of-band Energie, und es ist *a priori* unklar,
-ob die Primstellen-Probe diese Energie **sieht** oder **auslöscht**.
+Alle drei sind dieselbe Aussage, in drei verschiedenen Sprachen.
 
 ---
 
-## Die zwei möglichen Welten
+## Warum BW-Doubling hier die Arbeit macht
 
-**Fall 1 (das Paper behauptet):**
-$\mathrm{Ev}_N$ ist energieschließend genug auf Edge-Moden:
-$$
-\|\mathrm{Ev}_N \psi_{n^*}\|^2 \ge c > 0
-\quad \Rightarrow \quad
-(E_{N,c})_{n^*n^*} \ge \tilde{c}_0 > 0.
-$$
-Edge-Obstruction überlebt das arithmetische Sampling.
+Der kontinuierliche Raum liefert:
 
-**Fall 2 (kritische Alternative):**
-$\mathrm{Ev}_N$ glättet Edge-Moden stärker als erwartet:
 $$
-\|\mathrm{Ev}_N \psi_{n^*}\|^2 \ll \|\psi_{n^*}\|^2
-\quad \Rightarrow \quad
-(E_{N,c})_{n^*n^*} \approx 0.
+\int_{\mathbb{R}} |\psi_{n^*}|^2 \,dx
+= \underbrace{\lambda_{n^*}(c)}_{\text{in-band}}
++ \underbrace{\mathcal{E}_{\mathrm{out}}(|\psi_{n^*}|^2)}_{\ge\, c_0^{\mathrm{III}} > 0}
+= 1.
 $$
-BW-Doubling bleibt spektral korrekt, wird aber im diskreten
-Bild unsichtbar — Theorem B kollabiert.
+
+Die arithmetische Probe:
+
+$$
+\frac{1}{N}\sum_j |\psi_{n^*}(p_j)|^2
+\approx \int |\psi_{n^*}|^2 \,d\mu_{\text{arith}}
+= \lambda_{n^*}(c) + (E_{N,c})_{n^*n^*}.
+$$
+
+Der Defektterm $(E_{N,c})_{n^*n^*}$ ist **genau der Anteil,
+den $\mu_{\text{arith}}$ von $\mathcal{E}_{\mathrm{out}}(|\psi_{n^*}|^2)$ sieht**.
+
+**Hebelstelle:** Wenn $\mu_{\text{arith}}$ die out-of-band Energie
+von $\psi_{n^*}$ vollständig ignoriert
+(weil die Primstellen im Frequenzraum blind für Energie oberhalb $\omega$ sind),
+dann $(E_{N,c})_{n^*n^*} = 0$ und Theorem B kollabiert.
 
 ---
 
-## Strukturelle Einordnung
+## Warum das nicht passiert (heuristisch)
 
-Diese Frage ist **kein Spektralproblem mehr**.
-Sie ist isomorph zu einer
-**Sampling-Stabilitätsfrage im Reproducing Kernel Hilbert Space** $\mathrm{PW}_\omega$:
+Primstellen samplen $|\psi_{n^*}|^2$ als **reelle Funktion im Zeitraum**,
+nicht im Frequenzraum. Die out-of-band Energie von $\psi_{n^*}$
+äußert sich als **Nicht-Glätte** von $|\psi_{n^*}|^2$ auf $[-T, T]$ —
+genau im Edge-Regime ist $\psi_{n^*}$ **oszillatorisch** (Airy-Übergang),
+nicht glättend. Primstellen sind keine gleichmäßige Folge;
+aber PNT garantiert, dass sie keine **Nullmenge** in dem für
+$\psi_{n^*}$ relevanten Zeitintervall bilden.
 
-> Sind Primstellen $\{p_j/T\}_{j=1}^N$ eine stabile
-> Sampling-Folge für $V_{N,c}$ **gleichmäßig** auf Edge-Moden?
+Formal wäre ein Beweis über:
 
-Formaler Kontext:
-- $V_{N,c} \subset \mathrm{PW}_\omega$ ist ein RKHS mit Kernel
-  $K_c(x,y) = \sum_{n<N} \psi_n(x)\psi_n(y)$.
-- Stabilität bedeutet:
-  $\|\mathrm{Ev}_N f\|^2 \asymp \|f\|^2$ **uniform** in $V_{N,c}$.
-- Im Bulk ist das gesichert (quadrature, Paper I).
-- Im Edge: **offen**.
+$$
+\inf_{n \in [(1-\delta)N,N)}
+\Bigl|\frac{1}{N}\sum_j |\psi_n(p_j)|^2 - \lambda_n(c)\Bigr|
+\ge c_2(\delta, c) > 0
+$$
+
+das **uniforme** Resultat, das Theorem B von existenziell
+zu global machen würde.
 
 ---
 
 ## Verbindung zu CCM
 
-Genau hier greift das CCM-Programm (Connes–Consani–Moscovici
-[CCM2025]) an:
+Unter RH ist die Explicit Formula:
 
-Das CCM-Spektrum ist konstruiert so, dass die
-Weil-Distributionen als **Reproducing-Kernel-Pairings**
-erscheinen. Die Frage, ob $\mathrm{Ev}_N$ stabil auf
-Edge-Moden ist, ist isomorph zur Frage:
+$$
+\sum_{j=1}^N \Lambda(p_j) f(p_j)
+= \hat{f}(0) - \sum_{\rho} \hat{f}(\rho) + \text{Fehler}
+$$
 
-> Realisiert die Weil-Distribution die
-> out-of-band Projektionsenergie von $\psi_{n^*}$
-> als **sichtbares** Spektralobstruction-Signal?
+Das ist genau eine **Reproducing-Kernel-Paarung**:
+die Weil-Distribution $W$ wirkt auf $f$ über ihre Nullstellen $\rho$.
 
-Unter RH: ja (Explicit Formula gibt genau diese Paarung).
-Ohne RH: offen — das ist der Punkt, wo
-$\tilde{c}_0 \to 0$ oder $\tilde{c}_0 > 0$ entschieden wird.
+Die Hebelstelle lautet damit:
+
+$$
+\boxed{
+\text{Sieht } W(|\psi_{n^*}|^2) > 0 ?
+\iff
+\text{Hat die Explicit Formula Energie auf dem Edge-Modus?}
+}
+$$
+
+Unter RH: ja, weil $\rho = 1/2 + it$ und die
+Fourier-Transformierten $\hat{\psi}_{n^*}(\rho)$ für Edge-Moden
+nicht verschwinden (sie trägt genau die out-of-band Energie).
+
+**Ohne RH:** offen. Das ist der einzige Punkt,
+wo RH das Programm schließt.
 
 ---
 
-## Open Problem (für Paper XXI oder Paper XXII)
+## Statusblock: Was geschlossen ist, was offen
 
-**Problem.** Sei $n^* \in [(1-\delta)N, N)$ der Zeuge
-aus Lemma $\Omega$(b). Zeige oder widerlege:
+| Komponente | Status |
+|---|---|
+| Spektralpositivität $\lambda_k > 0$ | ✔ Slepian 1978 |
+| BW-Doubling Obstruction | ✔ Paper III |
+| Landau–Widom Mittelwert | ✔ Widom 1964 |
+| Funktorstruktur $\mathcal{F}$ | ✔ Paper XXI |
+| PNT-Gewichtskorrektur $\to 0$ | ✔ PNT |
+| Theorem B (existenziell) | ✔ Paper XXI |
+| **Theorem B (uniform über Edge-Block)** | **⚠ offen** |
+| **Ev$_N$ stabil auf Edge-Moden** | **⚠ offen** |
+| CCM-Ankopplung ohne RH | **⚠ offen** |
+| Theorem D (Non-Repr.) ohne GRH | **⚠ offen** |
+
+---
+
+## Open Problem (Paper XXII-Kandidat)
+
+**Problem (Uniform Edge Sampling Stability).**
+Sei $n^* \in [(1-\delta)N, N)$. Zeige:
 
 $$
 \inf_{n \in [(1-\delta)N,\, N)}
-\frac{\frac{1}{N}\sum_{j=1}^N |\psi_n(p_j)|^2}{\|\psi_n\|^2}
+\Bigl(
+\frac{1}{N}\sum_{j=1}^N |\psi_n(p_j)|^2 - \lambda_n(c)
+\Bigr)
 \;\ge\; c_2(\delta, c) > 0.
 $$
 
-Eine positive Antwort würde Theorem B aus einem
-*existenziellen* in ein *uniformes* Resultat über
-den gesamten Edge-Block verwandeln.
+Eine positive Antwort verwandelt Theorem B in ein
+**uniformes geometrisches Resultat** und macht
+die Obstruction-Konstante $\tilde{c}_0$ **scharf und explizit**.
 
-Ein Gegenbeispiel würde zeigen, dass die Obstruktion
-nur entlang einer **dünn besiedelten** Unterfolge von Indizes
-$n^*$ sichtbar ist — was Theorem C zwar nicht widerlegt,
-aber strukturell schwächt.
-
----
-
-## Zusammenfassung: Die eine offene Frage
-
-$$
-\boxed{\text{Ist } \mathrm{Ev}_N \text{ stabil auf PSWF-Edge-Moden?}}
-$$
-
-Alles andere ist geschlossen. Diese Frage entscheidet,
-ob das Programm ein **uniformes Obstruction-Resultat**
-oder nur ein **existenzielles** hat —
-und ob CCM ohne RH angreifen kann.
+Zugang: RKHS-Stabilität von $V_{N,c}$ unter
+Primstellen-Sampling im Edge-Regime.
+Vermutlich braucht man hier eine Mischung aus
+Explicit Formula + quantitative PSWF-Oszillationsabschätzungen
+im Airy-Übergangsregime.
