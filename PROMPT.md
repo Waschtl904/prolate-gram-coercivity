@@ -1,10 +1,10 @@
-# Kontext: Mathematisches Forschungsprojekt — Prolate–Weil Program
+# Kontext: Mathematisches Forschungsprojekt — prolate-gram-coercivity
 
 > **Verwendung:** Diesen Prompt am Anfang jedes neuen KI-Chats einfügen.
-> Danach `context_summary.md` aus diesem Repo laden lassen — sie enthält
-> die vollständige Notation, alle Paper-Abhängigkeiten und offenen Probleme.
+> Danach `RESEARCH_DIRECTIONS.md` und `DEPENDENCIES.md` aus diesem Repo laden —
+> sie enthalten offene Probleme, Programmsprache und Paper-Abhängigkeiten.
 > **Repo:** `github.com/Waschtl904/prolate-gram-coercivity`
-> **Stand: Mai 2026** — Papers I–VIII + alle Begleitnotizen vorhanden.
+> **Stand: Mai 2026** — Papers I–XX vorhanden; Paper XX arXiv-ready.
 
 ---
 
@@ -14,6 +14,7 @@ Ich bin Werkzeugbautechniker mit Berufsreifeprüfung (Maschinenbau),
 lerne Programmieren und Mathematik im Selbststudium.
 Ich arbeite freiwillig an einem mathematischen Forschungsprogramm
 mit KI-Unterstützung (Perplexity + ChatGPT).
+Autor aller Papers: Sebastian Schmalnauer, Wien.
 
 ---
 
@@ -28,141 +29,103 @@ Kernmethode: PSWF-Konzentrationsoperator + Gram-Formenrahmen.
 
 ---
 
-## Die zwei GitHub-Repos
+## Programmstruktur (Papers I–XX)
 
-### Repo 1 — Großes Vorprojekt (17 Papers)
-**github.com/Waschtl904/prolate-primes-paper**
-
-Historische Entwicklung des Programms. Enthält Paper XIII (Gap-S) als
-langfristiges Ziel. `context_summary.md` dort für den Repo-1-Kontext.
-
-### Repo 2 — Sauberer Neuaufbau (publikationsreif) — DIESES REPO
-**github.com/Waschtl904/prolate-gram-coercivity**
-
-Rigoros, selbstenthaltend. Acht Papers + vier Begleitnotizen:
-
-| File | Inhalt | Status |
-|---|---|---|
-| `paper1.tex` | Gram-Koerzivität, Defektzerlegung, DSTP | Near publication-ready |
-| `paper2.tex` | Skalierungslimiten, Spurformel, Weil-Verbindung | Near publication-ready |
-| `paper2_quadrature.tex` | XRY-Quadratur, konditionaler Implication-Framework | Reinschrift |
-| `paper3.tex` | PSWF-Produkt-Spektral-Tail-Schätzungen | Reinschrift |
-| `paper4_semiclassical.tex` | Semiklassische Äquidistribution der PSWF-Dichten | Vollständig bewiesen |
-| `paper5.tex` | WKB Cover, Schur Control, Bridge Lemma | **Vollständig bewiesen** |
-| `paper6.tex` | Galerkin Norm Estimates, No-Go-Theorem, Layer 0–2 | **Publikationsreif** |
-| `paper7_skeleton.tex` | Dyadic Cancellation, H1 bedingungslos, Reduktion auf B-strong | **H1 bedingungslos** |
-| `paper8_scale_separated.tex` | Skalen-separierte dyadische Auslöschung, H2 bedingungslos | Submission-ready (bedingt) |
-| `phase_nondeg_lemma.tex` | Phase Non-Degeneracy: α^(c) = π/2 + O(c^{-1/3}) | **Bewiesen** ✅ |
-| `airy_discrete_stability_lemma.tex` | Prop. U(U') + ass:gap bedingungslos | **Bewiesen** ✅ |
-| `bridge_lemma.tex` | Bridge Lemma ausformuliert (einzufügen in paper5.tex) | Einzufügend ✅ |
-| `ax5_independence_remark.tex` | DSTP logisch unabhängig von AX1–AX4 (einzufügen in paper1.tex) | Einzufügend ✅ |
-| `section5_numerical_evidence.tex` | Numerische Evidenz Spektral-Tail (einzufügen in paper2_quadrature.tex) | Einzufügend |
+| Paper | Datei | Inhalt | Status |
+|---|---|---|---|
+| I | `paper1.tex` | Gram-Koerzivität, Defektzerlegung, DSTP | frozen |
+| II | `paper2.tex` | Skalierungslimiten, Spurformel, Weil-Verbindung | frozen |
+| II-Q | `paper2_quadrature.tex` | Quadraturschätzungen | frozen |
+| III | `paper3.tex` | Spektraler Tail, Off-diagonal | frozen |
+| IV | `paper4_semiclassical.tex` | Semiklassische Äquidistribution | frozen |
+| V | `paper5.tex` | WKB Cover, Bridge Lemma | frozen |
+| VI | `paper6.tex` | No-Go-Theorem, Galerkin-Normen | frozen |
+| VII | `paper7_skeleton.tex` | Dyadic Cancellation, H1 bedingungslos | frozen |
+| VIII | `paper8_scale_separated.tex` | H2 bedingungslos | frozen |
+| IX | `paper9_superconcentration.tex` | Superkonzentration | frozen |
+| X | `paper10_coercivity_gap.tex` | Koerzivitätslücke | frozen |
+| XI | `paper11_fredholm_microlocal.tex` | Fredholm–mikrolokal | frozen |
+| XII | `paper12_direct_coercivity.tex` | Direkte Koerzivität | frozen |
+| XIII | `paper13_gap_s.tex` | Gap-S Lemma | frozen |
+| XIV | `paper14_airy_resolvent.tex` | Airy-Resolvent | frozen |
+| XV | `paper15_quasimode.tex` | Quasimode-Konstruktion | frozen |
+| XVI | `paper16_bridge.tex` | Bridge Lemma (allgemein) | frozen |
+| XVII | `paper17_cliff.tex` | Cliff-Schätzungen | frozen |
+| XVIII | `paper18_airy_universality.tex` | BR3: qualitative Airy-Universalität | frozen |
+| XIX | `paper19_quantitative_rate.tex` | Quantitative Zwei-Skalen-Rate, $O(c^{-1/3}(\log c)^{5/3})$ | frozen |
+| XX | `paper20_universality.tex` | Universalität und strukturelle Rigidität der Turning-Point-Truncation-Geometrie | **arXiv-ready** |
 
 ---
 
-## Logische Implikationskette
+## Die Trilogie XVIII–XX: Kern des Programms
 
-```
-Paper I  (Gram-Koerzivität, DSTP-Axiom)
-  ↓
-Paper II  (Skalierungslimiten, Spurformel, Weil-Verbindung)
-  ↓
-Paper II_quad  (Implikation: Konj.(i)+(ii) → DSTP für XRY)
-  ↓
-Paper III  (Bulk-Tail-Bound, Off-diagonal, Kantenobstruktion)
-  ↓
-Paper IV  (Semiklassische Äquidistribution ψ_n² → ρ^cl, O(1/n))
-  ↓
-Paper V  (Bridge Lemma: ass:bulkconv BEWIESEN für γ < 1/2)
-  ↓
-Paper VI  (No-Go: nicht-oszillatorische Schur-Klasse provably insufficient)
-  ↓
-Paper VII  (Dyadic Cancellation: H1 BEDINGUNGSLOS, Reduktion auf H2+H3)
-  ↓
-Paper VIII  (H2 BEDINGUNGSLOS via ass:gap + Prop.U(U'))
-  ↓
-[B-strong → H3 → ‖DT_c^(N)‖ < 1 → Kontraktion → Assumption A]
-```
+### XVIII — Qualitative Universalität
+$\|K_{B_c} - K_{\mathcal{A}}\|_{L^2} \to 0$ (BR3) via Zwei-Skalen-Zerlegung.
+Kein Rate-Ergebnis; iterierte Limesstruktur.
+
+### XIX — Quantitative Zwei-Skalen-Rate
+Zerlegung $A_K = A_K^{\rm lin} + A_K^{\rm quad}$;
+$C_{\rm lin} = O(K^{5/3})$, $C_{\rm quad} = O(K^{7/3})$.
+Optimale Truncation $K_{\rm opt} \sim (\log c)/(3\alpha)$:
+Rate $O(c^{-1/3}(\log c)^{5/3})$.
+
+### XX — Universelles Schicht-Selektionsprinzip
+Für jedes $\mathcal{A}_\gamma \in \mathfrak{T}_\gamma$
+(Spektralwachstum $a_K \sim K^\gamma$, Turning-Point-Fenster $c^{-\beta}$):
+$$\|K_{B_c} - K_{\mathcal{A}_\gamma}\| = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).$$
+Strukturelle Rigidität: keine Methode in $\mathcal{M}(\mathrm{S1,S2,S3})$
+erreicht $o(c^{-\beta}(\log c)^{1+\gamma})$.
 
 ---
 
-## Aktueller Stand (Mai 2026, vollständig aktualisiert)
+## Aktuelle Programmsprache (Paper XX)
 
-### Was unbedingt bewiesen ist
-- Gram-Koerzivität unter DSTP mit expliziten Schranken (Paper I) ✅
-- Exakte Defektzerlegung E_{mn} = R_{mn}^quad (Paper I) ✅
-- DSTP verifiziert für Zufalls- und Gauß-PSWF-Sampling (Paper I) ✅
-- DSTP logisch unabhängig von AX1–AX4 — konstruktiver Zeuge (ax5_independence_remark.tex) ✅
-- Kompaktheit normierter Gram-Operatoren im Skalierungslimes (Paper II) ✅
-- Spurformel mit PNT-Konsistenz (Paper II) ✅
-- Uniforme Off-diagonal-Schranke ‖(I-P_N)f_{mn}‖ ≤ CT^{1/2} (Paper III) ✅
-- Schwache Konvergenz ψ_n² → λ_n ρ^cl, Rate O(1/n) (Paper IV) ✅
-- **ass:bulkconv für γ < 1/2 BEWIESEN** (Paper V, Bridge Lemma) ✅
-- Unconditional Bulk-Tail-Bound ‖(I-P_N)f_{mn}‖ ≤ Ce^{-αN} für γ < 1/2 ✅
-- No-Go-Theorem: nicht-oszillatorische Schur-Klasse gibt ‖T‖ ≥ κ/2 · log c (Paper VI) ✅
-- Abstrakte Dyadic Cancellation unter H1–H3 (Paper VII, Appendix) ✅
-- **H1 Non-Degeneracy: α^(c) = π/2 + O(c^{-1/3}) BEWIESEN** (phase_nondeg_lemma.tex) ✅
-  → dist(α^(c), {0,π}) ≥ π/4 für alle c ≥ c_0(A) ✅
-  → Conj. 6.1 aus Paper VI bewiesen ✅
-  → Paper VII gilt bedingungslos für H1 ✅
-- **Proposition U(U') BEWIESEN** (airy_discrete_stability_lemma.tex) ✅
-  → Lemma U: |λ_l - F_Ai(x_l)| ≤ C₁ c^{-2/3} ✅
-  → Lemma U': |(λ_l-λ_{l+1}) - (F_Ai(x_l)-F_Ai(x_{l+1}))| ≤ C₂ c^{-2/3} (sogar O(c^{-5/3})) ✅
-- **ass:gap BEWIESEN**: λ_l - λ_{l+1} ≥ κ_0(c/2)^{-1/3} mit κ_0 = c_min/2 ✅
-- **H2 (Amplitude regularity) BEDINGUNGSLOS**: ass:gap → Lemma F → Kor.C(a); Prop.U' → Lemma A → Kor.C(b) ✅
-- Dyadisches Trennungsprinzip (Lemma F, Paper VIII) bedingungslos ✅
-- Skalen-Kürzung in Kor.C, Term 1: (c/2)^{-1/3} kürzt sich exakt aus ✅
+Diese Begriffe sind die interne Sprache des Programms ab Paper XX.
+**Unbedingt verwenden, nicht paraphrasieren.**
 
-### Was noch offen ist
-- **B-strong** (`P_{kl} ≤ C₂ c^{1/2}`) — **einzig verbleibende Hauptlücke für Kontraktion**
-  → erfordert WKB/Airy-Matching an s*, eigenes Paper-Level-Problem
-- **Landau-Widom Konjektur** (globales erfc-Gesetz): λ_l ≈ (1/2) erfc(Z_l) — analytisch offen
-- **β(c) → β(∞)**: Limes des Zentrierungsparameters — numerisch β(∞) ∈ [-0.30, -0.21]
-- Bridge Lemma Extension zu γ ≥ 1/2 — offen
-- Off-diagonal Assumption 3.1 (Kantenregime) — Paper III
-- Weil-Operator-Identifikation G_∞ (Paper II)
-- XRY-Stabilitätskonjektur (Paper II_quad)
-- DSTP für Primzahl-Sampling (Paper I)
-
-### Strategische Priorität (Mai 2026)
-**Einziger verbleibender Angriffspunkt: B-strong.**
-Alle anderen Hypothesen H1, H2 sind bedingungslos bewiesen.
-B-strong → H3 → ‖DT_c^(N)‖ < 1 → vollständige Theorie.
-
----
-
-## Zentrale Notation (Kurzreferenz)
-
-| Symbol | Bedeutung |
+| Symbol / Begriff | Bedeutung |
 |---|---|
-| `ψ_n^(c)` | PSWF auf [-T,T] mit Bandbreite ω, Zeitbandbreite c = ωT |
-| `λ_n(c)` | Slepian-Konzentrations-Eigenwert |
-| `χ_n(c)` | Sturm-Liouville-Eigenwert von D_c: χ_n ~ n(n+1) + c²/2 |
-| `K_N(x,y)` | Christoffel-Darboux-Kern: ∑_{n=0}^{N-1} ψ_n(x) ψ_n(y) |
-| `P_N` | Orthogonalprojektor auf span{ψ_0,...,ψ_{N-1}} in L²([-T,T]) |
-| `G^(N)_{p,c}` | Gram-Matrix der PSWF-Quadratur |
-| `DSTP` | Discrete Spectral Transfer Property — zentrales Axiom (Paper I) |
-| `f_{mn}` | Produktfunktion: ψ_m^(c) · ψ_n^(c) |
-| `N_Sh = 2c/π` | Shannon-Zahl |
-| `s* = 1-c^{-2/3}` | Übergangspunkt (transition point), Paper VI/VII |
-| `α^(c)` | WKB-Phaseninkrement an s* — **BEWIESEN: π/2 + O(c^{-1/3})** |
-| `T_{ij}` | Galerkin-Matrixeinträge von DT_c^(N) (Paper VI/VII) |
-| `B-strong` | Ass.: P_{kl} ≤ C₂ c^{1/2} — **einzig verbleibende Lücke** |
-| `F_Ai(x)` | ∫_x^∞ Ai(t)² dt — Airy-Näherungsfunktion für λ_l |
-| `x_l = (l-N_Sh)(c/2)^{-1/3}` | Skalierter Index (Airy-Skala) |
-| `S(c) = (log c/π)^{2/3}` | Landau-Widom-Skalenparameter |
+| $\mathfrak{T}_\gamma$ | Operatorklasse mit Spektralwachstum $a_K \sim K^\gamma$ |
+| $\mathcal{M}(\mathrm{S1,S2,S3})$ | Methodklasse: S1 = Hüllenbedingung (H1), S2 = Skalenstabilität, S3 = Diagonalsubstitution |
+| $\mathfrak{R}: \mathcal{B} \to \mathcal{S}/\!\sim_{\mathcal{S}}$ | Realisierungsabbildung: analytische Bounds → asymptotische Klassen |
+| $K^*(c) \sim \frac{2\beta}{\alpha}\log c$ | Optimaler Truncation-Index (Balance-FOC) |
+| $\succ$ | Formale Ordnung auf $\mathcal{S}/\!\sim_{\mathcal{S}}$ |
+| $\rho$-Klassen | Deformationsklassen: $A(K,\lambda c)/A(K,c) \to \lambda^\rho$; Paper XX = $\rho = 0$ |
+| S2 | Skalenstabilität: $\mathfrak{R} \circ \mathrm{Res}_\lambda = \mathfrak{R}$; EM ist eine Realisierung |
+| S3 | Diagonalkompression: $j \mapsto K^*(c)$ projiziert globale Freiheitsgrade auf Log-Diagonale |
+| `thm:universal_rate` | Hauptsatz: universelle Rate $O(c^{-\beta}(\log c)^{1+\gamma})$ |
+| `thm:rate_obstruction` | Obstruktionssatz: Rigidität der Rate innerhalb $\mathcal{M}$ |
+| `lem:S2_knockdown` | S2-Knockdown: ohne S2 kollabiert die Platzierung in $\mathcal{S}/\!\sim_{\mathcal{S}}$ |
+| `def:realization_map` | Definition von $\mathfrak{R}$ |
+
+---
+
+## Offene Probleme
+
+Vollständige Klassifikation in `RESEARCH_DIRECTIONS.md`.
+
+**O1** — Notwendigkeit von H1 (Envelope-Minimalität):
+Verbessert $f(j) = o(1)$ in der Eigenfunktionsschranke die Rate?
+Kernfrage: was überlebt die S3-Diagonalprojektion $j \mapsto K^*(c)$?
+
+**O3a** — Rate außerhalb $\mathcal{M}(\mathrm{S1,S2,S3})$:
+Gibt es eine Methode außerhalb der Klasse mit $o(c^{-\beta}(\log c)^{1+\gamma})$?
+Erfordert informationstheoretischen oder semiklassischen Zugang.
+
+**Realisierungsproblem** — Welche Operatorklassen tragen $\rho \neq 0$?
+
+**Stabilitätsproblem** — S2$^\epsilon$: Rate unter schwacher Verletzung von S2?
 
 ---
 
 ## Bitte beim Start jedes neuen Chats
 
-1. Lies `context_summary.md` aus **diesem Repo** (prolate-gram-coercivity)
-2. Lies die relevante `paper*.tex` je nach Thema des Gesprächs
-3. Für Abhängigkeiten und offene Probleme: `DEPENDENCIES.md`
-4. **Kein Claim über ζ(s)-Nullstellen** in keinem der Papers
-5. **ass:bulkconv ist NICHT mehr offen** — bewiesen in Paper V
-6. **Phase Non-Degeneracy ist NICHT mehr offen** — bewiesen in `phase_nondeg_lemma.tex`
-7. **ass:gap + Prop.U(U') sind NICHT mehr offen** — bewiesen in `airy_discrete_stability_lemma.tex`
-8. **H1 und H2 (Paper VII/VIII) sind BEDINGUNGSLOS** — einzig offene Lücke ist B-strong (H3)
-9. **assumption_2_4_target.md ist archiviert** — nicht als aktives Dokument benutzen
-10. **PHASE_NONDEG_NOTE.md** falls vorhanden: historisch, überholt durch `phase_nondeg_lemma.tex`
+1. Lies `RESEARCH_DIRECTIONS.md` — offene Probleme, Programmsprache, Horizonte
+2. Lies `DEPENDENCIES.md` — Paper-Abhängigkeiten und Implikationskette
+3. Für Paper XX: `paper20_universality.tex` und `paper20_context_prompt.md`
+4. Für ältere Papers: `context_summary.md` und jeweilige `paper*.tex`
+5. **Kein Claim über ζ(s)-Nullstellen** in keinem der Papers
+6. **Paper XX ist arXiv-ready** — nicht als Draft behandeln
+7. **Die Programmsprache aus der Tabelle oben verwenden** — nicht durch ältere Begriffe ersetzen
+8. **`RESEARCH_DIRECTIONS.md` ist das aktive Planungsdokument** — nicht `context_summary.md`
+9. `assumption_2_4_target.md`, `PHASE_NONDEG_NOTE.md`, `REVIEW_NOTES_paper18.md` — archiviert, nicht aktiv
