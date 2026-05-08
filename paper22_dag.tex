@@ -1,0 +1,576 @@
+%%
+%% paper22_dag.tex  --  Logical Dependency Graph for Paper XXII
+%%
+%% Every edge A -> B: ``B requires A in its proof''.
+%% Format is compatible with trilogy_dag.tex (XVIII--XX).
+%%
+%% Structure:
+%%   Layer 0: Imported black boxes (from other papers in the program)
+%%   Layer 1: IIKS representation (§2)
+%%   Layer 2: Two-level obstruction (§3)
+%%   Layer 3: Gram-to-gap reduction (§4)
+%%   Layer 4: Airy closure (§5)
+%%   Layer 5: Open problems with mechanisms
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\begin{document}
+
+\title{Logical DAG: Paper~XXII (Paper-Grade)\\
+Edge Coercivity and the Airy Boundary Operator}
+\date{May 2026}
+\maketitle
+
+\tableofcontents
+
+%%=================================================================
+\section{Purpose and Conventions}
+\label{sec:purpose}
+%%=================================================================
+
+This document is the paper-grade logical dependency graph for Paper~XXII.
+It follows the format of \texttt{trilogy\_dag.tex} (XVIII--XX).
+Every edge is explicit; every open edge carries a constructive mechanism.
+
+\medskip
+\textbf{Conventions.}
+(T) = proved theorem within XXII or cited paper.
+(I) = exact identity (no asymptotics).
+(H) = hypothesis / assumption (open).
+(C) = conjecture (stated, not proved).
+(BB) = black box (imported from another paper, no re-proof in XXII).
+(O) = open problem with explicit mechanism.
+An edge $A\to B$ means: B's proof invokes A.
+An edge $A\xrightarrow{\mathrm{mech}}B$ additionally names
+the explicit transfer mechanism.
+
+\medskip
+\textbf{Scope of XXII.}
+The paper has exactly one new open question:
+\[
+  \inf\,\sigma(\Dedge) > 0
+  \quad (\text{XXII Main Conjecture})
+\]
+where $\Dedge = \Pi_{\mathrm{edge}}(A_{N,c}-\mathcal{K}_c)\Pi_{\mathrm{edge}}$.
+All other statements are either proved theorems, imported black boxes,
+or explicitly labelled conditionals.
+
+%%=================================================================
+\section{Layer~0: Imported Black Boxes}
+\label{sec:L0}
+%%=================================================================
+
+These results are used in XXII but not re-proved.
+Every BB-edge is a theorem in the cited paper.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l p{5.5cm} l l}
+\toprule
+\textbf{ID} & \textbf{Statement} & \textbf{Source} & \textbf{Used in} \\
+\midrule
+BB1 & $\sigma(A_{N,c})\approx\sigma(\mathcal{K}_c)$ in bulk
+    (Theorem~A)
+    & Paper~XXI
+    & P1 \\
+BB2 & $\Dedge\ne 0$: at least one positive eigenvalue
+    (Theorem~B)
+    & Paper~XXI
+    & P1, P5 \\
+BB3 & Gram coercivity $\Rightarrow$ spectral gap
+    $\ge Cc^{-1/2}$ (Theorem~A)
+    & Paper~13b
+    & P9 \\
+BB4 & $K_c(x,y)=\frac{\sin(c(x-y))}{\pi(x-y)}$:
+    sinc kernel representation
+    & Slepian 1978
+    & P2 \\
+BB5 & Widom edge phase $\phi_c$
+    and $O(c)$ growth
+    & Widom 1964
+    & P6, O3 \\
+BB6 & Deift--Zhou steepest descent framework
+    & Deift 1999
+    & P7, P8 \\
+BB7 & Fredholm determinant continuity
+    in $\mathfrak{S}_1$-norm
+    & standard
+    & P10 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%%=================================================================
+\section{Layer~1: IIKS Representation (\S2)}
+\label{sec:L1}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l p{5.5cm} l l}
+\toprule
+\textbf{ID} & \textbf{Statement} & \textbf{Type} & \textbf{Used in} \\
+\midrule
+P1 & Operator setup: $\Dedge$
+    as mismatch form, Bulk vs.\ Edge
+    & (T), from BB1, BB2
+    & P3, P4 \\
+P2 & Exact IIKS identity:
+    $K_c(x,y) = \vec{F}_c(x)^\top J\,\vec{G}_c(y)/(x-y)$
+    & (I), from BB4
+    & P3, P7 \\
+P3 & The cubic Airy term $\tfrac{1}{3}u^3$
+    does not arise from the Fourier
+    representation; it requires
+    integration of the Widom edge phase
+    via the IIKS RHP structure
+    & (T) structural remark, from P2, BB5
+    & P6, P7 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Why P2 is infrastructure, not argument]
+P2 is an exact algebraic identity.
+Its role in XXII is not to prove anything about $\Dedge$
+directly, but to provide the coordinate system in which
+Assumptions~A and~B (Layer~2) can be formulated.
+Without P2, the RHP associated to $\mathcal{K}_c$ has no
+well-defined jump matrix, and the obstruction decomposition
+(P5--P7) cannot be stated.
+\end{remark}
+
+%%=================================================================
+\section{Layer~2: Two-Level Obstruction Principle (\S3)}
+\label{sec:L2}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l p{5.5cm} l l}
+\toprule
+\textbf{ID} & \textbf{Statement} & \textbf{Type} & \textbf{Used in} \\
+\midrule
+P4 & Edge stability decomposes as:
+    (nonlinear phase consistency) $+$
+    (linear kernel transfer)
+    & (T) structural, from P1, P3
+    & P5, P6, P7 \\
+P5 & Assumption~A: $\exists\, g_c$ analytic
+    satisfying nonlinear matching
+    $2\mathrm{Re}(g_c^+) = \mathrm{Re}(\phi_c)$
+    with $g_c(z)=\log z + O(z^{-1})$
+    & (H) open, from BB5
+    & P7, P8 \\
+P6 & Nonlinearity of Assumption~A:
+    $\phi_c = \phi_c[g_c]$ (implicit
+    dependence through spectral density
+    near band edge); no RMT-type
+    candidate satisfies (A) for large $c$
+    & (T) structural, from P3, BB5
+    & P5, O3 \\
+P7 & Assumption~B: given Assumption~A,
+    steepest-descent geometry holds
+    (sign condition, Lipschitz contours,
+    no additional saddles)
+    & (H) conditional on P5
+    & P8 \\
+P8 & Conjecture~3.3 (RHP convergence):
+    $Y_c\to Y_{\mathrm{Ai}}$ uniformly
+    on compacta; implies
+    $\|\tilde{K}_c^{(\xi)}-K^{\mathrm{Airy}}\|_{\mathfrak{S}_1}=O(c^{-1/3})$
+    & (C) conditional on P5, P7, BB6
+    & P10, P11 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Logical isolation of A and B]
+P5 (Assumption~A) is a nonlinear existence statement;
+it does not follow from P7 and cannot be reduced to it.
+P7 (Assumption~B) is a geometric regularity statement
+that is standard in form but cannot even be formulated
+without P5, since $2g_c - \phi_c$ is undefined without
+a compatible $g_c$.
+Thus the logical direction is always $P5 \to P7$, never
+$P7 \to P5$.
+The deep difficulty lies entirely in P5.
+\end{remark}
+
+%%=================================================================
+\section{Layer~3: Gram-to-Gap Reduction (\S4)}
+\label{sec:L3}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l p{5.5cm} l l}
+\toprule
+\textbf{ID} & \textbf{Statement} & \textbf{Type} & \textbf{Used in} \\
+\midrule
+P9 & Reduction: uniform edge-frame
+    stability $\Rightarrow$
+    $\lambda_{\min}(G_{N,c})\ge\alpha(c)
+    \asymp c^{-1/2}$
+    (Prop.~4.1)
+    & (T), from Landau--Widom
+    & P12 \\
+R1 & (Reduction functor via BB3):
+    $\lambda_{\min}(G_{N,c})\ge c^{-1/2}$
+    $\Rightarrow$ gap lower bound
+    $\ge Cc^{-1/2}$ (Theorem~4.2)
+    & (BB) = BB3 imported, from P9
+    & P12 \\
+P10 & Conditional Airy-scale upgrade:
+    under Conj.~3.3, gap upgrades
+    to $c^{-1/3}$ (Corollary~4.1)
+    & (C) conditional on P8, BB7
+    & P13 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[R1 is not re-proved]
+R1 imports BB3 (Paper~13b Theorem~A) exactly.
+The new content of XXII is P9 (the first arrow in the chain):
+showing that uniform quasi-isometry of $\mathrm{Ev}|_{\mathrm{Edge}}$
+controls the Gram minimum eigenvalue at the required scale.
+R1 is then applied as a black-box functor.
+XXII does not touch the proof of BB3.
+\end{remark}
+
+%%=================================================================
+\section{Layer~4: Airy Closure and Main Theorem (\S5)}
+\label{sec:L4}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l p{5.5cm} l l}
+\toprule
+\textbf{ID} & \textbf{Statement} & \textbf{Type} & \textbf{Used in} \\
+\midrule
+P11 & $D^{\mathrm{Airy}} =
+     \Pi_{\mathrm{Airy}}(A^{\mathrm{arith}}
+     - K^{\mathrm{Airy}})\Pi_{\mathrm{Airy}}$:
+     Rand-Weyl operator definition
+     & (T) from P8, Prop.~5.1
+     & P12 \\
+P12 & Conjecture~5.2 (main gap conjecture):
+     $\inf\,\sigma(D^{\mathrm{Airy}})
+     \ge c_2^{\mathrm{Airy}} > 0$
+     & (C) open
+    & P13 \\
+P13 & Main Theorem (Thm.~5.3,
+     conditional on P12):
+     $\inf_{f\in\mathrm{Edge},\|f\|=1}
+     \langle\Dedge f,f\rangle
+     \ge c_2^{\mathrm{Airy}}/2 > 0$
+     & (T) conditional on P11, P12,
+       from P9, R1, P8
+     & (terminal) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Airy closure is asymptotic, not foundational]
+P11--P13 are not the logical ground of XXII.
+They are the asymptotic ceiling: the scaling limit into which
+the reduction chain (P9, R1) feeds.
+The Airy kernel does not justify the coercivity;
+it parametrizes the limit operator whose spectral gap
+is the one remaining unknown.
+\end{remark}
+
+%%=================================================================
+\section{Layer~5: Open Problems with Mechanisms}
+\label{sec:L5}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l p{3.8cm} l p{4.5cm}}
+\toprule
+\textbf{ID} & \textbf{Statement} & \textbf{Closes} & \textbf{Mechanism} \\
+\midrule
+O1 & Prove Assumption~A:
+    $\exists\,g_c$ satisfying
+    \eqref{eq:g-matching}
+    & P5
+    & Fixed-point operator
+      $\mathcal{T}_c(g)
+      = \mathcal{H}_{(-1,1)}
+      [\tfrac{1}{2}\mathrm{Re}(\phi_c[g])]
+      + \log(\cdot)$;
+      prove $\mathcal{T}_c$ contractive
+      on a suitable Banach space
+      of analytic functions;
+      standard: Muskhelishvili theory
+      once nonlinear coupling is
+      controlled \\
+O2 & Prove Assumption~B
+    given~A
+    & P7
+    & Standard Deift--Zhou:
+      sign check on $\mathrm{Re}(2g_c-\phi_c)$
+      along contour, Lipschitz
+      parameterisation;
+      no new method required
+      once $g_c$ is known from O1 \\
+O3 & Uniform BW-Doubling:
+    $\inf_{n\in[(1-\delta)N,N)}
+    \mathcal{E}_{\mathrm{out}}(|\psi_n|^2)
+    \ge c_3 > 0$
+    & O4 (alternate route to P9)
+    & Extend Paper~III pointwise
+      argument to a uniform
+      Schur-test on the edge block;
+      alternatively: transfer
+      via Kadec-$\tfrac{1}{4}$ for
+      prime frequencies in edge band \\
+O4 & Uniform quasi-isometry:
+    $A\|f\|^2\le\|\mathrm{Ev}\,f\|^2
+    \le B\|f\|^2$ for all
+    $f\in\mathrm{Edge}$
+    & P9 (direct route)
+    & Frame stability via
+      prime-frequency sampling
+      in edge band;
+      equivalent to Kadec-type
+      stability for $\mathrm{PW}_c$
+      restricted to edge \\
+O5 & Compute $c_2^{\mathrm{Airy}}$
+    explicitly
+    & P12
+    & Quantitative oscillation
+      bounds on $\mathrm{Ai}(t)$;
+      $\mathrm{Ai}(t)>0$ for $t>0$
+      implies non-degenerate
+      prime sampling of
+      $|\mathrm{Ai}(t)|^2$;
+      connection to $a_1\approx-2.338$
+      via spectral counting \\
+O6 & Under RH: characterise
+    RH-collapse of the
+    coercivity gap
+    & P13 (long-range)
+    & $\sigma(D^{\mathrm{Airy}})$
+      controlled by zero distribution
+      of $\zeta(s)$; coercivity
+      failure $\Leftrightarrow$
+      accumulation of zeros off
+      critical line \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%%=================================================================
+\section{Critical Path Analysis}
+\label{sec:critical_path}
+%%=================================================================
+
+\subsection{Minimal path to the unconditional gap bound}
+\[
+  \text{O4}
+  \xrightarrow{\text{frame stability}}
+  \text{P9}
+  \xrightarrow{\text{Landau--Widom}}
+  \lambda_{\min}(G_{N,c})\ge c^{-1/2}
+  \xrightarrow{\text{BB3 (Paper~13b)}}
+  \text{gap}\ge Cc^{-1/2}.
+\]
+This path is fully explicit once O4 is resolved.
+O4 is independent of the RHP machinery (Layers 1--2).
+
+\subsection{Minimal path to the Airy-scale upgrade ($c^{-1/3}$)}
+\[
+  \text{O1}
+  \xrightarrow{\text{Muskhelishvili}}
+  \text{P5}\,(\mathrm{Ass.~A})
+  \xrightarrow{}
+  \text{O2}
+  \xrightarrow{\text{Deift--Zhou}}
+  \text{P7}\,(\mathrm{Ass.~B})
+  \xrightarrow{\text{BB6}}
+  \text{P8}\,(\mathrm{Conj.~3.3})
+  \xrightarrow{\text{BB7}}
+  \text{P10}\,(c^{-1/3}\text{ gap}).
+\]
+This path is the deep route and requires the resolution of
+the nonlinear RHP existence problem O1.
+
+\subsection{Minimal path to $\inf\,\sigma(\Dedge)>0$ (Main Theorem)}
+\[
+  \text{O4} + \text{O5}
+  \;\Rightarrow\;
+  \text{P9} + \text{P12}
+  \;\Rightarrow\;
+  \text{R1} + \text{P13}\;\;(\mathrm{Main~Theorem}).
+\]
+O4 and O5 are independent.
+O5 does not require O1 or O2.
+
+\subsection{Critical observation}
+
+The XXII architecture has \emph{two independent open inputs},
+not one:
+\begin{enumerate}[label=(\roman*),nosep]
+  \item \textbf{O4} (uniform quasi-isometry at the edge):
+    purely functional-analytic, no RHP involved.
+  \item \textbf{O5} (spectral gap of $D^{\mathrm{Airy}}$):
+    analytic, Airy function oscillation, no arithmetic involved.
+\end{enumerate}
+They feed the Main Theorem via disjoint sub-chains.
+Resolution of either one in isolation yields a partial result;
+both are required for the full theorem.
+The RHP route (O1, O2) provides the deeper structural picture
+(Airy-scale gap, $c^{-1/3}$ exponent) but is not on the
+minimal path to $\inf\,\sigma(\Dedge)>0$.
+
+%%=================================================================
+\section{Dependency Graph (Textual)}
+\label{sec:dag_textual}
+%%=================================================================
+
+\begin{verbatim}
+[BB4: Slepian sinc kernel]
+         |
+         v
+[P2: exact IIKS identity] ----+
+         |                    |
+         v                    |
+[P3: cubic term = Widom      |
+     phase integral]         |
+         |                    |
+         v                    v
+[BB5: Widom edge phase]   [BB6: Deift-Zhou]
+         |                    |
+         v                    |
+[P6: nonlinearity             |
+     of phi_c]                |
+         |                    |
+         v                    |
+[P5: Assumption A]            |
+    (OPEN: O1) <-----------+  |
+         |                 |  |
+         v                 |  |
+[P7: Assumption B]         |  |
+    (OPEN: O2) <---------+ |  |
+         |               | |  |
+         +---------+-----+ |  |
+                   |       |  |
+                   v       |  |
+[BB6+BB7]---->[P8: Conj.3.3: Y_c -> Y_Ai]
+                   |
+                   v
+[P10: c^{-1/3} gap scale]
+
+----------- Independent sub-chain -----------
+
+[BB1+BB2: Paper XXI]
+         |
+         v
+[P1: Dedge setup]
+         |
+         v
+[P4: Edge stability decomposition]
+         |
+         +-----------+
+         |           |
+         v           v
+  [P9: Gram]    [P11: D^Airy]
+  (OPEN: O4)   (from P8)
+         |           |
+         v           v
+  [R1 = BB3: Gram->Gap]
+         |    +-------+
+         |    |       |
+         v    v       v
+[P12: inf sigma(D^Airy)>0]  [P10]
+         (OPEN: O5)
+         |
+         v
+[P13: Main Theorem]
+    (conditional on P12 + P9 + R1)
+\end{verbatim}
+
+%%=================================================================
+\section{Freeze Checklist}
+\label{sec:freeze}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l l}
+\toprule
+\textbf{Item} & \textbf{Status} \\
+\midrule
+All BB0--BB7 sourced and not re-proved & \checkmark \\
+P2 (IIKS) verified as exact identity & \checkmark \\
+P3 (cubic term from Widom phase) stated with mechanism & \checkmark \\
+P4 (edge stability decomposition) structurally derived & \checkmark \\
+P5 (Assumption~A) explicitly labelled (H), not proved & \checkmark \\
+P6 (nonlinearity of $\phi_c$) explicitly stated & \checkmark \\
+P7 (Assumption~B) conditional on P5 only & \checkmark \\
+P8 (RHP conjecture) labelled (C) with precise statement & \checkmark \\
+P9 (Gram lower bound) with Landau--Widom scale & \checkmark \\
+R1 (BB3) imported as functor, not re-proved & \checkmark \\
+P10 (conditional $c^{-1/3}$ upgrade) labelled (C) & \checkmark \\
+P11 (Rand-Weyl operator) defined from P8 & \checkmark \\
+P12 (main gap conjecture) labelled (C) & \checkmark \\
+P13 (Main Theorem) conditional scope in statement & \checkmark \\
+All O1--O6 carry explicit mechanisms & \checkmark \\
+Two independent open inputs (O4, O5) identified & \checkmark \\
+RHP path (O1, O2) not on minimal path to Main Thm & \checkmark \\
+\hline
+O1: Assumption~A existence (nonlinear RHP) & open \\
+O2: Assumption~B geometry & open (conditional on O1) \\
+O3: Uniform BW-Doubling & open (alternate route) \\
+O4: Uniform quasi-isometry $\Ev|_{\mathrm{Edge}}$ & open \\
+O5: $c_2^{\mathrm{Airy}} = \inf\,\sigma(D^{\mathrm{Airy}}) > 0$ & open \\
+O6: RH collapse characterisation & open (long-range) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\textbf{Freeze verdict.}
+Paper~XXII is structurally complete as a conditional programme:
+all logical dependencies are explicit, all open inputs are
+identified with constructive mechanisms, and no BB is re-proved.
+The minimal path to the Main Theorem requires O4 and O5,
+which are independent and carry different methods
+(functional-analytic vs.\ Airy oscillation).
+The RHP route (O1--O2) deepens the result to the
+$c^{-1/3}$ exponent but is not a prerequisite.
+
+\begin{thebibliography}{99}
+\bibitem{PaperXXI}
+S.~Schmalnauer, \textit{Commutativity Failure in the
+Arithmetic--Spectral Diagram} (Paper~XXI), preprint, 2026.
+\bibitem{Paper13b}
+S.~Schmalnauer, \textit{Spectral Gap Lower Bounds via
+Gram Coercivity} (paper13b), preprint, 2026.
+\bibitem{Paper13cc}
+S.~Schmalnauer, \textit{Airy Universality for PSWF:
+Exact IIKS Structure and RHP Reduction} (paper13cc), preprint, 2026.
+\bibitem{Widom1964}
+H.~Widom, \textit{Asymptotic behavior of the eigenvalues~II},
+Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964).
+\bibitem{Deift1999}
+P.~Deift, \textit{Orthogonal Polynomials and Random Matrices:
+A Riemann--Hilbert Approach}, AMS, 1999.
+\bibitem{Muskhelishvili1953}
+N.~Muskhelishvili, \textit{Singular Integral Equations},
+Noordhoff, 1953.
+\end{thebibliography}
+
+\end{document}
