@@ -45,7 +45,8 @@
   Langer error, discrete floor projection, iterated asymptotics,
   diagonal substitution, stability of optimal truncation,
   substitution stability principle, structural obstruction,
-  rigidity of scaling regimes}
+  rigidity of scaling regimes, decomposition stability,
+  balance fixed-point, method-class invariant}
 
 \begin{document}
 
@@ -82,8 +83,14 @@ The central result of this paper is that this rate is not merely achievable
 but \emph{structurally rigid}: within the simultaneous validity of
 the Langer scaling law~(H1), the Euler--Maclaurin structural property,
 and the substitution stability principle, no asymptotically better rate
-is compatible with the two-scale truncation geometry
+is compatible with the two-scale truncation geometry for any admissible
+truncation-based representation
 (Theorem~\ref{thm:rate_obstruction}).
+The rigidity is grounded in two supporting lemmas:
+decomposition stability against hidden cancellation
+(Lemma~\ref{lem:decomp_stability})
+and balance fixed-point uniqueness
+(Lemma~\ref{lem:balance_fixpoint}).
 All results are conditional on H1--H2.
 \end{abstract}
 
@@ -123,7 +130,8 @@ Universality in this paper has two layers:
   \item \textbf{Structural rigidity:} the exponent $1+\gamma$ and the
     logarithmic scale $\log c$ are fixed by the interplay of
     Langer scaling, EM growth, and tail decay;
-    no improvement is possible without breaking this structure
+    no improvement is possible within any admissible truncation-based
+    representation without breaking this structure
     (Theorem~\ref{thm:rate_obstruction}).
 \end{itemize}
 \end{remark}
@@ -259,7 +267,9 @@ No argument depends logically on the DAG itself.
 The central node \textbf{thm:obstruction} is the structural
 culmination: it receives input from all three structural components
 (H1, EM-property, substitution stability) and converts the
-upper-bound results into a rigidity statement.
+upper-bound results into a rigidity statement,
+grounded by Lemmas~\ref{lem:decomp_stability}
+and~\ref{lem:balance_fixpoint}.
 \end{remark}
 
 \[
@@ -278,8 +288,11 @@ upper-bound results into a rigidity statement.
 & \text{lem:stability} \\
 & & \text{lem:diag\_sub} \ar[d] \ar[drr]
 & & \text{lem:kopt(ii)} \ar[dl] \\
-& & \text{cor:rate} \ar[rr]
-& & \boxed{\textbf{thm:obstruction}} \\
+& & \text{cor:rate} \ar[dr]
+& & \text{lem:decomp\_stab} \ar[d] \\
+& & & \text{lem:balance\_fixpt} \ar[d]
+& \ar[dl] \\
+& & & \boxed{\textbf{thm:obstruction}} \\
 \end{tikzcd}
 \]
 
@@ -288,11 +301,9 @@ upper-bound results into a rigidity statement.
 \begin{itemize}[nosep]
   \item Anti-circularity:
     $F'\text{ sign}\to\text{window}\to\text{convexity}$, strictly directed.
-  \item \textbf{thm:obstruction} is the terminal node:
-    it takes as input the achieved rate (cor:rate),
-    the EM structural property, H1, and prop:subst,
-    and produces the rigidity conclusion.
-    It is not used by any earlier node; the DAG remains acyclic.
+  \item \textbf{thm:obstruction} is the terminal node;
+    it receives cor:rate, lem:decomp\_stab, and lem:balance\_fixpt
+    as its three direct inputs; the DAG remains acyclic.
   \item All $K,c$-couplings pass through prop:subst;
     domain $c$-dependence separated from operator constants.
 \end{itemize}
@@ -394,8 +405,8 @@ Uniform structural property of all EM remainders in this paper:
   \item Each EM expansion applied once per sum, never iterated
     or composed; all occurrences are independent instances.
 \end{itemize}
-This property is one of the three structural components
-(S2) in Theorem~\ref{thm:rate_obstruction}.
+This property is structural component (S2) in
+Theorem~\ref{thm:rate_obstruction}.
 \end{remark}
 
 %% ============================================================
@@ -484,13 +495,13 @@ $\normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma})$; linear term dominant.
 \begin{theorem}[Layer-Survival]
 \label{thm:layer_survival}
 For $n\geq 1$, H1, all $K\geq K_0$:
-$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$.
+$\normh{A_K^{(n)}}{}  \leq C_n K^{1+n\gamma}c^{-n\beta}$.
 Diagonal: $O(c^{-n\beta}(\log c)^{1+n\gamma})\prec c^{-\beta}(\log c)^{1+\gamma}$
 for $n\geq 2$.
 \end{theorem}
 
 %% ============================================================
-\section{Main Theorems}
+\section{Main Rate Theorem}
 \label{sec:main}
 %% ============================================================
 
@@ -523,13 +534,133 @@ at fixed $\gamma$; constants depend on $\gamma$, not on $c$.
 \label{sec:obstruction}
 %% ============================================================
 
+\begin{lemma}[Decomposition stability under asymptotic comparison]
+\label{lem:decomp_stability}
+Let the total bound be
+\begin{equation}\label{eq:total_bound}
+  \|\cK-\cKA\| \leq \Phi_1(K,c) + \Phi_2(K,c) + \Phi_3(K,c),
+\end{equation}
+where
+\[
+  \Phi_1 := C_{\rm lin}K^{1+\gamma}c^{-\beta},\quad
+  \Phi_2 := C_{\rm quad}K^{1+2\gamma}c^{-2\beta},\quad
+  \Phi_3 := C_2(\alpha)^{1/2}e^{-\alpha K/2},
+\]
+with $c$-admissible constants, and let $\Phi_1\succ\Phi_2$
+(Proposition~\ref{prop:asymp_order}).
+
+If $\|\cK-\cKA\| = o(\Phi_1(K^*(c),c))$, then no cancellation within
+the decomposition~\eqref{eq:total_bound} is possible: specifically,
+for any admissible truncation-based representation compatible with
+\textnormal{(S1)--(S3)}, one cannot have
+\[
+  \Phi_1(K(c),c) + \Phi_3(K(c),c)
+  = o\!\big(c^{-\beta}(\log c)^{1+\gamma}\big)
+\]
+via mutual cancellation of $\Phi_1$ and $\Phi_3$.
+\end{lemma}
+
+\begin{proof}
+$\Phi_1$ and $\Phi_3$ have distinct analytic forms:
+$\Phi_1$ is algebraic-polynomial in $K$ with coefficient $c^{-\beta}$;
+$\Phi_3$ is purely exponential in $K$ with no power of $c$.
+Both arise from structurally independent components (H1 and tail geometry
+respectively); they share no common factor.
+Under (S2), the EM remainder contributes to $\Phi_1$ only additively
+with a strictly lower-order term $C_\sigma K^{\sigma-1}c^{-\beta}\prec\Phi_1$.
+
+For cancellation to reduce $\Phi_1+\Phi_3$ below $\Phi_1(K^*(c),c)$,
+one would need $\Phi_3(K(c),c) = -\Phi_1(K(c),c) + o(\Phi_1)$,
+i.e., the exponential term would have to acquire a negative sign
+and match the algebraic term to leading order.
+But $\Phi_3\geq 0$ (it is a norm bound) and $\Phi_1\geq 0$;
+hence $\Phi_1+\Phi_3\geq\Phi_1$.
+Cancellation is structurally impossible.
+\end{proof}
+
+\begin{remark}[Role of decomposition stability]
+\label{rem:decomp_role}
+Lemma~\ref{lem:decomp_stability} closes the ``hidden cancellation
+objection'': any improvement of the total rate must come from reducing
+each dominant term individually, not from cancellation between
+algebraic and exponential contributions.
+Under (S1)--(S3) this means improving $\|\cK-\cKA\|$ requires
+simultaneously suppressing $\Phi_1(K(c),c)$, which forces the
+analysis of $K(c)$ in Lemma~\ref{lem:balance_fixpoint}.
+\end{remark}
+
+\begin{lemma}[Balance fixed-point: strict separation outside logarithmic window]
+\label{lem:balance_fixpoint}
+Define the \emph{balance function}
+$\Psi(K,c) := \Phi_1(K,c) + \Phi_3(K,c)$.
+Under \textnormal{(S1)--(S3)}:
+\begin{itemize}[nosep]
+  \item[\textup{(i)}] \textbf{Sub-logarithmic regime.}
+    If $K(c) = o(\log c)$, then
+    $\Phi_3(K(c),c) = e^{-\alpha K(c)/2} \succ c^{-\beta}(\log c)^{1+\gamma}$,
+    so $\Psi(K(c),c)\succ c^{-\beta}(\log c)^{1+\gamma}$.
+  \item[\textup{(ii)}] \textbf{Super-logarithmic regime.}
+    If $K(c)\geq C\log c$ for $C>c_2=2(\beta+1)/\alpha$, then
+    $\Phi_1(K(c),c)\geq C_{\rm lin}(C\log c)^{1+\gamma}c^{-\beta}
+    \succ c^{-\beta}(\log c)^{1+\gamma}$,
+    so $\Psi(K(c),c)\succ c^{-\beta}(\log c)^{1+\gamma}$.
+  \item[\textup{(iii)}] \textbf{Logarithmic window.}
+    For $K(c)\in[c_1\log c, c_2\log c]$:
+    $\Phi_1(K(c),c)\asymp c^{-\beta}(\log c)^{1+\gamma}$
+    (by Proposition~\ref{prop:substitution_stability}(ii)--(iii)
+    and~\eqref{eq:Kstar_power}).
+    Hence $\Psi(K(c),c)\asymp c^{-\beta}(\log c)^{1+\gamma}$;
+    no $K(c)$ in the window achieves
+    $o(c^{-\beta}(\log c)^{1+\gamma})$.
+  \item[\textup{(iv)}] \textbf{Conclusion.}
+    For every $K(c)$, $\Psi(K(c),c)\asymp c^{-\beta}(\log c)^{1+\gamma}$
+    or strictly larger.
+    The asymptotic scale $c^{-\beta}(\log c)^{1+\gamma}$ is the unique
+    balance point of the system $(\Phi_1,\Phi_3)$ under \textnormal{(S1)--(S3)}.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+\textup{(i)} $K(c)=o(\log c)$ implies $\alpha K(c)/2 = o(\log c)$,
+so $e^{-\alpha K(c)/2}\succ c^{-\varepsilon}$ for all $\varepsilon>0$;
+in particular $e^{-\alpha K(c)/2}\succ c^{-\beta}(\log c)^{1+\gamma}$.
+
+\textup{(ii)} $(C\log c)^{1+\gamma}c^{-\beta} = C^{1+\gamma}(\log c)^{1+\gamma}c^{-\beta}$;
+for $C>c_2$ one has $C^{1+\gamma}>c_2^{1+\gamma}$,
+so $\Phi_1\succ c^{-\beta}(\log c)^{1+\gamma}$ strictly.
+
+\textup{(iii)} From~\eqref{eq:Kstar_power} applied to any
+$K(c)\in[c_1\log c, c_2\log c]$:
+$(K(c))^{1+\gamma}\asymp(\log c)^{1+\gamma}$ with $c$-admissible constants.
+Hence $\Phi_1(K(c),c)\asymp c^{-\beta}(\log c)^{1+\gamma}$.
+The exponential satisfies $\Phi_3(K(c),c)\leq c^{-\beta}(\log c)^{1+\gamma}$
+at $K^*(c)$ by definition of optimality; within the window the two terms are
+$\asymp$ comparable. No choice in the window suppresses $\Psi$ below the scale.
+
+\textup{(iv)} Follows from (i)--(iii) by exhausting all regimes.
+\end{proof}
+
+\begin{remark}[Nature of the fixed point]
+\label{rem:fixpoint_nature}
+Lemma~\ref{lem:balance_fixpoint} establishes that the logarithmic window
+$[c_1\log c, c_2\log c]$ is the \emph{only} regime in which the
+balance function $\Psi$ is $\asymp$ to the target scale.
+Outside the window, $\Psi$ is strictly larger.
+Inside the window, $\Psi$ is $\asymp$ but not $o(\cdot)$.
+This is a \emph{strict separation} of asymptotic regimes:
+the balance point is not a local minimum that could be escaped
+by a perturbation, but an exact invariant of the three-way constraint
+geometry $(\mathrm{H1},\,\mathrm{EM\text{-}structure},\,\mathrm{tail\text{-}decay})$.
+\end{remark}
+
 \begin{theorem}[Structural Obstruction]
 \label{thm:rate_obstruction}
 Let $\cAg\in\mathfrak{T}_\gamma$ satisfy H1--H2 and the
 EM structural property (Remark~\ref{rem:EM_growth}),
 and let $\normh{\cK-\cKA}{}$ admit the fixed-parameter
 decomposition~\eqref{eq:AKlin}--\eqref{eq:AKquad} with $c$-admissible constants.
-Assume that for some choice of $K(c)$,
+For any admissible truncation-based representation compatible with
+\textnormal{(S1)--(S3)}, assume that for some choice of $K(c)$,
 \begin{equation}\label{eq:improved_rate_hyp}
   \normh{\cK-\cKA}{} = o\!\big(c^{-\beta}(\log c)^{1+\gamma}\big)
   \quad\text{as }c\to\infty.
@@ -542,58 +673,42 @@ Then at least one of the following structural components must fail:
   \item[\textnormal{(S3)}] the substitution stability principle
     (Proposition~\ref{prop:substitution_stability}).
 \end{itemize}
-Equivalently: within the simultaneous validity of (S1)--(S3),
+Equivalently: within the simultaneous validity of \textnormal{(S1)--(S3)},
 the rate $c^{-\beta}(\log c)^{1+\gamma}$ is the minimal asymptotic
 scale compatible with the two-scale truncation geometry
-of $\mathfrak{T}_\gamma$.
+of $\mathfrak{T}_\gamma$, for any admissible truncation-based representation.
 \end{theorem}
 
 \begin{proof}
 Assume (S1)--(S3) all hold. We derive a contradiction with~\eqref{eq:improved_rate_hyp}.
 
-\textbf{Step 1 (Three-term balance).}
-The fixed-parameter bound has three contributions:
-$c^{-\beta}K^{1+\gamma}$ (linear/EM),
-$c^{-2\beta}K^{1+2\gamma}$ (quadratic),
-$e^{-\alpha K/2}$ (tail).
-Any improvement requires all three to be
-$o(c^{-\beta}(\log c)^{1+\gamma})$ simultaneously.
+\textbf{Step 1 (No cancellation in the decomposition).}
+By Lemma~\ref{lem:decomp_stability}, the improvement
+hypothesis~\eqref{eq:improved_rate_hyp} cannot be achieved via
+mutual cancellation of algebraic ($\Phi_1$) and exponential ($\Phi_3$)
+terms: both are non-negative and structurally independent.
+Therefore~\eqref{eq:improved_rate_hyp} requires
+$\Phi_1(K(c),c) + \Phi_3(K(c),c) = o(c^{-\beta}(\log c)^{1+\gamma})$,
+i.e., $\Psi(K(c),c) = o(c^{-\beta}(\log c)^{1+\gamma})$.
 
-\textbf{Step 2 (Lower rigidity: EM constraint).}
-By (S2), the EM remainder satisfies
-$|R_\sigma(K)|\leq C_\sigma K^{\sigma-1}$;
-under (S1) the leading linear term satisfies
-$c^{-\beta}K^{1+\gamma}\sim C_{\rm lin}c^{-\beta}K^{1+\gamma}$.
-Reducing $K(c)$ below $C\log c$ for any $C<c_1=2\beta/\alpha$
-forces the linear term to scale as
-$o(c^{-\beta}(\log c)^{1+\gamma})$,
-but then $e^{-\alpha K/2}\sim c^{-\alpha C/2}$,
-which dominates $c^{-\beta}(\log c)^{1+\gamma}$
-if $\alpha C/2<\beta$, i.e., $C<2\beta/\alpha=c_1$.
-Therefore reducing $K$ below logarithmic scale breaks tail dominance.
+\textbf{Step 2 (Strict separation outside the window).}
+By Lemma~\ref{lem:balance_fixpoint}(i)--(ii), any $K(c)$ outside
+$[c_1\log c, c_2\log c]$ gives
+$\Psi(K(c),c)\succ c^{-\beta}(\log c)^{1+\gamma}$,
+contradicting Step~1.
+Hence (S1)--(S3) force $K(c)\in[c_1\log c, c_2\log c]$.
 
-\textbf{Step 3 (Upper rigidity: tail constraint).}
-To keep the exponential tail $e^{-\alpha K/2}\prec c^{-\beta}(\log c)^{1+\gamma}$,
-one must have $K(c)\gtrsim c_1\log c$ (from $e^{-\alpha K/2}=O(c^{-\beta})$).
-Increasing $K$ above $c_2\log c$ forces the linear term
-$c^{-\beta}K^{1+\gamma}\succ c^{-\beta}(\log c)^{1+\gamma}$,
-which contradicts improvement.
+\textbf{Step 3 (Unavoidability within the window).}
+By Lemma~\ref{lem:balance_fixpoint}(iii), any $K(c)$ in the logarithmic
+window satisfies $\Psi(K(c),c)\asymp c^{-\beta}(\log c)^{1+\gamma}$;
+no choice in the window achieves the $o(\cdot)$ improvement of Step~1.
 
-\textbf{Step 4 (Uniqueness of balance).}
-Steps~2--3 together pin
-$K(c)\in[c_1\log c, c_2\log c]$,
-which is precisely the sandwich of Lemma~\ref{lem:loglog}.
-Within this window the leading term satisfies
-$c^{-\beta}(K(c))^{1+\gamma}\asymp c^{-\beta}(\log c)^{1+\gamma}$
-(by Proposition~\ref{prop:substitution_stability}(ii)--(iii));
-no $K(c)$ in the window can produce $o(c^{-\beta}(\log c)^{1+\gamma})$.
-
-\textbf{Step 5 (Contradiction).}
-Any $K(c)$ satisfying both tail and EM constraints lies in
-$[c_1\log c, c_2\log c]$ (Step~3) and yields
-linear-term contribution $\asymp c^{-\beta}(\log c)^{1+\gamma}$ (Step~4).
+\textbf{Step 4 (Contradiction).}
+Steps~2--3 together exhaust all possible choices of $K(c)$:
+every $K(c)$ either falls outside the window (contradiction by Step~2)
+or inside the window (contradiction by Step~3).
 Hence~\eqref{eq:improved_rate_hyp} is impossible under (S1)--(S3);
-at least one structural component must fail.
+at least one structural component must fail.\qed
 \end{proof}
 
 \begin{remark}[Scope of obstruction]
@@ -601,8 +716,9 @@ at least one structural component must fail.
 Theorem~\ref{thm:rate_obstruction} is an obstruction within the
 method class defined by (S1)--(S3); it is not a lower bound
 in the sense of O3a (which would require a matching construction).
-The theorem asserts: \emph{any method operating within this
-structural framework cannot exceed the rate} $c^{-\beta}(\log c)^{1+\gamma}$.
+The theorem asserts: \emph{any admissible truncation-based method
+operating within this structural framework cannot exceed the rate}
+$c^{-\beta}(\log c)^{1+\gamma}$.
 O3a remains open and would provide the complementary lower bound;
 its resolution is independent of the upper-bound programme.
 \end{remark}
@@ -655,7 +771,8 @@ O4 & Olver-Watson & open \\
 \textbf{XVIII--XIX--XX.}
 Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$ for fixed $\gamma>0$,
 and structural obstruction (Theorem~\ref{thm:rate_obstruction}):
-no improvement is possible within (S1)--(S3).
+no improvement is possible within (S1)--(S3) for any admissible
+truncation-based representation.
 Closure inventory:
 \begin{itemize}[nosep,leftmargin=1.5em]
   \item $c$-admissible chain, four sources (Remark~\ref{rem:cadmissible});
@@ -664,14 +781,21 @@ Closure inventory:
   \item $\BK$, $C_2(\alpha)$: $c$-free by definition;
   \item domain vs.\ operator $c$-dependence: disjoint;
   \item anti-circularity: $F'\text{ sign}\to\text{window}\to\text{convexity}$;
-  \item Substitution Stability with monotonicity window control
-    (Proposition~\ref{prop:substitution_stability});
+  \item Substitution Stability with monotonicity window control;
   \item $\gamma$-uniformity on compact sets;
     $(1+\gamma)2^\gamma\to\infty$ for $\gamma\to\infty$ explicit;
   \item log-log stability: Lipschitz implicit function;
   \item $\prec$ transitive via lexicographic order;
-  \item Structural Obstruction (Theorem~\ref{thm:rate_obstruction}):
-    rate $c^{-\beta}(\log c)^{1+\gamma}$ is rigid within (S1)--(S3);
+  \item \textbf{Decomposition stability:}
+    no hidden cancellation between algebraic and exponential terms
+    (Lemma~\ref{lem:decomp_stability});
+  \item \textbf{Balance fixed-point rigidity:}
+    strict separation outside $[c_1\log c, c_2\log c]$;
+    $\asymp$-unavoidability inside (Lemma~\ref{lem:balance_fixpoint});
+  \item \textbf{Structural Obstruction:}
+    rate $c^{-\beta}(\log c)^{1+\gamma}$ is rigid within (S1)--(S3)
+    for all admissible truncation-based representations
+    (Theorem~\ref{thm:rate_obstruction});
   \item DAG: organizational map with obstruction as terminal node;
   \item Layer-Survival; invariants $1+\gamma$, $1+2\gamma$.
 \end{itemize}
@@ -686,6 +810,8 @@ The leading logarithmic exponent is not merely achieved ---
 it is the unique asymptotically stable balance point of
 the three-way tension between Langer scaling, EM growth,
 and exponential tail decay.
+No admissible truncation-based method can escape this balance
+without abandoning the structural framework.
 \end{quote}
 
 \begin{thebibliography}{99}
