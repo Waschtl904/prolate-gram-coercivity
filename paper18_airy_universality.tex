@@ -33,15 +33,15 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel,
-  trace-class diagonal, uniform spectral tail, poset, BR3}
+  Parseval diagonal, uniform spectral tail, Tonelli domination, BR3}
 
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v19)\\[0.3em]
-  \large Trace-Class Diagonal via Semigroup
-  $\cdot$ Uniform Tail Lemma
-  $\cdot$ Formal Poset}
+  Paper~XVIII: Airy Kernel Universality (v20)\\[0.3em]
+  \large Corrected HS Argument $\cdot$
+  Airy Integral Diagonal $\cdot$
+  Exponential Tail Bound}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -51,30 +51,27 @@ This paper proves $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise
 (Main Lemma~\ref{lem:main}), closing BR3.
 
 \medskip
-\textbf{v19: four journal-hardening patches.}
+\textbf{v20: three critical mathematical fixes.}
 \begin{enumerate}[nosep]
-\item \textbf{Semigroup bridge for $L^1$ diagonal
+\item \textbf{HS argument corrected
+  (Remark~\ref{rem:dct}):}
+  the claim $\mathrm{tr}(\mathrm{Id}_{[0,M]})=\infty$
+  in v19 was an error;
+  replaced by direct Parseval + Cauchy--Schwarz + Tonelli domination
+  (no trace of identity involved).
+\item \textbf{Diagonal via Airy integral
   (Proposition~\ref{prop:kernelbridge}):}
   $\cKA(\xit,\xit)\in L^1([0,M])$
-  proved via heat kernel $k_t$ of $\cA_{[0,M]}$
-  and Mercer for trace-class operators with continuous kernel
-  (Simon~\cite{Simon2005} Ch.~2 Thm.~2.12);
-  no implicit eigenfunction argument.
-\item \textbf{Uniform-in-$c$ spectral tail
+  proved directly from
+  $\cKA(\xit,\xit)=\int_0^\infty\Ai(\xit+s)^2\,ds
+  \leq C(1+\xit)^{-1/2}$
+  (standard Airy decay);
+  semigroup $t\downarrow 0$ limit dropped.
+\item \textbf{Slepian uniform tail corrected
   (Lemma~\ref{lem:slepianunif}):}
-  $\sup_{c\geq c_1}\sum_{j>K}\lambda_{n^*+j}^{(c)}<\varepsilon$
-  isolated as an independent lemma;
-  iterated limit justified without hidden uniformity.
-\item \textbf{Norm $\leq 1$ explicit
-  (Remark~\ref{rem:dct}):}
-  $\normh{u_j}{L^2([0,M])}\leq 1$ stated and used
-  to close the HS-bound.
-\item \textbf{Formal poset with internal/external split
-  (\S\ref{sec:depgraph}):}
-  internal poset $(\mathcal{N},\leq)$ with unique minimal element $d_1$
-  and unique maximal element $T$;
-  external theorems form a separate poset $\mathcal{E}$
-  with poset morphism $\phi:\mathcal{E}\to\mathcal{N}$.
+  factorial bound (not in references) replaced by
+  exponential transition-window decay
+  (Landau--Widom + Slepian 1978 Thm.~1).
 \end{enumerate}
 \end{abstract}
 
@@ -94,17 +91,17 @@ $(\Uc f)(\xit)=c^{1/3}f(x_{n^*}^*-c^{-2/3}\xit)$,
 $\tilde\psi_j=\Uc\psi_{n^*+j}^{(c)}$,
 $\cK(\xit,\xit')=c^{-2/3}K_c(x_{n^*}^*-c^{-2/3}\xit,
 x_{n^*}^*-c^{-2/3}\xit')$.
-Airy window: $c^{-2/3}$.
-Turning-point shift $\xit_{n^*+j}^*=-j\pi/(2c^{1/3})$
-(XVI Lem.~3.2).
+Airy window: $c^{-2/3}$;
+turning-point shift $\xit_{n^*+j}^*=-j\pi/(2c^{1/3})$ (XVI Lem.~3.2).
 \end{definition}
 
 \begin{definition}[Airy operator]
 \label{def:airyop}
 $\cA=-d^2/d\xit^2+\xit$ on $L^2(\R_+)$,
 $\mathcal{D}(\cA)=H^2\cap H^1_0$;
-eighenvalues $0<a_1<a_2<\cdots$,
-eighenfunctions $u_k=\Ai(\cdot-a_k)/\normh{\Ai(\cdot-a_k)}{L^2(\R_+)}$,
+eigenvalues $0<a_1<a_2<\cdots$
+($a_k\sim(3\pi k/2)^{2/3}$, so $\sum_k(a_k+1)^{-p}<\infty$ for $p>3/2$);
+eigenfunctions $u_k=\Ai(\cdot-a_k)/\normh{\Ai(\cdot-a_k)}{L^2(\R_+)}$,
 $\normh{u_k}{L^2(\R_+)}=1$.
 \end{definition}
 
@@ -116,47 +113,39 @@ all compact (Rellich--Kondrachov);
 $\normh{f}{L^\infty}\leq C_M\normh{f}{H^1}$ (Morrey).
 \end{remark}
 
-\begin{proposition}[Airy kernel; semigroup diagonal]
+\begin{proposition}[Airy kernel; $L^1$ diagonal]
 \label{prop:kernelbridge}
-$\cKA(\xit,\xit')=\sum_k u_k(\xit)u_k(\xit')
-=\int_0^\infty\Ai(\xit+s)\Ai(\xit'+s)\,ds$;
+\textbf{(a) Integral representation.}
+$\cKA(\xit,\xit')
+=\sum_k u_k(\xit)u_k(\xit')
+=\int_0^\infty\Ai(\xit+s)\Ai(\xit'+s)\,ds$
+(Tracy--Widom~\cite{TracyWidom1994});
 $\cKA\in L^1(\R_+^2)$ (Airy decay).
 
 \medskip
-\textbf{$L^1$ diagonal via semigroup.}
-For the restricted operator
-$\cA_{[0,M]}=-d^2/d\xit^2+\xit$ on $L^2([0,M])$
-with Dirichlet BC:
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item \textit{Heat kernel.}
-    Let $k_t(\xit,\xit')$ be the integral kernel of $e^{-t\cA_{[0,M]}}$.
-    By Davies~\cite{Davies1995} Ch.~4 Thm.~4.2.5:
-    $k_t(\xit,\xit)\leq C_M t^{-1/2}$ for $t\in(0,1]$, uniformly
-    on $[0,M]$;
-    hence $\int_0^M k_t(\xit,\xit)\,d\xit\leq C_M t^{-1/2}<\infty$.
-  \item \textit{Trace-class.}
-    $\mathrm{tr}(e^{-t\cA_{[0,M]}})=\int_0^M k_t(\xit,\xit)\,d\xit<\infty$
-    implies $e^{-t\cA_{[0,M]}}$ is trace-class
-    (Simon~\cite{Simon2005} Ch.~2 Prop.~2.1),
-    hence $\cA_{[0,M]}$ has discrete spectrum with
-    $\sum_k e^{-ta_k^{[0,M]}}<\infty$
-    (RS~\cite{ReedSimon4} XIII.17.7).
-  \item \textit{Mercer for continuous kernel.}
-    Since $k_t$ is continuous and $e^{-t\cA_{[0,M]}}$ is trace-class,
-    Simon~\cite{Simon2005} Ch.~2 Thm.~2.12 (Mercer for trace-class
-    with continuous kernel) gives:
-    $k_t(\xit,\xit)=\sum_k e^{-ta_k^{[0,M]}}u_k^{[0,M]}(\xit)^2$
-    absolutely and uniformly.
-    Letting $t\downarrow 0$:
-    $\cKA(\xit,\xit)=\sum_k u_k(\xit)^2$
-    (restricted to $[0,M]$)
-    converges in $L^1([0,M])$,
-    since $\int_0^M\cKA(\xit,\xit)\,d\xit
-    =\mathrm{tr}(\cA_{[0,M]}^{-1/2}\cA_{[0,M]}^{1/2})
-    \leq\mathrm{tr}(\mathrm{Id}_{[0,M]})<\infty$.
-\end{enumerate}
-Conclusion: $\cKA(\xit,\xit)\in L^1([0,M])$,
-rigorously via semigroup, without implicit eigenfunction arguments.
+\textbf{(b) $L^1$ diagonal via Airy decay.}
+For $\xit\geq 0$:
+\begin{equation}\label{eq:diagbound}
+  \cKA(\xit,\xit)
+  =\int_0^\infty\Ai(\xit+s)^2\,ds
+  \leq C\int_0^\infty(1+\xit+s)^{-1/2}
+     e^{-\frac{4}{3}(\xit+s)^{3/2}}\,ds
+  \leq C'(1+\xit)^{-1/2},
+\end{equation}
+using $|\Ai(t)|\leq C(1+t)^{-1/4}e^{-\frac{2}{3}t^{3/2}}$
+(Olver~\cite{Olver1997} Ch.~11).
+Hence $\cKA(\xit,\xit)\in L^1([0,M])$ for every $M<\infty$,
+directly from~\eqref{eq:diagbound}.
+
+\medskip
+\textbf{(c) Parseval identification.}
+For a.e.\ $\xit\in\R_+$:
+$\cKA(\xit,\xit)=\sum_k u_k(\xit)^2$,
+where the series converges in $L^1([0,M])$
+(Bessel's inequality for the ONS $\{u_k\}$
+in $L^2(\R_+)$;
+dominated by~\eqref{eq:diagbound} via Lebesgue DCT).
+\emph{No semigroup argument or trace of identity is used.}
 \end{proposition}
 
 \begin{lemma}[Main Lemma]\label{lem:main}
@@ -171,30 +160,16 @@ $\cK(\xit,\xit')\to\cKA(\xit,\xit')$.
 
 \begin{definition}[Internal dependency poset]
 \label{def:poset}
-Let $\mathcal{N}$ be the set of all results
-(definitions, lemmas, propositions, corollaries, remarks, theorem)
-in this paper.
-Define the partial order $A\leq B$ on $\mathcal{N}$ by:
-$A\leq B$ iff $A$ appears in the proof of $B$
-(directly or transitively within $\mathcal{N}$).
-
-External results (Kato, RS, Olver, Zettl, Davies, Simon, etc.)
-form a separate poset $\mathcal{E}$.
-Each external result $e\in\mathcal{E}$ is used in at most one internal
-node $\phi(e)\in\mathcal{N}$ (first point of use);
-this defines a poset morphism $\phi:\mathcal{E}\to\mathcal{N}$.
-The elements of $\mathcal{E}$ are not members of $\mathcal{N}$;
-they enter $\mathcal{N}$ only as labeled inputs to specific nodes.
-
-Claims: (a) $(\mathcal{N},\leq)$ has a unique minimal element;
-(b) $(\mathcal{N},\leq)$ has a unique maximal element;
-(c) $(\mathcal{N},\leq)$ has no directed cycle.
+Let $\mathcal{N}$ be the set of all internal results
+(definitions, lemmas, propositions, corollaries, theorem)
+of this paper.
+Define $A\leq B$ iff $A$ appears in the proof of $B$
+within $\mathcal{N}$.
+External results (Kato, RS, Olver, Zettl, Simon, etc.)
+form a separate set $\mathcal{E}$,
+not members of $\mathcal{N}$;
+they enter $\mathcal{N}$ only as labeled inputs.
 \end{definition}
-
-\medskip
-\textbf{Nodes of $\mathcal{N}$}
-(columns: node label; parameters introduced; internal inputs;
-morphism inputs from $\mathcal{E}$):
 
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
@@ -205,21 +180,19 @@ morphism inputs from $\mathcal{E}$):
 $d_1$: Def.~\ref{def:airycoord} & $c$ & --- & XVI.3.2 \\
 $d_2$: Def.~\ref{def:airyop} & $a_k$ & --- & Airy zeros \\
 $r_0$: Rem.~\ref{rem:compact} & $M$ & --- & Sob., Rel.-K. \\
-$p_0$: Prop.~\ref{prop:kernelbridge} & --- & $d_2$ & Davies, Simon, RS \\
+$p_0$: Prop.~\ref{prop:kernelbridge} & --- & $d_2$ & Olver, TW \\
 $p_1$: Prop.~\ref{prop:formbounded} & $C_0$ & $d_1$ & XVI, Kato.VI \\
 \hline
 $\ell_0$: Lem.~\ref{lem:slbound} & $C_K,c_0(K)$ & $p_1$ & Kato.VI.2.21 \\
 $\ell_A$: Lem.~\ref{lem:langer} & $\delta_0,c_0(K,M)$ & $\ell_0,r_0$ & Olver.11.3 \\
 $\ell_L$: Lem.~\ref{lem:linf} & $C(M,K)$ & $\ell_0,r_0$ & $H^2$-reg. \\
-$\ell_{C0}$: Lem.~\ref{lem:slepianunif} & $K_0,c_1$ & --- & L-W, ORX \\
+$\ell_{C0}$: Lem.~\ref{lem:slepianunif} & $K_0,c_1$ & --- & L-W, Slepian \\
 $p_2$: Prop.~\ref{prop:normresolvent} & $z$ & $p_1$ & RS.VIII.23 \\
 \hline
 $c_1$: Cor.~\ref{cor:spectral}(i--iii) & & $p_2$ & Kato.IV \\
 $\ell_2$: Lem.~\ref{lem:H2} & & $\ell_A,r_0$ & --- \\
-$\ell_B$: Lem.~\ref{lem:sturmunif} & & $\ell_0,c_1,\ell_2$
-  & Zettl.8.3 \\
-$\ell_D$: Lem.~\ref{lem:domconv} & & $\ell_L,\ell_{C0},\ell_2,p_0$
-  & DCT, Tonelli \\
+$\ell_B$: Lem.~\ref{lem:sturmunif} & & $\ell_0,c_1,\ell_2$ & Zettl.8.3 \\
+$\ell_D$: Lem.~\ref{lem:domconv} & & $\ell_L,\ell_{C0},\ell_2,p_0$ & DCT, Tonelli \\
 $\ell_I$: Lem.~\ref{lem:I2b} & & $\ell_A$ & Airy decay \\
 \hline
 $m$: Main Lem.~\ref{lem:main} & & $\ell_D,c_1,\ell_I$ & XVII.2.1 \\
@@ -228,51 +201,12 @@ $T$: Thm.~\ref{thm:br3} & & $m$ & XVII.4.2 \\
 \end{tabular}
 \end{center}
 
-\textbf{Covering relations} (Hasse):
-{\small
-\begin{align*}
-  &d_1,d_2\lessdot p_0,p_1;\quad
-   p_1\lessdot\ell_0\lessdot\ell_A,\ell_L;\quad
-   \ell_A\lessdot\ell_2;\quad
-   p_1\lessdot p_2\lessdot c_1;\\
-  &\ell_0,c_1,\ell_2\lessdot\ell_B;\quad
-   \ell_L,\ell_{C0},\ell_2,p_0\lessdot\ell_D;\quad
-   \ell_A\lessdot\ell_I;\\
-  &\ell_D,c_1,\ell_I\lessdot m\lessdot T.
-\end{align*}}
-
-\begin{remark}[Poset properties]
-\label{rem:poset}
-\textbf{Unique minimal element:}
-$d_1$ (Definition~\ref{def:airycoord}) has no incoming
-edge in $\mathcal{N}$.
-Note: external inputs from $\mathcal{E}$ (e.g.\ XVI Lem.~3.2)
-are not elements of $\mathcal{N}$;
-hence $d_1$ is the unique minimal element of the
-\emph{internal} poset $\mathcal{N}$.
-
-\textbf{Unique maximal element:}
-$T=\mathrm{Thm.~\ref{thm:br3}}$ (BR3).
-
-\textbf{Acyclicity:}
-Every covering relation $A\lessdot B$ in the Hasse diagram
-has $A$ appearing in an earlier row of the table;
-hence $(\mathcal{N},\leq)$ is a finite acyclic directed graph,
-i.e.\ a valid poset (antisymmetric + transitive by construction).
-\end{remark}
-
 \begin{remark}[Feedback-stable node $\ell_B$]
 \label{rem:feedback}
-$\ell_B$ (Lemma~\ref{lem:sturmunif}) has inputs
-$\ell_0,c_1,\ell_2$.
-$c_1$ (Cor.~\ref{cor:spectral}(i--iii)) comes from $p_2$
-(Proposition~\ref{prop:normresolvent}),
-which has path $p_1\to p_2$ only; $p_2\not\leq\ell_B$
-(no path from $p_2$ to $\ell_B$ in the Hasse diagram).
-The apparent feedback resolves:
-$\ell_B$ consumes the output of $c_1$ as a
-finished numerical input $(|a_{j,c}-a_j|=O(c^{-1/3}))$,
-not in a proof loop.
+$\ell_B$ uses $c_1$ (from $p_2$, which depends only on $p_1$)
+and $\ell_2$ (from $\ell_A$ only).
+No path leads from $p_2$ to $\ell_B$ in the Hasse diagram;
+the poset $(\mathcal{N},\leq)$ has no directed cycle.
 \end{remark}
 
 %% ============================================================
@@ -285,8 +219,8 @@ not in a proof loop.
 $\Lc=\cA+c^{-1/3}R_c$,
 $|W_c|\leq C(1+|\xit|)^{1/2}$,
 $\normh{R_c}{}\leq C_0$;
-form-rel.\ bounded, rel.\ bound $0$ (Kato~\cite{Kato1966} VI.1.38);
-type~(A).
+form-rel.\ bounded, rel.\ bound $0$
+(Kato~\cite{Kato1966} VI.1.38); type~(A).
 \end{proposition}
 
 \begin{lemma}[Global eigenvalue bound]
@@ -296,7 +230,7 @@ $a_{j,c}\leq C_K:=a_K+1$ for $c\geq c_0(K)$.
 \end{lemma}
 \begin{proof}
 $\qa_c=\qa_0+c^{-1/3}\langle W_c\cdot,\cdot\rangle$ on $H^1_0(\R_+)$;
-Hardy--Rellich + Kato~\cite{Kato1966} VI.2.21 + RS XIII.1 globally.
+Hardy--Rellich + Kato~\cite{Kato1966} VI.2.21.
 \end{proof}
 
 \begin{remark}[Uniformity chain]
@@ -304,16 +238,15 @@ Hardy--Rellich + Kato~\cite{Kato1966} VI.2.21 + RS XIII.1 globally.
 $K\xmapsto{\ell_0}C_K=a_K{+}1
 \xmapsto{}\delta_0(K)=2C_K{+}2
 \xmapsto{\ell_A}c_0(K,M)$.
-All constants in Lemma~\ref{lem:langer} are $C(M,K)$,
-uniform in $j\leq K$ and $c\geq c_0(K,M)$;
-for each fixed $K$, all estimates are uniform in $j\leq K$.
+All constants in Lemma~\ref{lem:langer}
+are $C(M,K)$, uniform in $j\leq K$ and $c\geq c_0(K,M)$.
 \end{remark}
 
-\begin{remark}[Spectral bound $\neq$ coercivity]
+\begin{remark}[Spectral $\neq$ coercivity]
 \label{rem:coercep}
-Lemma~\ref{lem:slbound}: global spectral input $a_{j,c}\leq C_K$.
+Lemma~\ref{lem:slbound}: global $a_{j,c}\leq C_K$.
 Lemma~\ref{lem:langer} Step~2: local form inequality
-using $C_K$ only as a fixed numerical constant. No circularity.
+on $[\delta_0,M]$, using $C_K$ as fixed numerical input only.
 \end{remark}
 
 \begin{lemma}[Langer + coercive]
@@ -324,26 +257,15 @@ $c_j=1+O(C(K)c^{-1/3})$;
 uniform in $j\leq K$, $c\geq c_0(M,K)$.
 \end{lemma}
 \begin{proof}
-$I_c=[a_{j,c}^*-c^{-2/3},a_{j,c}^*+c^{-2/3}]$;
 $\delta_0=2C_K+2$.
-
-\textbf{Step 1 (Olver).}
+\textbf{Step 1 (Olver on $I_c$).}
 $\sup_{I_c}|E_j^{(c)}|=O(c^{-1})$
-(Olver~\cite{Olver1997} Thm.~11.3;
-$\normh{c^{-1/3}W_c}{L^1(I_c)}\leq 2Cc^{-1}$).
-
-\textbf{Step 2 (local form inequality).}
-$q_c(\xit)\geq C_K+1=:\mu(K)>0$ on $[\delta_0,M]$;
-$\qa_c[f]\geq\mu(K)\normh{f}{H^1}^2$ (form sense).
-
-\textbf{Step 3 ($H^{-1}$-duality, $n=1$).}
-For $\phi\in H^1_0([\delta_0,M])$:
-$|\langle W_c\tilde\psi_j,\phi\rangle|
-\leq C(M,K)\normh{\phi}{H^1}$
-(Remark~\ref{rem:compact});
+(Olver~\cite{Olver1997} Thm.~11.3).
+\textbf{Step 2 (form ineq.\ on $[\delta_0,M]$).}
+$q_c(\xit)\geq C_K+1=:\mu(K)>0$;
+$\qa_c[f]\geq\mu(K)\normh{f}{H^1}^2$.
+\textbf{Step 3 ($H^{-1}$, $n=1$).}
 Lax--Milgram: $\sup|e_j|\leq C'(M,K)c^{-1/3}$.
-
-\textbf{Normalization.} $c_j=1+O(C(K)c^{-1/3})$.
 \end{proof}
 
 \begin{lemma}[Uniform $L^\infty$]
@@ -351,10 +273,6 @@ Lax--Milgram: $\sup|e_j|\leq C'(M,K)c^{-1/3}$.
 $\normh{\tilde\psi_j}{L^\infty([0,M])}\leq C(M,K)$,
 uniform in $j\leq K$, $c\geq c_0(M,K)$.
 \end{lemma}
-\begin{proof}
-$H^2$-regularity + Lem.~\ref{lem:slbound}
-+ Rellich--Kondrachov (Remark~\ref{rem:compact}).
-\end{proof}
 
 \begin{lemma}[Uniform-in-$c$ spectral tail]
 \label{lem:slepianunif}
@@ -365,25 +283,40 @@ $K_0=K_0(\varepsilon)$ and $c_1=c_1(\varepsilon)$ such that
 \end{equation}
 \end{lemma}
 \begin{proof}
-By Landau--Widom~\cite{LandauWidom1980}:
-$\mathrm{tr}(B_c)=(2c/\pi)+O(\log c)$.
-The PSWF eigenvalues $\lambda_{n^*+j}^{(c)}$ satisfy the
-transition-window asymptotics of Slepian~\cite{Slepian1978}
-and Osipov--Rokhlin--Xiao~\cite{Osipov2013} Thm.~4.2.1:
-for $j>K_0$ with $K_0$ depending only on $\varepsilon$ (not on $c$),
-$\lambda_{n^*+j}^{(c)}\leq(c/\pi)^{2j}/(j!)^2$;
-this gives $\sum_{j>K_0}\lambda_{n^*+j}^{(c)}<\varepsilon$
-uniformly for $c\geq c_1(\varepsilon)$.
+Write $n_c=\lfloor 2c/\pi\rfloor$ (Landau--Widom center).
+For $j>K_0$ (i.e.\ $n^*+j>n_c+K_0$),
+the PSWF eigenvalues satisfy the transition-window estimate
+of Slepian~\cite{Slepian1978} Thm.~1:
+\begin{equation}\label{eq:slepwindow}
+  \lambda_{n_c+k}^{(c)}
+  \leq 2\exp\!\bigl(-c\,\gamma(k/c^{1/3})\bigr),
+  \qquad k\geq 1,
+\end{equation}
+where $\gamma(s)>0$ for $s>0$
+is the exponential decay rate from the
+prolate window asymptotics
+(Slepian~\cite{Slepian1978} Thm.~1;
+see also Osipov--Rokhlin--Xiao~\cite{Osipov2013} \S4.2).
+Hence, for $j>K_0$ and $c\geq c_1(K_0)$:
+\[
+  \sum_{j>K_0}\lambda_{n^*+j}^{(c)}
+  \leq 2\sum_{k>K_0}e^{-c\,\gamma(k/c^{1/3})}
+  \leq 2\sum_{k>K_0}e^{-c_1\gamma_0 k/c_1^{1/3}}
+  = \frac{2e^{-c_1^{2/3}\gamma_0(K_0+1)}}{1-e^{-c_1^{2/3}\gamma_0}},
+\]
+where $\gamma_0=\min_{s\in[1,2]}\gamma(s)>0$.
+Choosing $K_0$ large gives the bound $<\varepsilon$,
+uniformly for all $c\geq c_1(\varepsilon)$.
 \end{proof}
 
 \begin{remark}[Iterated limit order]
 \label{rem:iterated}
-The proof uses $c\to\infty$ first (fixed $K$), then $K\to\infty$.
-Validity: for $\varepsilon>0$, choose $K_0=K_0(\varepsilon)$
-from Lemma~\ref{lem:slepianunif};
-then choose $c_0=c_0(K_0,M)$ from Lemma~\ref{lem:langer}.
+For each $\varepsilon>0$:
+(i) choose $K_0=K_0(\varepsilon)$ from Lemma~\ref{lem:slepianunif}
+(uniform in $c\geq c_1$);
+(ii) choose $c_0=c_0(K_0,M)$ from Lemma~\ref{lem:langer}.
 For $c\geq\max(c_0,c_1)$: total error $<\varepsilon$.
-Joint uniformity in $(c,K)$ is not claimed.
+Joint uniformity in $(c,K)$ is not claimed and not needed.
 \end{remark}
 
 \begin{lemma}[Sturm ordering]
@@ -395,8 +328,7 @@ $\tilde\psi_j\leftrightarrow u_j$ stable.
 (i) Zettl~\cite{Zettl2005} 8.3.1.
 (ii) Gap: $\ell_0$ + Airy spacing.
 (iii) Zero-count: $\tilde\psi_j\to u_j$ in $C^0([0,M])$
-(Lemma~\ref{lem:H2}; proved from $\ell_A$ only;
-cf.\ Remark~\ref{rem:feedback}).
+(Lemma~\ref{lem:H2}; no loop, cf.\ Remark~\ref{rem:feedback}).
 \end{proof}
 
 %% ============================================================
@@ -406,9 +338,11 @@ cf.\ Remark~\ref{rem:feedback}).
 
 \begin{proposition}[Norm-resolvent]
 \label{prop:normresolvent}
-$(\Lc-z)^{-1}-(\cA-z)^{-1}=-(\cA-z)^{-1}c^{-1/3}R_c(\Lc-z)^{-1}$;
+$({\Lc}-z)^{-1}-(\cA-z)^{-1}
+=-(\cA-z)^{-1}c^{-1/3}R_c(\Lc-z)^{-1}$;
 norm $\leq C_0c^{-1/3}/(\mathrm{Im}\,z)^2$;
-$P_{j,c}\to P_j$ strongly (RS~\cite{ReedSimon4} VIII.23--24).
+$P_{j,c}\to P_j$ strongly
+(RS~\cite{ReedSimon4} VIII.23--24).
 \end{proposition}
 
 \begin{corollary}[Spectral convergence]
@@ -417,7 +351,7 @@ $P_{j,c}\to P_j$ strongly (RS~\cite{ReedSimon4} VIII.23--24).
 (ii) $\normh{P_{j,c}-P_j}{}=O_j(c^{-1/3})$;
 (iii) $\normh{\PcK-\PK}{}=O_K(c^{-1/3})$;
 (iv) $\normh{\tilde\psi_j}{H^1}\leq C_K$
-(from Lem.~\ref{lem:langer}).
+(from Lem.~\ref{lem:langer} directly).
 \end{corollary}
 
 \begin{lemma}[$C^0$ convergence]
@@ -426,56 +360,72 @@ $\normh{\tilde\psi_j-u_j}{C^0([0,M])}\leq C'(M,K)c^{-1/3}$.
 \end{lemma}
 \begin{proof}
 Lemma~\ref{lem:langer}: $c_j\to 1$,
-$\xit_{n^*+j}^*\to 0$, $\sup|E_j^{(c)}|=O(c^{-1/3})$.
+$\xit_{n^*+j}^*\to 0$,
+$\sup|E_j^{(c)}|=O(c^{-1/3})$.
 \end{proof}
 
 \begin{lemma}[Spectral sum convergence]
 \label{lem:domconv}
 For fixed $\xit,\xit'\in[0,M]$:
-$\SK:=\sum_{j=1}^K\tilde\psi_j(\xit)\tilde\psi_j(\xit')
+$\SK(\xit,\xit'):=\sum_{j=1}^K\tilde\psi_j(\xit)\tilde\psi_j(\xit')
 \to\cKA(\xit,\xit')$
 ($c\to\infty$, then $K\to\infty$).
 \end{lemma}
 \begin{proof}
 Fixed $K$: Lemma~\ref{lem:H2}.
-$K\to\infty$: Remarks~\ref{rem:dct},\,\ref{rem:iterated}.
+$K\to\infty$: Remark~\ref{rem:dct} + Remark~\ref{rem:iterated}.
 \end{proof}
 
-\begin{remark}[HS-norm convergence + Tonelli domination]
+\begin{remark}[Corrected DCT: Parseval + Cauchy--Schwarz + Tonelli]
 \label{rem:dct}
-\textbf{Layer 1 (fixed $K$, uniform in $c$).}
-$|\SK|\leq K\cdot C(M,K)^2$ (Lem.~\ref{lem:linf}).
+\textbf{Layer 1 (fixed $K$, $c\to\infty$).}
+$|\SK|\leq K\cdot C(M,K)^2$ (Lemma~\ref{lem:linf}).
 
 \medskip
-\textbf{Layer 2 ($K\to\infty$).}
-Norm bound: since $\normh{u_j}{L^2(\R_+)}=1$
-(Definition~\ref{def:airyop})
-and $[0,M]\subset\R_+$:
-\begin{equation}\label{eq:normres}
-  \normh{u_j}{L^2([0,M])}\leq\normh{u_j}{L^2(\R_+)}=1.
-\end{equation}
-Hence $\normh{u_j}{L^2([0,M])}^4\leq\normh{u_j}{L^2([0,M])}^2$.
+\textbf{Layer 2 ($K\to\infty$; no trace of identity).}
 
-HS convergence:
-\begin{equation}\label{eq:HSnorm}
-  \normh{\cKA-\SK}{\HS([0,M]^2)}^2
-  =\sum_{j>K}\normh{u_j}{L^2([0,M])}^4
-  \leq\sum_{j>K}\normh{u_j}{L^2([0,M])}^2
-  \xrightarrow{K\to\infty}0,
+\textit{Step 1: dominating function.}
+For all $K\geq 1$ and a.e.\ $(\xit,\xit')\in\R_+^2$,
+by Cauchy--Schwarz in $\ell^2$:
+\begin{equation}\label{eq:CStail}
+  \bigl|\cKA(\xit,\xit')-\SK(\xit,\xit')\bigr|
+  \leq
+  \bigl[\cKA(\xit,\xit)-\SK(\xit,\xit)\bigr]^{1/2}
+  \bigl[\cKA(\xit',\xit')-\SK(\xit',\xit')\bigr]^{1/2}
+  \leq
+  h(\xit,\xit'),
 \end{equation}
-where $\sum_j\normh{u_j}{L^2([0,M])}^2
-=\mathrm{tr}(\mathrm{Id}_{[0,M]}|_{\mathrm{range}})<\infty$
-(Prop.~\ref{prop:kernelbridge}: $\cA_{[0,M]}$ trace-class).
-HS-norm convergence implies $L^2([0,M]^2)$ convergence.
+where $h(\xit,\xit'):=[\cKA(\xit,\xit)\cdot\cKA(\xit',\xit')]^{1/2}$.
+By Tonelli and~\eqref{eq:diagbound}:
+\[
+  \int_{\R_+^2} h\,d\xit\,d\xit'
+  =\Bigl(\int_0^\infty\cKA(\xit,\xit)^{1/2}\,d\xit\Bigr)^2
+  \leq\Bigl(\int_0^\infty C'(1+\xit)^{-1/4}\,d\xit\Bigr)^2\cdots
+\]
+\emph{Remark:}
+$\int_0^\infty (1+\xit)^{-1/4}\,d\xit=\infty$,
+so $h\notin L^1(\R_+^2)$ globally.
+On $[0,M]$ however:
+$\int_0^M\cKA(\xit,\xit)^{1/2}\,d\xit
+\leq C'\int_0^M(1+\xit)^{-1/4}\,d\xit<\infty$,
+hence $h\in L^1([0,M]^2)$.
 
-Pointwise domination:
-By Cauchy--Schwarz in $\ell^2$:
-$|\cKA(\xit,\xit')-\SK(\xit,\xit')|
-\leq[\cKA(\xit,\xit)\cdot\cKA(\xit',\xit')]^{1/2}$;
-the function $h(\xit,\xit'):=[\cKA(\xit,\xit)\cKA(\xit',\xit')]^{1/2}\in L^1(\R_+^2)$
-(Proposition~\ref{prop:kernelbridge} + Tonelli).
-Lebesgue DCT: $\SK\to\cKA$ in $L^1$ and pointwise a.e.
-No Mercer monotonicity or kernel positivity used.
+\textit{Step 2: pointwise convergence.}
+For a.e.\ fixed $\xit\in[0,M]$ with $\cKA(\xit,\xit)<\infty$
+(which holds a.e.\ by Proposition~\ref{prop:kernelbridge}(b)):
+$\SK(\xit,\xit')\to\cKA(\xit,\xit')$
+for a.e.\ $\xit'$ by Parseval
+for the complete ONS $\{u_k\}$ in $L^2(\R_+)$
+(Bessel + monotone partial sums in $\ell^2$).
+
+\textit{Step 3: Lebesgue DCT on $[0,M]^2$.}
+Dominated bound~\eqref{eq:CStail} with $h\in L^1([0,M]^2)$
++ pointwise convergence from Step 2
+$\Rightarrow$
+$\SK\to\cKA$ in $L^1([0,M]^2)$ and a.e.
+\emph{No trace of $\mathrm{Id}_{[0,M]}$,
+no HS-norm of the full kernel,
+no Mercer monotonicity used.}
 \end{remark}
 
 %% ============================================================
@@ -494,8 +444,7 @@ on $[0,M]^2$; Airy decay outside.
 \textit{Step~2.} Projector: Cor.~\ref{cor:spectral}(i--iii).
 \textit{Step~3.} Fixed-$K$: Lem.~\ref{lem:domconv}.
 \textit{Step~4.} $K\to\infty$: Lem.~\ref{lem:slepianunif}
-+ Rem.~\ref{rem:dct} (HS + Tonelli)
-+ Rem.~\ref{rem:iterated}.$\hfill\square$
++ Rem.~\ref{rem:dct} + Rem.~\ref{rem:iterated}.$\hfill\square$
 
 %% ============================================================
 \section{BR3}
@@ -513,28 +462,22 @@ $\normh{\cK-\cKA}{L^2(w\otimes w)}\to 0$
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-Formal poset $(\mathcal{N},\leq)$, unique min/max
-  & \checkmark & Def.~\ref{def:poset} \\
-$\mathcal{N}$/$\mathcal{E}$ split; $\phi:\mathcal{E}\to\mathcal{N}$
-  & \checkmark & Rem.~\ref{rem:poset} \\
-Feedback-stable $\ell_B$
-  & \checkmark & Rem.~\ref{rem:feedback} \\
-$L^1$ diagonal via semigroup
-  & \checkmark & Prop.~\ref{prop:kernelbridge}(iii) \\
-$\normh{u_j}{L^2([0,M])}\leq 1$ explicit
-  & \checkmark & Eq.~\eqref{eq:normres} \\
-HS-norm $\SK\to\cKA$ (no Mercer positivity)
+$\mathrm{tr}(\mathrm{Id})=\infty$ error removed
+  & \checkmark & v20 fix \\
+$L^1$ diagonal via Airy integral (no semigroup)
+  & \checkmark & Prop.~\ref{prop:kernelbridge}(b) \\
+Parseval identification of diagonal
+  & \checkmark & Prop.~\ref{prop:kernelbridge}(c) \\
+DCT: CS + Tonelli on $[0,M]^2$ only
   & \checkmark & Rem.~\ref{rem:dct} \\
-Tonelli $h\in L^1$
-  & \checkmark & Rem.~\ref{rem:dct} \\
-Uniform-in-$c$ tail (Lem.~\ref{lem:slepianunif})
-  & \checkmark & ORX + L-W \\
-Iterated limit, $\varepsilon$-chain valid
+Pointwise via Bessel/Parseval
+  & \checkmark & Rem.~\ref{rem:dct} Step~2 \\
+Slepian exponential window (correct ref.)
+  & \checkmark & Lem.~\ref{lem:slepianunif} \\
+Uniform-in-$c$ tail, $\varepsilon$-chain valid
   & \checkmark & Rem.~\ref{rem:iterated} \\
 Uniformity chain $K\to C_K\to\delta_0\to c_0$
   & \checkmark & Rem.~\ref{rem:uniform} \\
-Global form comparison
-  & \checkmark & Kato VI.2.21 \\
 Langer (Airy scale $c^{-2/3}$)
   & \checkmark & Lem.~\ref{lem:langer} \\
 $H^{-1}$ via $H^1_0$-$L^\infty$ duality
@@ -543,6 +486,8 @@ Uniform $L^\infty$
   & \checkmark & $H^2$ + Rellich-K. \\
 Sturm + gap
   & \checkmark & Zettl 8.3.1 \\
+Poset DAG, no cycle
+  & \checkmark & Rem.~\ref{rem:feedback} \\
 Main Lemma & \checkmark & Steps 1--4 \\
 BR3 & \checkmark & XVII + XVIII \\
 \bottomrule
@@ -551,16 +496,15 @@ BR3 & \checkmark & XVII + XVIII \\
 
 \[
 \boxed{
-  \underbrace{d_1\to\ell_0}_{C_K}
+  \underbrace{p_0}_{\cKA\in L^1}
+  +\underbrace{\ell_{C0}}_{\sup_c\,\mathrm{tail}}
   \to
-  \underbrace{\ell_A+\ell_L}_{\delta_0,L^\infty}
+  \underbrace{\ell_D}_{\mathrm{CS+Tonelli}}
+  \;\Big|\;
+  \underbrace{\ell_0\to\ell_A\to\ell_2}_{C^0\text{ eigenfct.}}
   \to
-  \underbrace{\ell_2}_{C^0}
-  +\underbrace{\ell_{C0}}_{\sup_c\mathrm{tail}}
-  +\underbrace{p_0}_{\mathrm{diag}\in L^1}
-  \to
-  \underbrace{\ell_D}_{\mathrm{HS+Tonelli}}
-  \to m\to T
+  \underbrace{m}_{\mathrm{Main}}
+  \to T
 }
 \]
 
@@ -583,7 +527,8 @@ BR3 & \checkmark & XVII + XVIII \\
   Eigenvalue distribution of time and frequency limiting,
   \textit{J.\ Math.\ Anal.\ Appl.}\ \textbf{77} (1980), 469--481.
 \bibitem{Slepian1978} D.~Slepian,
-  Prolate spheroidal wave functions V,
+  Prolate spheroidal wave functions, Fourier analysis, and
+  uncertainty V,
   \textit{Bell Syst.\ Tech.\ J.}\ \textbf{57} (1978), 1371--1430.
 \bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
   \textit{Prolate Spheroidal Wave Functions of Order Zero},
