@@ -38,10 +38,10 @@
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v21)\\[0.3em]
-  \large Tonelli Factorisation $\cdot$
-  $L^2$-then-a.e.\ Parseval $\cdot$
-  Weaker Slepian Tail}
+  Paper~XVIII: Airy Kernel Universality (v22)\\[0.3em]
+  \large Tensorised Parseval $\cdot$
+  Slepian $\alpha$-Gluing $\cdot$
+  Neutral Limit Phrasing}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -51,27 +51,24 @@ This paper proves $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise
 (Main Lemma~\ref{lem:main}), closing BR3.
 
 \medskip
-\textbf{v21: three minimal surgical fixes to v20.}
+\textbf{v22: three sentence-level fixes to v21.}
 \begin{enumerate}[nosep]
-\item \textbf{Tonelli factorisation explicit
-  (Remark~\ref{rem:dct}):}
-  $\normh{h}{L^1([0,M]^2)}
-  =\bigl(\int_0^M\cKA(\xit,\xit)^{1/2}\,d\xit\bigr)^2$
-  stated as an equation;
-  ``monotone partial sums in $\ell^2$'' replaced by
-  $L^2$-convergence + subsequential a.e.\ (Parseval).
-\item \textbf{Slepian tail weakened to safe form
+\item \textbf{Tensorised Parseval
+  (Remark~\ref{rem:dct}, Step~3):}
+  $L^2([0,M]^2)$-norm formula restated as
+  projection onto $\mathrm{span}\{u_1,\dots,u_K\}$ in each
+  variable separately in $L^2(\R_+)\otimes L^2(\R_+)$
+  (RS II Thm.~II.10).
+\item \textbf{Slepian $\alpha$-gluing explicit
   (Lemma~\ref{lem:slepianunif}):}
-  explicit $\gamma(k/c^{1/3})$ replaced by
-  $\lambda_{n_c+k}^{(c)}\leq e^{-\alpha k}$ for
-  $\alpha=\alpha(\varepsilon)>0$ independent of $c$
-  (Slepian 1978 Thm.~1 + ORX~\S4.2.1,
-  transition-window regime).
-\item \textbf{Iterated limit non-uniformity stated
+  inner ($\beta_1$) and deep-tail ($\beta_2$) exponents
+  unified as $\alpha:=\min(\beta_1,\beta_2)>0$.
+\item \textbf{Neutral phrasing
   (Remark~\ref{rem:iterated}):}
-  explicit sentence: non-uniformity in $K$ is
-  intrinsic and harmless; only the sequential
-  limit is used.
+  ``non-uniformity is harmless''
+  $\to$
+  ``no joint uniform convergence in $(c,K)$
+  is required for the diagonal limit argument''.
 \end{enumerate}
 \end{abstract}
 
@@ -177,7 +174,7 @@ $p_1$: Prop.~\ref{prop:formbounded} & $C_0$ & $d_1$ & XVI, Kato.VI \\
 $\ell_0$: Lem.~\ref{lem:slbound} & $C_K,c_0(K)$ & $p_1$ & Kato.VI.2.21 \\
 $\ell_A$: Lem.~\ref{lem:langer} & $\delta_0,c_0(K,M)$ & $\ell_0,r_0$ & Olver.11.3 \\
 $\ell_L$: Lem.~\ref{lem:linf} & $C(M,K)$ & $\ell_0,r_0$ & $H^2$-reg. \\
-$\ell_{C0}$: Lem.~\ref{lem:slepianunif} & $K_0,c_1$ & --- & L-W, Slepian \\
+$\ell_{C0}$: Lem.~\ref{lem:slepianunif} & $K_0,c_1,\alpha$ & --- & L-W, Slepian, ORX \\
 $p_2$: Prop.~\ref{prop:normresolvent} & $z$ & $p_1$ & RS.VIII.23 \\
 \hline
 $c_1$: Cor.~\ref{cor:spectral}(i--iii) & & $p_2$ & Kato.IV \\
@@ -274,27 +271,35 @@ and $c_1=c_1(\varepsilon)$, with $\alpha$ independent of $c$, such that
 \end{equation}
 Consequently
 $\sup_{c\geq c_1}\sum_{j>K_0}\lambda_{n^*+j}^{(c)}
-\leq\sum_{k>K_0}e^{-\alpha k}
-=\frac{e^{-\alpha(K_0+1)}}{1-e^{-\alpha}}<\varepsilon$
+\leq\frac{e^{-\alpha(K_0+1)}}{1-e^{-\alpha}}<\varepsilon$
 for $K_0$ large.
 \end{lemma}
 \begin{proof}
 Write $n_c=\lfloor2c/\pi\rfloor$.
-For $k\geq c^{1/3+\delta}$ (fixed $\delta>0$), the PSWF
-eigenvalues lie in the super-exponential tail of the transition
-window: Slepian~\cite{Slepian1978} Thm.~1 gives
-$\lambda_{n_c+k}^{(c)}<2e^{-c\,\gamma_0}$ for some $\gamma_0>0$
-depending only on $\delta$.
-For $K_0\leq k\leq c^{1/3+\delta}$
-(the ``inner transition'' region),
+Fix $\delta\in(0,\tfrac{1}{3})$.
+
+\textbf{Inner transition regime} ($K_0\leq k\leq c^{1/3+\delta}$,
+$c\geq c_1$).
 Osipov--Rokhlin--Xiao~\cite{Osipov2013} \S4.2.1
-yields $\lambda_{n_c+k}^{(c)}\leq e^{-\alpha k}$
-with $\alpha=\alpha(\delta)>0$ uniform in $c$.
-Choosing $\alpha=\alpha(\varepsilon)$ and $K_0=K_0(\varepsilon)$
-yields~\eqref{eq:uniftail}.
+yields $\lambda_{n_c+k}^{(c)}\leq e^{-\beta_1 k}$
+with $\beta_1=\beta_1(\delta)>0$ uniform in $c\geq c_1(\delta)$.
+
+\textbf{Deep tail} ($k>c^{1/3+\delta}$).
+Slepian~\cite{Slepian1978} Thm.~1:
+$\lambda_{n_c+k}^{(c)}<2e^{-c\,\gamma_0}$
+for $\gamma_0=\gamma_0(\delta)>0$;
+for $k>c^{1/3+\delta}$ this gives
+$\lambda_{n_c+k}^{(c)}<2e^{-\beta_2 k}$
+with $\beta_2=c^{2/3-\delta}\gamma_0\geq\beta_2(\varepsilon)>0$
+for $c\geq c_1(\varepsilon)$ fixed.
+
+\textbf{Gluing.}
+Set $\alpha:=\min(\beta_1,\beta_2)>0$.
+This single exponent satisfies~\eqref{eq:uniftail}
+for all $k\geq K_0$ and $c\geq c_1$, covering both regimes.
 \end{proof}
 
-\begin{remark}[Iterated limit: intrinsic non-uniformity]
+\begin{remark}[Iterated limit; no joint uniformity needed]
 \label{rem:iterated}
 For each $\varepsilon>0$:
 (i) choose $K_0=K_0(\varepsilon)$ from
@@ -302,10 +307,10 @@ Lemma~\ref{lem:slepianunif} (uniform in $c\geq c_1$);
 (ii) choose $c_0=c_0(K_0,M)$ from Lemma~\ref{lem:langer}.
 For $c\geq\max(c_0,c_1)$: total error $<\varepsilon$.
 
-\emph{Non-uniformity in $K$ is intrinsic and harmless:}
-only the sequential limit (first $c\to\infty$ for fixed $K$,
-then $K\to\infty$) is used;
-no joint $(c,K)$ uniformity is claimed or needed.
+\emph{No joint uniform convergence in $(c,K)$ is required
+for the diagonal limit argument;}
+only the sequential limit
+(first $c\to\infty$ for fixed $K$, then $K\to\infty$) is used.
 \end{remark}
 
 \begin{lemma}[Sturm ordering]
@@ -364,7 +369,7 @@ Fixed $K$: Lemma~\ref{lem:H2}.
 $K\to\infty$: Remark~\ref{rem:dct} + Remark~\ref{rem:iterated}.
 \end{proof}
 
-\begin{remark}[DCT: Cauchy--Schwarz + Tonelli + $L^2$-Parseval]
+\begin{remark}[DCT: Cauchy--Schwarz + Tonelli + tensorised Parseval]
 \label{rem:dct}
 \textbf{Layer 1 (fixed $K$).}
 $|\SK|\leq K\cdot C(M,K)^2$ (Lemma~\ref{lem:linf}).
@@ -387,31 +392,40 @@ By Tonelli's theorem:
 \begin{equation}\label{eq:Tonelli}
   \normh{h}{L^1([0,M]^2)}
   = \Bigl(\int_0^M\cKA(\xit,\xit)^{1/2}\,d\xit\Bigr)^2
-  \leq \Bigl(C'\int_0^M(1+\xit)^{-1/4}\,d\xit\Bigr)^2
   < \infty,
 \end{equation}
 using~\eqref{eq:diagbound}.
 Hence $h\in L^1([0,M]^2)$.
-(Note: $h\notin L^1(\R_+^2)$ globally since
-$\int_0^\infty(1+\xit)^{-1/4}\,d\xit=\infty$;
+(Note: $h\notin L^1(\R_+^2)$ globally;
 the restriction to $[0,M]^2$ is essential.)
 
-\textit{Step 3: $L^2$-convergence, then a.e.}
-$\SK\to\cKA$ in $L^2([0,M]^2)$ by Parseval
-for the complete ONS $\{u_k\}$ in $L^2(\R_+)$
-(more precisely: $\normh{\cKA-\SK}{L^2([0,M]^2)}^2
-=\sum_{j>K}\int_0^M u_j^2\,d\xit
-\cdot\int_0^M u_j^2\,d\xit'\to 0$
-by Bessel's inequality and dominated convergence).
-Hence there exists a subsequence
-$\SK_n(\xit,\xit')\to\cKA(\xit,\xit')$ for a.e.\ $(\xit,\xit')$;
-monotonicity of $\SK$ (in $K$, for fixed $\xit=\xit'$) then gives
-full sequence a.e.\ convergence on the diagonal,
-and the off-diagonal follows by~\eqref{eq:CStail}.
+\textit{Step 3: Tensorised Parseval in $L^2(\R_+)\otimes L^2(\R_+)$.}
+The kernel has the expansion
+$\cKA=\sum_k u_k\otimes u_k$ in
+$L^2(\R_+)\otimes L^2(\R_+)$ (RS~\cite{ReedSimon2} Thm.~II.10).
+Truncating to $\mathrm{span}\{u_1,\dots,u_K\}$
+in each variable separately gives
+\begin{equation}\label{eq:tensorparseval}
+  \normh{\cKA-\SK}{L^2([0,M]^2)}^2
+  = \sum_{j>K}
+     \normh{u_j}{L^2([0,M])}^2\cdot
+     \normh{u_j}{L^2([0,M])}^2
+  \leq \sum_{j>K}\normh{u_j}{L^2([0,M])}^2
+  \to 0
+\end{equation}
+by Bessel's inequality in $L^2(\R_+)$
+(since $\sum_j\normh{u_j}{L^2([0,M])}^2
+=\int_0^M\cKA(\xit,\xit)\,d\xit<\infty$
+by~\eqref{eq:diagbound}).
+Hence $\SK\to\cKA$ in $L^2([0,M]^2)$,
+giving a subsequence converging a.e.\ on $[0,M]^2$;
+monotonicity $\SK(\xit,\xit)\nearrow\cKA(\xit,\xit)$
+(diagonal) then extends full-sequence a.e.\ convergence
+off-diagonal via~\eqref{eq:CStail}.
 
 \textit{Step 4: Lebesgue DCT.}
 Dominated bound~\eqref{eq:CStail} with $h\in L^1([0,M]^2)$
-+ a.e.\ convergence from Step 3
++ a.e.\ convergence
 $\Rightarrow$ $\SK\to\cKA$ in $L^1([0,M]^2)$.
 \emph{No trace of $\mathrm{Id}_{[0,M]}$;
 no HS-norm of the full kernel;
@@ -454,13 +468,13 @@ $\normh{\cK-\cKA}{L^2(w\otimes w)}\to 0$
 \midrule
 $L^1$ diagonal via Airy integral
   & \checkmark & Prop.~\ref{prop:kernelbridge}(b) \\
-Tonelli factorisation $\normh{h}{L^1}=(\cdots)^2$ explicit
+Tonelli: $\normh{h}{L^1}=(\int\sqrt{\cdot}\,d\xit)^2$
   & \checkmark & Eq.~\eqref{eq:Tonelli} \\
-$L^2$-convergence then a.e.\ (no ``monotone in $\ell^2$'')
-  & \checkmark & Rem.~\ref{rem:dct} Step~3 \\
-Slepian tail: $e^{-\alpha k}$, $\alpha$ indep.\ of $c$
+Tensorised Parseval ($L^2(\R_+)\otimes L^2(\R_+)$)
+  & \checkmark & Eq.~\eqref{eq:tensorparseval}, RS II.10 \\
+Slepian $\alpha$-gluing (two regimes, one exponent)
   & \checkmark & Lem.~\ref{lem:slepianunif} \\
-Iterated limit, non-uniformity stated explicit
+Iterated limit, no joint $(c,K)$ uniformity
   & \checkmark & Rem.~\ref{rem:iterated} \\
 Uniformity chain $K\to C_K\to\delta_0\to c_0$
   & \checkmark & Rem.~\ref{rem:uniform} \\
@@ -484,14 +498,14 @@ BR3
 
 \[
 \boxed{
-  \underbrace{p_0}_{\cKA\leq C(1+\xit)^{-1/2}}
+  \underbrace{p_0}_{\cKA\leq C(1{+}\xit)^{-1/2}}
   \xrightarrow{\text{Tonelli}}
-  \underbrace{h\in L^1([0,M]^2)}_{\text{Eq.}\,\eqref{eq:Tonelli}}
-  +
-  \underbrace{\ell_{C0}}_{e^{-\alpha k}}
-  \to
-  \underbrace{\ell_D}_{L^2\text{-Parseval}+\text{DCT}}
-  \to m\to T
+  h\in L^1([0,M]^2)
+  \;+\;
+  \underbrace{\ell_{C0}}_{e^{-\alpha k},\,\alpha{=}\min(\beta_1,\beta_2)}
+  \xrightarrow{\text{tensor Parseval}+\text{DCT}}
+  \underbrace{m}_{\text{Main}}
+  \to T
 }
 \]
 
@@ -500,6 +514,9 @@ BR3
 \bibitem{paper17} \textit{Paper~XVII}, 2026.
 \bibitem{Kato1966} T.~Kato,
   \textit{Perturbation Theory for Linear Operators}, Springer, 1966.
+\bibitem{ReedSimon2} M.~Reed, B.~Simon,
+  \textit{Methods of Modern Mathematical Physics, Vol.~II},
+  Academic Press, 1975.
 \bibitem{ReedSimon4} M.~Reed, B.~Simon,
   \textit{Methods of Modern Mathematical Physics, Vol.~IV},
   Academic Press, 1978.
