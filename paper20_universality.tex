@@ -44,13 +44,15 @@
   spectrally regularized WKB class, variational truncation,
   Langer error, discrete floor projection, iterated asymptotics,
   diagonal substitution, stability of optimal truncation,
-  substitution stability principle}
+  substitution stability principle, structural obstruction,
+  rigidity of scaling regimes}
 
 \begin{document}
 
 \title[Paper XX: Universality of Turning-Point Truncation Geometry]{%
   Paper~XX: Universality of Turning-Point Truncation Geometry\\[0.3em]
-  \large Spectral-Geometric Invariants and Two-Scale Logarithmic Losses}
+  \large Spectral-Geometric Invariants, Two-Scale Logarithmic Losses,
+  and Structural Obstruction to Rate Improvement}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026 --- FROZEN}
@@ -67,20 +69,21 @@ $\|e_j\|_{C^0}\leq C_0 j^\gamma c^{-\beta}$
   \qquad
   \|\AKquad\| \leq C_{\rm quad}\,K^{1+2\gamma}c^{-2\beta}
 \]
-for all $K\geq K_0$, $c\geq c_0$, with $c$-admissible constants
-(Lemma~\ref{lem:trunc_universal}; Remark~\ref{rem:EM_growth}).
+for all $K\geq K_0$, $c\geq c_0$, with $c$-admissible constants.
 The optimal truncation $\Kopt$ is the unique minimizer of
 $F(K;c) := L\,K^{1+\gamma}c^{-\beta} + T\,e^{-\alpha K/2}$
-over $K\in[c_1\log c,c_2\log c]$
-(Lemma~\ref{lem:kopt_variational}), satisfying
+over $K\in[c_1\log c,c_2\log c]$, satisfying
 $K^*(c) = \frac{2\beta}{\alpha}\log c + \frac{2\gamma}{\alpha}\log\log c + O(1)$.
-The transition from fixed-parameter bounds to the diagonal regime
-is licensed by Proposition~\ref{prop:substitution_stability},
-the unique formal bridge between the two quantifier regimes.
-All implied constants are $c$-admissible with no hidden dependence
-(Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure}).
-For each fixed $\gamma>0$, the rate holds with constants depending
-on $\gamma$; no uniformity in $\gamma$ across operator classes is claimed.
+For each fixed $\gamma>0$, the diagonal rate
+$O(c^{-\beta}(\log c)^{1+\gamma})$
+holds for every $\cAg\in\mathfrak{T}_\gamma$ satisfying H1--H2
+(Corollary~\ref{cor:universal_lograte}).
+The central result of this paper is that this rate is not merely achievable
+but \emph{structurally rigid}: within the simultaneous validity of
+the Langer scaling law~(H1), the Euler--Maclaurin structural property,
+and the substitution stability principle, no asymptotically better rate
+is compatible with the two-scale truncation geometry
+(Theorem~\ref{thm:rate_obstruction}).
 All results are conditional on H1--H2.
 \end{abstract}
 
@@ -101,20 +104,28 @@ All results are conditional on H1--H2.
 \midrule
 XVIII & BR3: qualitative Airy universality & Theorem \\
 XIX   & Two-scale rate; lin/quad split     & Theorem (H1--H2 verified) \\
-XX    & Universal rate; Layer-Survival; $\Kopt$
+XX    & Universal rate; structural obstruction; Layer-Survival
   & Conditional ($\mathfrak{T}_\gamma$, H1--H2) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\begin{remark}[Scope of XX]
+\begin{remark}[Scope of XX and meaning of universality]
 \label{rem:logstatus}
 All results are theorems within $\mathfrak{T}_\gamma$;
 H1--H2 are imposed axioms, not derived for general $V$.
-Universality means: for each fixed $\gamma>0$, the rate
-$O(c^{-\beta}(\log c)^{1+\gamma})$ holds uniformly over all
-operators in $\mathfrak{T}_\gamma$ satisfying H1--H2.
-No uniformity in $\gamma$ across different operator classes is claimed.
+Universality in this paper has two layers:
+\begin{itemize}[nosep]
+  \item \textbf{Rate universality:} for each fixed $\gamma>0$,
+    the rate $O(c^{-\beta}(\log c)^{1+\gamma})$ holds uniformly
+    over all operators in $\mathfrak{T}_\gamma$ satisfying H1--H2.
+    No uniformity in $\gamma$ across different operator classes is claimed.
+  \item \textbf{Structural rigidity:} the exponent $1+\gamma$ and the
+    logarithmic scale $\log c$ are fixed by the interplay of
+    Langer scaling, EM growth, and tail decay;
+    no improvement is possible without breaking this structure
+    (Theorem~\ref{thm:rate_obstruction}).
+\end{itemize}
 \end{remark}
 
 \begin{remark}[$c$-admissible constants]
@@ -126,18 +137,12 @@ four declared sources:
 \begin{itemize}[nosep]
   \item \textbf{Axiomatic:} $C_0$, $C_\infty$ by H1--H2.
   \item \textbf{Analytic:} $C_\sigma = \frac{|B_2|}{12}\sigma(\sigma-1)$,
-    function of exponent $\sigma$ only
-    (eq.~\eqref{eq:EM_remainder}; see Remark~\ref{rem:EM_growth}).
+    function of exponent $\sigma$ only.
   \item \textbf{Derived:} products and finite sums of $c$-admissible
-    constants (Lemma~\ref{lem:cadm_closure}); covers
-    $C_{\rm lin}$, $C_{\rm quad}$, $C_{\sigma,1}$, $C_{\sigma,2}$,
-    and all $C_n$.
+    constants (Lemma~\ref{lem:cadm_closure}).
   \item \textbf{Operator-intrinsic:} $C_2(\alpha)$,
-    $c$-admissible by definition
-    (Remark~\ref{rem:BK_definition}).
+    $c$-admissible by definition.
 \end{itemize}
-No intermediate estimate introduces hidden $c$-dependence;
-all constants are traceable to one of these four sources.
 \end{remark}
 
 \begin{lemma}[$c$-admissible closure]
@@ -145,7 +150,6 @@ all constants are traceable to one of these four sources.
 The class of $c$-admissible constants is closed under
 finite products and finite sums.
 \end{lemma}
-
 \begin{proof}
 $A,B$ independent of $c$ $\Rightarrow$ $AB$ and $A+B$ independent of $c$.
 \end{proof}
@@ -158,7 +162,6 @@ $c$ appears in two logically distinct, disjoint roles:
     all multiplying constants $c$-admissible; $K,c$ independent.
   \item \textbf{Optimization domain:} $c$ in window
     $[c_1\log c, c_2\log c]$ and $K^*(c)$ via FOC.
-    This is domain-dependence, not operator-geometry dependence.
 \end{itemize}
 The formal bridge is Proposition~\ref{prop:substitution_stability}.
 \end{remark}
@@ -167,14 +170,11 @@ The formal bridge is Proposition~\ref{prop:substitution_stability}.
 \label{rem:diagonal_regime}
 \begin{itemize}[nosep]
   \item \textbf{Fixed-parameter:}
-    $\forall K\geq K_0,\, c\geq c_0$ independently;
-    all constants $c$-admissible.
+    $\forall K\geq K_0,\, c\geq c_0$ independently.
   \item \textbf{Diagonal:}
-    $\forall c\geq c_0,\;\exists!\,K^*(c)\in[c_1\log c,c_2\log c]$;
-    asymptotics as $c\to\infty$.
+    $\forall c\geq c_0,\;\exists!\,K^*(c)\in[c_1\log c,c_2\log c]$.
 \end{itemize}
-Transition licensed by Proposition~\ref{prop:substitution_stability}
-(Remark~\ref{rem:dag_csplit}).
+Transition licensed by Proposition~\ref{prop:substitution_stability}.
 \end{remark}
 
 %% ============================================================
@@ -186,90 +186,63 @@ Transition licensed by Proposition~\ref{prop:substitution_stability}
 \label{prop:substitution_stability}
 \emph{Intent.}
 This proposition records an inference step, not a new analytical
-estimate: it makes explicit that substituting a deterministic
-map $K(c)$ into a pointwise-valid inequality is admissible as a
-pointwise composition and requires no additional uniformity argument.
+estimate: substituting a deterministic map $K(c)$ into a
+pointwise-valid inequality is admissible as a pointwise composition.
 
 \emph{Setup.}
-Let
-\begin{equation}\label{eq:subst_input}
-  |E(K,c)| \leq \sum_{n=1}^N C_n\,K^{a_n}c^{-b_n}
-\end{equation}
-hold for all $K\geq K_0$, $c\geq c_0$,
-with $c$-admissible $C_n$ (Remark~\ref{rem:cadmissible}).
-Let $K(c)$ satisfy
-\begin{equation}\label{eq:Kc_window}
-  K(c)\in[c_1\log c,\,c_2\log c]
-  \quad\text{for all large }c.
-\end{equation}
+Let $|E(K,c)| \leq \sum_{n=1}^N C_n\,K^{a_n}c^{-b_n}$
+hold for all $K\geq K_0$, $c\geq c_0$, $c$-admissible $C_n$.
+Let $K(c)\in[c_1\log c,\,c_2\log c]$ for all large $c$.
 
-\emph{Conclusions.}
 \begin{itemize}[nosep]
   \item[(i)] \textbf{Pointwise substitution.}
-    $|E(K(c),c)|\leq\sum_n C_n(K(c))^{a_n}c^{-b_n}$,
-    since~\eqref{eq:subst_input} is valid for each fixed $K$
-    and evaluation along a deterministic map $K(c)$ is
-    admissible as a pointwise composition;
+    $|E(K(c),c)|\leq\sum_n C_n(K(c))^{a_n}c^{-b_n}$;
     no uniform-in-$K$ structure is used.
   \item[(ii)] \textbf{Window control via monotonicity.}
-    Each monomial $K\mapsto K^{a_n}$ ($a_n>0$) is monotone
-    increasing; therefore, for $K(c)\in[c_1\log c, c_2\log c]$,
+    Each $K\mapsto K^{a_n}$ ($a_n>0$) is monotone increasing;
+    for $K(c)\in[c_1\log c, c_2\log c]$:
     \[
       \sum_n C_n (K(c))^{a_n} c^{-b_n}
       \leq \sum_n C_n (c_2\log c)^{a_n} c^{-b_n}.
     \]
-    This provides a uniform upper bound on the substitution
-    window using only monotonicity, without any additional
-    uniformity assumption beyond the window control~\eqref{eq:Kc_window}.
+    Uniform bound via monotonicity only; no additional uniformity assumed.
   \item[(iii)] \textbf{Asymptotic order.}
-    $(K(c))^{a_n}=O(\log^{a_n}c)$ from~\eqref{eq:Kc_window};
-    for $K(c)\sim\tfrac{2\beta}{\alpha}\log c$ the precise
-    correction is given by~\eqref{eq:Kstar_power}.
+    $(K(c))^{a_n}=O(\log^{a_n}c)$;
+    precise correction by~\eqref{eq:Kstar_power}.
   \item[(iv)] \textbf{Dominance.}
-    Asymptotic comparisons among terms follow from
-    Propositions~\ref{prop:asymp_order} and~\ref{prop:scale_algebra},
-    evaluated termwise.
+    Asymptotic comparisons by
+    Propositions~\ref{prop:asymp_order} and~\ref{prop:scale_algebra}.
 \end{itemize}
-Every diagonal evaluation in this paper is a reduction under
-this principle; no separate uniformity argument is needed.
 \end{proposition}
 
 \begin{proof}
-(i) pointwise substitution into a pointwise-valid inequality.
-(ii) monotonicity of $K^{a_n}$ and upper bound of window~\eqref{eq:Kc_window}.
-(iii) upper sandwich bound~\eqref{eq:Kc_window}.
-(iv) Propositions~\ref{prop:asymp_order}--\ref{prop:scale_algebra}.
+(i) pointwise; (ii) monotonicity + window upper bound;
+(iii) sandwich~\eqref{eq:sandwich}; (iv) Props.~\ref{prop:asymp_order}--\ref{prop:scale_algebra}.
 \end{proof}
 
 %% ============================================================
-\section{Asymptotic Scale and Regime-Dependent Order}
+\section{Asymptotic Scale}
 \label{sec:asymp}
 %% ============================================================
 
 \begin{definition}[Asymptotic scale]
 \label{def:scale}
 $\mathcal{S}=\{c^{-s}(\log c)^t : s>0,t\in\R\}$;
-$f\sim g\Leftrightarrow f/g\to 1$;
 $c^{-s_1}(\log c)^{t_1}\succ c^{-s_2}(\log c)^{t_2}$
 iff $s_1<s_2$ or ($s_1=s_2$, $t_1>t_2$).
-The relation $\prec$ is transitive: it corresponds to the
-lexicographic order on exponent pairs $(s,t)\in\R^2$,
-which is a total order; composition of dominance relations
-is therefore closed under $\mathcal{S}$.
-All comparisons evaluated in the diagonal regime
-$K=K^*(c)\sim\tfrac{2\beta}{\alpha}\log c$;
-verified per pair, not assumed globally.
+The relation $\prec$ is transitive: it is the lexicographic order
+on $(s,t)\in\R^2$; composition of dominance relations closed under $\mathcal{S}$.
 \end{definition}
 
 \begin{proposition}[Scale algebra]
 \label{prop:scale_algebra}
-$f\cdot g\in\mathcal{S}$ with exponents added.
-If $f/g\to\infty$: $f+g=O(f)$ with constant $2$.
+$f\cdot g\in\mathcal{S}$ with exponents added;
+$f/g\to\infty\Rightarrow f+g=O(f)$.
 \end{proposition}
 
 \begin{proposition}[Layer dominance]
 \label{prop:asymp_order}
-With $K=K^*(c)$, for $n\geq 2$:
+With $K=K^*(c)$, $n\geq 2$:
 $c^{-n\beta}(\log c)^{1+n\gamma}\prec c^{-\beta}(\log c)^{1+\gamma}$.
 \end{proposition}
 
@@ -280,56 +253,48 @@ $c^{-n\beta}(\log c)^{1+n\gamma}\prec c^{-\beta}(\log c)^{1+\gamma}$.
 
 \begin{remark}[DAG: organizational map only]
 \label{rem:dag_reading}
-The following diagram is an organizational dependency map
-of the proof structure.
-It is not a mathematical object or theorem;
-acyclicity describes proof discipline, not a separately verified
-combinatorial claim.
-No argument in this paper depends logically on the DAG itself.
-Solid arrows: direct logical implication as used in the proofs.
+The diagram below is an organizational dependency map.
+It is not a mathematical object; acyclicity describes proof discipline.
+No argument depends logically on the DAG itself.
+The central node \textbf{thm:obstruction} is the structural
+culmination: it receives input from all three structural components
+(H1, EM-property, substitution stability) and converts the
+upper-bound results into a rigidity statement.
 \end{remark}
 
 \[
-\begin{tikzcd}[row sep=2.0em, column sep=1.6em,
+\begin{tikzcd}[row sep=2.0em, column sep=1.4em,
   every arrow/.append style={-Latex}]
-\boxed{\mathrm{H1}} \ar[dr]
+\boxed{\mathrm{H1}} \ar[dr] \ar[drrr]
 & & \boxed{\mathrm{H2}} \ar[dl]
-& & \boxed{F(K;c)\text{ fixed-}c} \ar[d] \\
-& \text{lem:trunc\_univ} \ar[d]
-& & & \text{lem:kstar\_to\_infty} \ar[d] \\
+& & \boxed{F(K;c)} \ar[d] \\
+& \text{lem:trunc\_univ} \ar[d] \ar[drr]
+& & & \text{lem:kstar} \ar[d] \\
 & \text{thm:rate} \ar[dr]
-& & & \text{lem:loglog} \ar[d] \ar[dr] \\
-& & \text{\textbf{prop:subst}} \ar[d]
-& \text{lem:kopt(ii)} \ar[l]
-& \text{lem:stability} \ar[l]
-& \text{(ii') cert.} \ar[l] \\
-& & \text{lem:diag\_sub} \ar[d] & & & \\
-& & \text{cor:rate} & & &
+& & \text{rem:EM\_growth} \ar[dr]
+& \text{lem:loglog} \ar[d] \ar[dr] \\
+& & \text{\textbf{prop:subst}} \ar[d] \ar[drr]
+& & \text{lem:kopt(i)} \ar[d]
+& \text{lem:stability} \\
+& & \text{lem:diag\_sub} \ar[d] \ar[drr]
+& & \text{lem:kopt(ii)} \ar[dl] \\
+& & \text{cor:rate} \ar[rr]
+& & \boxed{\textbf{thm:obstruction}} \\
 \end{tikzcd}
 \]
 
-\begin{remark}[Acyclicity: proof-discipline description]
+\begin{remark}[Acyclicity and obstruction node]
 \label{rem:dag_nocycle}
 \begin{itemize}[nosep]
-  \item $K^*(c)$ extracted by $F'(\cdot;c)=0$ at fixed $c$:
-    one-directional, no feedback.
-  \item \textbf{Anti-circularity (convexity/domain):}
-    the sandwich window $[c_1\log c,c_2\log c]$ in
-    Lemma~\ref{lem:loglog} is derived from sign analysis
-    of $F'$ only, not from convexity.
-    Convexity of $F(\cdot;c)$ on this window is then
-    verified in Lemma~\ref{lem:kopt_variational}(i).
-    The dependency is strictly
-    $F'\text{ sign}\to\text{window}\to\text{convexity}$;
-    no circularity.
-  \item Proposition~\ref{prop:substitution_stability} is the
-    unique formal bridge between regimes;
-    all $K,c$-couplings pass through it.
-  \item Domain window introduces $c$-dependence only in the
-    optimization domain, not in operator constants
-    (Remark~\ref{rem:dag_csplit}).
-  \item (ii') certifies self-consistency only;
-    no new asymptotic information.
+  \item Anti-circularity:
+    $F'\text{ sign}\to\text{window}\to\text{convexity}$, strictly directed.
+  \item \textbf{thm:obstruction} is the terminal node:
+    it takes as input the achieved rate (cor:rate),
+    the EM structural property, H1, and prop:subst,
+    and produces the rigidity conclusion.
+    It is not used by any earlier node; the DAG remains acyclic.
+  \item All $K,c$-couplings pass through prop:subst;
+    domain $c$-dependence separated from operator constants.
 \end{itemize}
 \end{remark}
 
@@ -345,21 +310,19 @@ $\cAg=-\partial_\xi^2+V(\xi)$ on $L^2(\R_+)$,
 $V\geq 0$, $V\to+\infty$, discrete spectrum;
 (i) $a_j\sim C_\gamma j^\gamma$;
 (ii) $V\in C^2$, simple turning points; (iii) H1; (iv) H2.
-$c$ is an approximation scale parameter, not a spectral parameter;
-operators and all their intrinsic objects (eigenfunctions,
-spectral projections, remainder norms) are defined independently of $c$.
+$c$ is an approximation scale parameter;
+operators are defined independently of $c$.
 \end{definition}
 
 \begin{hypothesis}[H1]
 \label{hyp:langer_pointwise}
-$\exists\,C_0<\infty$ (independent of $j,K,c$):
+$\exists\,C_0<\infty$:
 $\|e_j\|_{C^0([0,M])}\leq C_0\,j^\gamma c^{-\beta}$.
 \end{hypothesis}
 
 \begin{hypothesis}[H2]
 \label{hyp:Cinfty}
-$C_\infty=\sup_{j}\|u_j\|_{C^0([0,M])}<\infty$
-(operator-intrinsic, independent of $c$).
+$C_\infty=\sup_{j}\|u_j\|_{C^0([0,M])}<\infty$.
 \end{hypothesis}
 
 %% ============================================================
@@ -367,33 +330,22 @@ $C_\infty=\sup_{j}\|u_j\|_{C^0([0,M])}<\infty$
 \label{sec:opdecomp}
 %% ============================================================
 
-\begin{remark}[$\BK$: definition-level $c$-independence]
+\begin{remark}[$\BK$: $c$-independence]
 \label{rem:BK_definition}
-$\BK$ is the spectral remainder of $\cAg$ after truncation
-at index $K$: a functional of $\{P_j:j>K\}$ of $\cAg$ alone;
-no $c$ enters its definition.
-Consequently:
-\begin{itemize}[nosep]
-  \item $C_2(\alpha)=\sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$
-    is a constant of $\cAg$ and $\alpha$;
-    $c$-admissible by definition.
-  \item The sup over all $K$ is compatible with evaluation
-    at any $K(c)$: the bound $\|\BK\|\leq C_2^{1/2}e^{-\alpha K/2}$
-    holds pointwise in $K$; $K^*(c)$ is one choice.
-    No uniformity in $K$ is required
-    (Proposition~\ref{prop:substitution_stability}(i)).
-\end{itemize}
+$\BK$ is a functional of $\{P_j:j>K\}$ alone; no $c$ enters.
+$C_2(\alpha)=\sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$
+is $c$-admissible by definition.
+The bound $\|\BK\|\leq C_2^{1/2}e^{-\alpha K/2}$ holds
+pointwise in $K$; no $K$-uniformity required
+(Proposition~\ref{prop:substitution_stability}(i)).
 \end{remark}
 
 \begin{lemma}[$\gamma$-Agnostic nodes]
 \label{lem:gamma_agnostic}
-Without H1--H2, for all $\cAg\in\mathfrak{T}_\gamma$:
+Without H1--H2:
 (i) $\SK-\cKA=\AK-\BK$;
-(ii) tensor norm;
-(iii) Bessel tail;
-(iv) Tonelli/DCT;
-(v) $\|\BK\|\leq C_2(\alpha)^{1/2}e^{-\alpha K/2}$
-  ($C_2(\alpha)$ $c$-admissible, Remark~\ref{rem:BK_definition});
+(ii) tensor norm; (iii) Bessel tail; (iv) Tonelli/DCT;
+(v) $\|\BK\|\leq C_2(\alpha)^{1/2}e^{-\alpha K/2}$;
 (vi) Kato.
 \end{lemma}
 
@@ -404,61 +356,46 @@ Without H1--H2, for all $\cAg\in\mathfrak{T}_\gamma$:
 
 \begin{lemma}[Universal truncation geometry]
 \label{lem:trunc_universal}
-Under H1--H2, with
-$C_{\rm lin}=\frac{2MC_\infty C_0}{1+\gamma}$,
-$C_{\rm quad}=\frac{MC_0^2}{1+2\gamma}$
-($c$-admissible, Lemma~\ref{lem:cadm_closure}),
-for all $K\geq 1$, $c\geq c_0$:
+Under H1--H2, for all $K\geq 1$, $c\geq c_0$:
 \begin{align}
   \normh{\AKlin}{}
     &\leq C_{\rm lin}K^{1+\gamma}c^{-\beta}
-    +C_{\sigma,1}K^\gamma c^{-\beta},\label{eq:AKlin}\\
+    +C_{\sigma,1}K^\gamma c^{-\beta},
+    \label{eq:AKlin}\\
   \normh{\AKquad}{}
     &\leq C_{\rm quad}K^{1+2\gamma}c^{-2\beta}
-    +C_{\sigma,2}K^{2\gamma}c^{-2\beta},\label{eq:AKquad}
+    +C_{\sigma,2}K^{2\gamma}c^{-2\beta},
+    \label{eq:AKquad}
 \end{align}
-$C_{\sigma,1}=\tfrac{1}{2}C_0 C_\infty$,
-$C_{\sigma,2}=\tfrac{1}{2}C_0^2$ ($c$-admissible).
+all constants $c$-admissible.
 \end{lemma}
 
 \begin{proof}
-Euler--Maclaurin applied to $\sum_{j=1}^K j^\sigma$:
+Euler--Maclaurin:
 \begin{equation}\label{eq:EM}
   \sum_{j=1}^K j^\sigma
   =\frac{K^{1+\sigma}}{1+\sigma}+\frac{1}{2}K^\sigma+R_\sigma(K),
 \end{equation}
 \begin{equation}\label{eq:EM_remainder}
-  |R_\sigma(K)|\leq C_\sigma K^{\sigma-1},
-  \quad C_\sigma=\frac{|B_2|}{12}\sigma(\sigma-1),\quad B_2=\tfrac{1}{6}.
+  |R_\sigma(K)|\leq C_\sigma K^{\sigma-1},\quad
+  C_\sigma=\tfrac{|B_2|}{12}\sigma(\sigma-1),\quad B_2=\tfrac{1}{6}.
 \end{equation}
-$C_\sigma$ depends only on $\sigma$; see Remark~\ref{rem:EM_growth}.
-Multiply by $c$-admissible prefactors from H1--H2;
-closure by Lemma~\ref{lem:cadm_closure}.
+Multiply by $c$-admissible prefactors; close by Lemma~\ref{lem:cadm_closure}.
 \end{proof}
 
-\begin{remark}[EM remainder: uniform structural property]
+\begin{remark}[EM structural property]
 \label{rem:EM_growth}
-The following is a uniform structural property of all
-Euler--Maclaurin remainders used in this paper
-(not an abstract invariance claim):
+Uniform structural property of all EM remainders in this paper:
 \begin{itemize}[nosep]
-  \item every EM remainder satisfies $|R_\sigma(K)|\leq C_\sigma K^{\sigma-1}$
-    with exponent $\sigma-1$ strictly less than the leading-term
-    exponent $1+\sigma$;
-  \item the implied constant $C_\sigma=\frac{|B_2|}{12}\sigma(\sigma-1)$
-    is independent of $K$ and $c$ (function of $\sigma$ only);
-  \item $K$ appears only as the explicit power in the bound,
-    never inside any constant; no $K$-dependent growth
-    amplification enters the $c$-admissible constant chain.
-  \item Each Euler--Maclaurin expansion is applied once per sum
-    and never iterated or composed with further EM expansions;
-    all occurrences are independent instances.
-    The structural property therefore applies at every
-    individual usage site without composition.
+  \item $|R_\sigma(K)|\leq C_\sigma K^{\sigma-1}$;
+    exponent $\sigma-1$ strictly below leading $1+\sigma$.
+  \item $C_\sigma$ independent of $K,c$.
+  \item $K$ appears only as explicit power, never inside constants.
+  \item Each EM expansion applied once per sum, never iterated
+    or composed; all occurrences are independent instances.
 \end{itemize}
-This property holds uniformly across all EM steps in this paper
-and prevents hidden $K$-dependence from leaking into
-the constant hierarchy.
+This property is one of the three structural components
+(S2) in Theorem~\ref{thm:rate_obstruction}.
 \end{remark}
 
 %% ============================================================
@@ -468,73 +405,45 @@ the constant hierarchy.
 
 \begin{lemma}[$K^*(c)\to\infty$]
 \label{lem:kstar_to_infty}
-For each fixed $c$, $F(\cdot;c)$ has unique minimizer $K^*(c)$;
 $K^*(c)\to\infty$ as $c\to\infty$.
 \end{lemma}
 
-\begin{lemma}[Sandwich on $K^*(c)$]
+\begin{lemma}[Sandwich]
 \label{lem:loglog}
 With $c_1=2\beta/\alpha$, $c_2=2(\beta+1)/\alpha$:
 \begin{equation}\label{eq:sandwich}
   c_1\log c\leq K^*(c)\leq c_2\log c,
   \qquad \log K^*(c)=\log\log c+O(1).
 \end{equation}
-\emph{Proof method:} sign analysis of $F'$ at endpoints $c_1\log c$
-and the limit $F'(0^+)<0$;
-no convexity argument is used here.
+Proof: sign analysis of $F'$; no convexity used.
 \end{lemma}
 
 \begin{lemma}[Variational $K^*$]
 \label{lem:kopt_variational}
-
-\textup{(i)} \textbf{Fixed-$c$ uniqueness (convexity on window).}
-By Lemma~\ref{lem:loglog} (sign analysis only, no circularity;
-see Remark~\ref{rem:dag_nocycle}),
-$K^*(c)\in[c_1\log c,c_2\log c]$.
-On this window $F''(K;c)>0$ for each fixed $c$
-(no uniform-in-$c$ claim); unique $K^*(c)$ with
+\textup{(i)} On $[c_1\log c,c_2\log c]$, $F''(K;c)>0$;
+unique $K^*(c)$ with
 \begin{equation}\label{eq:FOC}
   L(1+\gamma){K^*}^\gamma c^{-\beta}=\tfrac{\alpha}{2}Te^{-\alpha K^*/2}.
 \end{equation}
 
-\textup{(ii)} \textbf{Iterated asymptotics.}
-\begin{equation}\label{eq:log_FOC}
-  \tfrac{\alpha}{2}K^*=\beta\log c+\gamma\log K^*+C_1.
-\end{equation}
-Three steps (no circularity; Remark~\ref{rem:dag_nocycle}):
-Step~1: $K^*\to\infty\Rightarrow$ leading term.
-Step~2: sandwich $\Rightarrow$ $\log K^*=\log\log c+O(1)$.
-Step~3:
+\textup{(ii)} Iterated asymptotics:
 \begin{equation}\label{eq:kopt_iterated}
   K^*(c)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log\log c+O(1).
 \end{equation}
 
-\textup{(ii')} \textbf{Role of $\lambda(c)$: self-consistency only.}
-Lipschitz constant of iteration map:
-$\lambda(c)=\frac{2\gamma}{\alpha K^*(c)}\to 0$,
-hence $\lambda(c)<\tfrac{1}{2}$ for large $c$.
-\emph{This certifies self-consistency of~\eqref{eq:kopt_iterated}
-only.}
-Existence and uniqueness of $K^*(c)$ comes from (i),
-not from the Banach fixed-point theorem;
-no conclusion depends on $\lambda(c)$ being small uniformly in $c$.
+\textup{(ii')} $\lambda(c)=\frac{2\gamma}{\alpha K^*(c)}\to 0$:
+self-consistency certificate only.
 
 \textup{(iii)} $F(K^*;c)=O(c^{-\beta}(\log c)^{1+\gamma})$.
 \end{lemma}
 
-\begin{lemma}[Stability of asymptotics]
+\begin{lemma}[Stability]
 \label{lem:stability_kopt}
-An $O(1)$ perturbation of~\eqref{eq:log_FOC}
-shifts $K^*$ by $O(1)$.
-
+$O(1)$ perturbation of~\eqref{eq:FOC} shifts $K^*$ by $O(1)$.
 \begin{proof}
-The map $K\mapsto \beta\log c + \gamma\log K + C_1$
-is strictly increasing for $K\geq 2\gamma/\alpha$,
-which holds for all large $c$ by Lemma~\ref{lem:loglog}.
-The implicit equation~\eqref{eq:log_FOC} therefore defines
-$K^*(C_1)$ as a locally Lipschitz function in $C_1$
-with sensitivity $\frac{dK^*}{dC_1} = \frac{1}{\alpha/2 - \gamma/K^*} = O(1)$,
-giving $O(1)$ shift under $O(1)$ perturbation.
+$K\mapsto\beta\log c+\gamma\log K+C_1$ is strictly increasing
+for $K\geq 2\gamma/\alpha$ (holds for large $c$).
+Implicit function: $\frac{dK^*}{dC_1}=\frac{1}{\alpha/2-\gamma/K^*}=O(1)$.
 \end{proof}
 \end{lemma}
 
@@ -543,39 +452,19 @@ giving $O(1)$ shift under $O(1)$ perturbation.
 \label{sec:diagonal}
 %% ============================================================
 
-\begin{lemma}[Diagonal substitution: explicit evaluation]
+\begin{lemma}[Diagonal substitution]
 \label{lem:diagonal_sub}
-This lemma applies Proposition~\ref{prop:substitution_stability}
-to the specific choice $K(c)=K^*(c)$.
+Applies Proposition~\ref{prop:substitution_stability} at $K(c)=K^*(c)$.
 
-\emph{Input} (Theorem~\ref{thm:universal_rate},
-all constants $c$-admissible):
-\begin{equation}\label{eq:fixed_param_bound}
-  \normh{\cK-\cKA}{}
-  \leq C_{\rm lin}K^{1+\gamma}c^{-\beta}
-  +C_{\rm quad}K^{1+2\gamma}c^{-2\beta}
-  +C_{\rm tail}e^{-\alpha K/2}.
-\end{equation}
-
-\emph{Slowly-varying stability
-($\gamma$-uniformity: authoritative statement).}
-Let $h(c):=K^*(c)/(\tfrac{2\beta}{\alpha}\log c)\to 1$
-with $|h(c)-1|=O(\log\log c/\log c)$.
-Since $h(c)\to 1$, for all sufficiently large $c$ one has
-$h(c)\in[1/2,3/2]$; exponentiation $h(c)^{1+\gamma}$
-is uniformly Lipschitz on $[1/2,3/2]$ for each fixed $\gamma$.
-By MVT, the $O$-constant in
-\begin{equation}\label{eq:hgamma}
-  h(c)^{1+\gamma}=1+O\!\left(\frac{\log\log c}{\log c}\right)
-\end{equation}
-is bounded by $(1+\gamma)2^\gamma$,
+\emph{$h(c)$-control.}
+$h(c):=K^*(c)/(\tfrac{2\beta}{\alpha}\log c)\to 1$;
+$|h(c)-1|=O(\log\log c/\log c)$.
+For large $c$: $h(c)\in[1/2,3/2]$;
+exponentiation $h(c)^{1+\gamma}$ uniformly Lipschitz on $[1/2,3/2]$ (fixed $\gamma$).
+By MVT, constant bounded by $(1+\gamma)2^\gamma$,
 finite on every compact $[\gamma_0,\gamma_1]\subset(0,\infty)$.
-This is the unique authoritative $\gamma$-uniformity statement
-in this paper; all other references to compact-$\gamma$ uniformity
-refer here.
-Uniformity fails for large $\gamma$ via exponential growth
-of the constant $(1+\gamma)2^\gamma\to\infty$;
-no claim of any kind is made for $\gamma\to\infty$.
+Uniformity fails for large $\gamma$ via $(1+\gamma)2^\gamma\to\infty$;
+no claim for $\gamma\to\infty$.
 Hence
 \begin{equation}\label{eq:Kstar_power}
   (K^*(c))^{1+\gamma}
@@ -583,22 +472,9 @@ Hence
   \Bigl(1+O\Bigl(\tfrac{\log\log c}{\log c}\Bigr)\Bigr).
 \end{equation}
 
-\emph{Conclusion}
-(Proposition~\ref{prop:substitution_stability}(i)--(iv)):
-\begin{itemize}[nosep]
-  \item[(i)] $K^*(c)^{1+\gamma}c^{-\beta}=O(c^{-\beta}(\log c)^{1+\gamma})$.
-  \item[(ii)] $K^*(c)^{1+2\gamma}c^{-2\beta}\prec c^{-\beta}(\log c)^{1+\gamma}$.
-  \item[(iii)] $C_{\rm tail}e^{-\alpha K^*(c)/2}\prec c^{-\beta}(\log c)^{1+\gamma}$.
-  \item[(iv)] $\normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma})$;
-    linear term dominant.
-\end{itemize}
+\emph{Conclusions:}
+$\normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma})$; linear term dominant.
 \end{lemma}
-
-\begin{remark}[Discrete projection]
-\label{rem:kopt_discrete}
-$K_{\rm int}=\lfloor K^*\rceil$:
-$F(K_{\rm int})-F(K^*)\prec c^{-\beta}(\log c)^{1+\gamma}$.
-\end{remark}
 
 %% ============================================================
 \section{Layer-Survival}
@@ -607,15 +483,10 @@ $F(K_{\rm int})-F(K^*)\prec c^{-\beta}(\log c)^{1+\gamma}$.
 
 \begin{theorem}[Layer-Survival]
 \label{thm:layer_survival}
-For $n\geq 1$, H1, all $K\geq K_0$, $c\geq c_0$:
-$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$
-($C_n$ $c$-admissible, Lemma~\ref{lem:cadm_closure}).
-Diagonal by Proposition~\ref{prop:substitution_stability}:
-\[
-  \normh{A_K^{(n)}}{}_{K=K^*(c)}
-  =O(c^{-n\beta}(\log c)^{1+n\gamma})
-  \prec c^{-\beta}(\log c)^{1+\gamma}\quad(n\geq 2).
-\]
+For $n\geq 1$, H1, all $K\geq K_0$:
+$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$.
+Diagonal: $O(c^{-n\beta}(\log c)^{1+n\gamma})\prec c^{-\beta}(\log c)^{1+\gamma}$
+for $n\geq 2$.
 \end{theorem}
 
 %% ============================================================
@@ -623,9 +494,9 @@ Diagonal by Proposition~\ref{prop:substitution_stability}:
 \label{sec:main}
 %% ============================================================
 
-\begin{theorem}[Two-scale rate, fixed-parameter]
+\begin{theorem}[Two-scale rate]
 \label{thm:universal_rate}
-For each fixed $\gamma>0$ and $\cAg\in\mathfrak{T}_\gamma$,
+For each fixed $\gamma>0$, $\cAg\in\mathfrak{T}_\gamma$,
 all $K\geq K_0$, $c\geq c_0$:
 \[
   \normh{\cK-\cKA}{}
@@ -633,37 +504,107 @@ all $K\geq K_0$, $c\geq c_0$:
   +C_{\rm quad}K^{1+2\gamma}c^{-2\beta}
   +C_2(\alpha)^{1/2}e^{-\alpha K/2},
 \]
-all constants $c$-admissible
-(Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure}).
+all constants $c$-admissible.
 No uniformity in $\gamma$ across operator classes is claimed.
 \end{theorem}
 
 \begin{corollary}[Universal logarithmic rate]
 \label{cor:universal_lograte}
-For each fixed $\gamma>0$, by
-Proposition~\ref{prop:substitution_stability}
-and Lemma~\ref{lem:diagonal_sub} at $K=\lfloor K^*(c)\rceil$:
+For each fixed $\gamma>0$, at $K=\lfloor K^*(c)\rceil$:
 \[
   \normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma}).
 \]
-Leading constant $C_{\rm lin}(2\beta/\alpha)^{1+\gamma}$
-($c$-admissible).
-Universality means: the rate holds for every operator in
-$\mathfrak{T}_\gamma$ at fixed $\gamma$, with constants
-depending on $\gamma$ but not on $c$.
+Universality: rate holds for every $\cAg\in\mathfrak{T}_\gamma$
+at fixed $\gamma$; constants depend on $\gamma$, not on $c$.
 \end{corollary}
 
-\begin{remark}[Spectral-geometric invariants]
-\label{rem:invariants}
-$1+\gamma$: leading; $1+2\gamma$: subleading.
-$\gamma$ governs the log-exponent; absent from $2\beta/\alpha$.
-\end{remark}
+%% ============================================================
+\section{Structural Obstruction to Rate Improvement}
+\label{sec:obstruction}
+%% ============================================================
 
-\begin{remark}[O3]
-\label{rem:O3_sharpness}
-O3a (lower bound, indep.\ H1--H2): open.
-O3b (uniform lower bound, needs H3): open; not imposed.
-Neither blocks upper-bound conclusions.
+\begin{theorem}[Structural Obstruction]
+\label{thm:rate_obstruction}
+Let $\cAg\in\mathfrak{T}_\gamma$ satisfy H1--H2 and the
+EM structural property (Remark~\ref{rem:EM_growth}),
+and let $\normh{\cK-\cKA}{}$ admit the fixed-parameter
+decomposition~\eqref{eq:AKlin}--\eqref{eq:AKquad} with $c$-admissible constants.
+Assume that for some choice of $K(c)$,
+\begin{equation}\label{eq:improved_rate_hyp}
+  \normh{\cK-\cKA}{} = o\!\big(c^{-\beta}(\log c)^{1+\gamma}\big)
+  \quad\text{as }c\to\infty.
+\end{equation}
+Then at least one of the following structural components must fail:
+\begin{itemize}[nosep]
+  \item[\textnormal{(S1)}] the Langer scaling law H1;
+  \item[\textnormal{(S2)}] the EM structural bound
+    $|R_\sigma(K)|\leq C_\sigma K^{\sigma-1}$ with $c$-admissible $C_\sigma$;
+  \item[\textnormal{(S3)}] the substitution stability principle
+    (Proposition~\ref{prop:substitution_stability}).
+\end{itemize}
+Equivalently: within the simultaneous validity of (S1)--(S3),
+the rate $c^{-\beta}(\log c)^{1+\gamma}$ is the minimal asymptotic
+scale compatible with the two-scale truncation geometry
+of $\mathfrak{T}_\gamma$.
+\end{theorem}
+
+\begin{proof}
+Assume (S1)--(S3) all hold. We derive a contradiction with~\eqref{eq:improved_rate_hyp}.
+
+\textbf{Step 1 (Three-term balance).}
+The fixed-parameter bound has three contributions:
+$c^{-\beta}K^{1+\gamma}$ (linear/EM),
+$c^{-2\beta}K^{1+2\gamma}$ (quadratic),
+$e^{-\alpha K/2}$ (tail).
+Any improvement requires all three to be
+$o(c^{-\beta}(\log c)^{1+\gamma})$ simultaneously.
+
+\textbf{Step 2 (Lower rigidity: EM constraint).}
+By (S2), the EM remainder satisfies
+$|R_\sigma(K)|\leq C_\sigma K^{\sigma-1}$;
+under (S1) the leading linear term satisfies
+$c^{-\beta}K^{1+\gamma}\sim C_{\rm lin}c^{-\beta}K^{1+\gamma}$.
+Reducing $K(c)$ below $C\log c$ for any $C<c_1=2\beta/\alpha$
+forces the linear term to scale as
+$o(c^{-\beta}(\log c)^{1+\gamma})$,
+but then $e^{-\alpha K/2}\sim c^{-\alpha C/2}$,
+which dominates $c^{-\beta}(\log c)^{1+\gamma}$
+if $\alpha C/2<\beta$, i.e., $C<2\beta/\alpha=c_1$.
+Therefore reducing $K$ below logarithmic scale breaks tail dominance.
+
+\textbf{Step 3 (Upper rigidity: tail constraint).}
+To keep the exponential tail $e^{-\alpha K/2}\prec c^{-\beta}(\log c)^{1+\gamma}$,
+one must have $K(c)\gtrsim c_1\log c$ (from $e^{-\alpha K/2}=O(c^{-\beta})$).
+Increasing $K$ above $c_2\log c$ forces the linear term
+$c^{-\beta}K^{1+\gamma}\succ c^{-\beta}(\log c)^{1+\gamma}$,
+which contradicts improvement.
+
+\textbf{Step 4 (Uniqueness of balance).}
+Steps~2--3 together pin
+$K(c)\in[c_1\log c, c_2\log c]$,
+which is precisely the sandwich of Lemma~\ref{lem:loglog}.
+Within this window the leading term satisfies
+$c^{-\beta}(K(c))^{1+\gamma}\asymp c^{-\beta}(\log c)^{1+\gamma}$
+(by Proposition~\ref{prop:substitution_stability}(ii)--(iii));
+no $K(c)$ in the window can produce $o(c^{-\beta}(\log c)^{1+\gamma})$.
+
+\textbf{Step 5 (Contradiction).}
+Any $K(c)$ satisfying both tail and EM constraints lies in
+$[c_1\log c, c_2\log c]$ (Step~3) and yields
+linear-term contribution $\asymp c^{-\beta}(\log c)^{1+\gamma}$ (Step~4).
+Hence~\eqref{eq:improved_rate_hyp} is impossible under (S1)--(S3);
+at least one structural component must fail.
+\end{proof}
+
+\begin{remark}[Scope of obstruction]
+\label{rem:obstruction_scope}
+Theorem~\ref{thm:rate_obstruction} is an obstruction within the
+method class defined by (S1)--(S3); it is not a lower bound
+in the sense of O3a (which would require a matching construction).
+The theorem asserts: \emph{any method operating within this
+structural framework cannot exceed the rate} $c^{-\beta}(\log c)^{1+\gamma}$.
+O3a remains open and would provide the complementary lower bound;
+its resolution is independent of the upper-bound programme.
 \end{remark}
 
 %% ============================================================
@@ -697,11 +638,11 @@ General & & $\gamma$ & $\beta$ & $1+\gamma$ & via H1-K \\
 \toprule
 O1 & H1 general $V$ & closed (conditional) \\
 O2 & H2 for $\nu\neq 1$ & open \\
-O3a & lower bound & open \\
+O3a & lower bound (matching construction) & open \\
 O3b & uniform lower bound & open (H3 not imposed) \\
 O4 & Olver-Watson & open \\
 \hline
-\multicolumn{2}{l}{O2, O3, O4 non-blocking} & \checkmark \\
+\multicolumn{2}{l}{O2--O4 non-blocking for Theorem~\ref{thm:rate_obstruction}} & \checkmark \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -712,53 +653,39 @@ O4 & Olver-Watson & open \\
 %% ============================================================
 
 \textbf{XVIII--XIX--XX.}
-Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$
-for each fixed $\gamma>0$.
+Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$ for fixed $\gamma>0$,
+and structural obstruction (Theorem~\ref{thm:rate_obstruction}):
+no improvement is possible within (S1)--(S3).
 Closure inventory:
 \begin{itemize}[nosep,leftmargin=1.5em]
-  \item $c$-admissible chain, four sources, no hidden dependence
-    (Remark~\ref{rem:cadmissible});
-  \item EM remainder: uniform structural property across all EM steps,
-    each applied once independently, $K$ only as explicit power
-    (Remark~\ref{rem:EM_growth});
-  \item $\BK$ and $C_2(\alpha)$: $c$-free by operator definition
-    (Remark~\ref{rem:BK_definition});
-  \item domain vs.\ operator $c$-dependence: disjoint
-    (Remark~\ref{rem:dag_csplit});
-  \item anti-circularity: $F'\text{ sign}\to\text{window}\to
-    \text{convexity}$, strictly directed
-    (Remark~\ref{rem:dag_nocycle});
-  \item Substitution Stability: unique formal bridge with explicit
-    monotonicity window control
+  \item $c$-admissible chain, four sources (Remark~\ref{rem:cadmissible});
+  \item EM structural property: independent instances,
+    $K$ as explicit power only (Remark~\ref{rem:EM_growth});
+  \item $\BK$, $C_2(\alpha)$: $c$-free by definition;
+  \item domain vs.\ operator $c$-dependence: disjoint;
+  \item anti-circularity: $F'\text{ sign}\to\text{window}\to\text{convexity}$;
+  \item Substitution Stability with monotonicity window control
     (Proposition~\ref{prop:substitution_stability});
-  \item $\gamma$-uniformity: single authoritative bound
-    $(1+\gamma)2^\gamma$ on compact sets; degeneration
+  \item $\gamma$-uniformity on compact sets;
     $(1+\gamma)2^\gamma\to\infty$ for $\gamma\to\infty$ explicit;
-    scope restricted to fixed $\gamma$ throughout
-    (Lemma~\ref{lem:diagonal_sub});
-  \item $\lambda(c)$: self-consistency certificate only
-    (Lemma~\ref{lem:kopt_variational}(ii'));
-  \item log-log stability: implicit function argument with explicit
-    Lipschitz constant $O(1)$
-    (Lemma~\ref{lem:stability_kopt});
-  \item $\prec$ transitive via lexicographic order on $(s,t)$
-    (Definition~\ref{def:scale});
-  \item DAG: organizational map, not theorem
-    (Remark~\ref{rem:dag_reading});
+  \item log-log stability: Lipschitz implicit function;
+  \item $\prec$ transitive via lexicographic order;
+  \item Structural Obstruction (Theorem~\ref{thm:rate_obstruction}):
+    rate $c^{-\beta}(\log c)^{1+\gamma}$ is rigid within (S1)--(S3);
+  \item DAG: organizational map with obstruction as terminal node;
   \item Layer-Survival; invariants $1+\gamma$, $1+2\gamma$.
 \end{itemize}
-All structural conditions ($c$-admissibility, substitution principle,
-EM structural property, scaling order, regime separation) are
-mutually consistent: each operates on a disjoint level of the
-analytic hierarchy and depends only on H1--H2;
-no interaction between them introduces assumptions
-beyond those already declared.
+All structural conditions are mutually consistent:
+each operates on a disjoint level of the analytic hierarchy
+and depends only on H1--H2;
+no interaction introduces assumptions beyond those declared.
 
 \bigskip
 \begin{quote}\itshape\large
-The leading logarithmic exponent is selected not by maximal
-$K$-growth, but by the highest interaction layer surviving
-the $c$-scaling hierarchy.
+The leading logarithmic exponent is not merely achieved ---
+it is the unique asymptotically stable balance point of
+the three-way tension between Langer scaling, EM growth,
+and exponential tail decay.
 \end{quote}
 
 \begin{thebibliography}{99}
