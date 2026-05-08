@@ -1,0 +1,342 @@
+%%
+%% O4_frame_stability_problem.tex
+%% Self-contained problem document for Open Node O4.
+%% Subfield: Harmonic Analysis / Frame Theory / Sampling in Paley-Wiener spaces.
+%% No RHP, no Airy functions, no arithmetic of primes beyond their distribution.
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\Ev}{\mathrm{Ev}_N}
+\newcommand{\Edge}{\mathrm{Edge}}
+\newcommand{\PW}{\mathrm{PW}_c}
+\newcommand{\ip}[2]{\langle #1,\,#2\rangle}
+\newcommand{\norm}[1]{\|#1\|}
+
+\title{O4: Uniform Frame Stability of the Evaluation Map\\
+at the PSWF Spectral Edge\\
+{\normalsize A Self-Contained Problem Document}}
+\author{Sebastian Schmalnauer}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document isolates Open Problem O4 of Paper~XXII as a
+self-contained problem in frame theory and harmonic analysis.
+No Riemann--Hilbert methods, Airy functions, or arithmetic
+structure of primes beyond their counting function are used.
+The problem asks whether the evaluation map on the PSWF edge
+spectral block is a uniform quasi-isometry.
+We formulate the precise statement, identify the
+relevant classical theory (Kadec-$\tfrac{1}{4}$, Paley--Wiener frames,
+Jaffard--Baskakov--Gohberg--Sjöstrand), and describe three
+independent attack routes.
+\end{abstract}
+
+\tableofcontents
+
+%%=================================================================
+\section{The Problem}
+\label{sec:problem}
+%%=================================================================
+
+\subsection{Setup}
+
+Let $c > 0$ and $N = \lfloor \alpha c \rfloor$ with $\alpha \in (0, 2/\pi)$.
+Let $\{\psi_n\}_{n=0}^{N-1}$ be the orthonormal PSWF basis of
+$V_{N,c} := \mathrm{span}\{\psi_0,\ldots,\psi_{N-1}\} \subset L^2([-1,1])$.
+Fix $\delta \in (0,1)$ and define the \emph{edge subspace}
+\[
+  \Edge := \mathrm{span}\{\psi_n : n \in [(1-\delta)N,\, N)\}.
+\]
+Let $p_1 < p_2 < \cdots$ be the primes, normalised to $[-1,1]$
+by $p_j^* := 2p_j/p_N - 1$.
+The \emph{evaluation map} is
+\[
+  \Ev : \Edge \to \mathbb{C}^N,
+  \quad
+  (\Ev f)_j := f(p_j^*).
+\]
+
+\begin{problem}[O4: Uniform quasi-isometry]\label{prob:O4}
+Does there exist a constant $A = A(\delta, \alpha) > 0$,
+uniform in $N$, such that
+\begin{equation}\label{eq:O4}
+  A \norm{f}^2
+  \le \frac{1}{N}\norm{\Ev\,f}_{\ell^2}^2
+  \le B\norm{f}^2
+  \qquad \forall\, f \in \Edge\,?
+\end{equation}
+The upper bound $B$ follows from the Slepian tail estimate;
+the \emph{lower bound $A > 0$ uniform in $N$} is the open statement.
+\end{problem}
+
+\begin{remark}[Consequence for Paper~XXII]
+A positive answer to Problem~\ref{prob:O4} implies, via
+Proposition~4.1 of Paper~XXII and the Gram--gap reduction (BB3),
+a spectral gap lower bound
+$|\lambda_n^{(c)} - \lambda_{n+1}^{(c)}| \ge C c^{-1/2}$
+in the transition window.
+No Airy function or RHP structure is required for this consequence.
+\end{remark}
+
+%%=================================================================
+\section{Reformulations}
+\label{sec:reformulations}
+%%=================================================================
+
+\subsection{As a Gram matrix condition}
+
+\eqref{eq:O4} is equivalent to:
+\[
+  \lambda_{\min}(G) \ge A > 0,
+  \quad
+  G_{mn} := \frac{1}{N}\sum_j \psi_m(p_j^*)\overline{\psi_n(p_j^*)},
+  \quad m,n \in [(1-\delta)N, N).
+\]
+The Gram matrix $G$ is the compression of the
+arithmetic sampling form $A_{N,c}$ to the edge block.
+
+\subsection{As a Paley--Wiener frame condition}
+
+Every $f \in \Edge \subset V_{N,c} \subset \PW$
+(Paley--Wiener space of bandwidth $c$) is
+a bandlimited function of bandwidth $c$.
+Equation~\eqref{eq:O4} asks: do the prime points
+$\{p_j^*\}$ form a \emph{stable sampling set}
+for $f|_{\Edge}$?
+
+For the full Paley--Wiener space $\PW$,
+a sufficient condition for stable sampling is
+the Beurling density $D^-(\Lambda) > c/\pi$
+(Landau~\cite{Landau1967}).
+The primes satisfy the Beurling density condition
+by the prime number theorem: $D^-(\{p_j^*\}) = \alpha > 0$.
+The question is whether the restriction to the
+\emph{edge subspace} $\Edge$ preserves stability
+\emph{uniformly} as $N \to \infty$.
+
+\subsection{As a Kadec-type perturbation problem}
+
+A \emph{Kadec-$\tfrac{1}{4}$ frame} replaces the regular grid
+$\{j/c\}$ by a perturbed grid $\{j/c + \epsilon_j\}$
+with $\sup_j|\epsilon_j| < 1/(4c)$.
+The primes are not perturbations of a regular grid;
+however, the \emph{local gaps} between consecutive primes
+in the range $[N, N(1+\delta)]$ are $O(\log N)$,
+which is $o(N)$, suggesting Kadec-type applicability
+in a weaker form.
+
+\begin{conjecture}[Kadec-type stability for edge modes]%
+\label{conj:kadec_edge}
+There exists $\delta_0 > 0$ such that for all
+$\delta \in (0,\delta_0)$ and $\psi_n$ with
+$n \in [(1-\delta)N, N)$, the sampling set $\{p_j^*\}$
+satisfies
+\[
+  \sum_j |\psi_n(p_j^*)\cdot h_j|^2
+  \ge A \sum_j |h_j|^2
+\]
+for some $A > 0$ uniform in $n$ and in sequences
+$\{h_j\}$ supported on the prime-gap intervals.
+\end{conjecture}
+
+%%=================================================================
+\section{Known Tools and Their Reach}
+\label{sec:tools}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l p{4cm} p{4.5cm} l}
+\toprule
+\textbf{Tool} & \textbf{Statement} & \textbf{Reach toward O4} & \textbf{Gap} \\
+\midrule
+Landau density
+  & $D^- > c/\pi$ implies stable sampling for $\PW$
+  & Establishes upper frame bound $B$;
+    lower bound needs edge restriction
+  & Edge restriction \\
+Kadec-$\tfrac{1}{4}$
+  & Stable frame under perturbation $|\epsilon_j| < 1/(4c)$
+  & Applicable if primes treated as perturbed grid
+  & Primes are not regular perturbation \\
+Jaffard matrix
+  & $\ell^1$ off-diagonal decay $\Rightarrow$ Banach algebra
+  & Gram matrix invertibility via norm estimate
+  & Needs decay of $\psi_m(p_j)\psi_n(p_j)$ for $|m-n|$ large \\
+Schur test
+  & $\sum_m |G_{mn}| \le C$ uniformly $\Rightarrow \|G\| \le C$
+  & Gives \emph{upper} bound on $\|G\|$
+  & Does not give $\lambda_{\min}$ directly \\
+BW-Doubling (Paper III)
+  & $\mathcal{E}_{\mathrm{out}}(|\psi_{n^*}|^2) \ge c_3 > 0$
+    for \emph{some} $n^*$
+  & Existential: proves $\Dedge \ne 0$ (BBs of XXII)
+  & Not uniform over edge block \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%%=================================================================
+\section{Three Attack Routes}
+\label{sec:attacks}
+%%=================================================================
+
+\subsection{Route A: Uniform BW-Doubling}
+
+\textbf{Goal.} Extend BW-Doubling (Paper~III) from
+$\exists n^*$ to $\forall n \in [(1-\delta)N, N)$:
+\[
+  \inf_{n \in [(1-\delta)N, N)}
+  \mathcal{E}_{\mathrm{out}}(|\psi_n|^2) \ge c_3(\delta,c) > 0.
+\]
+
+\textbf{Mechanism.} The energy-outside estimate
+$\mathcal{E}_{\mathrm{out}}(|\psi_n|^2) =
+1 - \lambda_n(c) \ge 1 - \lambda_{(1-\delta)N}(c)$
+is bounded below uniformly for $n$ in the edge block
+by the spectral gap of $\mathcal{K}_c$
+(which is controlled by the Widom formula).
+Convert the spectral bound to a pointwise sampling bound
+via the Bessel-type inequality for the edge block.
+
+\textbf{Status.} The spectral bound is available (Widom~\cite{Widom1964});
+the conversion from spectral to pointwise sampling
+over the prime set is the non-trivial step.
+
+\subsection{Route B: Jaffard Gram Matrix Inversion}
+
+\textbf{Goal.} Show that the edge Gram matrix $G$
+satisfies $G = I + E$ where $\|E\|_{\ell^1 \to \ell^1} < 1$,
+which implies $\lambda_{\min}(G) \ge 1 - \|E\|$.
+
+\textbf{Mechanism.}
+The off-diagonal entries are
+$G_{mn} = \frac{1}{N}\sum_j \psi_m(p_j^*)\overline{\psi_n(p_j^*)}$
+for $m \ne n$.
+Using the Langer--Olver approximation
+$\psi_n(x) \approx c^{1/6}\mathrm{Ai}(c^{2/3}\zeta_n(x))$
+in the edge window, the cross terms decay as $|m-n| \to \infty$
+due to oscillation of Airy functions.
+If this decay is summable ($\ell^1$ in $m-n$),
+the Jaffard criterion applies.
+
+\textbf{Dependency.} This route uses Airy approximation
+for $\psi_n$ (Langer--Olver, Paper~XVIII),
+but only as a tool for estimating matrix entries,
+not for the spectral structure of $D^{\mathrm{Airy}}$.
+It does not depend on O5.
+
+\subsection{Route C: Beurling--Kadec for Edge-Restricted PW}
+
+\textbf{Goal.} Prove directly that $\{p_j^*\}$ is a
+Riesz basis for $\Edge$ (or at least a frame).
+
+\textbf{Mechanism.}
+$\Edge \subset \PW$ is a finite-dimensional subspace.
+The restriction of $\PW$ to $\Edge$ changes the
+effective bandwidth: modes $\psi_n$ with $n \in [(1-\delta)N,N)$
+have oscillation comparable to bandwidth $(1-\delta)c$.
+By Beurling--Kadec for bandwidth $(1-\delta)c$
+and the Nyquist density of the primes in $[N(1-\delta), N]$,
+stability follows if the primes are $(1-\delta)c$-dense.
+Verify: inter-prime gaps in this range are $O(\log N) = o(N)$,
+which is below the Nyquist threshold for bandwidth
+$(1-\delta)c$ for $\delta$ small.
+
+\textbf{Risk.} The effective bandwidth argument requires
+careful tracking of the edge cutoff $\delta$;
+the bound may degrade as $\delta \to 0$.
+
+%%=================================================================
+\section{Independence Certificate}
+\label{sec:independence}
+%%=================================================================
+
+This problem is \textbf{independent of O5} (Airy spectral gap).
+Specifically:
+\begin{itemize}
+  \item No Airy kernel or Fredholm determinant appears
+    in the statement of Problem~\ref{prob:O4} or in
+    Routes~A--C above.
+  \item The edge subspace $\Edge$ is defined via PSWF indices,
+    not via Airy functions.
+  \item Routes~A and~C do not use Airy approximation at all.
+  \item Route~B uses Langer--Olver only to estimate
+    Gram matrix entries; the conclusion is a deterministic
+    lower bound on $\lambda_{\min}(G)$.
+\end{itemize}
+
+Resolution of O4 does not affect and does not require
+resolution of O5.
+
+%%=================================================================
+\section{Open Sub-Problems}
+\label{sec:subproblems}
+%%=================================================================
+
+\begin{problem}[Schur-to-coercivity transfer]\label{sub1}
+Prove that the Schur-test upper bound on $\|G - I\|$
+transfers to a lower bound on $\lambda_{\min}(G)$
+via the Neumann series $G^{-1} = \sum_k (I-G)^k$.
+Identify the function space on the prime set
+for which the Neumann series converges.
+\end{problem}
+
+\begin{problem}[Uniform BW-Doubling via spectral monotonicity]%
+\label{sub2}
+Use the monotonicity of $\lambda_n(c)$ in $n$
+to extend the BW-Doubling estimate from
+$n = n^*$ to all $n \in [(1-\delta)N, N)$.
+What is the quantitative dependence on $\delta$?
+\end{problem}
+
+\begin{problem}[Optimal $\delta$ range]\label{sub3}
+For which values of $\delta = \delta(c, \alpha)$
+does the frame constant $A$ in \eqref{eq:O4}
+remain bounded away from zero?
+Is there a critical $\delta_c$ below which coercivity fails?
+\end{problem}
+
+\begin{thebibliography}{99}
+\bibitem{Landau1967}
+H.~Landau,
+\textit{Necessary density conditions for sampling
+and interpolation of certain entire functions},
+Acta Math.\ \textbf{117} (1967), 37--52.
+\bibitem{Kadec1964}
+M.~Kadec,
+\textit{The exact value of the Paley--Wiener constant},
+Sov.\ Math.\ Dokl.\ \textbf{5} (1964), 559--561.
+\bibitem{Jaffard1990}
+S.~Jaffard,
+\textit{A density criterion for frames of complex exponentials},
+Michigan Math.\ J.\ \textbf{38} (1991), 339--348.
+\bibitem{Widom1964}
+H.~Widom,
+\textit{Asymptotic behavior of the eigenvalues~II},
+Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964).
+\bibitem{PaperXVIII}
+S.~Schmalnauer,
+\textit{Airy Universality at the PSWF Spectral Edge}
+(Paper~XVIII), preprint, 2026.
+\bibitem{PaperXXII}
+S.~Schmalnauer,
+\textit{Edge Coercivity and the Airy Boundary Operator}
+(Paper~XXII), preprint, 2026.
+\end{thebibliography}
+
+\end{document}

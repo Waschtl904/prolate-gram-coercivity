@@ -1,0 +1,364 @@
+%%
+%% O5_airy_gap_problem.tex
+%% Self-contained problem document for Open Node O5.
+%% Subfield: Spectral theory of integrable operators /
+%%           Random matrix edge universality / Airy operator analysis.
+%% No prime arithmetic, no Gram matrices, no Kadec-type arguments.
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\Ai}{\mathrm{Ai}}
+\newcommand{\KAi}{K^{\mathrm{Airy}}}
+\newcommand{\DAi}{D^{\mathrm{Airy}}}
+\newcommand{\PAi}{\Pi_{\mathrm{Airy}}}
+\newcommand{\ip}[2]{\langle #1,\,#2\rangle}
+\newcommand{\norm}[1]{\|#1\|}
+
+\title{O5: Spectral Gap of the Airy Mismatch Operator\\
+{\normalsize A Self-Contained Problem Document}}
+\author{Sebastian Schmalnauer}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document isolates Open Problem O5 of Paper~XXII as a
+self-contained problem in spectral analysis of integrable operators.
+No prime arithmetic, Gram matrices, frame theory, or
+Riemann--Hilbert analysis is required.
+The problem asks whether the Airy mismatch operator
+$\DAi = \PAi(A^{\mathrm{arith}} - \KAi)\PAi$
+has a spectral gap: $\inf\sigma(\DAi) \ge c_2 > 0$.
+We formulate the precise statement, identify the relevant classical
+tools (Airy oscillation, Fredholm theory, GUE edge universality),
+and describe three independent attack routes.
+\end{abstract}
+
+\tableofcontents
+
+%%=================================================================
+\section{The Problem}
+\label{sec:problem}
+%%=================================================================
+
+\subsection{The Airy kernel operator}
+
+The \emph{Airy kernel} is:
+\[
+  \KAi(x,y)
+  := \frac{\Ai(x)\Ai'(y) - \Ai'(x)\Ai(y)}{x-y},
+  \quad x,y \in \mathbb{R}.
+\]
+The associated operator $K^{\mathrm{Airy},(s)}$
+on $L^2([s,+\infty))$ is trace-class for every $s \in \mathbb{R}$
+and its Fredholm determinant is the GUE edge gap probability:
+$F_{\mathrm{TW}}(s) = \det(I - K^{\mathrm{Airy},(s)})$ (Tracy--Widom~\cite{TracyWidom1994}).
+
+\subsection{The arithmetic sampling form in the Airy limit}
+
+Let $\{p_j^*\}$ be the prime-scaled points (as in O4 document)
+and let $A^{\mathrm{arith}}$ be the limiting arithmetic
+sampling form in the Airy scaling limit
+$x = s + c^{-2/3}\cdot(\text{edge displacement})$:
+\[
+  \ip{A^{\mathrm{arith}} f}{g}
+  := \lim_{N\to\infty}\frac{1}{N}
+  \sum_j f(p_j^{\mathrm{Ai}}) \overline{g(p_j^{\mathrm{Ai}})},
+\]
+where $p_j^{\mathrm{Ai}}$ are the primes mapped to the
+Airy scale via the canonical edge scaling.
+
+\begin{problem}[O5: Spectral gap of $\DAi$]\label{prob:O5}
+Let $\PAi$ be the orthogonal projection onto the
+closed linear span of $\{\Ai(\cdot - s) : s \in [0,R]\}$
+(the Airy edge subspace on $[0,R]$ for some $R > 0$).
+Define the \emph{Airy mismatch operator}:
+\[
+  \DAi
+  := \PAi\,(A^{\mathrm{arith}} - \KAi)\,\PAi
+  : \PAi L^2([0,R]) \to \PAi L^2([0,R]).
+\]
+Is $\DAi$ positive definite? More precisely:
+\begin{equation}\label{eq:O5}
+  \inf\,\sigma(\DAi) \ge c_2^{\mathrm{Airy}} > 0
+\end{equation}
+with $c_2^{\mathrm{Airy}}$ independent of $R$ and of
+the specific prime sequence (depending only on
+the Beurling density $D^+(\{p_j^{\mathrm{Ai}}\})$)?
+\end{problem}
+
+\begin{remark}[Structure of the problem]
+$\DAi$ is the \emph{difference} between two objects:
+\begin{itemize}
+  \item $A^{\mathrm{arith}}$: discrete, arithmetic,
+    governed by the prime distribution.
+    Its spectrum has no universal structure.
+  \item $\KAi$: continuous, universal,
+    governed by Airy functions.
+    Its eigenvalues are known (Tracy--Widom, GUE edge).
+\end{itemize}
+The positivity of their \emph{difference}
+is a non-cancellation statement:
+the arithmetic sampling operator must dominate
+the Airy kernel operator in the Airy edge subspace.
+\end{remark}
+
+\begin{remark}[Consequence for Paper~XXII]
+A positive answer implies, via the Airy scaling limit
+convergence $\Dedge \to \DAi$ (Proposition~5.1 of Paper~XXII
+conditional on Conjecture~3.3), the uniform edge coercivity
+$\inf\sigma(\Dedge) \ge c_2^{\mathrm{Airy}}/2 > 0$.
+This is the Main Theorem of Paper~XXII.
+\end{remark}
+
+%%=================================================================
+\section{Key Structural Facts}
+\label{sec:facts}
+%%=================================================================
+
+\begin{proposition}[Non-degeneracy of prime Airy sampling]%
+\label{prop:nondeg}
+The Airy function satisfies $\Ai(t) > 0$ for all $t > 0$.
+In particular, for prime-scaled points $p_j^{\mathrm{Ai}} > 0$:
+\[
+  |\Ai(p_j^{\mathrm{Ai}})|^2 > 0
+  \quad \text{for all } j.
+\]
+Therefore the diagonal of $A^{\mathrm{arith}}$
+in the basis $\{\Ai(\cdot - a_k)\}$
+(where $a_k < 0$ are Airy zeros) is strictly positive.
+\end{proposition}
+
+\begin{remark}[Why this is non-trivial]
+Proposition~\ref{prop:nondeg} guarantees \emph{pointwise}
+non-degeneracy. The problem asks for \emph{operator-level}
+uniform positivity, which is a global statement about
+all linear combinations $f = \sum_k \alpha_k \Ai(\cdot - a_k)$.
+Pointwise non-degeneracy is necessary but not sufficient
+for $\inf\sigma(\DAi) > 0$.
+\end{remark}
+
+\begin{proposition}[Spectrum of $\KAi$ is known]%
+\label{prop:kairy_spectrum}
+For $R < \infty$:
+\begin{itemize}
+  \item The eigenvalues of $K^{\mathrm{Airy},(0)}$
+    on $L^2([0,R])$ lie in $[0,1)$ and accumulate only at $0$ and $1$.
+  \item $\|K^{\mathrm{Airy},(0)}\|_{\mathfrak{S}_1}
+    = \int_0^{\infty} K^{\mathrm{Airy},(0)}(x,x)\,dx < \infty$.
+  \item $\det(I - \KAi^{(0)}) = F_{\mathrm{TW}}(0) \approx 0.9597$
+    (numerically known to high precision~\cite{Bornemann2010}).
+\end{itemize}
+\end{proposition}
+
+%%=================================================================
+\section{Three Attack Routes}
+\label{sec:attacks}
+%%=================================================================
+
+\subsection{Route A: Quantitative oscillation bound via Airy zeros}
+
+\textbf{Goal.}
+Bound $\ip{\DAi f}{f}$ from below for all unit vectors
+$f \in \PAi L^2([0,R])$ using the oscillation structure
+of Airy functions.
+
+\textbf{Mechanism.}
+Express $f = \sum_k \alpha_k \phi_k$ in the eigenbasis
+$\{\phi_k\}$ of $\KAi$ (which is explicitly related
+to Airy functions).
+Use the asymptotics of Airy zeros:
+$a_k \sim -(3\pi k/2)^{2/3}$ as $k \to \infty$.
+Between consecutive Airy zeros,
+$|\Ai(t)|^2$ has a single maximum;
+the prime-scaled sampling points hit each such interval
+(by the prime density argument),
+providing a Gauss-quadrature-type lower bound on
+$\ip{A^{\mathrm{arith}} f}{f}$.
+
+\textbf{Key inequality to establish:}
+\[
+  \frac{1}{N}\sum_j |f(p_j^{\mathrm{Ai}})|^2
+  \ge \int_0^R |f(t)|^2\,dt - \varepsilon(N)\norm{f}^2
+\]
+with $\varepsilon(N) \to 0$, plus
+$\ip{\KAi f}{f} \le \mu_{\max}\norm{f}^2 < 1$,
+which gives $\ip{\DAi f}{f} \ge (1 - \mu_{\max} - \varepsilon)\norm{f}^2 > 0$.
+
+\subsection{Route B: Connection to the Tracy--Widom constant}
+
+\textbf{Goal.}
+Estimate $c_2^{\mathrm{Airy}}$ in terms of the
+Tracy--Widom Fredholm determinant $F_{\mathrm{TW}}(s)$.
+
+\textbf{Mechanism.}
+The spectral gap of $\DAi$ is related to the
+$\mathfrak{S}_1$-distance between $A^{\mathrm{arith}}$
+and $\KAi$:
+\[
+  \inf\sigma(\DAi)
+  \ge \lambda_{\min}(A^{\mathrm{arith}}|_{\mathrm{edge}})
+    - \|\KAi|_{\mathrm{edge}}\|.
+\]
+The operator norm of $\KAi$ on $L^2([0,R])$ is bounded
+by $1 - F_{\mathrm{TW}}(0) \approx 0.04$ (at $s=0$).
+If $\lambda_{\min}(A^{\mathrm{arith}}|_{\mathrm{edge}}) > 0.04$,
+then $c_2^{\mathrm{Airy}} > 0$.
+
+\textbf{This is a quantitative route:}
+it converts the abstract positivity question
+into a numerically checkable bound
+(cf.\ Bornemann~\cite{Bornemann2010} for high-precision
+Tracy--Widom numerics).
+
+\subsection{Route C: Resolvent comparison via determinantal identities}
+
+\textbf{Goal.}
+Use the integrable structure of $\KAi$
+(Its--Izergin--Korepin--Slavnov form,
+as in Paper~13cc) to compute
+$\det(I - z\DAi)$ explicitly for small $z > 0$,
+and deduce positivity from the determinantal expansion.
+
+\textbf{Mechanism.}
+$\KAi$ is an IIKS operator with explicit vectors
+$(\Ai(x), \Ai'(x))^\top$.
+The perturbed Fredholm determinant
+$\det(I - z\DAi) = \det(I - z\PAi A^{\mathrm{arith}}\PAi
++ z\KAi)$
+can be expanded as a Fredholm series;
+the first-order term is
+$-z\,\mathrm{tr}(\DAi)$,
+which is related to the integrated mismatch
+$\int_0^R (A^{\mathrm{arith}}(x,x) - \KAi(x,x))\,dx$.
+If this trace is positive, it gives evidence for
+(but not a proof of) $\inf\sigma(\DAi) > 0$.
+
+\textbf{Status.}
+$\KAi(x,x) = \mathrm{tr}\,\KAi = \int_0^\infty K^{\mathrm{Airy}}(x,x)\,dx$
+is explicitly computable via the Painlevé~II representation~\cite{TracyWidom1994}.
+The term $A^{\mathrm{arith}}(x,x) = \lim_{N}\frac{1}{N}\sum_j |\Ai(p_j^{\mathrm{Ai}} - x)|^2$
+requires estimates on the Airy function at prime arguments.
+
+%%=================================================================
+\section{Relation to First Airy Zero}
+\label{sec:zero}
+%%=================================================================
+
+\begin{conjecture}[Connection to $a_1$]\label{conj:a1}
+The spectral gap satisfies
+\[
+  c_2^{\mathrm{Airy}}
+  \asymp |a_1|^{-1}
+  \approx 0.428,
+\]
+where $a_1 \approx -2.338$ is the first zero of $\Ai$.
+\end{conjecture}
+
+\begin{remark}[Motivation]
+The first Airy zero governs:
+(i) the largest eigenvalue of $\KAi$ on $[a_1, \infty)$
+(Tracy--Widom edge);
+(ii) the oscillation period of $|\Ai(t)|^2$ near $t = 0$;
+(iii) the spacing of the smallest prime-scaled sampling
+points in the Airy window.
+All three are controlled by $|a_1|$,
+suggest a common scale for the spectral gap.
+This conjecture is numerically checkable via the
+Bornemann algorithm~\cite{Bornemann2010}.
+\end{remark}
+
+%%=================================================================
+\section{Independence Certificate}
+\label{sec:independence}
+%%=================================================================
+
+This problem is \textbf{independent of O4} (frame stability).
+Specifically:
+\begin{itemize}
+  \item The statement of Problem~\ref{prob:O5} involves
+    only the Airy operator $\KAi$, the arithmetic sampling form
+    $A^{\mathrm{arith}}$ in the Airy scaling limit,
+    and the Airy edge subspace.
+  \item No Gram matrix, PSWF basis, edge block index
+    $[(1-\delta)N, N)$, or Paley--Wiener frame condition appears.
+  \item Routes~A--C above use Airy function analysis,
+    Fredholm determinant theory, and IIKS structure;
+    none uses sampling stability or prime gaps.
+\end{itemize}
+
+Resolution of O5 does not affect and does not require
+resolution of O4.
+
+%%=================================================================
+\section{Open Sub-Problems}
+\label{sec:subproblems}
+%%=================================================================
+
+\begin{problem}[Trace computation]\label{sub1}
+Compute $\mathrm{tr}(\DAi)
+= \int_0^R (A^{\mathrm{arith}}(x,x) - \KAi(x,x))\,dx$
+numerically and establish its sign rigorously.
+\end{problem}
+
+\begin{problem}[$R$-independence]\label{sub2}
+Show that $c_2^{\mathrm{Airy}}$ is bounded away from zero
+uniformly in $R > 0$.
+Equivalently: the spectral gap of $\DAi$ does not
+collapse as the edge window grows.
+\end{problem}
+
+\begin{problem}[Verify Conjecture~\ref{conj:a1} numerically]%
+\label{sub3}
+Using the Bornemann algorithm~\cite{Bornemann2010},
+compute $\inf\sigma(\DAi)$ numerically for $R = 5, 10, 20$
+and compare with $|a_1|^{-1} \approx 0.428$.
+\end{problem}
+
+\begin{problem}[Density universality]\label{sub4}
+Is $c_2^{\mathrm{Airy}}$ the same for all sampling
+sequences $\{p_j^{\mathrm{Ai}}\}$ with the same Beurling density,
+or does it depend on arithmetic properties of the primes?
+(I.e., is the gap a universal constant or a number-theoretic invariant?)
+\end{problem}
+
+\begin{thebibliography}{99}
+\bibitem{TracyWidom1994}
+C.~Tracy and H.~Widom,
+\textit{Level-spacing distributions and the Airy kernel},
+Comm.\ Math.\ Phys.\ \textbf{159} (1994), 151--174.
+\bibitem{Bornemann2010}
+F.~Bornemann,
+\textit{On the numerical evaluation of distributions in random
+matrix theory: a review},
+Markov Processes Relat.\ Fields \textbf{16} (2010), 803--866.
+\bibitem{ItsIzergin1990}
+A.~R.~Its, A.~G.~Izergin, V.~E.~Korepin, N.~A.~Slavnov,
+\textit{Differential equations for quantum correlation functions},
+Int.\ J.\ Mod.\ Phys.\ B \textbf{4} (1990), 1003--1037.
+\bibitem{Deift1999}
+P.~Deift, \textit{Orthogonal Polynomials and Random Matrices:
+A Riemann--Hilbert Approach}, AMS, 1999.
+\bibitem{PaperXXII}
+S.~Schmalnauer,
+\textit{Edge Coercivity and the Airy Boundary Operator}
+(Paper~XXII), preprint, 2026.
+\bibitem{Paper13cc}
+S.~Schmalnauer,
+\textit{Airy Universality for PSWF: Exact IIKS Structure
+and RHP Reduction} (paper13cc), preprint, 2026.
+\end{thebibliography}
+
+\end{document}
