@@ -79,6 +79,8 @@ is licensed by Proposition~\ref{prop:substitution_stability},
 the unique formal bridge between the two quantifier regimes.
 All implied constants are $c$-admissible with no hidden dependence
 (Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure}).
+For each fixed $\gamma>0$, the rate holds with constants depending
+on $\gamma$; no uniformity in $\gamma$ across operator classes is claimed.
 All results are conditional on H1--H2.
 \end{abstract}
 
@@ -109,6 +111,10 @@ XX    & Universal rate; Layer-Survival; $\Kopt$
 \label{rem:logstatus}
 All results are theorems within $\mathfrak{T}_\gamma$;
 H1--H2 are imposed axioms, not derived for general $V$.
+Universality means: for each fixed $\gamma>0$, the rate
+$O(c^{-\beta}(\log c)^{1+\gamma})$ holds uniformly over all
+operators in $\mathfrak{T}_\gamma$ satisfying H1--H2.
+No uniformity in $\gamma$ across different operator classes is claimed.
 \end{remark}
 
 \begin{remark}[$c$-admissible constants]
@@ -205,12 +211,21 @@ Let $K(c)$ satisfy
     and evaluation along a deterministic map $K(c)$ is
     admissible as a pointwise composition;
     no uniform-in-$K$ structure is used.
-  \item[(ii)] \textbf{Asymptotic order.}
-    $(K(c))^{a_n}=O(\log^{a_n}c)$ from the upper bound
-    in~\eqref{eq:Kc_window};
+  \item[(ii)] \textbf{Window control via monotonicity.}
+    Each monomial $K\mapsto K^{a_n}$ ($a_n>0$) is monotone
+    increasing; therefore, for $K(c)\in[c_1\log c, c_2\log c]$,
+    \[
+      \sum_n C_n (K(c))^{a_n} c^{-b_n}
+      \leq \sum_n C_n (c_2\log c)^{a_n} c^{-b_n}.
+    \]
+    This provides a uniform upper bound on the substitution
+    window using only monotonicity, without any additional
+    uniformity assumption beyond the window control~\eqref{eq:Kc_window}.
+  \item[(iii)] \textbf{Asymptotic order.}
+    $(K(c))^{a_n}=O(\log^{a_n}c)$ from~\eqref{eq:Kc_window};
     for $K(c)\sim\tfrac{2\beta}{\alpha}\log c$ the precise
     correction is given by~\eqref{eq:Kstar_power}.
-  \item[(iii)] \textbf{Dominance.}
+  \item[(iv)] \textbf{Dominance.}
     Asymptotic comparisons among terms follow from
     Propositions~\ref{prop:asymp_order} and~\ref{prop:scale_algebra},
     evaluated termwise.
@@ -221,8 +236,9 @@ this principle; no separate uniformity argument is needed.
 
 \begin{proof}
 (i) pointwise substitution into a pointwise-valid inequality.
-(ii) upper sandwich bound~\eqref{eq:Kc_window}.
-(iii) Propositions~\ref{prop:asymp_order}--\ref{prop:scale_algebra}.
+(ii) monotonicity of $K^{a_n}$ and upper bound of window~\eqref{eq:Kc_window}.
+(iii) upper sandwich bound~\eqref{eq:Kc_window}.
+(iv) Propositions~\ref{prop:asymp_order}--\ref{prop:scale_algebra}.
 \end{proof}
 
 %% ============================================================
@@ -236,6 +252,10 @@ $\mathcal{S}=\{c^{-s}(\log c)^t : s>0,t\in\R\}$;
 $f\sim g\Leftrightarrow f/g\to 1$;
 $c^{-s_1}(\log c)^{t_1}\succ c^{-s_2}(\log c)^{t_2}$
 iff $s_1<s_2$ or ($s_1=s_2$, $t_1>t_2$).
+The relation $\prec$ is transitive: it corresponds to the
+lexicographic order on exponent pairs $(s,t)\in\R^2$,
+which is a total order; composition of dominance relations
+is therefore closed under $\mathcal{S}$.
 All comparisons evaluated in the diagonal regime
 $K=K^*(c)\sim\tfrac{2\beta}{\alpha}\log c$;
 verified per pair, not assumed globally.
@@ -430,6 +450,11 @@ Euler--Maclaurin remainders used in this paper
   \item $K$ appears only as the explicit power in the bound,
     never inside any constant; no $K$-dependent growth
     amplification enters the $c$-admissible constant chain.
+  \item Each Euler--Maclaurin expansion is applied once per sum
+    and never iterated or composed with further EM expansions;
+    all occurrences are independent instances.
+    The structural property therefore applies at every
+    individual usage site without composition.
 \end{itemize}
 This property holds uniformly across all EM steps in this paper
 and prevents hidden $K$-dependence from leaking into
@@ -501,6 +526,16 @@ no conclusion depends on $\lambda(c)$ being small uniformly in $c$.
 \label{lem:stability_kopt}
 An $O(1)$ perturbation of~\eqref{eq:log_FOC}
 shifts $K^*$ by $O(1)$.
+
+\begin{proof}
+The map $K\mapsto \beta\log c + \gamma\log K + C_1$
+is strictly increasing for $K\geq 2\gamma/\alpha$,
+which holds for all large $c$ by Lemma~\ref{lem:loglog}.
+The implicit equation~\eqref{eq:log_FOC} therefore defines
+$K^*(C_1)$ as a locally Lipschitz function in $C_1$
+with sensitivity $\frac{dK^*}{dC_1} = \frac{1}{\alpha/2 - \gamma/K^*} = O(1)$,
+giving $O(1)$ shift under $O(1)$ perturbation.
+\end{proof}
 \end{lemma}
 
 %% ============================================================
@@ -526,6 +561,9 @@ all constants $c$-admissible):
 ($\gamma$-uniformity: authoritative statement).}
 Let $h(c):=K^*(c)/(\tfrac{2\beta}{\alpha}\log c)\to 1$
 with $|h(c)-1|=O(\log\log c/\log c)$.
+Since $h(c)\to 1$, for all sufficiently large $c$ one has
+$h(c)\in[1/2,3/2]$; exponentiation $h(c)^{1+\gamma}$
+is uniformly Lipschitz on $[1/2,3/2]$ for each fixed $\gamma$.
 By MVT, the $O$-constant in
 \begin{equation}\label{eq:hgamma}
   h(c)^{1+\gamma}=1+O\!\left(\frac{\log\log c}{\log c}\right)
@@ -546,7 +584,7 @@ Hence
 \end{equation}
 
 \emph{Conclusion}
-(Proposition~\ref{prop:substitution_stability}(i)--(iii)):
+(Proposition~\ref{prop:substitution_stability}(i)--(iv)):
 \begin{itemize}[nosep]
   \item[(i)] $K^*(c)^{1+\gamma}c^{-\beta}=O(c^{-\beta}(\log c)^{1+\gamma})$.
   \item[(ii)] $K^*(c)^{1+2\gamma}c^{-2\beta}\prec c^{-\beta}(\log c)^{1+\gamma}$.
@@ -570,7 +608,7 @@ $F(K_{\rm int})-F(K^*)\prec c^{-\beta}(\log c)^{1+\gamma}$.
 \begin{theorem}[Layer-Survival]
 \label{thm:layer_survival}
 For $n\geq 1$, H1, all $K\geq K_0$, $c\geq c_0$:
-$\normh{A_K^{(n)}}{}\ \leq C_n K^{1+n\gamma}c^{-n\beta}$
+$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$
 ($C_n$ $c$-admissible, Lemma~\ref{lem:cadm_closure}).
 Diagonal by Proposition~\ref{prop:substitution_stability}:
 \[
@@ -587,7 +625,8 @@ Diagonal by Proposition~\ref{prop:substitution_stability}:
 
 \begin{theorem}[Two-scale rate, fixed-parameter]
 \label{thm:universal_rate}
-For $\cAg\in\mathfrak{T}_\gamma$, all $K\geq K_0$, $c\geq c_0$:
+For each fixed $\gamma>0$ and $\cAg\in\mathfrak{T}_\gamma$,
+all $K\geq K_0$, $c\geq c_0$:
 \[
   \normh{\cK-\cKA}{}
   \leq C_{\rm lin}K^{1+\gamma}c^{-\beta}
@@ -596,17 +635,22 @@ For $\cAg\in\mathfrak{T}_\gamma$, all $K\geq K_0$, $c\geq c_0$:
 \]
 all constants $c$-admissible
 (Remark~\ref{rem:cadmissible}, Lemma~\ref{lem:cadm_closure}).
+No uniformity in $\gamma$ across operator classes is claimed.
 \end{theorem}
 
 \begin{corollary}[Universal logarithmic rate]
 \label{cor:universal_lograte}
-By Proposition~\ref{prop:substitution_stability}
+For each fixed $\gamma>0$, by
+Proposition~\ref{prop:substitution_stability}
 and Lemma~\ref{lem:diagonal_sub} at $K=\lfloor K^*(c)\rceil$:
 \[
   \normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma}).
 \]
 Leading constant $C_{\rm lin}(2\beta/\alpha)^{1+\gamma}$
 ($c$-admissible).
+Universality means: the rate holds for every operator in
+$\mathfrak{T}_\gamma$ at fixed $\gamma$, with constants
+depending on $\gamma$ but not on $c$.
 \end{corollary}
 
 \begin{remark}[Spectral-geometric invariants]
@@ -668,13 +712,14 @@ O4 & Olver-Watson & open \\
 %% ============================================================
 
 \textbf{XVIII--XIX--XX.}
-Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$.
+Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$
+for each fixed $\gamma>0$.
 Closure inventory:
 \begin{itemize}[nosep,leftmargin=1.5em]
   \item $c$-admissible chain, four sources, no hidden dependence
     (Remark~\ref{rem:cadmissible});
   \item EM remainder: uniform structural property across all EM steps,
-    $K$ only as explicit power, never inside constants
+    each applied once independently, $K$ only as explicit power
     (Remark~\ref{rem:EM_growth});
   \item $\BK$ and $C_2(\alpha)$: $c$-free by operator definition
     (Remark~\ref{rem:BK_definition});
@@ -683,20 +728,31 @@ Closure inventory:
   \item anti-circularity: $F'\text{ sign}\to\text{window}\to
     \text{convexity}$, strictly directed
     (Remark~\ref{rem:dag_nocycle});
-  \item Substitution Stability: unique formal bridge,
-    proof-translation step declared explicitly
+  \item Substitution Stability: unique formal bridge with explicit
+    monotonicity window control
     (Proposition~\ref{prop:substitution_stability});
   \item $\gamma$-uniformity: single authoritative bound
-    $(1+\gamma)2^\gamma$ on compact sets;
-    constant degenerates as $(1+\gamma)2^\gamma\to\infty$
-    for $\gamma\to\infty$; no claim beyond compact sets
+    $(1+\gamma)2^\gamma$ on compact sets; degeneration
+    $(1+\gamma)2^\gamma\to\infty$ for $\gamma\to\infty$ explicit;
+    scope restricted to fixed $\gamma$ throughout
     (Lemma~\ref{lem:diagonal_sub});
   \item $\lambda(c)$: self-consistency certificate only
     (Lemma~\ref{lem:kopt_variational}(ii'));
+  \item log-log stability: implicit function argument with explicit
+    Lipschitz constant $O(1)$
+    (Lemma~\ref{lem:stability_kopt});
+  \item $\prec$ transitive via lexicographic order on $(s,t)$
+    (Definition~\ref{def:scale});
   \item DAG: organizational map, not theorem
     (Remark~\ref{rem:dag_reading});
   \item Layer-Survival; invariants $1+\gamma$, $1+2\gamma$.
 \end{itemize}
+All structural conditions ($c$-admissibility, substitution principle,
+EM structural property, scaling order, regime separation) are
+mutually consistent: each operates on a disjoint level of the
+analytic hierarchy and depends only on H1--H2;
+no interaction between them introduces assumptions
+beyond those already declared.
 
 \bigskip
 \begin{quote}\itshape\large
