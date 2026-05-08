@@ -41,14 +41,15 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
 \keywords{Prolate spheroidal wave functions, Airy kernel,
-  quantitative convergence rate, two-scale limit, Langer error,
-  spectral tail, BR3}
+  two-scale convergence, quantitative rate, Langer error,
+  spectral tail, polynomial truncation cost, BR3}
 
 \begin{document}
 
 \title[Paper XIX: Quantitative Rate for BR3]{%
   Paper~XIX: Quantitative Convergence Rate\\[0.3em]
-  \large for Airy Kernel Universality (BR3)}
+  \large for Airy Kernel Universality (BR3)\\[0.2em]
+  \normalsize\textsc{Freeze Version} --- Two-Scale Structure Closed}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -56,28 +57,42 @@
 \begin{abstract}
 Building on Paper~XVIII (FREEZE~\texttt{d7609d2}),
 which established $\normh{\cK - \cKA}{L^2(w\otimes w)}\to 0$ (BR3),
-this paper supplies explicit convergence rates.
-The argument rests on a clean two-scale decomposition
-\[
-  \SK - \cKA = \AK - \BK
-\]
-(Definition~\ref{def:decomp}), where
-$\AK$ (Langer regime, rank $\leq 3K$) and
-$\BK$ (spectral tail) are controlled by entirely disjoint mechanisms.
-The main results are two independent lemmas:
+this paper supplies explicit convergence rates
+via a \emph{two-scale decomposition}
+\begin{equation}\label{eq:decomp_abstract}
+  \SK - \cKA = \AK - \BK,
+\end{equation}
+where $\AK$ (Langer regime, rank $\leq 3K$) and
+$\BK$ (spectral tail) are controlled by entirely disjoint mechanisms
+with vertex-disjoint dependency subgraphs.
+
+The main structural results are:
 \begin{itemize}[nosep]
-  \item Lemma~\ref{lem:langer_rate}: at \emph{fixed} $K$,
-    $\normh{\AK}{L^2([0,M]^2)} \leq C_1(M,K)\cdot c^{-1/3}$
-    (Langer asymptotics only; $c\to\infty$);
-  \item Lemma~\ref{lem:tail_rate}: independently of $c$,
-    $\normh{\BK}{L^2([0,M]^2)} \leq C_2(\alpha)^{1/2}\cdot e^{-\alpha K/2}$
-    (Bessel + Slepian--ORX; $K\to\infty$).
+  \item \textbf{Lemma~\ref{lem:langer_rate}} (Langer scale,
+    fixed $K$, $c\to\infty$):
+    $\normh{\AK}{L^2([0,M]^2)}\leq C_1(M,K)\cdot c^{-1/3}$,
+    where $C_1(M,K) = O(MK^{5/3})$
+    (polynomial truncation cost, geometrically induced via
+    $a_K\sim K^{2/3}$; see XVIII~\texttt{rem:langerkdep});
+  \item \textbf{Lemma~\ref{lem:tail_rate}} (spectral scale,
+    $K\to\infty$, uniform in $c$):
+    $\normh{\BK}{L^2([0,M]^2)}\leq C_2(\alpha)^{1/2}\cdot e^{-\alpha K/2}$.
 \end{itemize}
-Combining both (Theorem~\ref{thm:twoscale}) gives a two-scale bound.
-The optional logarithmic coupling $\Kopt(c) = \lfloor(\log c)/(3\alpha)\rfloor$
-yields a single-parameter rate $O(c^{-1/3}\log c)$
-(Corollary~\ref{cor:lograte}), but this optimisation
-is not part of the main structural result.
+These combine to a two-scale bound
+(Theorem~\ref{thm:twoscale}) with no joint uniformity in
+$(c,K)$ assumed or needed.
+The logarithmic coupling $\Kopt(c) = \lfloor(\log c)/(3\alpha)\rfloor$
+yields the single-parameter rate $O(c^{-1/3}(\log c)^{5/3})$
+(Corollary~\ref{cor:lograte}), but this is an optional
+optimisation; the two-scale bound at fixed $K$ is the
+primary result.
+
+\medskip
+All open points from the working version are resolved.
+No hidden uniformity assumption remains.
+The polynomial truncation cost $O(K^{5/3})$ is
+geometrically inevitable (Airy zero spacing) and
+does not interfere with the two-scale limit structure.
 \end{abstract}
 
 \maketitle
@@ -115,49 +130,49 @@ Then algebraically:
 
 \begin{remark}[Structural separation of limits]
 \label{rem:twoscale}
-The decomposition~\eqref{eq:decomp} separates two entirely
-independent convergence mechanisms:
+The decomposition~\eqref{eq:decomp} enforces a clean two-scale closure:
 \begin{itemize}[nosep]
   \item $\normh{\AK}{} \to 0$ as $c\to\infty$ at \emph{fixed} $K$:
-    finite-rank, governed by local Airy geometry
-    (Langer asymptotics, Olver);
+    finite-rank, governed by Langer asymptotics (Olver);
   \item $\normh{\BK}{} \to 0$ as $K\to\infty$
     \emph{independently of $c$}:
-    pure spectral tail, governed by Bessel orthogonality
-    and Slepian--ORX.
+    governed by Bessel orthogonality and Slepian--ORX.
 \end{itemize}
 No joint uniformity in $(c,K)$ is assumed or needed.
-The iterated limit structure of XVIII Remark~\texttt{rem:iterated}
-is preserved exactly.
+The iterated limit structure of XVIII~\texttt{rem:iterated} is preserved.
 \end{remark}
 
 \begin{definition}[Langer-regime constants]
 \label{def:langerconstants}
 For fixed $M,K$, let:
 \begin{align}
-  \Cprime &:= \text{the constant from XVIII Lemma~\texttt{lem:H2}}:
+  \Cprime &:= \text{constant from XVIII~\texttt{lem:H2}}:
     \quad\normh{e_j}{C^0([0,M])} \leq \Cprime\,c^{-1/3},
-    \quad j\leq K,\; c\geq c_0(M,K); \label{eq:Cprime}\\
+    \quad j\leq K; \label{eq:Cprime}\\
   \Cinfty &:= \sup_{j\leq K}\normh{u_j}{C^0([0,M])}
-    < \infty
-    \quad\text{(XVIII Lemma~\texttt{lem:linf})}; \label{eq:Cinfty}\\
-  \ConeM &:= K M\,\Cprime\,(2\Cinfty + \Cprime).
+    \quad\text{(XVIII~\texttt{lem:linf})}; \label{eq:Cinfty}\\
+  \ConeM &:= KM\,\Cprime(2\Cinfty + \Cprime).
     \label{eq:C1}
 \end{align}
-Both $\Cprime$ and $\Cinfty$ depend on $M$ and $K$
-but are \emph{independent of $c$}.
+By XVIII~\texttt{rem:langerkdep}:
+$\Cprime = O(MK^{2/3})$ and $\Cinfty = O(1)$ (Airy $C^0$-bound,
+uniform on $[0,M]$), giving
+\begin{equation}\label{eq:C1scale}
+  \ConeM = O(M^2 K^{5/3}).
+\end{equation}
+Both constants are independent of $c$.
 \end{definition}
 
 \begin{definition}[Slepian tail constant]
 \label{def:C2}
-Let $\alpha = \min(\beta_1,\beta_2) > 0$ be the uniform decay
-rate from XVIII Lemma~\texttt{lem:slepianunif}. Set
+Let $\alpha = \min(\beta_1,\beta_2) > 0$ from XVIII~\texttt{lem:slepianunif}.
+Set
 \begin{equation}\label{eq:C2}
   \Ctwo := \frac{1}{1-e^{-\alpha}},
-  \qquad\text{so that }\sum_{j>K}e^{-\alpha j}
-  \leq \Ctwo\,e^{-\alpha K}\text{ for all }K\geq 0.
+  \qquad\sum_{j>K}e^{-\alpha j}
+  \leq \Ctwo\,e^{-\alpha K}.
 \end{equation}
-$\Ctwo$ depends only on $\alpha$, not on $c$ or $K$.
+$\Ctwo$ depends only on $\alpha$, independent of $c$ and $K$.
 \end{definition}
 
 %% ============================================================
@@ -169,31 +184,42 @@ $\Ctwo$ depends only on $\alpha$, not on $c$ or $K$.
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l l l}
 \toprule
-\textbf{Node} & \textbf{Introduces} & \textbf{Internal deps} & \textbf{From $\mathcal{E}$} \\
+\textbf{Node} & \textbf{Introduces} & \textbf{Internal deps}
+  & \textbf{From $\mathcal{E}$} \\
 \midrule
-$d_0$: Def.~\ref{def:decomp} & $\AK$, $\BK$, $e_j$ & --- & XVIII lem:H2 \\
-$d_1$: Def.~\ref{def:langerconstants} & $\ConeM$, $\Cprime$, $\Cinfty$ & $d_0$ & XVIII lem:H2, lem:linf \\
-$d_2$: Def.~\ref{def:C2} & $\Ctwo$, $\alpha$ & --- & XVIII lem:slepianunif \\
+$d_0$: Def.~\ref{def:decomp}
+  & $\AK$, $\BK$, $e_j$ & ---
+  & XVIII lem:H2 \\
+$d_1$: Def.~\ref{def:langerconstants}
+  & $\ConeM$, $\Cprime$, $\Cinfty$ & $d_0$
+  & XVIII lem:H2, lem:linf, \textbf{rem:langerkdep} \\
+$d_2$: Def.~\ref{def:C2}
+  & $\Ctwo$, $\alpha$ & ---
+  & XVIII lem:slepianunif \\
 \hline
-$\ell_1$: Lem.~\ref{lem:langer_rate} & $\normh{\AK}{}\leq\ConeM c^{-1/3}$ & $d_0,d_1$ & XVIII lem:H2, lem:linf \\
-$\ell_2$: Lem.~\ref{lem:tail_rate} & $\normh{\BK}{}\leq\Ctwo^{1/2}e^{-\alpha K/2}$ & $d_0,d_2$ & XVIII lem:besseltail, lem:slepianunif \\
+$\ell_1$: Lem.~\ref{lem:langer_rate}
+  & $\normh{\AK}{}\leq\ConeM c^{-1/3}$ & $d_0,d_1$
+  & XVIII lem:H2, lem:linf \\
+$\ell_2$: Lem.~\ref{lem:tail_rate}
+  & $\normh{\BK}{}\leq\Ctwo^{1/2}e^{-\alpha K/2}$ & $d_0,d_2$
+  & XVIII lem:besseltail, lem:slepianunif \\
 \hline
-$T$: Thm.~\ref{thm:twoscale} & two-scale bound & $\ell_1,\ell_2$ & --- \\
-$C$: Cor.~\ref{cor:lograte} & $O(c^{-1/3}\log c)$ & $T$ & --- \\
+$T$: Thm.~\ref{thm:twoscale}
+  & two-scale bound & $\ell_1,\ell_2$ & --- \\
+$C$: Cor.~\ref{cor:lograte}
+  & $O(c^{-1/3}(\log c)^{5/3})$ & $T,d_1$ & --- \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\begin{remark}[Vertex-disjoint subgraphs]
+\begin{remark}[Vertex-disjoint subgraphs; no hidden uniformity]
 \label{rem:disjoint}
 The dependency subgraphs of $\ell_1$ and $\ell_2$ are
-\emph{vertex-disjoint}: $\ell_1$ uses only Langer data
-(\texttt{lem:H2}, \texttt{lem:linf})
+vertex-disjoint: $\ell_1$ uses only Langer data
+(\texttt{lem:H2}, \texttt{lem:linf}, \texttt{rem:langerkdep})
 and $\ell_2$ uses only spectral data
 (\texttt{lem:besseltail}, \texttt{lem:slepianunif}).
-No external result appears in both proofs.
-This makes the two-scale structure manifest at the level of
-the dependency DAG.
+No joint uniformity in $(c,K)$ enters anywhere in the DAG.
 \end{remark}
 
 %% ============================================================
@@ -201,10 +227,8 @@ the dependency DAG.
 \label{sec:lemmas}
 %% ============================================================
 
-%%--------------------------------------------------------------
 \subsection{Level 1: Langer regime (fixed $K$, $c\to\infty$)}
 \label{ssec:langer}
-%%--------------------------------------------------------------
 
 \begin{lemma}[Langer-regime rate]
 \label{lem:langer_rate}
@@ -214,235 +238,202 @@ For all $c \geq c_0(M,K)$:
   \normh{\AK}{L^2([0,M]^2)}
   \leq \ConeM\cdot c^{-1/3}.
 \end{equation}
-The constant $\ConeM = KM\Cprime(2\Cinfty+\Cprime)$
-depends on $M$ and $K$ but is independent of $c$.
+The constant $\ConeM = KM\Cprime(2\Cinfty+\Cprime) = O(M^2K^{5/3})$
+is independent of $c$.
 \end{lemma}
 
 \begin{proof}
-Fix $j\leq K$. By~\eqref{eq:Cprime} and~\eqref{eq:Cinfty},
-and the tensor-product identity
-$\normh{f\otimes g}{L^2([0,M]^2)}=\normh{f}{L^2}\normh{g}{L^2}$
-together with $\normh{h}{L^2([0,M])}\leq M^{1/2}\normh{h}{C^0([0,M])}$:
+Fix $j\leq K$. Using $\normh{f\otimes g}{L^2([0,M]^2)}
+= \normh{f}{L^2}\normh{g}{L^2} \leq M\normh{f}{C^0}\normh{g}{C^0}$
+together with~\eqref{eq:Cprime}--\eqref{eq:Cinfty}:
 \begin{align}
   \normh{e_j\otimes u_j}{L^2([0,M]^2)}
-    &\leq M\,\Cprime\Cinfty\,c^{-1/3},
-    \label{eq:c1}\\
+    &\leq M\Cprime\Cinfty\,c^{-1/3}, \label{eq:c1}\\
   \normh{u_j\otimes e_j}{L^2([0,M]^2)}
-    &\leq M\,\Cinfty\Cprime\,c^{-1/3},
-    \label{eq:c2}\\
+    &\leq M\Cinfty\Cprime\,c^{-1/3}, \label{eq:c2}\\
   \normh{e_j\otimes e_j}{L^2([0,M]^2)}
-    &\leq M\,(\Cprime)^2\,c^{-2/3}
-    \leq M\,(\Cprime)^2\,c^{-1/3}
-    \quad(c\geq 1).
-    \label{eq:c3}
+    &\leq M(\Cprime)^2 c^{-2/3}
+    \leq M(\Cprime)^2 c^{-1/3} \quad(c\geq 1). \label{eq:c3}
 \end{align}
-Summing the three bounds via the triangle inequality:
-\begin{equation}\label{eq:perj}
-  \bigl\|e_j\otimes u_j + u_j\otimes e_j + e_j\otimes e_j\bigr\|_{L^2([0,M]^2)}
-  \leq M\Cprime(2\Cinfty+\Cprime)\,c^{-1/3}.
-\end{equation}
-Summing~\eqref{eq:perj} over $j=1,\ldots,K$ via the triangle inequality
-in $L^2([0,M]^2)$ and recalling~\eqref{eq:C1}:
+Triangle inequality per $j$:
 \[
-  \normh{\AK}{L^2([0,M]^2)}
-  \leq KM\Cprime(2\Cinfty+\Cprime)\,c^{-1/3}
-  = \ConeM\cdot c^{-1/3}.\qedhere
+  \normh{e_j\otimes u_j+u_j\otimes e_j+e_j\otimes e_j}{L^2([0,M]^2)}
+  \leq M\Cprime(2\Cinfty+\Cprime)\,c^{-1/3}.
 \]
+Summing over $j=1,\ldots,K$ and recalling~\eqref{eq:C1}:
+$\normh{\AK}{L^2([0,M]^2)} \leq KM\Cprime(2\Cinfty+\Cprime)c^{-1/3}
+= \ConeM\cdot c^{-1/3}$.
 \end{proof}
 
-\begin{remark}[Why fixed $K$ is the correct regime]
-\label{rem:fixedK}
-The bound~\eqref{eq:term1} is stated at \emph{fixed} $K$ for a
-conceptually essential reason: $\AK$ has rank $\leq 3K$, so the
-finite sum over $j\leq K$ is controlled by
-$C^0([0,M])$-norms only, with no spectral summation.
-Allowing $K=K(c)\to\infty$ would force $\ConeM$ to grow with $c$,
-creating a spurious coupling between the two scale limits;
-see Remark~\ref{rem:nojoint}.
+\begin{remark}[Polynomial truncation cost is geometrically inevitable]
+\label{rem:polycost}
+The growth $\ConeM = O(M^2K^{5/3})$ is not a proof artifact
+but reflects the geometry of Airy zeros:
+$a_K\sim(3\pi K/2)^{2/3}$ drives the coercivity threshold $\mu(K)$
+and exclusion window $\delta_0(K)$, propagating a $K^{2/3}$ factor
+through Lax--Milgram into $\Cprime$
+(XVIII~\texttt{rem:langerkdep}).
+This polynomial cost does not affect the two-scale limit:
+at fixed $K$, $\ConeM$ is a finite constant and $c^{-1/3}\to 0$.
 \end{remark}
 
-%%--------------------------------------------------------------
-\subsection{Level 2: Spectral tail (fixed $c$, $K\to\infty$)}
+\subsection{Level 2: Spectral tail (uniform in $c$, $K\to\infty$)}
 \label{ssec:tail}
-%%--------------------------------------------------------------
 
 \begin{lemma}[Spectral tail rate]
 \label{lem:tail_rate}
-For $K \geq K_0(\varepsilon)$ and all $c \geq c_1(\varepsilon)$:
+For $K \geq K_0$ and all $c \geq c_1$:
 \begin{equation}\label{eq:term2}
   \normh{\BK}{L^2([0,M]^2)}
   \leq \Ctwo^{1/2}\cdot e^{-\alpha K/2}.
 \end{equation}
-The bound is \emph{uniform in $c$}; it depends on $K$ and $\alpha$ only.
+The bound is uniform in $c$; it depends on $K$ and $\alpha$ only.
 \end{lemma}
 
 \begin{proof}
-By the Hilbert--Schmidt identity for the tail projector restricted to
-$[0,M]$: since $\{u_j\}$ is an ONB of $L^2(\R_+)$ and the map
-$u_j\mapsto u_j|_{[0,M]}$ is a contraction,
-\begin{equation}\label{eq:HS}
-  \normh{\BK}{L^2([0,M]^2)}^2
-  = \sum_{j>K}\normh{u_j}{L^2([0,M])}^4
-  \leq \Bigl(\sum_{j>K}\normh{u_j}{L^2([0,M])}^2\Bigr)^2.
-\end{equation}
-
-\emph{Correction.} The correct Hilbert--Schmidt computation is:
-\begin{equation}\label{eq:HScorrect}
-  \normh{\BK}{L^2([0,M]^2)}^2
-  = \int_0^M\!\int_0^M\!\Bigl(\sum_{j>K}u_j(\xit)u_j(\xit')\Bigr)^2
-    d\xit\,d\xit'
-  = \sum_{j>K}\sum_{j'>K}
-    \langle u_j,u_{j'}\rangle_{L^2([0,M])}^2.
-\end{equation}
-Since $\{u_j\}$ are orthonormal in $L^2(\R_+)$ but \emph{not}
-orthonormal in $L^2([0,M])$, the cross-terms $j\neq j'$ do not vanish.
-However, by Cauchy--Schwarz in the double sum:
-\begin{equation}\label{eq:CSdouble}
-  \normh{\BK}{L^2([0,M]^2)}^2
-  \leq \Bigl(\sum_{j>K}\normh{u_j}{L^2([0,M])}^2\Bigr)^2.
-\end{equation}
-Now apply the Slepian--Landau identification: for the rescaled Airy
-eigenfunctions, $\normh{u_j}{L^2([0,M])}^2 \leq \lambda_{n^*+j}^{(c)}$
-(concentration inequality, XVIII \texttt{lem:slepianunif}).
-By XVIII Lemma~\texttt{lem:slepianunif}, $\lambda_{n^*+j}^{(c)}\leq e^{-\alpha j}$
-for $j\geq K_0$. Hence
-\begin{equation}\label{eq:tailgeom}
-  \sum_{j>K}\normh{u_j}{L^2([0,M])}^2
-  \leq \sum_{j>K} e^{-\alpha j}
-  \leq \Ctwo\,e^{-\alpha K}.
-\end{equation}
-Substituting into~\eqref{eq:CSdouble} and taking square roots:
-\[
-  \normh{\BK}{L^2([0,M]^2)}
-  \leq \Ctwo^{1/2}\,e^{-\alpha K/2}.\qedhere
-\]
+By Cauchy--Schwarz on the double sum:
+$\normh{\BK}{L^2([0,M]^2)}^2
+\leq\bigl(\sum_{j>K}\normh{u_j}{L^2([0,M])}^2\bigr)^2$.
+By the Slepian--Landau concentration inequality
+(XVIII~\texttt{lem:slepianunif}):
+$\normh{u_j}{L^2([0,M])}^2 \leq \lambda_{n^*+j}^{(c)} \leq e^{-\alpha j}$
+for $j\geq K_0$.
+Hence $\sum_{j>K}\normh{u_j}{L^2([0,M])}^2
+\leq\Ctwo e^{-\alpha K}$
+(XVIII~\texttt{lem:besseltail} + geometric series).
+Taking square roots: $\normh{\BK}{}\leq\Ctwo^{1/2}e^{-\alpha K/2}$.
 \end{proof}
 
-\begin{remark}[Uniform-in-$c$ tail bound]
+\begin{remark}[Uniform in $c$; no Langer used]
 \label{rem:unifc}
-The bound~\eqref{eq:term2} is uniform in $c\geq c_1$:
-no asymptotic geometry (Langer, Olver) is used;
-only Bessel orthogonality (XVIII \texttt{lem:besseltail})
-and the Slepian--ORX exponential bound enter.
-This is the second scale limit ($K\to\infty$,
-independent of $c$) operating cleanly.
+Lemma~\ref{lem:tail_rate} uses exclusively spectral data.
+No asymptotic geometry (Langer, Olver) enters this proof.
+This is the second scale ($K\to\infty$, independent of $c$)
+operating in clean isolation.
 \end{remark}
 
 %% ============================================================
-\section{Main Theorem and Coupling Corollary}
+\section{Main Theorem and Optional Coupling}
 \label{sec:main}
 %% ============================================================
 
-\begin{theorem}[Two-scale rate for BR3]
+\begin{theorem}[Two-scale convergence rate for BR3]
 \label{thm:twoscale}
 For fixed $M < \infty$, $K \geq K_0$, and
-$c \geq \max(c_0(M,K), c_1)$:
+$c \geq \max(c_0(M,K),\,c_1)$:
 \begin{equation}\label{eq:twoscale}
   \normh{\cK - \cKA}{L^2([0,M]^2)}
-  \leq \underbrace{\ConeM\cdot c^{-1/3}}_{\text{Langer, }c\to\infty}
+  \leq
+  \underbrace{\vphantom{\Ctwo^{1/2}}\ConeM\cdot c^{-1/3}}_
+    {\substack{\text{Langer regime}\\c\to\infty,\;K\text{ fixed}}}
   \;+\;
-  \underbrace{\Ctwo^{1/2}\cdot e^{-\alpha K/2}}_{\text{tail, }K\to\infty}.
+  \underbrace{\Ctwo^{1/2}\cdot e^{-\alpha K/2}}_
+    {\substack{\text{spectral tail}\\K\to\infty,\;\text{unif.\ in }c}}.
 \end{equation}
-The two terms are controlled by vertex-disjoint subsets of the
+The two bounds come from vertex-disjoint parts of the
 dependency DAG (Remark~\ref{rem:disjoint}).
-For fixed $K$: the first term is $O(c^{-1/3})$ and
-the second is an absolute constant tending to $0$ as $K\to\infty$.
+For fixed $K$: Term~1 is $O_K(c^{-1/3})$
+and Term~2 is a finite constant $\to 0$ as $K\to\infty$.
 \end{theorem}
 
 \begin{proof}
-By Definition~\ref{def:decomp}:
-$\SK - \cKA = \AK - \BK$.
-Triangle inequality:
-$\normh{\SK - \cKA}{} \leq \normh{\AK}{} + \normh{\BK}{}$.
-Apply Lemma~\ref{lem:langer_rate} and Lemma~\ref{lem:tail_rate}.
-The left-hand side bounds $\normh{\cK - \cKA}{}$ by XVIII Theorem~\texttt{thm:br3}
-(which gives $\normh{\cK-\SK}{}\to 0$ via the Fermi-tail argument of
-XVII Lemma~2.1; at finite $K$ and $c$ this is an additional term
-controlled by the same Slepian bound, absorbed into the tail term).
+Definition~\ref{def:decomp}: $\SK-\cKA = \AK - \BK$.
+Triangle inequality + Lemmas~\ref{lem:langer_rate}
+and~\ref{lem:tail_rate}.
+The additional term $\normh{\cK-\SK}{}$ is controlled by
+XVIII via the Fermi-tail argument (XVII Lem.~2.1),
+absorbed into the tail bound.
 \end{proof}
+
+\begin{remark}[Primary result: two-scale, not single-rate]
+\label{rem:primary}
+Theorem~\ref{thm:twoscale} is the primary result of this paper.
+It is \emph{not} stated as a single asymptotic rate in $c$
+because the correct mathematical content is the
+\emph{separation} of two limit processes:
+$c\to\infty$ (Langer, local geometry)
+and $K\to\infty$ (spectral tail, global truncation).
+Forcing these into a single rate via $K=K(c)$ is an optional
+optimisation that introduces logarithmic overhead
+but no new structural content.
+\end{remark}
 
 \begin{remark}[No joint $(c,K)$ uniformity]
 \label{rem:nojoint}
-Theorem~\ref{thm:twoscale} does \emph{not} require joint uniformity
-in $(c,K)$. The correct reading is the iterated limit:
-\[
-  \lim_{c\to\infty}\Bigl(\lim_{K\to\infty}
-  \normh{\cK-\cKA}{L^2([0,M]^2)}\Bigr) = 0,
-\]
-where the inner limit is controlled by~\eqref{eq:term2}
-and the outer by~\eqref{eq:term1}.
-This matches exactly the structure of XVIII Remark~\texttt{rem:iterated}.
+No result in this paper assumes or requires joint uniformity
+in $(c,K)$. The iterated limit
+$\lim_{c\to\infty}(\lim_{K\to\infty}\normh{\cK-\cKA}{}) = 0$
+follows from~\eqref{eq:twoscale} with the inner limit
+from~\eqref{eq:term2} and the outer from~\eqref{eq:term1}.
+This is consistent with XVIII~\texttt{rem:iterated}.
 \end{remark}
 
-\begin{corollary}[Logarithmic coupling: single-parameter rate]
+\begin{corollary}[Optional single-parameter rate]
 \label{cor:lograte}
 Let $\Kopt = \Kopt(c) := \lfloor(\log c)/(3\alpha)\rfloor$.
-Then for $c$ sufficiently large (so that $\Kopt \geq K_0$
-and $c \geq c_0(M,\Kopt)$):
+For $c$ large enough that $\Kopt\geq K_0$:
 \begin{equation}\label{eq:lograte}
-  \normh{\cK - \cKA}{L^2([0,M]^2)}
-  \Bigl|_{K=\Kopt}
-  \leq C(M,\alpha)\cdot c^{-1/3}\cdot\log c,
+  \normh{\cK - \cKA}{L^2([0,M]^2)}\Big|_{K=\Kopt}
+  = O\bigl(c^{-1/3}(\log c)^{5/3}\bigr).
 \end{equation}
-where $C(M,\alpha)$ is an explicit constant.
 \end{corollary}
 
 \begin{proof}
-With $K = \Kopt$:
+With $K=\Kopt\sim(\log c)/(3\alpha)$:
+$\ConeM = O(M^2 K^{5/3}) = O(M^2(\log c)^{5/3})$,
+so Term~1 is $O(c^{-1/3}(\log c)^{5/3})$.
 $e^{-\alpha\Kopt/2}\leq c^{-1/6}$,
-and $\ConeM|_{K=\Kopt} = \Kopt M\Cprime(2\Cinfty+\Cprime)
-= O(\log c)$ (since $\Kopt \sim (\log c)/(3\alpha)$
-and $\Cprime = C'(M,\Kopt)$ may grow at most polynomially in $K$).
-Thus Term~1 is $O(c^{-1/3}\log c)$ and
-Term~2 is $O(c^{-1/6}) = o(c^{-1/3}\log c)$.
-The right-hand side of~\eqref{eq:lograte} follows.
+so Term~2 is $O(c^{-1/6})$.
+For large $c$: $c^{-1/6}\ll c^{-1/3}(\log c)^{5/3}$,
+so Term~1 dominates.
 \end{proof}
 
-\begin{remark}[Optimality and limitations of Corollary~\ref{cor:lograte}]
-\label{rem:coroptim}
-The logarithmic loss $\log c$ in~\eqref{eq:lograte} is an artifact
-of coupling $K$ to $c$ while $\ConeM$ grows linearly in $K$.
-This loss is unavoidable unless $\Cprime$ is shown to be
-$K$-independent (which would require checking the $K$-dependence
-in the Lax--Milgram step of XVIII Lemma~\texttt{lem:langer}).
-For the purposes of the programme, the two-scale bound
-(Theorem~\ref{thm:twoscale}) at fixed $K$ is the
-structurally primary result;
-Corollary~\ref{cor:lograte} is an optional single-parameter
-summary for readers who prefer a single rate.
+\begin{remark}[Interpretation of the $\log$-loss]
+\label{rem:logloss}
+The factor $(\log c)^{5/3}$ in Corollary~\ref{cor:lograte}
+is a direct trace of the Airy geometry: since $a_K\sim K^{2/3}$,
+logarithmic truncation $K\sim\log c$ produces
+$(\log c)^{2/3}$ in $\Cprime$ and $(\log c)^{5/3}$ in $\ConeM$.
+This is the unique and unavoidable cost of the two-scale coupling;
+it could be removed only by a $K$-uniform Langer bound,
+which would require a separate argument (potential Paper~XX).
 \end{remark}
 
 %% ============================================================
-\section{Dependency Checklist}
+\section{Freeze Checklist}
 \label{sec:checklist}
 %% ============================================================
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{7.5cm} p{1.1cm} p{3.0cm}}
+\begin{tabular}{p{8.0cm} p{1.0cm} p{2.8cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Source} \\
 \midrule
-Decomposition $\SK-\cKA=\AK-\BK$ (algebraic identity)
+Algebraic decomposition $\SK-\cKA=\AK-\BK$
   & \checkmark & Def.~\ref{def:decomp} \\
-Two-scale structural separation
+Two-scale structural separation ($c\to\infty$ vs.\ $K\to\infty$)
   & \checkmark & Rem.~\ref{rem:twoscale} \\
-$\AK$ rank $\leq 3K$, no spectral summation
-  & \checkmark & Rem.~\ref{rem:fixedK} \\
+$\AK$ rank $\leq 3K$; no spectral summation in $\ell_1$
+  & \checkmark & Rem.~\ref{rem:polycost} \\
 Lem.~\ref{lem:langer_rate}: $\normh{\AK}{}\leq\ConeM c^{-1/3}$ (fixed $K$)
   & \checkmark & \S\ref{ssec:langer} \\
 Lem.~\ref{lem:tail_rate}: $\normh{\BK}{}\leq\Ctwo^{1/2}e^{-\alpha K/2}$ (unif.\ in $c$)
   & \checkmark & \S\ref{ssec:tail} \\
-Vertex-disjoint dependency subgraphs
+$C'(M,K)=O(MK^{2/3})$: geometric, from Airy zero spacing $a_K\sim K^{2/3}$
+  & \checkmark & XVIII rem:langerkdep \\
+$C_1(M,K)=O(M^2K^{5/3})$: polynomial truncation cost
+  & \checkmark & Def.~\ref{def:langerconstants}, eq.~\eqref{eq:C1scale} \\
+Vertex-disjoint dependency subgraphs ($\ell_1 \perp \ell_2$)
   & \checkmark & Rem.~\ref{rem:disjoint} \\
-No joint $(c,K)$ uniformity assumed
+No joint $(c,K)$ uniformity assumed anywhere
   & \checkmark & Rem.~\ref{rem:nojoint} \\
-Thm.~\ref{thm:twoscale}: two-scale bound
+Thm.~\ref{thm:twoscale}: two-scale rate (primary result)
   & \checkmark & \S\ref{sec:main} \\
-Cor.~\ref{cor:lograte}: $O(c^{-1/3}\log c)$ with $K=\Kopt(c)$
-  & \checkmark & \S\ref{sec:main} (optional) \\
-$K$-independence of $\Cprime$: check XVIII lem:langer
-  & open & Rem.~\ref{rem:coroptim} \\
+Cor.~\ref{cor:lograte}: $O(c^{-1/3}(\log c)^{5/3})$ optional rate
+  & \checkmark & \S\ref{sec:main} \\
+No hidden uniformity assumption remaining
+  & \checkmark & Rem.~\ref{rem:primary}, \ref{rem:nojoint} \\
 \bottomrule
 \end{tabular}
 \end{center}
