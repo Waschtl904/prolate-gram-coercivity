@@ -1,45 +1,45 @@
-\documentclass[12pt,a4paper]{amsart}
+\\documentclass[12pt,a4paper]{amsart}
 
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathtools}
-\usepackage{enumitem}
-\usepackage{hyperref}
-\usepackage{booktabs}
-\usepackage{tikz-cd}
-\usetikzlibrary{positioning,arrows.meta}
+\\usepackage{amsmath,amssymb,amsthm}
+\\usepackage{mathtools}
+\\usepackage{enumitem}
+\\usepackage{hyperref}
+\\usepackage{booktabs}
+\\usepackage{tikz-cd}
+\\usetikzlibrary{positioning,arrows.meta}
 
 %%%─ Environments
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{conjecture}[theorem]{Conjecture}
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{hypothesis}[theorem]{Hypothesis}
-\newtheorem{remark}[theorem]{Remark}
+\\newtheorem{theorem}{Theorem}[section]
+\\newtheorem{lemma}[theorem]{Lemma}
+\\newtheorem{proposition}[theorem]{Proposition}
+\\newtheorem{corollary}[theorem]{Corollary}
+\\newtheorem{conjecture}[theorem]{Conjecture}
+\\theoremstyle{definition}
+\\newtheorem{definition}[theorem]{Definition}
+\\newtheorem{hypothesis}[theorem]{Hypothesis}
+\\newtheorem{remark}[theorem]{Remark}
 
 %%%─ Macros
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cAg}{\mathcal{A}_\gamma}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\cK}{K_{B_c}}
-\newcommand{\cKA}{K_{\cA}}
-\newcommand{\normh}[2]{\|#1\|_{#2}}
-\newcommand{\SK}{S_K}
-\newcommand{\AK}{A_K}
-\newcommand{\AKlin}{A_K^{\mathrm{lin}}}
-\newcommand{\AKquad}{A_K^{\mathrm{quad}}}
-\newcommand{\BK}{B_K}
-\newcommand{\Kopt}{K^*}
-\newcommand{\Clin}{C_{\mathrm{lin}}(M,K)}
-\newcommand{\Cquad}{C_{\mathrm{quad}}(M,K)}
-\newcommand{\Ctwo}{C_2(\alpha)}
-\newcommand{\Cinfty}{C_\infty}
+\\newcommand{\\cA}{\\mathcal{A}}
+\\newcommand{\\cAg}{\\mathcal{A}_\\gamma}
+\\newcommand{\\R}{\\mathbb{R}}
+\\newcommand{\\N}{\\mathbb{N}}
+\\newcommand{\\cK}{K_{B_c}}
+\\newcommand{\\cKA}{K_{\\cA}}
+\\newcommand{\\normh}[2]{\\|#1\\|_{#2}}
+\\newcommand{\\SK}{S_K}
+\\newcommand{\\AK}{A_K}
+\\newcommand{\\AKlin}{A_K^{\\mathrm{lin}}}
+\\newcommand{\\AKquad}{A_K^{\\mathrm{quad}}}
+\\newcommand{\\BK}{B_K}
+\\newcommand{\\Kopt}{K^*}
+\\newcommand{\\Clin}{C_{\\mathrm{lin}}(M,K)}
+\\newcommand{\\Cquad}{C_{\\mathrm{quad}}(M,K)}
+\\newcommand{\\Ctwo}{C_2(\\alpha)}
+\\newcommand{\\Cinfty}{C_\\infty}
 
-\subjclass[2020]{34B24, 47B34, 34E20, 47G10, 34L20}
-\keywords{Sturm--Liouville operators, turning-point asymptotics,
+\\subjclass[2020]{34B24, 47B34, 34E20, 47G10, 34L20}
+\\keywords{Sturm--Liouville operators, turning-point asymptotics,
   spectral growth exponent, two-scale truncation, logarithmic rate,
   spectral-geometric invariant, universality, layer-survival,
   spectrally regularized WKB class, variational truncation,
@@ -50,939 +50,945 @@
   balance fixed-point, method-class invariant,
   H1 exponent rigidity, envelope conjecture,
   scale admissibility, EM structural property,
-  asymptotic preorder, c-covariance}
+  asymptotic preorder, realization map, c-uniform stability}
 
-\begin{document}
+\\begin{document}
 
-\title[Paper XX: Universality of Turning-Point Truncation Geometry]{%
-  Paper~XX: Universality of Turning-Point Truncation Geometry\\[0.3em]
-  \large Spectral-Geometric Invariants, Two-Scale Logarithmic Losses,
+\\title[Paper XX: Universality of Turning-Point Truncation Geometry]{%
+  Paper~XX: Universality of Turning-Point Truncation Geometry\\\\[0.3em]
+  \\large Spectral-Geometric Invariants, Two-Scale Logarithmic Losses,
   and Structural Obstruction to Rate Improvement}
 
-\author{\textit{prolate-gram-coercivity programme}}
-\date{May 2026 --- FROZEN}
+\\author{\\textit{prolate-gram-coercivity programme}}
+\\date{May 2026 --- FROZEN}
 
-\begin{abstract}
-For operators $\cAg\in\mathfrak{T}_\gamma$
-(spectrally regularized WKB class, Definition~\ref{def:opclass}),
-the Langer term $\AK = \AKlin + \AKquad$ satisfies,
+\\begin{abstract}
+For operators $\\cAg\\in\\mathfrak{T}_\\gamma$
+(spectrally regularized WKB class, Definition~\\ref{def:opclass}),
+the Langer term $\\AK = \\AKlin + \\AKquad$ satisfies,
 under the pointwise Langer scaling law
-$\|e_j\|_{C^0}\leq C_0 j^\gamma c^{-\beta}$
-(Hypothesis~\ref{hyp:langer_pointwise}),
-\[
-  \|\AKlin\| \leq C_{\rm lin}\,K^{1+\gamma}c^{-\beta},
-  \qquad
-  \|\AKquad\| \leq C_{\rm quad}\,K^{1+2\gamma}c^{-2\beta}
-\]
-for all $K\geq K_0$, $c\geq c_0$, with $c$-admissible constants.
-The optimal truncation $\Kopt$ is the unique minimizer of
-$F(K;c) := L\,K^{1+\gamma}c^{-\beta} + T\,e^{-\alpha K/2}$
-over $K\in[c_1\log c,c_2\log c]$, satisfying
-$K^*(c) = \frac{2\beta}{\alpha}\log c + \frac{2\gamma}{\alpha}\log\log c + O(1)$.
-For each fixed $\gamma>0$, the diagonal rate
-$O(c^{-\beta}(\log c)^{1+\gamma})$
-holds for every $\cAg\in\mathfrak{T}_\gamma$ satisfying H1--H2
-(Corollary~\ref{cor:universal_lograte}).
-The central result is that this rate is \emph{structurally rigid}:
+$\\|e_j\\|_{C^0}\\leq C_0 j^\\gamma c^{-\\beta}$
+(Hypothesis~\\ref{hyp:langer_pointwise}),
+\\[
+  \\|\\AKlin\\| \\leq C_{\\rm lin}\\,K^{1+\\gamma}c^{-\\beta},
+  \\qquad
+  \\|\\AKquad\\| \\leq C_{\\rm quad}\\,K^{1+2\\gamma}c^{-2\\beta}
+\\]
+for all $K\\geq K_0$, $c\\geq c_0$, with $c$-admissible constants.
+The optimal truncation $\\Kopt$ is the unique minimizer of
+$F(K;c) := L\\,K^{1+\\gamma}c^{-\\beta} + T\\,e^{-\\alpha K/2}$
+over $K\\in[c_1\\log c,c_2\\log c]$, satisfying
+$K^*(c) = \\frac{2\\beta}{\\alpha}\\log c + \\frac{2\\gamma}{\\alpha}\\log\\log c + O(1)$.
+For each fixed $\\gamma>0$, the diagonal rate
+$O(c^{-\\beta}(\\log c)^{1+\\gamma})$
+holds for every $\\cAg\\in\\mathfrak{T}_\\gamma$ satisfying H1--H2
+(Corollary~\\ref{cor:universal_lograte}).
+The central result is that this rate is \\emph{structurally rigid}:
 within the simultaneous validity of (S1)--(S3), no asymptotically
 better rate is compatible with the two-scale truncation geometry
-(Theorem~\ref{thm:rate_obstruction}).
+(Theorem~\\ref{thm:rate_obstruction}).
 The three structural components play distinct roles:
-(S1) generates the exponent pair $(\gamma,\beta)$;
+(S1) generates the exponent pair $(\\gamma,\\beta)$;
 (S2) --- the Euler--Maclaurin structural property ---
-provides a canonical realization of scale admissibility:
-it ensures that the asymptotic equivalence classes of
-leading-order truncation terms are stable under $c$-rescaling,
-so that the preorder $\succ$ on $\mathcal{S}$ is $c$-covariant;
-without S2, this $c$-covariance fails and the balance
-fixed-point argument collapses (Lemma~\ref{lem:S2_knockdown});
-(S3) licenses the diagonal substitution $K\mapsto K^*(c)$.
+ensures that the realization map
+$\\mathfrak{R}\\colon \\{\\text{analytic bounds}\\} \\to \\mathcal{S}/\\!\\sim_{\\mathcal{S}}$
+(Definition~\\ref{def:realization_map}) is $c$-uniformly stable,
+so that leading-order bounds project to fixed equivalence classes
+under $c$-rescaling; without S2 this stability fails and the
+balance fixed-point argument collapses (Lemma~\\ref{lem:S2_knockdown});
+(S3) licenses the diagonal substitution $K\\mapsto K^*(c)$.
 Rigidity is further supported by decomposition stability
-(Lemma~\ref{lem:decomp_stability}),
+(Lemma~\\ref{lem:decomp_stability}),
 balance fixed-point uniqueness
-(Lemma~\ref{lem:balance_fixpoint}),
+(Lemma~\\ref{lem:balance_fixpoint}),
 H1 exponent rigidity
-(Lemma~\ref{lem:H1_rigidity}),
+(Lemma~\\ref{lem:H1_rigidity}),
 and scope remarks
-(Remarks~\ref{rem:non_tautology}--\ref{rem:method_vs_operator}).
+(Remarks~\\ref{rem:non_tautology}--\\ref{rem:method_vs_operator}).
 All results are conditional on H1--H2.
-\end{abstract}
+\\end{abstract}
 
-\maketitle
-\tableofcontents
-\bigskip\hrule\bigskip
+\\maketitle
+\\tableofcontents
+\\bigskip\\hrule\\bigskip
 
 %% ============================================================
-\section{Introduction and Logical Status}
-\label{sec:intro}
+\\section{Introduction and Logical Status}
+\\label{sec:intro}
 %% ============================================================
 
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Paper} & \textbf{Content} & \textbf{Logical status} \\
-\midrule
-XVIII & BR3: qualitative Airy universality & Theorem \\
-XIX   & Two-scale rate; lin/quad split     & Theorem (H1--H2 verified) \\
+\\begin{center}
+\\renewcommand{\\arraystretch}{1.3}
+\\begin{tabular}{l l l}
+\\toprule
+\\textbf{Paper} & \\textbf{Content} & \\textbf{Logical status} \\\\
+\\midrule
+XVIII & BR3: qualitative Airy universality & Theorem \\\\
+XIX   & Two-scale rate; lin/quad split     & Theorem (H1--H2 verified) \\\\
 XX    & Universal rate; structural obstruction; H1 rigidity;
         S2 knockdown; Layer-Survival
-  & Conditional ($\mathfrak{T}_\gamma$, H1--H2) \\
-\bottomrule
-\end{tabular}
-\end{center}
+  & Conditional ($\\mathfrak{T}_\\gamma$, H1--H2) \\\\
+\\bottomrule
+\\end{tabular}
+\\end{center}
 
-\begin{remark}[Roles of S1, S2, S3]
-\label{rem:S123_roles}
-The three structural components of Theorem~\ref{thm:rate_obstruction}
+\\begin{remark}[Roles of S1, S2, S3]
+\\label{rem:S123_roles}
+The three structural components of Theorem~\\ref{thm:rate_obstruction}
 play logically distinct and mutually irreducible roles:
-\begin{itemize}[nosep]
-  \item \textbf{(S1) = H1 (Langer scaling):}
-    generates the exponent pair $(\gamma,\beta)$ and produces
-    the algebraic growth $\Phi_1 = C_{\rm lin}K^{1+\gamma}c^{-\beta}$.
+\\begin{itemize}[nosep]
+  \\item \\textbf{(S1) = H1 (Langer scaling):}
+    generates the exponent pair $(\\gamma,\\beta)$ and produces
+    the algebraic growth $\\Phi_1 = C_{\\rm lin}K^{1+\\gamma}c^{-\\beta}$.
     Without S1, no growth term exists and the balance equation is vacuous.
-  \item \textbf{(S2) = EM structural property:}
-    provides a \emph{canonical realization of scale admissibility}.
-    Concretely: S2 ensures that the asymptotic equivalence classes
-    of leading-order truncation terms are stable under $c$-rescaling
-    (Definition~\ref{def:scale}), so that the preorder $\succ$
-    on $\mathcal{S}$ is $c$-covariant.
-    Without S2, this covariance fails: the relative order of
-    $\Phi_1$ and $\Phi_2$ is not preserved under $c \mapsto \lambda c$,
+  \\item \\textbf{(S2) = EM structural property:}
+    ensures that the realization map $\\mathfrak{R}$
+    (Definition~\\ref{def:realization_map}) is $c$-uniformly stable:
+    each analytic bound projects to a fixed equivalence class in
+    $\\mathcal{S}/\\!\\sim_{\\mathcal{S}}$ under $c$-rescaling.
+    The preorder $\\succ$ on $\\mathcal{S}$ is defined purely on
+    index pairs and is unconditionally well-defined;
+    what S2 protects is the stability of the map from bounds to
+    those index pairs.
+    Without S2, the realization map $\\mathfrak{R}$ is not
+    $c$-uniformly stable, the comparison $\\Phi_1 \\succ \\Phi_2$
+    as applied to the actual bounds ceases to be $c$-uniform,
     and the balance fixed-point argument of
-    Lemma~\ref{lem:balance_fixpoint}(iii) collapses
-    (Lemma~\ref{lem:S2_knockdown}).
-    EM is one --- the simplest and most explicit --- realization
-    of this property in the WKB power-sum class;
-    other summation methods satisfying the same three structural
-    properties (leading-power extraction, uniform remainder
-    control, scaling invariance of coefficients) would serve equally.
-  \item \textbf{(S3) = Substitution Stability:}
+    Lemma~\\ref{lem:balance_fixpoint}(iii) collapses
+    (Lemma~\\ref{lem:S2_knockdown}).
+    EM is a canonical realization of this stability property
+    in the WKB power-sum class; other summation methods
+    satisfying leading-power extraction, uniform remainder control,
+    and scaling invariance of coefficients serve equally.
+  \\item \\textbf{(S3) = Substitution Stability:}
     licenses the passage from the fixed-parameter regime
     to the diagonal regime ($K = K^*(c)$).
-    Without S3, the optimality condition~\eqref{eq:FOC}
+    Without S3, the optimality condition~\\eqref{eq:FOC}
     cannot be substituted into the truncation bound.
-\end{itemize}
-The three roles are:\quad
-exponent generation (S1),\quad
-scale covariance (S2),\quad
+\\end{itemize}
+The three roles are:\\quad
+exponent generation (S1),\\quad
+realization-map stability (S2),\\quad
 diagonal projection (S3).
-\end{remark}
+\\end{remark}
 
-\begin{remark}[Scope of XX and meaning of universality]
-\label{rem:logstatus}
-All results are theorems within $\mathfrak{T}_\gamma$;
+\\begin{remark}[Scope of XX and meaning of universality]
+\\label{rem:logstatus}
+All results are theorems within $\\mathfrak{T}_\\gamma$;
 H1--H2 are imposed axioms, not derived for general $V$.
-Universality in this paper has two layers:
-\begin{itemize}[nosep]
-  \item \textbf{Rate universality:} for each fixed $\gamma>0$,
-    the rate $O(c^{-\beta}(\log c)^{1+\gamma})$ holds uniformly
-    over all operators in $\mathfrak{T}_\gamma$ satisfying H1--H2.
-  \item \textbf{Structural rigidity:} the exponent $1+\gamma$ and the
-    scale $\log c$ are fixed by the interplay of S1--S3;
-    no improvement is possible within $\mathcal{M}(\mathrm{S1,S2,S3})$.
-\end{itemize}
-\end{remark}
+Universality has two layers:
+\\begin{itemize}[nosep]
+  \\item \\textbf{Rate universality:} for each fixed $\\gamma>0$,
+    the rate $O(c^{-\\beta}(\\log c)^{1+\\gamma})$ holds uniformly
+    over all operators in $\\mathfrak{T}_\\gamma$ satisfying H1--H2.
+  \\item \\textbf{Structural rigidity:} the exponent $1+\\gamma$ and the
+    scale $\\log c$ are fixed by the interplay of S1--S3;
+    no improvement is possible within $\\mathcal{M}(\\mathrm{S1,S2,S3})$.
+\\end{itemize}
+\\end{remark}
 
-\begin{remark}[$c$-admissible constants]
-\label{rem:cadmissible}
-A constant is \emph{$c$-admissible} if it is independent of $c$.
+\\begin{remark}[$c$-admissible constants]
+\\label{rem:cadmissible}
+A constant is \\emph{$c$-admissible} if it is independent of $c$.
 Every constant falls under one of four declared sources:
-\begin{itemize}[nosep]
-  \item \textbf{Axiomatic:} $C_0$, $C_\infty$ by H1--H2.
-  \item \textbf{Analytic:} $C_\sigma = \frac{|B_2|}{12}\sigma(\sigma-1)$.
-  \item \textbf{Derived:} products/sums of $c$-admissible constants
-    (Lemma~\ref{lem:cadm_closure}).
-  \item \textbf{Operator-intrinsic:} $C_2(\alpha)$.
-\end{itemize}
-\end{remark}
+\\begin{itemize}[nosep]
+  \\item \\textbf{Axiomatic:} $C_0$, $C_\\infty$ by H1--H2.
+  \\item \\textbf{Analytic:} $C_\\sigma = \\frac{|B_2|}{12}\\sigma(\\sigma-1)$.
+  \\item \\textbf{Derived:} products/sums of $c$-admissible constants
+    (Lemma~\\ref{lem:cadm_closure}).
+  \\item \\textbf{Operator-intrinsic:} $C_2(\\alpha)$.
+\\end{itemize}
+\\end{remark}
 
-\begin{lemma}[$c$-admissible closure]
-\label{lem:cadm_closure}
+\\begin{lemma}[$c$-admissible closure]
+\\label{lem:cadm_closure}
 The class of $c$-admissible constants is closed under
 finite products and finite sums.
-\end{lemma}
-\begin{proof}
-$A,B$ independent of $c$ $\Rightarrow$ $AB$ and $A+B$ independent of $c$.
-\end{proof}
+\\end{lemma}
+\\begin{proof}
+$A,B$ independent of $c$ $\\Rightarrow$ $AB$ and $A+B$ independent of $c$.
+\\end{proof}
 
-\begin{remark}[Two sources of $c$-dependence, strictly separated]
-\label{rem:dag_csplit}
+\\begin{remark}[Two sources of $c$-dependence, strictly separated]
+\\label{rem:dag_csplit}
 $c$ appears in two logically distinct roles:
-\begin{itemize}[nosep]
-  \item \textbf{Operator estimates:} $c^{-\beta}$ as scaling factor;
+\\begin{itemize}[nosep]
+  \\item \\textbf{Operator estimates:} $c^{-\\beta}$ as scaling factor;
     all multiplying constants $c$-admissible.
-  \item \textbf{Optimization domain:} $c$ in window
-    $[c_1\log c, c_2\log c]$ and $K^*(c)$ via FOC.
-\end{itemize}
-The formal bridge is Proposition~\ref{prop:substitution_stability}.
-\end{remark}
+  \\item \\textbf{Optimization domain:} $c$ in window
+    $[c_1\\log c, c_2\\log c]$ and $K^*(c)$ via FOC.
+\\end{itemize}
+The formal bridge is Proposition~\\ref{prop:substitution_stability}.
+\\end{remark}
 
-\begin{remark}[Two-regime quantifier structure]
-\label{rem:diagonal_regime}
-\begin{itemize}[nosep]
-  \item \textbf{Fixed-parameter:}
-    $\forall K\geq K_0,\, c\geq c_0$ independently.
-  \item \textbf{Diagonal:}
-    $\forall c\geq c_0,\;\exists!\,K^*(c)\in[c_1\log c,c_2\log c]$.
-\end{itemize}
-Transition licensed by Proposition~\ref{prop:substitution_stability}.
-\end{remark}
+\\begin{remark}[Two-regime quantifier structure]
+\\label{rem:diagonal_regime}
+\\begin{itemize}[nosep]
+  \\item \\textbf{Fixed-parameter:}
+    $\\forall K\\geq K_0,\\, c\\geq c_0$ independently.
+  \\item \\textbf{Diagonal:}
+    $\\forall c\\geq c_0,\\;\\exists!\\,K^*(c)\\in[c_1\\log c,c_2\\log c]$.
+\\end{itemize}
+Transition licensed by Proposition~\\ref{prop:substitution_stability}.
+\\end{remark}
 
 %% ============================================================
-\section{Substitution Stability Principle}
-\label{sec:substprin}
+\\section{Substitution Stability Principle}
+\\label{sec:substprin}
 %% ============================================================
 
-\begin{proposition}[Substitution Stability Principle]
-\label{prop:substitution_stability}
-\emph{Intent.}
+\\begin{proposition}[Substitution Stability Principle]
+\\label{prop:substitution_stability}
+\\emph{Intent.}
 Substituting a deterministic map $K(c)$ into a
 pointwise-valid inequality is admissible as a pointwise composition.
 
-\emph{Setup.}
-Let $|E(K,c)| \leq \sum_{n=1}^N C_n\,K^{a_n}c^{-b_n}$
-hold for all $K\geq K_0$, $c\geq c_0$, $c$-admissible $C_n$.
-Let $K(c)\in[c_1\log c,\,c_2\log c]$ for all large $c$.
+\\emph{Setup.}
+Let $|E(K,c)| \\leq \\sum_{n=1}^N C_n\\,K^{a_n}c^{-b_n}$
+hold for all $K\\geq K_0$, $c\\geq c_0$, $c$-admissible $C_n$.
+Let $K(c)\\in[c_1\\log c,\\,c_2\\log c]$ for all large $c$.
 
-\begin{itemize}[nosep]
-  \item[(i)] \textbf{Pointwise substitution.}
-    $|E(K(c),c)|\leq\sum_n C_n(K(c))^{a_n}c^{-b_n}$.
-  \item[(ii)] \textbf{Window control via monotonicity.}
-    $\sum_n C_n (K(c))^{a_n} c^{-b_n}
-      \leq \sum_n C_n (c_2\log c)^{a_n} c^{-b_n}$.
-  \item[(iii)] \textbf{Asymptotic order.}
-    $(K(c))^{a_n}=O(\log^{a_n}c)$;
-    precise correction by~\eqref{eq:Kstar_power}.
-  \item[(iv)] \textbf{Dominance.}
-    By Propositions~\ref{prop:asymp_order} and~\ref{prop:scale_algebra}.
-\end{itemize}
-\end{proposition}
+\\begin{itemize}[nosep]
+  \\item[(i)] \\textbf{Pointwise substitution.}
+    $|E(K(c),c)|\\leq\\sum_n C_n(K(c))^{a_n}c^{-b_n}$.
+  \\item[(ii)] \\textbf{Window control via monotonicity.}
+    $\\sum_n C_n (K(c))^{a_n} c^{-b_n}
+      \\leq \\sum_n C_n (c_2\\log c)^{a_n} c^{-b_n}$.
+  \\item[(iii)] \\textbf{Asymptotic order.}
+    $(K(c))^{a_n}=O(\\log^{a_n}c)$;
+    precise correction by~\\eqref{eq:Kstar_power}.
+  \\item[(iv)] \\textbf{Dominance.}
+    By Propositions~\\ref{prop:asymp_order} and~\\ref{prop:scale_algebra}.
+\\end{itemize}
+\\end{proposition}
 
-\begin{proof}
+\\begin{proof}
 (i) pointwise; (ii) monotonicity + window upper bound;
-(iii) sandwich~\eqref{eq:sandwich}; (iv) Props.~\ref{prop:asymp_order}--\ref{prop:scale_algebra}.
-\end{proof}
+(iii) sandwich~\\eqref{eq:sandwich}; (iv) Props.~\\ref{prop:asymp_order}--\\ref{prop:scale_algebra}.
+\\end{proof}
 
 %% ============================================================
-\section{Asymptotic Scale and Preorder}
-\label{sec:asymp}
+\\section{Asymptotic Scale, Preorder, and Realization Map}
+\\label{sec:asymp}
 %% ============================================================
 
-%% PATCH A: relational definition of S via equivalence classes.
-%% S itself is defined purely in terms of growth rates (independent
-%% of representations). The preorder succ is defined on equivalence
-%% classes. S2 is then the condition that makes this preorder
-%% c-covariant --- not a membership condition.
+\\begin{definition}[Asymptotic scale and preorder]
+\\label{def:scale}
+For $s>0$, $t\\in\\R$, let $\\phi_{s,t}(c) := c^{-s}(\\log c)^t$.
+Define the \\emph{asymptotic scale}
+$\\mathcal{S} := \\{\\phi_{s,t} : s>0,\\, t\\in\\R\\}$.
 
-\begin{definition}[Asymptotic scale and preorder]
-\label{def:scale}
-For $s>0$, $t\in\R$, let $\phi_{s,t}(c) := c^{-s}(\log c)^t$.
-Define the \emph{asymptotic scale}
-$\mathcal{S} := \{\phi_{s,t} : s>0,\, t\in\R\}$.
+Two functions $f,g:(c_0,\\infty)\\to(0,\\infty)$ are
+\\emph{asymptotically equivalent in $\\mathcal{S}$},
+written $f\\sim_{\\mathcal{S}} g$, if
+\\[
+  0 < \\liminf_{c\\to\\infty} \\frac{f(c)}{g(c)}
+  \\leq \\limsup_{c\\to\\infty} \\frac{f(c)}{g(c)} < \\infty,
+\\]
+where both ratio bounds are finite positive real numbers,
+\\emph{independent of all external parameters}
+(no dependence on $c$, $K$, $\\lambda$, or any auxiliary index).
 
-Two functions $f,g:(c_0,\infty)\to(0,\infty)$ are
-\emph{asymptotically equivalent in $\mathcal{S}$},
-written $f\sim_{\mathcal{S}} g$, if
-\[
-  0 < \liminf_{c\to\infty} \frac{f(c)}{g(c)}
-  \leq \limsup_{c\to\infty} \frac{f(c)}{g(c)} < \infty,
-\]
-with both ratio bounds \emph{$c$-independent} (i.e.\ the liminf
-and limsup are finite positive constants, independent of any
-auxiliary parameter).
+The \\emph{asymptotic preorder} on $\\mathcal{S}$ is
+\\[
+  \\phi_{s_1,t_1} \\succ \\phi_{s_2,t_2}
+  \\;\\iff\\;
+  s_1 < s_2 \\quad \\text{or} \\quad (s_1 = s_2 \\text{ and } t_1 > t_2).
+\\]
+This is the lexicographic order on $(s,t)\\in\\R^2$; it is defined
+purely on index pairs, independently of any function representation.
+The preorder on $\\mathcal{S}$ is unconditionally well-defined.
+\\end{definition}
 
-The \emph{asymptotic preorder} on $\mathcal{S}$ is
-\[
-  \phi_{s_1,t_1} \succ \phi_{s_2,t_2}
-  \;\iff\;
-  s_1 < s_2 \quad \text{or} \quad (s_1 = s_2 \text{ and } t_1 > t_2).
-\]
-This is the lexicographic order on $(s,t)\in\R^2$; it depends
-only on the index pair $(s,t)$, not on any representation.
+%% NEW: explicit realization map as intermediate layer.
+%% This is where S2 sits: not on the preorder (which is always
+%% well-defined), but on the stability of the map from
+%% analytic bounds to equivalence classes.
 
-A function $f$ is said to \emph{realize} an element
-$\phi_{s,t}\in\mathcal{S}$ if $f \sim_{\mathcal{S}} \phi_{s,t}$.
-The preorder $\succ$ is \emph{$c$-covariant} for a family
-$\{f_\lambda\}_{\lambda>0}$ if
-$f_\lambda \sim_{\mathcal{S}} \phi_{s,t}$ for all $\lambda>0$
-implies that the index pair $(s,t)$ is independent of $\lambda$.
-\end{definition}
+\\begin{definition}[Realization map]
+\\label{def:realization_map}
+Let $\\mathcal{B}$ denote the class of analytic bounds of the form
+$b(K,c) = A(K,c)\\,\\phi_{s,t}(c)$, where $A(K,c)$ is a
+non-negative prefactor and $\\phi_{s,t}\\in\\mathcal{S}$.
 
-\begin{remark}[Role of $c$-admissibility for covariance]
-\label{rem:scale_admissibility}
-The preorder on $\mathcal{S}$ is defined independently of any
-representation and is unconditionally well-defined.
-However, to conclude that a specific bound
-$\normh{\AKlin}{} \leq C(K,c)\,K^{1+\gamma}c^{-\beta}$
-\emph{realizes} $\phi_{\beta,\,1+\gamma}$ and that this realization
-is \emph{stable under $c \mapsto \lambda c$},
-one needs $C(K,c)$ to be $c$-admissible.
-If $C(K,c)$ grows with $c$, the bound may realize
-a different (larger) element of $\mathcal{S}$ for each $c$;
-the equivalence class is then not $c$-covariant.
-S2 provides a canonical mechanism ensuring $c$-admissibility
-of all remainder coefficients, thereby guaranteeing covariance
-of the realization map.
-\end{remark}
+The \\emph{realization map} is
+\\[
+  \\mathfrak{R}\\colon \\mathcal{B} \\to \\mathcal{S}/\\!\\sim_{\\mathcal{S}},
+  \\qquad
+  \\mathfrak{R}(b) := [\\phi_{s,t}]
+  \\quad\\text{if}\\quad b(K^*(c),c) \\sim_{\\mathcal{S}} \\phi_{s,t}.
+\\]
+The map $\\mathfrak{R}$ is \\emph{$c$-uniformly stable} if,
+for every $\\lambda>0$ and every $b\\in\\mathcal{B}$,
+\\[
+  \\mathfrak{R}(b(\\,\\cdot\\,,\\lambda c)) = \\mathfrak{R}(b(\\,\\cdot\\,,c)).
+\\]
+That is: rescaling $c\\mapsto\\lambda c$ does not change the
+equivalence class to which the bound $b$ projects.
 
-\begin{proposition}[Scale algebra]
-\label{prop:scale_algebra}
-$\phi_{s_1,t_1}\cdot\phi_{s_2,t_2} = \phi_{s_1+s_2,\,t_1+t_2}$;
-if $f\succ g$ then $f+g \sim_{\mathcal{S}} f$.
-\end{proposition}
+\\emph{Role of S2.}
+S2 is precisely the condition that ensures $\\mathfrak{R}$ is
+$c$-uniformly stable for all bounds arising in
+Lemma~\\ref{lem:trunc_universal}:
+the prefactor $A(K,c) = C(K,c)$ is $c$-admissible,
+so $b(K^*(c),c)\\sim_{\\mathcal{S}}\\phi_{s,t}$ holds with
+ratio bounds independent of all external parameters,
+and $\\mathfrak{R}$ maps to a fixed class for all $c$.
+Without S2, $C(K,c)$ may grow with $c$, the ratio
+$b(K^*(c),c)/\\phi_{s,t}(c)$ is not bounded uniformly,
+and $\\mathfrak{R}(b)$ is not well-defined as a single
+equivalence class.
+\\end{definition}
 
-\begin{proposition}[Layer dominance]
-\label{prop:asymp_order}
-With $K=K^*(c)$, $n\geq 2$:
-$\phi_{n\beta,\,1+n\gamma} \prec \phi_{\beta,\,1+\gamma}$.
-\end{proposition}
+\\begin{remark}[Preorder vs.\\ realization map: strict separation]
+\\label{rem:scale_admissibility}
+The preorder $\\succ$ on $\\mathcal{S}$ lives on the \\emph{target}
+of $\\mathfrak{R}$: it compares index pairs $(s_1,t_1)$ vs.\\ $(s_2,t_2)$
+and is unconditionally well-defined.
+S2 governs the \\emph{source} side: it ensures that each analytic
+bound has a well-defined, $c$-stable image under $\\mathfrak{R}$.
+The two layers are logically independent:
+one can have a well-defined preorder on $\\mathcal{S}$ and
+simultaneously have analytic bounds whose realization map
+is not $c$-uniformly stable (precisely the situation without S2).
+\\end{remark}
+
+\\begin{proposition}[Scale algebra]
+\\label{prop:scale_algebra}
+$\\phi_{s_1,t_1}\\cdot\\phi_{s_2,t_2} = \\phi_{s_1+s_2,\\,t_1+t_2}$;
+if $f\\succ g$ then $f+g \\sim_{\\mathcal{S}} f$.
+\\end{proposition}
+
+\\begin{proposition}[Layer dominance]
+\\label{prop:asymp_order}
+With $K=K^*(c)$, $n\\geq 2$:
+$\\phi_{n\\beta,\\,1+n\\gamma} \\prec \\phi_{\\beta,\\,1+\\gamma}$.
+\\end{proposition}
 
 %% ============================================================
-\section{Logical Dependency DAG}
-\label{sec:dag_logical}
+\\section{Logical Dependency DAG}
+\\label{sec:dag_logical}
 %% ============================================================
 
-\begin{remark}[DAG: organizational map and role classification]
-\label{rem:dag_reading}
+\\begin{remark}[DAG: organizational map and role classification]
+\\label{rem:dag_reading}
 The diagram is an organizational dependency map; acyclicity describes
 proof discipline.
-The three structural axes S1, S2, S3 enter the DAG at distinct levels:
-\begin{itemize}[nosep]
-  \item \textbf{S1 (H1):} enters at lem:trunc\_univ (exponent generation).
-  \item \textbf{S2 (EM):} enters at rem:EM\_growth as
-    \emph{canonical scale-covariance mechanism} ---
-    certifies that all remainder coefficients are $c$-admissible,
-    which guarantees $c$-covariance of the realization map
-    (Definition~\ref{def:scale}, Remark~\ref{rem:scale_admissibility}).
-    Lemma~\ref{lem:S2_knockdown} shows that without S2,
-    the preorder $\succ$ loses $c$-covariance.
-  \item \textbf{S3 (subst):} enters at prop:subst (diagonal projection).
-\end{itemize}
-The terminal node \textbf{thm:obstruction} receives input from
-cor:rate, lem:decomp\_stab, lem:balance\_fixpt,
-lem:S2\_knockdown, lem:H1\_rigidity, and the three scope remarks.
-\end{remark}
+The three structural axes enter the DAG at distinct levels:
+\\begin{itemize}[nosep]
+  \\item \\textbf{S1 (H1):} exponent generation (lem:trunc\\_univ).
+  \\item \\textbf{S2 (EM):} enters at rem:EM\\_growth as the mechanism
+    ensuring $c$-uniform stability of the realization map $\\mathfrak{R}$
+    (Definition~\\ref{def:realization_map}).
+    Lemma~\\ref{lem:S2_knockdown} isolates what fails without S2:
+    not the preorder, but $\\mathfrak{R}$.
+  \\item \\textbf{S3 (subst):} diagonal projection (prop:subst).
+\\end{itemize}
+Terminal node \\textbf{thm:obstruction} receives input from
+cor:rate, lem:decomp\\_stab, lem:balance\\_fixpt,
+lem:S2\\_knockdown, lem:H1\\_rigidity, and three scope remarks.
+\\end{remark}
 
-\[
-\begin{tikzcd}[row sep=2.0em, column sep=1.1em,
+\\[
+\\begin{tikzcd}[row sep=2.0em, column sep=1.1em,
   every arrow/.append style={-Latex}]
-\boxed{\mathrm{S1/H1}} \ar[dr] \ar[drrr] \ar[drrrrrr]
-& & \boxed{\mathrm{H2}} \ar[dl]
-& & \boxed{F(K;c)} \ar[d]
-& & & \\
-& \text{lem:trunc\_univ} \ar[d] \ar[drr]
-& & & \text{lem:kstar} \ar[d]
-& & & \\
-\boxed{\mathrm{S2/EM}} \ar[ur] \ar[rrrrrr]
-& \text{thm:rate} \ar[dr]
-& & \text{rem:EM\_growth} \ar[dr]
-& \text{lem:loglog} \ar[d] \ar[dr]
-& & \text{lem:H1\_rig} \ar[ddl]
-& \text{lem:S2\_kd} \ar[ddll] \\
-& & \boxed{\mathrm{S3/subst}} \ar[d] \ar[drr]
-& & \text{lem:kopt(i)} \ar[d]
-& \text{lem:stab} & & \\
-& & \text{lem:diag\_sub} \ar[d] \ar[drr]
-& & \text{lem:kopt(ii)} \ar[dl] & & & \\
-& & \text{cor:rate} \ar[dr]
-& & \text{lem:decomp\_stab} \ar[d] & & & \\
-& & & \text{lem:balance\_fixpt} \ar[d]
-& \ar[dl] & & & \\
-& \text{rem:non\_taut} \ar[rr]
-& & \boxed{\textbf{thm:obstruction}}
-& \ar[l] \text{rem:meth\_vs\_op} & & & \\
-& & \text{rem:const\_dep} \ar[urr] & & & & & \\
-\end{tikzcd}
-\]
+\\boxed{\\mathrm{S1/H1}} \\ar[dr] \\ar[drrr] \\ar[drrrrrr]
+& & \\boxed{\\mathrm{H2}} \\ar[dl]
+& & \\boxed{F(K;c)} \\ar[d]
+& & & \\\\
+& \\text{lem:trunc\\_univ} \\ar[d] \\ar[drr]
+& & & \\text{lem:kstar} \\ar[d]
+& & & \\\\
+\\boxed{\\mathrm{S2/EM}} \\ar[ur] \\ar[rrrrrr]
+& \\text{thm:rate} \\ar[dr]
+& & \\text{rem:EM\\_growth} \\ar[dr]
+& \\text{lem:loglog} \\ar[d] \\ar[dr]
+& & \\text{lem:H1\\_rig} \\ar[ddl]
+& \\text{lem:S2\\_kd} \\ar[ddll] \\\\
+& & \\boxed{\\mathrm{S3/subst}} \\ar[d] \\ar[drr]
+& & \\text{lem:kopt(i)} \\ar[d]
+& \\text{lem:stab} & & \\\\
+& & \\text{lem:diag\\_sub} \\ar[d] \\ar[drr]
+& & \\text{lem:kopt(ii)} \\ar[dl] & & & \\\\
+& & \\text{cor:rate} \\ar[dr]
+& & \\text{lem:decomp\\_stab} \\ar[d] & & & \\\\
+& & & \\text{lem:balance\\_fixpt} \\ar[d]
+& \\ar[dl] & & & \\\\
+& \\text{rem:non\\_taut} \\ar[rr]
+& & \\boxed{\\textbf{thm:obstruction}}
+& \\ar[l] \\text{rem:meth\\_vs\\_op} & & & \\\\
+& & \\text{rem:const\\_dep} \\ar[urr] & & & & & \\\\
+\\end{tikzcd}
+\\]
 
-\begin{remark}[Acyclicity, S2 position, obstruction node]
-\label{rem:dag_nocycle}
-\begin{itemize}[nosep]
-  \item Anti-circularity:
-    $F'\text{ sign}\to\text{window}\to\text{convexity}$, strictly directed.
-  \item \textbf{S2/EM} enters in two places:
-    (a) predecessor of lem:trunc\_univ
-      (certifies $c$-admissibility of EM coefficients);
-    (b) direct sibling input to thm:obstruction via lem:S2\_kd
-      (certifies $c$-covariance of the realization map).
-    These are logically distinct roles; the two DAG edges reflect this.
-  \item lem:H1\_rigidity and lem:S2\_knockdown are sibling inputs
-    to thm:obstruction, certifying exponent-independence
-    and scale-covariance respectively.
-  \item All $K,c$-couplings pass through prop:subst (S3).
-\end{itemize}
-\end{remark}
+\\begin{remark}[Acyclicity, S2 position, obstruction node]
+\\label{rem:dag_nocycle}
+\\begin{itemize}[nosep]
+  \\item Anti-circularity:
+    $F'\\text{ sign}\\to\\text{window}\\to\\text{convexity}$, strictly directed.
+  \\item \\textbf{S2/EM} enters in two places:
+    (a) predecessor of lem:trunc\\_univ
+      (certifies $c$-admissibility of EM coefficients, ensuring
+      $\\mathfrak{R}$ maps each bound to a well-defined class);
+    (b) direct sibling input to thm:obstruction via lem:S2\\_kd
+      (certifies $c$-uniform stability of $\\mathfrak{R}$ globally).
+  \\item lem:H1\\_rigidity and lem:S2\\_knockdown certify
+    exponent-independence and realization-map stability respectively;
+    both are sibling inputs to thm:obstruction.
+  \\item All $K,c$-couplings pass through prop:subst (S3).
+\\end{itemize}
+\\end{remark}
 
 %% ============================================================
-\section{Framework}
-\label{sec:framework}
+\\section{Framework}
+\\label{sec:framework}
 %% ============================================================
 
-\begin{definition}[$\mathfrak{T}_\gamma$]
-\label{def:opclass}
-$\mathfrak{T}_\gamma$ ($\gamma,\beta>0$): self-adjoint
-$\cAg=-\partial_\xi^2+V(\xi)$ on $L^2(\R_+)$,
-$V\geq 0$, $V\to+\infty$, discrete spectrum;
-(i) $a_j\sim C_\gamma j^\gamma$;
-(ii) $V\in C^2$, simple turning points; (iii) H1; (iv) H2.
+\\begin{definition}[$\\mathfrak{T}_\\gamma$]
+\\label{def:opclass}
+$\\mathfrak{T}_\\gamma$ ($\\gamma,\\beta>0$): self-adjoint
+$\\cAg=-\\partial_\\xi^2+V(\\xi)$ on $L^2(\\R_+)$,
+$V\\geq 0$, $V\\to+\\infty$, discrete spectrum;
+(i) $a_j\\sim C_\\gamma j^\\gamma$;
+(ii) $V\\in C^2$, simple turning points; (iii) H1; (iv) H2.
 $c$ is an approximation scale parameter, independent of the operator.
-\end{definition}
+\\end{definition}
 
-\begin{hypothesis}[H1]
-\label{hyp:langer_pointwise}
-$\exists\,C_0<\infty$:
-$\|e_j\|_{C^0([0,M])}\leq C_0\,j^\gamma c^{-\beta}$.
-\end{hypothesis}
+\\begin{hypothesis}[H1]
+\\label{hyp:langer_pointwise}
+$\\exists\\,C_0<\\infty$:
+$\\|e_j\\|_{C^0([0,M])}\\leq C_0\\,j^\\gamma c^{-\\beta}$.
+\\end{hypothesis}
 
-\begin{hypothesis}[H2]
-\label{hyp:Cinfty}
-$C_\infty=\sup_{j}\|u_j\|_{C^0([0,M])}<\infty$.
-\end{hypothesis}
+\\begin{hypothesis}[H2]
+\\label{hyp:Cinfty}
+$C_\\infty=\\sup_{j}\\|u_j\\|_{C^0([0,M])}<\\infty$.
+\\end{hypothesis}
 
 %% ============================================================
-\section{Operator Decomposition}
-\label{sec:opdecomp}
+\\section{Operator Decomposition}
+\\label{sec:opdecomp}
 %% ============================================================
 
-\begin{remark}[$\BK$: $c$-independence]
-\label{rem:BK_definition}
-$\BK$ is a functional of $\{P_j:j>K\}$ alone; no $c$ enters.
-$C_2(\alpha)=\sup_{K\geq 0}\|\BK\|^2 e^{\alpha K}$
+\\begin{remark}[$\\BK$: $c$-independence]
+\\label{rem:BK_definition}
+$\\BK$ is a functional of $\\{P_j:j>K\\}$ alone; no $c$ enters.
+$C_2(\\alpha)=\\sup_{K\\geq 0}\\|\\BK\\|^2 e^{\\alpha K}$
 is $c$-admissible by definition.
-$\|\BK\|\leq C_2^{1/2}e^{-\alpha K/2}$ holds pointwise in $K$.
-\end{remark}
+$\\|\\BK\\|\\leq C_2^{1/2}e^{-\\alpha K/2}$ holds pointwise in $K$.
+\\end{remark}
 
-\begin{lemma}[$\gamma$-Agnostic nodes]
-\label{lem:gamma_agnostic}
+\\begin{lemma}[$\\gamma$-Agnostic nodes]
+\\label{lem:gamma_agnostic}
 Without H1--H2:
-(i) $\SK-\cKA=\AK-\BK$;
+(i) $\\SK-\\cKA=\\AK-\\BK$;
 (ii) tensor norm; (iii) Bessel tail; (iv) Tonelli/DCT;
-(v) $\|\BK\|\leq C_2(\alpha)^{1/2}e^{-\alpha K/2}$;
+(v) $\\|\\BK\\|\\leq C_2(\\alpha)^{1/2}e^{-\\alpha K/2}$;
 (vi) Kato.
-\end{lemma}
+\\end{lemma}
 
 %% ============================================================
-\section{Truncation Geometry and S2 Knockdown}
-\label{sec:trunc}
+\\section{Truncation Geometry and S2 Knockdown}
+\\label{sec:trunc}
 %% ============================================================
 
-\begin{lemma}[Universal truncation geometry]
-\label{lem:trunc_universal}
-Under H1--H2, for all $K\geq 1$, $c\geq c_0$:
-\begin{align}
-  \normh{\AKlin}{}
-    &\leq C_{\rm lin}K^{1+\gamma}c^{-\beta}
-    +C_{\sigma,1}K^\gamma c^{-\beta},
-    \label{eq:AKlin}\\
-  \normh{\AKquad}{}
-    &\leq C_{\rm quad}K^{1+2\gamma}c^{-2\beta}
-    +C_{\sigma,2}K^{2\gamma}c^{-2\beta},
-    \label{eq:AKquad}
-\end{align}
+\\begin{lemma}[Universal truncation geometry]
+\\label{lem:trunc_universal}
+Under H1--H2, for all $K\\geq 1$, $c\\geq c_0$:
+\\begin{align}
+  \\normh{\\AKlin}{}
+    &\\leq C_{\\rm lin}K^{1+\\gamma}c^{-\\beta}
+    +C_{\\sigma,1}K^\\gamma c^{-\\beta},
+    \\label{eq:AKlin}\\\\
+  \\normh{\\AKquad}{}
+    &\\leq C_{\\rm quad}K^{1+2\\gamma}c^{-2\\beta}
+    +C_{\\sigma,2}K^{2\\gamma}c^{-2\\beta},
+    \\label{eq:AKquad}
+\\end{align}
 all constants $c$-admissible.
-\end{lemma}
+\\end{lemma}
 
-\begin{proof}
+\\begin{proof}
 Euler--Maclaurin:
-\begin{equation}\label{eq:EM}
-  \sum_{j=1}^K j^\sigma
-  =\frac{K^{1+\sigma}}{1+\sigma}+\frac{1}{2}K^\sigma+R_\sigma(K),
-\end{equation}
-\begin{equation}\label{eq:EM_remainder}
-  |R_\sigma(K)|\leq C_\sigma K^{\sigma-1},\quad
-  C_\sigma=\tfrac{|B_2|}{12}\sigma(\sigma-1),\quad B_2=\tfrac{1}{6}.
-\end{equation}
-Multiply by $c$-admissible prefactors; close by Lemma~\ref{lem:cadm_closure}.
-\end{proof}
+\\begin{equation}\\label{eq:EM}
+  \\sum_{j=1}^K j^\\sigma
+  =\\frac{K^{1+\\sigma}}{1+\\sigma}+\\frac{1}{2}K^\\sigma+R_\\sigma(K),
+\\end{equation}
+\\begin{equation}\\label{eq:EM_remainder}
+  |R_\\sigma(K)|\\leq C_\\sigma K^{\\sigma-1},\\quad
+  C_\\sigma=\\tfrac{|B_2|}{12}\\sigma(\\sigma-1),\\quad B_2=\\tfrac{1}{6}.
+\\end{equation}
+Multiply by $c$-admissible prefactors; close by Lemma~\\ref{lem:cadm_closure}.
+\\end{proof}
 
-\begin{remark}[EM structural property: two roles]
-\label{rem:EM_growth}
+\\begin{remark}[EM structural property: two roles]
+\\label{rem:EM_growth}
 The Euler--Maclaurin formula serves two distinct functions:
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item \textbf{Analytic:}
-    extracts the leading power $K^{1+\sigma}/(1+\sigma)$
-    from the discrete spectral sum $\sum_{j=1}^K j^\sigma$,
-    with remainder $O(K^{\sigma-1})$.
-  \item \textbf{Scale-covariance:}
-    the remainder coefficient $C_\sigma = \frac{|B_2|}{12}\sigma(\sigma-1)$
+\\begin{enumerate}[nosep,label=(\\roman*)]
+  \\item \\textbf{Analytic:}
+    extracts the leading power $K^{1+\\sigma}/(1+\\sigma)$
+    from the discrete spectral sum $\\sum_{j=1}^K j^\\sigma$,
+    with remainder $O(K^{\\sigma-1})$.
+  \\item \\textbf{Realization-map stability:}
+    the remainder coefficient $C_\\sigma = \\frac{|B_2|}{12}\\sigma(\\sigma-1)$
     is a universal explicit constant, independent of $K$ and $c$.
-    This makes all coefficients in~\eqref{eq:AKlin}--\eqref{eq:AKquad}
-    $c$-admissible, guaranteeing that the bounds
-    realize fixed elements of $\mathcal{S}$ stably under
-    $c$-rescaling (Definition~\ref{def:scale},
-    Remark~\ref{rem:scale_admissibility}).
-\end{enumerate}
-EM is a \emph{canonical realization} of role~(ii) in the
-WKB power-sum class: it is not the unique possible mechanism,
-but it is the simplest one with explicit universal constants.
+    This makes all prefactors in~\\eqref{eq:AKlin}--\\eqref{eq:AKquad}
+    $c$-admissible, ensuring that each bound has a well-defined,
+    $c$-uniformly stable image under $\\mathfrak{R}$
+    (Definition~\\ref{def:realization_map}).
+\\end{enumerate}
 Role~(ii) is structural component (S2).
-Lemma~\ref{lem:S2_knockdown} shows that any summation
-method lacking role~(ii) destroys the $c$-covariance of
-the asymptotic preorder.
-\end{remark}
+EM is a canonical realization of (S2) in the WKB power-sum class;
+other methods satisfying leading-power extraction,
+uniform remainder control, and scaling invariance of coefficients
+serve equally.
+Lemma~\\ref{lem:S2_knockdown} shows that without (ii),
+$\\mathfrak{R}$ loses $c$-uniform stability.
+\\end{remark}
 
-%% PATCH B: relational S2 knockdown.
-%% Replace ontological claim (Phi_1 not in S) by relational claim
-%% (c-covariance of succ fails). The preorder on S is always
-%% well-defined; S2 is the condition making it stable under rescaling.
-
-\begin{lemma}[S2 knockdown: failure of $c$-covariance]
-\label{lem:S2_knockdown}
-Assume that the EM structural property~(S2) is replaced by
-an arbitrary summation method yielding only
-\begin{equation}\label{eq:S2weak}
-  \sum_{j=1}^K j^\gamma
-  = a_\gamma K^{1+\gamma} + R_\gamma^*(K),
-  \qquad a_\gamma\in\R_{>0},
-  \qquad R_\gamma^*(K) = O_*(K^\gamma),
-\end{equation}
-where the implicit constant in $O_*(\cdot)$ is \emph{not $c$-admissible}
-(may depend on $c$ or on $K$).
+\\begin{lemma}[S2 knockdown: failure of realization-map stability]
+\\label{lem:S2_knockdown}
+Assume that S2 is replaced by a summation method yielding only
+\\begin{equation}\\label{eq:S2weak}
+  \\sum_{j=1}^K j^\\gamma
+  = a_\\gamma K^{1+\\gamma} + R_\\gamma^*(K),
+  \\qquad a_\\gamma\\in\\R_{>0},
+  \\qquad R_\\gamma^*(K) = O_*(K^\\gamma),
+\\end{equation}
+where the implicit constant in $O_*(\\cdot)$ is not $c$-admissible
+(the prefactor $A(K,c)$ absorbing $R_\\gamma^*$ is not
+$c$-uniformly bounded; it may grow with $c$ or depend on $K$).
 Then:
-\begin{itemize}[nosep]
-  \item[\textup{(i)}] \textbf{Non-stable realization.}
-    The truncation bound takes the form
-    \[
-      \normh{\AKlin}{} \leq C_*(K,c)\,K^{1+\gamma}c^{-\beta},
-    \]
-    where $C_*(K,c)$ is not $c$-admissible.
-    The bound may realize different elements of $\mathcal{S}$
-    for different values of $c$: as $c\to\infty$,
-    the equivalence class of $\normh{\AKlin}{}$ in $\mathcal{S}$
-    is not $c$-covariant.
+\\begin{itemize}[nosep]
+  \\item[\\textup{(i)}] \\textbf{$\\mathfrak{R}$ is not well-defined.}
+    The bound $\\normh{\\AKlin}{}\\leq A(K,c)\\,K^{1+\\gamma}c^{-\\beta}$
+    does not have a fixed image under $\\mathfrak{R}$:
+    for a sequence $c_n\\to\\infty$ with $A(K,c_n)\\to\\infty$,
+    the ratio $A(K,c_n)K^{1+\\gamma}c_n^{-\\beta}/\\phi_{\\beta,1+\\gamma}(c_n)
+    = A(K,c_n)$ is unbounded,
+    so $\\mathfrak{R}(b)\\neq [\\phi_{\\beta,1+\\gamma}]$ along this sequence.
 
-  \item[\textup{(ii)}] \textbf{Failure of $c$-covariance of $\succ$.}
-    The preorder $\succ$ on $\mathcal{S}$ is defined
-    on index pairs $(s,t)$ and is unconditionally well-defined.
-    However, the comparison $\Phi_1 \succ \Phi_2$ as applied
-    to the \emph{bounds} produced by the truncation requires
-    that each bound stably realizes a fixed index pair;
-    by~(i), without S2 the bound for $\Phi_1$ does not
-    stably realize $(\beta,1+\gamma)$.
-    Hence the comparison $\Phi_1 \succ \Phi_2$, as a statement
-    about the actual truncation bounds,
-    is not preserved under $c \mapsto \lambda c$.
+  \\item[\\textup{(ii)}] \\textbf{Comparison of bounds loses $c$-uniformity.}
+    The preorder $\\succ$ on $\\mathcal{S}$ is defined on index pairs
+    and remains unconditionally well-defined.
+    However, comparing the \\emph{bounds} $\\Phi_1$ and $\\Phi_2$
+    via $\\succ$ requires that each bound has a stable image under
+    $\\mathfrak{R}$; by~(i), $\\Phi_1$'s image is not stable.
+    Hence the statement ``$\\Phi_1\\succ\\Phi_2$ as bounds''
+    is not $c$-uniform: it may hold for some values of $c$
+    and fail for others as $A(K,c)$ grows.
 
-  \item[\textup{(iii)}] \textbf{Failure of the balance fixed-point.}
-    Lemma~\ref{lem:balance_fixpoint}(iii) establishes
-    $\Psi \asymp c^{-\beta}(\log c)^{1+\gamma}$
-    via Proposition~\ref{prop:substitution_stability}(ii),
-    which requires the equivalence class of $\Phi_1$
-    to be $c$-covariant (stable under window scaling).
-    Without S2, this stability fails by~(i);
-    the $\asymp$-conclusion of
-    Lemma~\ref{lem:balance_fixpoint}(iii)
-    has no valid basis.
-\end{itemize}
+  \\item[\\textup{(iii)}] \\textbf{Balance fixed-point loses its basis.}
+    Lemma~\\ref{lem:balance_fixpoint}(iii) requires
+    $\\Psi\\asymp c^{-\\beta}(\\log c)^{1+\\gamma}$,
+    which is established via
+    Proposition~\\ref{prop:substitution_stability}(ii)
+    using both a $c$-uniform upper and lower bound on
+    $\\Psi/\\phi_{\\beta,1+\\gamma}$.
+    The upper bound requires $\\mathfrak{R}(\\Phi_1)=[\\phi_{\\beta,1+\\gamma}]$
+    to hold $c$-uniformly; by~(i) this fails without S2,
+    and the $\\asymp$-conclusion has no valid basis.
+\\end{itemize}
 
-\emph{Upshot.}
-S2 is not a membership condition for $\mathcal{S}$
-(the preorder on $\mathcal{S}$ is always well-defined).
-Rather, S2 is the \emph{$c$-covariance condition}:
-it ensures that the asymptotic equivalence classes
-associated to leading-order truncation bounds are
-invariant under $c$-rescaling.
-The quantifier shift is precise:
-with S2, $\forall K,c\;\exists C_\sigma^{\rm EM}$
-(fixed, $c$-independent)$: |R_\sigma(K)|\leq C_\sigma^{\rm EM} K^{\sigma-1}$;
-without S2, $\forall K,c\;\exists C_*(K,c)$
-(existence only, no $c$-independence).
-The existence statement does not imply covariance;
-it is covariance, not existence, that the argument requires.
-\end{lemma}
+\\emph{Upshot.}
+The preorder $\\succ$ on $\\mathcal{S}$ is not affected by the absence of S2:
+it is defined on index pairs and remains well-defined.
+What S2 protects is the realization map $\\mathfrak{R}$:
+S2 is the condition that every analytic bound arising in
+Lemma~\\ref{lem:trunc_universal} has a $c$-uniformly stable image
+under $\\mathfrak{R}$, and hence a well-defined position in
+the preorder.
+The quantifier shift is:
+with S2, $\\forall K,c\\;\\exists C_\\sigma^{\\rm EM}$
+($c$-independent): $|R_\\sigma(K)|\\leq C_\\sigma^{\\rm EM} K^{\\sigma-1}$;
+without S2, $\\forall K,c\\;\\exists A(K,c)$
+($c$-dependence not excluded): $|R^*(K)|\\leq A(K,c) K^\\gamma$.
+Existence of $A(K,c)$ does not imply $c$-uniform stability of $\\mathfrak{R}$.
+\\end{lemma}
 
-\begin{proof}
-\textup{(i)}
-By~\eqref{eq:S2weak}, the coefficient absorbing $R_\gamma^*(K)$
-into the leading term is $C_*(K,c)$, which depends on $c$.
-For a sequence $c_n\to\infty$ with $C_*(K,c_n)\to\infty$,
-the bound $C_*(K,c_n)K^{1+\gamma}c_n^{-\beta}$ grows faster
-than $K^{1+\gamma}c_n^{-\beta}$, realizing a larger element
-of $\mathcal{S}$ than $\phi_{\beta,1+\gamma}$.
+\\begin{proof}
+\\textup{(i)} By~\\eqref{eq:S2weak}, the prefactor absorbing
+$R_\\gamma^*(K)$ is $A(K,c)$; $c$-independence is not guaranteed.
+For any sequence with $A(K,c_n)\\to\\infty$ the ratio
+$b/\\phi_{\\beta,1+\\gamma}$ is unbounded, contradicting
+$\\sim_{\\mathcal{S}}$ (Definition~\\ref{def:scale}).
 
-\textup{(ii)}
-The comparison $\Phi_1\succ\Phi_2$ as applied to bounds requires
-each bound to have a stable representative in $\mathcal{S}$.
-By (i), $\Phi_1$'s representative shifts with $c$;
-the lexicographic comparison is therefore not $c$-uniform.
+\\textup{(ii)} Comparing bounds via $\\succ$ requires each bound
+to have a fixed representative in $\\mathcal{S}/\\!\\sim_{\\mathcal{S}}$;
+by~(i) $\\Phi_1$'s representative shifts with $c$.
 
-\textup{(iii)}
-The $\asymp$-equivalence in
-Lemma~\ref{lem:balance_fixpoint}(iii) requires
-both upper and lower $c$-uniform bounds on $\Psi/\phi_{\beta,1+\gamma}$.
-The upper bound uses
-Proposition~\ref{prop:substitution_stability}(ii),
-which requires the coefficient of $K^{1+\gamma}c^{-\beta}$
-to be $c$-admissible. Without S2 this fails.
-\end{proof}
+\\textup{(iii)} The $\\asymp$-statement requires
+$c$-uniform upper and lower bounds;
+the upper bound is $\\mathfrak{R}(\\Phi_1) = [\\phi_{\\beta,1+\\gamma}]$
+held $c$-uniformly, which fails by~(i).
+\\end{proof}
 
 %% ============================================================
-\section{Variational Optimal Truncation}
-\label{sec:kopt}
+\\section{Variational Optimal Truncation}
+\\label{sec:kopt}
 %% ============================================================
 
-\begin{lemma}[$K^*(c)\to\infty$]
-\label{lem:kstar_to_infty}
-$K^*(c)\to\infty$ as $c\to\infty$.
-\end{lemma}
+\\begin{lemma}[$K^*(c)\\to\\infty$]
+\\label{lem:kstar_to_infty}
+$K^*(c)\\to\\infty$ as $c\\to\\infty$.
+\\end{lemma}
 
-\begin{lemma}[Sandwich]
-\label{lem:loglog}
-With $c_1=2\beta/\alpha$, $c_2=2(\beta+1)/\alpha$:
-\begin{equation}\label{eq:sandwich}
-  c_1\log c\leq K^*(c)\leq c_2\log c,
-  \qquad \log K^*(c)=\log\log c+O(1).
-\end{equation}
-\end{lemma}
+\\begin{lemma}[Sandwich]
+\\label{lem:loglog}
+With $c_1=2\\beta/\\alpha$, $c_2=2(\\beta+1)/\\alpha$:
+\\begin{equation}\\label{eq:sandwich}
+  c_1\\log c\\leq K^*(c)\\leq c_2\\log c,
+  \\qquad \\log K^*(c)=\\log\\log c+O(1).
+\\end{equation}
+\\end{lemma}
 
-\begin{lemma}[Variational $K^*$]
-\label{lem:kopt_variational}
-\textup{(i)} On $[c_1\log c,c_2\log c]$, $F''(K;c)>0$;
+\\begin{lemma}[Variational $K^*$]
+\\label{lem:kopt_variational}
+\\textup{(i)} On $[c_1\\log c,c_2\\log c]$, $F''(K;c)>0$;
 unique $K^*(c)$ with
-\begin{equation}\label{eq:FOC}
-  L(1+\gamma){K^*}^\gamma c^{-\beta}=\tfrac{\alpha}{2}Te^{-\alpha K^*/2}.
-\end{equation}
+\\begin{equation}\\label{eq:FOC}
+  L(1+\\gamma){K^*}^\\gamma c^{-\\beta}=\\tfrac{\\alpha}{2}Te^{-\\alpha K^*/2}.
+\\end{equation}
 
-\textup{(ii)} Iterated asymptotics:
-\begin{equation}\label{eq:kopt_iterated}
-  K^*(c)=\frac{2\beta}{\alpha}\log c+\frac{2\gamma}{\alpha}\log\log c+O(1).
-\end{equation}
+\\textup{(ii)} Iterated asymptotics:
+\\begin{equation}\\label{eq:kopt_iterated}
+  K^*(c)=\\frac{2\\beta}{\\alpha}\\log c+\\frac{2\\gamma}{\\alpha}\\log\\log c+O(1).
+\\end{equation}
 
-\textup{(ii')} $\lambda(c)=\frac{2\gamma}{\alpha K^*(c)}\to 0$:
+\\textup{(ii')} $\\lambda(c)=\\frac{2\\gamma}{\\alpha K^*(c)}\\to 0$:
 self-consistency certificate only.
 
-\textup{(iii)} $F(K^*;c)=O(c^{-\beta}(\log c)^{1+\gamma})$.
-\end{lemma}
+\\textup{(iii)} $F(K^*;c)=O(c^{-\\beta}(\\log c)^{1+\\gamma})$.
+\\end{lemma}
 
-\begin{lemma}[Stability]
-\label{lem:stability_kopt}
-$O(1)$ perturbation of~\eqref{eq:FOC} shifts $K^*$ by $O(1)$.
-\begin{proof}
-$\frac{dK^*}{dC_1}=\frac{1}{\alpha/2-\gamma/K^*}=O(1)$.
-\end{proof}
-\end{lemma}
+\\begin{lemma}[Stability]
+\\label{lem:stability_kopt}
+$O(1)$ perturbation of~\\eqref{eq:FOC} shifts $K^*$ by $O(1)$.
+\\begin{proof}
+$\\frac{dK^*}{dC_1}=\\frac{1}{\\alpha/2-\\gamma/K^*}=O(1)$.
+\\end{proof}
+\\end{lemma}
 
 %% ============================================================
-\section{Diagonal Substitution}
-\label{sec:diagonal}
+\\section{Diagonal Substitution}
+\\label{sec:diagonal}
 %% ============================================================
 
-\begin{lemma}[Diagonal substitution]
-\label{lem:diagonal_sub}
-Applies Proposition~\ref{prop:substitution_stability} at $K(c)=K^*(c)$.
+\\begin{lemma}[Diagonal substitution]
+\\label{lem:diagonal_sub}
+Applies Proposition~\\ref{prop:substitution_stability} at $K(c)=K^*(c)$.
 
-$h(c):=K^*(c)/(\tfrac{2\beta}{\alpha}\log c)\to 1$;
-$|h(c)-1|=O(\log\log c/\log c)$.
-For large $c$: $h(c)\in[1/2,3/2]$;
-constant by MVT bounded by $(1+\gamma)2^\gamma$,
-finite on every compact $[\gamma_0,\gamma_1]$;
-$(1+\gamma)2^\gamma\to\infty$ for $\gamma\to\infty$ explicit.
+$h(c):=K^*(c)/(\\tfrac{2\\beta}{\\alpha}\\log c)\\to 1$;
+$|h(c)-1|=O(\\log\\log c/\\log c)$.
+For large $c$: $h(c)\\in[1/2,3/2]$;
+constant by MVT bounded by $(1+\\gamma)2^\\gamma$,
+finite on every compact $[\\gamma_0,\\gamma_1]$;
+$(1+\\gamma)2^\\gamma\\to\\infty$ for $\\gamma\\to\\infty$ explicit.
 Hence
-\begin{equation}\label{eq:Kstar_power}
-  (K^*(c))^{1+\gamma}
-  =\Bigl(\tfrac{2\beta}{\alpha}\log c\Bigr)^{1+\gamma}
-  \Bigl(1+O\Bigl(\tfrac{\log\log c}{\log c}\Bigr)\Bigr).
-\end{equation}
-Conclusion: $\normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma})$.
-\end{lemma}
+\\begin{equation}\\label{eq:Kstar_power}
+  (K^*(c))^{1+\\gamma}
+  =\\Bigl(\\tfrac{2\\beta}{\\alpha}\\log c\\Bigr)^{1+\\gamma}
+  \\Bigl(1+O\\Bigl(\\tfrac{\\log\\log c}{\\log c}\\Bigr)\\Bigr).
+\\end{equation}
+Conclusion: $\\normh{\\cK-\\cKA}{}=O(c^{-\\beta}(\\log c)^{1+\\gamma})$.
+\\end{lemma}
 
 %% ============================================================
-\section{Layer-Survival}
-\label{sec:layersurvival}
+\\section{Layer-Survival}
+\\label{sec:layersurvival}
 %% ============================================================
 
-\begin{theorem}[Layer-Survival]
-\label{thm:layer_survival}
-For $n\geq 1$, H1, all $K\geq K_0$:
-$\normh{A_K^{(n)}}{}\leq C_n K^{1+n\gamma}c^{-n\beta}$.
-Diagonal: $O(c^{-n\beta}(\log c)^{1+n\gamma})\prec c^{-\beta}(\log c)^{1+\gamma}$
-for $n\geq 2$.
-\end{theorem}
+\\begin{theorem}[Layer-Survival]
+\\label{thm:layer_survival}
+For $n\\geq 1$, H1, all $K\\geq K_0$:
+$\\normh{A_K^{(n)}}{}\\leq C_n K^{1+n\\gamma}c^{-n\\beta}$.
+Diagonal: $O(c^{-n\\beta}(\\log c)^{1+n\\gamma})\\prec c^{-\\beta}(\\log c)^{1+\\gamma}$
+for $n\\geq 2$.
+\\end{theorem}
 
 %% ============================================================
-\section{Main Rate Theorem}
-\label{sec:main}
+\\section{Main Rate Theorem}
+\\label{sec:main}
 %% ============================================================
 
-\begin{theorem}[Two-scale rate]
-\label{thm:universal_rate}
-For each fixed $\gamma>0$, $\cAg\in\mathfrak{T}_\gamma$,
-all $K\geq K_0$, $c\geq c_0$:
-\[
-  \normh{\cK-\cKA}{}
-  \leq C_{\rm lin}K^{1+\gamma}c^{-\beta}
-  +C_{\rm quad}K^{1+2\gamma}c^{-2\beta}
-  +C_2(\alpha)^{1/2}e^{-\alpha K/2},
-\]
+\\begin{theorem}[Two-scale rate]
+\\label{thm:universal_rate}
+For each fixed $\\gamma>0$, $\\cAg\\in\\mathfrak{T}_\\gamma$,
+all $K\\geq K_0$, $c\\geq c_0$:
+\\[
+  \\normh{\\cK-\\cKA}{}
+  \\leq C_{\\rm lin}K^{1+\\gamma}c^{-\\beta}
+  +C_{\\rm quad}K^{1+2\\gamma}c^{-2\\beta}
+  +C_2(\\alpha)^{1/2}e^{-\\alpha K/2},
+\\]
 all constants $c$-admissible.
-\end{theorem}
+\\end{theorem}
 
-\begin{corollary}[Universal logarithmic rate]
-\label{cor:universal_lograte}
-For each fixed $\gamma>0$, at $K=\lfloor K^*(c)\rceil$:
-$\normh{\cK-\cKA}{}=O(c^{-\beta}(\log c)^{1+\gamma})$.
-\end{corollary}
+\\begin{corollary}[Universal logarithmic rate]
+\\label{cor:universal_lograte}
+For each fixed $\\gamma>0$, at $K=\\lfloor K^*(c)\\rceil$:
+$\\normh{\\cK-\\cKA}{}=O(c^{-\\beta}(\\log c)^{1+\\gamma})$.
+\\end{corollary}
 
 %% ============================================================
-\section{H1 Exponent Rigidity}
-\label{sec:H1rigidity}
+\\section{H1 Exponent Rigidity}
+\\label{sec:H1rigidity}
 %% ============================================================
 
-\begin{lemma}[H1 exponent rigidity]
-\label{lem:H1_rigidity}
-Let $\widetilde{\mathrm{H1}}$ be any hypothesis of the form
-$\|e_j\|_{C^0} \leq \tilde C_0 j^{\tilde\gamma} c^{-\tilde\beta}$,
-$\tilde C_0$ $c$-admissible.
+\\begin{lemma}[H1 exponent rigidity]
+\\label{lem:H1_rigidity}
+Let $\\widetilde{\\mathrm{H1}}$ be any hypothesis of the form
+$\\|e_j\\|_{C^0} \\leq \\tilde C_0 j^{\\tilde\\gamma} c^{-\\tilde\\beta}$,
+$\\tilde C_0$ $c$-admissible.
 
-\begin{itemize}[nosep]
-  \item[\textup{(i)}] \textbf{Exponent propagation.}
-    The FOC~\eqref{eq:FOC} with $(\tilde\gamma,\tilde\beta)$ yields
-    $\widetilde K^*(c) = \frac{2\tilde\beta}{\alpha}\log c
-    + \frac{2\tilde\gamma}{\alpha}\log\log c + O(1)$
-    and rate $O(c^{-\tilde\beta}(\log c)^{1+\tilde\gamma})$.
-    The map $(\tilde\gamma,\tilde\beta)\mapsto(1+\tilde\gamma,\tilde\beta)$
+\\begin{itemize}[nosep]
+  \\item[\\textup{(i)}] \\textbf{Exponent propagation.}
+    The FOC~\\eqref{eq:FOC} with $(\\tilde\\gamma,\\tilde\\beta)$ yields
+    $\\widetilde K^*(c) = \\frac{2\\tilde\\beta}{\\alpha}\\log c
+    + \\frac{2\\tilde\\gamma}{\\alpha}\\log\\log c + O(1)$
+    and rate $O(c^{-\\tilde\\beta}(\\log c)^{1+\\tilde\\gamma})$.
+    The map $(\\tilde\\gamma,\\tilde\\beta)\\mapsto(1+\\tilde\\gamma,\\tilde\\beta)$
     is injective; distinct exponent pairs yield distinct rates.
 
-  \item[\textup{(ii)}] \textbf{Logarithmic perturbation instability.}
-    If $\|e_j\|_{C^0} \leq C_0 j^\gamma (\log j)^\delta c^{-\beta}$,
-    $\delta>0$, then the rate becomes
-    $O(c^{-\beta}(\log c)^{1+\gamma}(\log\log c)^\delta)$,
+  \\item[\\textup{(ii)}] \\textbf{Logarithmic perturbation instability.}
+    If $\\|e_j\\|_{C^0} \\leq C_0 j^\\gamma (\\log j)^\\delta c^{-\\beta}$,
+    $\\delta>0$, then the rate becomes
+    $O(c^{-\\beta}(\\log c)^{1+\\gamma}(\\log\\log c)^\\delta)$,
     strictly larger than the baseline.
-\end{itemize}
-\end{lemma}
+\\end{itemize}
+\\end{lemma}
 
-\begin{proof}
-(i) Log-form of~\eqref{eq:FOC} is shape-invariant;
+\\begin{proof}
+(i) Log-form of~\\eqref{eq:FOC} is shape-invariant;
 iterated asymptotics applies verbatim.
-(ii) $\log K^*(c) = \log\log c + O(1)$;
-pointwise substitution and Proposition~\ref{prop:scale_algebra}.
-\end{proof}
+(ii) $\\log K^*(c) = \\log\\log c + O(1)$;
+pointwise substitution and Proposition~\\ref{prop:scale_algebra}.
+\\end{proof}
 
-\begin{remark}[Scope of H1 rigidity]
-\label{rem:H1_rigidity_scope}
+\\begin{remark}[Scope of H1 rigidity]
+\\label{rem:H1_rigidity_scope}
 (a)--(b) within power-law class: established.
 (c) Envelope minimality and (d) outside power-law class: open;
-see Conjecture~\ref{conj:H1_envelope}.
-\end{remark}
+see Conjecture~\\ref{conj:H1_envelope}.
+\\end{remark}
 
 %% ============================================================
-\section{Structural Obstruction to Rate Improvement}
-\label{sec:obstruction}
+\\section{Structural Obstruction to Rate Improvement}
+\\label{sec:obstruction}
 %% ============================================================
 
-\begin{lemma}[Decomposition stability]
-\label{lem:decomp_stability}
-With $\Phi_1,\Phi_3\geq 0$ and $c$-admissible constants
-(S2 guarantees the latter via Lemma~\ref{lem:S2_knockdown}(i)):
-$\Phi_1+\Phi_3\geq\Phi_1$; no cancellation between $\Phi_1$ and $\Phi_3$.
-\end{lemma}
+\\begin{lemma}[Decomposition stability]
+\\label{lem:decomp_stability}
+With $\\Phi_1,\\Phi_3\\geq 0$ and $c$-admissible prefactors
+(S2 ensures $\\mathfrak{R}(\\Phi_1)$ is well-defined;
+see Definition~\\ref{def:realization_map}):
+$\\Phi_1+\\Phi_3\\geq\\Phi_1$; no cancellation between $\\Phi_1$ and $\\Phi_3$.
+\\end{lemma}
 
-\begin{remark}[Role]
-\label{rem:decomp_role}
+\\begin{remark}[Role]
+\\label{rem:decomp_role}
 Rate improvement requires reducing each dominant term individually;
-under (S1)--(S3) this forces the analysis in Lemma~\ref{lem:balance_fixpoint}.
-\end{remark}
+under (S1)--(S3) this forces the analysis in Lemma~\\ref{lem:balance_fixpoint}.
+\\end{remark}
 
-\begin{lemma}[Balance fixed-point]
-\label{lem:balance_fixpoint}
-Define $\Psi := \Phi_1+\Phi_3$.
-Under \textnormal{(S1)--(S3)}:
-\begin{itemize}[nosep]
-  \item[\textup{(i)}] $K(c)=o(\log c)$:
-    $\Psi \succ c^{-\beta}(\log c)^{1+\gamma}$.
-  \item[\textup{(ii)}] $K(c)\geq C\log c$, $C>c_2$:
-    $\Psi \succ c^{-\beta}(\log c)^{1+\gamma}$.
-  \item[\textup{(iii)}] $K(c)\in[c_1\log c,c_2\log c]$:
-    $\Psi \asymp c^{-\beta}(\log c)^{1+\gamma}$;
-    no $K(c)$ in the window achieves $o(\cdot)$.
-    \emph{(This $\asymp$ requires $c$-covariant realization;
-    Lemma~\ref{lem:S2_knockdown}(iii) shows it fails without S2.)}
-  \item[\textup{(iv)}] For every $K(c)$,
-    $\Psi \asymp c^{-\beta}(\log c)^{1+\gamma}$ or strictly larger.
-\end{itemize}
-\end{lemma}
+\\begin{lemma}[Balance fixed-point]
+\\label{lem:balance_fixpoint}
+Define $\\Psi := \\Phi_1+\\Phi_3$.
+Under \\textnormal{(S1)--(S3)}:
+\\begin{itemize}[nosep]
+  \\item[\\textup{(i)}] $K(c)=o(\\log c)$:
+    $\\Psi \\succ c^{-\\beta}(\\log c)^{1+\\gamma}$.
+  \\item[\\textup{(ii)}] $K(c)\\geq C\\log c$, $C>c_2$:
+    $\\Psi \\succ c^{-\\beta}(\\log c)^{1+\\gamma}$.
+  \\item[\\textup{(iii)}] $K(c)\\in[c_1\\log c,c_2\\log c]$:
+    $\\Psi \\asymp c^{-\\beta}(\\log c)^{1+\\gamma}$;
+    no $K(c)$ in the window achieves $o(\\cdot)$.
+    \\emph{(Requires $c$-uniform stability of $\\mathfrak{R}(\\Phi_1)$,
+    i.e.\\ S2; fails without it by Lemma~\\ref{lem:S2_knockdown}(iii).)}
+  \\item[\\textup{(iv)}] For every $K(c)$,
+    $\\Psi \\asymp c^{-\\beta}(\\log c)^{1+\\gamma}$ or strictly larger.
+\\end{itemize}
+\\end{lemma}
 
-\begin{proof}
+\\begin{proof}
 (i)--(ii): regime analysis.
-(iii): $\asymp$ from~\eqref{eq:Kstar_power} via
-Proposition~\ref{prop:substitution_stability}(ii);
-$c$-covariance certified by S2
-(Remark~\ref{rem:EM_growth}(ii) and Lemma~\ref{lem:cadm_closure}).
+(iii): $\\asymp$ from~\\eqref{eq:Kstar_power} via
+Proposition~\\ref{prop:substitution_stability}(ii);
+$c$-uniform stability of $\\mathfrak{R}$ certified by S2
+(Remark~\\ref{rem:EM_growth}(ii) and Lemma~\\ref{lem:cadm_closure}).
 (iv): exhaustion.
-\end{proof}
+\\end{proof}
 
-\begin{remark}[Nature of the fixed point]
-\label{rem:fixpoint_nature}
+\\begin{remark}[Nature of the fixed point]
+\\label{rem:fixpoint_nature}
 The balance point is an exact invariant of (S1,S2,S3), not a local minimum.
-The scale $c^{-\beta}(\log c)^{1+\gamma}$ is \emph{forced}
+The scale $c^{-\\beta}(\\log c)^{1+\\gamma}$ is \\emph{forced}
 by the three-way constraint geometry.
-\end{remark}
+\\end{remark}
 
-\begin{theorem}[Structural Obstruction]
-\label{thm:rate_obstruction}
-Let $\cAg\in\mathfrak{T}_\gamma$ satisfy H1--H2 and~(S2),
-admitting decomposition~\eqref{eq:AKlin}--\eqref{eq:AKquad}
+\\begin{theorem}[Structural Obstruction]
+\\label{thm:rate_obstruction}
+Let $\\cAg\\in\\mathfrak{T}_\\gamma$ satisfy H1--H2 and~(S2),
+admitting decomposition~\\eqref{eq:AKlin}--\\eqref{eq:AKquad}
 with $c$-admissible constants.
 For any admissible truncation-based representation compatible with
-\textnormal{(S1)--(S3)}, if
-$\normh{\cK-\cKA}{} = o(c^{-\beta}(\log c)^{1+\gamma})$
-for some $K(c)$, then at least one of \textnormal{(S1)--(S3)} must fail.
-\end{theorem}
+\\textnormal{(S1)--(S3)}, if
+$\\normh{\\cK-\\cKA}{} = o(c^{-\\beta}(\\log c)^{1+\\gamma})$
+for some $K(c)$, then at least one of \\textnormal{(S1)--(S3)} must fail.
+\\end{theorem}
 
-\begin{proof}
-Step~1: Lemma~\ref{lem:decomp_stability}.
-Step~2: Lemma~\ref{lem:balance_fixpoint}(i)--(ii).
-Step~3: Lemma~\ref{lem:balance_fixpoint}(iii) (uses S2 covariance).
+\\begin{proof}
+Step~1: Lemma~\\ref{lem:decomp_stability}.
+Step~2: Lemma~\\ref{lem:balance_fixpoint}(i)--(ii).
+Step~3: Lemma~\\ref{lem:balance_fixpoint}(iii)
+  (uses $c$-uniform stability of $\\mathfrak{R}$, guaranteed by S2).
 Step~4: exhaustion.
-\end{proof}
+\\end{proof}
 
-\begin{remark}[Scope]
-\label{rem:obstruction_scope}
-Obstruction within $\mathcal{M}(\mathrm{S1,S2,S3})$;
+\\begin{remark}[Scope]
+\\label{rem:obstruction_scope}
+Obstruction within $\\mathcal{M}(\\mathrm{S1,S2,S3})$;
 not a lower bound in the sense of O3a.
-\end{remark}
+\\end{remark}
 
-\begin{remark}[Non-tautology]
-\label{rem:non_tautology}
-$\Phi_1$ (H1-driven) and $\Phi_3$ ($\BK$-driven)
+\\begin{remark}[Non-tautology]
+\\label{rem:non_tautology}
+$\\Phi_1$ (H1-driven) and $\\Phi_3$ ($\\BK$-driven)
 have disjoint analytic origins.
-Changing H1 shifts $\Phi_1$; $\Phi_3$ is invariant.
+Changing H1 shifts $\\Phi_1$; $\\Phi_3$ is invariant.
 The balance is a genuine coupling of two independent mechanisms.
-\end{remark}
+\\end{remark}
 
-\begin{remark}[Constant dependence]
-\label{rem:constant_dependence}
-All $\asymp$-constants are $c$-uniform;
-dependence on $(\gamma,\beta,\alpha,C_{\rm lin},C_2)$ is explicit.
+\\begin{remark}[Constant dependence]
+\\label{rem:constant_dependence}
+All $\\asymp$-constants are $c$-uniform;
+dependence on $(\\gamma,\\beta,\\alpha,C_{\\rm lin},C_2)$ is explicit.
 No $K(c)$-dependence after substitution (S3 pointwise).
-No $\gamma\to\infty$ uniformity claimed.
-\end{remark}
+No $\\gamma\\to\\infty$ uniformity claimed.
+\\end{remark}
 
-\begin{remark}[Method class vs.\ operator class]
-\label{rem:method_vs_operator}
-$\mathcal{M}(\mathrm{S1,S2,S3})$ classifies the method, not $\mathfrak{T}_\gamma$.
+\\begin{remark}[Method class vs.\\ operator class]
+\\label{rem:method_vs_operator}
+$\\mathcal{M}(\\mathrm{S1,S2,S3})$ classifies the method, not $\\mathfrak{T}_\\gamma$.
 (S1)--(S3) are the Tauberian condition;
-$c^{-\beta}(\log c)^{1+\gamma}$ is the forced consequence.
-O3a (outside $\mathcal{M}$) remains open.
-\end{remark}
+$c^{-\\beta}(\\log c)^{1+\\gamma}$ is the forced consequence.
+O3a (outside $\\mathcal{M}$) remains open.
+\\end{remark}
 
 %% ============================================================
-\section{Model Family}
-\label{sec:models}
+\\section{Model Family}
+\\label{sec:models}
 %% ============================================================
 
-\begin{center}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{l l c c c c}
-\toprule
-\textbf{Model} & $V$ & $\gamma$ & $\beta$ & $1{+}\gamma$ & H1 \\
-\midrule
-Airy     & $\xi$   & $2/3$ & $1/3$ & $5/3$ & Proved \\
-Harmonic & $\xi^2$ & $1$   & $1/2$ & $2$   & Sketch \\
-$|\xi|^\nu$ & & $\frac{2\nu}{\nu+2}$ & $\frac{\nu}{\nu+2}$
-  & $\frac{3\nu+2}{\nu+2}$ & Sketch \\
-General & & $\gamma$ & $\beta$ & $1+\gamma$ & via H1-K \\
-\bottomrule
-\end{tabular}
-\end{center}
+\\begin{center}
+\\renewcommand{\\arraystretch}{1.4}
+\\begin{tabular}{l l c c c c}
+\\toprule
+\\textbf{Model} & $V$ & $\\gamma$ & $\\beta$ & $1{+}\\gamma$ & H1 \\\\
+\\midrule
+Airy     & $\\xi$   & $2/3$ & $1/3$ & $5/3$ & Proved \\\\
+Harmonic & $\\xi^2$ & $1$   & $1/2$ & $2$   & Sketch \\\\
+$|\\xi|^\\nu$ & & $\\frac{2\\nu}{\\nu+2}$ & $\\frac{\\nu}{\\nu+2}$
+  & $\\frac{3\\nu+2}{\\nu+2}$ & Sketch \\\\
+General & & $\\gamma$ & $\\beta$ & $1+\\gamma$ & via H1-K \\\\
+\\bottomrule
+\\end{tabular}
+\\end{center}
 
 %% ============================================================
-\section{Open Tasks and Conjectures}
-\label{sec:open}
+\\section{Open Tasks and Conjectures}
+\\label{sec:open}
 %% ============================================================
 
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{l l l}
-\toprule
-O1 & H1 envelope minimality (Conjecture~\ref{conj:H1_envelope}) & open \\
-O2 & H2 for $\nu\neq 1$ & open \\
-O3a & lower bound for $\mathcal{M}^c$ & open \\
-O3b & uniform lower bound & open (H3 not imposed) \\
-O4 & Olver-Watson & open \\
-\hline
-\multicolumn{2}{l}{O2--O4 non-blocking for main theorems} & \checkmark \\
-\bottomrule
-\end{tabular}
-\end{center}
+\\begin{center}
+\\renewcommand{\\arraystretch}{1.3}
+\\begin{tabular}{l l l}
+\\toprule
+O1 & H1 envelope minimality (Conjecture~\\ref{conj:H1_envelope}) & open \\\\
+O2 & H2 for $\\nu\\neq 1$ & open \\\\
+O3a & lower bound for $\\mathcal{M}^c$ & open \\\\
+O3b & uniform lower bound & open (H3 not imposed) \\\\
+O4 & Olver-Watson & open \\\\
+\\hline
+\\multicolumn{2}{l}{O2--O4 non-blocking for main theorems} & \\checkmark \\\\
+\\bottomrule
+\\end{tabular}
+\\end{center}
 
-\begin{conjecture}[H1 envelope minimality --- O1]
-\label{conj:H1_envelope}
+\\begin{conjecture}[H1 envelope minimality --- O1]
+\\label{conj:H1_envelope}
 There exists no hypothesis
-$\|e_j\|_{C^0} \leq C_0 j^\gamma f(j) c^{-\beta}$
+$\\|e_j\\|_{C^0} \\leq C_0 j^\\gamma f(j) c^{-\\beta}$
 with $f(j)=o(1)$ monotone that yields
-$\Phi_1(K^*(c),c) = O(c^{-\beta}(\log c)^{1+\gamma})$
+$\\Phi_1(K^*(c),c) = O(c^{-\\beta}(\\log c)^{1+\\gamma})$
 with $c$-admissible constants.
 
-\emph{Status.}
-Sufficiency: Theorem~\ref{thm:universal_rate}.
-Necessity requires $\limsup_{j\to\infty} j^{-\gamma}c^\beta\|e_j\|_{C^0}>0$;
+\\emph{Status.}
+Sufficiency: Theorem~\\ref{thm:universal_rate}.
+Necessity requires $\\limsup_{j\\to\\infty} j^{-\\gamma}c^\\beta\\|e_j\\|_{C^0}>0$;
 operator-specific.
-Airy: confirmed via Abramowitz--Stegun~\S10.4.
+Airy: confirmed via Abramowitz--Stegun~\\S10.4.
 General $V$: open.
-\end{conjecture}
+\\end{conjecture}
 
-\begin{remark}[O1 vs.\ O3a]
-\label{rem:O1_vs_O3a}
-O1: axiom-minimality (within $\mathcal{M}$).
-O3a: method-class question (outside $\mathcal{M}$).
+\\begin{remark}[O1 vs.\\ O3a]
+\\label{rem:O1_vs_O3a}
+O1: axiom-minimality (within $\\mathcal{M}$).
+O3a: method-class question (outside $\\mathcal{M}$).
 Neither implies the other.
-\end{remark}
+\\end{remark}
 
 %% ============================================================
-\section{Programme Conclusion}
-\label{sec:conclusion}
+\\section{Programme Conclusion}
+\\label{sec:conclusion}
 %% ============================================================
 
-\textbf{XVIII--XIX--XX.}
+\\textbf{XVIII--XIX--XX.}
 Universal rate, structural obstruction, H1 exponent rigidity,
-and S2 knockdown: the scale $c^{-\beta}(\log c)^{1+\gamma}$
-is rigid within $\mathcal{M}(\mathrm{S1,S2,S3})$.
+and S2 knockdown: the scale $c^{-\\beta}(\\log c)^{1+\\gamma}$
+is rigid within $\\mathcal{M}(\\mathrm{S1,S2,S3})$.
 Closure inventory:
-\begin{itemize}[nosep,leftmargin=1.5em]
-  \item $c$-admissible chain, four sources;
-  \item \textbf{S1:} exponent generation;
-  \item \textbf{S2:} canonical $c$-covariance mechanism ---
-    equivalence classes of bounds stable under rescaling;
-    removal causes covariance failure, not set-membership failure
-    (Lemma~\ref{lem:S2_knockdown});
-  \item \textbf{S3:} diagonal projection;
-  \item Asymptotic preorder $\succ$: defined on index pairs,
-    representation-independent; $c$-covariance of bounds
-    is a separate property ensured by S2
-    (Definition~\ref{def:scale}, Remark~\ref{rem:scale_admissibility});
-  \item Decomposition stability: no cancellation;
-  \item Balance fixed-point: strict separation + $\asymp$-unavoidability;
-  \item H1 exponent rigidity: injective map, log-inflation;
-  \item Non-tautology, constant uniformity, method/operator scope;
-  \item O1: Airy closed, general open.
-\end{itemize}
+\\begin{itemize}[nosep,leftmargin=1.5em]
+  \\item $c$-admissible chain, four sources (Remark~\\ref{rem:cadmissible});
+  \\item \\textbf{S1:} exponent generation;
+  \\item \\textbf{S2:} $c$-uniform stability of the realization map
+    $\\mathfrak{R}$ (Definition~\\ref{def:realization_map});
+    removal destroys the image of bounds under $\\mathfrak{R}$,
+    not the preorder on $\\mathcal{S}$
+    (Lemma~\\ref{lem:S2_knockdown}, Remark~\\ref{rem:scale_admissibility});
+  \\item \\textbf{S3:} diagonal projection;
+  \\item Preorder $\\succ$: unconditionally well-defined on index pairs;
+    $c$-uniform stability of $\\mathfrak{R}$ is a separate condition (S2);
+  \\item Decomposition stability; balance fixed-point;
+    H1 exponent rigidity; non-tautology; method/operator scope;
+  \\item O1: Airy closed, general open.
+\\end{itemize}
 
-\bigskip
-\begin{quote}\itshape\large
-The scale $c^{-\beta}(\log c)^{1+\gamma}$ is not merely optimal ---
+\\bigskip
+\\begin{quote}\\itshape\\large
+The scale $c^{-\\beta}(\\log c)^{1+\\gamma}$ is not merely optimal ---
 it is the uniquely forced consequence of three mutually irreducible
-constraints: exponent generation~(S1), $c$-covariance of the
-asymptotic order~(S2), and diagonal projection~(S3).
+constraints: exponent generation~(S1),
+$c$-uniform stability of the realization map~(S2),
+and diagonal projection~(S3).
 Remove any one, and the balance fixed-point system
 ceases to have a well-posed conclusion.
-\end{quote}
+\\end{quote}
 
-\begin{thebibliography}{99}
-\bibitem{paper18} \textit{Paper XVIII}, 2026.
-\bibitem{paper19} \textit{Paper XIX}, 2026.
-\bibitem{Kato1966} T.~Kato, \textit{Perturbation Theory for Linear Operators}, Springer, 1966.
-\bibitem{Olver1997} F.~Olver, \textit{Asymptotics and Special Functions}, AK Peters, 1997.
-\bibitem{Zettl2005} A.~Zettl, \textit{Sturm--Liouville Theory}, AMS, 2005.
-\bibitem{ReedSimon2} M.~Reed, B.~Simon, \textit{Methods of Modern Mathematical Physics II},
+\\begin{thebibliography}{99}
+\\bibitem{paper18} \\textit{Paper XVIII}, 2026.
+\\bibitem{paper19} \\textit{Paper XIX}, 2026.
+\\bibitem{Kato1966} T.~Kato, \\textit{Perturbation Theory for Linear Operators}, Springer, 1966.
+\\bibitem{Olver1997} F.~Olver, \\textit{Asymptotics and Special Functions}, AK Peters, 1997.
+\\bibitem{Zettl2005} A.~Zettl, \\textit{Sturm--Liouville Theory}, AMS, 2005.
+\\bibitem{ReedSimon2} M.~Reed, B.~Simon, \\textit{Methods of Modern Mathematical Physics II},
   Academic Press, 1975.
-\bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
-  \textit{Prolate Spheroidal Wave Functions}, Springer, 2013.
-\bibitem{BGT1987} N.~H.\ Bingham, C.~M.\ Goldie, J.~L.\ Teugels,
-  \textit{Regular Variation}, Cambridge UP, 1987.
-\bibitem{AbramowitzStegun} M.~Abramowitz, I.~A.\ Stegun,
-  \textit{Handbook of Mathematical Functions}, NBS, 1964.
-\end{thebibliography}
+\\bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \\textit{Prolate Spheroidal Wave Functions}, Springer, 2013.
+\\bibitem{BGT1987} N.~H.\\ Bingham, C.~M.\\ Goldie, J.~L.\\ Teugels,
+  \\textit{Regular Variation}, Cambridge UP, 1987.
+\\bibitem{AbramowitzStegun} M.~Abramowitz, I.~A.\\ Stegun,
+  \\textit{Handbook of Mathematical Functions}, NBS, 1964.
+\\end{thebibliography}
 
-\end{document}
+\\end{document}
