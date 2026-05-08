@@ -38,10 +38,8 @@
 \begin{document}
 
 \title[Paper XVIII: Airy Universality]{%
-  Paper~XVIII: Airy Kernel Universality (v22)\\[0.3em]
-  \large Tensorised Parseval $\cdot$
-  Slepian $\alpha$-Gluing $\cdot$
-  Neutral Limit Phrasing}
+  Paper~XVIII: Airy Kernel Universality (v23)\\[0.3em]
+  \large Subsequence Principle $\cdot$ Tensor Projection Explicit}
 
 \author{\textit{prolate-gram-coercivity programme}}
 \date{May 2026}
@@ -51,24 +49,17 @@ This paper proves $\cK(\xit,\xit')\to\cKA(\xit,\xit')$ pointwise
 (Main Lemma~\ref{lem:main}), closing BR3.
 
 \medskip
-\textbf{v22: three sentence-level fixes to v21.}
+\textbf{v23: two sentence-level patches to Remark~\ref{rem:dct} Step~3.}
 \begin{enumerate}[nosep]
-\item \textbf{Tensorised Parseval
-  (Remark~\ref{rem:dct}, Step~3):}
-  $L^2([0,M]^2)$-norm formula restated as
-  projection onto $\mathrm{span}\{u_1,\dots,u_K\}$ in each
-  variable separately in $L^2(\R_+)\otimes L^2(\R_+)$
-  (RS II Thm.~II.10).
-\item \textbf{Slepian $\alpha$-gluing explicit
-  (Lemma~\ref{lem:slepianunif}):}
-  inner ($\beta_1$) and deep-tail ($\beta_2$) exponents
-  unified as $\alpha:=\min(\beta_1,\beta_2)>0$.
-\item \textbf{Neutral phrasing
-  (Remark~\ref{rem:iterated}):}
-  ``non-uniformity is harmless''
-  $\to$
-  ``no joint uniform convergence in $(c,K)$
-  is required for the diagonal limit argument''.
+\item \textbf{Subsequence principle} replaces
+  the incorrect ``monotonicity of $\SK$ gives full-sequence a.e.''
+  claim: $L^2([0,M]^2)$-convergence + uniqueness of limit
+  $\Rightarrow$ full-sequence $L^2$, then subsequential a.e.
+\item \textbf{Tensor projection made explicit:}
+  $\SK=\sum_{j\leq K}(P_j\otimes P_j)$,
+  $P_j=\langle u_j,\cdot\rangle u_j$ rank-1 in $L^2(\R_+)$;
+  norm identity from orthogonality of the $P_j$
+  in $L^2(\R_+)\otimes L^2(\R_+)$.
 \end{enumerate}
 \end{abstract}
 
@@ -275,38 +266,33 @@ $\sup_{c\geq c_1}\sum_{j>K_0}\lambda_{n^*+j}^{(c)}
 for $K_0$ large.
 \end{lemma}
 \begin{proof}
-Write $n_c=\lfloor2c/\pi\rfloor$.
-Fix $\delta\in(0,\tfrac{1}{3})$.
+Write $n_c=\lfloor2c/\pi\rfloor$. Fix $\delta\in(0,\tfrac{1}{3})$.
 
-\textbf{Inner transition regime} ($K_0\leq k\leq c^{1/3+\delta}$,
-$c\geq c_1$).
-Osipov--Rokhlin--Xiao~\cite{Osipov2013} \S4.2.1
-yields $\lambda_{n_c+k}^{(c)}\leq e^{-\beta_1 k}$
-with $\beta_1=\beta_1(\delta)>0$ uniform in $c\geq c_1(\delta)$.
+\textbf{Inner transition regime} ($K_0\leq k\leq c^{1/3+\delta}$).
+Osipov--Rokhlin--Xiao~\cite{Osipov2013} \S4.2.1:
+$\lambda_{n_c+k}^{(c)}\leq e^{-\beta_1 k}$,
+$\beta_1=\beta_1(\delta)>0$ uniform in $c\geq c_1(\delta)$.
 
 \textbf{Deep tail} ($k>c^{1/3+\delta}$).
 Slepian~\cite{Slepian1978} Thm.~1:
-$\lambda_{n_c+k}^{(c)}<2e^{-c\,\gamma_0}$
-for $\gamma_0=\gamma_0(\delta)>0$;
-for $k>c^{1/3+\delta}$ this gives
-$\lambda_{n_c+k}^{(c)}<2e^{-\beta_2 k}$
-with $\beta_2=c^{2/3-\delta}\gamma_0\geq\beta_2(\varepsilon)>0$
-for $c\geq c_1(\varepsilon)$ fixed.
+$\lambda_{n_c+k}^{(c)}<2e^{-\beta_2 k}$,
+$\beta_2=\beta_2(\varepsilon)>0$ uniform in $c\geq c_1(\varepsilon)$.
 
 \textbf{Gluing.}
-Set $\alpha:=\min(\beta_1,\beta_2)>0$.
+Both regimes cover $k\geq K_0$ without gap
+(finite union of intervals);
+set $\alpha:=\min(\beta_1,\beta_2)>0$.
 This single exponent satisfies~\eqref{eq:uniftail}
-for all $k\geq K_0$ and $c\geq c_1$, covering both regimes.
+for all $k\geq K_0$ and $c\geq c_1$.
 \end{proof}
 
 \begin{remark}[Iterated limit; no joint uniformity needed]
 \label{rem:iterated}
 For each $\varepsilon>0$:
-(i) choose $K_0=K_0(\varepsilon)$ from
-Lemma~\ref{lem:slepianunif} (uniform in $c\geq c_1$);
+(i) choose $K_0=K_0(\varepsilon)$ from Lemma~\ref{lem:slepianunif}
+(uniform in $c\geq c_1$);
 (ii) choose $c_0=c_0(K_0,M)$ from Lemma~\ref{lem:langer}.
 For $c\geq\max(c_0,c_1)$: total error $<\varepsilon$.
-
 \emph{No joint uniform convergence in $(c,K)$ is required
 for the diagonal limit argument;}
 only the sequential limit
@@ -399,37 +385,40 @@ Hence $h\in L^1([0,M]^2)$.
 (Note: $h\notin L^1(\R_+^2)$ globally;
 the restriction to $[0,M]^2$ is essential.)
 
-\textit{Step 3: Tensorised Parseval in $L^2(\R_+)\otimes L^2(\R_+)$.}
-The kernel has the expansion
-$\cKA=\sum_k u_k\otimes u_k$ in
-$L^2(\R_+)\otimes L^2(\R_+)$ (RS~\cite{ReedSimon2} Thm.~II.10).
-Truncating to $\mathrm{span}\{u_1,\dots,u_K\}$
-in each variable separately gives
+\textit{Step 3: Tensorised Parseval + $L^2$-convergence.}
+Write
+$\SK=\sum_{j=1}^K P_j\otimes P_j$
+where $P_j=\langle u_j,\cdot\rangle u_j$
+is the rank-1 projection in $L^2(\R_+)$.
+Orthogonality of the $P_j$ in $L^2(\R_+)\otimes L^2(\R_+)$
+(RS~\cite{ReedSimon2} Thm.~II.10) gives
 \begin{equation}\label{eq:tensorparseval}
   \normh{\cKA-\SK}{L^2([0,M]^2)}^2
   = \sum_{j>K}
-     \normh{u_j}{L^2([0,M])}^2\cdot
-     \normh{u_j}{L^2([0,M])}^2
+     \normh{u_j}{L^2([0,M])}^4
   \leq \sum_{j>K}\normh{u_j}{L^2([0,M])}^2
   \to 0
 \end{equation}
-by Bessel's inequality in $L^2(\R_+)$
-(since $\sum_j\normh{u_j}{L^2([0,M])}^2
+by Bessel's inequality
+($\sum_j\normh{u_j}{L^2([0,M])}^2
 =\int_0^M\cKA(\xit,\xit)\,d\xit<\infty$
 by~\eqref{eq:diagbound}).
-Hence $\SK\to\cKA$ in $L^2([0,M]^2)$,
-giving a subsequence converging a.e.\ on $[0,M]^2$;
-monotonicity $\SK(\xit,\xit)\nearrow\cKA(\xit,\xit)$
-(diagonal) then extends full-sequence a.e.\ convergence
-off-diagonal via~\eqref{eq:CStail}.
+Hence $\SK\to\cKA$ in $L^2([0,M]^2)$.
+Since the $L^2$-limit is unique (equal to $\cKA$),
+the full sequence $\SK$ converges in $L^2([0,M]^2)$;
+a standard subsequence extraction then yields
+$\SK_n(\xit,\xit')\to\cKA(\xit,\xit')$
+for a.e.\ $(\xit,\xit')\in[0,M]^2$,
+which is the only property used in Step~4.
 
 \textit{Step 4: Lebesgue DCT.}
 Dominated bound~\eqref{eq:CStail} with $h\in L^1([0,M]^2)$
-+ a.e.\ convergence
++ a.e.\ convergence (Step~3)
 $\Rightarrow$ $\SK\to\cKA$ in $L^1([0,M]^2)$.
 \emph{No trace of $\mathrm{Id}_{[0,M]}$;
 no HS-norm of the full kernel;
-no Mercer monotonicity.}
+no Mercer monotonicity;
+no monotonicity of $\SK$ in $K$.}
 \end{remark}
 
 %% ============================================================
@@ -468,44 +457,42 @@ $\normh{\cK-\cKA}{L^2(w\otimes w)}\to 0$
 \midrule
 $L^1$ diagonal via Airy integral
   & \checkmark & Prop.~\ref{prop:kernelbridge}(b) \\
-Tonelli: $\normh{h}{L^1}=(\int\sqrt{\cdot}\,d\xit)^2$
+Tonelli: $\normh{h}{L^1}=(\int\sqrt{\cdot})^2$ explicit
   & \checkmark & Eq.~\eqref{eq:Tonelli} \\
-Tensorised Parseval ($L^2(\R_+)\otimes L^2(\R_+)$)
-  & \checkmark & Eq.~\eqref{eq:tensorparseval}, RS II.10 \\
-Slepian $\alpha$-gluing (two regimes, one exponent)
+Tensor: $\SK=\sum P_j\otimes P_j$, norm via orthogonality
+  & \checkmark & Eq.~\eqref{eq:tensorparseval} \\
+$L^2$-convergence $\Rightarrow$ subsequential a.e.
+  & \checkmark & Rem.~\ref{rem:dct} Step~3 \\
+No monotonicity of $\SK$ used
+  & \checkmark & Rem.~\ref{rem:dct} Step~4 note \\
+Slepian: two regimes, $\alpha=\min(\beta_1,\beta_2)$
   & \checkmark & Lem.~\ref{lem:slepianunif} \\
+Gluing covers $k\geq K_0$ without gap
+  & \checkmark & Lem.~\ref{lem:slepianunif} proof \\
 Iterated limit, no joint $(c,K)$ uniformity
   & \checkmark & Rem.~\ref{rem:iterated} \\
 Uniformity chain $K\to C_K\to\delta_0\to c_0$
   & \checkmark & Rem.~\ref{rem:uniform} \\
 Langer (Airy scale $c^{-2/3}$)
   & \checkmark & Lem.~\ref{lem:langer} \\
-$H^{-1}$ via $H^1_0$-$L^\infty$ duality
-  & \checkmark & Morrey, $n=1$ \\
-Uniform $L^\infty$
-  & \checkmark & $H^2$ + Rellich-K. \\
 Sturm + gap
   & \checkmark & Zettl 8.3.1 \\
 Poset DAG, no cycle
   & \checkmark & Rem.~\ref{rem:feedback} \\
-Main Lemma
-  & \checkmark & Steps 1--4 \\
-BR3
-  & \checkmark & XVII + XVIII \\
+Main Lemma & \checkmark & Steps 1--4 \\
+BR3 & \checkmark & XVII + XVIII \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \[
 \boxed{
-  \underbrace{p_0}_{\cKA\leq C(1{+}\xit)^{-1/2}}
-  \xrightarrow{\text{Tonelli}}
-  h\in L^1([0,M]^2)
-  \;+\;
-  \underbrace{\ell_{C0}}_{e^{-\alpha k},\,\alpha{=}\min(\beta_1,\beta_2)}
-  \xrightarrow{\text{tensor Parseval}+\text{DCT}}
-  \underbrace{m}_{\text{Main}}
-  \to T
+  \underbrace{\SK=\textstyle\sum_{j\leq K}P_j{\otimes}P_j}_{\text{tensor proj.}}
+  \xrightarrow{L^2}
+  \cKA
+  \xrightarrow{\text{subseq. a.e.}+h\in L^1}
+  \underbrace{\text{DCT on }[0,M]^2}_{\ell_D}
+  \to m\to T
 }
 \]
 
