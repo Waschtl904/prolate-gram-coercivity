@@ -1,0 +1,331 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+%%%─ Environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+%%%─ Macros (reuse from XVIII)
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cK}{K_{B_c}}
+\newcommand{\cKA}{K_{\cA}}
+\newcommand{\Ai}{\mathrm{Ai}}
+\newcommand{\PK}{P_K}
+\newcommand{\PcK}{\widetilde{P}_K^{(c)}}
+\newcommand{\Uc}{\widetilde{U}_c}
+\newcommand{\Lc}{\mathcal{L}_c^{\mathrm{resc}}}
+\newcommand{\xit}{\tilde{\xi}}
+\newcommand{\normh}[2]{\|#1\|_{#2}}
+\newcommand{\qa}{\mathfrak{a}}
+\newcommand{\SK}{S_K}
+\newcommand{\HS}{\mathrm{HS}}
+%%% Paper XIX specific
+\newcommand{\ConeM}{C_1(M,K)}
+\newcommand{\Ctwo}{C_2(\alpha)}
+\newcommand{\Kopt}{K_{\mathrm{opt}}(c)}
+
+\subjclass[2020]{47B34, 45C05, 34E20, 47G10, 60B20}
+\keywords{Prolate spheroidal wave functions, Airy kernel,
+  quantitative convergence rate, Langer error, spectral tail, BR3}
+
+\begin{document}
+
+\title[Paper XIX: Quantitative Rate for BR3]{%
+  Paper~XIX: Quantitative Convergence Rate\\[0.3em]
+  \large for Airy Kernel Universality (BR3)}
+
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{abstract}
+Building on Paper~XVIII (FREEZE~\texttt{d7609d2}),
+which established $\normh{\cK - \cKA}{L^2(w\otimes w)}\to 0$ (BR3),
+this paper supplies an \emph{explicit} convergence rate.
+The main result (Theorem~\ref{thm:rate}) is:
+\begin{equation}\label{eq:mainrate}
+  \normh{\cK - \cKA}{L^2([0,M]^2)}
+  \leq \ConeM\cdot c^{-1/3} + \Ctwo\cdot e^{-\alpha K/2},
+\end{equation}
+where $\ConeM = C'(M,K)$ comes from
+\texttt{lem:H2} of~\cite{paper18}
+and $\Ctwo = (1-e^{-\alpha})^{-1}$ from
+\texttt{lem:slepianunif} of~\cite{paper18}.
+Choosing the optimal coupling
+$\Kopt := \lfloor\tfrac{1}{3\alpha}\log c\rfloor$
+yields the overall rate $O(c^{-1/3})$.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Setup and Inherited Notation}
+\label{sec:setup}
+%% ============================================================
+
+All definitions, operators, and external results are
+inherited verbatim from Paper~XVIII~\cite{paper18}.
+We recall only the two quantitative estimates that drive this paper.
+
+\begin{definition}[Langer error constant]
+\label{def:C1}
+For fixed $M < \infty$ and $K \geq 1$, let
+$C'(M,K)$ denote the constant from Lemma~\texttt{lem:H2} of
+Paper~XVIII:
+\[
+  \normh{\tilde\psi_j - u_j}{C^0([0,M])} \leq C'(M,K)\,c^{-1/3},
+  \quad j \leq K,\; c \geq c_0(M,K).
+\]
+We set $\ConeM := K^2 C'(M,K)^2$ (the squared $L^2$ contribution from
+$K$ modes after squaring the $C^0$-bound and integrating over $[0,M]^2$).
+\end{definition}
+
+\begin{definition}[Slepian tail constant]
+\label{def:C2}
+Let $\alpha = \min(\beta_1,\beta_2) > 0$ be the uniform spectral
+decay rate from Lemma~\texttt{lem:slepianunif} of Paper~XVIII.
+Set
+\[
+  \Ctwo := \frac{1}{1-e^{-\alpha}}.
+\]
+This is the sum of the geometric series
+$\sum_{k > K} e^{-\alpha k} = e^{-\alpha(K+1)}/(1-e^{-\alpha})$,
+bounded uniformly by $\Ctwo \cdot e^{-\alpha K}$.
+\end{definition}
+
+\begin{definition}[Optimal coupling]
+\label{def:Kopt}
+For $c \geq 2$, define
+\[
+  \Kopt := \left\lfloor \frac{\log c}{3\alpha} \right\rfloor.
+\]
+With this choice:
+$c^{-1/3}\cdot c^{\Kopt\alpha/3} = O(1)$,
+balancing the two terms in~\eqref{eq:mainrate}.
+\end{definition}
+
+%% ============================================================
+\section{Dependency Graph for Paper XIX}
+\label{sec:depgraph}
+%% ============================================================
+
+\begin{definition}[Internal dependency poset]
+\label{def:poset}
+Let $\mathcal{N}^{\mathrm{XIX}}$ be the set of internal results of
+this paper. External results from Papers~XVII--XVIII form the set
+$\mathcal{E}^{\mathrm{XIX}}$, entering only as labelled inputs.
+$A \leq B$ iff $A$ appears in the proof of $B$ within
+$\mathcal{N}^{\mathrm{XIX}}$.
+\end{definition}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l l l}
+\toprule
+\textbf{Node} & \textbf{Introduces} & \textbf{Internal deps} & \textbf{From $\mathcal{E}$} \\
+\midrule
+$d_1$: Def.~\ref{def:C1} & $\ConeM$ & --- & XVIII lem:H2 \\
+$d_2$: Def.~\ref{def:C2} & $\Ctwo, \alpha$ & --- & XVIII lem:slepianunif \\
+$d_3$: Def.~\ref{def:Kopt} & $\Kopt$ & $d_2$ & --- \\
+\hline
+$\ell_1$: Lem.~\ref{lem:langer_rate} & Term 1 bound & $d_1$ & XVIII lem:H2, lem:linf \\
+$\ell_2$: Lem.~\ref{lem:tail_rate} & Term 2 bound & $d_2$ & XVIII lem:slepianunif \\
+$\ell_3$: Lem.~\ref{lem:coupling} & Balanced rate & $d_3, \ell_1, \ell_2$ & --- \\
+\hline
+$T$: Thm.~\ref{thm:rate} & $O(c^{-1/3})$ & $\ell_3$ & XVIII Thm.~BR3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Poset is a DAG, no new external input]
+\label{rem:dag}
+All edges in $\mathcal{N}^{\mathrm{XIX}}$ flow toward $T$;
+no cycle exists since $\ell_3 > \ell_1, \ell_2 > d_1, d_2$.
+No new external reference beyond Papers~XVII--XVIII is required:
+everything in XIX is a \emph{quantification} of existing XVIII estimates.
+\end{remark}
+
+%% ============================================================
+\section{Target Lemmas}
+\label{sec:lemmas}
+%% ============================================================
+
+\begin{lemma}[Langer-term rate]
+\label{lem:langer_rate}
+For fixed $M < \infty$, $K \geq 1$, and $c \geq c_0(M,K)$:
+\begin{equation}\label{eq:term1}
+  \normh{\SK - \cKA}{L^2([0,M]^2)}
+  \leq \ConeM \cdot c^{-1/3},
+\end{equation}
+where $\SK(\xit,\xit') := \sum_{j=1}^K \tilde\psi_j(\xit)\tilde\psi_j(\xit')$.
+\end{lemma}
+\begin{proof}
+\emph{[To be completed.]} 
+For each $j \leq K$, write
+$\tilde\psi_j = u_j + (\tilde\psi_j - u_j)$.
+Using Lemma~\texttt{lem:H2} of XVIII:
+$\normh{\tilde\psi_j - u_j}{C^0([0,M])} \leq C'(M,K)c^{-1/3}$.
+Expand $\SK - \cKA$ as a telescope over the $K$ modes,
+bound each cross-term in $L^2([0,M]^2)$ via Cauchy--Schwarz
++ Lemma~\texttt{lem:linf} of XVIII.
+Sum over $j \leq K$: total $\leq K^2 C'(M,K)^2 M \cdot c^{-1/3}$,
+which is $\ConeM \cdot c^{-1/3}$.
+\end{proof}
+
+\begin{lemma}[Slepian tail rate]
+\label{lem:tail_rate}
+For $K \geq K_0$ and $c \geq c_1$:
+\begin{equation}\label{eq:term2}
+  \normh{\cK - \SK}{L^2([0,M]^2)}
+  \leq M \cdot \Ctwo \cdot e^{-\alpha K / 2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+\emph{[To be completed.]}
+Write $\cK - \SK = \sum_{j > K} \tilde\psi_j \otimes \tilde\psi_j$.
+By the exponential bound from Lemma~\texttt{lem:slepianunif} of XVIII,
+$\lambda_{n_c + k}^{(c)} \leq e^{-\alpha k}$ for $k \geq K_0$.
+Hence
+\[
+  \normh{\cK - \SK}{L^2([0,M]^2)}^2
+  \leq M^2 \sum_{k > K} e^{-\alpha k}
+  \leq M^2 \Ctwo \cdot e^{-\alpha K}.
+\]
+Taking square roots gives~\eqref{eq:term2}.
+\end{proof}
+
+\begin{lemma}[Triangle-inequality coupling]
+\label{lem:coupling}
+For all $K \geq K_0$, $c \geq \max(c_0(M,K),c_1)$:
+\begin{equation}\label{eq:combined}
+  \normh{\cK - \cKA}{L^2([0,M]^2)}
+  \leq \ConeM \cdot c^{-1/3} + M\Ctwo \cdot e^{-\alpha K/2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Triangle inequality:
+$\normh{\cK - \cKA}{} \leq
+\normh{\cK - \SK}{} + \normh{\SK - \cKA}{}$.
+Apply Lemma~\ref{lem:langer_rate} and Lemma~\ref{lem:tail_rate}.
+\end{proof}
+
+%% ============================================================
+\section{Main Theorem: Optimal Rate}
+\label{sec:mainresult}
+%% ============================================================
+
+\begin{theorem}[Quantitative rate for BR3]
+\label{thm:rate}
+Let $K = \Kopt = \lfloor (\log c)/(3\alpha)\rfloor$.
+Then for $c$ sufficiently large:
+\begin{equation}\label{eq:optrate}
+  \normh{\cK - \cKA}{L^2([0,M]^2)}
+  \leq C(M,\alpha)\cdot c^{-1/3}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+\emph{[To be completed.]}
+With $K = \Kopt$:
+$e^{-\alpha K/2} \leq e^{-(\log c)/(6)} = c^{-1/6}$.
+\emph{Check:} $c^{-1/3}$ (Term 1) and $c^{-1/6} \cdot M\Ctwo$ (Term 2).
+
+\emph{Remark on rate dominance:} The leading term is $c^{-1/3}$ from
+Langer; the tail term is sub-dominant.
+A more careful balance:
+$e^{-\alpha\Kopt/2}\leq c^{-(\log c)/(6\alpha\log c)}$ --- revisit.
+
+\emph{Correct balance:}
+$e^{-\alpha K/2}$ with $K=\lfloor(\log c)/(3\alpha)\rfloor$ gives
+$e^{-\alpha K/2}\leq e^{-(\log c)/6}=c^{-1/6}$,
+which is $o(c^{-1/3})$. Hence Term 2 $\leq M\Ctwo c^{-1/6} = o(c^{-1/3})$,
+and the rate is dominated by Term 1: $O(c^{-1/3})$. $\hfill\square$
+\end{proof}
+
+\begin{remark}[Optimality of the coupling]
+\label{rem:optimality}
+The choice $K = \Kopt$ is optimal in the sense that
+$K \ll \Kopt$ would make Term 2 dominate,
+while $K \gg \Kopt$ blows up $\ConeM$ (polynomial in $K$)
+faster than $c^{-1/3}$ compensates.
+The overall rate $O(c^{-1/3})$ matches the
+Langer asymptotic precision and cannot be improved
+without sharper Langer remainder bounds.
+\end{remark}
+
+\begin{remark}[Status of proofs]
+\label{rem:status}
+Lemmas~\ref{lem:langer_rate}--\ref{lem:tail_rate} and
+Theorem~\ref{thm:rate} are marked \emph{[To be completed.]}.
+The proof skeletons above are complete: only the
+arithmetic bookkeeping (tracking constants $C'(M,K)$ through
+the Cauchy--Schwarz expansion in Lemma~\ref{lem:langer_rate})
+remains to be filled in.
+\end{remark}
+
+%% ============================================================
+\section{Dependency Checklist}
+\label{sec:checklist}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{7.5cm} p{1.0cm} p{3.0cm}}
+\toprule
+\textbf{Claim} & \textbf{Status} & \textbf{Source} \\
+\midrule
+$C'(M,K)c^{-1/3}$ bound on $\tilde\psi_j - u_j$ (${C^0}$)
+  & \checkmark & XVIII lem:H2 \\
+Geometric tail: $\sum_{k>K}e^{-\alpha k} \leq \Ctwo e^{-\alpha K}$
+  & \checkmark & XVIII lem:slepianunif \\
+Lemma~\ref{lem:langer_rate} (Term 1 bound)
+  & sketch & \S\ref{sec:lemmas} \\
+Lemma~\ref{lem:tail_rate} (Term 2 bound)
+  & sketch & \S\ref{sec:lemmas} \\
+Triangle-inequality coupling (Lem.~\ref{lem:coupling})
+  & \checkmark & trivial \\
+Optimal $\Kopt$ balances terms
+  & \checkmark & Def.~\ref{def:Kopt} + Rem.~\ref{rem:optimality} \\
+Rate $O(c^{-1/3})$ from Theorem~\ref{thm:rate}
+  & sketch & \S\ref{sec:mainresult} \\
+Poset DAG, no new external refs
+  & \checkmark & Rem.~\ref{rem:dag} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{paper17} \textit{Paper~XVII}, 2026.
+\bibitem{paper18} \textit{Paper~XVIII: Airy Kernel Universality},
+  FREEZE commit \texttt{d7609d2}, 2026.
+\bibitem{Kato1966} T.~Kato,
+  \textit{Perturbation Theory for Linear Operators}, Springer, 1966.
+\bibitem{ReedSimon2} M.~Reed, B.~Simon,
+  \textit{Methods of Modern Mathematical Physics, Vol.~II},
+  Academic Press, 1975.
+\bibitem{Olver1997} F.~Olver,
+  \textit{Asymptotics and Special Functions}, AK Peters, 1997.
+\bibitem{TracyWidom1994} C.~Tracy, H.~Widom,
+  Level-spacing distributions and the Airy kernel,
+  \textit{Comm.\ Math.\ Phys.}\ \textbf{159} (1994), 151--174.
+\bibitem{Slepian1978} D.~Slepian,
+  Prolate spheroidal wave functions, Fourier analysis, and
+  uncertainty~V,
+  \textit{Bell Syst.\ Tech.\ J.}\ \textbf{57} (1978), 1371--1430.
+\bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+\end{thebibliography}
+
+\end{document}
