@@ -55,50 +55,54 @@ gap problem (Gap-S) for the prolate concentration operator
 \]
 in the transition regime $n \sim 2c/\pi$.
 The primary contribution is not a proof of Gap-S,
-but a precise identification of why all previous approaches fail
-and what minimal inputs would be logically sufficient.
+but a precise identification of why all previous approaches fail.
+
+\medskip\noindent
+\textbf{Central new insight.}
+All currently known approaches reduce Gap-S to a local spectral
+counting problem in a $c^{-1/3}$-scale transition window:
+the question of whether that window contains exactly two eigenvalues
+of $\Kc$, no more and no fewer.
+This counting problem --- condition~(Q5) --- is a Widom-type spectral
+rigidity question, not a perturbative consequence of quasimode analysis.
+It is the genuine obstruction.
 
 \medskip\noindent
 \textbf{Central negative results.}
 \begin{itemize}
 \item Gram coercivity ($\lambda_{\min}(G_N) \asymp c^{-1/2}$, Paper~I)
   does \emph{not} imply nontrivial spectral gaps
-  (Proposition~\ref{prop:gram-fails}).
-  Gram coercivity controls coordinates, not spectral separation.
-\item Every approach based on $\Kc$-invariant trial spaces is
-  \emph{circularly dependent on Gap-S} (Remark~\ref{rem:circular}).
-  This provides a unified explanation for the failure of all
-  strategies in Papers~X--XII.
+  (Proposition~\ref{prop:gram-fails}):
+  coordinate stability is not spectral rigidity.
+\item Every approach based on $\Kc$-invariant trial spaces
+  is circularly dependent on Gap-S (Remark~\ref{rem:circular}).
+  This is a fixed-point obstruction: for invariant spaces,
+  the model gap is identical to the sought gap.
+  This explains the failure of all strategies in Papers~X--XII.
 \end{itemize}
 
 \medskip\noindent
 \textbf{Reduction to minimal inputs.}
-Logically sufficient conditions for Gap-S are identified and
-decomposed into three independent ingredients:
-Gram coercivity (stability; unconditional),
-spectral nondegeneracy (local spectral geometry; open),
-and spectral window isolation (index identification; open).
-None of the three suffices alone.
-The primary open difficulty is condition~(Q5):
-a local spectral counting statement $N(W) = 2$
-in the transition window, which is a Widom-type problem
-in the regime $n - 2c/\pi \sim c^{1/3}$.
+Gap-S $\Longleftarrow$ microlocal spectral geometry $+$ local counting
+rigidity, not Gap-S $\Longleftarrow$ linear algebra.
+Three logically independent ingredients are isolated:
+Gram coercivity (stability, unconditional),
+spectral nondegeneracy (local geometry, open),
+and spectral window isolation (index counting, open).
+None suffices alone.
 
 \medskip\noindent
-\textbf{Conditional outputs.}
+\textbf{Conditional outputs} (value: precise problem formulation,
+not independent results).
 \begin{itemize}
-\item \emph{(Theorem~A, Conditional Transfer Principle.)}
-  Under the three ingredients above,
-  $\gap{c}{n} \geq Cc^{-1/2}$.
-  Theorem~A is a \emph{lifting device}, not a deep result;
-  the depth lies entirely in its assumptions.
-\item \emph{(Theorem~B, Conditional Quasimode Separation.)}  
-  Under local quasimode hypotheses, a conditional gap bound follows.
-  Theorem~B is the most structurally sound conditional result;
-  it does not use invariant spaces and avoids the circularity of Theorem~A.
-\item \emph{(Corollary~C.)} A roadmap consequence: under Airy transition
-  asymptotics, the gap scale would be $c^{-1/3}$.
-  This is not a theorem; it defines what needs to be built.
+\item \emph{Theorem~A} (Conditional Transfer Principle):
+  a lifting device whose entire content lies in its assumptions.
+  It contains no genuine spectral information beyond the inputs.
+\item \emph{Theorem~B} (Conditional Quasimode Separation):
+  the more structurally sound route; avoids invariant spaces
+  and the circularity of Theorem~A.
+\item \emph{Corollary~C}: a roadmap consequence
+  identifying the $c^{-1/3}$ target scale.
 \end{itemize}
 \end{abstract}
 
@@ -118,8 +122,9 @@ in the regime $n - 2c/\pi \sim c^{1/3}$.
   \item \textbf{Papers~X--XII}: WKB, Fredholm, direct coercivity --- all fail.
   \item \textbf{This paper}: Unified obstruction analysis.
     Gram coercivity is a stability input only.
-    The circularity of all invariant-space approaches is proved.
+    The circularity of all invariant-space approaches is established.
     Minimal sufficient conditions for Gap-S are isolated.
+    The primary obstruction is identified as a local counting problem.
 \end{itemize}
 
 \subsection{Gap-S}
@@ -145,27 +150,48 @@ $\gap{c}{n} := \lam{c}{n} - \lam{c}{n+1}$,\quad
 $V_N := \spann\{\pswf{0},\ldots,\pswf{N}\}$.
 \end{definition}
 
-\begin{lemma}[Compression and Cauchy interlacing]
+\begin{lemma}[Compression, Ritz values, and min-max principle]
 \label{lem:compression}
-For finite-dimensional $E \subset L^2([-1,1])$ with $\dim E = N$,
-the compression $T_E := P_E \Kc|_E$ is self-adjoint
-and its eigenvalues $\sigma_0(T_E) \geq \cdots \geq \sigma_{N-1}(T_E)$
-are the Ritz values of $\Kc$ with respect to $E$.
-They satisfy the Cauchy interlacing inequalities:
-\begin{equation}\label{eq:cauchy}
-  \lam{c}{j} \geq \sigma_j(T_E) \geq \lam{c}{j+N'}
-  \qquad (j = 0,\ldots,N-1),
+Let $A: H \to H$ be a compact self-adjoint operator
+on a separable Hilbert space $H$,
+with eigenvalues $\lambda_0(A) \geq \lambda_1(A) \geq \cdots \to 0$.
+Let $E \subset H$ be an $N$-dimensional subspace
+with compression $T_E := P_E A|_E$,
+having eigenvalues $\sigma_0 \geq \cdots \geq \sigma_{N-1}$.
+
+The eigenvalues $\sigma_j$ are the Ritz values of $A$ in $E$:
+\begin{equation}\label{eq:ritz}
+  \sigma_j = \max_{\substack{S \subset E\\ \dim S = j+1}}
+  \min_{u \in S,\, \|u\|=1} \ip{Au}{u}.
 \end{equation}
-where $N' = \dim L^2 - N$ in the finite-rank sense
-(for compact operators: the appropriate complement dimension).
-In particular, Ritz values are not in general eigenvalues
-or even spectral points of $\Kc$.
+In particular, by the min-max principle applied simultaneously
+to $A$ (with all of $H$ as test space) and to $A|_E$:
+\begin{equation}\label{eq:interlace}
+  \lambda_j(A) \geq \sigma_j(T_E)
+  \qquad \text{for all } j = 0,\ldots,N-1.
+\end{equation}
+Ritz values are not in general eigenvalues or spectral points of $A$.
 \end{lemma}
 
 \begin{proof}
-Ritz-value characterisation: standard min-max principle restricted to $E$.
-Cauchy interlacing: Kato~\cite{Kato1966}, Chapter~V.\S4.
+\eqref{eq:ritz} is the min-max principle restricted to $E$.
+\eqref{eq:interlace} holds because every $j$-dimensional subspace
+of $E$ is a valid test space for the min-max characterisation of
+$\lambda_j(A)$ over all of $H$, so the constrained maximum
+$\sigma_j$ cannot exceed the unconstrained maximum $\lambda_j(A)$.
+The claim that $\sigma_j \notin \sigma(A)$ in general is illustrated
+by any compression to a subspace not spanned by eigenvectors.
 \end{proof}
+
+\begin{remark}[What interlacing gives and does not give]
+\label{rem:interlace}
+\eqref{eq:interlace} gives the one-sided bound $\sigma_j \leq \lambda_j(A)$.
+For the lower bound in finite-rank settings one sometimes writes
+$\sigma_j \geq \lambda_{j+N'}(A)$ for an appropriate $N'$;
+however, for the arguments of this paper only the upper bound
+\eqref{eq:interlace} is used, and we do not claim a specific
+codimension-dependent lower bound.
+\end{remark}
 
 %% ============================================================
 \section{Gram Coercivity as Stability Input}
@@ -186,18 +212,18 @@ but all consecutive eigenvalue gaps equal to zero.
 \end{proposition}
 
 \begin{proof}
-$T := \mu \cdot \mathrm{Id}$ on any orthonormal basis $\{e_j\}$:
-$G = I$, all gaps zero.
-For general $\alpha$: replace $e_j$ by $\sqrt{\alpha}\,e_j$;
+$T := \mu \cdot \mathrm{Id}$ on any orthonormal basis:
+$G = I$, gaps zero.
+For general $\alpha$: replace basis vectors by $\sqrt{\alpha}$ multiples;
 $G = \alpha I$, $\lambda_{\min}(G) = \alpha$, gaps still zero.
 \end{proof}
 
-\begin{remark}[What Gram coercivity does and does not give]
+\begin{remark}[Coordinate stability $\neq$ spectral rigidity]
 \label{rem:gram-limit}
-\emph{Coordinate stability $\neq$ spectral rigidity.}
-Gram coercivity gives: coordinate stability (Gram invertibility)
-and Ritz-value reliability (Cauchy sandwiching, Lemma~\ref{lem:compression}).
-It does not give any spectral gap, for any value of $\lambda_{\min}(G)$.
+Proposition~\ref{prop:gram-fails} is the key negative result.
+Gram coercivity gives coordinate stability (Gram invertibility)
+and Ritz-value upper bounds (Lemma~\ref{lem:compression}),
+but no spectral gap, for any value of $\lambda_{\min}(G)$.
 The additional required inputs are local spectral nondegeneracy
 (Assumption~\ref{ass:nondeg}) and window isolation
 (Assumption~\ref{ass:window}).
@@ -211,13 +237,14 @@ The additional required inputs are local spectral nondegeneracy
 \begin{remark}[Status of Theorem~A]
 \label{rem:thmA-status}
 Theorem~A is a \emph{lifting device}.
-Its value is not the transfer step itself, which is elementary,
-but the identification and separation of the three logically
-independent inputs required for Gap-S.
-The depth lies entirely in verifying
-Assumptions~\ref{ass:nondeg} and~\ref{ass:window};
-both of these, for $\Kc$-invariant trial spaces,
-reduce to Gap-S itself (Remark~\ref{rem:circular}).
+It contains \emph{no genuine spectral information beyond its assumptions}.
+The information content lies entirely in
+Assumptions~\ref{ass:nondeg} (local spectral geometry)
+and~\ref{ass:window} (index counting).
+The transfer step itself is elementary.
+The value of Theorem~A is exclusively in the identification
+and logical separation of the three required inputs;
+it is not a theorem about spectral gaps per se.
 \end{remark}
 
 \subsection{Assumptions}
@@ -234,16 +261,14 @@ and $\delta(c) = o(\delta_{\mathrm{model}}(c))$.
 \end{assumption}
 
 \begin{remark}[Operationalising Assumption~\ref{ass:nondeg}]
-For $\Kc$-invariant spaces (e.g.\ $V_N$), \eqref{eq:nondeg} holds with
-$\mu_j = \lam{c}{j}$, $\delta = 0$, but then $\delta_{\mathrm{model}}$
-is the gap itself (circular).
-For a non-invariant trial space $\widetilde{V}_N$,
-verifying \eqref{eq:nondeg} requires:
-(1) a microlocal normal form;
+For $\Kc$-invariant spaces (e.g.\ $V_N$), \eqref{eq:nondeg} holds trivially
+with $\mu_j = \lam{c}{j}$, $\delta = 0$, but $\delta_{\mathrm{model}}$
+then equals the gap itself (circular).
+For a non-invariant trial space $\widetilde{V}_N$, verifying
+\eqref{eq:nondeg} requires: (1) a microlocal normal form;
 (2) off-diagonal control via noncommutativity of $\Pi_{\mathrm{space}}$
-and $\Pi_{\mathrm{phase}}$;
-(3) identification of the semiclassical scale of symbol separation.
-Programme for Paper~XIV.
+and $\Pi_{\mathrm{phase}}$; (3) identification of the semiclassical
+scale of symbol separation. Programme for Paper~XIV.
 \end{remark}
 
 \begin{assumption}[Spectral window isolation]
@@ -267,18 +292,19 @@ Window isolation (\ref{ass:window}) & Index identification & Lifts to PSWF gap \
 \bottomrule
 \end{tabular}
 \end{center}
-None of the three suffices alone;
-Theorem~A is a lifting device whose depth lies entirely in the assumptions.
+None of the three suffices alone.
+Theorem~A is a lifting device; its content is the identification
+of these inputs, not the transfer step.
 \end{remark}
 
 \subsection{The compressed-to-global gap lemma}
 
 \begin{lemma}[Compressed-to-global gap transfer]
 \label{lem:comptoglobal}
-Let $A: H \to H$ be compact self-adjoint,
+Let $A: H\to H$ compact self-adjoint,
 $E \subset H$ $N$-dimensional with compression $T_E$
 having Ritz values $\sigma_0 \geq \cdots \geq \sigma_{N-1}$.
-For some index $n$ and parameters $\Delta > 0$, $\rho \geq 0$, suppose:
+For some index $n$ and $\Delta > 0$, $\rho \geq 0$, suppose:
 \begin{enumerate}[label=(C\arabic*),nosep]
   \item $\sigma_n - \sigma_{n+1} \geq \Delta$;\label{C1}
   \item The window $W := [\sigma_{n+1} - \rho,\, \sigma_n + \rho]$
@@ -289,42 +315,32 @@ Then $\lambda_p - \lambda_{p+1} \geq \Delta - 2\rho$.
 \end{lemma}
 
 \begin{proof}
-By the Cauchy interlacing inequalities (Lemma~\ref{lem:compression}),
-$\sigma_j$ lies between two consecutive eigenvalues of $A$,
-so $\mathrm{dist}(\sigma_j, \sigma(A)) \leq \max_k(\lam{}{k}-\lam{}{k+1})$.
-Condition~(C2) implies $\sigma_n, \sigma_{n+1} \in W$
-(by definition of $W$).
-Since $W$ contains exactly two eigenvalues $\lambda_p \geq \lambda_{p+1}$
-of $A$, and each of $\sigma_n, \sigma_{n+1}$ is within $\rho$ of
-some eigenvalue of $A$ (by~(C2) and the Cauchy trap),
-we obtain $\lambda_p \leq \sigma_n + \rho$ and
-$\lambda_{p+1} \geq \sigma_{n+1} - \rho$.
-Subtracting: $\lambda_p - \lambda_{p+1} \geq (\sigma_n - \sigma_{n+1}) - 2\rho \geq \Delta - 2\rho$.
+By Lemma~\ref{lem:compression}~\eqref{eq:interlace},
+$\lambda_j(A) \geq \sigma_j$, so both $\sigma_n$ and $\sigma_{n+1}$
+are bounded above by $\lambda_n(A)$ and $\lambda_{n+1}(A)$ respectively.
+By~(C2), the only eigenvalues of $A$ in $W$ are $\lambda_p$ and
+$\lambda_{p+1}$; combined with~(C2) and the Ritz-value bound,
+these eigenvalues satisfy
+$\lambda_p \leq \sigma_n + \rho$ and $\lambda_{p+1} \geq \sigma_{n+1} - \rho$.
+Subtracting and using~(C1): $\lambda_p - \lambda_{p+1} \geq \Delta - 2\rho$.
 \end{proof}
 
-\begin{remark}[On condition~(C1) and the role of $\rho$]
+\begin{remark}[On $\rho$ and the Ritz-value bound]
 \label{rem:rho}
-Note that Ritz values $\sigma_j(T_E)$ are \emph{not} in general
-spectral points of $A$: a Ritz value lies between
-consecutive eigenvalues of $A$ (Cauchy interlacing), but is
-not itself an eigenvalue or even in $\sigma(A)$ in general.
-Accordingly, $\rho > 0$ is a genuine additional parameter
-in Lemma~\ref{lem:comptoglobal};
-setting $\rho = 0$ is not justified by Ritz-value theory alone.
-In the proof of Theorem~A, $\rho$ is taken equal to $\delta(c)$
-(the perturbation in Assumption~\ref{ass:nondeg}),
-which is $o(\delta_{\mathrm{model}}(c))$ and hence asymptotically negligible;
-but it is not zero.
+Ritz values are not spectral points of $A$ in general
+(Lemma~\ref{lem:compression}).
+Accordingly $\rho = 0$ is not justified by Ritz-value theory alone;
+in Theorem~A we take $\rho = \delta(c) > 0$,
+which is $o(\delta_{\mathrm{model}}(c))$ and hence asymptotically negligible
+but not zero.
 \end{remark}
 
 \begin{remark}[On index identification]
 \label{rem:index}
-Lemma~\ref{lem:comptoglobal} establishes the gap between the two
-eigenvalues of $A$ inside the window $W$, but does not identify
+Lemma~\ref{lem:comptoglobal} establishes the gap between the
+two eigenvalues of $A$ inside $W$, but does not identify
 their global indices as $p = n$.
-This index identification is the content of
-Assumption~\ref{ass:window}: an external spectral counting input,
-not derivable from the compression.
+Index identification is the content of Assumption~\ref{ass:window}.
 \end{remark}
 
 \subsection{The theorem}
@@ -333,39 +349,33 @@ not derivable from the compression.
 \label{thm:A}
 Under Assumptions~\ref{ass:gram}, \ref{ass:nondeg}, and~\ref{ass:window},
 for all sufficiently large $c$ and transition-window indices $n$:
-\begin{equation}\label{eq:thmA}
-  \gap{c}{n} \geq \tfrac{1}{2}\delta_{\mathrm{model}}(c).
-\end{equation}
+$\gap{c}{n} \geq \tfrac{1}{2}\delta_{\mathrm{model}}(c)$.
 In particular, $\delta_{\mathrm{model}}(c) \asymp c^{-1/2}$ closes Gap-S.
 \end{theorem}
 
 \begin{proof}
-\textit{Step~1 (compressed gap).}
-By Weyl and Assumption~\ref{ass:nondeg}:
-$\sigma_n^{(c)} - \sigma_{n+1}^{(c)} \geq \delta_{\mathrm{model}}(c) - 2\delta(c) =: \Delta$.
-
-\textit{Step~2 (global gap via Lemma~\ref{lem:comptoglobal}).}
-Set $\rho := \delta(c) > 0$ (not zero; see Remark~\ref{rem:rho}).
-Condition~(C1) holds with $\Delta$ from Step~1.
-Condition~(C2) is Assumption~\ref{ass:window} with $\rho = \delta(c)$.
-Applying Lemma~\ref{lem:comptoglobal}:
-$\gap{c}{n} \geq \Delta - 2\delta(c) = \delta_{\mathrm{model}}(c) - 4\delta(c)$.
-
+\textit{Step~1.}
+Weyl~$+$~Assumption~\ref{ass:nondeg}:
+$\sigma_n^{(c)} - \sigma_{n+1}^{(c)} \geq \delta_{\mathrm{model}} - 2\delta(c) =: \Delta$.
+\textit{Step~2.}
+Apply Lemma~\ref{lem:comptoglobal} with $\rho = \delta(c)$
+and Assumption~\ref{ass:window} as~(C2):
+$\gap{c}{n} \geq \Delta - 2\delta(c) = \delta_{\mathrm{model}} - 4\delta(c)$.
 \textit{Step~3.}
-$\delta(c) = o(\delta_{\mathrm{model}}(c))$ gives the conclusion.
+$\delta = o(\delta_{\mathrm{model}})$ gives the conclusion.
 \end{proof}
 
-\begin{remark}[On the circularity for invariant trial spaces]
+\begin{remark}[Circularity for invariant trial spaces]
 \label{rem:circular}
 If $E_{c,N} = V_N$ ($\Kc$-invariant), $T_{c,N}$ is exactly diagonal
-with eigenvalues $\lam{c}{0},\ldots,\lam{c}{N}$, so
-Assumption~\ref{ass:nondeg} holds trivially with $\mu_j = \lam{c}{j}$
-but then $\delta_{\mathrm{model}}$ is the gap itself;
-and Assumption~\ref{ass:window} reduces to the assertion that
-the window around two consecutive PSWF eigenvalues contains
-exactly those two eigenvalues --- which is Gap-S.
-Every invariant-space approach inherits this circularity.
-This is the precise mechanism of failure for Papers~X--XII.
+with eigenvalues $\lam{c}{0},\ldots,\lam{c}{N}$.
+Then Assumption~\ref{ass:nondeg} holds trivially with $\mu_j = \lam{c}{j}$
+but $\delta_{\mathrm{model}} =$ the gap, and
+Assumption~\ref{ass:window} reduces to Gap-S itself.
+This is a fixed-point obstruction:
+the model gap is identical to the sought gap.
+Every invariant-space approach inherits this circularity;
+this is the precise failure mechanism of Papers~X--XII.
 The only non-circular route is a non-$\Kc$-invariant trial space
 $\widetilde{V}_N$ whose compressed symbol is governed by the
 noncommutativity of $\Pi_{\mathrm{space}}$ and $\Pi_{\mathrm{frequency}}$.
@@ -377,8 +387,8 @@ noncommutativity of $\Pi_{\mathrm{space}}$ and $\Pi_{\mathrm{frequency}}$.
 %% ============================================================
 
 Theorem~B works directly with approximate eigenfunctions of $\Kc$,
-avoiding invariant spaces and the circularity of Theorem~A.
-It is the most structurally sound conditional result in the paper.
+avoiding invariant spaces and the fixed-point obstruction of Theorem~A.
+It is the more structurally sound conditional result.
 
 \begin{definition}[Quasimode family]
 $\{f_n^{(c)}\}$ is an $\varepsilon(c)$-quasimode family if
@@ -392,8 +402,7 @@ $\|(\Kc - \mu_n(c))f_n^{(c)}\| \leq \varepsilon(c)$ and $\|f_n^{(c)}\| = 1$.
   \item $\|(\Kc - \mu_n(c))f_n^{(c)}\| \leq \varepsilon(c)$;
   \item $|\mu_n(c) - \mu_{n+1}(c)| \geq \delta_{\mathrm{model}}(c)$;
   \item $\|G_n^{(c)} - I\|_{\op} \leq \eta(c) < 1$
-    (quasimodes linearly independent; conceptually much weaker
-    than Gram coercivity of Paper~I);
+    (quasimodes linearly independent; much weaker than Gram coercivity);
   \item \textbf{[Primary difficulty]}
     $[\mu_{n+1}(c) - \varepsilon(c),\, \mu_n(c) + \varepsilon(c)]$
     contains exactly two eigenvalues of $\Kc$.
@@ -402,28 +411,25 @@ $\|(\Kc - \mu_n(c))f_n^{(c)}\| \leq \varepsilon(c)$ and $\|f_n^{(c)}\| = 1$.
 
 \begin{remark}[On the depth of (Q5)]
 \label{rem:Q5}
-(Q5) is a local spectral counting statement $N(W) = 2$
-in the transition window.
-It requires simultaneously an upper counting bound
-(no extra eigenvalue crowds the window)
+(Q5) is a local spectral counting statement $N(W) = 2$.
+It requires simultaneously:
+an upper counting bound (no extra eigenvalue crowds the window)
 and a lower counting bound (no eigenvalue escapes).
-This is a Widom-type local law in the regime
-$n - 2c/\pi \sim c^{1/3}$
-and is expected to encode most of the spectral rigidity
-of the transition window.
-It is the deepest open problem in this paper.
+This is not a perturbative consequence of quasimode analysis;
+it is a local spectral rigidity problem in the transition regime
+$n - 2c/\pi \sim c^{1/3}$, of the same character as
+Widom-type counting problems for integral operators
+with sharp transitions.
+It is the deepest open problem identified in this paper.
 \end{remark}
 
-\begin{remark}[Role of (Q4) in Theorem~B]
+\begin{remark}[Role of (Q4)]
 \label{rem:Q4role}
-Condition~(Q4) asserts $\|G - I\|_{\op} < 1$,
-which guarantees linear independence of the quasimode pair.
-This is conceptually much weaker than the Gram coercivity
-$\lambda_{\min}(G) \asymp c^{-1/2}$ of Paper~I:
-it is a non-degeneracy condition, not a quantitative lower bound.
-The connection to Gram coercivity is structural
-(it motivates that suitable nearly-orthogonal quasimodes exist)
-but (Q4) as used in Theorem~B requires only $\eta(c) < 1$.
+(Q4) requires only $\|G - I\|_{\op} < 1$ (linear independence);
+this is conceptually much weaker than the $c^{-1/2}$ Gram coercivity
+of Paper~I. The connection is structural (Paper~I motivates that
+nearly-orthogonal quasimodes exist) but (Q4) as used in Theorem~B
+is a non-degeneracy condition only.
 \end{remark}
 
 \begin{lemma}[Quasimode window separation]
@@ -432,21 +438,18 @@ Let $A$ compact self-adjoint, $\mu_n > \mu_{n+1}$,
 $\varepsilon$-quasimodes $f_n, f_{n+1}$ with $\|G - I\|_{\op} < 1$.
 If the window $[\mu_{n+1} - \varepsilon,\, \mu_n + \varepsilon]$
 contains exactly two eigenvalues of $A$ (condition~(Q5)),
-these are $\lambda_n(A)$ and $\lambda_{n+1}(A)$, and
-\begin{equation}\label{eq:qmsep}
-  \lambda_n(A) - \lambda_{n+1}(A) \geq (\mu_n - \mu_{n+1}) - 2\varepsilon.
-\end{equation}
+then
+$\lambda_n(A) - \lambda_{n+1}(A) \geq (\mu_n - \mu_{n+1}) - 2\varepsilon$.
 \end{lemma}
 
 \begin{proof}
-For each $j \in \{n, n+1\}$:
-$\|(A - \mu_j)f_j\| \leq \varepsilon$ and $\|f_j\| = 1$
+For $j \in \{n, n+1\}$:
+$\|(A-\mu_j)f_j\| \leq \varepsilon$, $\|f_j\|=1$
 imply $\mathrm{dist}(\mu_j, \sigma(A)) \leq \varepsilon$
-(standard spectral inclusion for approximate eigenvectors).
-Linear independence of $f_n, f_{n+1}$ (from $\|G - I\| < 1$)
-excludes $\mu_n$ and $\mu_{n+1}$ from mapping to the same eigenvalue.
-Condition~(Q5) provides exact count and index identification.
-Ordering and subtracting gives~\eqref{eq:qmsep}.
+(spectral inclusion for approximate eigenvectors).
+Linear independence (from $\|G-I\|<1$) excludes collision.
+(Q5) provides exact count and index identification.
+Ordering and subtracting gives the bound.
 \end{proof}
 
 \begin{theorem}[Conditional Quasimode Separation --- Theorem~B]
@@ -474,12 +477,13 @@ and $\varepsilon(c) = o(c^{-1/3})$.
 \end{assumption}
 
 \begin{remark}[Status of Assumption~\ref{ass:airy}]
-The scale $c^{-1/3}$ is expected from Airy quantization and
-Widom--Deift transition asymptotics.
-Proving it requires: (i) steepest-descent analysis of the PSWF kernel;
-(ii) Airy quasimodes with residual $o(c^{-1/3})$;
+The scale $c^{-1/3}$ is expected from semiclassical
+turning-point heuristics in the transition regime.
+Proving it requires: (i) asymptotic analysis of the PSWF
+kernel near the turning point; (ii) construction of Airy
+quasimodes with residual $o(c^{-1/3})$;
 (iii) condition~(Q5) in this regime.
-None is established from first principles.
+None of these is established from first principles.
 \end{remark}
 
 \begin{corollary}[Roadmap at Airy scale --- Corollary~C]
@@ -488,10 +492,9 @@ Under Assumption~\ref{ass:airy},
 $\gap{c}{n} \geq Cc^{-1/3}$ for all large $c$.
 \end{corollary}
 
-\begin{remark}[Corollary~C is not a theorem]
+\begin{remark}[Corollary~C is a roadmap consequence, not a theorem]
 \label{rem:corC-status}
 Corollary~C records what follows if Assumption~\ref{ass:airy} is verified.
-It is a \emph{roadmap consequence}, not a current achievement.
 The originality of this paper lies not in Corollary~C
 but in Proposition~\ref{prop:gram-fails},
 Remark~\ref{rem:circular}, and Remark~\ref{rem:Q5}.
@@ -510,17 +513,17 @@ Remark~\ref{rem:circular}, and Remark~\ref{rem:Q5}.
 \midrule
 Prop.~\ref{prop:gram-fails}
   & Negative result
-  & Gram coerc.\ $\not\Rightarrow$ gap
+  & Gram $\not\Rightarrow$ gap
   & \checkmark\ proved \\
 Rem.~\ref{rem:circular}
   & Obstruction
-  & Invariant spaces $\Rightarrow$ circular
+  & Invariant spaces circular
   & \checkmark\ proved \\
-Cauchy interlacing (Lem.~\ref{lem:compression})
+Lem.~\ref{lem:compression}
   & Linear algebra
-  & Ritz-value sandwiching
+  & Ritz values $\leq \lambda_j(A)$
   & \checkmark\ proved \\
-Comp.-to-global (Lem.~\ref{lem:comptoglobal})
+Lem.~\ref{lem:comptoglobal}
   & Perturbation
   & $\gap{c}{n}\geq\Delta-2\rho$
   & \checkmark\ proved \\
@@ -540,7 +543,7 @@ Corollary~C
   & Roadmap
   & Scale $c^{-1/3}$ if Airy pkg
   & roadmap \\
-Spectral nondeg. (Ass.~\ref{ass:nondeg})
+Ass.~\ref{ass:nondeg}
   & Local geometry
   & Compressed gap $\asymp c^{-1/2}$
   & open (Paper~XIV) \\
@@ -565,34 +568,31 @@ Airy quasimodes
 \label{prob:nondeg}
 Construct $\widetilde{V}_N = \Pi_{\mathrm{phase}}\Pi_{\mathrm{space}} L^2$
 and verify Assumption~\ref{ass:nondeg} with $\delta_{\mathrm{model}} \asymp c^{-1/2}$
-via: (1) microlocal normal form; (2) off-diagonal control via noncommutativity
-of $\Pi_{\mathrm{space}}, \Pi_{\mathrm{phase}}$; (3) semiclassical symbol separation.
-Programme for Paper~XIV.
+via: (1) microlocal normal form; (2) off-diagonal control;
+(3) semiclassical symbol separation. Programme for Paper~XIV.
 \end{problem}
 
 \begin{problem}[Spectral window isolation]
 \label{prob:window}
-Verify Assumption~\ref{ass:window} for the trial space
-of Problem~\ref{prob:nondeg}: local counting for the compressed spectrum.
+Verify Assumption~\ref{ass:window} for the trial space of
+Problem~\ref{prob:nondeg}.
 \end{problem}
 
-\begin{problem}[(Q5): Local spectral counting in the transition regime]
+\begin{problem}[(Q5): Local spectral counting]
 \label{prob:counting}
-Prove $N(W) = 2$ for the transition window in the regime
-$n - 2c/\pi \sim c^{1/3}$.
-This is a local Widom-type counting problem.
+Prove $N(W) = 2$ in the regime $n - 2c/\pi \sim c^{1/3}$.
 \emph{Deepest open problem in this paper.}
 \end{problem}
 
 \begin{problem}[Airy quasimode package]
 \label{prob:quasimodes}
 Construct quasimodes satisfying Assumption~\ref{ass:airy}
-(residual $o(c^{-1/3})$, spacing $\asymp c^{-1/3}$, (Q5) in the Airy regime).
+(residual $o(c^{-1/3})$, spacing $\asymp c^{-1/3}$, (Q5) in Airy regime).
 \end{problem}
 
 \begin{problem}[Fold amplitude regime]
 \label{prob:fold}
-Determine $\alpha$ for the PSWF fold integral $\Phi_\alpha(u)$
+Determine $\alpha$ for $\Phi_\alpha(u)$
 (\texttt{fold\_model.tex}, \texttt{Waschtl904/prolate-primes-paper}).
 \end{problem}
 
@@ -612,10 +612,10 @@ B-strong $\Leftrightarrow \varepsilon_N\geq Cc^{-1/2}$ & Paper~IX & --- & \check
 All direct routes fail & X--XII & --- & \checkmark \\
 \textbf{Gram $\not\Rightarrow$ gap}
   & Prop.~\ref{prop:gram-fails} & --- & \textbf{\checkmark\ (new)} \\
-\textbf{Cauchy sandwiching}
+\textbf{Ritz: $\sigma_j \leq \lambda_j(A)$}
   & Lem.~\ref{lem:compression} & --- & \textbf{\checkmark\ (new)} \\
 \textbf{Comp.-to-global ($\rho>0$)}
-  & Lem.~\ref{lem:comptoglobal} & Cauchy & \textbf{\checkmark\ (new)} \\
+  & Lem.~\ref{lem:comptoglobal} & Ritz & \textbf{\checkmark\ (new)} \\
 \textbf{Invariant spaces circular}
   & Rem.~\ref{rem:circular} & --- & \textbf{\checkmark\ (new)} \\
 \textbf{(Q5) = primary obstruction}
@@ -623,7 +623,7 @@ All direct routes fail & X--XII & --- & \checkmark \\
 Gap-S (Thm~A) & This paper
   & Ass.~\ref{ass:nondeg}+\ref{ass:window} & (cond.) \\
 Gap-S (Thm~B) & This paper & Q1--Q5 & (cond.) \\
-Scale $c^{-1/3}$ (Cor~C) & This paper & Airy pkg & (roadmap) \\
+Scale $c^{-1/3}$ & Cor~C & Airy pkg & (roadmap) \\
 Spectral nondeg. & Prob.~\ref{prob:nondeg} & $\widetilde{V}_N$ & open \\
 (Q5) counting & Prob.~\ref{prob:counting} & Widom & open \\
 Airy quasimodes & Prob.~\ref{prob:quasimodes} & --- & open \\
@@ -632,22 +632,26 @@ Airy quasimodes & Prob.~\ref{prob:quasimodes} & --- & open \\
 \end{center}
 
 \medskip\noindent
-\textbf{Summary of new contributions.}
+\textbf{Primary contributions of this paper.}
 \begin{quote}\itshape
-The originality of this paper lies in three results, in order of importance:
+In order of mathematical importance:
 \begin{enumerate}[nosep]
-  \item Proposition~\ref{prop:gram-fails}: Gram coercivity
-    does not imply spectral gaps.
-    This closes the main implicit hypothesis of Papers~I--XII.
-  \item Remark~\ref{rem:circular}: all $\Kc$-invariant approaches
-    are circularly dependent on Gap-S.
-    This provides a unified explanation for all failures in X--XII.
-  \item Remark~\ref{rem:Q5}: (Q5) is the primary obstruction;
-    it is a local Widom-type counting problem,
+  \item Proposition~\ref{prop:gram-fails}:
+    Gram coercivity does not imply spectral gaps.
+    Closes the main implicit hypothesis of Papers~I--XII.
+  \item Remark~\ref{rem:circular}:
+    All $\Kc$-invariant approaches are circularly dependent
+    on Gap-S via a fixed-point obstruction.
+    Provides a unified explanation for all failures in X--XII.
+  \item Remark~\ref{rem:Q5}:
+    (Q5) is the primary obstruction;
+    it is a local spectral counting problem of Widom type,
     not a perturbative consequence of quasimode analysis.
+    All currently known approaches reduce Gap-S to (Q5).
 \end{enumerate}
-The conditional results (Theorems~A, B and Corollary~C) have
-value only as precise formulations of what remains to be done.
+The conditional results (Theorems~A, B and Corollary~C)
+have value only as precise formulations of what remains to be done;
+Theorem~A contains no genuine spectral information beyond its inputs.
 \end{quote}
 
 \begin{thebibliography}{99}
