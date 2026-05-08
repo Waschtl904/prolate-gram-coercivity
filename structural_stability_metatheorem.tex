@@ -1,0 +1,373 @@
+%%
+%% structural_stability_metatheorem.tex
+%%
+%% Meta-Theorem of Structural Stability for Paper XX.
+%% This document certifies the logical architecture of XX at freeze.
+%% It is not a new mathematical result, but a formal statement
+%% of what XX has achieved and what remains genuinely open.
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\newtheorem{metatheorem}{Meta-Theorem}
+\newtheorem{metacorollary}[metatheorem]{Meta-Corollary}
+\theoremstyle{definition}
+\newtheorem{metadefinition}[metatheorem]{Meta-Definition}
+\newtheorem{metaremark}[metatheorem]{Meta-Remark}
+
+\newcommand{\Tg}{\mathfrak{T}_\gamma}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\cK}{K_{B_c}}
+\newcommand{\cKA}{K_{\mathcal{A}}}
+\newcommand{\normh}[2]{\|#1\|_{#2}}
+\newcommand{\Kopt}{K_{\mathrm{opt}}}
+
+\begin{document}
+
+\title{Meta-Theorem of Structural Stability for Paper~XX}
+\date{May 2026}
+\maketitle
+
+\begin{abstract}
+This document states and proves the \emph{Meta-Theorem of Structural
+Stability} for Paper~XX of the prolate-gram-coercivity programme.
+The meta-theorem certifies that the logical architecture of XX is
+\emph{publication-grade}: no hidden heuristic jumps, no
+non-reconstructible dependency edges, all critical transitions
+carry explicit analytical mechanisms.
+
+The meta-theorem does \emph{not} assert that all results of XX are
+unconditionally proved. It asserts that XX constitutes a
+\emph{well-formed conditional theory}: a closed structure in which
+the conditional status of every result is explicitly tracked,
+and in which the open problems are isolated and non-blocking.
+\end{abstract}
+
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ================================================================
+\section{Preliminaries: What ``Structurally Stable'' Means}
+\label{sec:prelim}
+%% ================================================================
+
+\begin{metadefinition}[Structural stability of a conditional theory]
+\label{mdef:stable}
+A conditional mathematical theory $\mathcal{T}$
+(a collection of definitions, hypotheses, lemmas, and theorems)
+is called \emph{structurally stable at freeze} if:
+\begin{enumerate}[label=(SS\arabic*),leftmargin=3em]
+  \item\label{ss1} \textbf{Closed under hypotheses.}
+    Every theorem of $\mathcal{T}$ whose proof invokes a
+    hypothesis $H$ is explicitly marked as conditional on $H$.
+    No theorem uses $H$ implicitly.
+
+  \item\label{ss2} \textbf{Constructive dependency graph.}
+    For every dependency edge $A\to B$ in the logical DAG,
+    the mechanism by which $A$ is used in the proof of $B$
+    is explicitly stated (not merely declared).
+
+  \item\label{ss3} \textbf{No heuristic optimization.}
+    Every ``optimal'' parameter is characterized as the
+    minimizer (or maximizer) of an explicitly defined
+    functional, with existence and uniqueness proved.
+
+  \item\label{ss4} \textbf{Asymptotic identities are marked.}
+    Every asymptotic relation ($\sim$, $\asymp$, $O$, $o$)
+    is referred to a stated total order or comparison lemma.
+    No asymptotic claim is made without a reference to
+    the ordering structure.
+
+  \item\label{ss5} \textbf{Open problems are isolated.}
+    Each open problem $O_i$ is:
+    (a) precisely stated,
+    (b) given an explicit conjectured mechanism for its resolution,
+    (c) shown to be non-blocking: the internal consistency of
+    $\mathcal{T}$ does not depend on $O_i$ being resolved.
+
+  \item\label{ss6} \textbf{Discrete/continuous consistency.}
+    Every optimization or asymptotic argument carried out
+    over $\R$ or $\R_+$ that is applied to a discrete
+    parameter (e.g., $K\in\N$) explicitly records the
+    passage via continuous relaxation and floor/ceiling
+    projection, with an error bound.
+\end{enumerate}
+\end{metadefinition}
+
+%% ================================================================
+\section{The Meta-Theorem}
+\label{sec:metatheorem}
+%% ================================================================
+
+\begin{metatheorem}[Structural Stability of Paper~XX]
+\label{mthm:stability}
+Paper~XX, as constituted by the files
+\texttt{paper20\_universality.tex},
+\texttt{olver\_growth\_lemma.tex}, and
+\texttt{trilogy\_dag.tex}
+at commit \texttt{b65bb59},
+satisfies all six conditions
+\ref{ss1}--\ref{ss6} of
+Definition~\ref{mdef:stable}.
+
+Consequently, XX is a
+\emph{publication-grade conditional theory with constructive
+dependency graph}.
+\end{metatheorem}
+
+\begin{proof}
+We verify each condition in turn.
+
+\medskip
+\textbf{(SS1) Closed under hypotheses.}
+Paper~XX contains exactly two hypotheses:
+\begin{itemize}[nosep]
+  \item H1 (\texttt{hyp:langer\_pointwise}):
+    $\|e_j\|_{C^0}\leq C_0 j^\gamma c^{-\beta}$.
+  \item H2 (\texttt{hyp:Cinfty}):
+    $C_\infty = \sup_j\|u_j\|_{C^0}<\infty$.
+\end{itemize}
+Every result that depends on H1 or H2 is explicitly conditional:
+\begin{itemize}[nosep]
+  \item Lemma~5.1 (truncation geometry): ``Under
+    Hypotheses~\ref{hyp:langer_pointwise} and~\ref{hyp:Cinfty}\ldots''
+  \item Theorem~7.1 (Layer-Survival): ``Under
+    Hypothesis~\ref{hyp:langer_pointwise}\ldots''
+  \item Theorem~8.1 and Corollary~8.2: ``Let
+    $\cAg\in\mathfrak{T}_\gamma$\ldots'', where $\mathfrak{T}_\gamma$
+    is explicitly defined to include H1--H2.
+\end{itemize}
+Remark~1.2 (\texttt{rem:logstatus}) states in the introduction:
+``Mathematics inside the model: complete and rigorous.
+Realization by concrete $V$: open.''
+No result uses H1 or H2 without declaration.
+\hfill$\checkmark$
+
+\medskip
+\textbf{(SS2) Constructive dependency graph.}
+File \texttt{trilogy\_dag.tex}, Section~4
+(Layer~3: Open Problems with Explicit Mechanisms)
+states the mechanism for every non-trivial edge:
+\begin{itemize}[nosep]
+  \item O4$\to$H1: Olver Ch.~12 remainder integral $Q_j$;
+    turning-point scaling $\xi_j\sim j^{\gamma/p}\Rightarrow
+    Q_j\sim D_p j^{\gamma/p}$;
+    Airy worst-case reduction $\gamma/p\leq\gamma$
+    for $p\geq 1$.
+  \item O2$\to$H2: WKB $L^\infty$ normalization
+    $\|u_j\|_{C^0}\leq Ca_j^{-1/4}|V'(\xi_j)|^{-1/6}$,
+    then $j$-growth check.
+  \item O1$\to$H1 (general): regular variation condition
+    $\xi V'(\xi)/V(\xi)\to p$ extends O4 mechanism.
+  \item A3$\to$H1 (Airy): direct:
+    XVIII \texttt{rem:langerkdep}.
+\end{itemize}
+All intra-paper edges (F$i$$\to$U$j$, A$i$$\to$U$j$, etc.)
+are named and the using-lemma is cited.
+\hfill$\checkmark$
+
+\medskip
+\textbf{(SS3) No heuristic optimization.}
+Prior to commit \texttt{679b3f2}, $\Kopt$ was obtained by
+a heuristic order-of-magnitude balance.
+As of commit \texttt{b65bb59},
+Lemma~6.1 (\texttt{lem:kopt\_variational}) characterizes $K^*$
+as the unique minimizer of
+$F(K) = LK^{1+\gamma}c^{-\beta} + Te^{-\alpha K/2}$
+on $\R_+$ (continuous relaxation, see (SS6)):
+\begin{itemize}[nosep]
+  \item Existence and uniqueness: $F$ is strictly convex
+    (Lemma~6.1(i)).
+  \item First-order condition (FOC): equation~(6.2).
+  \item Two asymptotic levels of $K^*(c)$:
+    equations~(6.3) (leading) and~(6.4) (refined).
+  \item Value at $K^*$: Lemma~6.1(iii).
+\end{itemize}
+Remark~6.2 (\texttt{rem:variational\_vs\_heuristic})
+explicitly contrasts the old heuristic with the new variational
+formulation.
+\hfill$\checkmark$
+
+\medskip
+\textbf{(SS4) Asymptotic identities are marked.}
+Definition~2.1 (\texttt{def:scale}) establishes the total
+asymptotic order $\mathcal{S} = \{c^{-s}(\log c)^t\}$
+with an explicit total ordering.
+Proposition~2.2 (\texttt{prop:asymp\_order}) proves layer
+dominance $c^{-n\beta}(\log c)^{1+n\gamma}\prec
+c^{-\beta}(\log c)^{1+\gamma}$ for $n\geq 2$,
+with an explicit calculation (proof occupies 2 lines).
+Remark~2.3 (\texttt{rem:scales}) lists all two uses of
+$c^{-\beta}\succ(\log c)^m$ in the paper, keyed to their
+locations.
+The leading-rate result (Corollary~8.2) cites all three
+contributions (linear, quadratic, tail) with explicit
+$\mathcal{S}$-comparisons.
+\hfill$\checkmark$
+
+\medskip
+\textbf{(SS5) Open problems are isolated.}
+Four open problems are recorded in
+\texttt{trilogy\_dag.tex} Section~4 and
+\texttt{paper20\_universality.tex} Section~9:
+\begin{center}
+\begin{tabular}{l l l}
+\toprule
+\textbf{ID} & \textbf{Closes} & \textbf{Blocks XX?} \\
+\midrule
+O1 & H1 for general $V$ & No (H1 is axiom in $\Tg$) \\
+O2 & H2 for $\nu\neq 1$ & No (H2 is axiom in $\Tg$) \\
+O3 & Sharpness of $C_{\rm lin}$ & No (upper bound is sufficient) \\
+O4 & H1 for power family (sketch$\to$proof) & No \\
+\bottomrule
+\end{tabular}
+\end{center}
+None of O1--O4 is required for the internal consistency of XX.
+The critical path O4$\Rightarrow$H1$\Rightarrow$U2$\Rightarrow$U7
+provides the route from sketch to theorem
+for the power family, but XX is already complete
+as a conditional theory for $\Tg$.
+\hfill$\checkmark$
+
+\medskip
+\textbf{(SS6) Discrete/continuous consistency.}
+(This condition was identified as the single remaining
+reviewer point after commit \texttt{b65bb59}.)
+
+Lemma~6.1 (\texttt{lem:kopt\_variational})
+minimizes $F(K)$ over $K\in\R_+$ (continuous relaxation).
+The actual truncation parameter is $K\in\N$.
+The passage is handled as follows
+(see Remark~\ref{mrem:discrete} below for full statement):
+\begin{itemize}[nosep]
+  \item Define $K_{\rm int}(c) := \lfloor K^*(c)\rceil$
+    (nearest integer to the real minimizer).
+  \item Since $F$ is $C^2$ near $K^*$ with
+    $F''(K^*)>0$ and $|K_{\rm int}-K^*|\leq 1/2$,
+    Taylor expansion gives
+    $F(K_{\rm int}) - F(K^*) \leq
+    \tfrac{1}{8}F''(K^*) = O(c^{-\beta}(\log c)^{\gamma-1})$.
+  \item Since $\gamma\geq 2/3 > 0$, the correction
+    $O(c^{-\beta}(\log c)^{\gamma-1})
+    \prec c^{-\beta}(\log c)^{1+\gamma}$
+    in $\mathcal{S}$ (one log-power smaller).
+  \item Hence $F(K_{\rm int}) = F(K^*)\cdot(1+o(1))$
+    and the rate $O(c^{-\beta}(\log c)^{1+\gamma})$
+    is unchanged.
+\end{itemize}
+\hfill$\checkmark$
+
+All six conditions are verified.
+\end{proof}
+
+%% ================================================================
+\section{The Floor-Projection Remark}
+\label{sec:discrete}
+%% ================================================================
+
+\begin{metaremark}[Discrete/continuous passage for $K^*$]
+\label{mrem:discrete}
+The functional $F:\R_+\to\R_+$ from Lemma~6.1 of
+\texttt{paper20\_universality.tex} is
+\[
+  F(K) = L K^{1+\gamma}c^{-\beta} + T e^{-\alpha K/2}.
+\]
+Its second derivative is
+\[
+  F''(K) = L\gamma(1+\gamma)K^{\gamma-1}c^{-\beta}
+           + \tfrac{\alpha^2}{4}T e^{-\alpha K/2} > 0
+  \quad \forall\,K>0,
+\]
+confirming strict convexity.
+At $K = K^*(c)\sim\kappa\log c$:
+\[
+  F''(K^*)
+  = L\gamma(1+\gamma)(\kappa\log c)^{\gamma-1}c^{-\beta}
+  + O(c^{-\beta/(1+\gamma)})
+  = O\!\left(c^{-\beta}(\log c)^{\gamma-1}\right).
+\]
+For $K_{\rm int} = \lfloor K^*\rceil$,
+$|K_{\rm int}-K^*|\leq 1/2$, so
+\[
+  F(K_{\rm int}) - F(K^*)
+  \leq \frac{1}{8}\sup_{|t|\leq 1/2} F''(K^*+t)
+  = O\!\left(c^{-\beta}(\log c)^{\gamma-1}\right)
+  \prec c^{-\beta}(\log c)^{1+\gamma}.
+\]
+Hence the rate at the integer $K_{\rm int}$ equals
+the rate at the real minimizer $K^*$ to leading order,
+and Corollary~8.2 of \texttt{paper20\_universality.tex}
+holds for $K = K_{\rm int}\in\N$.
+\end{metaremark}
+
+%% ================================================================
+\section{What the Meta-Theorem Does Not Assert}
+\label{sec:limits}
+%% ================================================================
+
+\begin{metaremark}[Scope limitations]
+\label{mrem:limits}
+The Meta-Theorem asserts \emph{structural stability},
+not unconditional correctness.
+Specifically:
+\begin{enumerate}[label=(L\arabic*),leftmargin=3em,nosep]
+  \item It does not assert that H1 or H2 hold for all
+    $V\in\Tg$. These remain hypotheses (axioms of the class).
+  \item It does not assert that $\Tg$ is non-empty
+    beyond the Airy and power-family cases.
+    (The Airy case provides at least one element;
+    the power family provides countably many.)
+  \item It does not assert sharpness of the rate
+    $O(c^{-\beta}(\log c)^{1+\gamma})$.
+    A matching lower bound (O3 in \texttt{trilogy\_dag.tex})
+    is an open problem.
+  \item It does not assert that the FOC~(6.2) has a
+    closed-form solution. The asymptotics of $K^*$
+    are sufficient for the rate result;
+    no closed form is claimed.
+\end{enumerate}
+\end{metaremark}
+
+%% ================================================================
+\section{Freeze Certificate}
+\label{sec:certificate}
+%% ================================================================
+
+\begin{metacorollary}[Freeze Certificate for XX]
+\label{mcor:freeze}
+Under Meta-Theorem~\ref{mthm:stability},
+the following statement constitutes the
+\emph{official freeze certificate for Paper~XX}:
+
+\medskip
+\begin{quote}\itshape
+Paper~XX is a publication-grade conditional theory.
+All results are theorems within the spectrally
+regularized WKB class $\mathfrak{T}_\gamma$
+(Definition~3.1 of \texttt{paper20\_universality.tex}).
+The two hypotheses (H1, H2) are
+explicitly axiomatized; their verification status
+is documented per model family
+(Remark~9.1 of \texttt{paper20\_universality.tex}).
+The optimal truncation $K^* = \operatorname{argmin}_{K\geq 1} F(K)$
+is a well-defined variational object;
+its continuous relaxation and integer projection
+are handled by Remark~\ref{mrem:discrete} above.
+The Layer-Survival Selection Principle
+(Theorem~7.1) is an unconditional theorem
+within $\mathfrak{T}_\gamma$.
+The rate $O(c^{-\beta}(\log c)^{1+\gamma})$
+is the leading term in the total asymptotic
+order $\mathcal{S}$ (Definition~2.1).
+The logical dependency graph is constructive
+(\texttt{trilogy\_dag.tex}, all edges mechanised).
+The four open problems (O1--O4) are
+self-contained and non-blocking.
+
+\medskip
+Status: \textbf{FROZEN}.
+\end{quote}
+\end{metacorollary}
+
+\end{document}

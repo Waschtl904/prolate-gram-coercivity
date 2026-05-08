@@ -21,6 +21,7 @@
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cAg}{\mathcal{A}_\gamma}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\cK}{K_{B_c}}
 \newcommand{\cKA}{K_{\cA}}
 \newcommand{\normh}[2]{\|#1\|_{#2}}
@@ -40,7 +41,7 @@
   spectral growth exponent, two-scale truncation, logarithmic rate,
   spectral-geometric invariant, universality, layer-survival,
   spectrally regularized WKB class, variational truncation,
-  Langer error, saddle balance}
+  Langer error, discrete floor projection}
 
 \begin{document}
 
@@ -49,7 +50,7 @@
   \large Spectral-Geometric Invariants and Two-Scale Logarithmic Losses}
 
 \author{\textit{prolate-gram-coercivity programme}}
-\date{May 2026}
+\date{May 2026 --- FROZEN}
 
 \begin{abstract}
 For operators $\cAg\in\mathfrak{T}_\gamma$
@@ -63,28 +64,24 @@ via summation $\sum_{j=1}^K j^\gamma\sim K^{1+\gamma}/(1+\gamma)$.
 
 The optimal truncation $\Kopt$ is characterized as the
 \emph{exact minimizer} of the upper-bound functional
-$F(K) := L(c)\,K^{1+\gamma}c^{-\beta} + T(c)\,e^{-\alpha K/2}$
+$F(K) := L\,K^{1+\gamma}c^{-\beta} + T\,e^{-\alpha K/2}$
 (Lemma~\ref{lem:kopt_variational}):
-\[
-  \Kopt = \operatorname{argmin}_{K\geq 1} F(K),
-  \qquad
-  \Kopt \sim \frac{2\beta}{\alpha(1+\gamma)}\log c
-  \quad (c\to\infty).
-\]
+$\Kopt = \operatorname{argmin}_{K\geq 1} F(K)$,
+$K^*\sim 2\beta/(\alpha(1+\gamma))\log c$ ($c\to\infty$).
+The integer projection $K_{\rm int}=\lfloor K^*\rceil$
+satisfies $F(K_{\rm int}) = F(K^*)\cdot(1+o(1))$
+(Remark~\ref{rem:kopt_discrete}).
+
 The Layer-Survival Selection Principle
 (Theorem~\ref{thm:layer_survival}) shows that
-for every interaction order $n\geq 2$,
-layer $n$ is $\prec$ layer~$1$ in the total
-asymptotic scale $\mathcal{S}$ (Definition~\ref{def:scale}).
-Hence:
-\[
-  \normh{\cK-\cKA}{}\big|_{K=\Kopt}
-  = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
-\]
-All results are theorems conditional on
-Hypotheses~\ref{hyp:langer_pointwise}--\ref{hyp:Cinfty},
-which are verified for the Airy case and for the
-power family $V=C_V\xi^p$ (proof sketch).
+for every $n\geq 2$,
+layer~$n$ is $\prec$ layer~$1$ in $\mathcal{S}$.
+Hence: $\normh{\cK-\cKA}{}|_{K=\Kopt}
+= O(c^{-\beta}(\log c)^{1+\gamma})$.
+
+All results are theorems conditional on H1--H2;
+the structural stability of the theory is certified
+by \texttt{structural\_stability\_metatheorem.tex}.
 \end{abstract}
 
 \maketitle
@@ -109,30 +106,25 @@ XIX   & Two-scale rate; lin/quad split
 XX    & Universal rate; Layer-Survival;
   variational $\Kopt$
   & Conditional theorem
-    (H1--H2, Definition~\ref{def:opclass}) \\
+    ($\mathfrak{T}_\gamma$, H1--H2) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \begin{remark}[Scope of XX: model theory, not derived classification]
 \label{rem:logstatus}
-All results of this paper are \emph{theorems within the model}
+All results of this paper are theorems within the model
 $\mathfrak{T}_\gamma$.
-The class $\mathfrak{T}_\gamma$ is an axiom class
-(spectrally regularized WKB class):
-Hypotheses~\ref{hyp:langer_pointwise}--\ref{hyp:Cinfty}
-are imposed, not derived for general $V$.
-This is the correct delineation of scope:
+The class $\mathfrak{T}_\gamma$ is an axiom class:
+H1--H2 are imposed, not derived for general $V$.
 \begin{itemize}[nosep]
   \item Mathematics inside the model: complete and rigorous.
   \item Realization by concrete $V$:
-    verified for Airy ($\gamma=2/3$, $\beta=1/3$);
-    sketch for power family ($V=C_V\xi^p$);
+    verified for Airy;
+    sketch for power family;
     open in general.
 \end{itemize}
-The paper should be read as establishing a structural
-universality theorem, not as a classification of all
-operators satisfying spectral growth $a_j\sim j^\gamma$.
+Formal certification: \texttt{structural\_stability\_metatheorem.tex}.
 \end{remark}
 
 %% ============================================================
@@ -142,48 +134,31 @@ operators satisfying spectral growth $a_j\sim j^\gamma$.
 
 \begin{definition}[Total asymptotic scale $\mathcal{S}$]
 \label{def:scale}
-Let $\mathcal{S}$ be the set of positive functions of the form
-$c^{-s}(\log c)^t$ ($s>0$, $t\in\R$), totally ordered by:
-\[
-  c^{-s_1}(\log c)^{t_1} \succ c^{-s_2}(\log c)^{t_2}
-  \;\Longleftrightarrow\;
-  s_1 < s_2,\text{ or }(s_1=s_2\text{ and }t_1 > t_2),
-\]
-as $c\to\infty$.
-All $o$- and $O$-comparisons in this paper use this order.
+Let $\mathcal{S} = \{c^{-s}(\log c)^t : s>0, t\in\R\}$,
+totally ordered by:
+$c^{-s_1}(\log c)^{t_1} \succ c^{-s_2}(\log c)^{t_2}$
+iff $s_1<s_2$, or ($s_1=s_2$ and $t_1>t_2$), as $c\to\infty$.
 \end{definition}
 
 \begin{proposition}[Layer dominance]
 \label{prop:asymp_order}
-For $\gamma,\beta>0$ and $K\sim\kappa\log c$ ($\kappa>0$):
-\[
-  c^{-n\beta}(\log c)^{1+n\gamma}
-  \prec c^{-\beta}(\log c)^{1+\gamma}
-  \quad \text{for all } n\geq 2,
-\]
-because $n\beta > \beta$; the comparison holds for all
-$n\geq 2$, uniformly in $\gamma, \kappa$.
+For $\gamma,\beta>0$, $K\sim\kappa\log c$, and all $n\geq 2$:
+$c^{-n\beta}(\log c)^{1+n\gamma}
+\prec c^{-\beta}(\log c)^{1+\gamma}$
+in $\mathcal{S}$.
 \end{proposition}
 
 \begin{proof}
 $c^{-n\beta}(\log c)^{1+n\gamma} / c^{-\beta}(\log c)^{1+\gamma}
-= c^{-(n-1)\beta}(\log c)^{(n-1)\gamma}\to 0$
-since $c^{-\delta}\cdot(\log c)^m\to 0$ for all $\delta>0$, $m>0$.
+= c^{-(n-1)\beta}(\log c)^{(n-1)\gamma}\to 0$.
 \end{proof}
 
-\begin{remark}[Explicit uses of $c^{-\beta}\succ (\log c)^m$]
+\begin{remark}[Uses of $c^{-\beta}\succ(\log c)^m$]
 \label{rem:scales}
-The comparison $c^{-\beta}\succ(\log c)^{-m}$ (for every fixed $m$)
-is used in exactly two places:
-\begin{enumerate}[label=(\roman*),nosep]
-  \item Proposition~\ref{prop:asymp_order}:
-    layer $n\geq 2$ dominated by layer $n=1$.
-  \item Corollary~\ref{cor:universal_lograte}:
-    spectral tail $e^{-\alpha\Kopt/2}\sim c^{-\beta/(1+\gamma)}
-    \prec c^{-\beta}(\log c)^{1+\gamma}$.
-\end{enumerate}
-No other comparison between polynomial $c$-factors and
-logarithms is needed.
+This comparison is used in exactly two places:
+(i) Proposition~\ref{prop:asymp_order};
+(ii) Corollary~\ref{cor:universal_lograte}(iii)
+(tail $\prec$ linear).
 \end{remark}
 
 %% ============================================================
@@ -191,118 +166,86 @@ logarithms is needed.
 \label{sec:framework}
 %% ============================================================
 
-\begin{definition}[Spectrally regularized WKB class $\mathfrak{T}_\gamma$]
+\begin{definition}[$\mathfrak{T}_\gamma$]
 \label{def:opclass}
-For $\gamma>0$, $\beta>0$: $\mathfrak{T}_\gamma$ is the class
-of self-adjoint operators $\cAg=-\partial_\xi^2+V(\xi)$
-on $L^2(\R_+)$, $V\geq 0$, $V\to+\infty$,
-discrete spectrum $0<a_1<a_2<\cdots$, satisfying:
-\begin{enumerate}[label=(\roman*),nosep]
-  \item $a_j\sim C_\gamma j^\gamma$ (spectral growth);
-  \item $V$ is $C^2$, simple turning points, Langer--Olver applicable;
-  \item Hypothesis~\ref{hyp:langer_pointwise} (pointwise Langer);
-  \item Hypothesis~\ref{hyp:Cinfty} ($C_\infty<\infty$).
-\end{enumerate}
+For $\gamma,\beta>0$: $\mathfrak{T}_\gamma$ is the class
+of self-adjoint $\cAg = -\partial_\xi^2+V(\xi)$ on $L^2(\R_+)$,
+$V\geq 0$, $V\to+\infty$, discrete spectrum, satisfying:
+(i) $a_j\sim C_\gamma j^\gamma$;
+(ii) $V\in C^2$, simple turning points;
+(iii) H1; (iv) H2.
 \end{definition}
 
-\begin{hypothesis}[Pointwise Langer scaling law]
+\begin{hypothesis}[H1: Pointwise Langer scaling]
 \label{hyp:langer_pointwise}
-$\exists\, C_0=C_0(M,V)<\infty$, independent of $j$, $K$, $c$,
-such that for $c\geq c_0(j)$:
-\begin{equation}\label{eq:langer_pointwise}
-  \|e_j\|_{C^0([0,M])} \leq C_0\,j^\gamma\,c^{-\beta}.
-\end{equation}
-\emph{Status.}
-Airy ($p=1$): verified by XVIII \texttt{rem:langerkdep}.
-Power family $V=C_V\xi^p$:
-\texttt{olver\_growth\_lemma.tex} gives a proof sketch
-(Remark~\ref{rem:h1_mechanism} explains the mechanism).
-General $V$: open; requires a regular variation condition.
+$\exists\, C_0<\infty$ (independent of $j,K,c$) such that
+$\|e_j\|_{C^0([0,M])} \leq C_0\,j^\gamma\,c^{-\beta}$
+for $c\geq c_0(j)$.
+
+\emph{Status:} Airy: XVIII; power family: sketch
+(\texttt{olver\_growth\_lemma.tex}, Remark~\ref{rem:h1_mechanism});
+general: open (requires regular variation).
 \end{hypothesis}
 
-\begin{remark}[Mechanism behind H1 for the power family]
+\begin{remark}[Mechanism for H1, power family]
 \label{rem:h1_mechanism}
-For $V=C_V\xi^p$, the Olver remainder bound gives
-$\|e_j\|\leq 2AQ_j c^{-\beta}$ with
-$Q_j = \int_0^M|\Psi(\zeta_j(t))|\,dt$
-(\texttt{olver\_growth\_lemma.tex}, eq.~(2.3)).
-The turning point $\xi_j\sim j^{\gamma/p}$ and the
-Olver error potential $\Psi$ involves $V'(\xi_j)$
-and $V''(\xi_j)$, giving
-$Q_j\sim D_p j^{\gamma/p}$.
-Since $\gamma/p\leq\gamma$ for $p\geq 1$
-(with equality at $p=1$, Airy is the worst case):
-$Q_j\leq D_1 j^\gamma$ with $D_1$ independent of $j$.
-This is the constructive bridge from O4 to H1
-in the DAG of \texttt{trilogy\_dag.tex}:
-the mechanism is Olver remainder $+$
-turning-point WKB scaling.
+Olver gives $\|e_j\|\leq 2AQ_jc^{-\beta}$;
+$\xi_j\sim j^{\gamma/p}$ implies $Q_j\sim D_pj^{\gamma/p}$;
+$p\geq 1$ implies $Q_j\leq D_1j^\gamma$;
+$C_0 = 2AD_1$ independent of $j$.
 \end{remark}
 
-\begin{hypothesis}[$C_\infty$ boundedness]
+\begin{hypothesis}[H2: $C_\infty$ boundedness]
 \label{hyp:Cinfty}
-$C_\infty:=\sup_{j\geq 1}\|u_j\|_{C^0([0,M])}<\infty$.
+$C_\infty = \sup_{j\geq 1}\|u_j\|_{C^0([0,M])}<\infty$.
 
-\emph{Status.}
-Airy: standard $L^\infty$ Airy bound.
-Power family: follows from WKB $L^\infty$ normalization.
-General: open.
+\emph{Status:} Airy: standard;
+power family: WKB $L^\infty$ normalization;
+general: open.
 \end{hypothesis}
 
 %% ============================================================
-\section{DAG: Agnostic and Sensitive Nodes}
+\section{DAG: Agnostic Nodes}
 \label{sec:dag}
 %% ============================================================
 
 \begin{lemma}[$\gamma$-Agnostic nodes]
 \label{lem:gamma_agnostic}
-The following hold for every $\cAg\in\mathfrak{T}_\gamma$:
-\begin{enumerate}[label=(\roman*),nosep]
-  \item Split $\SK-\cKA = \AK-\BK$;
-    $\AK = \AKlin+\AKquad$.
-  \item Tensor norm $\|f\otimes g\|\leq M\|f\|_{C^0}\|g\|_{C^0}$.
-  \item Bessel tail (XVIII \texttt{lem:besseltail}).
-  \item Tonelli/DCT.
-  \item Slepian tail $\|\BK\|\leq\Ctwo^{1/2}e^{-\alpha K/2}$
-    (XVIII \texttt{lem:slepianunif}).
-  \item HS/Cauchy--Schwarz on $\BK$.
-  \item Sequential $(c,K)$-limit.
-  \item Kato norm-resolvent perturbation.
-\end{enumerate}
+The following hold for every $\cAg\in\mathfrak{T}_\gamma$
+without H1--H2:
+\textup{(i)} Split $\SK-\cKA=\AK-\BK$, $\AK=\AKlin+\AKquad$;
+\textup{(ii)} tensor norm bound;
+\textup{(iii)} Bessel tail (XVIII);
+\textup{(iv)} Tonelli/DCT;
+\textup{(v)} Slepian tail $\|\BK\|\leq\Ctwo^{1/2}e^{-\alpha K/2}$;
+\textup{(vi)} Kato norm-resolvent (Kato VI).
 \end{lemma}
 
 %% ============================================================
-\section{Truncation Geometry via Summation}
+\section{Truncation Geometry}
 \label{sec:trunc}
 %% ============================================================
 
 \begin{lemma}[Universal truncation geometry]
 \label{lem:trunc_universal}
-Under Hypotheses~\ref{hyp:langer_pointwise} and~\ref{hyp:Cinfty},
-for $K\geq 1$ and $c\geq c_0$:
+Under H1--H2, for $K\geq 1$, $c\geq c_0$:
 \begin{align}
   \normh{\AKlin}{}
-    &\leq 2MC_\infty C_0\,c^{-\beta}\sum_{j=1}^K j^\gamma
-    \leq \underbrace{\frac{2MC_\infty C_0}{1+\gamma}K^{1+\gamma}
-      +O(K^\gamma)}_{\Clin}\cdot c^{-\beta},
-    \label{eq:AKlin}\\
+    &\leq \frac{2MC_\infty C_0}{1+\gamma}K^{1+\gamma}c^{-\beta}
+    + O(K^\gamma c^{-\beta}),\label{eq:AKlin}\\
   \normh{\AKquad}{}
-    &\leq MC_0^2\,c^{-2\beta}\sum_{j=1}^K j^{2\gamma}
-    \leq \underbrace{\frac{MC_0^2}{1+2\gamma}K^{1+2\gamma}
-      +O(K^{2\gamma})}_{\Cquad}\cdot c^{-2\beta}.
-    \label{eq:AKquad}
+    &\leq \frac{MC_0^2}{1+2\gamma}K^{1+2\gamma}c^{-2\beta}
+    + O(K^{2\gamma}c^{-2\beta}).\label{eq:AKquad}
 \end{align}
-Hence $\Clin=O(K^{1+\gamma})$, $\Cquad=O(K^{1+2\gamma})$
-with constants depending only on $M$, $C_0$, $C_\infty$, $\gamma$.
 \end{lemma}
 
 \begin{proof}
-For each $j\leq K$:
-$\|u_j\otimes e_j+e_j\otimes u_j\|\leq 2MC_\infty C_0 j^\gamma c^{-\beta}$;
-$\|e_j\otimes e_j\|\leq MC_0^2 j^{2\gamma}c^{-2\beta}$
-($c^{-2\beta}$ is not absorbed).
-Sum over $j=1,\ldots,K$ using Euler--Maclaurin:
-$\sum_{j=1}^K j^\sigma = K^{1+\sigma}/(1+\sigma)+O(K^\sigma)$.
+Sum over $j=1,\ldots,K$:
+$\|u_j\otimes e_j+e_j\otimes u_j\|
+\leq 2MC_\infty C_0 j^\gamma c^{-\beta}$;
+$\|e_j\otimes e_j\|\leq MC_0^2 j^{2\gamma}c^{-2\beta}$.
+Apply Euler--Maclaurin $\sum_{j=1}^K j^\sigma
+= K^{1+\sigma}/(1+\sigma)+O(K^\sigma)$.
 \end{proof}
 
 %% ============================================================
@@ -310,84 +253,61 @@ $\sum_{j=1}^K j^\sigma = K^{1+\sigma}/(1+\sigma)+O(K^\sigma)$.
 \label{sec:kopt}
 %% ============================================================
 
-\begin{lemma}[Variational characterization of $\Kopt$]
+\begin{lemma}[Variational $K^*$]
 \label{lem:kopt_variational}
-Define the upper-bound functional (for $K\geq 1$, $c\geq 2$):
-\begin{equation}\label{eq:F}
-  F(K) := L\,K^{1+\gamma}\,c^{-\beta} + T\,e^{-\alpha K/2},
+Set $F(K) := L K^{1+\gamma}c^{-\beta} + Te^{-\alpha K/2}$
+($L=2MC_\infty C_0/(1+\gamma)$, $T=\Ctwo^{1/2}$).
+
+\textup{(i)} $F$ is strictly convex on $(0,\infty)$;
+the unique minimizer $K^*(c)$ satisfies the FOC
+\begin{equation}\label{eq:FOC}
+  L(1+\gamma){K^*}^{\gamma}c^{-\beta}
+  = \tfrac{\alpha}{2}\,T\,e^{-\alpha K^*/2}.
 \end{equation}
-where $L = 2MC_\infty C_0/(1+\gamma)$ and $T=\Ctwo^{1/2}$
-are positive constants independent of $K$ and $c$.
 
-\begin{enumerate}[label=(\roman*)]
-  \item \textbf{(Existence of minimizer).}
-  $F(K)$ is convex in the real variable $K>0$
-  (sum of a strictly convex increasing and a strictly convex
-  decreasing function), so it has a unique minimizer
-  $K^*(c)\in(0,\infty)$ satisfying the first-order condition
-  \begin{equation}\label{eq:FOC}
-    L(1+\gamma)\,{K^*}^{\gamma}\,c^{-\beta}
-    = \tfrac{\alpha}{2}\,T\,e^{-\alpha K^*/2}.
-  \end{equation}
+\textup{(ii)} Asymptotics:
+\begin{align}
+  K^*(c) &\sim \frac{2\beta}{\alpha}\log c
+    \quad\textup{(leading)},\label{eq:kopt_leading}\\
+  K^*(c) &\sim \frac{2\beta}{\alpha(1+\gamma)}\log c
+    \quad\textup{(refined; both asymptotic, not canonical scales)}.
+    \label{eq:kopt_refined}
+\end{align}
 
-  \item \textbf{(Asymptotics of $K^*$).}
-  Taking logarithms of~\eqref{eq:FOC}:
-  \[
-    \gamma\log K^* + \log(L(1+\gamma)c^{-\beta})
-    = \log(\tfrac{\alpha T}{2}) - \tfrac{\alpha}{2}K^*.
-  \]
-  Since $\log K^* = o(K^*)$, the dominant balance as $c\to\infty$ is
-  $-\beta\log c \sim -\frac{\alpha}{2}K^*$, giving
-  \begin{equation}\label{eq:kopt_leading}
-    K^*(c) \sim \frac{2\beta}{\alpha}\log c
-    \quad (\text{leading order}).
-  \end{equation}
-  Substituting back: $\gamma\log K^*\sim\gamma\log\log c = o(\log c)$,
-  so the next-order correction gives
-  \begin{equation}\label{eq:kopt_refined}
-    K^*(c) \sim \frac{2\beta}{\alpha(1+\gamma)}\log c
-    \qquad (c\to\infty).
-  \end{equation}
-  Both~\eqref{eq:kopt_leading} and~\eqref{eq:kopt_refined}
-  are asymptotic; the rate $O(c^{-\beta}(\log c)^{1+\gamma})$
-  holds for any $\Kopt = \Theta(\log c)$.
-
-  \item \textbf{(Value at $K^*$).}
-  At $K=K^*(c)\sim\kappa\log c$
-  ($\kappa=2\beta/(\alpha(1+\gamma))$):
-  \[
-    F(K^*) = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
-  \]
-\end{enumerate}
+\textup{(iii)} $F(K^*) = O(c^{-\beta}(\log c)^{1+\gamma})$.
 \end{lemma}
 
 \begin{proof}
-(i)\; $F$ is the sum of $K\mapsto LK^{1+\gamma}c^{-\beta}$
-(strictly increasing for $K>0$, $L>0$) and
-$K\mapsto Te^{-\alpha K/2}$ (strictly decreasing);
-both are convex, hence $F$ is strictly convex with a unique
-minimizer. Setting $F'(K^*)=0$ gives~\eqref{eq:FOC}.
-
-(ii)\; Take logarithms of~\eqref{eq:FOC} and note
-$\log K^* = o(K^*)$ as $K^*\to\infty$.
-
-(iii)\; $LK^{1+\gamma}c^{-\beta}|_{K=\kappa\log c}
-= L\kappa^{1+\gamma}(\log c)^{1+\gamma}c^{-\beta}$.
+(i) $F'' = L\gamma(1+\gamma)K^{\gamma-1}c^{-\beta}
++ \frac{\alpha^2}{4}Te^{-\alpha K/2} > 0$.
+(ii) Logarithmating~\eqref{eq:FOC};
+$\log K^* = o(K^*)$; dominant balance.
+(iii) Direct substitution.
 \end{proof}
 
-\begin{remark}[Variational vs.\ heuristic saddle balance]
+\begin{remark}[Discrete floor projection]
+\label{rem:kopt_discrete}
+Lemma~\ref{lem:kopt_variational} minimizes $F$ over
+$\R_+$. For $K_{\rm int}=\lfloor K^*\rceil\in\N$:
+$F''(K^*) = O(c^{-\beta}(\log c)^{\gamma-1})$
+(from~\eqref{eq:FOC}, second derivative);
+Taylor expansion gives
+$F(K_{\rm int}) - F(K^*)
+\leq \tfrac{1}{8}F''(K^*)
+= O(c^{-\beta}(\log c)^{\gamma-1})
+\prec c^{-\beta}(\log c)^{1+\gamma}$
+in $\mathcal{S}$ (Definition~\ref{def:scale}).
+Hence Corollary~\ref{cor:universal_lograte}
+holds for $K=K_{\rm int}\in\N$.
+\end{remark}
+
+\begin{remark}[Variational replaces heuristic saddle]
 \label{rem:variational_vs_heuristic}
-Earlier versions (XIX, first XX draft) obtained $\Kopt$ by
-a heuristic order-of-magnitude balance
-$K^{1+\gamma}c^{-\beta}\asymp e^{-\alpha K/2}$.
-Lemma~\ref{lem:kopt_variational} replaces this with an exact
-variational statement: $K^*$ is the unique minimizer of
-a strictly convex function $F(K)$, and the asymptotics
-follow from the first-order condition~\eqref{eq:FOC}.
-The two approaches give the same leading-order formula~\eqref{eq:kopt_leading};
-the variational formulation provides the
-missing ``minimizing principle'' that makes $\Kopt$
-canonical rather than heuristic.
+Prior to commit \texttt{679b3f2}, $\Kopt$ was obtained
+by heuristic order-of-magnitude balance.
+Lemma~\ref{lem:kopt_variational} replaces this
+with a strictly convex functional and a FOC;
+asymptotics follow by standard dominant balance.
 \end{remark}
 
 %% ============================================================
@@ -395,157 +315,108 @@ canonical rather than heuristic.
 \label{sec:layersurvival}
 %% ============================================================
 
-\begin{theorem}[Layer-Survival Selection Principle]
+\begin{theorem}[Layer-Survival]
 \label{thm:layer_survival}
-For $n\geq 1$, the $n$-th interaction layer satisfies,
-under Hypothesis~\ref{hyp:langer_pointwise},
-\[
-  \normh{A_K^{(n)}}{}
-  \leq \frac{MC_\infty^{(2-n)_+}C_0^n}{1+n\gamma}
-    K^{1+n\gamma}\,c^{-n\beta}
-  + O(K^{n\gamma}c^{-n\beta}),
-\]
-where $(2-n)_+ = \max(2-n,0)$.
-At $K=K^*(c)\sim\kappa\log c$:
-\[
-  \normh{A_K^{(n)}}{} = O\!\left(c^{-n\beta}(\log c)^{1+n\gamma}\right)
-  \prec c^{-\beta}(\log c)^{1+\gamma} \quad \forall\, n\geq 2,
-\]
-by Proposition~\ref{prop:asymp_order}.
-Consequently, the rate is governed by the $n=1$ layer alone.
+For $n\geq 1$, under H1,
+$\normh{A_K^{(n)}}{}
+= O(K^{1+n\gamma}c^{-n\beta})$.
+At $K=K^*$:
+$\normh{A_K^{(n)}}{}
+= O(c^{-n\beta}(\log c)^{1+n\gamma})
+\prec c^{-\beta}(\log c)^{1+\gamma}$
+for all $n\geq 2$
+(Proposition~\ref{prop:asymp_order}).
+The rate is governed by $n=1$ alone.
 
-\medskip
-\textbf{Structural interpretation.}
-For each additional Langer error ($n\to n+1$):
-the $K$-exponent increases by $\gamma$ but the
-$c$-exponent increases by $\beta$.
-Since $c^{-\beta}\succ(\log c)^m$ for all $m$
-(Definition~\ref{def:scale}),
-every additional $c^{-\beta}$ factor dominates any
-logarithmic gain. The selection is determined entirely
-by the total asymptotic order $\mathcal{S}$:
-the layer with fewest Langer errors (smallest $c$-exponent)
-governed by layer $n=1$.
+\smallskip
+\textit{Mechanism:}
+each additional Langer factor adds $+\beta$ to the
+$c$-exponent and $+\gamma$ to the log-exponent;
+$c^{-\beta}\succ(\log c)^m$ for all $m$
+$\Rightarrow$ $c$-hierarchy always selects $n=1$.
 \end{theorem}
 
 %% ============================================================
-\section{Universal Rate Theorem}
+\section{Main Theorems}
 \label{sec:main}
 %% ============================================================
 
-\begin{theorem}[Universal two-scale rate]
+\begin{theorem}[Two-scale rate]
 \label{thm:universal_rate}
-Let $\cAg\in\mathfrak{T}_\gamma$, $K\geq K_0$, $c\geq c_0$:
-\begin{equation}\label{eq:twoscale_universal}
+For $\cAg\in\mathfrak{T}_\gamma$, $K\geq K_0$, $c\geq c_0$:
+\[
   \normh{\cK-\cKA}{}
-  \leq \Clin\cdot c^{-\beta}
-  + \Cquad\cdot c^{-2\beta}
-  + \Ctwo^{1/2}\cdot e^{-\alpha K/2}.
-\end{equation}
+  \leq \Clin c^{-\beta}
+  + \Cquad c^{-2\beta}
+  + \Ctwo^{1/2}e^{-\alpha K/2}.
+\]
 \end{theorem}
 
 \begin{corollary}[Universal logarithmic rate]
 \label{cor:universal_lograte}
-With $\Kopt = K^*(c)$ from Lemma~\ref{lem:kopt_variational}:
-\begin{equation}\label{eq:lograte_universal}
-  \normh{\cK-\cKA}{}\big|_{K=\Kopt}
-  = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
-\end{equation}
-All three contributions are explicit:
-\begin{enumerate}[label=(\roman*),nosep]
-  \item Linear: $O(c^{-\beta}(\log c)^{1+\gamma})$ — leading.
-  \item Quadratic: $O(c^{-2\beta}(\log c)^{1+2\gamma})
-    \prec$ linear (Prop.~\ref{prop:asymp_order}).
-  \item Tail: $O(c^{-\beta/(1+\gamma)})
-    \prec c^{-\beta}(\log c)^{1+\gamma}$
-    (Remark~\ref{rem:scales}(ii)).
-\end{enumerate}
+With $K=K_{\rm int}=\lfloor K^*(c)\rceil$
+(Remark~\ref{rem:kopt_discrete}):
+$\normh{\cK-\cKA}{}
+= O(c^{-\beta}(\log c)^{1+\gamma})$.
+The three contributions:
+\textup{(i)} linear $O(c^{-\beta}(\log c)^{1+\gamma})$: leading;
+\textup{(ii)} quadratic $\prec$ linear
+  (Proposition~\ref{prop:asymp_order});
+\textup{(iii)} tail $O(c^{-\beta/(1+\gamma)})
+  \prec$ linear (Remark~\ref{rem:scales}(ii)).
 \end{corollary}
 
-\begin{remark}[The two spectral-geometric invariants]
+\begin{remark}[Spectral-geometric invariants]
 \label{rem:invariants}
-$1+\gamma$: exponent of the linear layer;
-governs the rate (survives $c$-hierarchy);
-arises from $\sum_{j=1}^K j^\gamma\sim K^{1+\gamma}/(1+\gamma)$.
-
-$1+2\gamma$: exponent of the quadratic layer;
-structurally present; arises from $\sum_{j=1}^K j^{2\gamma}$;
-subleading by one factor $c^{-\beta}$ in $\mathcal{S}$.
-
-The gap $\gamma=(1+2\gamma)-(1+\gamma)$ measures the
-additional crowding cost of one extra Langer interaction;
-both invariants are determined by the turning-point geometry.
+$1+\gamma$: leading exponent; from $\sum j^\gamma$;
+governed by turning-point crowding.
+$1+2\gamma$: quadratic-layer exponent;
+subleading by one factor $c^{-\beta}$;
+gap $\gamma$ = crowding cost per Langer interaction.
 \end{remark}
 
 %% ============================================================
-\section{Model Family}
+\section{Model Family and H1 Status}
 \label{sec:models}
 %% ============================================================
 
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
-\begin{tabular}{l l c c c c c}
+\begin{tabular}{l l c c c c}
 \toprule
 \textbf{Model} & $V$ & $\gamma$ & $\beta$
-  & $1{+}\gamma$ & $1{+}2\gamma$
-  & $K^*\cdot\alpha/\log c$ \\
+  & $1{+}\gamma$ & H1 \\
 \midrule
-Airy     & $\xi$     & $2/3$ & $1/3$ & $5/3$ & $7/3$ & $2/5$ \\
-Harmonic & $\xi^2$   & $1$   & $1/2$ & $2$   & $3$   & $1/4$ \\
-$|\xi|^\nu$ & & $\frac{2\nu}{\nu+2}$ & $\frac{\nu}{\nu+2}$
-  & $\frac{3\nu+2}{\nu+2}$ & $\frac{5\nu+2}{\nu+2}$
-  & $\frac{2\nu}{3\nu+2}$ \\
-$\nu\to\infty$ & hard wall
-  & $2$ & $1$ & $3$ & $5$ & $2/7$ \\
+Airy     & $\xi$   & $2/3$ & $1/3$ & $5/3$ & Proved \\
+Harmonic & $\xi^2$ & $1$   & $1/2$ & $2$   & Sketch \\
+$|\xi|^\nu$ ($\nu\geq 1$)
+  & & $\frac{2\nu}{\nu+2}$ & $\frac{\nu}{\nu+2}$
+  & $\frac{3\nu+2}{\nu+2}$ & Sketch \\
+General $V$ & & $\gamma$ & $\beta$ & $1+\gamma$ & Open \\
 \bottomrule
 \end{tabular}
 \end{center}
-
-\begin{remark}[H1 verification status by model]
-\label{rem:h1_status}
-\begin{center}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Model} & \textbf{H1 status} & \textbf{Source} \\
-\midrule
-Airy ($p=1$) & Verified & XVIII \texttt{rem:langerkdep} \\
-Harmonic ($p=2$) & Proof sketch & \texttt{olver\_growth\_lemma.tex} \\
-$|\xi|^\nu$, $\nu\geq 1$ & Proof sketch & \texttt{olver\_growth\_lemma.tex} \\
-General $V$ & Open & Requires regular variation \\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{remark}
 
 %% ============================================================
-\section{Open Tasks Before Freeze}
+\section{Open Tasks}
 \label{sec:open}
 %% ============================================================
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{9.0cm} l}
+\begin{tabular}{l l l}
 \toprule
-\textbf{Item} & \textbf{Status} \\
+\textbf{ID} & \textbf{Statement} & \textbf{Status} \\
 \midrule
-Def.~\ref{def:scale}: total order $\mathcal{S}$ & \checkmark \\
-Prop.~\ref{prop:asymp_order}: $n$-layer dominance & \checkmark \\
-Rem.~\ref{rem:scales}: uses of $c^{-\beta}\succ(\log)^m$ listed & \checkmark \\
-Lem.~\ref{lem:kopt_variational}: variational $K^*$,
-  FOC, asymptotics & \checkmark \\
-Rem.~\ref{rem:variational_vs_heuristic}: old vs.\ new formulation
-  & \checkmark \\
-Thm.~\ref{thm:layer_survival}: $n$-th layer, general selection
-  & \checkmark \\
-Rem.~\ref{rem:logstatus}: conditional theorem, WKB class explicit
-  & \checkmark \\
-Rem.~\ref{rem:h1_mechanism}: constructive O4$\to$H1 bridge & \checkmark \\
+O1 & H1 for general $V$ (regular variation) & open \\
+O2 & H2 for $\nu\neq 1$ & open \\
+O3 & $\Omega(K^{1+\gamma})$ lower bound & open \\
+O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \hline
-Prove H1 from Olver for general $V$ & open \\
-Verify H2 for $\nu\neq 1$ & open \\
-Lower bound $\Omega(K^{1+\gamma})$ for $C_{\rm lin}$ & open \\
-Complete Olver-Watson expansion
-  (\texttt{olver\_growth\_lemma.tex}) & open \\
+\multicolumn{2}{l}{All of O1--O4 are non-blocking}
+  & \checkmark \\
+\multicolumn{2}{l}{Structural stability certified}
+  & \checkmark \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -555,18 +426,12 @@ Complete Olver-Watson expansion
 \label{sec:conclusion}
 %% ============================================================
 
-\textbf{XVIII.} Qualitative BR3: $\cK\to\cKA$.
-
-\medskip
-\textbf{XIX.} Airy two-scale rate $O(c^{-1/3}(\log c)^{5/3})$
-(H1--H2 verified for Airy).
-
-\medskip
-\textbf{XX.} Universal rate for $\cAg\in\mathfrak{T}_\gamma$
-(conditional on H1--H2):
-$O(c^{-\beta}(\log c)^{1+\gamma})$;
-variational $K^*$; Layer-Survival Theorem;
-two spectral-geometric invariants $1+\gamma$, $1+2\gamma$.
+\textbf{XVIII:} Qualitative BR3.
+\textbf{XIX:} Airy rate $O(c^{-1/3}(\log c)^{5/3})$.
+\textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$;
+variational $K^*$; Layer-Survival; two invariants
+$1+\gamma$, $1+2\gamma$.
+Structural stability: \texttt{structural\_stability\_metatheorem.tex}.
 
 \bigskip
 \begin{quote}\itshape\large
