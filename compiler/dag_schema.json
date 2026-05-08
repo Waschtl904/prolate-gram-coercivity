@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DAG Node Schema — prolate-gram-coercivity program",
+  "description": "Schema for a single node in the XXII proof dependency graph. Every lemma, theorem, conjecture, hypothesis, black box, or open problem must conform to this schema before being added to dag_nodes.json.",
+  "type": "object",
+  "required": ["id", "type", "statement", "source", "axis", "used_in", "requires"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique node identifier. Convention: P1-P13 (proved), BB1-BB7 (black box), R1 (reduction), O1-O6 (open), H (hypothesis), C (conjecture).",
+      "pattern": "^[A-Z][A-Z0-9_\\-]*$"
+    },
+    "type": {
+      "type": "string",
+      "description": "Node type. Determines validation rules (see compiler/RULES.md).",
+      "enum": ["T", "I", "BB", "H", "C", "O"]
+    },
+    "statement": {
+      "type": "string",
+      "description": "Human-readable mathematical statement. May contain LaTeX.",
+      "minLength": 10
+    },
+    "source": {
+      "type": "string",
+      "description": "Where this node is proved or defined. For BB: external paper. For T: section in XXII outline."
+    },
+    "axis": {
+      "type": "string",
+      "description": "Which research axis this node belongs to.",
+      "enum": ["discrete", "spectral", "rhp", "infrastructure", "import"]
+    },
+    "used_in": {
+      "type": "array",
+      "description": "IDs of nodes that directly depend on this node (outgoing edges).",
+      "items": { "type": "string" }
+    },
+    "requires": {
+      "type": "array",
+      "description": "IDs of nodes this node directly depends on (incoming edges).",
+      "items": { "type": "string" }
+    },
+    "on_minimal_path": {
+      "type": "boolean",
+      "description": "True if this node is on the minimal proof path to the Main Theorem (P13). Nodes on the minimal path may not depend on O1 or O2."
+    },
+    "closes": {
+      "type": "string",
+      "description": "For type O only: which hypothesis or conjecture this open problem would close if resolved."
+    },
+    "mechanism": {
+      "type": "string",
+      "description": "For type O only: explicit constructive mechanism for resolution."
+    },
+    "bb_source_paper": {
+      "type": "string",
+      "description": "For type BB only: exact paper/theorem reference. BB nodes may not appear in 'requires' of any T node that re-proves their content."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional. Additional remarks for human readers."
+    }
+  },
+  "if": { "properties": { "type": { "const": "O" } } },
+  "then": {
+    "required": ["closes", "mechanism"],
+    "properties": {
+      "on_minimal_path": { "enum": [false] }
+    }
+  }
+}
