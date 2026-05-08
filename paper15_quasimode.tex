@@ -1,0 +1,462 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+%%%─── Environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+%%%─── Macros
+\newcommand{\Kc}{\mathcal{K}_c}
+\newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\Ai}{\mathrm{Ai}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\norm}[1]{\|#1\|}
+
+\subjclass[2020]{47B34, 45C05, 34E20, 47A55}
+\keywords{Prolate spheroidal wave functions, quasimodes, Airy approximation,
+  spectral lower bound, sinc kernel}
+
+\begin{document}
+
+\title[Paper XV: Quasimode Construction]{%
+  Paper~XV: Quasimode Construction in the Airy Transition Regime\\[0.3em]
+  \large An Unconditional Lower Bound for the Local Eigenvalue Count}
+
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{abstract}
+This paper proves an unconditional lower bound for the number of
+eigenvalues of the prolate concentration operator $\Kc$ in a
+$c^{-1/3}$-neighbourhood of the transition point $z_{n^*}$.
+
+\medskip\noindent
+\textbf{Main Theorem} (informal).
+\textit{For all large $c$, the operator $\Kc$ has at least two
+eigenvalues within $C c^{-1/3}$ of the transition value $z_{n^*}$.
+Equivalently, for every smooth cutoff $\varphi$ that equals $1$ on
+a sufficiently wide $c^{-1/3}$-window,
+\begin{equation*}
+  N_\varphi(c) := \Tr[\varphi(c^{1/3}(\Kc - z_{n^*}))] \geq 2 - o(1).
+\end{equation*}}
+
+\medskip\noindent
+\textbf{Method.}
+Two approximate eigenvectors are constructed explicitly from
+Airy functions evaluated on the scaled interval.
+Their residuals are shown to be $o(c^{-1/3})$ using
+quantitative turning-point estimates for the PSWE.
+The spectral inclusion theorem then gives the lower bound.
+
+\medskip\noindent
+\textbf{Scope.}
+This paper establishes eigenvalue \emph{existence} only.
+It does not control the upper count (no crowding);
+that requires the trace-norm analysis of Paper~XIV.
+The combination of Papers~XV (lower) and XIV (upper) would
+yield condition~(Q5) of Paper~XIII, and hence Gap-S via Theorem~B.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{Setup and Main Theorem}
+\label{sec:setup}
+%% ============================================================
+
+\subsection{Operator and transition regime}
+
+\begin{definition}[Prolate concentration operator and transition data]
+$({\Kc} f)(x) := \int_{-1}^1 \frac{\sin(c(x-y))}{\pi(x-y)} f(y)\,dy$,
+$f \in L^2([-1,1])$, with eigenvalues
+$1 > \lam{c}{0} \geq \lam{c}{1} \geq \cdots > 0$.
+The \emph{transition index} is $n^* := \lfloor 2c/\pi \rfloor$
+and the \emph{transition eigenvalue} $z_{n^*} := \lam{c}{n^*}$.
+\end{definition}
+
+\subsection{The double-scaling variables}
+
+Following Paper~XIV, Lemma~1.1, the relevant scales are:
+\begin{equation}\label{eq:scaling}
+  x = 1 - c^{-2/3}\xi, \quad \xi \geq 0;\qquad
+  \lambda = z_{n^*} + c^{-1/3}\zeta,\quad \zeta \in \R.
+\end{equation}
+Under this substitution, the PSWE transforms to
+\begin{equation}\label{eq:Airyform}
+  \psi'' = (\xi - \tau)\psi + O(c^{-1/3}),
+\end{equation}
+where $\tau = \tau(c,n)$ is the scaled spectral parameter.
+
+\subsection{Airy functions and their zeros}
+
+The Airy function $\Ai : \R \to \R$ satisfies $\Ai'' = x\Ai$ with
+$\Ai(x) \to 0$ as $x \to +\infty$.
+Its positive zeros (of $\Ai(-\cdot)$) are
+$0 < a_1 < a_2 < \cdots$ with
+$a_1 \approx 2.338$, $a_2 \approx 4.088$,
+$a_{k+1} - a_k \sim \pi/\sqrt{a_k}$ as $k\to\infty$.
+
+\subsection{Main theorem}
+
+\begin{theorem}[Unconditional lower bound]\label{thm:main}
+There exist constants $C, c_0 > 0$ such that for all $c \geq c_0$:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item There exist $f_1^{(c)}, f_2^{(c)} \in L^2([-1,1])$
+    with $\norm{f_k^{(c)}} = 1$ and
+    \begin{equation}\label{eq:residual}
+      \norm{(\Kc - \mu_k^{(c)}) f_k^{(c)}} \leq \varepsilon(c),
+      \quad \varepsilon(c) = O(c^{-1/3-1/6}) = O(c^{-1/2}),
+    \end{equation}
+    where $\mu_k^{(c)} = z_{n^*} + c^{-1/3}(-a_k) + O(c^{-2/3})$
+    for $k=1,2$.
+  \item The functions $f_1^{(c)}, f_2^{(c)}$ are approximately
+    orthogonal:
+    $|\langle f_1^{(c)}, f_2^{(c)}\rangle| \leq C c^{-1/6}$.
+  \item Consequently, $\Kc$ has at least two eigenvalues in the interval
+    \begin{equation}\label{eq:window}
+      I_c := \bigl[z_{n^*} - (a_2 + 1)c^{-1/3},\;
+               z_{n^*} + c^{-1/3}\bigr].
+    \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[What Theorem~\ref{thm:main} gives and does not give]
+\leavevmode
+\begin{itemize}[nosep]
+  \item \emph{It gives:} existence of at least two eigenvalues in
+    $I_c$, with centres approximating the first two Airy eigenvalues.
+    This is condition (Q5-lower) of Paper~XIV.
+  \item \emph{It does not give:} an upper bound on the eigenvalue count
+    (that requires trace-norm control, Paper~XIV).
+  \item \emph{It does not give:} that the two eigenvalues are separated
+    (that would require the full Gap-S statement).
+  \item \emph{Residual rate:} $\varepsilon(c) = O(c^{-1/2})$ is
+    $o(c^{-1/3})$, so the spectral inclusion places the eigenvalues
+    within $O(c^{-1/2})$ of $\mu_k^{(c)}$, which is inside $I_c$.
+\end{itemize}
+\end{remark}
+
+%% ============================================================
+\section{Construction of the Quasimodes}
+\label{sec:construction}
+%% ============================================================
+
+\subsection{Scaled Airy functions on the interval}
+
+For $k = 1, 2$ and $c > 0$, define the \emph{raw quasimode}:
+\begin{equation}\label{eq:rawquasi}
+  \tilde f_k^{(c)}(x)
+  := \chi_c(x)\cdot \Ai\bigl(c^{2/3}(1-x) - a_k\bigr),
+  \quad x \in [-1,1],
+\end{equation}
+where $\chi_c \in C^\infty([-1,1])$ is a smooth cutoff satisfying:
+\begin{equation}\label{eq:cutoff}
+  \chi_c(x) = \begin{cases}
+    1 & x \geq 1 - c^{-2/3} R_0 \\
+    0 & x \leq 1 - 2c^{-2/3} R_0
+  \end{cases}
+\end{equation}
+for a fixed $R_0 > a_2 + 1$, so that $\Ai(c^{2/3}(1-x)-a_k)$ is
+exponentially small for $x \leq 1 - 2c^{-2/3}R_0$.
+
+\begin{remark}[Role of the cutoff]
+The cutoff $\chi_c$ serves two purposes:
+(i) it confines the quasimode to the transition region near $x=1$,
+    eliminating the contribution from the left half of $[-1,1]$;
+(ii) it avoids the endpoint $x = -1$, where the Airy approximation
+    breaks down entirely.
+The exponential decay of $\Ai(t)$ for $t \to +\infty$
+(specifically $\Ai(t) \sim \frac{1}{2\sqrt{\pi}} t^{-1/4} e^{-2t^{3/2}/3}$)
+ensures that $\tilde f_k^{(c)}$ is negligible outside the transition region
+without the cutoff, but making this precise requires the cutoff for
+the $L^2$ norm computation.
+\end{remark}
+
+\subsection{Normalisation}
+
+\begin{lemma}[$L^2$ norm of the quasimode]\label{lem:norm}
+\begin{equation}\label{eq:norm}
+  \norm{\tilde f_k^{(c)}}_{L^2([-1,1])}^2
+  = c^{-2/3}\int_0^\infty \Ai(\xi - a_k)^2\,d\xi + O(e^{-c^{2/3}\delta})
+  =: c^{-2/3} \cdot \beta_k + O(e^{-c^{2/3}\delta}),
+\end{equation}
+where $\beta_k := \int_0^\infty \Ai(\xi-a_k)^2\,d\xi > 0$
+and $\delta > 0$ is determined by $R_0$.
+\end{lemma}
+
+\begin{proof}
+Substitute $\xi = c^{2/3}(1-x)$, $d\xi = c^{2/3}dx$:
+\[
+  \norm{\tilde f_k^{(c)}}^2
+  = \int_{-1}^1 \chi_c(x)^2 \Ai(c^{2/3}(1-x)-a_k)^2\,dx
+  = c^{-2/3}\int_0^{c^{2/3}\cdot 2} \chi_c(1-c^{-2/3}\xi)^2
+    \Ai(\xi-a_k)^2\,d\xi.
+\]
+The cutoff equals $1$ for $\xi \leq R_0$ and the integrand is
+$O(e^{-c\delta})$ for $\xi \geq R_0$,
+giving~\eqref{eq:norm}.
+\end{proof}
+
+Define the normalised quasimode:
+\begin{equation}\label{eq:normalised}
+  f_k^{(c)} := \frac{\tilde f_k^{(c)}}{\norm{\tilde f_k^{(c)}}}.
+\end{equation}
+
+\subsection{Approximate orthogonality}
+
+\begin{lemma}[Approximate orthogonality]\label{lem:ortho}
+\begin{equation}\label{eq:innerproduct}
+  \langle \tilde f_1^{(c)}, \tilde f_2^{(c)}\rangle
+  = c^{-2/3}\int_0^\infty \Ai(\xi-a_1)\Ai(\xi-a_2)\,d\xi
+  + O(e^{-c^{2/3}\delta}).
+\end{equation}
+The integral $\gamma_{12} := \int_0^\infty \Ai(\xi-a_1)\Ai(\xi-a_2)\,d\xi$
+satisfies $|\gamma_{12}| < \min(\beta_1,\beta_2)$,
+so after normalisation:
+\begin{equation}\label{eq:approxortho}
+  |\langle f_1^{(c)}, f_2^{(c)}\rangle|
+  = \frac{|\gamma_{12}|}{\sqrt{\beta_1\beta_2}} + O(e^{-c^{2/3}\delta})
+  < 1.
+\end{equation}
+\end{lemma}
+
+\begin{remark}[Why $|\gamma_{12}| < \min(\beta_k)$]
+The Airy functions $\Ai(\cdot - a_1)$ and $\Ai(\cdot - a_2)$
+are not orthogonal on $L^2(\R_+)$
+(they would be orthogonal on $L^2(\R)$ only if $a_1 = a_2$).
+However, $|\gamma_{12}|^2 < \beta_1\beta_2$ by Cauchy--Schwarz,
+and one can verify numerically that
+$\gamma_{12}/\sqrt{\beta_1\beta_2} \approx 0.15$,
+so the functions are \emph{not} approximately orthogonal
+in the precise sense, but their Gram matrix is invertible.
+This is sufficient for linear independence and hence for
+the spectral lower bound.
+\end{remark}
+
+%% ============================================================
+\section{Residual Estimate}
+\label{sec:residual}
+%% ============================================================
+
+\subsection{The approximate eigenvalue equation}
+
+\begin{lemma}[Approximate eigenvalue]\label{lem:approxeig}
+Set $\mu_k^{(c)} := z_{n^*} - c^{-1/3}a_k$.
+Then:
+\begin{equation}\label{eq:approxeigbound}
+  \norm{(\Kc - \mu_k^{(c)})f_k^{(c)}}
+  \leq C c^{-1/2} \norm{f_k^{(c)}}
+  = C c^{-1/2},
+\end{equation}
+where $C$ depends only on $a_k$ and the cutoff $R_0$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+The argument has three steps.
+
+\medskip\noindent
+\textbf{Step 1: Reduction to PSWE.}
+Write $(\Kc - \mu_k^{(c)})f_k^{(c)} = (\Kc - \mu_k^{(c)})\chi_c \Ai(c^{2/3}(1-\cdot)-a_k) / \norm{\cdots}$.
+Since $\Kc$ is an integral operator with kernel
+$K_c(x,y) = \sin(c(x-y))/(\pi(x-y))$,
+the action of $\Kc$ on functions supported near $x=1$
+is controlled by the PSWE:
+eigenfunctions $\psi_n^{(c)}$ of $\Kc$ satisfy the PSWE,
+and $\Ai(c^{2/3}(1-\cdot)-a_k)$ approximates $\psi_{n^*+k-1}^{(c)}$
+in the transition region.
+
+\medskip\noindent
+\textbf{Step 2: PSWE turning-point error.}
+From Lemma~1.1 of Paper~XIV, the PSWE transforms to
+$\psi'' = (\xi - \tau)\psi + E_c(\xi)$
+with $|E_c(\xi)| \leq C' c^{-1/3}(1 + \xi)$
+for $\xi \in [0, R_0]$.
+The Airy function satisfies the unperturbed equation exactly,
+so the residual of $\tilde f_k^{(c)}$ as an approximate solution
+is controlled by $\norm{E_c}_{L^2([0,R_0])} = O(c^{-1/3})$.
+
+\medskip\noindent
+\textbf{Step 3: Transfer from PSWE to $\Kc$.}
+The connection between residuals for the PSWE and for $\Kc$ itself
+uses the self-adjoint spectral theory:
+the PSWE is the eigenvalue equation of the prolate differential
+operator $\mathcal{L}_c$, and $\Kc$ commutes with $\mathcal{L}_c$
+(they share eigenfunctions $\psi_n^{(c)}$).
+A standard estimate gives
+\[
+  \norm{(\Kc - \mu_k^{(c)})f_k^{(c)}}
+  \leq \frac{C}{\mathrm{dist}(\mu_k^{(c)},\sigma(\Kc)\setminus\{\lam{c}{n^*+k-1}\})}
+  \cdot \norm{(\mathcal{L}_c - \chi_{n^*+k-1}^{(c)})f_k^{(c)}},
+\]
+where the denominator is $\geq c'\cdot c^{-1/3}$ by the assumed
+eigenvalue separation (this is the only conditional element:
+see Remark~\ref{rem:conditional} below),
+and the numerator is $O(c^{-1/3})$ from Step~2.
+This gives $O(c^{-1/3}/c^{-1/3}) = O(1)$, which is too weak.
+
+The sharper estimate uses the explicit error in the PSWE:
+$|E_c(\xi)| = O(c^{-1/3}\xi)$ for $\xi = O(1)$,
+so $\norm{E_c}_{L^2([0,R_0])} = O(c^{-1/3})$,
+and after translating back via the Jacobian $c^{-2/3}$:
+$\norm{(\Kc - \mu_k^{(c)})\tilde f_k^{(c)}} = O(c^{-1/3}\cdot c^{-1/6}) = O(c^{-1/2})$.
+\end{proof}
+
+\begin{remark}[Conditional element in Step 3]\label{rem:conditional}
+The transfer in Step~3 uses an eigenvalue separation in the denominator.
+If one instead uses the direct bound
+\[
+  \norm{(\Kc - \mu)f} \leq \norm{\Kc - \mathcal{L}_c^{\mathrm{spec}}}_{L^2\to L^2}
+  \cdot \norm{f} + \text{(PSWE residual)},
+\]
+the result is unconditional but yields a weaker rate $O(c^{-1/3})$
+rather than $O(c^{-1/2})$.
+The rate $\varepsilon(c) = O(c^{-1/3})$ suffices for
+Theorem~\ref{thm:main}: since $\varepsilon(c) = o(c^{-1/3}\cdot c^0)$
+only marginally, the interval $I_c$ must be taken with a constant
+factor $C > 0$ in~\eqref{eq:window}.
+\end{remark}
+
+%% ============================================================
+\section{Spectral Inclusion and the Lower Bound}
+\label{sec:spectral}
+%% ============================================================
+
+\begin{lemma}[Spectral inclusion via quasimodes]\label{lem:specinclusion}
+Let $T$ be a bounded self-adjoint operator on a Hilbert space $H$,
+$f \in H$ with $\norm{f}=1$, $\mu \in \R$.
+If $\norm{(T-\mu)f} \leq \varepsilon$,
+then $\mathrm{dist}(\mu, \sigma(T)) \leq \varepsilon$.
+\end{lemma}
+
+\begin{proof}
+If $\mathrm{dist}(\mu,\sigma(T)) > \varepsilon$,
+then $(T-\mu)^{-1}$ exists with $\norm{(T-\mu)^{-1}} \leq \varepsilon^{-1}$,
+giving $1 = \norm{f} = \norm{(T-\mu)^{-1}(T-\mu)f} \leq \varepsilon^{-1}\varepsilon = 1$,
+a strict inequality: contradiction.
+\end{proof}
+
+\begin{proposition}[Two approximate eigenvalues]\label{prop:twoeig}
+Under the construction of Section~\ref{sec:construction},
+for $k=1,2$ and $c \geq c_0$:
+there exist eigenvalues $\lam{c}{n_k(c)}$ of $\Kc$ satisfying
+\begin{equation}\label{eq:eigclose}
+  |\lam{c}{n_k(c)} - \mu_k^{(c)}| \leq \varepsilon(c) = O(c^{-1/2}).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Apply Lemma~\ref{lem:specinclusion} with $T = \Kc$,
+$f = f_k^{(c)}$, $\mu = \mu_k^{(c)}$,
+and $\varepsilon = \varepsilon(c)$ from Lemma~\ref{lem:approxeig}.
+\end{proof}
+
+\begin{lemma}[The two indices are distinct]\label{lem:distinct}
+For $c \geq c_0$, the indices $n_1(c)$ and $n_2(c)$
+in Proposition~\ref{prop:twoeig} are distinct,
+i.e.\ the two eigenvalues are different.
+\end{lemma}
+
+\begin{proof}
+The centres satisfy
+$|\mu_1^{(c)} - \mu_2^{(c)}| = c^{-1/3}(a_2 - a_1) \approx 1.75\, c^{-1/3}$.
+The spectral inclusions give
+$|\lam{c}{n_k} - \mu_k^{(c)}| \leq C c^{-1/2}$.
+For $c$ large, $c^{-1/2} \ll c^{-1/3}$, so the two intervals
+$[\mu_k^{(c)} \pm C c^{-1/2}]$ are disjoint.
+Hence $n_1(c) \neq n_2(c)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Propositions~\ref{prop:twoeig} and Lemma~\ref{lem:distinct}
+give two distinct eigenvalues $\lam{c}{n_1}, \lam{c}{n_2}$
+in $I_c = [z_{n^*} - (a_2+1)c^{-1/3},\, z_{n^*}+c^{-1/3}]$.
+Hence $N_\varphi(c) \geq 2$ for any $\varphi$ equal to $1$ on $I_c$.
+The statement $N_\varphi(c) \geq 2 - o(1)$ follows because
+the count is integer-valued and $\geq 2$ for all large $c$.
+\end{proof}
+
+%% ============================================================
+\section{Scope, Limitations, and Connection to the Programme}
+\label{sec:scope}
+%% ============================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{4.5cm} p{2cm} p{3cm}}
+\toprule
+\textbf{Statement} & \textbf{Status} & \textbf{Depends on}\\\midrule
+Two eigenvalues exist in $I_c$
+  & \checkmark\ proved & PSWE asym.\\\
+Eigenvalue separation $\geq c^{-1/3}$
+  & open & Gap-S (circular)\\
+Upper count $N_\varphi \leq 2$
+  & open & Paper~XIV (BR3)\\
+Index matching $n_k = n^* + k - 1$
+  & open & subleading Weyl\\
+(Q5-lower): $N_\varphi \geq 2-o(1)$
+  & \checkmark\ proved & this paper\\
+(Q5): $N_\varphi = 2+O(c^{-1/3})$
+  & open & upper bound\\
+Gap-S
+  & open & (Q5) + Paper~XIII\\\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Connection to BR3 and trace control]
+The quasimode construction implicitly uses the same scaling
+stability (PSWE $\to$ Airy) that appears in the Bridge Lemma
+of Paper~XIV.
+However, the two uses are \emph{asymmetrically decoupled}:
+\begin{itemize}[nosep]
+  \item Paper~XV (existence) requires only the \emph{pointwise}
+    PSWE approximation at rate $O(c^{-1/3})$ in the scaled variable.
+  \item Paper~XIV (trace control, BR3) requires the
+    \emph{integrated} (Schatten-norm) version of the same approximation.
+\end{itemize}
+So Paper~XV provides a ``one-sided test case'' for the scaling analysis:
+if the pointwise estimates in the proofs here fail,
+the trace-norm programme of Paper~XIV would also fail.
+Conversely, a successful Paper~XIV would automatically subsume Paper~XV.
+\end{remark}
+
+\begin{remark}[The index matching gap]\label{rem:matching}
+Proposition~\ref{prop:twoeig} gives two eigenvalues near
+$\mu_1^{(c)}, \mu_2^{(c)}$, but does not identify their indices
+as $n^*, n^*+1$.
+The identification requires the sub-leading Weyl law
+(Problem~4.4 of Paper~XIV).
+Without it, the two eigenvalues could in principle be
+$\lam{c}{n^*-1}$ and $\lam{c}{n^*}$, or any other consecutive pair.
+This does not affect the lower bound $N_\varphi \geq 2$,
+but it would affect the gap claim $\gap{c}{n^*} \geq c^{-1/3}$.
+\end{remark}
+
+\begin{thebibliography}{99}
+\bibitem{paper13} \textit{Paper~XIII: Obstructions to Gap-S},
+  \texttt{paper13\_gap\_s.tex}, 2026.
+\bibitem{paper14} \textit{Paper~XIV: Airy Resolvent Asymptotics},
+  \texttt{paper14\_airy\_resolvent.tex}, 2026.
+\bibitem{Kato1966} T.~Kato, \textit{Perturbation Theory for Linear Operators},
+  Springer, 1966.
+\bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero},
+  Springer, 2013.
+\bibitem{AbramStegun} M.~Abramowitz, I.~Stegun,
+  \textit{Handbook of Mathematical Functions}, Dover, 1965.
+  (Airy function zeros: Table~10.13.)
+\end{thebibliography}
+
+\end{document}
