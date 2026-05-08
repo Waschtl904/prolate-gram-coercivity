@@ -17,46 +17,19 @@ with $c$-admissible constants?
 
 **The diagonal compression observation** *(2026-05-08)*
 
-The decisive mechanism is not the global behavior of $f(j) = o(1)$,
-but its behavior along the *forced diagonal*
-$$j \sim K^*(c) \sim \frac{2\beta}{\alpha} \log c.$$
-After substitution $j \mapsto K^*(c)$, any asymptotic improvement survives only as
-$f(K^*(c)) = f\!\left(\frac{2\beta}{\alpha}\log c + O(\log\log c)\right).$
-Since $K^*(c) \to \infty$ only logarithmically,
-a globally decaying $f$ may still satisfy $f(K^*(c)) \not\to 0$
-at the rate required to improve the leading term.
+After substitution $j \mapsto K^*(c) \sim \frac{2\beta}{\alpha} \log c$,
+improvements survive only as $f(K^*(c))$. Trichotomy:
 
-**The S3 compression principle** *(2026-05-08)*
+- **Algebraic:** $f(j) = j^{-\epsilon}$ $\Rightarrow$ $f(K^*(c)) = (\log c)^{-\epsilon} \to 0$. Survives.
+- **Slowly varying:** $f(j) = (\log j)^{-\delta}$ $\Rightarrow$ $f(K^*(c)) = (\log\log c)^{-\delta}$. Partially survives.
+- **Sub-slowly-varying:** $f(j) = (\log\log j)^{-\delta}$ $\Rightarrow$ frozen under projection.
 
-S3 is not merely a transfer mechanism for asymptotic information.
-It is simultaneously a *compression mechanism* for possible improvements:
-
-- **Algebraic improvements** in $j$ (e.g. $f(j) = j^{-\epsilon}$)
-  survive the diagonal projection, since
-  $f(K^*(c)) = (\log c)^{-\epsilon} \to 0$.
-  These *would* improve the rate and are excluded by O1 (open).
-- **Slowly varying improvements** (e.g. $f(j) = (\log j)^{-\delta}$)
-  become $f(K^*(c)) = (\log\log c)^{-\delta} \to 0$ very slowly,
-  and generate a rate $O(c^{-\beta}(\log c)^{1+\gamma}(\log\log c)^{-\delta})$:
-  a genuine improvement, but only by a secondary logarithm.
-  Whether this is excludable within $\mathcal{M}(\mathrm{S1,S2,S3})$
-  is precisely the content of O1.
-- **Sub-slowly-varying improvements** (e.g. $f(j) = (\log\log j)^{-\delta}$)
-  become frozen: $f(K^*(c)) \sim (\log\log\log c)^{-\delta}$,
-  asymptotically invisible after projection.
-
-**Reformulation of O1:**
-O1 is not an envelope-minimality question in the classical sense.
-The deeper question is:
+**S3 compression principle:** S3 is simultaneously a transfer mechanism
+*and* a compression mechanism. O1 is the question:
 > *Which information survives the S3 diagonal projection?*
 
-This makes O1 a problem about information loss under diagonal compression,
-not about the global shape of the eigenfunction envelope.
-
-**Likely approach:**
-Reverse FOC analysis: show that any $f$ with $f(K^*(c)) \to 0$
-either forces a shift in $K^*(c)$ that absorbs the gain,
-or requires the prefactor to become $c$-inadmissible (violating S2).
+**Likely approach:** Reverse FOC; show $f(K^*(c)) \to 0$ either shifts $K^*(c)$
+to absorb the gain, or forces $c$-inadmissibility of the shifted prefactor.
 
 ---
 
@@ -64,89 +37,113 @@ or requires the prefactor to become $c$-inadmissible (violating S2).
 
 **Current status:** Open. No lower bound claimed for $\mathcal{M}^c$.
 
-**The question:**
-Is the logarithmic loss $(\log c)^{1+\gamma}$ a consequence
-of the method class — or a deeper spectral-geometric phenomenon?
-
-**Two sub-questions:**
-
-**(O3a)** Does there exist a method outside $\mathcal{M}(\mathrm{S1,S2,S3})$
-that achieves $o(c^{-\beta}(\log c)^{1+\gamma})$?
-
-**(O3b)** Can a uniform lower bound be established
-(currently blocked by absence of H3)?
-
-**The mode shift** *(2026-05-08)*
-
-The current paper is Tauberian: *given* axioms, the scale is forced.
-A genuine lower bound outside $\mathcal{M}$ requires a different mode:
-not "every method with these properties produces this rate",
-but "every approximation must carry this information somewhere".
-
-Candidate approaches:
-- **Eigenfunction localization** near the turning point as intrinsic information cost
-- **Kolmogorov widths** of the eigenfunction class in $L^2([0,M])$
-- **Semiclassical barrier arguments** at the turning point
-- **Entropy / information-theoretic** lower bounds on spectral approximation at scale $c$
-
-Each requires a structurally different proof mode from the current architecture.
+**Mode shift** *(2026-05-08):* Tauberian $\to$ information-theoretic.
+Candidate approaches: eigenfunction localization, Kolmogorov widths,
+semiclassical barrier, entropy lower bounds.
 
 ---
 
 ## Direction 3 — Asymptotic Projection Theory
 
-**Current status:** $\mathfrak{R}$ defined functionally in Paper XX.
-Abstract theory not yet developed.
+### 3.1 The three-level structure of S2
 
-**The abstract core** *(2026-05-08)*
+*(2026-05-08)*
 
-The structure underlying $\mathfrak{R}$ is more general than its WKB instantiation:
-- a *source space* of analytic representatives (bounds, expansions)
-- a *target order* of asymptotic equivalence classes
-- a *stability condition* ensuring that projection and rescaling commute
+| Level | Content | Character |
+|---|---|---|
+| Analytic | Concrete summation formula (EM) | Model-dependent |
+| Asymptotic | Scale-stability of $A(K,c)$ | Structural |
+| Functional | $\mathfrak{R}$ commutes with rescaling | Categorical |
 
-The content of S2 is then precisely:
+The implication chain is:
+$$\text{EM remainder control} \;\Longrightarrow\; \text{scale-stability of } A(K,c)
+\;\Longrightarrow\; \mathfrak{R} \circ \mathrm{Res}_\lambda = \mathfrak{R}.$$
+Only the last two levels generalize beyond WKB.
+EM is one realization; the invariance $\mathfrak{R} \circ \mathrm{Res}_\lambda = \mathfrak{R}$
+is the actual mathematical content of S2.
 
-> **Scale-stability criterion:**
-> $A(K,c)$ *induces a well-defined class under* $\mathfrak{R}$
-> $\iff$ $A$ *is asymptotically scale-stable*,
+**Scale-stability criterion:**
+$$A(K,c) \text{ induces a well-defined class under } \mathfrak{R}
+\iff
+\sup_{c \geq c_0} \frac{A(K, \lambda c)}{A(K,c)} < \infty
+\quad \forall \lambda > 0, \text{ uniformly on the diagonal.}$$
 
-where *asymptotically scale-stable* means:
-$$\sup_{c \geq c_0}\, \frac{A(K, \lambda c)}{A(K, c)} < \infty
-\quad \forall \lambda > 0, \text{ uniformly in } K \text{ on the diagonal}.$$
+### 3.2 Twisted realization theory
 
-This is entirely independent of Euler–Maclaurin.
-EM is one concrete mechanism that *realizes* scale-stability in the WKB power-sum class.
-The criterion itself is a general asymptotic stability axiom.
+*(2026-05-08)*
 
-**Transformation of S2:**
-The scale-stability criterion would transform S2 from a
-WKB-technical property (EM structural property)
-into a general asymptotic stability axiom:
+**The degenerate case $\mathfrak{R} \circ \mathrm{Res}_\lambda = \mathfrak{R}$
+is not the only interesting case.**
 
-| Stage | Formulation of S2 |
+Suppose instead:
+$$\frac{A(K, \lambda c)}{A(K,c)} \xrightarrow{c \to \infty} L(\lambda)$$
+for some function $L: (0,\infty) \to (0,\infty)$.
+By the standard argument, $L$ must satisfy the Cauchy functional equation
+$L(\lambda\mu) = L(\lambda)L(\mu)$, so $L(\lambda) = \lambda^\rho$ for some $\rho \in \mathbb{R}$.
+
+This gives a one-parameter family of *rescaling cocycles*:
+$$\frac{A(K, \lambda c)}{A(K,c)} \sim \lambda^\rho, \qquad \rho \in \mathbb{R}.$$
+
+- $\rho = 0$: scale-stable; $\mathfrak{R}$ well-defined. *Current Paper XX setting.*
+- $\rho \neq 0$: $A(K,c)$ transforms as $c^\rho$ under rescaling;
+  the image under $\mathfrak{R}$ shifts by $\phi_{s,t} \mapsto \phi_{s-\rho, t}$.
+  The preorder $\succ$ is preserved (it is defined on index pairs),
+  but the equivalence class assigned to the bound shifts with $\lambda$:
+  $\mathfrak{R}$ is no longer a map to a single class, but to a *cocycle orbit*.
+
+**Definition (Twisted realization map):**
+For prefactor $A$ with rescaling exponent $\rho$, define
+$$\mathfrak{R}^\rho(b) := [\phi_{s-\rho, t}]
+\quad \text{if} \quad b(K^*(c), c) \sim_{\mathcal{S}} c^\rho \phi_{s,t}(c).$$
+For $\rho = 0$ this recovers $\mathfrak{R}$ from Paper XX.
+
+**Conjecture (Twisted rigidity):**
+*For each $\rho \in \mathbb{R}$, the balance fixed-point equation
+under $\mathfrak{R}^\rho$ forces the diagonal rate*
+$$O\!\left(c^{-(\beta - \rho)}(\log c)^{1+\gamma}\right),$$
+*with the effective exponent shifted by $\rho$.
+Structural rigidity holds within each $\rho$-class;
+the class itself is determined by the rescaling behavior of $A$.*
+
+**Consequence:** the obstruction theorem generalizes: rate improvement
+within a fixed $\rho$-class is impossible by the same balance argument;
+crossing $\rho$-classes corresponds to a genuine change in
+the asymptotic geometry of the bound.
+
+### 3.3 S2 as projective invariance
+
+The reformulation is now complete:
+
+> **S2 is not the statement that EM gives good constants.**
+> **S2 is the statement that the asymptotic geometry possesses
+> a stable projection structure under the rescaling group.**
+
+In this language:
+- Paper XX establishes the $\rho = 0$ case.
+- Twisted realization theory covers $\rho \neq 0$.
+- The full theory classifies which asymptotic geometries
+  arise from which rescaling-cocycle structure of the analytic bounds.
+
+### 3.4 The five structural questions (updated)
+
+1. **Well-definedness:** $\mathfrak{R}^\rho(b)$ exists $\iff$ $A$ has a definite rescaling exponent $\rho$.
+2. **Stability axioms:** is $\{$leading-power extraction, uniform remainder, $\rho$-homogeneity$\}$ complete?
+3. **Projection fidelity:** when does $\mathfrak{R}^\rho(b_1 + b_2) = \mathfrak{R}^\rho(b_1)$?
+4. **Collapse:** deformations that break $\rho$-homogeneity destroy $\mathfrak{R}^\rho$
+   while preserving $\succ$. (`lem:S2_knockdown` in abstract form.)
+5. **Method equivalence:** two methods are *projectively equivalent* if
+   they induce the same $\rho$ and the same $\mathfrak{R}^\rho$.
+
+### 3.5 Connections to existing theory
+
+| Existing theory | Connection |
 |---|---|
-| Paper XX | EM structural property: $C_\sigma$ explicit and $c$-independent |
-| Abstract criterion | $A(K,c)$ is asymptotically scale-stable |
-| Functional form | $\mathfrak{R}$ commutes with $c$-rescaling |
-
-All three are equivalent in the WKB setting;
-only the last two generalize.
-
-**The five structural questions:**
-1. **Well-definedness:** when does $b(K,c)$ have a unique image in $\mathcal{S}/{\sim}$?
-2. **Stability axioms:** is {leading-power extraction, uniform remainder, scaling invariance} complete?
-3. **Projection fidelity:** when does $\mathfrak{R}(b_1 + b_2) = \mathfrak{R}(b_1)$?
-4. **Collapse conditions:** which deformations destroy $c$-uniform stability
-   while preserving the target order $\succ$?
-   *(This is `lem:S2_knockdown` in abstract form.)*
-5. **Method equivalence:** when do two summation methods induce the same $\mathfrak{R}$?
-
-**Connection to existing theory:**
-- Regular variation (Bingham–Goldie–Teugels): slowly varying functions
-  as the boundary case of scale-stability
-- Tauberian theorems: sufficient conditions for $\mathfrak{R}$ to be well-defined
-- Asymptotic algebras: algebraic structure of $\mathcal{S}/{\sim}$ as a ring
+| Regular variation (BGT) | Slowly varying = boundary case $\rho = 0$, $L(\lambda) \equiv 1$ |
+| Regularly varying functions | $\rho \neq 0$ class: $A(K,\lambda c) \sim \lambda^\rho A(K,c)$ |
+| Karamata representation | Structure theorem for $\rho$-homogeneous prefactors |
+| Tauberian theorems | Sufficient conditions for $\mathfrak{R}^\rho$ to be well-defined |
+| Renormalization group | Rescaling action on asymptotic classes; fixed points = $\rho = 0$ |
+| Asymptotic algebras | Algebraic structure of $\bigsqcup_\rho \mathcal{S}^\rho/\!\sim$ |
 
 ---
 
@@ -154,19 +151,21 @@ only the last two generalize.
 
 ```
 O1 (envelope minimality = information survival under S3 compression)
-  └── coupled to S3 via diagonal compression principle
-  └── coupled to S2 via c-admissibility of shifted prefactors
-  └── requires: reverse FOC analysis on f(K*(c))
+  └── coupled to S3 via diagonal compression
+  └── coupled to S2 via c-admissibility = rho=0 condition
+  └── requires: reverse FOC analysis
 
 O3a (outside M)
-  └── requires: new proof mode (localization / entropy / semiclassical)
+  └── requires: localization / entropy / semiclassical
   └── independent of O1
 
 Direction 3 (asymptotic projection theory)
-  └── scale-stability criterion generalizes S2
-  └── subsumes O1 as instance of projection fidelity
-  └── subsumes O3a context: leaving M = losing scale-stability
-  └── connects to regular variation, Tauberian theory, asymptotic algebras
+  └── rho=0: Paper XX (scale-stable, R well-defined)
+  └── rho!=0: twisted realization theory (new)
+  └── S2 = projective invariance under rescaling group
+  └── connects to regular variation, Karamata, renormalization
+  └── O1 = special case rho=0, question about fidelity under f-perturbation
+  └── O3a = leaving rho=0 class entirely
 ```
 
 ---
@@ -177,8 +176,9 @@ Direction 3 (asymptotic projection theory)
 |---|---|---|---|
 | O1 | Medium | Yes (necessity in XX) | Yes |
 | O3a | Long | No | Possibly, with H3 |
-| Direction 3 | Long | No | Programme paper XXI? |
+| Dir. 3 ($\rho=0$ theory) | Medium–Long | No | Programme paper XXI |
+| Dir. 3 (twisted, $\rho\neq 0$) | Long | No | Programme paper XXII? |
 
-*O1 is the natural next target. Its resolution requires understanding
-which information survives the S3 diagonal projection —
-a question that is simultaneously the key to Direction 3.*
+*O1 is the natural next target.
+ Direction 3 at $\rho=0$ is the natural continuation of the programme language.
+ The twisted theory is the long horizon that gives the full geometric picture.*
