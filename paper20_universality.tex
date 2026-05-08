@@ -41,7 +41,7 @@
   spectral growth exponent, two-scale truncation, logarithmic rate,
   spectral-geometric invariant, universality, layer-survival,
   spectrally regularized WKB class, variational truncation,
-  Langer error, discrete floor projection}
+  Langer error, discrete floor projection, iterated asymptotics}
 
 \begin{document}
 
@@ -65,9 +65,14 @@ via summation $\sum_{j=1}^K j^\gamma\sim K^{1+\gamma}/(1+\gamma)$.
 The optimal truncation $\Kopt$ is characterized as the
 \emph{exact minimizer} of the upper-bound functional
 $F(K) := L\,K^{1+\gamma}c^{-\beta} + T\,e^{-\alpha K/2}$
-(Lemma~\ref{lem:kopt_variational}):
-$\Kopt = \operatorname{argmin}_{K\geq 1} F(K)$,
-$K^*\sim 2\beta/(\alpha(1+\gamma))\log c$ ($c\to\infty$).
+(Lemma~\ref{lem:kopt_variational}).
+The unique minimizer satisfies the iterated asymptotics
+\[
+  K^*(c) = \frac{2\beta}{\alpha}\log c
+          + \frac{2\gamma}{\alpha}\log\log c + O(1),
+  \qquad\text{so in particular}\quad
+  K^*(c)\sim\frac{2\beta}{\alpha}\log c.
+\]
 The integer projection $K_{\rm int}=\lfloor K^*\rceil$
 satisfies $F(K_{\rm int}) = F(K^*)\cdot(1+o(1))$
 (Remark~\ref{rem:kopt_discrete}).
@@ -258,39 +263,77 @@ Apply Euler--Maclaurin $\sum_{j=1}^K j^\sigma
 Set $F(K) := L K^{1+\gamma}c^{-\beta} + Te^{-\alpha K/2}$
 ($L=2MC_\infty C_0/(1+\gamma)$, $T=\Ctwo^{1/2}$).
 
-\textup{(i)} $F$ is strictly convex on $(0,\infty)$;
-the unique minimizer $K^*(c)$ satisfies the FOC
+\textup{(i)} \textbf{Existence and uniqueness.}
+$F$ is strictly convex on $(0,\infty)$ since
+$F''(K) = L\gamma(1+\gamma)K^{\gamma-1}c^{-\beta}
++ \frac{\alpha^2}{4}Te^{-\alpha K/2} > 0$.
+The unique minimizer $K^*(c)$ satisfies the FOC
 \begin{equation}\label{eq:FOC}
   L(1+\gamma){K^*}^{\gamma}c^{-\beta}
   = \tfrac{\alpha}{2}\,T\,e^{-\alpha K^*/2}.
 \end{equation}
 
-\textup{(ii)} Asymptotics:
-\begin{align}
-  K^*(c) &\sim \frac{2\beta}{\alpha}\log c
-    \quad\textup{(leading)},\label{eq:kopt_leading}\\
-  K^*(c) &\sim \frac{2\beta}{\alpha(1+\gamma)}\log c
-    \quad\textup{(refined; both asymptotic, not canonical scales)}.
-    \label{eq:kopt_refined}
-\end{align}
+\textup{(ii)} \textbf{Iterated asymptotics.}
+Taking logarithms of~\eqref{eq:FOC}:
+\begin{equation}\label{eq:log_FOC}
+  \frac{\alpha}{2}K^*
+  = \beta\log c + \gamma\log K^*
+  + \log\!\Bigl(\tfrac{L(1+\gamma)}{(\alpha/2)T}\Bigr).
+\end{equation}
+Define $K_0 := \frac{2\beta}{\alpha}\log c$ as the
+zeroth iterate (dominant balance: $\gamma\log K^*=o(K^*)$).
+Substituting $\log K^* = \log K_0 + O(\log\log c/\log c)$
+into~\eqref{eq:log_FOC} gives the first iterate:
+\begin{equation}\label{eq:kopt_iterated}
+  K^*(c) = \frac{2\beta}{\alpha}\log c
+           + \frac{2\gamma}{\alpha}\log\log c
+           + O(1)
+  \qquad(c\to\infty).
+\end{equation}
+In particular, $K^*(c)\sim\frac{2\beta}{\alpha}\log c$.
 
-\textup{(iii)} $F(K^*) = O(c^{-\beta}(\log c)^{1+\gamma})$.
+\medskip
+\textbf{Structural interpretation.}
+The leading coefficient $2\beta/\alpha$ is determined
+entirely by the $c$-decay exponent $\beta$ and the
+Slepian tail rate $\alpha$; it does not depend on $\gamma$.
+The crowding exponent $\gamma$ enters only at the
+log-log level~\eqref{eq:kopt_iterated}:
+it shifts the secondary correction, not the saddle location.
+The rate $O(c^{-\beta}(\log c)^{1+\gamma})$ holds for
+any $K = \Theta(\log c)$; the constant in $\Theta$ is
+$2\beta/\alpha$ to leading order.
+
+\textup{(iii)} \textbf{Value at $K^*$.}
+At $K = K^*(c)$:
+\[
+  F(K^*) = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
+\]
 \end{lemma}
 
 \begin{proof}
-(i) $F'' = L\gamma(1+\gamma)K^{\gamma-1}c^{-\beta}
-+ \frac{\alpha^2}{4}Te^{-\alpha K/2} > 0$.
-(ii) Logarithmating~\eqref{eq:FOC};
-$\log K^* = o(K^*)$; dominant balance.
-(iii) Direct substitution.
+(i) $F'' > 0$ as computed above; unique minimizer follows.
+(ii) Equation~\eqref{eq:log_FOC} is exact.
+Zeroth iterate: $\gamma\log K^* = o(K^*)$, so leading balance is
+$\frac{\alpha}{2}K_0 = \beta\log c$, giving $K_0$.
+First iterate: substitute $\log K^* = \log K_0 + o(1)
+= \log(\frac{2\beta}{\alpha}\log c) + o(1)
+= \log\log c + O(1)$
+into~\eqref{eq:log_FOC}:
+$\frac{\alpha}{2}K^* = \beta\log c
++ \gamma\log\log c + O(1)$,
+which gives~\eqref{eq:kopt_iterated}.
+(iii) $L(K^*)^{1+\gamma}c^{-\beta}
+= L\bigl(\frac{2\beta}{\alpha}\log c\bigr)^{1+\gamma}
+c^{-\beta}(1+o(1))
+= O(c^{-\beta}(\log c)^{1+\gamma})$.
 \end{proof}
 
 \begin{remark}[Discrete floor projection]
 \label{rem:kopt_discrete}
 Lemma~\ref{lem:kopt_variational} minimizes $F$ over
 $\R_+$. For $K_{\rm int}=\lfloor K^*\rceil\in\N$:
-$F''(K^*) = O(c^{-\beta}(\log c)^{\gamma-1})$
-(from~\eqref{eq:FOC}, second derivative);
+$F''(K^*) = O(c^{-\beta}(\log c)^{\gamma-1})$;
 Taylor expansion gives
 $F(K_{\rm int}) - F(K^*)
 \leq \tfrac{1}{8}F''(K^*)
@@ -306,8 +349,9 @@ holds for $K=K_{\rm int}\in\N$.
 Prior to commit \texttt{679b3f2}, $\Kopt$ was obtained
 by heuristic order-of-magnitude balance.
 Lemma~\ref{lem:kopt_variational} replaces this
-with a strictly convex functional and a FOC;
-asymptotics follow by standard dominant balance.
+with a strictly convex functional, a FOC, and an
+iterated asymptotic expansion~\eqref{eq:kopt_iterated}
+with explicit error structure.
 \end{remark}
 
 %% ============================================================
@@ -320,7 +364,7 @@ asymptotics follow by standard dominant balance.
 For $n\geq 1$, under H1,
 $\normh{A_K^{(n)}}{}
 = O(K^{1+n\gamma}c^{-n\beta})$.
-At $K=K^*$:
+At $K=K^*\sim\frac{2\beta}{\alpha}\log c$:
 $\normh{A_K^{(n)}}{}
 = O(c^{-n\beta}(\log c)^{1+n\gamma})
 \prec c^{-\beta}(\log c)^{1+\gamma}$
@@ -362,7 +406,8 @@ The three contributions:
 \textup{(i)} linear $O(c^{-\beta}(\log c)^{1+\gamma})$: leading;
 \textup{(ii)} quadratic $\prec$ linear
   (Proposition~\ref{prop:asymp_order});
-\textup{(iii)} tail $O(c^{-\beta/(1+\gamma)})
+\textup{(iii)} tail $O(e^{-\alpha K^*/2})
+  = O(c^{-\beta}(\log c)^{-\gamma})
   \prec$ linear (Remark~\ref{rem:scales}(ii)).
 \end{corollary}
 
@@ -373,6 +418,13 @@ governed by turning-point crowding.
 $1+2\gamma$: quadratic-layer exponent;
 subleading by one factor $c^{-\beta}$;
 gap $\gamma$ = crowding cost per Langer interaction.
+
+\smallskip
+Note: $\gamma$ does not appear in the leading saddle
+coefficient $2\beta/\alpha$ of $K^*$
+(Lemma~\ref{lem:kopt_variational}(ii));
+it governs the log-exponent of the rate and the
+log-log correction to the optimal truncation.
 \end{remark}
 
 %% ============================================================
@@ -382,17 +434,21 @@ gap $\gamma$ = crowding cost per Langer interaction.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
-\begin{tabular}{l l c c c c}
+\begin{tabular}{l l c c c c c}
 \toprule
 \textbf{Model} & $V$ & $\gamma$ & $\beta$
-  & $1{+}\gamma$ & H1 \\
+  & $1{+}\gamma$ & $K^*$ leading & H1 \\
 \midrule
-Airy     & $\xi$   & $2/3$ & $1/3$ & $5/3$ & Proved \\
-Harmonic & $\xi^2$ & $1$   & $1/2$ & $2$   & Sketch \\
+Airy     & $\xi$   & $2/3$ & $1/3$ & $5/3$
+  & $\frac{2}{3\alpha}\log c$ & Proved \\
+Harmonic & $\xi^2$ & $1$   & $1/2$ & $2$
+  & $\frac{1}{\alpha}\log c$ & Sketch \\
 $|\xi|^\nu$ ($\nu\geq 1$)
   & & $\frac{2\nu}{\nu+2}$ & $\frac{\nu}{\nu+2}$
-  & $\frac{3\nu+2}{\nu+2}$ & Sketch \\
-General $V$ & & $\gamma$ & $\beta$ & $1+\gamma$ & Open \\
+  & $\frac{3\nu+2}{\nu+2}$
+  & $\frac{2\nu}{(\nu+2)\alpha}\log c$ & Sketch \\
+General $V$ & & $\gamma$ & $\beta$ & $1+\gamma$
+  & $\frac{2\beta}{\alpha}\log c$ & Open \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -429,8 +485,8 @@ O4 & Olver-Watson expansion (sketch$\to$proof) & open \\
 \textbf{XVIII:} Qualitative BR3.
 \textbf{XIX:} Airy rate $O(c^{-1/3}(\log c)^{5/3})$.
 \textbf{XX:} Universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$;
-variational $K^*$; Layer-Survival; two invariants
-$1+\gamma$, $1+2\gamma$.
+variational $K^*$ with iterated asymptotics;
+Layer-Survival; two invariants $1+\gamma$, $1+2\gamma$.
 Structural stability: \texttt{structural\_stability\_metatheorem.tex}.
 
 \bigskip
