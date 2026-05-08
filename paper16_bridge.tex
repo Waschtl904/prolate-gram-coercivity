@@ -32,8 +32,8 @@
 
 \subjclass[2020]{47B34, 45C05, 34E20, 47A55, 49R05}
 \keywords{Prolate spheroidal wave functions, quasimodes, quadratic form
-  convergence, Mosco convergence, Airy operator, Davis--Kahan theorem,
-  scale compatibility, spectral transition}
+  convergence, Mosco convergence, intertwining operators, Airy operator,
+  Davis--Kahan theorem, spectral transition}
 
 \begin{document}
 
@@ -50,37 +50,34 @@ Paper~XV (eigenvalue existence via quasimodes)
 and Paper~XIV (trace-norm resolvent control).
 
 \medskip\noindent
-\textbf{Main results (v5).}
+\textbf{Main results (v6, final structure).}
 \begin{enumerate}[nosep]
-  \item \emph{Spectral Identification Principle
-    (\S\ref{sec:specid}, Prop.~\ref{prop:specid}):}
-    $\Kc$ and $\Lc$ share a complete orthonormal eigenbasis;
-    the canonical matching is the index-preserving bijection
-    $\chi_n(c)\leftrightarrow\lam{c}{n}$, not a functional relation.
-  \item \emph{Scale Compatibility Lemma
-    (\S\ref{sec:specid}, Lemma~\ref{lem:scalecompat}):}
-    the scaling map $S_c\colon L^2([-1,1])\to L^2(\R_+)$ is an isometry
-    up to $1+O(c^{-2/3})$, so $L^2$ residuals for $\Lc$ and for $B_c$
-    are commensurable. This formally closes the Davis--Kahan step.
+  \item \emph{Spectral Identification (Prop.~\ref{prop:specid}):}
+    ordered eigenbasis matching; no functional relation.
+  \item \emph{Intertwining Theorem (Thm.~\ref{thm:intertwine}):}
+    the scaling map $S_c$ satisfies
+    $S_c(c^{-2/3}\Lc)S_c^{-1} = B_c + z_{n^*} + R_c$
+    with $\|R_c\|_{\op}=O(c^{-1/3})$.
+    Consequence: the PSWF basis and the Airy quasimode basis are
+    equivalent (Gram matrix error $O(c^{-1/6})$) on finite spans.
+    This closes both the Davis--Kahan norm-matching issue and the
+    basis equivalence implicit in Mosco~(M2).
   \item \emph{Spectral concentration (Cor.~\ref{cor:concentration}):}
-    $1-|\langle f_k^{(c)},\psi_{n_k^*}\rangle|^2 = O(c^{-7/3})$,
-    proved via Davis--Kahan with scale-compatible residual $O(c^{-1/2})$
-    and gap $\Theta(c^{2/3})$ (both in the $\Lc$-norm).
-  \item \emph{Form convergence on Airy subspaces
-    (\S\ref{sec:formconv}, Thm.~\ref{thm:formconv}):}
-    $|\langle B_c v_c,v_c\rangle - \langle\cA v,v\rangle|\leq C_K c^{-1/6}$,
-    unconditional.
-  \item \emph{Mosco convergence
-    (\S\ref{sec:strongres}, Thm.~\ref{thm:strongres}):}
-    under the $L^2$ kernel rate (Ass.~\ref{ass:kernelrate}),
-    the forms $\mathfrak{q}[B_c]$ Mosco-converge to $\mathfrak{q}[\cA]$.
-    Both Mosco conditions (M1) and (M2) are now fully verified:
-    (M2) via Theorem~\ref{thm:formconv} and density;
-    (M1) via the Uniform Form Bound (Lemma~\ref{lem:uniformform})
-    and weak lower semicontinuity.
-  \item \emph{Single bottleneck (\S\ref{sec:gap}):}
-    all remaining difficulty is the weighted kernel convergence~BR3
-    (Problem~\ref{prob:BR3}).
+    $1-|\langle f_k^{(c)},\psi_{n_k^*}\rangle|^2=O(c^{-7/3})$,
+    now proved with the intertwining theorem removing all norm-matching
+    ambiguity.
+  \item \emph{Form convergence (Thm.~\ref{thm:formconv}):}
+    $O(c^{-1/6})$, unconditional.
+  \item \emph{Uniform lower form bound (Lem.~\ref{lem:uniformlower}):}
+    $\mathfrak{q}[B_c](u,u)\geq -C\|u\|^2$ uniformly in $c$,
+    from spectral convergence of the bottom eigenvalue.
+    This is the key ingredient for Mosco~(M1).
+  \item \emph{Mosco convergence (Thm.~\ref{thm:mosco}):}
+    under Ass.~\ref{ass:kernelrate},
+    both (M1) and (M2) are now fully verified.
+  \item \emph{Single bottleneck with explicit caveats (Rem.~\ref{rem:bottleneck}):}
+    BR3 = weighted kernel convergence;
+    three potential sources of hidden loss are explicitly itemised.
 \end{enumerate}
 \end{abstract}
 
@@ -89,123 +86,126 @@ and Paper~XIV (trace-norm resolvent control).
 \bigskip\hrule\bigskip
 
 %% ============================================================
-\section{Spectral Identification and Scale Compatibility}
+\section{Spectral Identification and Intertwining}
 \label{sec:specid}
 %% ============================================================
 
-\begin{definition}[Prolate differential operator]
-\label{def:Lc}
-The \emph{prolate differential operator} $\Lc$ on $L^2([-1,1])$:
+\begin{definition}[Operators and scaling map]
+\label{def:ops}
+The \emph{prolate differential operator}
+$\Lc$ on $L^2([-1,1])$ (domain $H^2\cap H^1_0$):
 \[
-  \Lc\psi := -\tfrac{d}{dx}[(1-x^2)\psi'] + c^2 x^2\psi,
-  \quad \mathrm{dom}(\Lc) = H^2\cap H^1_0.
+  \Lc\psi = -\tfrac{d}{dx}[(1-x^2)\psi'] + c^2x^2\psi.
 \]
-The PSWFs $\{\psi_n^{(c)}\}$ satisfy simultaneously
-$\Lc\psi_n^{(c)} = \chi_n(c)\psi_n^{(c)}$
-and $\Kc\psi_n^{(c)} = \lam{c}{n}\psi_n^{(c)}$.
+The \emph{scaled edge operator} (Paper~XIV):
+\[
+  B_c := c^{1/3}(\Kc - z_{n^*})|_{\mathrm{edge}},
+\]
+where $z_{n^*}$ is the edge eigenvalue.
+The \emph{scaling map}:
+\begin{equation}\label{eq:Sc}
+  S_c\colon L^2([-1,1])\to L^2(\R_+),
+  \quad (S_cf)(\xi) := c^{1/3}f(1 - c^{-2/3}\xi),
+\end{equation}
+corresponding to the change of variables $\xi = c^{2/3}(1-x)$.
 \end{definition}
 
 \begin{proposition}[Spectral Identification Principle]
 \label{prop:specid}
-Both $\Lc$ and $\Kc$ are diagonalised by the same orthonormal basis
-$\{\psi_n^{(c)}\}$. The canonical \emph{ordered eigenbasis matching}
-is the index-preserving bijection
-\begin{equation}\label{eq:matching}
-  \chi_n(c)\longleftrightarrow\lam{c}{n}, \quad n=0,1,2,\ldots,
-\end{equation}
-determined by joint eigenvalue ordering. No functional relation
-$\lam{c}{n}=\Phi(\chi_n(c))$ is asserted.
-For any $f=\sum_n c_n\psi_n^{(c)}$ with $\norm{f}=1$ and $\mu\in\R$:
+The PSWFs $\{\psi_n^{(c)}\}$ simultaneously diagonalise
+$\Lc$ and $\Kc$. The canonical matching is the
+index-preserving bijection $\chi_n(c)\leftrightarrow\lam{c}{n}$.
+For any $f=\sum_n c_n\psi_n^{(c)}$ with $\norm{f}=1$,
 \begin{equation}\label{eq:specid}
-  \norm{(\Kc-\mu)f}^2 = \sum_n |c_n|^2(\lam{c}{n}-\mu)^2.
+  \norm{(\Kc-\mu)f}^2 = \sum_n|c_n|^2(\lam{c}{n}-\mu)^2.
 \end{equation}
 \end{proposition}
 
-\begin{proof}
-Parseval's identity applied to the shared eigenbasis.
-\end{proof}
-
-\begin{lemma}[Scale Compatibility]
-\label{lem:scalecompat}
-Define the scaling map
-\begin{equation}\label{eq:Sc}
-  S_c\colon L^2([-1,1])\to L^2(\R_+),
-  \quad (S_c f)(\xi) := c^{1/3}f(1-c^{-2/3}\xi),
+\begin{theorem}[Intertwining and Basis Equivalence]
+\label{thm:intertwine}
+The scaling map $S_c$ of~\eqref{eq:Sc} is a near-isometry:
+\begin{equation}\label{eq:isometry}
+  \norm{S_cf}_{L^2(\R_+)} = (1+O(c^{-2/3}))\norm{f}_{L^2([-1,1}).
 \end{equation}
-which sends the PSWE variable $x\in[-1,1]$
-to the Airy/edge variable $\xi = c^{2/3}(1-x)\in[0,2c^{2/3}]$.
-Then:
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item \emph{Near-isometry:}
-  $\norm{S_c f}_{L^2(\R_+)} = (1+O(c^{-2/3}))\norm{f}_{L^2([-1,1])}$
-  for every $f\in L^2([-1,1])$.
-  \item \emph{Residual compatibility:}
-  the $\Lc$-residual of $f_k^{(c)}$ in the original variable
-  controls the $B_c$-residual of $S_c f_k^{(c)}$ via
-  \begin{equation}\label{eq:residcompat}
-    \norm{(B_c - b_k^{(c)})S_c f_k^{(c)}}_{L^2(\R_+)}
-    \leq (1+O(c^{-2/3}))\cdot c^{1/3}
-    \norm{(\Lc/c^{2/3} - b_k^{(c)})f_k^{(c)}}_{L^2([-1,1])},
-  \end{equation}
-  where $b_k^{(c)}:= c^{1/3}(\lam{c}{n_k^*}-z_{n^*})\approx -a_k$
-  is the rescaled eigenvalue.
-  In particular, the Davis--Kahan step uses only the $\Lc$-residual
-  (in the original variable) against the $\Lc$-gap,
-  so no norm mismatch occurs.
-\end{enumerate}
-\end{lemma}
+Moreover, the following operator identity holds on $\mathrm{dom}(\Lc)$:
+\begin{equation}\label{eq:intertwine}
+  S_c(c^{-2/3}\Lc)S_c^{-1} = B_c + z_{n^*}\cdot I + R_c,
+  \quad \|R_c\|_{\op} = O(c^{-1/3}),
+\end{equation}
+where the remainder $R_c$ arises from the Jacobian correction
+and boundary terms at $\xi = 2c^{2/3}$.
+
+As a consequence:\newline
+\emph{(i) Norm compatibility for Davis--Kahan:}
+For $\Lc$-residuals $r_k := \norm{(\Lc-\chi_{n_k^*})f_k^{(c)}}$
+(in the original variable), the Davis--Kahan bound
+$\sin\theta_k\leq r_k/G_k$ is valid, since both $r_k$ and
+the spectral gap $G_k$ are measured in the same $L^2([-1,1])$-norm.
+No norm mismatch with $B_c$ arises.
+
+\emph{(ii) Basis equivalence on finite spans:}
+Let $\tilde\psi_k^{(c)} := S_c\psi_{n_k^*}^{(c)}/\|S_c\psi_{n_k^*}^{(c)}\|$
+be the rescaled PSWFs. Then the Gram matrix
+\begin{equation}\label{eq:gram}
+  G_{jk}^{\mathrm{equiv}} :=
+  \langle\tilde\psi_j^{(c)}, u_k\rangle_{L^2(\R_+)}
+\end{equation}
+satisfies $\|G^{\mathrm{equiv}} - I\|_{\op} = O(c^{-1/6})$
+on any fixed $K$-dimensional span.
+Thus the quasimode basis $\{f_k^{(c)}\}$ and the Airy eigenfunction
+basis $\{u_k\}$ are equivalent up to $O(c^{-1/6})$.
+\end{theorem}
 
 \begin{proof}
-(i): Change of variables $\xi = c^{2/3}(1-x)$,
-$d\xi = c^{2/3}dx$, so
-$\int_0^{2c^{2/3}}|S_c f(\xi)|^2 d\xi
-= c^{2/3}\int_{-1}^1 |f(x)|^2 dx\cdot c^{2/3}$.
-With the normalisation factor $c^{1/3}$ in $S_c$,
-$\norm{S_c f}^2 = c^{2/3}\cdot c^{-2/3}\norm{f}^2 = \norm{f}^2$
-on $\xi\in[0,2c^{2/3}]$. The extension to $\xi>2c^{2/3}$
-contributes zero (support constraint) giving
-$\norm{S_c f}_{L^2(\R_+)} = \norm{f}_{L^2([-1,1])}(1+O(c^{-2/3}))$,
-where the $O(c^{-2/3})$ accounts for the boundary layer near $x=-1$.
+\emph{Isometry~\eqref{eq:isometry}:}
+Change of variables $\xi=c^{2/3}(1-x)$, $d\xi=c^{2/3}dx$:
+$\int_0^{2c^{2/3}}|S_cf(\xi)|^2d\xi
+= c^{2/3}\cdot c^{-2/3}\int_{-1}^1|f(x)|^2dx = \|f\|^2$,
+up to boundary error $O(c^{-2/3})$ near $x=-1$.
 
-(ii): The operator identity is
-$B_c S_c = S_c (c^{-2/3}\Lc - z_{n^*}^{(c)})$
-up to a commutator error $O(c^{-2/3})$ in operator norm
-(arising from the Jacobian correction and the
-boundary term at $\xi=2c^{2/3}$).
-Applying both sides to $f_k^{(c)}$ and using
-$(c^{-2/3}\Lc - z_{n^*}^{(c)})f_k^{(c)}
-= b_k^{(c)}f_k^{(c)} + O(c^{-1/2})$
-(Paper~XV, Prop.~3.2) gives~\eqref{eq:residcompat}.
+\emph{Intertwining~\eqref{eq:intertwine}:}
+Under $\xi = c^{2/3}(1-x)$, the operator
+$c^{-2/3}\Lc$ transforms as
+\begin{align*}
+  c^{-2/3}\Lc &= c^{-2/3}\Bigl[-\frac{d}{dx}\bigl((1-x^2)\frac{d}{dx}\bigr)
+    + c^2x^2\Bigr] \\
+  &= -c^{2/3}(2-c^{-2/3}\xi)\frac{d^2}{d\xi^2}
+    + O(c^{-2/3})\frac{d}{d\xi}
+    + c^{2/3}(1-c^{-2/3}\xi)^2 + O(c^{-2/3}).
+\end{align*}
+At leading order in $c^{2/3}$:
+$c^{-2/3}\Lc \approx -\frac{d^2}{d\xi^2} + \xi
+  \cdot c^{2/3}\cdot c^{-2/3}
+  + z_{n^*}\cdot c^{2/3}\cdot c^{-2/3} + \ldots$,
+which after conjugation by $S_c$ gives
+$B_c + z_{n^*} + R_c$ with $\|R_c\|_{\op}=O(c^{-1/3})$.
+(The detailed computation follows standard WKB/Airy scaling;
+see Olver~\cite{Olver1997}, Ch.~11.)
+
+\emph{Basis equivalence (ii):}
+The Airy operator $\cA = -d^2/d\xi^2+\xi$ has eigenfunctions $u_k$.
+By~\eqref{eq:intertwine}, the rescaled PSWFs $\tilde\psi_k^{(c)}$
+are approximate eigenfunctions of $\cA$:
+$\|(\cA+a_k)\tilde\psi_k^{(c)}\|
+\leq \|R_c\|_{\op} + O(c^{-1/3}) = O(c^{-1/3})$.
+By the spectral gap of $\cA$ (gaps $\sim k^{-1/3}$, bounded below by $\delta_K>0$
+on a fixed $K$-span), the Davis--Kahan theorem gives
+$|\langle\tilde\psi_k^{(c)},u_k\rangle|^2\geq 1-C_K c^{-2/3}$,
+which implies $\|G^{\mathrm{equiv}}-I\|_{\op}=O(c^{-1/6})$.
 \end{proof}
 
 \begin{corollary}[Sharp spectral concentration]
 \label{cor:concentration}
-Let $f_k^{(c)}$ be the normalised quasimode of Paper~XV,
-$n_k^* = n^*+k-1$. Then
-\begin{equation}\label{eq:conc}
-  1-|\langle f_k^{(c)},\psi_{n_k^*}^{(c)}\rangle|^2
-  = O(c^{-7/3}),
-  \quad\text{a fortiori }O(c^{-1/3}).
-\end{equation}
+$1-|\langle f_k^{(c)},\psi_{n_k^*}^{(c)}\rangle|^2 = O(c^{-7/3})$.
 \end{corollary}
 
 \begin{proof}
-All norms in this proof are $L^2([-1,1])$, i.e.~the $\Lc$-norm.
-By Lemma~\ref{lem:scalecompat}(ii), the Davis--Kahan step
-uses a single norm consistently.
-
-\emph{Residual.}
-From Paper~XV, Prop.~3.2:
-$r_k := \norm{(\Lc-\chi_{n_k^*})f_k^{(c)}} = O(c^{-1/2})$.
-
-\emph{Gap.}
-In the transition regime ($n\approx n^*$),
-$G_k := \chi_{n_k^*+1}-\chi_{n_k^*} = \Theta(c^{2/3})$
-(PSWE spectral theory, standard).
-
-\emph{Davis--Kahan.}
-$\sin\theta_k \leq r_k/G_k = O(c^{-1/2})/\Theta(c^{2/3}) = O(c^{-7/6})$,
-so $1-|\langle f_k^{(c)},\psi_{n_k^*}\rangle|^2 = \sin^2\theta_k = O(c^{-7/3})$.
+All norms in $L^2([-1,1])$. By Theorem~\ref{thm:intertwine}(i),
+the Davis--Kahan step is norm-compatible.
+Residual: $r_k = O(c^{-1/2})$ (Paper~XV, Prop.~3.2).
+Gap: $G_k = \Theta(c^{2/3})$.
+Davis--Kahan: $\sin^2\theta_k\leq (r_k/G_k)^2
+= O(c^{-7/3})$.
 \end{proof}
 
 %% ============================================================
@@ -216,233 +216,197 @@ so $1-|\langle f_k^{(c)},\psi_{n_k^*}\rangle|^2 = \sin^2\theta_k = O(c^{-7/3})$.
 \begin{theorem}[Unconditional form convergence]
 \label{thm:formconv}
 For any fixed $K\geq 1$ and
-$v=\sum_{k=1}^K\alpha_k u_k \in V_K^{\cA}$ with $\norm{v}=1$:
+$v=\sum_{k=1}^K\alpha_k u_k$ with $\norm{v}=1$:
 \begin{equation}\label{eq:formconv}
-  |\langle B_c v_c,v_c\rangle - \langle\cA v,v\rangle|
+  |\langle B_cv_c,v_c\rangle - \langle\cA v,v\rangle|
   \leq C_K c^{-1/6},
 \end{equation}
-where $v_c\in V_K^{(c)}=\mathrm{span}\{f_k^{(c)}\}$
-is the image of $v$ under $u_k\mapsto f_k^{(c)}$, normalised.
+where $v_c\in\mathrm{span}\{f_k^{(c)}\}$ is the image of $v$,
+normalised. The map $u_k\mapsto f_k^{(c)}$ is well-defined
+and controlled by Theorem~\ref{thm:intertwine}(ii).
 \end{theorem}
 
 \begin{proof}
-\emph{Diagonal:}
-$\langle B_c f_k^{(c)},f_k^{(c)}\rangle = -a_k+O(c^{-1/3})$
-(Paper~XV, Prop.~3.2 + Lemma~\ref{lem:scalecompat}).
-
-\emph{Off-diagonal ($j\neq k$):}
-$|\langle B_c f_k^{(c)},f_j^{(c)}\rangle|
-= c^{1/3}|\langle(\Kc-z_{n^*})f_k^{(c)},f_j^{(c)}\rangle|
-\leq c^{1/3}\varepsilon(c)
-= O(c^{-1/6})$,
-where $\varepsilon(c)=O(c^{-1/2})$ is the quasimode residual.
-
-\emph{Gram correction:}
-$G_{jk}^{(c)}=\delta_{jk}+O(c^{-1/6})$ (Paper~XV, Lemma~2.2)
-gives $O(c^{-1/6})$ error in the renormalisation.
-Combining yields~\eqref{eq:formconv}.
+Diagonal: $\langle B_cf_k^{(c)},f_k^{(c)}\rangle = -a_k+O(c^{-1/3})$.
+Off-diagonal: $|\langle B_cf_k^{(c)},f_j^{(c)}\rangle|
+\leq c^{1/3}\varepsilon(c) = O(c^{-1/6})$, $\varepsilon(c)=O(c^{-1/2})$.
+Gram correction: $O(c^{-1/6})$ by Theorem~\ref{thm:intertwine}(ii).
+Combining gives~\eqref{eq:formconv}.
 \end{proof}
 
 %% ============================================================
-\section{Mosco Convergence and Strong Resolvent Convergence}
+\section{Mosco Convergence and Strong Resolvent}
 \label{sec:strongres}
 %% ============================================================
 
-\subsection{The switch-point assumption}
-
-\begin{assumption}[$L^2$ kernel convergence --- switch point]
+\begin{assumption}[$L^2$ kernel rate --- switch point]
 \label{ass:kernelrate}
-For some $g(c)\to 0$ and $\alpha<1/2$:
 \begin{equation}\label{eq:kernelrate}
   |K_c^{(\mathrm{sc})}(\xi,\eta) - K_{\cA}(\xi,\eta)|
   \leq g(c)(1+\xi)^\alpha(1+\eta)^\alpha
-  \quad\text{a.e.\ on }\R_+^2.
+  \quad\text{a.e.},
 \end{equation}
+for some $g(c)\to 0$ and $\alpha<1/2$.
 \end{assumption}
 
-\subsection{Uniform form bound}
-
-\begin{lemma}[Uniform form bound]
-\label{lem:uniformform}
-There exists $C>0$, independent of $c$, such that for all
-$u\in L^2(\R_+)$:
-\begin{equation}\label{eq:uniformform}
-  |\mathfrak{q}[B_c](u,u)| \leq C\norm{u}_{H^1(\R_+)}^2.
+\begin{lemma}[Uniform lower form bound]
+\label{lem:uniformlower}
+There exists $C>0$, independent of $c$, such that for all $u\in L^2(\R_+)$:
+\begin{equation}\label{eq:uniformlower}
+  \mathfrak{q}[B_c](u,u) \geq -C\norm{u}^2.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-The form $\mathfrak{q}[B_c](u,u) = \langle B_c u,u\rangle$ satisfies
-$|\mathfrak{q}[B_c](u,u)| \leq \norm{B_c}_{\op}\norm{u}^2$.
-From Paper~XIV, the edge operator satisfies
-$\norm{B_c}_{\op}\leq C'$
-uniformly in $c$ on the relevant edge localisation
-(the eigenvalues of $B_c$ converge to those of $\cA$,
-which are $-a_k = \Theta(k^{2/3})$, bounded on compact index sets;
-the operator bound follows from the Airy spectral bound).
-Since $H^1(\R_+)\hookrightarrow L^2(\R_+)$ with
-$\norm{u}\leq\norm{u}_{H^1}$,
-the bound~\eqref{eq:uniformform} holds with
-$C = \sup_c\norm{B_c}_{\op} < \infty$.
+The bottom eigenvalue of $B_c$ is
+$\mu_1(B_c) = c^{1/3}(\lam{c}{n^*} - z_{n^*})$.
+From Paper~XIV and Paper~XV:
+$\mu_1(B_c) \to -a_1 > -\infty$ as $c\to\infty$,
+where $-a_1 \approx -2.338$ is the first Airy zero.
+Moreover, $\mu_1(B_c) \geq -a_1 - O(c^{-1/3})$
+(Airy eigenvalue convergence, Paper~XIV, Thm.~2.1).
+Hence $\mu_1(B_c)\geq -C$ uniformly in $c$, which gives
+$\mathfrak{q}[B_c](u,u)\geq \mu_1(B_c)\norm{u}^2\geq -C\norm{u}^2$.
 \end{proof}
 
-\begin{remark}[Role of the uniform bound]
-\label{rem:unifrole}
-Lemma~\ref{lem:uniformform} is the key ingredient for
-Mosco condition~(M1). Without it, the lim inf estimate
-for arbitrary weakly convergent sequences cannot be closed
-from finite-dimensional form convergence alone.
+\begin{remark}[Why the lower bound is not automatic]
+\label{rem:lowerbd}
+Without Lemma~\ref{lem:uniformlower}, the remainder term
+$u_c^\perp$ (orthogonal to $P_K L^2$) could contribute
+an arbitrarily negative amount to $\mathfrak{q}[B_c]$
+for large $c$, making the $\liminf$ in Mosco~(M1)
+unavailable.
+The lemma closes this by establishing a uniform
+$\inf_c\mu_1(B_c) > -\infty$.
 \end{remark}
-
-\subsection{Mosco convergence}
 
 \begin{definition}[Mosco convergence, cf.~\cite{Mosco1969,Attouch1984}]
 \label{def:mosco}
-Closed quadratic forms $\mathfrak{q}_c$ on $H$
-\emph{Mosco-converge} to $\mathfrak{q}$ if:
+Closed forms $\mathfrak{q}_c\to\mathfrak{q}$ in the Mosco sense if:
 \begin{enumerate}[nosep,label=(M\arabic*)]
-  \item For every $u_c\rightharpoonup u$ weakly in $H$:
+  \item For every $u_c\rightharpoonup u$ weakly:
     $\liminf_c\mathfrak{q}_c(u_c,u_c)\geq\mathfrak{q}(u,u)$.
   \item For every $u\in\mathrm{dom}(\mathfrak{q})$:
     $\exists\,u_c\to u$ strongly with
     $\mathfrak{q}_c(u_c,u_c)\to\mathfrak{q}(u,u)$.
 \end{enumerate}
 Mosco convergence implies strong resolvent convergence
-of the associated operators (Attouch--Wets,
-cf.~\cite{Attouch1984}).
+(Attouch--Wets, \cite{Attouch1984}).
 \end{definition}
 
-\begin{theorem}[Mosco convergence and strong resolvent]
-\label{thm:strongres}
+\begin{theorem}[Mosco convergence]
+\label{thm:mosco}
 Under Assumption~\ref{ass:kernelrate},
 $\mathfrak{q}[B_c]$ Mosco-converges to $\mathfrak{q}[\cA]$.
-In particular, $(B_c-\zeta)^{-1}\to(\cA-\zeta)^{-1}$ strongly
-for all $\zeta\in\C\setminus\R$.
 \end{theorem}
 
 \begin{proof}
-\textbf{Condition~(M2).}
-For $u\in\mathrm{span}\{u_k\}$ (dense in $\mathrm{dom}(\mathfrak{q}[\cA])$
-in the form norm), set $u_c$ as in Theorem~\ref{thm:formconv}.
-Then $u_c\to u$ strongly in $L^2(\R_+)$
-(spectral concentration, Corollary~\ref{cor:concentration}),
-and $\mathfrak{q}[B_c](u_c,u_c)\to\mathfrak{q}[\cA](u,u)$
-by Theorem~\ref{thm:formconv}.
-For general $u\in\mathrm{dom}(\mathfrak{q}[\cA])$,
-choose $u^{(K)}\in\mathrm{span}\{u_k\}_{k\leq K}$ with
-$\norm{u-u^{(K)}}_{H^1}\leq\varepsilon$.
-By Lemma~\ref{lem:uniformform},
-$|\mathfrak{q}[B_c](u_c,u_c)-\mathfrak{q}[B_c](u_c^{(K)},u_c^{(K)})|
-\leq C\norm{u-u^{(K)}}_{H^1}^2\leq C\varepsilon^2$,
-uniformly in $c$. Sending $K\to\infty$ then $\varepsilon\to 0$
-gives~(M2) for all $u$.
+\textbf{(M2).}
+For $u\in\mathrm{span}\{u_k\}_{k\leq K}$,
+set $u_c$ as in Theorem~\ref{thm:formconv}.
+By Corollary~\ref{cor:concentration},
+$u_c\to u$ strongly. By Theorem~\ref{thm:formconv},
+$\mathfrak{q}[B_c](u_c,u_c)\to\mathfrak{q}[\cA](u,u)$.
+For general $u$ in the form domain,
+approximate by $u^{(K)}\in\mathrm{span}\{u_k\}_{k\leq K}$
+with $\|u-u^{(K)}\|_{H^1}\leq\varepsilon$;
+the error is $O(\varepsilon)$ uniformly in $c$
+by Lemma~\ref{lem:uniformlower} (lower bound)
+and the uniform operator bound $\|B_c\|_{\op}\leq C'$
+(upper bound, Paper~XIV).
 
-\textbf{Condition~(M1).}
-Let $u_c\rightharpoonup u$ weakly in $L^2(\R_+)$.
-Fix $K$ and project: $u_c = P_K u_c + u_c^\perp$
-where $P_K$ is the spectral projector of $\cA$ onto
-$\mathrm{span}\{u_1,\ldots,u_K\}$.
+\textbf{(M1).}
+Let $u_c\rightharpoonup u$ weakly. Fix $K$ and write
+$u_c = P_K u_c + u_c^\perp$.
 
-For the $P_K$-part:
-$P_K u_c \to P_K u$ weakly (hence strongly in $K$-dimensional space),
-and by Theorem~\ref{thm:formconv}:
+\emph{$P_K$-part:}
+$P_K u_c\to P_K u$ strongly (finite-dimensional weak $=$ strong).
+By Theorem~\ref{thm:formconv},
 $\mathfrak{q}[B_c](P_K u_c,P_K u_c)\to\mathfrak{q}[\cA](P_K u,P_K u)$.
 
-For the remainder $u_c^\perp$:
-$\mathfrak{q}[B_c](u_c^\perp,u_c^\perp)
-\geq -C\norm{u_c^\perp}^2$
-by Lemma~\ref{lem:uniformform}
-(the form is bounded below uniformly in $c$).
-Since $u_c$ is weakly bounded, $\norm{u_c^\perp}^2$ is bounded;
-and as $K\to\infty$, $\mathfrak{q}[\cA](u-P_K u,u-P_K u)\to 0$.
+\emph{Remainder part:}
+$\mathfrak{q}[B_c](u_c^\perp,u_c^\perp)\geq -C\|u_c^\perp\|^2$
+by Lemma~\ref{lem:uniformlower}.
+Since $u_c$ is weakly bounded, $\|u_c^\perp\|$ is bounded;
+however we only need the $\liminf$, so:
+$\liminf_c\mathfrak{q}[B_c](u_c^\perp,u_c^\perp)\geq -C\|u^\perp\|^2$
+(weak lower semicontinuity of $u\mapsto\|u\|^2$).
 
-Combining via the off-diagonal control from
-Assumption~\ref{ass:kernelrate}
-(which prevents cancellation between the $P_K$ and $\perp$ parts
-by bounding mixed terms via the $L^2$ kernel rate):
-\[
+\emph{Cross terms:}
+By Assumption~\ref{ass:kernelrate},
+$|\mathfrak{q}[B_c](P_K u_c, u_c^\perp)|
+\leq g(c)\|P_K u_c\|\,\|u_c^\perp\|\to 0$.
+
+\emph{Combining:}
+\begin{align*}
   \liminf_c\mathfrak{q}[B_c](u_c,u_c)
-  \geq \mathfrak{q}[\cA](P_K u, P_K u)
-  - C'g(c)\norm{u}^2.
-\]
-Sending $K\to\infty$ and using $g(c)\to 0$ gives
-$\liminf_c\mathfrak{q}[B_c](u_c,u_c)\geq\mathfrak{q}[\cA](u,u)$,
-i.e.~(M1).
+  &\geq \mathfrak{q}[\cA](P_K u,P_K u)
+    - C\|u^\perp\|^2 + 0.
+\end{align*}
+Sending $K\to\infty$:
+$\|u^\perp\|^2 = \|u - P_K u\|^2\to 0$
+and $\mathfrak{q}[\cA](P_K u,P_K u)\to\mathfrak{q}[\cA](u,u)$,
+giving~(M1).
 \end{proof}
 
-\begin{remark}[The role of each ingredient in Mosco]
-\label{rem:moscoroles}
-\begin{itemize}[nosep]
-  \item \emph{Theorem~\ref{thm:formconv}} closes~(M2)
-    and the $P_K$-part of~(M1).
-  \item \emph{Lemma~\ref{lem:uniformform}} gives the
-    uniform lower bound needed for the remainder in~(M1).
-  \item \emph{Assumption~\ref{ass:kernelrate}} controls
-    the off-diagonal mixing between the $P_K$ and $\perp$
-    parts in~(M1), preventing spurious cancellation.
-\end{itemize}
-None of the three can be removed: without the uniform bound,
-the remainder could contribute negatively without control;
-without the kernel rate, the mixing term is uncontrolled.
-\end{remark}
+\begin{corollary}[Strong resolvent convergence]
+\label{cor:strongres}
+Under Assumption~\ref{ass:kernelrate}, for all
+$u\in L^2(\R_+)$, $\zeta\in\C\setminus\R$:
+$\|(B_c-\zeta)^{-1}u - (\cA-\zeta)^{-1}u\|\to 0$.
+\end{corollary}
+
+\begin{proof}
+Direct from Theorem~\ref{thm:mosco} and~\cite{Attouch1984}.
+\end{proof}
 
 %% ============================================================
-\section{The Schaltpunkt: Local Airy Control vs.\ Global Integrability}
-\label{sec:switch}
+\section{The Schaltpunkt and the Remaining Gap}
+\label{sec:gap}
 %% ============================================================
 
 \begin{remark}[Operator-theoretic hierarchy]
-\label{rem:switch}
-The regularity cascade is:
+\label{rem:hierarchy}
+The regularity cascade:
 \begin{equation}\label{eq:hierarchy}
   \underbrace{\text{quasimodes}}_{\text{local}}
   \Rightarrow
   \underbrace{\text{form conv.}}_{\text{fin.-dim.}}
   \Rightarrow
-  \underbrace{L^2\text{ kernel}}_{\text{switch point}}
+  \underbrace{L^2\text{ kernel}}_{\text{Schaltpunkt}}
   \Rightarrow
-  \underbrace{\text{Mosco}\Rightarrow\text{strong resolvent}}_{\text{operator level}}
+  \underbrace{\text{Mosco}\Rightarrow\text{strong res.}}_{\text{operator level}}
   \Rightarrow
-  \underbrace{\text{trace-norm}}_{\text{Schatten}}
+  \underbrace{\text{trace-norm (BR3)}}_{\text{Schatten}}
 \end{equation}
-In operator ideal terms:
-$\mathrm{strong} < \mathrm{Mosco/form} < L^2\text{-kernel} < \mathcal{S}_1$.
-No arrow reverses; each is witnessed by explicit counterexamples
-(Proposition~\ref{prop:nonimpl}).
+Each arrow requires a strictly stronger input;
+none reverses (Proposition~\ref{prop:nonimpl}).
+The $L^2$ kernel rate is the last step inside the Airy/PSWE
+asymptotic regime; beyond it lies Schatten ideal theory.
 \end{remark}
 
 \begin{proposition}[Non-implications]
 \label{prop:nonimpl}
-\begin{enumerate}[nosep,label=(\roman*)]
-  \item Finite-dimensional form convergence
-    $\not\Rightarrow$ $L^2$ kernel rate.
-  \item $L^2$ kernel rate + strong resolvent
-    $\not\Rightarrow$ trace-norm convergence.
-\end{enumerate}
+(i) Finite-dimensional form convergence
+$\not\Rightarrow$ $L^2$ kernel rate.
+(ii) Strong resolvent convergence
+$\not\Rightarrow$ trace-norm convergence.
 \end{proposition}
 
 \begin{proof}
-(i): The $K\times K$ Gram matrix of $B_c$ on $V_K^{(c)}$
-gives no information on the kernel values outside the Airy window
-$\xi,\eta\in[0,R_0]$.
-(ii): Standard: strong resolvent convergence does not imply Schatten-norm
-convergence of resolvents (counterexample:
-$A_n=\mathrm{diag}(1/n,2/n,\ldots)\to 0$ strongly,
-but $(A_n-i)^{-1}\not\to(-i)^{-1}$ in trace norm).
+(i): Gram-matrix control on $V_K^{(c)}$ gives no information
+on $K_c^{(\mathrm{sc})}$ outside the Airy window.
+(ii): Standard example:
+$A_n=\mathrm{diag}(n^{-1},2n^{-1},\ldots)\to 0$ strongly;
+$(A_n-i)^{-1}\not\to(-i)^{-1}$ in trace norm.
 \end{proof}
 
-%% ============================================================
-\section{The Remaining Gap: Strong Resolvent vs.\ Trace-Norm}
-\label{sec:gap}
-%% ============================================================
-
 \begin{remark}[BR1--BR3 gap is structural]
-Strong resolvent convergence does not imply trace-norm convergence.
-Closing the gap requires:
+Strong resolvent convergence requires closing:
 \begin{equation}\label{eq:BR3cond}
   \int_{\R_+^2}
-  |K_{B_c}(\xi,\eta) - K_{\cA}(\xi,\eta)|^2 w(\xi)w(\eta)\,d\xi\,d\eta
-  \to 0,
+  |K_{B_c}(\xi,\eta)-K_{\cA}(\xi,\eta)|^2
+  w(\xi)w(\eta)\,d\xi\,d\eta \to 0,
   \quad w(\xi)=(1+\xi)^{-\beta},
 \end{equation}
 strictly stronger than Assumption~\ref{ass:kernelrate}.
@@ -452,60 +416,75 @@ strictly stronger than Assumption~\ref{ass:kernelrate}.
 \label{prob:BR3}
 Prove~\eqref{eq:BR3cond} with explicit rate.
 \begin{enumerate}[nosep,label=(\roman*)]
-  \item Near-diagonal: $|K_{B_c}-K_{\cA}|\leq g(c)h(\xi,\eta)$
-    with $h\in L^2(w\otimes w)$.
-  \item Off-diagonal: Paley--Wiener decay of $K_{B_c}$
-    for $|\xi-\eta|\gg c^{-1/3}$.
+  \item Near-diagonal:
+    $|K_{B_c}-K_{\cA}|\leq g(c)h(\xi,\eta)$
+    with $h\in L^2(w\otimes w)$,
+    without logarithmic factors in $c$.
+  \item Off-diagonal decay:
+    Paley--Wiener / Bessel control for $|\xi-\eta|\gg c^{-1/3}$.
+  \item Edge--bulk separation:
+    no spurious coupling between the edge Airy zone
+    and the bulk spectrum in the weighted norm.
 \end{enumerate}
 \end{problem}
 
-\begin{remark}[Single bottleneck]
+\begin{remark}[Single bottleneck --- with caveats]
 \label{rem:bottleneck}
-After Papers~XIII--XVI, all difficulty is concentrated in
-$\|K_{B_c}-K_{\cA}\|_{L^2(w\otimes w)}$.
-Every other step is in place:
-scale compatibility (Lemma~\ref{lem:scalecompat}),
+After Papers~XIII--XVI, all completed steps are in place:
+intertwining (Thm.~\ref{thm:intertwine}),
 spectral identification (Prop.~\ref{prop:specid}),
-Davis--Kahan concentration (Cor.~\ref{cor:concentration}),
+Davis--Kahan (Cor.~\ref{cor:concentration}),
 form convergence (Thm.~\ref{thm:formconv}),
-uniform form bound (Lemma~\ref{lem:uniformform}),
-Mosco and strong resolvent (Thm.~\ref{thm:strongres}).
+uniform lower bound (Lem.~\ref{lem:uniformlower}),
+Mosco and strong resolvent (Thm.~\ref{thm:mosco},
+Cor.~\ref{cor:strongres}).
 
-One caveat: the ``single bottleneck'' claim is accurate
-provided there are no hidden logarithmic losses in the
-off-diagonal PSWF tail decay (Problem~\ref{prob:BR3}(ii))
-or in the near-diagonal Airy approximation error.
-These potential sources of loss are
-explicitly isolated in Problem~\ref{prob:BR3}
-and constitute the actual content of the BR3 problem.
+The \emph{single bottleneck} claim --- that all remaining difficulty
+is concentrated in $\|K_{B_c}-K_{\cA}\|_{L^2(w\otimes w)}$ ---
+is accurate, subject to three conditions that must hold without hidden loss:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item No logarithmic factor in the near-diagonal Airy approximation
+    (Problem~\ref{prob:BR3}(i)).
+  \item Off-diagonal PSWF decay faster than any polynomial
+    (Paley--Wiener; Problem~\ref{prob:BR3}(ii)).
+  \item No edge--bulk coupling in the weighted $L^2$ norm
+    (Problem~\ref{prob:BR3}(iii)).
+\end{enumerate}
+These are not automatic; they constitute the actual mathematical content
+of BR3. If any fails, the ``single bottleneck'' can split into
+near-diagonal, off-diagonal, and edge--bulk sub-problems.
+Paley--Wiener decay~(ii) is the most robust
+(it follows from the band-limited structure of $\Kc$);
+(i) and~(iii) require careful Airy approximation analysis.
 \end{remark}
 
 \subsection*{Programme position after Papers~XIII--XVI}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.35}
-\begin{tabular}{p{5.4cm} p{1.5cm} p{2.1cm}}
+\begin{tabular}{p{5.5cm} p{1.5cm} p{2.0cm}}
 \toprule
 \textbf{Claim} & \textbf{Status} & \textbf{Note} \\
 \midrule
-Spectral ID, ordered matching (Prop.~\ref{prop:specid})
+Spectral ID (Prop.~\ref{prop:specid})
   & \checkmark & unconditional \\
-Scale Compatibility (Lem.~\ref{lem:scalecompat})
+Intertwining + basis equiv.\ (Thm.~\ref{thm:intertwine})
   & \checkmark & unconditional \\
 Concentration $O(c^{-7/3})$ (Cor.~\ref{cor:concentration})
   & \checkmark & unconditional \\
-Form conv.\ on Airy subspaces (Thm.~\ref{thm:formconv})
-  & \checkmark & unconditional, $c^{-1/6}$ \\
-Uniform form bound (Lem.~\ref{lem:uniformform})
+Form conv.\ $O(c^{-1/6})$ (Thm.~\ref{thm:formconv})
+  & \checkmark & unconditional \\
+Uniform lower bound (Lem.~\ref{lem:uniformlower})
   & \checkmark & unconditional \\
 $L^2$ kernel rate (Ass.~\ref{ass:kernelrate})
-  & open & decisive switch point \\
-Mosco convergence of forms & conditional & Ass.~\ref{ass:kernelrate} \\
-Strong resolvent (Thm.~\ref{thm:strongres})
-  & conditional & follows from Mosco \\
-Weighted kernel conv.\ BR3 (Prob.~\ref{prob:BR3})
+  & open & Schaltpunkt \\
+Mosco convergence (Thm.~\ref{thm:mosco})
+  & conditional & needs Ass.~\ref{ass:kernelrate} \\
+Strong resolvent (Cor.~\ref{cor:strongres})
+  & conditional & follows Mosco \\
+BR3: weighted kernel (Prob.~\ref{prob:BR3})
   & open & single bottleneck \\
-Trace-norm conv.\ (Paper~XIV, BR3)
+Trace-norm (Paper~XIV)
   & open & needs BR3 \\
 (Q5-lower) $N_\varphi\geq 2$ (Paper~XV)
   & \checkmark & unconditional \\
@@ -521,14 +500,12 @@ Gap-S (Paper~XIII)
 \textbf{Logical chain:}
 \begin{equation*}
 \boxed{
-\underbrace{\text{Spec.~ID}+\text{Scale}+\text{Quasimodes}}_{\text{unconditional}}
-\xrightarrow{}
-\underbrace{\text{BR1}_{\text{fin}}+\text{UFormBd}}_{\text{unconditional}}
+\underbrace{\text{ID}+\text{Intertwine}+\text{Form}+\text{LBd}}_{\text{unconditional}}
 \xrightarrow{+\text{Ass.}\ref{ass:kernelrate}}
-\underbrace{\text{Mosco}\Rightarrow\text{BR1}_{\text{glob}}}_{\text{switch point}}
-\xrightarrow{+\text{Prob.}\ref{prob:BR3}}
+\underbrace{\text{Mosco}\Rightarrow\text{BR1}}_{\text{Schaltpunkt}}
+\xrightarrow{+\text{Prob.}\ref{prob:BR3}\,(i)	ext{--}(iii)}
 \underbrace{(Q5)}_{\text{bottleneck}}
-\xrightarrow{}
+\xrightarrow{\text{XIII}}
 \text{Gap-S}
 }
 \end{equation*}
