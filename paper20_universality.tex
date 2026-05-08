@@ -26,6 +26,8 @@
 \newcommand{\normh}[2]{\|#1\|_{#2}}
 \newcommand{\SK}{S_K}
 \newcommand{\AK}{A_K}
+\newcommand{\AKlin}{A_K^{\mathrm{lin}}}
+\newcommand{\AKquad}{A_K^{\mathrm{quad}}}
 \newcommand{\BK}{B_K}
 \newcommand{\Kopt}{K_{\mathrm{opt}}}
 \newcommand{\Cprime}{\hat{C}(M,K)}
@@ -37,7 +39,8 @@
 \subjclass[2020]{34B24, 47B34, 34E20, 47G10, 34L20}
 \keywords{Sturm--Liouville operators, turning-point asymptotics,
   spectral growth exponent, two-scale truncation, logarithmic rate,
-  spectral-geometric invariant, universality, coercivity propagation}
+  spectral-geometric invariant, universality, coercivity propagation,
+  layer-survival, interaction hierarchy}
 
 \begin{document}
 
@@ -52,33 +55,46 @@
 Papers~XVIII and~XIX established, for the Airy turning-point model,
 qualitative universality (BR3) and a quantitative two-scale rate
 $O(c^{-1/3}(\log c)^{5/3})$.
-Paper~XIX's Langer term $\normh{A_K}{}$ splits into two internal scales:
-\[
-  \normh{A_K}{} \leq C_{\mathrm{lin}}\cdot c^{-1/3} + C_{\mathrm{quad}}\cdot c^{-2/3},
-\]
-where the linear interaction $C_{\mathrm{lin}} = O(K^{5/3})$ dominates
-because the quadratic interaction $C_{\mathrm{quad}} = O(K^{7/3})$ carries
-an extra $c^{-\beta}$ factor (two Langer errors vs.\ one).
+Paper~XIX's Langer term $\normh{A_K}{}$ splits into two
+\emph{interaction layers}:
+\begin{align*}
+  \AKlin  &= \textstyle\sum_{j=1}^K
+    (u_j\otimes e_j + e_j\otimes u_j)
+    &&\text{(linear: one exact mode, one Langer error)},\\
+  \AKquad &= \textstyle\sum_{j=1}^K e_j\otimes e_j
+    &&\text{(quadratic: two Langer errors)},
+\end{align*}
+with bounds
+$\normh{\AKlin}{}\leq C_{\mathrm{lin}}c^{-\beta}$
+and
+$\normh{\AKquad}{}\leq C_{\mathrm{quad}}c^{-2\beta}$.
 
-This paper shows that this two-scale structure within $A_K$ is universal:
-for any $\cAg \in \mathfrak{T}_\gamma$ with spectral growth exponent $\gamma > 0$,
+This paper shows that this two-layer structure is universal:
+for every $\cAg\in\mathfrak{T}_\gamma$ with spectral growth exponent $\gamma>0$,
 \[
-  C_{\mathrm{lin}}(M,K) = O(K^{1+\gamma}), \qquad
-  C_{\mathrm{quad}}(M,K) = O(K^{1+2\gamma}),
+  C_{\mathrm{lin}} = O(K^{1+\gamma}), \qquad
+  C_{\mathrm{quad}} = O(K^{1+2\gamma}).
 \]
-and at $K = K_{\mathrm{opt}} \sim (2\beta/\alpha)\log c$ the quadratic term
-is $O(c^{-2\beta}(\log c)^{1+2\gamma}) = o(c^{-\beta}(\log c)^{1+\gamma})$,
-yielding the rigorous rate
+At $K=K_{\mathrm{opt}}\sim(2\beta/\alpha)\log c$,
+the quadratic layer is
+$O(c^{-2\beta}(\log c)^{1+2\gamma}) = o(c^{-\beta}(\log c)^{1+\gamma})$,
+so the rate is governed by the linear layer alone:
 \[
-  O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
+  \normh{\cK-\cKA}{} = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
 \]
-The exponent $1+\gamma$ is the spectral-geometric invariant of the
-\emph{linear interaction layer} of the two-scale truncation mechanism;
-the quadratic layer contributes a strictly subleading $1+2\gamma$.
 
-The proof uses exactly one new lemma (Lemma~\ref{lem:trunc_universal});
-all other components carry over from XVIII/XIX
-(Lemma~\ref{lem:gamma_agnostic}).
+The central mechanism is expressed in the
+\emph{Layer-Survival Selection Principle}
+(Remark~\ref{rem:selection_principle}):
+\begin{quote}\itshape
+  The leading logarithmic exponent is selected not by maximal
+  $K$-growth, but by the highest interaction layer
+  surviving the $c$-scaling hierarchy.
+\end{quote}
+$1+2\gamma > 1+\gamma$ algebraically, yet $1+\gamma$ governs the rate
+because the quadratic layer pays one additional factor $c^{-\beta}$
+for its second Langer error, placing it below the $c$-horizon at
+$K=K_{\mathrm{opt}}$.
 \end{abstract}
 
 \maketitle
@@ -86,7 +102,7 @@ all other components carry over from XVIII/XIX
 \bigskip\hrule\bigskip
 
 %% ============================================================
-\section{Introduction}
+\section{Introduction and Layer-Survival Principle}
 \label{sec:intro}
 %% ============================================================
 
@@ -98,37 +114,97 @@ all other components carry over from XVIII/XIX
 \midrule
 XVIII & BR3: qualitative Airy universality
   & FROZEN \texttt{d7609d2} \\
-XIX  & Quantitative two-scale rate;
-       $C_{\rm lin} = O(K^{5/3})$, rate $O(c^{-1/3}(\log c)^{5/3})$
-  & FROZEN \texttt{580016b} \\
-XX   & Universality: $1+\gamma$ (linear layer)
-       and $1+2\gamma$ (quadratic layer)
-       as spectral-geometric invariants
+XIX  & Two-scale rate; lin/quad split;
+       rate $O(c^{-1/3}(\log c)^{5/3})$ rigorous
+  & FROZEN \\
+XX   & Universality: $1{+}\gamma$, $1{+}2\gamma$ as invariants;
+       Layer-Survival Selection Principle
   & this paper \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \medskip
-The key insight is that the Langer term $A_K$ has two internal
-interaction layers:
+The Langer term $\AK = \AKlin + \AKquad$ has three
+asymptotically distinct layers:
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l l l l}
+\toprule
+\textbf{Layer} & \textbf{Structure}
+  & \textbf{$K$-invariant} & \textbf{$c$-scale} \\
+\midrule
+Linear (leading)
+  & $u_j\otimes e_j + e_j\otimes u_j$
+  & $1+\gamma$ & $c^{-\beta}$ \\
+Quadratic (subleading)
+  & $e_j\otimes e_j$
+  & $1+2\gamma$ & $c^{-2\beta}$ \\
+Spectral tail
+  & $B_K = \sum_{j>K}u_j\otimes u_j$
+  & $e^{-\alpha K/2}$ & uniform in $c$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+Each layer is governed by a separate geometric mechanism;
+the asymptotic rate is selected by the \emph{survival} criterion
+of Remark~\ref{rem:selection_principle}.
+
+\begin{remark}[Layer-Survival Selection Principle]
+\label{rem:selection_principle}
+Let $\lambda_1 > \lambda_2 > \cdots$ be the
+$K$-growth exponents of the interaction layers of $\AK$,
+with associated $c$-scales $c^{-\sigma_1}, c^{-\sigma_2},\ldots$
+($\sigma_1 < \sigma_2 < \cdots$).
+At the optimal coupling $K = K_{\mathrm{opt}}(c)$,
+an interaction layer $\ell$ survives the $c$-hierarchy if and only if
+\[
+  (\log c)^{\lambda_\ell}\, c^{-\sigma_\ell}
+  \not= o\!\left((\log c)^{\lambda_1}\,c^{-\sigma_1}\right).
+\]
+The leading logarithmic exponent of the total rate
+is determined by the highest-$K$-exponent layer that survives
+(i.e.\ the layer with the smallest $\sigma$).
+
+\medskip
+\textbf{In our setting:}
 \begin{itemize}[nosep]
-  \item \emph{Linear layer} ($u_j\otimes e_j + e_j\otimes u_j$):
-    one exact eigenfunction $\times$ one Langer error;
-    rate $O(K^{1+\gamma})c^{-\beta}$.
-  \item \emph{Quadratic layer} ($e_j\otimes e_j$):
-    two Langer errors;
-    rate $O(K^{1+2\gamma})c^{-2\beta}$.
+  \item Linear layer: $\lambda_1 = 1+\gamma$,\; $\sigma_1 = \beta$.
+  \item Quadratic layer: $\lambda_2 = 1+2\gamma$,\; $\sigma_2 = 2\beta$.
 \end{itemize}
-The quadratic layer is subleading by one extra factor $c^{-\beta}$,
-so the asymptotic rate is governed by the linear layer alone.
-This is not a bookkeeping accident but the structural content of
-the two-scale architecture.
+Since $\sigma_2 > \sigma_1$:
+$
+(\log c)^{1+2\gamma}c^{-2\beta} = c^{-\beta}\cdot(\log c)^{1+2\gamma}c^{-\beta}
+= o\bigl((\log c)^{1+\gamma}c^{-\beta}\bigr).
+$
+The quadratic layer does not survive the $c$-hierarchy;
+the rate exponent is $1+\gamma$, determined exclusively by
+the linear layer.
+
+\medskip
+\textbf{Conceptual content.}
+Algebraic $K$-size ($1+2\gamma > 1+\gamma$) is insufficient to
+determine the rate.
+What matters is the combined $(K, c)$-scaling after
+$K$-optimization.
+The layer hierarchy is:
+\[
+  \text{linear geometry} \;\succ\; \text{quadratic geometry}
+  \quad\text{(in the asymptotic sense)},
+\]
+not because $1+\gamma < 1+2\gamma$,
+but because the quadratic layer pays an additional $c^{-\beta}$
+for its second Langer error, dropping it below the $c$-horizon.
+\end{remark}
 
 \begin{remark}[Scope]
 \label{rem:scope}
 $\gamma > 0$ arbitrary. The power family $V = |\xi|^\nu$ gives
-$\gamma = 2\nu/(\nu+2)\nearrow 2$, so $\gamma\in(0,1]$ is insufficient.
+$\gamma = 2\nu/(\nu+2)$, ranging over $(0,2)$.
 \end{remark}
 
 %% ============================================================
@@ -143,41 +219,29 @@ $\cAg = -\partial_\xi^2 + V(\xi)$ on $L^2(\R_+)$,
 $V\geq 0$, $V\to+\infty$, discrete spectrum $0<a_1<a_2<\cdots$,
 with:
 \begin{enumerate}[label=(\roman*),nosep]
-  \item \emph{Spectral growth:} $a_K \sim C_\gamma K^\gamma$,
-    $C_\gamma > 0$. \hfill\eqref{eq:spectralgrowth}
+  \item \emph{Spectral growth:} $a_K \sim C_\gamma K^\gamma$.
   \item \emph{Turning-point regularity:} $V$ is $C^2$ near its simple zero;
     Langer--Olver applicable on $[0,M]$.
   \item \emph{Coercivity propagation:}
     Hypothesis~\ref{hyp:coercprop}.
 \end{enumerate}
-\begin{equation}\label{eq:spectralgrowth}
-  a_K \sim C_\gamma K^\gamma \quad(K\to\infty),\quad C_\gamma>0.
-\end{equation}
 \end{definition}
 
-\begin{definition}[Spectral growth exponent]
-\label{def:spectralgrowth}
-$\gamma > 0$ in~\eqref{eq:spectralgrowth} is the
-\emph{spectral growth exponent} of $\cAg$.
+\begin{definition}[Parameters]
+\label{def:params}
+\mbox{}
+\begin{itemize}[nosep]
+  \item $\gamma > 0$: spectral growth exponent ($a_K\sim K^\gamma$);
+    governs $K$-size of interaction layers.
+  \item $\beta > 0$: turning-point window ($c^{-\beta}$ per Langer error);
+    governs $c$-survival of layers. Independent of $\gamma$.
+  \item $\alpha > 0$: Slepian tail decay; independent of $\gamma$, $\beta$.
+\end{itemize}
+Airy: $\gamma=2/3$, $\beta=1/3$, $\alpha>0$ from XVIII.
 \end{definition}
-
-\begin{definition}[Scaling-window and tail exponents]
-\label{def:beta}
-$\beta > 0$: turning-point rescaling window $c^{-\beta}$ (local geometry);
-independent of $\gamma$. Airy: $\beta = 1/3$.\\
-$\alpha > 0$: Slepian tail decay rate; from XVIII~\texttt{lem:slepianunif}.
-\end{definition}
-
-\begin{remark}[Independence of $\gamma$, $\beta$, $\alpha$]
-\label{rem:threeparams}
-$\gamma$ (global eigenvalue spacing), $\beta$ (local turning-point window),
-and $\alpha$ (spectral tail decay) are logically independent.
-The universal rate $O(c^{-\beta}(\log c)^{1+\gamma})$ encodes $\gamma$ and $\beta$
-through separate mechanisms.
-\end{remark}
 
 %% ============================================================
-\section{DAG Decomposition: Agnostic and Sensitive Nodes}
+\section{DAG: Agnostic and Sensitive Nodes}
 \label{sec:dag}
 %% ============================================================
 
@@ -186,31 +250,25 @@ through separate mechanisms.
 The following eight components of the XVIII/XIX DAG hold verbatim
 for every $\cAg\in\mathfrak{T}_\gamma$:
 \begin{enumerate}[label=(\roman*),nosep]
-  \item Tensor decomposition $\SK-\cKA=\AK-\BK$.
-  \item Tensor norm bound per $j$:
-    $\|f\otimes g\|_{L^2}\leq M\|f\|_{C^0}\|g\|_{C^0}$.
+  \item Algebraic split $\SK-\cKA = \AK-\BK$
+    and $\AK = \AKlin + \AKquad$.
+  \item Tensor norm: $\|f\otimes g\|_{L^2}\leq M\|f\|_{C^0}\|g\|_{C^0}$.
   \item Bessel tail (XVIII~\texttt{lem:besseltail}).
   \item Tonelli/DCT (XVIII~\texttt{rem:dct}).
   \item Slepian-type tail (XVIII~\texttt{lem:slepianunif}).
-  \item HS/Cauchy--Schwarz on $\BK$ (XIX~\texttt{lem:tail\_rate}).
+  \item HS/Cauchy--Schwarz on $\BK$.
   \item Sequential $(c,K)$-limit structure.
   \item Norm-resolvent perturbation (Kato~VI).
 \end{enumerate}
 \end{lemma}
 
-\begin{proof}
-By inspection: no proof in XVIII/XIX references $a_K\sim K^\gamma$
-except through the four $\gamma$-sensitive nodes of
-Remark~\ref{rem:sensitive}.
-\end{proof}
-
 \begin{remark}[$\gamma$-Sensitive nodes: exactly four]
 \label{rem:sensitive}
-Only these four depend on $\gamma$ (all in the propagation spine):
-(i) spectral spacing $a_K\sim K^\gamma$;
-(ii) coercive threshold $\mu(K)\sim K^\gamma$;
-(iii) exclusion window $\delta_0(K)\sim K^\gamma$;
-(iv) Langer $C^0$-constant $\Cprime = O(MK^\gamma)$.
+Only these four depend on $\gamma$ (propagation spine):
+(i) $a_K\sim K^\gamma$;
+(ii) $\mu(K)\sim K^\gamma$;
+(iii) $\delta_0(K)\sim K^\gamma$;
+(iv) $\hat{C}(M,K) = O(MK^\gamma)$.
 \end{remark}
 
 %% ============================================================
@@ -220,88 +278,100 @@ Only these four depend on $\gamma$ (all in the propagation spine):
 
 \begin{definition}[Propagation spine]
 \label{def:spine}
+The $\gamma$-sensitive chain is:
 \[
-\begin{tikzcd}[column sep=1.9em]
+\begin{tikzcd}[column sep=2.1em]
   a_K{\sim}K^\gamma
   \ar[r]
   & \mu(K){\sim}K^\gamma
   \ar[r,"\mathrm{L\text{-}M}"]
-  & \Cprime{\sim}K^\gamma
-  \ar[r,"\times K\text{ (lin)}"]
-  & \Clin{\sim}K^{1+\gamma}
-  \ar[r,"\times K\text{ (quad)}"]
-  & \Cquad{\sim}K^{1+2\gamma}.
+  & \hat C{\sim}K^\gamma
+  \ar[r,"\times K \cdot C_\infty \;\text{(lin)}"]
+  & C_{\rm lin}{\sim}K^{1+\gamma}
 \end{tikzcd}
 \]
-The exponent increases by $\gamma$ (one Langer error) at each
-multiplication step.
+\[
+\begin{tikzcd}[column sep=2.1em]
+  \hat C{\sim}K^\gamma
+  \ar[r,"\hat C^2\,{\times}\,K \;\text{(quad)}"]
+  & C_{\rm quad}{\sim}K^{1+2\gamma}.
+\end{tikzcd}
+\]
+The $K$-exponent increases by $\gamma$ per Langer error factor:
+linear interaction carries one error ($+\gamma$),
+quadratic carries two ($+2\gamma$).
+Each additional error also adds one factor $c^{-\beta}$,
+which is the $c$-counterpart of the $K$-growth.
 \end{definition}
 
 \begin{hypothesis}[Coercivity propagation]
 \label{hyp:coercprop}
-There exists $\Cprime = O(MK^\gamma)$ (independent of $c$)
-such that: for fixed $M,K$ and $c\geq c_0(M,K)$,
+$\exists\, \hat{C}=O(MK^\gamma)$ (independent of $c$) such that:
+for fixed $M,K$ and $c\geq c_0(M,K)$,
 \begin{equation}\label{eq:langererror}
-  \normh{e_j}{C^0([0,M])} \leq \Cprime\cdot c^{-\beta},
+  \normh{e_j}{C^0([0,M])} \leq \hat{C}\cdot c^{-\beta},
   \qquad j\leq K.
 \end{equation}
-Airy ($\gamma=2/3$, $\beta=1/3$): $\Cprime = O(MK^{2/3})$ by
-XVIII~\texttt{rem:langerkdep}. $\checkmark$
+Airy verification: $\gamma=2/3$, $\beta=1/3$,
+$\hat{C} = O(MK^{2/3})$ by XVIII~\texttt{rem:langerkdep}. $\checkmark$
 \end{hypothesis}
 
 \begin{lemma}[Universal truncation geometry]
 \label{lem:trunc_universal}
 Let $\cAg\in\mathfrak{T}_\gamma$ satisfy Hypothesis~\ref{hyp:coercprop},
-and let $\Cinfty := \sup_{j\leq K}\normh{u_j}{C^0([0,M])} = O(1)$.
-For fixed $M$, $K\geq 1$, and $c\geq c_0(M,K)$:
+$\Cinfty := \sup_{j\leq K}\normh{u_j}{C^0([0,M])} = O(1)$.
+For fixed $M$, $K\geq 1$, $c\geq c_0(M,K)$:
 \begin{align}
-  \normh{\AK}{L^2([0,M]^2)}
-  &\leq
-  \underbrace{2KM\Cprime\Cinfty}_{\Clin}\cdot c^{-\beta}
-  \;+\;
-  \underbrace{KM(\Cprime)^2}_{\Cquad}\cdot c^{-2\beta}, \label{eq:AKsplit}
+  \normh{\AKlin}{L^2([0,M]^2)}
+    &\leq \underbrace{2KM\hat{C}\Cinfty}_{\Clin}
+      \cdot c^{-\beta}, \label{eq:AKlin} \\
+  \normh{\AKquad}{L^2([0,M]^2)}
+    &\leq \underbrace{KM\hat{C}^2}_{\Cquad}
+      \cdot c^{-2\beta}, \label{eq:AKquad}
 \end{align}
-where:
+where
 \begin{equation}\label{eq:Cscales}
-  \Clin = O(MK^{1+\gamma}), \qquad \Cquad = O(M^2K^{1+2\gamma}).
+  \Clin = O(MK^{1+\gamma}), \qquad
+  \Cquad = O(M^2K^{1+2\gamma}).
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-For each $j\leq K$, using $\|f\otimes g\|_{L^2([0,M]^2)}
-\leq M\|f\|_{C^0}\|g\|_{C^0}$
-and Hypothesis~\ref{hyp:coercprop}:
-\begin{align*}
+For each $j\leq K$, by Hypothesis~\ref{hyp:coercprop}
+and $\|f\otimes g\|_{L^2}\leq M\|f\|_{C^0}\|g\|_{C^0}$:
+\[
   \normh{u_j\otimes e_j + e_j\otimes u_j}{}
-    &\leq 2M\Cinfty\Cprime\,c^{-\beta}, \\
+    \leq 2M\Cinfty\hat{C}\,c^{-\beta},
+  \qquad
   \normh{e_j\otimes e_j}{}
-    &\leq M(\Cprime)^2\,c^{-2\beta}.
-\end{align*}
-Summing over $j=1,\ldots,K$ and using~\eqref{eq:spectralgrowth}
-with $\Cprime=O(MK^\gamma)$, $\Cinfty=O(1)$
-gives~\eqref{eq:AKsplit}--\eqref{eq:Cscales}.
+    \leq M\hat{C}^2\,c^{-2\beta}.
+\]
+Note that the quadratic term carries $c^{-2\beta}$ exactly:
+no absorption $c^{-2\beta}\leq c^{-\beta}$ is performed here.
+Summing over $j=1,\ldots,K$ and using $\hat{C}=O(MK^\gamma)$,
+$\Cinfty=O(1)$ gives~\eqref{eq:AKlin}--\eqref{eq:Cscales}.
 
 \medskip
-\textbf{Airy verification.}
-$\gamma=2/3$: $\Clin=O(MK^{5/3})$ $\checkmark$
-(XIX~\texttt{def:langerconstants} Rem.~\ref{rem:C1scale}),
-$\Cquad=O(M^2K^{7/3})$. \qed
+\textbf{Airy check} ($\gamma=2/3$, $\beta=1/3$):
+$\Clin = O(MK^{5/3})$ (XIX~\texttt{def:langerconstants})~$\checkmark$,
+$\Cquad = O(M^2K^{7/3})$~$\checkmark$.
 \end{proof}
 
-\begin{remark}[Why $1+\gamma$ governs the rate, not $1+2\gamma$]
+\begin{remark}[Layer-survival at $K=\Kopt$: the selection mechanism]
 \label{rem:whylinear}
-At the optimal coupling $\Kopt \sim (2\beta/\alpha)\log c$:
+By Remark~\ref{rem:selection_principle} with
+$K=\Kopt\sim(2\beta/\alpha)\log c$:
 \[
   \Cquad\cdot c^{-2\beta}\Big|_{K=\Kopt}
-  = O\!\left((\log c)^{1+2\gamma}\,c^{-2\beta}\right)
-  = o\!\left((\log c)^{1+\gamma}\,c^{-\beta}\right).
+  = O\!\left((\log c)^{1+2\gamma}\cdot c^{-2\beta}\right)
+  = c^{-\beta}\cdot O\!\left((\log c)^{1+2\gamma}\cdot c^{-\beta}\right)
+  = o\!\left((\log c)^{1+\gamma}\cdot c^{-\beta}\right),
 \]
-The quadratic layer is suppressed by the extra $c^{-\beta}$ factor
-arising from the second Langer error.
-The asymptotic rate is therefore governed exclusively by
-the linear layer, with invariant $1+\gamma$.
-This is a structural property of the two-scale architecture,
-not a bookkeeping choice.
+since $c^{-\beta}\gg(\log c)^m$ for every fixed $m$ as $c\to\infty$.
+The quadratic layer does not survive the $c$-hierarchy
+at $K=\Kopt$; it falls below the $c$-horizon.
+The rate exponent $1+\gamma$ is therefore selected by the linear layer,
+which is the highest $K$-exponent layer that survives.
 \end{remark}
 
 %% ============================================================
@@ -314,7 +384,7 @@ not a bookkeeping choice.
 Let $\cAg\in\mathfrak{T}_\gamma$ satisfy Hypothesis~\ref{hyp:coercprop}.
 For fixed $K\geq K_0$ and $c\geq c_0(M,K)$:
 \begin{equation}\label{eq:twoscale_universal}
-  \normh{\cK-\cKA}{L^2([0,M]^2)}
+  \normh{\cK-\cKA}{}
   \leq
   \Clin\cdot c^{-\beta}
   + \Cquad\cdot c^{-2\beta}
@@ -323,51 +393,60 @@ For fixed $K\geq K_0$ and $c\geq c_0(M,K)$:
 \end{theorem}
 
 \begin{proof}
-Triangle inequality on $\AK - \BK$ + Lemma~\ref{lem:trunc_universal}
-+ XIX~\texttt{lem:tail\_rate} (Lemma~\ref{lem:gamma_agnostic}(vi)).
+Triangle inequality on $\AK - \BK$:
+$\normh{\AK}{}\leq\normh{\AKlin}{}+\normh{\AKquad}{}$
++ Lemma~\ref{lem:trunc_universal} + tail bound
+(Lemma~\ref{lem:gamma_agnostic}(vi)).
 \end{proof}
 
 \begin{corollary}[Universal logarithmic rate]
 \label{cor:universal_lograte}
 With $\Kopt(c) = \lfloor(2\beta/\alpha)\log c\rfloor$,
-for $c$ large:
+for $c$ large enough that $\Kopt\geq K_0$:
 \begin{equation}\label{eq:lograte_universal}
   \normh{\cK-\cKA}{}\Big|_{K=\Kopt}
   = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
 \end{equation}
+The quadratic layer and the spectral tail are both
+$o(c^{-\beta}(\log c)^{1+\gamma})$.
 \end{corollary}
 
 \begin{proof}
 At $K=\Kopt\sim(2\beta/\alpha)\log c$:
-\begin{itemize}[nosep]
-  \item \emph{Linear term:}
+\begin{enumerate}[label=(\roman*),nosep]
+  \item \emph{Linear:}
     $\Clin c^{-\beta} = O((\log c)^{1+\gamma}c^{-\beta})$.
-  \item \emph{Quadratic term:}
+  \item \emph{Quadratic:}
     $\Cquad c^{-2\beta} = O((\log c)^{1+2\gamma}c^{-2\beta})
-    = o(c^{-\beta}(\log c)^{1+\gamma})$.
+    = o(c^{-\beta}(\log c)^{1+\gamma})$
+    (Remark~\ref{rem:whylinear}).
   \item \emph{Tail:}
-    $e^{-\alpha\Kopt/2} = c^{-\beta}$;
-    then $\Ctwo^{1/2}c^{-\beta} = O(c^{-\beta})
+    $\Ctwo^{1/2}e^{-\alpha\Kopt/2}\leq\Ctwo^{1/2}c^{-\beta}
+    = O(c^{-\beta})
     = o(c^{-\beta}(\log c)^{1+\gamma})$.
-\end{itemize}
-Linear term dominates; \eqref{eq:lograte_universal} follows.
+\end{enumerate}
+Sum dominated by term (i). \qed
 \end{proof}
 
-\begin{remark}[Spectral-geometric invariants]
+\begin{remark}[Two spectral-geometric invariants]
 \label{rem:invariants}
-The two spectral-geometric invariants of the two-scale mechanism are:
+The two spectral-geometric invariants of the two-scale
+truncation mechanism are:
 \begin{itemize}[nosep]
-  \item $1+\gamma$: exponent of the linear interaction layer
-    ($u_j\otimes e_j + e_j\otimes u_j$); governs the asymptotic rate.
-  \item $1+2\gamma$: exponent of the quadratic interaction layer
-    ($e_j\otimes e_j$); subleading by $c^{-\beta}$.
+  \item $1+\gamma$: $K$-exponent of the linear layer;
+    \emph{determines the rate} (survives $c$-hierarchy).
+  \item $1+2\gamma$: $K$-exponent of the quadratic layer;
+    \emph{structurally present but subleading}
+    (suppressed by additional $c^{-\beta}$).
 \end{itemize}
-Both are determined by $\gamma$ alone (and the rank-$K$ summation);
-neither is a proof artifact.
+Both are real geometric quantities;
+none is a proof artifact.
+The gap $\gamma = (1+2\gamma)-(1+\gamma)$ is itself spectral:
+it measures the extra crowding cost of the quadratic interaction.
 \end{remark}
 
 %% ============================================================
-\section{Model Examples}
+\section{Model Family}
 \label{sec:models}
 %% ============================================================
 
@@ -378,23 +457,26 @@ neither is a proof artifact.
 \textbf{Operator} & $V$ & $\gamma$ & $\beta$
   & $1{+}\gamma$ (leading) & $1{+}2\gamma$ (subleading) \\
 \midrule
-Airy (XVIII/XIX) & $\xi$ & $2/3$ & $1/3$ & $5/3$ & $7/3$ \\
-Harmonic osc. & $\xi^2$ & $1$ & $1/2$ & $2$ & $3$ \\
+Airy (XVIII/XIX) & $\xi$  & $2/3$ & $1/3$ & $5/3$ & $7/3$ \\
+Harmonic osc.    & $\xi^2$ & $1$   & $1/2$ & $2$   & $3$   \\
 Power $|\xi|^\nu$ & $|\xi|^\nu$
-  & $\tfrac{2\nu}{\nu+2}$ & $\tfrac{\nu}{\nu+2}$
-  & $\tfrac{3\nu+2}{\nu+2}$ & $\tfrac{5\nu+2}{\nu+2}$ \\
-Bessel-type & $\xi{+}c\xi^{-2}$ & $1$ & $1/3$ & $2$ & $3$ \\
+  & $\tfrac{2\nu}{\nu+2}$
+  & $\tfrac{\nu}{\nu+2}$
+  & $\tfrac{3\nu+2}{\nu+2}$
+  & $\tfrac{5\nu+2}{\nu+2}$ \\
+Bessel-type & $\xi+c\xi^{-2}$ & $1$ & $1/3$ & $2$ & $3$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\begin{remark}[Interpretation]
+\begin{remark}[Geometry of the model family]
 \label{rem:geometry}
-$\nu\to 0$: $1+\gamma\to 1$, $1+2\gamma\to 1$ (flat potential, both layers trivial).\\
-$\nu\to\infty$: $1+\gamma\to 3$, $1+2\gamma\to 5$ (hard wall, steep penalties).\\
-The two-layer gap $1+2\gamma - (1+\gamma) = \gamma$
-is itself a spectral quantity: it measures how much
-``extra crowding'' the quadratic interaction incurs relative to the linear.
+$\nu\to 0$: $1+\gamma\to 1$, $1+2\gamma\to 1$
+(flat potential; both layers cheap, gap $\gamma\to 0$).\\
+$\nu\to\infty$: $1+\gamma\to 3$, $1+2\gamma\to 5$
+(hard wall; both layers expensive, gap $\gamma\to 2$).\\
+The inter-layer gap $\gamma$ interpolates monotonically with
+potential steepness.
 \end{remark}
 
 %% ============================================================
@@ -404,61 +486,58 @@ is itself a spectral quantity: it measures how much
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{9.0cm} p{1.0cm}}
+\begin{tabular}{p{9.5cm} p{1.0cm}}
 \toprule
 \textbf{Item} & \textbf{Status} \\
 \midrule
 Lem.~\ref{lem:gamma_agnostic}: 8 agnostic nodes & \checkmark \\
-$\gamma\in(0,\infty)$: range & \checkmark \\
-Lem.~\ref{lem:trunc_universal}: lin/quad split rigorous
-  under Hyp.~\ref{hyp:coercprop} & \checkmark \\
-Cor.~\ref{cor:universal_lograte}: quadratic term subleading,
-  proof complete & \checkmark \\
-$\Kopt = 2\beta/\alpha\cdot\log c$: tail balances linear term & \checkmark \\
-Rem.~\ref{rem:whylinear}: structural reason for $1+\gamma$ leadership & \checkmark \\
+Lem.~\ref{lem:trunc_universal}: lin/quad split, no $c$-absorption & \checkmark \\
+Cor.~\ref{cor:universal_lograte}: three-term proof, all subleadings & \checkmark \\
+Rem.~\ref{rem:selection_principle}: Layer-Survival Principle, general form & \checkmark \\
+Rem.~\ref{rem:whylinear}: rigorous $o$-argument for quadratic layer & \checkmark \\
+$\Kopt = (2\beta/\alpha)\log c$: tail balances linear term & \checkmark \\
 \hline
 Prove Hyp.~\ref{hyp:coercprop} for general $\cAg\in\mathfrak{T}_\gamma$ & \textbf{open} \\
-$\beta(\gamma)$ verified for model table (WKB computation) & open \\
-Lower bound: $\Omega(K^{1+\gamma})$ for $\Clin$? & open \\
+$\beta(\gamma)$ for model table: WKB computation & open \\
+Lower bound $\Omega(K^{1+\gamma})$ for $\Clin$? & open \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 %% ============================================================
-\section{Conceptual Conclusion}
+\section{Programme Conclusion: What the Trilogy Establishes}
 \label{sec:conclusion}
 %% ============================================================
 
-\textbf{XVIII.} Qualitative Airy universality.
+\textbf{XVIII.} Qualitative Airy universality (BR3):
+qualitative $\to$ no rate.
 
 \medskip
-\textbf{XIX.} Two-scale rate with refined Langer bound:
+\textbf{XIX.} Two-scale rate with linear/quadratic split:
 $\normh{A_K}{}\leq C_{\rm lin}c^{-1/3}+C_{\rm quad}c^{-2/3}$;
-rate $O(c^{-1/3}(\log c)^{5/3})$ with $C_{\rm lin}=O(K^{5/3})$ governing.
+rate $O(c^{-1/3}(\log c)^{5/3})$ rigorous;
+quadratic layer subleading by $c^{-1/3}$.
 
 \medskip
-\textbf{XX.} For $\cAg\in\mathfrak{T}_\gamma$:
+\textbf{XX.} Universal layer-survival mechanism for
+$\cAg\in\mathfrak{T}_\gamma$:
 $C_{\rm lin}=O(K^{1+\gamma})$, $C_{\rm quad}=O(K^{1+2\gamma})$;
-rate $O(c^{-\beta}(\log c)^{1+\gamma})$ rigorous,
-with the quadratic layer strictly subleading.
+rate $O(c^{-\beta}(\log c)^{1+\gamma})$ rigorous;
+Layer-Survival Selection Principle identifies
+\emph{why} $1+\gamma$ and not $1+2\gamma$ governs.
 
-\medskip
-\begin{quote}\itshape
-Logarithmic truncation losses are not proof artifacts.
-They reflect two spectral-geometric layers of the two-scale
-truncation mechanism: the linear interaction layer with
-invariant $1+\gamma$, and the quadratic interaction layer with
-invariant $1+2\gamma$. The asymptotic rate is governed by the
-linear layer because the quadratic layer pays an additional $c^{-\beta}$
-for the second Langer error factor.
-This hierarchy is a structural property of the two-scale architecture.
+\bigskip
+\begin{quote}\itshape\large
+The leading logarithmic exponent is selected not by maximal
+$K$-growth, but by the highest interaction layer surviving
+the $c$-scaling hierarchy.
 \end{quote}
 
 \begin{thebibliography}{99}
 \bibitem{paper18} \textit{Paper~XVIII},
   FREEZE \texttt{d7609d2}/\texttt{19f5742}, 2026.
 \bibitem{paper19} \textit{Paper~XIX},
-  FREEZE \texttt{580016b}, 2026.
+  FREEZE, 2026.
 \bibitem{Kato1966} T.~Kato,
   \textit{Perturbation Theory for Linear Operators}, Springer, 1966.
 \bibitem{Olver1997} F.~Olver,

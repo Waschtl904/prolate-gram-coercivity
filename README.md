@@ -1,235 +1,144 @@
-# Prolate–Weil Program: Sampling, Frame Stability, and Spectral Structure
+# prolate-gram-coercivity
 
-This repository contains a sequence of research papers on discrete sampling,
-frame stability, and spectral structure in Paley–Wiener spaces using prolate
-spheroidal wave functions (PSWFs), with connections to operator-theoretic
-approaches to Weil positivity.
-
-**Current state: Papers I–VIII complete. Hypotheses H1 and H2 of Paper VII are now unconditional.
-The sole remaining gap in the original programme is B-strong.
-Airy Edge Programme (Papers XIII–XVI): unconditional lower bound (Q5-lower) proved;
-bridge to trace-norm control in progress.**
+A programme of eight (now twenty) papers establishing coercivity, spectral
+properties, and universality of the prolate spheroidal wave function (PSWF)
+Gram matrix, culminating in a quantitative two-scale convergence rate for
+Airy kernel universality and its universal generalisation.
 
 ---
 
-## Core Idea
+## Layer-Survival Selection Principle
 
-The central concept developed in this series is the
-**Discrete Spectral Transfer Property (DSTP)**:
+> **The leading logarithmic exponent is selected not by maximal $K$-growth,
+> but by the highest interaction layer surviving the $c$-scaling hierarchy.**
 
-> Discrete sampling preserves the spectral decay structure of PSWF
-> interactions, leading to Schur-summable defect matrices and stable
-> frame operators.
+This is the central result of Papers XVIII–XX and the mathematical leitmotif
+of the programme. It explains:
 
-The main result of Paper I is a **reduction principle**: frame stability holds —
-with explicit bounds — provided the DSTP is satisfied. Papers II–VIII develop the
-operator-theoretic, arithmetic, semiclassical, and dyadic consequences of this
-principle. **Paper VIII** establishes the three-scale architecture (combinatorial,
-Airy/WKB, Landau–Widom) and completes the reduction to B-strong as the unique
-remaining gap.
-
----
-
-## Papers in This Repository
-
-| File | Title | Status |
-|---|---|---|
-| `paper1.tex` | Frame coercivity and defect decomposition; introduction of DSTP | Complete |
-| `paper2.tex` | Scaling limits, trace formula, conditional coercivity; Weil connection | Complete |
-| `paper2_quadrature.tex` | XRY quadrature compatibility; conditional DSTP verification framework | Complete |
-| `paper3.tex` | PSWF product spectral tail estimates; edge obstruction (bandwidth doubling) | Complete |
-| `paper4_semiclassical.tex` | Semiclassical equidistribution of PSWF densities via Prüfer analysis | Complete |
-| `paper5.tex` | WKB cover, Bridge Lemma, Schur control; ass:bulkconv proved for γ < 1/2 | Complete |
-| `paper6.tex` | Galerkin norm estimates; No-Go theorem; B-strong framework | Complete |
-| `paper7_skeleton.tex` | Dyadic cancellation for PSWF Galerkin operators; H1 unconditional | Complete |
-| `paper8_scale_separated.tex` | Scale-separated dyadic cancellation; H2 unconditional; three-scale architecture | **Submission-ready** |
-| `paper13_gap_s.tex` | Gap-S obstruction; reduction of frame stability to (Q5) | Complete |
-| `paper14_airy_resolvent.tex` | Airy resolvent asymptotics; Framework paper: open problems map | Framework |
-| `paper15_quasimode.tex` | Quasimode construction; unconditional (Q5-lower): $N_\varphi \geq 2$ | **Proved ✅** |
-| `paper16_bridge.tex` | Bridge Reduction Lemma; quasimode stability ⇒ quadratic form convergence | **BR1-finite ✅** |
-
-Companion notes (proved results, ready to insert into papers):
-
-| File | Content | Status |
-|---|---|---|
-| `phase_nondeg_lemma.tex` | Phase Non-Degeneracy: α^(c) = π/2 + O(c^{−1/3}); H1 unconditional | **Proved** ✅ |
-| `airy_discrete_stability_lemma.tex` | Proposition U(U') + ass:gap unconditional | **Proved** ✅ |
-| `bridge_lemma.tex` | Bridge Lemma fully written out (to insert in paper5.tex) | **Proved** ✅ |
-| `ax5_independence_remark.tex` | DSTP logically independent of AX1–AX4 (Riemann-rule witness) | **Proved** ✅ |
-| `section5_numerical_evidence.tex` | Numerical evidence for spectral tail separation (for paper2_quadrature.tex) | Supplementary |
-
-Internal documentation:
-
-| File | Description |
-|---|---|
-| `numerics/` | Computational experiments and scripts |
-| `DEPENDENCIES.md` | Full logical dependency graph between all papers and companion notes |
-| `context_summary.md` | Internal working summary (session context scaffold) |
-| `PROMPT.md` | Internal prompt scaffolding for AI-assisted sessions |
-| `PHASE_NONDEG_NOTE.md` | **Superseded** — Phase Non-Degeneracy gap now closed; see `phase_nondeg_lemma.tex` |
-| `assumption_2_4_target.md` | **Archived** — proof strategies for ass:bulkconv, superseded by Paper V |
+- **Why** the rate exponent is $1+\gamma$ (linear interaction layer)
+  and not $1+2\gamma$ (quadratic interaction layer), even though
+  $1+2\gamma > 1+\gamma$ algebraically.
+- **How** logarithmic truncation losses arise: they trace the Airy zero
+  spacing $a_K \sim K^\gamma$ propagating through the coercivity spine
+  into $C_{\rm lin} = O(K^{1+\gamma})$.
+- **What** the asymptotic hierarchy is: the quadratic layer $O(K^{1+2\gamma})
+  c^{-2\beta}$ is suppressed by one extra factor $c^{-\beta}$ relative to the
+  linear layer $O(K^{1+\gamma}) c^{-\beta}$, placing it below the $c$-horizon
+  at the optimal coupling $K_{\rm opt} \sim (2\beta/\alpha) \log c$.
 
 ---
 
-## Airy Edge Programme (Papers XIII–XVI)
+## Programme Structure
 
-This sub-programme addresses **condition (Q5)**:
-how many eigenvalues of $\mathcal{K}_c$ lie in a $c^{-1/3}$-window
-near the transition point $z_{n^*}$?
-The answer drives Gap-S (Paper XIII, Theorem B) and hence the full
-frame stability theory.
+| Paper | File | Content | Status |
+|-------|------|---------|--------|
+| I | `paper1.tex` | Gram matrix basics | frozen |
+| II | `paper2.tex` | Coercivity lower bound | frozen |
+| II-Q | `paper2_quadrature.tex` | Quadrature estimates | frozen |
+| III | `paper3.tex` | Spectral gap | frozen |
+| IV | `paper4_semiclassical.tex` | Semiclassical analysis | frozen |
+| V | `paper5.tex` | Scale separation | frozen |
+| VI | `paper6.tex` | Fredholm theory | frozen |
+| VII | `paper7_skeleton.tex` | Skeleton lemmas | frozen |
+| VIII | `paper8_scale_separated.tex` | Scale-separated regime | frozen |
+| IX | `paper9_superconcentration.tex` | Superconcentration | frozen |
+| X | `paper10_coercivity_gap.tex` | Coercivity gap | frozen |
+| XI | `paper11_fredholm_microlocal.tex` | Fredholm–microlocal | frozen |
+| XII | `paper12_direct_coercivity.tex` | Direct coercivity | frozen |
+| XIII | `paper13_gap_s.tex` | Gap-s lemma | frozen |
+| XIV | `paper14_airy_resolvent.tex` | Airy resolvent | frozen |
+| XV | `paper15_quasimode.tex` | Quasimode construction | frozen |
+| XVI | `paper16_bridge.tex` | Bridge lemma | frozen |
+| XVII | `paper17_cliff.tex` | Cliff estimates | frozen |
+| XVIII | `paper18_airy_universality.tex` | BR3: qualitative Airy universality | **FROZEN d7609d2** |
+| XIX | `paper19_quantitative_rate.tex` | Two-scale rate; $C_{\rm lin}$/$C_{\rm quad}$ split; $O(c^{-1/3}(\log c)^{5/3})$ | **FROZEN** |
+| XX | `paper20_universality.tex` | Universal layer-survival; $1+\gamma$, $1+2\gamma$ invariants | **active** |
 
-### Three-Layer Architecture
+---
 
-| Layer | Paper | Content | Status |
-|---|---|---|---|
-| **I. Local / Existential** | XV | Airy quasimodes → $N_\varphi \geq 2$ unconditionally | ✅ **Proved** |
-| **II. Form Stability** | XVI | Quasimode stability ⇒ quadratic form convergence (BR1-finite) | ✅ **Proved** |
-| **II. Form Stability** | XVI | $L^2$ kernel rate ⇒ strong resolvent conv.\ (BR1-global) | ⚠️ Conditional |
-| **III. Global / Trace** | XIV | Weighted kernel conv.\ ⇒ trace-norm conv.\ (BR3) | 🔴 Open (hardest) |
-| **III. Global / Trace** | XIV | $N_\varphi \leq 2$ (upper count) | 🔴 Open (needs BR3) |
+## The Trilogy (XVIII–XX): Core Mathematical Content
 
-### Logical Chain (Papers XIII–XVI → Gap-S)
+### XVIII — Qualitative universality
+Establishes $\|K_{B_c} - K_{\mathcal{A}}\|_{L^2(w\otimes w)} \to 0$ (BR3)
+via two-scale decomposition $S_K - K_{\mathcal{A}} = A_K - B_K$.
+No rate; iterated limit structure $(c\to\infty$, then $K\to\infty)$.
+
+### XIX — Quantitative two-scale rate
+The Langer term $A_K$ splits into two interaction layers:
+$$
+A_K = A_K^{\rm lin} + A_K^{\rm quad},
+$$
+$$
+\|A_K^{\rm lin}\| \leq C_{\rm lin}\cdot c^{-1/3}, \quad
+\|A_K^{\rm quad}\| \leq C_{\rm quad}\cdot c^{-2/3},
+$$
+with $C_{\rm lin} = O(K^{5/3})$, $C_{\rm quad} = O(K^{7/3})$.
+At $K_{\rm opt} \sim (\log c)/(3\alpha)$: rate $O(c^{-1/3}(\log c)^{5/3})$.
+The quadratic layer is subleading by $c^{-1/3}$.
+
+### XX — Universal layer-survival mechanism
+For any $\mathcal{A}_\gamma \in \mathfrak{T}_\gamma$
+(spectral growth $a_K \sim K^\gamma$, turning-point window $c^{-\beta}$):
+$$
+C_{\rm lin} = O(K^{1+\gamma}), \quad C_{\rm quad} = O(K^{1+2\gamma}).
+$$
+At $K_{\rm opt} \sim (2\beta/\alpha)\log c$:
+$$
+\|K_{B_c} - K_{\mathcal{A}_\gamma}\| = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).
+$$
+The Layer-Survival Selection Principle explains the selection
+mechanism: $1+2\gamma > 1+\gamma$ algebraically, but the quadratic
+layer pays $c^{-2\beta}$ (two Langer errors) and falls below the
+$c$-horizon at $K_{\rm opt}$.
+
+---
+
+## Propagation Spine
 
 ```
-Paper XV (unconditional)
-  Spectral ID Principle + Airy quasimodes
-      ↓ [Paper XVI, Thm 2.1, unconditional]
-  BR1-finite: form convergence on Airy subspaces
-      ↓ [Paper XVI, Thm 3.2, + L² kernel rate assumption]
-  BR1-global: strong resolvent convergence
-      ↓ [Paper XIV, + BR3: weighted kernel convergence]
-  Trace-norm resolvent convergence
-      ↓ [Paper XIV, Helffer–Sjöstrand]
-  (Q5): N_φ(c) = 2 + O(c^{-1/3})
-      ↓ [Paper XIII, Theorem B]
-  Gap-S
-```
-
-### What Is Unconditional After Papers XV–XVI
-
-- **Spectral Identification Principle** (XVI, Prop. 1.1):
-  the PSWE→$\mathcal{K}_c$ transfer is rigorous via shared eigenbasis. ✅
-- **Spectral concentration** (XVI, Cor. 1.3):
-  Airy quasimodes concentrate on $\psi_{n^*+k}^{(c)}$ with error $O(c^{-1/3})$. ✅
-- **Form convergence on finite subspaces** (XVI, Thm. 2.1):
-  $\mathfrak{q}[B_c](u,v) \to \mathfrak{q}[\mathcal{A}](u,v)$ on Airy-generated subspaces,
-  rate $O(c^{-1/6})$. ✅
-- **(Q5-lower)** (XV, Thm. 1.1):
-  $N_\varphi(c) \geq 2$ for all large $c$. ✅
-
-### Open Problems (Airy Edge Programme)
-
-| Problem | Location | Difficulty |
-|---|---|---|
-| $L^2$ kernel rate (Ass. 3.1, XVI) | XVI §3 | Medium — Olver-type PSWE asymptotics |
-| Bulk–edge microlocal separation | XIV, Prob. 4 | Hard |
-| BR3: weighted kernel convergence | XIV, Prob. 4.1; XVI, Prob. 4.1 | **Hardest** |
-| Index matching: sub-leading Weyl | XIV, Prob. 4.4 | Medium–hard (new) |
-| (Q5-upper): $N_\varphi \leq 2$ | XIV | Needs BR3 |
-
----
-
-## What is Now Unconditional (Full Programme)
-
-The following results hold **without any remaining assumptions**:
-
-- **ass:bulkconv** (Assumption 2.4, Paper III): proved for γ < 1/2 via Bridge Lemma (Paper V) ✅
-- **Phase Non-Degeneracy**: α^(c) = π/2 + O(c^{−1/3}), dist(α^(c), {0,π}) ≥ π/4 for all large c ✅
-- **Proposition U and U'** (Paper VIII): Airy discrete stability bounds unconditional ✅
-- **ass:gap** (Paper VIII): uniform spectral gap unconditional ✅
-- **H1, H2** (Paper VII/VIII): unconditional ✅
-- **Lemma F, Corollary C** (Paper VIII): unconditional ✅
-- **(Q5-lower)**: $N_\varphi(c) \geq 2$ for all large $c$ (Paper XV) ✅
-- **BR1-finite**: form convergence on Airy subspaces (Paper XVI) ✅
-
----
-
-## Paper VIII: Three-Scale Architecture
-
-**Paper VIII** (`paper8_scale_separated.tex`) establishes the three-scale structure
-of the dyadic cancellation mechanism:
-
-| Scale | Layer | Content | Status |
-|---|---|---|---|
-| Combinatorial `c^{−1/3}` | Dyadic Separation | Lemma F (DSP), Corollary C | ✅ Unconditional |
-| Local Airy `(c/2)^{−1/3}` | Airy / WKB | Proposition U(U'), Lemma A | ✅ Unconditional |
-| Global Landau–Widom `(log c)^{2/3}` | erfc profile | Conjecture ULW | 📊 Empirical only |
-
----
-
-## Open Problems (May 2026)
-
-### Gap in Original Programme
-
-| Problem | Location | Status |
-|---|---|---|
-| **B-strong**: `P_{kl} ≤ C₂ c^{1/2}` in transition zone | Paper VI/VII H3 | 🔴 Open |
-
-### Airy Edge Programme
-
-See table in § Airy Edge Programme above.
-
-### Secondary
-
-| Problem | Evidence / Status |
-|---|---|
-| **Conjecture ULW**: erfc global scaling law | Numerical residuals ≈ 2·10^{−2} |
-| Limit of β(c) as c → ∞ | Fitting suggests β(∞) ∈ [−0.30, −0.21] |
-| Bridge Lemma extension to γ ≥ 1/2 | Geometry breaks; stationary phase open |
-| Weil operator identification G_∞ (Paper II) | Structural; medium term |
-
----
-
-## Logical Dependency Chain
-
-```
-phase_nondeg_lemma.tex
-    ↓ proves H1 (Paper VII) unconditionally
-airy_discrete_stability_lemma.tex
-    ↓ proves ass:gap + Prop. U(U') unconditionally
-    ↓ proves H2 (Paper VII/VIII) unconditionally
-
-B-strong (open)
-    ↓ will prove H3 (Paper VII)
-
-H1 ✅ + H2 ✅ + H3 (⚠️ B-strong)
-    ↓
-Paper VII Theorem 2.1 (abstract dyadic cancellation)
-    ↓
-Contraction estimate: ‖DT_c^{(N)}‖ < 1 for large c
-    ↓
-Assumption A → complete frame stability theory
-
-───────────────────────────────────────────────
-
-Paper XV (unconditional)
-    ↓ Airy quasimodes + Spectral ID Principle
-Paper XVI, Thm 2.1 (unconditional)
-    ↓ BR1-finite: form convergence on Airy subspaces
-Paper XVI, Thm 3.2 (+ L² kernel rate, open)
-    ↓ BR1-global: strong resolvent convergence
-Paper XIV (+ BR3: weighted kernel conv., open)
-    ↓ Trace-norm resolvent convergence
-    ↓ (Q5): N_φ(c) = 2 + O(c^{-1/3})
-Paper XIII, Theorem B
-    ↓
-  Gap-S
+a_K ~ K^gamma  -->  mu(K) ~ K^gamma  -->  C_hat ~ K^gamma
+                                              |
+                          x K * C_inf (lin)  |   x K * C_hat (quad)
+                                    v                  v
+              C_lin ~ K^{1+gamma}          C_quad ~ K^{1+2*gamma}
+                      c^{-beta}                    c^{-2*beta}
+                   [SURVIVES K_opt]         [BELOW c-HORIZON at K_opt]
 ```
 
 ---
 
-## Key References
+## Key Parameters
 
-- Osipov–Rokhlin–Xiao (2013): *Prolate Spheroidal Wave Functions of Order Zero*, Springer
-- Slepian (1978): *Prolate spheroidal wave functions, Fourier analysis, and uncertainty V*, Bell Syst. Tech. J.
-- Xiao–Rokhlin–Yarvin (2001): *Prolate spheroidal wave functions, quadrature, and interpolation*, Inverse Problems
-- Kato (1966): *Perturbation Theory for Linear Operators*, Springer
-- Simon (2005): *Trace Ideals and Their Applications*, 2nd ed., AMS
-- Olver (1997): *Asymptotics and Special Functions*, AK Peters
-- Tracy–Widom (1994): Level-spacing distributions and the Airy kernel, Comm. Math. Phys. **159**
-- Connes–Consani–Moscovici (2022, 2025): UV prolate spectrum and zeros of zeta, PNAS; arXiv:2511.22755
-- Levitan–Sargsjan (1991): *Sturm–Liouville and Dirac Operators*, Kluwer
-- Weil (1952): *Sur les formules explicites de la théorie des nombres*
-- Reed–Simon (1980): *Methods of Modern Mathematical Physics I*, Academic Press
-- NIST DLMF (2023): Digital Library of Mathematical Functions, https://dlmf.nist.gov/
+| Symbol | Meaning | Airy value |
+|--------|---------|------------|
+| $\gamma$ | Spectral growth exponent ($a_K \sim K^\gamma$) | $2/3$ |
+| $\beta$ | Turning-point window ($c^{-\beta}$ per Langer error) | $1/3$ |
+| $\alpha$ | Slepian tail decay rate | $>0$ (XVIII) |
+| $1+\gamma$ | Leading log-exponent (linear layer) | $5/3$ |
+| $1+2\gamma$ | Subleading log-exponent (quadratic layer) | $7/3$ |
+| $K_{\rm opt}$ | Optimal truncation | $\sim (2\beta/\alpha)\log c$ |
+
+---
+
+## Model Family $V = |\xi|^\nu$
+
+| $\nu$ | $\gamma$ | $\beta$ | $1+\gamma$ (leading) | $1+2\gamma$ (subleading) |
+|-------|---------|---------|----------------------|-------------------------|
+| $1$ (Airy) | $2/3$ | $1/3$ | $5/3$ | $7/3$ |
+| $2$ (harmonic) | $1$ | $1/2$ | $2$ | $3$ |
+| $\nu$ | $2\nu/(\nu+2)$ | $\nu/(\nu+2)$ | $(3\nu+2)/(\nu+2)$ | $(5\nu+2)/(\nu+2)$ |
+| $\nu\to\infty$ | $\to 2$ | $\to 1$ | $\to 3$ | $\to 5$ |
+
+---
+
+## Open Problems
+
+1. Prove Hypothesis (coercivity propagation)
+   for general $\mathcal{A}_\gamma \in \mathfrak{T}_\gamma$.
+2. Compute $\beta(\gamma)$ from WKB theory for the model family.
+3. Lower bound $\Omega(K^{1+\gamma})$ for $C_{\rm lin}$
+   (sharpness of the spectral-geometric invariant).
+
+---
+
+*Programme: prolate-gram-coercivity, May 2026.*
