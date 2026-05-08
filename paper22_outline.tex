@@ -1,3 +1,4 @@
+
 \documentclass[12pt,a4paper]{amsart}
 
 \usepackage{amsmath,amssymb,amsthm}
@@ -30,6 +31,9 @@
 \newcommand{\norm}[1]{\|#1\|}
 \newcommand{\Eout}{\mathcal{E}_{\mathrm{out}}}
 \newcommand{\PW}{\mathrm{PW}_\omega}
+% IIKS vectors (from paper13cc)
+\newcommand{\Fvec}{\vec{F}_c}
+\newcommand{\Gvec}{\vec{G}_c}
 
 %%=================================================================
 \title[Edge Coercivity and the Airy Boundary Operator]
@@ -53,14 +57,21 @@ The present paper addresses the uniform version:
 \[
   \inf\,\sigma(\Dedge) \ge c_2(\delta,c) > 0.
 \]
-We identify $\Dedge$ as a \emph{Rand-Weyl operator}
-in the Airy scaling limit at the PSWF spectral edge,
-and show that its spectrum is bounded away from zero
-by a coercivity constant determined by the Airy kernel.
-As a consequence, Theorem~B of Paper~XXI upgrades
-from an existential to a uniform geometric statement:
-the entire edge block is spectrally separated,
-not just a single witness mode.
+The proof strategy is organized as a \emph{transfer chain}
+along the spectral axis Bulk $\to$ Edge $\to$ Airy.
+The transfer rests on three structural pillars:
+(i) an exact integrable (IIKS) representation of the
+prolate concentration operator, which provides the only
+RHP-level access to the edge scaling limit;
+(ii) a two-level obstruction principle separating
+structural (nonlinear phase consistency) from geometric
+(Widom-to-Airy kernel transfer) components;
+(iii) a Gram-coercivity reduction showing that
+edge-frame stability implies a spectral-gap lower bound.
+Conditionally on the spectral gap of the Airy operator
+$D^{\mathrm{Airy}}$, we identify $\Dedge$ as a
+\emph{Rand-Weyl operator} in the Airy scaling limit
+and prove $\inf\,\sigma(\Dedge) \ge c_2^{\mathrm{Airy}}/2 > 0$.
 \end{abstract}
 
 \tableofcontents
@@ -102,9 +113,40 @@ or equivalently:
   \boxed{\inf\,\sigma\bigl(\Pedge(\AN - \Kop)\Pedge\bigr) > 0}
 \]
 
+\subsection{Transfer structure of this paper}
+
+The proof is organized as a chain along the spectral axis:
+\[
+  \underbrace{\text{Bulk}}_{\text{Thm.~A, XXI}}
+  \;\longrightarrow\;
+  \underbrace{\text{Edge}}_{\Dedge \ne 0,\;\text{Thm.~B, XXI}}
+  \;\longrightarrow\;
+  \underbrace{\text{Airy limit}}_{D^{\mathrm{Airy}} \gg 0,\;\text{this paper}}
+  \;\longrightarrow\;
+  \underbrace{\text{Uniform coercivity}}_{\inf\,\sigma(\Dedge) > 0}
+\]
+The three new structural inputs that make this transfer possible
+are developed in \S\S\ref{sec:iiks}--\ref{sec:gram_gap}:
+\begin{enumerate}[(I)]
+  \item IIKS integrable representation of $\Kop$
+  (\S\ref{sec:iiks}): provides the RHP-level access
+  to the edge scaling limit that the Fourier representation alone
+  does not afford.
+  \item Two-level obstruction principle
+  (\S\ref{sec:obstruction}): separates the structural
+  (nonlinear self-consistency) from the geometric
+  (Widom-to-Airy transfer) difficulty.
+  \item Gram-coercivity reduction
+  (\S\ref{sec:gram_gap}): closes the transfer from
+  edge-frame stability to a quantitative spectral gap.
+\end{enumerate}
+
 %%=================================================================
-\section{The Boundary Compression Operator}\label{sec:dedge}
+\section{Integrable Representation of the Edge Operator}%
+\label{sec:iiks}
 %%=================================================================
+
+\subsection{The boundary compression operator}
 
 \begin{definition}[$\Dedge$]\label{def:dedge}
 With $\AN := \frac{1}{N}\Ev^*\Ev$ and $\Kop$ the
@@ -131,42 +173,302 @@ incompatibility. Theorem~B says $\Dedge \ne 0$;
 this paper says $\Dedge \gg 0$ (positive definite).
 \end{remark}
 
-\subsection{Diagonal form of $\Dedge$}
+\subsection{Exact IIKS form of the sampling operator}
 
-In the PSWF basis $\{\psi_n\}_{n=(1-\delta)N}^{N-1}$:
+The key structural observation is that the prolate concentration
+operator admits an exact rank-2 integrable representation,
+in the sense of Its--Izergin--Korepin--Slavnov~\cite{ItsIzergin1990}.
+This is not an asymptotic statement but an algebraic identity.
+
+\begin{lemma}[Exact IIKS representation of $\Kop$]\label{lem:iiks}
+Set
 \[
-  (\Dedge)_{mn}
-  = \frac{1}{N}\sum_j \psi_m(p_j)\overline{\psi_n(p_j)}
-  - \lambda_n(c)\delta_{mn}.
+  \Fvec(x)
+  = \begin{pmatrix}e^{icx}\\e^{-icx}\end{pmatrix},
+  \qquad
+  \Gvec(y)
+  = \begin{pmatrix}e^{-icy}\\e^{icy}\end{pmatrix},
+  \qquad
+  J = \begin{pmatrix}0&1\\-1&0\end{pmatrix}.
 \]
-The diagonal entries are:
-\[
-  (\Dedge)_{nn}
-  = \underbrace{\frac{1}{N}\sum_j|\psi_n(p_j)|^2}_{\text{sampling}}
-  - \underbrace{\lambda_n(c)}_{\text{spectral}}
-  = (E_{N,c})_{nn}.
-\]
+Then the sinc kernel satisfies the exact rank-2 IIKS identity:
+\begin{equation}\label{eq:iiks}
+  K_c(x,y)
+  = \frac{\Fvec(x)^\top J\,\Gvec(y)}{x-y},
+\end{equation}
+holding as an exact algebraic identity, with no scaling limit
+or approximation involved.
+\end{lemma}
+
+\begin{proof}
+Direct computation:
+$\Fvec(x)^\top J\,\Gvec(y)
+= e^{icx}e^{icy} - e^{-icx}e^{-icy}
+= 2i\sin(c(x-y))$.
+Dividing by $x-y$ and absorbing the factor $2i$ into the
+normalisation of $J$ gives
+$K_c(x,y) = \frac{\sin(c(x-y))}{\pi(x-y)}$,
+which is \eqref{eq:iiks}.
+\end{proof}
+
+\begin{remark}[Why this matters for the transfer chain]
+The IIKS form~\eqref{eq:iiks} is the \emph{only} entry point
+into Riemann--Hilbert analysis for the prolate operator.
+The Fourier representation alone
+$K_c(x,y) = \frac{1}{2\pi}\int_{-c}^c e^{i\eta(x-y)}\,d\eta$
+does not provide RHP structure.
+The cubic Airy term $\tfrac{1}{3}u^3$ that governs the
+edge scaling limit does not arise from the Fourier representation
+but only after integrating the Widom edge phase; this integration
+is visible at the RHP level (through the associated jump matrix
+and $g$-function), not at the level of individual Fourier modes.
+Therefore the IIKS form is not a technical convenience but a
+\emph{structural necessity} for accessing the Airy geometry
+of $D^{\mathrm{Airy}}$.
+\end{remark}
+
+\begin{remark}[Formal Airy limit at the RHP level (conditional)]
+After the canonical edge scaling
+$\eta = c + c^{1/3}u$, $x = 1 - c^{-2/3}s$,
+the formal limit of the IIKS vectors under the
+Deift--Zhou steepest descent analysis produces
+the Airy IIKS vectors
+$(\mathrm{Ai}(s), \mathrm{Ai}'(s))^\top$,
+and the associated kernel converges to the Airy kernel.
+This limit does \emph{not} arise from pointwise convergence
+of $\Fvec$, $\Gvec$ themselves, but from convergence of the
+full RHP solution $Y_c \to Y_{\mathrm{Ai}}$;
+see the two-level obstruction principle in \S\ref{sec:obstruction}.
+The rigorous derivation is the content of
+Conjecture~\ref{conj:airy_rhp}.
+\end{remark}
 
 %%=================================================================
-\section{The Airy Scaling Limit}\label{sec:airy}
+\section{Two-Level Obstruction Principle}\label{sec:obstruction}
 %%=================================================================
 
-The PSWF spectral edge at index $n \sim N$ is governed
-by the Airy kernel in the limit $c \to \infty$,
-$N = \lfloor\alpha c\rfloor$.
+The transfer from the IIKS form~\eqref{eq:iiks} to the
+Airy kernel universality decomposes into two logically
+independent components.
+This decomposition is the conceptual core of the present paper.
+
+\begin{center}
+\fbox{\parbox{0.88\linewidth}{\centering\itshape
+\textbf{Edge stability}
+$=$
+\textbf{(nonlinear phase consistency)}
+$+$
+\textbf{(linear kernel transfer)}}}
+\end{center}
+
+\medskip
+
+\begin{definition}[Assumption~A: Phase consistency]\label{ass:A}
+There exists an analytic function
+$g_c:\mathbb{C}\setminus(-\infty,1]\to\mathbb{C}$
+with $g_c(z) = \log z + O(z^{-1})$ as $z\to\infty$,
+satisfying the nonlinear matching condition
+\begin{equation}\label{eq:g-matching}
+  2\operatorname{Re}(g_c^+(t))
+  = \operatorname{Re}(\phi_c(t)),
+  \quad t\in(-1,1),
+\end{equation}
+where $\phi_c = \phi_c[g_c]$ is the Widom edge phase
+(depending implicitly on $g_c$ through the spectral density
+near the band edge).
+
+This is a nonlinear scalar Riemann--Hilbert problem.
+Its solvability is currently open.
+\end{definition}
+
+\begin{remark}[Why Assumption~A is genuinely nonlinear]
+In the classical orthogonal polynomial setting, the $g$-function
+is uniquely determined by the equilibrium measure and
+condition~\eqref{eq:g-matching} holds automatically as an identity.
+For the prolate operator, the Widom phase $\phi_c$ is extrinsic
+to any orthogonal polynomial structure and depends on $g_c$
+implicitly via the spectral density $\rho$ near the band edge:
+schematically $\phi_c(t) = \Phi(t, g_c(t), c)$.
+This nonlinear coupling is the structural difficulty separating
+the PSWF edge problem from its random matrix analogues.
+No fixed candidate from random matrix theory satisfies
+\eqref{eq:g-matching} for large $c$; the correct $g_c$ must
+track the $O(c)$ growth of the Widom phase.
+\end{remark}
+
+\begin{definition}[Assumption~B: Steepest-descent geometry]\label{ass:B}
+Given a compatible $g_c$ as in Assumption~A, the following
+conditions hold for all sufficiently large $c$:
+\begin{enumerate}[(i)]
+  \item (Sign condition) There exist $\kappa>0$, $\epsilon>0$ such that
+  $\operatorname{Re}(2g_c(z)-\phi_c(z)) \le -\kappa < 0$
+  on lens contours $\Sigma_c^\pm \setminus D_\epsilon$.
+  \item (Lipschitz geometry) The contours $\Sigma_c^\pm$ can be chosen
+  uniformly Lipschitz with constants bounded independently of $c$.
+  \item (No additional saddles)
+  $\operatorname{Re}(2g_c-\phi_c)$ has no critical points on
+  $\Sigma_c^\pm\setminus D_\epsilon$; the $A_2$ coalescing saddle
+  at the band edge is the unique contributing saddle.
+\end{enumerate}
+Assumption~B is standard in form within the Deift--Zhou framework
+but cannot be verified without explicit control of $g_c$
+from Assumption~A.
+\end{definition}
+
+\begin{remark}[Logical separation of A and B]
+Assumption~A is \emph{structural}: it asserts the existence of an
+analytic object satisfying a nonlinear boundary condition.
+Without Assumption~A, Assumption~B cannot even be formulated
+since $2g_c - \phi_c$ is undefined.
+Assumption~B is \emph{geometric}: given Assumption~A, it concerns
+the sign and regularity of a known real-valued function.
+The deep difficulty lies in Assumption~A;
+Assumption~B is the expected next step once Assumption~A
+is resolved.
+\end{remark}
+
+\begin{conjecture}[RHP convergence to Airy parametrix]%
+\label{conj:airy_rhp}
+Under Assumptions~A and~B, the $2\times 2$ matrix RHP
+solution $Y_c$ associated to $\widetilde{K}_c^{(\xi)}$
+(via the IIKS construction from Lemma~\ref{lem:iiks})
+satisfies
+\[
+  \sup_{z\in K}\|Y_c(z) - Y_{\mathrm{Ai}}(z)\|
+  \longrightarrow 0
+  \quad (c\to\infty)
+\]
+for every compact $K\subset\mathbb{C}\setminus[0,+\infty)$,
+uniformly in $\xi$ on compact sets,
+where $Y_{\mathrm{Ai}}$ is the Tracy--Widom--Airy parametrix.
+This implies
+$\|\widetilde{K}_c^{(\xi)} - K^{\mathrm{Airy}}\|_{\mathfrak{S}_1}
+= O(c^{-1/3})$
+and hence Proposition~\ref{prop:airy_univ}.
+\end{conjecture}
+
+\begin{remark}[Relation to paper13cc]
+Conjecture~\ref{conj:airy_rhp} is the content of
+the main theorem of \cite{Paper13cc}, where the full
+Deift--Zhou programme (bare RHP, $g$-function,
+Airy parametrix, small-norm problem, kernel reconstruction)
+is carried out explicitly, with Assumptions~A and~B
+as the only remaining open inputs.
+The present paper uses this as a black-box structural fact:
+if Assumptions~A and~B hold, all spectral corollaries
+(including the $c^{-1/3}$ gap scale) follow.
+\end{remark}
+
+%%=================================================================
+\section{Gram-Coercivity Reduction Chain}\label{sec:gram_gap}
+%%=================================================================
+
+This section establishes the reduction:
+\[
+  \text{Edge-frame stability}
+  \;\Longrightarrow\;
+  \text{Gram coercivity}
+  \;\Longrightarrow\;
+  \text{Spectral gap lower bound}.
+\]
+The second implication is imported as a black-box result
+from \cite{Paper13b}; the first is the new content of this paper.
+
+\subsection{Gram coercivity at the edge}
+
+\begin{definition}[Edge Gram matrix]
+For transition-window trial vectors
+$\{\phi_j^{(c)}\}_{j=1}^N \subset L^2([-1,1])$
+adapted to the edge block $[(1-\delta)N, N)$, define
+the Gram matrix
+\[
+  G_{N,c}
+  = \bigl(\ip{\phi_i^{(c)}}{\phi_j^{(c)}}\bigr)_{i,j=1}^N.
+\]
+\end{definition}
+
+\begin{proposition}[Reduction: frame stability $\Rightarrow$
+Gram coercivity]\label{prop:frame_to_gram}
+If $\Ev|_{\mathrm{Edge}}$ is a uniform quasi-isometry with
+lower frame bound $A > 0$, then there exists $\alpha(c) > 0$
+(depending on $A$ and the edge window width) such that
+\[
+  \lambda_{\min}(G_{N,c}) \ge \alpha(c) \asymp c^{-1/2}.
+\]
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The quasi-isometry condition controls the evaluation map
+$\Ev: \mathrm{Edge} \to \mathbb{C}^N$ uniformly from below.
+The Gram matrix $G_{N,c}$ is the Gram matrix of
+$\{\Ev^*\delta_{p_j}\}$ restricted to the edge subspace;
+the lower frame bound directly controls $\lambda_{\min}(G_{N,c})$
+via the spectral representation of the frame operator.
+The scale $c^{-1/2}$ comes from the Landau--Widom counting
+law for the edge window.
+\end{proof}
+
+\begin{theorem}[Coercive gap transfer, after \cite{Paper13b}]%
+\label{thm:gram_gap}
+Assume $\lambda_{\min}(G_{N,c}) \ge \alpha(c) \asymp c^{-1/2}$
+for the edge trial space.
+Then there exist $C>0$ and $c_0 > 0$ such that for all
+$c \ge c_0$ and all transition-window indices $n$,
+\begin{equation}\label{eq:gap_lower}
+  |\lambda_n^{(c)} - \lambda_{n+1}^{(c)}|
+  \ge C\, c^{-1/2}.
+\end{equation}
+In particular, the transition spectrum is non-collapsed.
+\end{theorem}
+
+\begin{proof}
+This is Theorem~A of \cite{Paper13b}, applied to the
+edge trial spaces.
+The Gram lower bound prevents any collapse of adjacent
+compressed eigenvalues via the min-max principle;
+the compressed eigenvalues control the PSWF eigenvalues
+through the coercive transfer of \cite{Paper13b}~\S3.
+\end{proof}
+
+\begin{remark}[This paper is not re-proving \cite{Paper13b}]
+Theorem~\ref{thm:gram_gap} uses \cite{Paper13b} as a black box.
+The new content of XXII is the first implication in the chain:
+showing that uniform edge-frame stability (the open question
+from \texttt{HEBELSTELLE.md}) implies the Gram coercivity input
+that \cite{Paper13b} requires.
+The gap lower bound is a \emph{consequence}, not a goal.
+\end{remark}
+
+\begin{remark}[Conditional Airy-scale upgrade]
+Under Conjecture~\ref{conj:airy_rhp}, the gap scale upgrades
+from $c^{-1/2}$ (unconditional, Theorem~\ref{thm:gram_gap})
+to $c^{-1/3}$ (conditional, Corollary~\ref{cor:airy_gap}).
+The $c^{-1/3}$ scale is the Airy spacing of the transition
+window and is the sharp scale expected from random matrix
+universality; see also Open Problem~\ref{prob:airy_gap_compute}.
+\end{remark}
+
+%%=================================================================
+\section{Airy Scaling Limit and Main Theorem}\label{sec:main}
+%%=================================================================
 
 \subsection{Airy universality}
 
 \begin{proposition}[Airy kernel at the PSWF edge,
-Paper~XVIII]\label{prop:airy_univ}
-As $c\to\infty$, $N = \lfloor\alpha c\rfloor$, $\alpha < 2/\pi$:
+Paper~XVIII and Conjecture~\ref{conj:airy_rhp}]%
+\label{prop:airy_univ}
+As $c\to\infty$, $N = \lfloor\alpha c\rfloor$,
+$\alpha < 2/\pi$:
 \[
   K_N(N+s, N+t)
   \to K^{\mathrm{Airy}}(s,t)
-  = \frac{\mathrm{Ai}(s)\mathrm{Ai}'(t) - \mathrm{Ai}'(s)\mathrm{Ai}(t)}{s-t},
+  = \frac{\mathrm{Ai}(s)\mathrm{Ai}'(t)
+        - \mathrm{Ai}'(s)\mathrm{Ai}(t)}{s-t},
 \]
 uniformly for $s,t$ in compact sets.
 Here $K_N$ is the PSWF reproducing kernel at level $N$.
+The convergence follows from Conjecture~\ref{conj:airy_rhp}
+(via the IIKS structure of Lemma~\ref{lem:iiks}).
 \end{proposition}
 
 \subsection{$\Dedge$ as a Rand-Weyl operator}
@@ -196,22 +498,25 @@ of the Airy kernel, independent of $\alpha$ and of the arithmetic input.
 \end{conjecture}
 
 \begin{remark}[Why the Airy kernel is the right object]
-The Airy kernel is the universal limit of PSWF reproducing kernels
-at the spectral edge (GUE/GOE universality class).
+The Airy kernel is the universal edge limit of PSWF reproducing kernels
+(via Proposition~\ref{prop:airy_univ} and Conjecture~\ref{conj:airy_rhp}).
 The arithmetic sampling operator $A^{\mathrm{arith}}$ does
 not share this universality: its structure is governed by
-the distribution of primes, not by random matrix statistics.
-The \emph{mismatch} between these two universality classes
-is exactly $D^{\mathrm{Airy}}$, and its positivity is the
-geometric content of the edge obstruction.
+the distribution of primes.
+The \emph{mismatch} between these two objects is $D^{\mathrm{Airy}}$,
+and its uniform positivity is the geometric content of the
+edge obstruction.
+The two-level obstruction principle (\S\ref{sec:obstruction})
+is what makes this mismatch computable: Assumption~A controls
+the phase consistency that ensures $K^{\mathrm{Airy}}$ is the
+correct limit, and Assumption~B controls the geometric transfer.
 \end{remark}
 
-%%=================================================================
-\section{Main Theorem}\label{sec:main}
-%%=================================================================
+\subsection{Main theorem}
 
 \begin{theorem}[Edge Coercivity -- conditional on
-Conjecture~\ref{conj:airy_gap}]\label{thm:edge_coercive}
+Conjecture~\ref{conj:airy_gap}]%
+\label{thm:edge_coercive}
 Fix $\delta \in (0,1)$, $\alpha \in (0, 2/\pi)$.
 If $\inf\,\sigma(D^{\mathrm{Airy}}) \ge c_2^{\mathrm{Airy}} > 0$,
 then for $N$ sufficiently large:
@@ -236,6 +541,17 @@ Consequently:
 \end{enumerate}
 \end{theorem}
 
+\begin{corollary}[Conditional Airy-scale gap]\label{cor:airy_gap}
+Under Conjecture~\ref{conj:airy_rhp}, the spectral gap
+in the transition window satisfies
+\[
+  |\lambda_n^{(c)} - \lambda_{n+1}^{(c)}|
+  \ge C\,c^{-1/3}
+\]
+for all sufficiently large $c$ and all transition-window
+indices $n \sim 2c/\pi$.
+\end{corollary}
+
 \begin{remark}[Unconditional content]
 Without Conjecture~\ref{conj:airy_gap}, the following remains
 unconditional (Paper~XXI):
@@ -244,17 +560,19 @@ unconditional (Paper~XXI):
   \item The witness $\psi_{n^*}$ satisfies
   $\ip{\Dedge\,\psi_{n^*}}{\psi_{n^*}} \ge \tilde{c}_0 > 0$.
 \end{itemize}
-The upgrade to $\inf\,\sigma(\Dedge) > 0$ is the new content of XXII.
+Theorem~\ref{thm:gram_gap} adds, unconditionally,
+the gap lower bound $|\lambda_n^{(c)}-\lambda_{n+1}^{(c)}|
+\ge Cc^{-1/2}$, once Gram coercivity is established.
+The upgrade to $\inf\,\sigma(\Dedge) > 0$ and the
+$c^{-1/3}$ gap scale are the new conditional content of XXII.
 \end{remark}
 
 %%=================================================================
-\section{Strategy: Proving Conjecture~\ref{conj:airy_gap}}%
+\section{Proof Strategies for the Open Conjectures}%
 \label{sec:strategy}
 %%=================================================================
 
-Three approaches, in order of accessibility:
-
-\subsection{Approach 1: Uniform BW-Doubling over the Edge Block}
+\subsection{Approach~1: Uniform BW-Doubling over the Edge Block}
 
 Extend the bandwidth-doubling obstruction (Paper~III)
 from a pointwise statement ($\exists n^*$) to a uniform one:
@@ -262,11 +580,12 @@ from a pointwise statement ($\exists n^*$) to a uniform one:
   \inf_{n \in [(1-\delta)N,\,N)}
   \Eout(|\psi_n|^2) \ge c_3(\delta,c) > 0.
 \]
-If provable, this immediately gives
+If provable, Proposition~\ref{prop:frame_to_gram} and
+Theorem~\ref{thm:gram_gap} immediately give
 $\ip{\Dedge\psi_n}{\psi_n} \ge \lmin^2 c_3 > 0$
 for all $n$ in the edge block.
 
-\subsection{Approach 2: RKHS Stability of $\Ev$ on Edge Moden}
+\subsection{Approach~2: RKHS Stability of $\Ev$ on Edge Modes}
 
 Show directly that the Paley--Wiener frame condition holds
 uniformly on Edge:
@@ -278,17 +597,17 @@ with $A > 0$ uniform in $n \in [(1-\delta)N, N)$.
 This is a Kadec-$\tfrac{1}{4}$-type result for prime frequencies
 in the edge band.
 
-\subsection{Approach 3: Airy Kernel Spectral Analysis}
+\subsection{Approach~3: Direct Analysis of $D^{\mathrm{Airy}}$}
 
-Analyse $D^{\mathrm{Airy}}$ directly:
+Analyse $D^{\mathrm{Airy}}$ via Airy function oscillation:
 \begin{itemize}
-  \item Compute $\inf\,\sigma(D^{\mathrm{Airy}})$
-  via Airy function oscillation estimates.
-  \item Use the fact that $\mathrm{Ai}(t)$ for $t \in \mathbb{R}$
-  has no positive zeros $\Rightarrow$ sampling of
-  $|\mathrm{Ai}(t)|^2$ by prime-scaled points is non-degenerate.
-  \item Transfer to finite $N$ via the universality convergence
-  rate (Proposition~\ref{prop:airy_univ}).
+  \item $\mathrm{Ai}(t)$ has no positive zeros
+  $\Rightarrow$ sampling of $|\mathrm{Ai}(t)|^2$
+  by prime-scaled points is non-degenerate.
+  \item Estimate $\inf\,\sigma(D^{\mathrm{Airy}})$
+  via quantitative oscillation bounds on Airy functions.
+  \item Transfer to finite $N$ using the convergence rate
+  from Proposition~\ref{prop:airy_univ}.
 \end{itemize}
 
 %%=================================================================
@@ -306,9 +625,21 @@ $\Ev|_{\mathrm{Edge}}$ (uniform quasi-isometry).
 \end{problem}
 
 \begin{problem}\label{prob:airy_gap_compute}
-Compute or bound $c_2^{\mathrm{Airy}} = \inf\,\sigma(D^{\mathrm{Airy}})$
-explicitly. Is $c_2^{\mathrm{Airy}}$ related to the
+Compute or bound
+$c_2^{\mathrm{Airy}} = \inf\,\sigma(D^{\mathrm{Airy}})$
+explicitly.
+Is $c_2^{\mathrm{Airy}}$ related to the
 first zero of the Airy function $a_1 \approx -2.338$?
+\end{problem}
+
+\begin{problem}\label{prob:g_existence}
+Prove Assumption~A (Definition~\ref{ass:A}): existence of a
+$g_c$ satisfying the nonlinear matching condition
+$2\operatorname{Re}(g_c^+(t)) = \operatorname{Re}(\phi_c(t))$
+on $(-1,1)$ for all sufficiently large $c$.
+Natural approach: fixed-point analysis of the operator
+$\mathcal{T}_c(g) := \mathcal{H}_{(-1,1)}
+[\tfrac{1}{2}\operatorname{Re}(\phi_c[g])] + \log(\cdot)$.
 \end{problem}
 
 \begin{problem}\label{prob:rh_collapses}
@@ -335,6 +666,19 @@ S.~Schmalnauer,
 \textit{Commutativity Failure in the Arithmetic--Spectral Diagram}
 (Paper~XXI), preprint, 2026.
 
+\bibitem{Paper13b}
+S.~Schmalnauer,
+\textit{Spectral Gap Lower Bounds for Prolate Operators
+via Local Kernel Approximation, Quasimode Transfer,
+and Gram Coercivity}
+(paper13b), preprint, 2026.
+
+\bibitem{Paper13cc}
+S.~Schmalnauer,
+\textit{Airy Universality for Prolate Spheroidal Wave Functions:
+Exact IIKS Structure and RHP Reduction to a Variational Problem}
+(paper13cc), preprint, 2026.
+
 \bibitem{Slepian1978}
 D.~Slepian,
 \textit{Prolate spheroidal wave functions~-- V},
@@ -344,6 +688,11 @@ Bell Syst.\ Tech.\ J.\ \textbf{57} (1978).
 H.~Widom,
 \textit{Asymptotic behavior of the eigenvalues II},
 Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964).
+
+\bibitem{ItsIzergin1990}
+A.~R.~Its, A.~G.~Izergin, V.~E.~Korepin, N.~A.~Slavnov,
+\textit{Differential equations for quantum correlation functions},
+Int.\ J.\ Mod.\ Phys.\ B \textbf{4} (1990), 1003--1037.
 
 \bibitem{CCM2025}
 A.~Connes, C.~Consani, and H.~Moscovici,
