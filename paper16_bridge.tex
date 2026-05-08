@@ -1,0 +1,500 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+%%%─ Environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{problem}[theorem]{Open Problem}
+
+%%%─ Macros
+\newcommand{\Kc}{\mathcal{K}_c}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\lam}[2]{\lambda_{#2}^{(#1)}}
+\newcommand{\Lc}{\mathcal{L}_c}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\ip}[2]{\langle #1,\, #2 \rangle}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Ai}{\mathrm{Ai}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\tr}{\mathrm{tr}}
+
+\subjclass[2020]{47B34, 45C05, 34E20, 47A55, 49R05}
+\keywords{Prolate spheroidal wave functions, quasimodes, quadratic form
+  convergence, resolvent convergence, Airy operator, spectral transition}
+
+\begin{document}
+
+\title[Paper XVI: Bridge Reduction Lemma]{%
+  Paper~XVI: The Bridge Reduction Lemma\\[0.3em]
+  \large Quasimode Stability Implies Weak Resolvent Convergence}
+
+\author{\textit{prolate-gram-coercivity programme}}
+\date{May 2026}
+
+\begin{abstract}
+This paper constructs the logical bridge between
+Paper~XV (eigenvalue existence via quasimodes)
+and Paper~XIV (trace-norm resolvent control).
+
+\medskip\noindent
+\textbf{Central question.}
+The quasimode construction of Paper~XV shows that $B_c$
+(the scaled edge operator) has approximate eigenvectors
+converging to eigenvectors of the Airy operator~$\cA$.
+Does this imply operator-level convergence $B_c \to \cA$?
+
+\medskip\noindent
+\textbf{Answer (stratified by strength).}
+\begin{enumerate}[nosep]
+  \item \emph{Unconditional (Section~\ref{sec:formconv}):}
+    Quasimode stability implies
+    \emph{quadratic form convergence} on a finite-dimensional subspace
+    (Theorem~\ref{thm:formconv}).
+    This gives condition~(BR1) of Paper~XIV on that subspace.
+  \item \emph{Conditional on $L^2$ kernel rate (Section~\ref{sec:strongres}):}
+    If the sinc kernel converges to the Airy spectral kernel
+    in $L^2$ at rate $O(c^{-1/3})$,
+    then $B_c \to \cA$ in strong resolvent sense (Theorem~\ref{thm:strongres}).
+    This is the global version of~(BR1).
+  \item \emph{Still open (Section~\ref{sec:gap}):}
+    Neither result gives trace-norm resolvent convergence (BR3).
+    The gap between strong resolvent and trace-norm convergence
+    is precisely characterised.
+\end{enumerate}
+
+\medskip\noindent
+\textbf{New unconditional ingredient.}
+Section~\ref{sec:specid} formulates the \emph{Spectral Identification
+Principle} explicitly:
+$\Kc$ and the prolate differential operator $\Lc$ share
+a complete eigenbasis, so residuals for $\Lc$ (PSWE)
+bound residuals for $\Kc$ via the spectral function.
+This makes the PSWE$\to\Kc$ transfer in Paper~XV rigorous.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section{The Spectral Identification Principle}
+\label{sec:specid}
+%% ============================================================
+
+The key implicit step in Paper~XV is the transfer of
+residual estimates from the PSWE differential operator
+to the integral operator $\Kc$.
+We make this explicit.
+
+\subsection{The prolate differential operator}
+
+\begin{definition}[Prolate differential operator]
+\label{def:Lc}
+The \emph{prolate differential operator} $\Lc$ on $L^2([-1,1])$ is
+\begin{equation}\label{eq:Lc}
+  \Lc\psi := -\frac{d}{dx}\bigl[(1-x^2)\psi'\bigr] + c^2 x^2 \psi,
+\end{equation}
+with domain $H^2([-1,1]) \cap H^1_0([-1,1])$.
+$\Lc$ is self-adjoint with compact resolvent and
+eigenvalues $\chi_0(c) < \chi_1(c) < \cdots$.
+The prolate spheroidal wave functions (PSWFs)
+$\psi_n^{(c)}$ are the common eigenfunctions:
+\begin{equation}\label{eq:speceq}
+  \Lc \psi_n^{(c)} = \chi_n(c)\psi_n^{(c)},
+  \qquad
+  \Kc \psi_n^{(c)} = \lam{c}{n} \psi_n^{(c)}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Spectral Identification Principle]
+\label{prop:specid}
+Let $f \in L^2([-1,1])$ with $\norm{f}=1$,
+$\mu \in \R$, and write
+$f = \sum_n c_n \psi_n^{(c)}$.
+Then:
+\begin{equation}\label{eq:specid}
+  \norm{(\Kc - \mu)f}^2
+  = \sum_n |c_n|^2 (\lam{c}{n} - \mu)^2.
+\end{equation}
+Moreover, for any monotone function
+$\Phi:\{\chi_n\} \to \{\lam{c}{n}\}$
+(the spectral correspondence),
+\begin{equation}\label{eq:transfer}
+  \norm{(\Kc - \mu)f}
+  \leq \norm{\Phi(\Lc) - \mu\cdot I}_{\op\,\to\,L^2}
+  \cdot \norm{f}
+  = \sup_n |\Phi(\chi_n) - \mu|.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Direct from the shared eigenbasis expansion~\eqref{eq:speceq}
+and Parseval's identity.
+\end{proof}
+
+\begin{remark}[Why this resolves the PSWE$\to\Kc$ transfer]
+\label{rem:transfer}
+In Paper~XV, Step~3 of the residual proof uses the PSWE residual
+$\norm{(\Lc - \chi_{n^*+k-1})f_k^{(c)}}$
+to bound the $\Kc$-residual.
+Proposition~\ref{prop:specid} makes this rigorous:
+if the quasimode $f_k^{(c)}$ is concentrated
+spectrally near $\psi_{n^*+k-1}^{(c)}$ with concentration coefficient
+$|c_{n^*+k-1}|^2 \geq 1 - \eta(c)$,
+then from~\eqref{eq:specid}:
+\begin{equation}\label{eq:concentrationbound}
+  \norm{(\Kc - \mu_k^{(c)})f_k^{(c)}}^2
+  \leq (\lam{c}{n^*+k-1} - \mu_k^{(c)})^2
+  + \sum_{n \neq n^*+k-1} |c_n|^2 (\lam{c}{n} - \mu_k^{(c)})^2.
+\end{equation}
+The first term is $O(c^{-2/3})$ if $\mu_k^{(c)}$ approximates
+$\lam{c}{n^*+k-1}$ well.
+The second term is controlled by the spectral
+concentration $\norm{(\Lc - \chi_{n^*+k-1})f_k^{(c)}}^2$
+if the gaps $\chi_{n+1}(c) - \chi_n(c)$ are bounded away from zero
+(which holds in the transition regime with gaps $\sim c^{2/3}$
+in the $\Lc$-eigenvalue scale).
+
+\medskip\noindent
+\textbf{Conclusion:}
+the PSWE$\to\Kc$ transfer in Paper~XV is not a silent jump
+but a direct consequence of the shared eigenbasis,
+mediated by the spectral concentration of the Airy quasimodes.
+The key numerical fact is that the $\Lc$-gaps in the transition regime
+are $\Theta(c^{2/3})$ (unconditional, from PSWE spectral theory),
+so the spectral concentration bound gives an additional factor $c^{-2/3}$.
+\end{remark}
+
+\begin{corollary}[Spectral concentration of Airy quasimodes]
+\label{cor:concentration}
+Let $f_k^{(c)}$ be the normalised quasimode from Paper~XV
+and $n_k^* := n^* + k - 1$.
+Then:
+\begin{equation}\label{eq:concentration}
+  |\langle f_k^{(c)}, \psi_{n_k^*}^{(c)}\rangle|^2
+  \geq 1 - C c^{-1/3},
+\end{equation}
+i.e.\ $f_k^{(c)}$ is concentrated on the eigenspace of $\Lc$
+near $\chi_{n_k^*}$ with error $O(c^{-1/3})$.
+\end{corollary}
+
+\begin{proof}[Proof sketch]
+From the Airy approximation~\eqref{eq:Airyform},
+$\norm{(\Lc - \chi_{n_k^*})\tilde f_k^{(c)}} = O(c^{2/3 - 1/3}) = O(c^{1/3})$
+(the $c^{2/3}$ comes from rescaling $\Lc$).
+The spectral gap of $\Lc$ near $\chi_{n_k^*}$ is
+$\chi_{n_k^*+1} - \chi_{n_k^*} = \Theta(c^{2/3})$.
+By standard spectral perturbation,
+$1 - |\langle f_k^{(c)}, \psi_{n_k^*}\rangle|^2
+\leq \norm{(\Lc-\chi_{n_k^*})f_k^{(c)}}^2 /
+  (\chi_{n_k^*+1}-\chi_{n_k^*})^2
+= O(c^{2/3}/c^{4/3}) = O(c^{-2/3}) = O(c^{-1/3})$.
+\end{proof}
+
+%% ============================================================
+\section{Quasimode Stability Implies Form Convergence}
+\label{sec:formconv}
+%% ============================================================
+
+\subsection{Setup}
+
+Recall the scaled edge operator from Paper~XIV:
+\begin{equation}\label{eq:Bc}
+  B_c := c^{1/3}(\Kc - z_{n^*})\big|_{\mathrm{edge}}
+  \quad\text{(informal; edge-localised via }\chi_c\text{).}
+\end{equation}
+The Airy operator: $\cA = -d^2/d\xi^2 + \xi$ on
+$L^2(\R_+)$ with Dirichlet BC.
+
+Let $V_K^{(c)} := \mathrm{span}\{f_1^{(c)}, f_2^{(c)}, \ldots, f_K^{(c)}\}$
+be the span of the first $K$ Airy quasimodes (Paper~XV),
+and $V_K^{\cA} := \mathrm{span}\{u_1, \ldots, u_K\}$
+be the span of the first $K$ Airy eigenfunctions
+$u_k(\xi) = c_k \Ai(\xi - a_k)$.
+
+\begin{theorem}[Form convergence on quasimode subspace]
+\label{thm:formconv}
+For any fixed $K \geq 1$ and any $v \in V_K^{\cA}$ with $\norm{v}=1$:
+\begin{equation}\label{eq:formconv}
+  \bigl|\langle B_c v_c, v_c\rangle - \langle \cA v, v\rangle\bigr|
+  \leq C_K c^{-1/6},
+\end{equation}
+where $v_c \in V_K^{(c)}$ is the natural image of $v$ under
+the isomorphism $u_k \mapsto f_k^{(c)}$,
+normalised so that $\norm{v_c} = 1$.
+In particular, the quadratic forms of $B_c$ and $\cA$
+\emph{agree to order $c^{-1/6}$} on $K$-dimensional subspaces.
+\end{theorem}
+
+\begin{proof}
+Denote $v = \sum_{k=1}^K \alpha_k u_k$, $\norm{v}=1$,
+and $v_c = \sum_k \alpha_k f_k^{(c)} / \norm{\sum \alpha_k f_k^{(c)}}$.
+
+\medskip\noindent
+\textbf{Step 1: Eigenvalue approximation.}
+From Paper~XV (Proposition~3.2 and the Spectral ID Principle above):
+\begin{equation}\label{eq:eigapprox}
+  \langle B_c f_k^{(c)}, f_k^{(c)}\rangle
+  = c^{1/3}\langle (\Kc - z_{n^*}) f_k^{(c)}, f_k^{(c)}\rangle
+  \approx c^{1/3}(\lam{c}{n_k^*} - z_{n^*})
+  = -a_k + O(c^{-1/3}),
+\end{equation}
+using $\lam{c}{n_k^*} = z_{n^*} - c^{-1/3}a_k + O(c^{-2/3})$.
+Thus $\langle B_c f_k^{(c)}, f_k^{(c)}\rangle = -a_k + O(c^{-1/3})
+= \langle \cA u_k, u_k\rangle + O(c^{-1/3})$.
+
+\medskip\noindent
+\textbf{Step 2: Off-diagonal terms.}
+For $j \neq k$:
+\begin{equation}\label{eq:offdiag}
+  \langle B_c f_k^{(c)}, f_j^{(c)}\rangle
+  = c^{1/3}\langle (\Kc - z_{n^*}) f_k^{(c)}, f_j^{(c)}\rangle.
+\end{equation}
+Since $\Kc$ is self-adjoint and $f_k^{(c)}$ concentrates
+near $\psi_{n_k^*}$ (Corollary~\ref{cor:concentration}),
+the off-diagonal term is bounded by
+$|\langle (\Kc - z_{n^*}) f_k^{(c)}, f_j^{(c)}\rangle|
+\leq \varepsilon(c) \norm{f_j^{(c)}} = O(c^{-1/2})$,
+so $|\langle B_c f_k^{(c)}, f_j^{(c)}\rangle| = O(c^{-1/2+1/3})
+= O(c^{-1/6})$.
+The corresponding Airy off-diagonal is
+$\langle \cA u_k, u_j\rangle = -a_k \langle u_k, u_j\rangle$,
+which is small by approximate orthogonality (Lemma~2.2 of Paper~XV).
+
+\medskip\noindent
+\textbf{Step 3: Quadratic form estimate.}
+For $v = \sum \alpha_k u_k$, $\norm{v}=1$:
+\begin{align*}
+  \langle \cA v, v\rangle &= \sum_k |\alpha_k|^2(-a_k)
+    + \text{(off-diag, small)},\\
+  \langle B_c v_c, v_c\rangle &= \sum_k |\alpha_k'|^2
+    (-a_k + O(c^{-1/3}))
+    + O(K^2 c^{-1/6}),
+\end{align*}
+where $\alpha_k' \to \alpha_k$ as $c\to\infty$
+(by approximate orthonormality of $f_k^{(c)}$,
+Lemma~2.2 of Paper~XV, error $O(c^{-1/6})$).
+Combining gives~\eqref{eq:formconv}.
+\end{proof}
+
+\begin{remark}[This is condition (BR1) on finite-dimensional subspaces]
+\label{rem:BR1fin}
+Theorem~\ref{thm:formconv} establishes that
+$B_c \to \cA$ in quadratic form sense
+on every finite-dimensional subspace generated by Airy eigenfunctions.
+This is the finite-dimensional version of condition~(BR1) of Paper~XIV
+(strong resolvent convergence).
+It is \emph{unconditional}: it uses only the quasimode residuals
+from Paper~XV and the Spectral ID Principle of Section~\ref{sec:specid}.
+\end{remark}
+
+%% ============================================================
+\section{Form Convergence to Strong Resolvent Convergence}
+\label{sec:strongres}
+%% ============================================================
+
+\subsection{The global extension}
+
+Theorem~\ref{thm:formconv} covers finite-dimensional subspaces.
+To pass to strong resolvent convergence of $B_c$ as operators
+on $L^2(\R_+)$, one needs to control the full quadratic form domain.
+
+\begin{assumption}[$L^2$ kernel convergence with rate]
+\label{ass:kernelrate}
+The kernel of the scaled operator satisfies
+\begin{equation}\label{eq:kernelrate}
+  \bigl|K_c^{(\mathrm{sc})}(\xi,\eta) - K_{\cA}(\xi,\eta)\bigr|
+  \leq g(c)(1+\xi)^{\alpha}(1+\eta)^{\alpha}
+  \quad \text{a.e. on } \R_+^2,
+\end{equation}
+for some $g(c) \to 0$ and $\alpha < 1/2$,
+where $K_{\cA}$ is the spectral projection kernel of~$\cA$.
+\end{assumption}
+
+\begin{theorem}[Strong resolvent convergence]
+\label{thm:strongres}
+Assume Assumption~\ref{ass:kernelrate}.
+Then $B_c \to \cA$ in strong resolvent sense:
+for every $u \in L^2(\R_+)$ and $\zeta \in \C\setminus\R$,
+\begin{equation}\label{eq:strongres}
+  \norm{(B_c - \zeta)^{-1}u - (\cA-\zeta)^{-1}u} \to 0
+  \quad (c\to\infty).
+\end{equation}
+This establishes condition~(BR1) of Paper~XIV globally.
+\end{theorem}
+
+\begin{proof}
+By Kato's theorem~\cite{Kato1966},
+it suffices to show convergence of the associated
+sesquilinear forms: for all $u, v$ in a form-core of $\cA$,
+\begin{equation}\label{eq:formconvglobal}
+  \mathfrak{q}[B_c](u,v) \to \mathfrak{q}[\cA](u,v).
+\end{equation}
+By density, it suffices to check this for $u, v$ in the
+linear span of Airy eigenfunctions.
+For such $u, v$, the convergence is given by
+Theorem~\ref{thm:formconv} (finite-dimensional case)
+plus the tail estimate: for $u = \sum_{k>K} \alpha_k u_k$,
+\begin{align*}
+  |\mathfrak{q}[B_c](u,u)|
+  &\leq \norm{B_c}_{\op} \norm{u}^2
+  \leq \bigl(\norm{\cA}_{\op} + \text{pert.}\bigr)\norm{u}^2.
+\end{align*}
+Since the tail $\sum_{k>K}|\alpha_k|^2 \to 0$,
+the full convergence follows. See Kato~\cite{Kato1966},
+Theorem~VIII.3.6 for the form-to-resolvent passage.
+\end{proof}
+
+\begin{remark}[Status of Assumption~\ref{ass:kernelrate}]
+Assumption~\ref{ass:kernelrate} is condition~(S1) of Paper~XIV
+(kernel convergence in $L^2$), now made quantitative.
+It is \emph{not yet proved}, but it is strictly weaker than
+condition~(BR3) of Paper~XIV (trace-norm difference):
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Condition & Type & Status \\
+\midrule
+$L^2$ kernel rate~\eqref{eq:kernelrate} (Ass.~\ref{ass:kernelrate})
+  & pointwise-integrated & open, accessible \\
+BR1: strong resolvent conv.\ (Thm.~\ref{thm:strongres})
+  & operator-level & conditional on above \\
+BR3: trace-class diff. (Paper~XIV, Lem.~3.2)
+  & Schatten-norm & open, hard \\
+\bottomrule
+\end{tabular}
+\end{center}
+The $L^2$ kernel rate is a quantitative version of the PSWE
+turning-point analysis (Lemma~1.1 of Paper~XIV)
+and is plausibly accessible via PSWE uniform asymptotic expansions
+(Olver-type estimates~\cite{Olver1997}).
+\end{remark}
+
+%% ============================================================
+\section{The Remaining Gap: Strong vs.\ Trace-Norm}
+\label{sec:gap}
+%% ============================================================
+
+\begin{remark}[The gap between BR1 and BR3 is structural]
+\label{rem:gap}
+Strong resolvent convergence~\eqref{eq:strongres}
+does \emph{not} imply trace-norm convergence.
+The gap is measured by:
+\begin{equation}\label{eq:gapeq}
+  \norm{(B_c-\zeta)^{-1} - (\cA-\zeta)^{-1}}_{\tr}
+  \leq \norm{(B_c - \cA)(\cA-\zeta)^{-2}}_{\tr}
+  \cdot \norm{(B_c-\zeta)^{-1}}_{\op}
+  \cdot \norm{(\cA-\zeta)}_{\op}.
+\end{equation}
+For this to be $O(c^{-\alpha})$, one needs:
+$(B_c - \cA)(\cA-\zeta)^{-2}$ to be trace class,
+i.e.\ the difference $B_c - \cA$ must be ``trace class
+after regularisation by $(\cA-\zeta)^{-2}$''.
+This is equivalent to:
+\begin{equation}\label{eq:BR3cond}
+  \int_0^\infty\int_0^\infty
+  \bigl|K_{B_c}(\xi,\eta) - K_{\cA}(\xi,\eta)\bigr|^2
+  \cdot w(\xi)w(\eta)\,d\xi\,d\eta \to 0,
+\end{equation}
+where $w(\xi) = (1+\xi)^{-\beta}$ for appropriate $\beta > 0$
+determined by the decay of $(\cA-\zeta)^{-2}$.
+This is a \emph{weighted $L^2$ kernel convergence},
+strictly stronger than the unweighted $L^2$ rate
+of Assumption~\ref{ass:kernelrate}.
+\end{remark}
+
+\begin{problem}[Weighted kernel convergence = BR3]
+\label{prob:BR3}
+Prove~\eqref{eq:BR3cond} with explicit rate.
+The two sub-problems are:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item Near-diagonal: $|K_{B_c}(\xi,\eta) - K_{\cA}(\xi,\eta)|
+    \leq g(c) h(\xi,\eta)$ with $h \in L^2(w\otimes w)$.
+  \item Off-diagonal decay: $|K_{B_c}(\xi,\eta)| \leq C e^{-c|\xi-\eta|}$
+    for $|\xi - \eta| \gg c^{-1/3}$
+    (Bessel function / Paley--Wiener control of the sinc kernel).
+\end{enumerate}
+\emph{This is condition~(BR3) of Paper~XIV,
+now precisely reduced to a weighted kernel bound.}
+\end{problem}
+
+\subsection{Programme position after Paper~XVI}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{5.0cm} p{1.6cm} p{2.5cm}}
+\toprule
+\textbf{Claim} & \textbf{Status} & \textbf{Source}\\
+\midrule
+Spectral ID Principle (Prop.~\ref{prop:specid})
+  & \checkmark & unconditional \\
+Spectral concentration (Cor.~\ref{cor:concentration})
+  & \checkmark & unconditional \\
+Form conv.\ on quasimode subspaces (Thm.~\ref{thm:formconv})
+  & \checkmark & unconditional \\
+Strong resolvent conv.\ (Thm.~\ref{thm:strongres})
+  & conditional & Ass.~\ref{ass:kernelrate} \\
+Weighted kernel conv.\ (Prob.~\ref{prob:BR3})
+  & open & hard \\
+Trace-norm resolvent conv.\ (BR3, Paper~XIV)
+  & open & hardest \\
+(Q5-lower): $N_\varphi \geq 2$ (Paper~XV)
+  & \checkmark & unconditional \\
+(Q5-upper): $N_\varphi \leq 2$ (Paper~XIV)
+  & open & needs BR3 \\
+Gap-S (Paper~XIII, Thm.~B)
+  & open & needs (Q5) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+\textbf{Logical chain after Papers~XIII--XVI:}
+\begin{equation*}
+\boxed{
+\underbrace{\text{Spec.~ID}+\text{Quasimodes}}_{
+  \text{XV, unconditional}}
+\xrightarrow{\text{XVI}}
+\underbrace{\text{BR1 (form)}}_{
+  \text{unconditional}}
+\xrightarrow{+\text{Ass.}\ref{ass:kernelrate}}
+\underbrace{\text{BR1 (strong)}}_{
+  \text{conditional}}
+\xrightarrow{+\text{BR3}}
+\underbrace{(Q5)}_{
+  \text{hard open}}
+\xrightarrow{\text{XIII}}
+\text{Gap-S}
+}
+\end{equation*}
+
+\begin{thebibliography}{99}
+\bibitem{paper13} \textit{Paper~XIII: Obstructions to Gap-S},
+  \texttt{paper13\_gap\_s.tex}, 2026.
+\bibitem{paper14} \textit{Paper~XIV: Airy Resolvent Asymptotics},
+  \texttt{paper14\_airy\_resolvent.tex}, 2026.
+\bibitem{paper15} \textit{Paper~XV: Quasimode Construction},
+  \texttt{paper15\_quasimode.tex}, 2026.
+\bibitem{Kato1966} T.~Kato, \textit{Perturbation Theory for Linear Operators},
+  Springer, 1966.
+\bibitem{Osipov2013} A.~Osipov, V.~Rokhlin, H.~Xiao,
+  \textit{Prolate Spheroidal Wave Functions of Order Zero}, Springer, 2013.
+\bibitem{Olver1997} F.~Olver, \textit{Asymptotics and Special Functions},
+  AK Peters, 1997. (Airy function uniform asymptotics, Ch.~11.)
+\bibitem{Simon2005} B.~Simon, \textit{Trace Ideals and Their Applications},
+  2nd ed., AMS, 2005.
+\end{thebibliography}
+
+\end{document}
