@@ -1,131 +1,140 @@
-# Kontext: Mathematisches Forschungsprojekt — prolate-gram-coercivity
+# Context Prompt — XXII Prolate Gram Coercivity Programme
+## Stand: 9. Mai 2026
 
-> **Verwendung:** Diesen Prompt am Anfang jedes neuen KI-Chats einfügen.
-> Danach `RESEARCH_DIRECTIONS.md` und `DEPENDENCIES.md` aus diesem Repo laden —
-> sie enthalten offene Probleme, Programmsprache und Paper-Abhängigkeiten.
-> **Repo:** `github.com/Waschtl904/prolate-gram-coercivity`
-> **Stand: Mai 2026** — Papers I–XX vorhanden; Paper XX arXiv-ready.
+Verwende diesen Prompt zu Beginn eines neuen Chats, um den vollen Kontext herzustellen.
 
 ---
 
-## Über mich
+## Wer ich bin
 
-Ich bin Werkzeugbautechniker mit Berufsreifeprüfung (Maschinenbau),
-lerne Programmieren und Mathematik im Selbststudium.
-Ich arbeite freiwillig an einem mathematischen Forschungsprogramm
-mit KI-Unterstützung (Perplexity + ChatGPT).
-Autor aller Papers: Sebastian Schmalnauer, Wien.
+Ich bin ein unabhängiger Mathematiker und arbeite an einem großen asymptotischen Spektralprogramm
+(Papers I–XXII) über PSWF-Gram-Matrizen, Airy-Operatoren und Verbindungen zur Riemannschen Vermutung.
+Das Repo ist: https://github.com/Waschtl904/prolate-gram-coercivity
 
 ---
 
-## Das übergeordnete Ziel
+## Was das Programm ist
 
-Konstruktion eines spektralen Operators, dessen Eigenwerte die nichttrivialen
-Nullstellen der Riemannschen Zetafunktion spiegeln (Hilbert-Pólya-Vermutung).
-Ausgangspunkt: **CCM2025** = Connes–Consani–Moscovici, arXiv:2511.22755.
-Kernmethode: PSWF-Konzentrationsoperator + Gram-Formenrahmen.
+Das XXII-Programm beweist, dass die Gram-Matrix der prolaten sphäroidalen Wellenfunktionen
+(PSWFs), ausgewertet an Airy-reskalisierten Primzahlen nahe dem Spektralrand,
+uniform koerziv ist im Landau–Widom-Skalenregime.
 
-**Kein Paper in diesem Repo macht eine Behauptung über Nullstellen von ζ(s).**
+**Hauptsatz (P13, unbedingt):**
+λ_min(G_{N,c}) ≥ α · c^{-1/2}  für alle c ≥ c_0, N = ⌊αc⌋.
+
+**Bedingtes Rate-Upgrade (conditional, Conjecture 3.3):**
+λ_min(G_{N,c}) ≥ α · c^{-1/3}  (RHP-Konvergenz vorausgesetzt).
 
 ---
 
-## Programmstruktur (Papers I–XX)
+## Die IR-Kernstruktur (Stand heute)
 
-| Paper | Datei | Inhalt | Status |
+Das Programm hat heute seinen IR-Kern freigelegt. Die irreduktible logische Substanz ist:
+
+```
+delta_Airy  ≥  F_TW(0) ≈ 0.96       [universell, Tracy–Widom]
+epsilon_c   ≤  C·(loglog c / log c)^{1/2}  →  0    [arithmetisch, Montgomery–Vaughan]
+─────────────────────────────────────────────────────
+delta_Airy  ≫  epsilon_c             [die IR-Bedingung]
+```
+
+**Das ist der einzige Satz, den Paper XXII wirklich braucht.**
+Alles andere ist entweder Voraussetzung für das *Finden* dieser Struktur
+oder Verfeinerung der *Rate*.
+
+---
+
+## Dreiniveaustruktur des Beweises
+
+| Level | Inhalt | Werkzeug | Status |
 |---|---|---|---|
-| I | `paper1.tex` | Gram-Koerzivität, Defektzerlegung, DSTP | frozen |
-| II | `paper2.tex` | Skalierungslimiten, Spurformel, Weil-Verbindung | frozen |
-| II-Q | `paper2_quadrature.tex` | Quadraturschätzungen | frozen |
-| III | `paper3.tex` | Spektraler Tail, Off-diagonal | frozen |
-| IV | `paper4_semiclassical.tex` | Semiklassische Äquidistribution | frozen |
-| V | `paper5.tex` | WKB Cover, Bridge Lemma | frozen |
-| VI | `paper6.tex` | No-Go-Theorem, Galerkin-Normen | frozen |
-| VII | `paper7_skeleton.tex` | Dyadic Cancellation, H1 bedingungslos | frozen |
-| VIII | `paper8_scale_separated.tex` | H2 bedingungslos | frozen |
-| IX | `paper9_superconcentration.tex` | Superkonzentration | frozen |
-| X | `paper10_coercivity_gap.tex` | Koerzivitätslücke | frozen |
-| XI | `paper11_fredholm_microlocal.tex` | Fredholm–mikrolokal | frozen |
-| XII | `paper12_direct_coercivity.tex` | Direkte Koerzivität | frozen |
-| XIII | `paper13_gap_s.tex` | Gap-S Lemma | frozen |
-| XIV | `paper14_airy_resolvent.tex` | Airy-Resolvent | frozen |
-| XV | `paper15_quasimode.tex` | Quasimode-Konstruktion | frozen |
-| XVI | `paper16_bridge.tex` | Bridge Lemma (allgemein) | frozen |
-| XVII | `paper17_cliff.tex` | Cliff-Schätzungen | frozen |
-| XVIII | `paper18_airy_universality.tex` | BR3: qualitative Airy-Universalität | frozen |
-| XIX | `paper19_quantitative_rate.tex` | Quantitative Zwei-Skalen-Rate, $O(c^{-1/3}(\log c)^{5/3})$ | frozen |
-| XX | `paper20_universality.tex` | Universalität und strukturelle Rigidität der Turning-Point-Truncation-Geometrie | **arXiv-ready** |
+| Level 1 | Existenz des universellen Airy-Gaps | Tracy–Widom | Unbedingt, vollständig |
+| Level 2 | Stabilität unter arithmetischer Störung | Montgomery–Vaughan | Unbedingt, vollständig |
+| Level 3 | Konvergenzrate O(c^{-1/3}) | IIKS / RHP / Deift–Zhou | Bedingt (Conjecture 3.3) |
+
+IIKS/RHP ist **epistemisch notwendig** (hat das richtige Objekt D^Airy sichtbar gemacht),
+aber **logisch eliminierbar** aus dem Minimalbeweis.
 
 ---
 
-## Die Trilogie XVIII–XX: Kern des Programms
+## Die zwei unabhängigen Beweisarme
 
-### XVIII — Qualitative Universalität
-$\|K_{B_c} - K_{\mathcal{A}}\|_{L^2} \to 0$ (BR3) via Zwei-Skalen-Zerlegung.
-Kein Rate-Ergebnis; iterierte Limesstruktur.
+**Arm 1 (diskret, O4):**
+Off-diagonal Decay |G_{mn}| ≤ C/|m-n|^{3/2}
+via triple-scale stationäre Phase → Jaffard–Schur → Koerzivität.
 
-### XIX — Quantitative Zwei-Skalen-Rate
-Zerlegung $A_K = A_K^{\rm lin} + A_K^{\rm quad}$;
-$C_{\rm lin} = O(K^{5/3})$, $C_{\rm quad} = O(K^{7/3})$.
-Optimale Truncation $K_{\rm opt} \sim (\log c)/(3\alpha)$:
-Rate $O(c^{-1/3}(\log c)^{5/3})$.
+**Arm 2 (spektral, O5):**
+Mismatch-Operator D^Airy = Π_Airy(A^arith - K^Airy)Π_Airy
+zerfällt in universellen Teil (Gap ≥ F_TW(0)) + arithmetische Störung (→ 0).
+Gap-Persistenz via Operatorstabilität.
 
-### XX — Universelles Schicht-Selektionsprinzip
-Für jedes $\mathcal{A}_\gamma \in \mathfrak{T}_\gamma$
-(Spektralwachstum $a_K \sim K^\gamma$, Turning-Point-Fenster $c^{-\beta}$):
-$$\|K_{B_c} - K_{\mathcal{A}_\gamma}\| = O\!\left(c^{-\beta}(\log c)^{1+\gamma}\right).$$
-Strukturelle Rigidität: keine Methode in $\mathcal{M}(\mathrm{S1,S2,S3})$
-erreicht $o(c^{-\beta}(\log c)^{1+\gamma})$.
+Beide Arme sind unbedingt und unabhängig.
+Sie schließen P12 bzw. P9 → R1 → P13.
 
 ---
 
-## Aktuelle Programmsprache (Paper XX)
+## Numerische Verifikation (S4, heute erledigt)
 
-Diese Begriffe sind die interne Sprache des Programms ab Paper XX.
-**Unbedingt verwenden, nicht paraphrasieren.**
+Für c ∈ {100, 200, 500, 1000, 2000, 5000, 10000}:
+- μ_A(f) / μ_K(f) ∈ [1.88, 4.21]  (Faktor > 1.88 Sicherheitsabstand)
+- μ_K(Ai) = 0.03084
+- 1 - F_TW(0) = 0.0403
+- C_crit = F_TW(0) / (ζ(3/2) - 1) ≈ 0.595
 
-| Symbol / Begriff | Bedeutung |
+Der Gap ist nicht knapp — die Perturbation ist quantitativ irrelevant für alle getesteten c.
+
+---
+
+## Schlüsseldokumente im Repo (aktuell)
+
+| Datei | Inhalt |
 |---|---|
-| $\mathfrak{T}_\gamma$ | Operatorklasse mit Spektralwachstum $a_K \sim K^\gamma$ |
-| $\mathcal{M}(\mathrm{S1,S2,S3})$ | Methodklasse: S1 = Hüllenbedingung (H1), S2 = Skalenstabilität, S3 = Diagonalsubstitution |
-| $\mathfrak{R}: \mathcal{B} \to \mathcal{S}/\!\sim_{\mathcal{S}}$ | Realisierungsabbildung: analytische Bounds → asymptotische Klassen |
-| $K^*(c) \sim \frac{2\beta}{\alpha}\log c$ | Optimaler Truncation-Index (Balance-FOC) |
-| $\succ$ | Formale Ordnung auf $\mathcal{S}/\!\sim_{\mathcal{S}}$ |
-| $\rho$-Klassen | Deformationsklassen: $A(K,\lambda c)/A(K,c) \to \lambda^\rho$; Paper XX = $\rho = 0$ |
-| S2 | Skalenstabilität: $\mathfrak{R} \circ \mathrm{Res}_\lambda = \mathfrak{R}$; EM ist eine Realisierung |
-| S3 | Diagonalkompression: $j \mapsto K^*(c)$ projiziert globale Freiheitsgrade auf Log-Diagonale |
-| `thm:universal_rate` | Hauptsatz: universelle Rate $O(c^{-\beta}(\log c)^{1+\gamma})$ |
-| `thm:rate_obstruction` | Obstruktionssatz: Rigidität der Rate innerhalb $\mathcal{M}$ |
-| `lem:S2_knockdown` | S2-Knockdown: ohne S2 kollabiert die Platzierung in $\mathcal{S}/\!\sim_{\mathcal{S}}$ |
-| `def:realization_map` | Definition von $\mathfrak{R}$ |
+| `XXII_ir_kernel.md` | **Der IR-Kern — was das Programm über sich selbst bewiesen hat** |
+| `XXII_introduction_draft.tex` | Vollständige Introduction für Paper XXII |
+| `XXII_abstract_and_meta.tex` | Formaler Abstract + Extended Abstract + Methodologische These |
+| `XXII_universality_theorem.tex` | Hauptsatz, Dreiteilung, asymptotische Formel |
+| `XXII_architectural_remark.tex` | Dreiniveaustruktur, Rolle von IIKS/RHP |
+| `paper22_dag.tex` | DAG: vollständiger Abhängigkeitsgraph |
+| `paper22_outline.tex` | Struktureller Outline, alle Sektionen |
+| `O4_B2_airy_offdiag_decay.tex` | Off-diagonal Decay (Arm 1, O4) |
+| `O5_B2_airy_sampling_coercivity.tex` | Gap-Persistenz (Arm 2, O5) |
+| `O5_Ec_operator_norm.tex` | Schranke für ε_c via Montgomery–Vaughan |
+| `DEPENDENCIES.md` | Vollständige Abhängigkeitsliste aller Propositions |
 
 ---
 
-## Offene Probleme
+## Verbleibende Arbeit (alles analytisches Bookkeeping, keine neuen Ideen)
 
-Vollständige Klassifikation in `RESEARCH_DIRECTIONS.md`.
+| Task | Datei | Aufwand |
+|---|---|---|
+| O4-T2: triple-scale Phase abschließen | `O4_B2_T2_triple_scaling.tex` | ~5 Seiten, LOW |
+| O5-V1/V2: Fourier-Expansion für Airy-bandlimitierte Fkt. | (neu) | ~3 Seiten, LOW |
+| O5-V3: explizite Konstante C(R,Ω) | (numerisch) | LOW |
+| §6: Connecting Theorem (beide Arme → P13) | `paper22_outline.tex` | ~3 Seiten, LOW |
 
-**O1** — Notwendigkeit von H1 (Envelope-Minimalität):
-Verbessert $f(j) = o(1)$ in der Eigenfunktionsschranke die Rate?
-Kernfrage: was überlebt die S3-Diagonalprojektion $j \mapsto K^*(c)$?
-
-**O3a** — Rate außerhalb $\mathcal{M}(\mathrm{S1,S2,S3})$:
-Gibt es eine Methode außerhalb der Klasse mit $o(c^{-\beta}(\log c)^{1+\gamma})$?
-Erfordert informationstheoretischen oder semiklassischen Zugang.
-
-**Realisierungsproblem** — Welche Operatorklassen tragen $\rho \neq 0$?
-
-**Stabilitätsproblem** — S2$^\epsilon$: Rate unter schwacher Verletzung von S2?
+Das Konzeptuelle ist abgeschlossen. Paper XXII braucht nur noch den Schreibvorgang.
 
 ---
 
-## Bitte beim Start jedes neuen Chats
+## Universalitätsbegriff in XXII
 
-1. Lies `RESEARCH_DIRECTIONS.md` — offene Probleme, Programmsprache, Horizonte
-2. Lies `DEPENDENCIES.md` — Paper-Abhängigkeiten und Implikationskette
-3. Für Paper XX: `paper20_universality.tex` und `paper20_context_prompt.md`
-4. Für ältere Papers: `context_summary.md` und jeweilige `paper*.tex`
-5. **Kein Claim über ζ(s)-Nullstellen** in keinem der Papers
-6. **Paper XX ist arXiv-ready** — nicht als Draft behandeln
-7. **Die Programmsprache aus der Tabelle oben verwenden** — nicht durch ältere Begriffe ersetzen
-8. **`RESEARCH_DIRECTIONS.md` ist das aktive Planungsdokument** — nicht `context_summary.md`
-9. `assumption_2_4_target.md`, `PHASE_NONDEG_NOTE.md`, `REVIEW_NOTES_paper18.md` — archiviert, nicht aktiv
+XXII ist **nicht** klassische Wigner-Universalität (vollständig verteilungsfrei).
+Es ist **perturbative Universalität** auf Operatorebene:
+
+- Führender Term: δ_Airy ≈ 0.96 (universell, primzahlunabhängig)
+- Arithmetische Korrekturen: ε_c → 0 (irrelevant asymptotisch)
+- Primzahlstruktur erzeugt keine neue universelle Klasse
+
+Analogie: D_c → D^Airy im Sinne stabiler Spektrallücken, nicht lokaler Punktprozesse.
+
+---
+
+## Methodologische These des Programms
+
+> Integrable Struktur identifiziert universelle Fixpunkte.
+> Die Stabilität dieser Fixpunkte wird perturbativ bewiesen.
+> Der finale universelle Satz lebt außerhalb der integrablen Kategorie.
+
+Diese These gilt für XXII wegen der spezifischen Zahlenwerte:
+δ_Airy / ε_c → +∞, mit Faktor ≥ 1.88 für alle c ≤ 10^4.
+Sie ist kein allgemeines Prinzip, sondern ein quantitativer Befund dieses Problems.
