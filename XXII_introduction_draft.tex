@@ -1,0 +1,253 @@
+%%
+%% XXII_introduction_draft.tex
+%%
+%% Draft Introduction for Paper XXII:
+%% "Edge Coercivity and the Airy Boundary Operator:
+%%  A Perturbative Stability Theory for Universal Boundary Operators"
+%%
+%% This introduction presents the paper's results honestly:
+%% -- what is proved (Level 1 + 2, unconditional)
+%% -- what is conditional (Level 3, rate refinement)
+%% -- what the integrable structure contributes (coordinates, not core)
+%% -- the RG interpretation (fixed point + irrelevant perturbation)
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\newcommand{\DAi}{D^{\mathrm{Airy}}}
+\newcommand{\KAi}{K^{\mathrm{Airy}}}
+\newcommand{\PAi}{\Pi_{\mathrm{Airy}}}
+\newcommand{\Aarith}{A^{\mathrm{arith}}}
+\newcommand{\norm}[1]{\|#1\|}
+
+\title{Edge Coercivity and the Airy Boundary Operator\\
+{\normalsize A Perturbative Stability Theory for Universal Boundary Operators}\\
+\vspace{6pt}
+{\small Paper XXII in the Prolate Gram Coercivity Programme}}
+\author{Sebastian Schmalnauer}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+%%=================================================================
+\section*{Introduction}
+%%=================================================================
+
+\subsection*{The main result}
+
+Let $G_{N,c}$ denote the Gram matrix of the prolate spheroidal wave
+functions $\{\psi_k(\,\cdot\,;c)\}_{k=0}^{N-1}$ of bandwidth $c$,
+sampled at the Airy-rescaled primes $\{p_j^{\mathrm{Ai}}\}$ near the
+spectral edge (see Section~2 for definitions).
+The central question of this paper is:
+
+\begin{quote}
+  \textit{Is the smallest eigenvalue $\lambda_{\min}(G_{N,c})$
+  bounded below by a positive quantity, uniformly as $N, c \to \infty$
+  in the Landau--Widom scaling regime?}
+\end{quote}
+
+We answer this question affirmatively and unconditionally:
+
+\begin{theorem*}[Main Theorem, P13]
+There exist constants $\alpha > 0$ and $c_0 < \infty$ such that
+for all $c \ge c_0$ and $N = \lfloor\alpha c\rfloor$:
+\[
+  \lambda_{\min}(G_{N,c}) \ge \alpha(c) \cdot c^{-1/2} > 0.
+\]
+\end{theorem*}
+
+The bound is not sharp in its rate;
+under the conditional Conjecture~3.3
+(convergence of the RHP solution, Section~3),
+the rate improves to $c^{-1/3}$.
+But the \emph{existence} of a positive lower bound is unconditional.
+
+\subsection*{What drives the result}
+
+The proof rests on a single structural observation:
+the mismatch operator
+\[
+  \DAi := \PAi(\Aarith - \KAi)\PAi
+\]
+between arithmetic sampling and the Airy kernel operator decomposes as
+\begin{equation}\label{eq:intro_decomp}
+  \DAi = \underbrace{\PAi(I - \KAi)\PAi}_{\text{universal part}}
+       + \underbrace{\PAi(\Aarith - I)\PAi}_{\text{arithmetic perturbation}}.
+\end{equation}
+The two terms in \eqref{eq:intro_decomp} live on separated asymptotic scales:
+\begin{alignat}{3}
+  \delta_{\mathrm{Airy}}
+  &:= \inf\sigma\bigl(\PAi(I-\KAi)\PAi\bigr)
+  &&\ge F_{\mathrm{TW}}(0) \approx 0.96,
+  \qquad &&\text{(universal, $c$-independent)}
+  \label{eq:intro_delta}\\
+  \varepsilon_c
+  &:= \norm{\PAi(\Aarith - I)\PAi}_{\mathrm{op}}
+  &&\le C\Bigl(\tfrac{\log\log c}{\log c}\Bigr)^{1/2} \to 0
+  \qquad &&\text{(arithmetic, vanishing)}
+  \label{eq:intro_eps}
+\end{alignat}
+and the gap persists by operator stability:
+$\inf\sigma(\DAi) \ge \delta_{\mathrm{Airy}} - \varepsilon_c > 0$ for large $c$.
+
+The bound \eqref{eq:intro_delta} is a consequence of
+the Tracy--Widom theory of the GUE edge~\cite{TW1994}.
+The bound \eqref{eq:intro_eps} follows from the
+Montgomery--Vaughan mean square theorem for prime exponential
+sums~\cite{MV1974}, applied to the $L^2$-Fourier expansion of
+Airy-bandlimited test functions.
+No Riemann Hypothesis and no conjecture on primes in short intervals
+is required.
+
+\subsection*{Universality}
+
+The scale separation \eqref{eq:intro_delta}--\eqref{eq:intro_eps}
+establishes a form of \emph{perturbative universality} for the
+Airy boundary operator:
+
+\begin{itemize}
+  \item The spectral gap \emph{exists} for any positive-density
+    sampling sequence (weak universality).
+  \item Its leading value $\delta_{\mathrm{Airy}} \approx 0.96$
+    is \emph{independent of the prime distribution}
+    (universality of the leading term).
+  \item The arithmetic corrections $\varepsilon_c \to 0$:
+    the prime structure is \emph{irrelevant} in the asymptotic regime.
+\end{itemize}
+
+This is not strong universality in the sense of random matrix theory
+(where the limiting distribution is completely distribution-free).
+It is a weaker, operator-level statement:
+the Airy geometry dominates the arithmetic fluctuation asymptotically,
+and the spectral gap of $\DAi$ converges to the universal value
+$\delta_{\mathrm{Airy}}$ as $c \to \infty$.
+
+In the language of renormalisation theory:
+$\KAi$ is the \emph{stable fixed point} of the programme;
+$\Aarith - I$ is an \emph{irrelevant perturbation};
+and the main theorem is the statement that the fixed point is stable
+under this perturbation for all large $c$.
+
+\subsection*{The role of integrable structure}
+
+Paper~XXII is the final paper in a programme that began with
+IIKS representations and Riemann--Hilbert analysis (Papers~XII--XXI).
+A central observation of this paper is that the main theorem
+\emph{does not require} the integrable machinery in its proof.
+
+The IIKS identity, the RHP for $Y_c$, and the Deift--Zhou
+steepest descent all appear in Section~3 (the RHP arm of the argument).
+They are used to prove Conjecture~3.3
+($Y_c \to Y_{\mathrm{Airy}}$ in the appropriate sense),
+which in turn gives the rate improvement $\lambda_{\min}(G_{N,c}) \ge \alpha c^{-1/3}$.
+But this rate improvement is conditional, and does not affect the
+\emph{existence} of the gap.
+
+The integrable structure played an essential \emph{epistemic} role:
+without Papers~XII--XXI, we would not have identified $\DAi$ as the
+relevant object, nor known that $F_{\mathrm{TW}}(0)$ is the correct
+universal constant.
+But once the object is identified, the proof of gap-existence
+reduces to two classical inputs from outside the integrable programme:
+Tracy--Widom theory and the Montgomery--Vaughan mean square.
+
+This separation --- integrable structure as discovery mechanism,
+universal spectral geometry as proof core --- is itself a structural
+result of the paper.
+It suggests that perturbative stability of universal boundary operators
+may be a more general phenomenon, accessible by the methods of
+this paper without requiring integrable structure case by case.
+
+\subsection*{Organisation of the paper}
+
+The paper is organised to reflect the three-level architecture:
+
+\begin{description}
+  \item[Section~2 (Setup).]
+    Operators, Airy scaling, and the decomposition~\eqref{eq:intro_decomp}.
+    All definitions are independent of IIKS.
+
+  \item[Section~3 (RHP arm, conditional).]
+    The Riemann--Hilbert analysis: Assumptions A and B, Conjecture~3.3,
+    and the conditional rate improvement to $c^{-1/3}$.
+    This section can be read independently and contributes P10.
+    It is not logically required for the Main Theorem.
+
+  \item[Section~4 (Discrete arm, O4).]
+    The Jaffard--Gram bound: off-diagonal decay $|G_{mn}| \le C/|m-n|^{3/2}$
+    via triple-scale stationary phase.
+    Contributes P9, which feeds R1 $\to$ P13 via Paper~13b.
+
+  \item[Section~5 (Spectral arm, O5).]
+    The gap-persistence theorem: $\delta_{\mathrm{Airy}} - \varepsilon_c > 0$
+    via Tracy--Widom (Level~1) and Montgomery--Vaughan (Level~2).
+    Unconditional. Closes P12 and contributes the main input to P13.
+
+  \item[Section~6 (Main Theorem).]
+    Combines P9 $\to$ R1 $\to$ P13 (Arm~1) and
+    O5 $\to$ P12 $\to$ P13 (Arm~2) into the final argument.
+
+  \item[Appendix (Numerical verification).]
+    Explicit computation of $\varepsilon_c$ for $c \in [100, 10^4]$;
+    verification that $\mu_A/\mu_K \in [1.88, 4.21]$ across this range;
+    computation of $C_{\mathrm{crit}} = F_{\mathrm{TW}}(0)/(\zeta(3/2)-1) \approx 0.595$.
+\end{description}
+
+\subsection*{Relation to earlier papers}
+
+The present paper concludes the programme begun in Paper~XII.
+The key imports from earlier papers are:
+\begin{itemize}
+  \item Papers~XVIII--XX: the Airy limit for PSWF near the spectral edge,
+    establishing that $K_c \to \KAi$ in the appropriate sense.
+    Used to \emph{define} $\DAi$; not used in the gap-persistence proof.
+  \item Paper~XXI: the bulk spectral approximation ($\sigma(A_{N,c}) \approx \sigma(K_c)$)
+    and the existence of at least one positive eigenvalue of $D_{\mathrm{Edge}}$.
+    Used as black boxes BB1, BB2.
+  \item Paper~13b: the reduction functor
+    $\lambda_{\min}(G_{N,c}) \ge c^{-1/2} \Rightarrow \text{spectral gap} \ge C c^{-1/2}$.
+    Used as black box BB3 = R1.
+\end{itemize}
+All other results of this paper are new.
+
+\subsection*{Notation}
+Standard: $\langle \cdot, \cdot \rangle$ for $L^2([0,R])$ inner product;
+$\|\cdot\|_{\mathrm{op}}$ for operator norm; $\|\cdot\|_{S_1}$ for trace norm;
+$\Pi_{\mathrm{Airy}}$ for the spectral projection onto the Airy edge subspace;
+$F_{\mathrm{TW}}$ for the Tracy--Widom GUE distribution.
+All other notation is defined at first use.
+
+\begin{thebibliography}{99}
+\bibitem{TW1994}
+C.~Tracy and H.~Widom,
+\textit{Level-spacing distributions and the Airy kernel},
+Comm.\ Math.\ Phys.\ \textbf{159} (1994), 151--174.
+\bibitem{MV1974}
+H.~L.~Montgomery and R.~C.~Vaughan,
+\textit{Hilbert's inequality},
+J.\ London Math.\ Soc.\ (2) \textbf{8} (1974), 73--82.
+\bibitem{Bornemann2010}
+F.~Bornemann,
+\textit{On the numerical evaluation of Fredholm determinants},
+Math.\ Comp.\ \textbf{79} (2010), 871--915.
+\bibitem{Slepian1978}
+D.~Slepian,
+\textit{Prolate spheroidal wave functions, Fourier analysis and uncertainty V},
+Bell Syst.\ Tech.\ J.\ \textbf{57} (1978), 1371--1430.
+\bibitem{Widom1964}
+H.~Widom,
+\textit{Asymptotic behavior of the eigenvalues of certain integral equations II},
+Arch.\ Rational Mech.\ Anal.\ \textbf{17} (1964), 215--229.
+\bibitem{PaperXXI}
+S.~Schmalnauer,
+\textit{Bulk Spectral Approximation for PSWF Gram Matrices} (Paper~XXI),
+preprint, 2025.
+\bibitem{Paper13b}
+S.~Schmalnauer,
+\textit{Gram Coercivity and Spectral Gap: The Reduction Functor} (Paper~13b),
+preprint, 2024.
+\end{thebibliography}
+
+\end{document}
