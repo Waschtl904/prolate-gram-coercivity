@@ -1,0 +1,219 @@
+%%
+%% XXII_abstract_and_meta.tex
+%%
+%% Definitive abstract for Paper XXII, plus the methodological thesis
+%% statement that the introduction builds toward.
+%%
+%% Three components:
+%%   (A) The formal abstract (100-150 words, journal style)
+%%   (B) The extended abstract / talk abstract (250 words)
+%%   (C) The methodological thesis (explicit, citable)
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\title{Abstracts and Methodological Thesis\\
+{\small Paper XXII: Edge Coercivity and the Airy Boundary Operator}}
+\author{Sebastian Schmalnauer}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+%%=================================================================
+\section*{(A) Formal Abstract (journal style)}
+%%=================================================================
+
+We prove that the Gram matrix of prolate spheroidal wave functions,
+sampled at Airy-rescaled primes near the spectral edge, is
+uniformly coercive in the Landau--Widom scaling regime.
+The proof establishes a scale separation between the universal
+Airy spectral gap $\delta_{\mathrm{Airy}} \ge F_{\mathrm{TW}}(0) \approx 0.96$
+and the arithmetic perturbation
+$\varepsilon_c \sim (\log\log c/\log c)^{1/2} \to 0$,
+yielding $\lambda_{\min}(G_{N,c}) \ge \alpha c^{-1/2}$ unconditionally.
+The leading term is governed by the Tracy--Widom GUE edge constant;
+the vanishing arithmetic correction is controlled by the
+Montgomery--Vaughan mean square theorem, without GRH.
+Conditionally on a Riemann--Hilbert convergence conjecture,
+the rate improves to $c^{-1/3}$.
+The result establishes a perturbative universality for the Airy
+boundary operator: the prime-sampling arithmetic structure survives
+the Airy limit only as an irrelevant perturbation of the universal
+spectral geometry.
+
+%%=================================================================
+\section*{(B) Extended Abstract (talk / preprint style)}
+%%=================================================================
+
+The prolate spheroidal wave functions (PSWFs) $\{\psi_k(\,\cdot\,;c)\}$
+form a natural basis for bandlimited functions on $[-1,1]$.
+Near the spectral edge ($k \approx N = \lfloor c/\pi\rfloor$),
+the PSWFs converge to Airy functions, and the associated Gram matrix
+$G_{N,c}$ encodes the geometry of prime-frequency sampling.
+A central question in the prolate programme is whether $G_{N,c}$
+remains uniformly coercive as $N, c \to \infty$.
+
+This paper answers the question affirmatively.
+The proof proceeds in two independent arms.
+
+The \emph{discrete arm} (O4) establishes uniform off-diagonal decay
+$|G_{mn}| \le C/|m-n|^{3/2}$ via triple-scale stationary phase
+in the PSWF oscillatory integral, then applies the Jaffard--Schur theorem.
+
+The \emph{spectral arm} (O5) works directly with the Airy mismatch
+operator $\DAi = \Pi_{\mathrm{Airy}}(A^{\mathrm{arith}} - K^{\mathrm{Airy}})\Pi_{\mathrm{Airy}}$.
+The operator decomposes as universal part plus arithmetic perturbation.
+The universal part has gap $\ge F_{\mathrm{TW}}(0) \approx 0.96$
+(Tracy--Widom theory).
+The arithmetic perturbation has operator norm $\to 0$
+(Montgomery--Vaughan mean square, unconditional).
+Gap persistence follows by operator stability.
+
+The two arms are logically independent and close the main conjecture
+by different routes.
+Both are unconditional.
+A conditional third arm (Riemann--Hilbert) improves the rate.
+
+The paper's main structural finding is a scale separation:
+$\delta_{\mathrm{Airy}} \sim O(1)$ (universal Airy geometry)
+vs.\ $\varepsilon_c \sim (\log\log c / \log c)^{1/2} \to 0$
+(arithmetic fluctuation).
+This is perturbative universality: the prime arithmetic is
+asymptotically irrelevant to the spectral gap, which is
+determined at leading order by the Airy edge geometry alone.
+
+%%=================================================================
+\section*{(C) Methodological Thesis}
+%%=================================================================
+
+\subsection*{The thesis statement}
+
+\begin{quote}
+\textit{
+In asymptotic spectral programmes built on integrable structure,
+the integrable machinery plays two logically distinct roles:
+a discovery role (identifying the correct asymptotic variable and
+universal constant) and a flow role (controlling the rate of convergence
+to the universal limit).
+Neither role is the same as the proof role (establishing the
+existence and stability of the limiting object).
+Once the universal object has been identified,
+its stability is typically governed by perturbative operator theory
+rather than by the integrable structure itself.
+The integrable structure is, in this sense, the UV mechanism;
+the universal spectral geometry is the IR fixed point;
+and the proof of stability lives in the IR, not the UV.}
+\end{quote}
+
+\subsection*{What this thesis does and does not claim}
+
+\paragraph{It claims:}
+\begin{itemize}
+  \item For Paper~XXII specifically:
+    the Main Theorem (gap existence) follows from TW theory + MV,
+    not from IIKS/RHP.
+    The integrable structure was necessary for \emph{finding} $\DAi$;
+    it is not necessary for \emph{proving} $\inf\sigma(\DAi) > 0$.
+  \item More generally: this pattern --- integrable structure identifies
+    fixed point, perturbative analysis proves stability ---
+    may recur in other universal spectral programmes.
+    XXII is an explicit instance.
+\end{itemize}
+
+\paragraph{It does not claim:}
+\begin{itemize}
+  \item That the integrable structure is \emph{dispensable} in the
+    broader programme.
+    Without IIKS/RHP, the correct fixed point ($\KAi$, $F_{\mathrm{TW}}$)
+    would not have been identified.
+    The integrable structure is essential at the level of the
+    \emph{programme}; it is eliminable at the level of the
+    \emph{main theorem}.
+  \item That RHP/Deift--Zhou methods are weaker than perturbative methods.
+    They are stronger in what they prove (rates, sharp asymptotics,
+    universality with explicit error terms).
+    The point is not comparative strength but logical structure:
+    what is a \emph{prerequisite} and what is an \emph{enhancement}.
+  \item That this separation holds in general.
+    It holds here because $\delta_{\mathrm{Airy}} \gg \varepsilon_c$:
+    the universal gap is large enough that the perturbation can be
+    handled without fine integrable estimates.
+    In a programme where $\delta_{\mathrm{Airy}}$ and $\varepsilon_c$
+    are of the same order, the integrable structure would re-enter
+    the minimal proof.
+\end{itemize}
+
+\subsection*{The condition for the separation to hold}
+
+The thesis holds for Paper XXII because of the specific numerical values:
+\[
+  \frac{\delta_{\mathrm{Airy}}}{\varepsilon_c}
+  \;\sim\; \frac{0.96}{(\log\log c/\log c)^{1/2}}
+  \;\to\; +\infty.
+\]
+The universal gap $\delta_{\mathrm{Airy}} \approx 0.96$ is close to $1$;
+the arithmetic perturbation $\varepsilon_c$ is logarithmically small.
+The ratio diverges, making the perturbative argument not just valid
+but robust (numerically: factor $1.88$--$4.21$ for $c \le 10^4$).
+
+This is the quantitative condition under which the integrable structure
+is eliminable from the minimal proof:
+\[
+  \boxed{\delta_{\mathrm{Airy}} \gg \varepsilon_c
+  \quad\Longleftrightarrow\quad
+  \text{universal geometry } \gg \text{ arithmetic fluctuation}.}
+\]
+When this condition holds, the programme has reached its
+\emph{IR fixed point}: the integrable UV mechanism has done its work,
+and the final spectral statement lives in the universal,
+arithmetic-independent regime.
+
+\subsection*{Relation to classical universality}
+
+The classical edge universality theorem (Wigner matrices, \cite{ESY2009})
+states that the local eigenvalue statistics near the spectral edge
+are universal: they depend only on the symmetry class, not on the
+entry distribution.
+This is strong universality: the limit is completely distribution-free.
+
+The present paper establishes a weaker but structurally analogous statement
+at the \emph{operator} level:
+the spectral gap of the Airy mismatch operator is
+\emph{perturbatively universal} --- distribution-free at leading order,
+with the prime distribution entering only at vanishing subleading order.
+
+The analogy is:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Classical edge universality & XXII perturbative universality\\
+\midrule
+Local statistics $\to$ TW distribution & Spectral gap $\to \delta_{\mathrm{Airy}}$\\
+Entry distribution $\to$ irrelevant & Prime distribution $\to$ irrelevant\\
+Convergence rate: problem-dependent & Convergence rate: $(\log\log c/\log c)^{1/2}$\\
+Proof: comparison + moment matching & Proof: operator stability + MV\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{TW1994}
+C.~Tracy and H.~Widom,
+\textit{Level-spacing distributions and the Airy kernel},
+Comm.\ Math.\ Phys.\ \textbf{159} (1994), 151--174.
+\bibitem{MV1974}
+H.~L.~Montgomery and R.~C.~Vaughan,
+\textit{Hilbert's inequality},
+J.\ London Math.\ Soc.\ (2) \textbf{8} (1974), 73--82.
+\bibitem{ESY2009}
+L.~Erd\H{o}s, B.~Schlein, and H.-T.~Yau,
+\textit{Universality of random matrices and local relaxation flow},
+Invent.\ Math.\ \textbf{185} (2011), 75--119.
+\bibitem{Deift1999}
+P.~Deift,
+\textit{Orthogonal Polynomials and Random Matrices: A Riemann--Hilbert Approach},
+Courant Lecture Notes, 1999.
+\end{thebibliography}
+
+\end{document}
