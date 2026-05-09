@@ -1,0 +1,266 @@
+%%
+%% XXII_architectural_remark.tex
+%%
+%% The Renormalisation Interpretation of Paper XXII.
+%% Architectural remark: IIKS/RHP as coordinate system, not proof core.
+%%
+%% This is a mathematical remark, not a philosophical note.
+%% It makes precise three claims:
+%%   (A) The minimal proof of P13 does not use IIKS/RHP.
+%%   (B) The Airy geometry is the RG fixed point of the programme.
+%%   (C) Papers XVIII-XXI were necessary to identify the right variable,
+%%       but are not logically required in the final argument.
+%%
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+
+\newcommand{\DAi}{D^{\mathrm{Airy}}}
+\newcommand{\KAi}{K^{\mathrm{Airy}}}
+\newcommand{\PAi}{\Pi_{\mathrm{Airy}}}
+\newcommand{\Aarith}{A^{\mathrm{arith}}}
+\newcommand{\norm}[1]{\|#1\|}
+
+\title{Architectural Remark: IIKS/RHP as Coordinate System\\
+{\normalsize Paper XXII --- The Renormalisation Interpretation}}
+\author{Sebastian Schmalnauer}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We make precise the observation that the minimal proof of the
+Main Theorem of Paper~XXII (Theorem P13) does not use the
+IIKS identity, the Riemann--Hilbert formalism, or the
+Deift--Zhou steepest descent method.
+These structures were essential for \emph{identifying} the correct
+asymptotic variable (the Airy mismatch operator $\DAi$),
+but are not logically required once this variable is identified.
+We interpret this as an asymptotic renormalisation:
+the Airy geometry is the \emph{stable fixed point} of the programme,
+and all arithmetic and integrable-systems structure produces only
+irrelevant perturbations in the renormalisation group sense.
+\end{abstract}
+
+%%=================================================================
+\section{The Minimal Proof Skeleton}
+\label{sec:skeleton}
+%%=================================================================
+
+\begin{observation}[Minimal proof of P13]\label{obs:minimal}
+The Main Theorem (P13) follows from exactly four inputs:
+\begin{enumerate}[\rm(I)]
+  \item \textbf{Operator identification.}
+    $\DAi = \PAi(\Aarith - \KAi)\PAi$.
+    This is a definition (Paper XXII, Section~5), not a theorem.
+  \item \textbf{Universal gap.}
+    $\inf\sigma(\PAi(I - \KAi)\PAi) \ge F_{\mathrm{TW}}(0) \approx 0.96$.
+    Source: Tracy--Widom 1994 + Bornemann 2010. No IIKS needed.
+  \item \textbf{Arithmetic perturbation bound.}
+    $\norm{\PAi(\Aarith - I)\PAi}_{\mathrm{op}} \le C\varepsilon_c \to 0$.
+    Source: Montgomery--Vaughan 1974. No RHP needed.
+  \item \textbf{Operator stability.}
+    (I) + (II) + (III) $\Rightarrow$ $\inf\sigma(\DAi) > 0$.
+    Source: min-max principle. Three lines.
+\end{enumerate}
+The proof is complete. No other input is required.
+\end{observation}
+
+\begin{remark}[What is NOT in the minimal proof]
+The following structures appear in Papers~XII--XXI and in
+the broader architecture of Paper~XXII, but are \emph{not used}
+in the proof of Observation~\ref{obs:minimal}:
+\begin{itemize}
+  \item IIKS identity ($K_c(x,y) = F_c(x)^\top J G_c(y)/(x-y)$)
+  \item Riemann--Hilbert Problem for $Y_c$
+  \item Deift--Zhou steepest descent
+  \item Assumption~A (existence of $g_c$)
+  \item Assumption~B (steepest descent geometry)
+  \item Conjecture~3.3 ($Y_c \to Y_{\mathrm{Airy}}$)
+  \item The cubic Airy phase $\tfrac{1}{3}u^3$
+  \item The Widom edge phase $\phi_c$
+\end{itemize}
+All of these are used only in the RHP arm (O1/O2/P8/P10),
+which improves the \emph{rate} of the gap ($c^{-1/2} \to c^{-1/3}$)
+but does not establish its \emph{existence}.
+\end{remark}
+
+%%=================================================================
+\section{The Role of Papers XVIII--XXI}
+\label{sec:role}
+%%=================================================================
+
+\begin{observation}[Discovery vs. proof]\label{obs:discovery}
+The integrable-systems machinery (IIKS, RHP, Airy parametrix)
+played two distinct roles in the development of Paper~XXII:
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Role & Mathematical content & Required in final proof?\\
+\midrule
+\textbf{Discovery} & identified $\DAi$ as the correct object & No\\
+\textbf{Coordinates} & gave explicit formula for $K_c$ near the edge & No\\
+\textbf{Rate refinement} & $\norm{K_c - \KAi}_{S_1} = O(c^{-1/3})$ & Conditionally (O1/O2)\\
+\textbf{Context} & established Airy limit for PSWF (Papers XVIII--XX) & No\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+Without Papers~XVIII--XXI, one would not know that $\DAi$ is the
+relevant operator, nor that $F_{\mathrm{TW}}(0)$ is the right constant.
+The integrable structure was \emph{epistemically necessary}:
+it was needed to \emph{find} the right variable.
+
+But once the variable $\DAi$ is identified, the integrable structure
+can be \emph{logically removed} from the proof.
+The operator $\DAi$ is defined independently of IIKS;
+the bound $\inf\sigma \ge F_{\mathrm{TW}}(0) - C\varepsilon_c$ requires
+only TW theory and Montgomery--Vaughan.
+
+This is a clean separation between \emph{heuristic scaffolding}
+and \emph{proof architecture}.
+\end{observation}
+
+%%=================================================================
+\section{The Renormalisation Group Interpretation}
+\label{sec:rg}
+%%=================================================================
+
+\begin{observation}[Airy geometry as RG fixed point]\label{obs:rg}
+The structure of Theorem~P13 can be interpreted as a
+renormalisation group (RG) fixed-point statement:
+\begin{align*}
+  &\text{\emph{Relevant direction:}}
+    &\delta_{\mathrm{Airy}} &\sim O(1)
+    &&\text{(universal Airy geometry --- does not flow)}\\
+  &\text{\emph{Irrelevant direction:}}
+    &\varepsilon_c &\sim \Bigl(\tfrac{\log\log c}{\log c}\Bigr)^{1/2} \to 0
+    &&\text{(arithmetic fluctuation --- flows to zero)}
+\end{align*}
+The Airy geometry is the \emph{stable fixed point}:
+as $c \to \infty$, the system flows toward the universal Airy operator,
+and the arithmetic perturbation becomes irrelevant.
+
+In the RG language:
+\begin{itemize}
+  \item $\KAi$ is the \emph{fixed-point operator}.
+  \item $F_{\mathrm{TW}}(0)$ is the \emph{fixed-point value} of the universal gap.
+  \item $\Aarith - I = \Ec$ is the \emph{irrelevant coupling}.
+  \item The RG flow is $c \to \infty$; the flow equation is $\varepsilon_c \to 0$.
+\end{itemize}
+The condition for the gap to survive (O5) is exactly the condition
+that the irrelevant coupling does not destabilise the fixed point:
+$\varepsilon_c < \delta_{\mathrm{Airy}}$.
+This is satisfied for all $c \ge c_0$ (Theorem P13).
+\end{observation}
+
+\begin{remark}[What flows and what does not]
+The following quantities are \emph{relevant} (do not flow to zero
+under $c \to \infty$) and determine the fixed point:
+\begin{itemize}
+  \item $F_{\mathrm{TW}}(0) \approx 0.9597$ (GUE edge universality constant)
+  \item $\zeta(3/2) - 1 \approx 0.612$ (Jaffard coupling constant)
+  \item $C_{\mathrm{crit}} = F_{\mathrm{TW}}(0)/(\zeta(3/2)-1) \approx 0.595$
+    (threshold for the Jaffard route)
+\end{itemize}
+The following are \emph{irrelevant} (flow to zero):
+\begin{itemize}
+  \item $\varepsilon_c = \norm{\Ec}_{\mathrm{op}} \sim (\log\log c/\log c)^{1/2}$
+  \item Off-diagonal fluctuations $|G_{mn} - G_{mn}^{\infty}|$ for $m \ne n$
+  \item Finite-$c$ corrections to the Airy parametrix
+\end{itemize}
+The integrable-systems structure (IIKS, Widom phase, cubic phase)
+appears only in the \emph{irrelevant} sector:
+it controls corrections to the Airy limit, not the fixed point itself.
+\end{remark}
+
+%%=================================================================
+\section{What O1/O2 Actually Adds}
+\label{sec:o1o2}
+%%=================================================================
+
+\begin{observation}[The precise contribution of O1/O2]\label{obs:o1o2}
+O1/O2 (the RHP arm: Assumptions A and B, Conjecture~3.3)
+provide exactly one additional piece of information beyond the
+minimal proof:
+\begin{equation}\label{eq:rate}
+  \norm{K_c - \KAi}_{S_1} = O(c^{-1/3})
+  \quad\text{(conditional on Conjecture~3.3)}.
+\end{equation}
+This upgrades:
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Result & Gap scale & Source\\
+\midrule
+P13 (unconditional) & $\lambda_{\min}(G_{N,c}) \ge \alpha c^{-1/2}$ & O4 + BB3\\
+P10 (conditional on~\eqref{eq:rate}) & $\lambda_{\min}(G_{N,c}) \ge \alpha c^{-1/3}$ & O1/O2 + P8\\
+\bottomrule
+\end{tabular}
+\end{center}
+The gap \emph{exists} (P13) without O1/O2.
+The gap has a \emph{better rate} (P10) with O1/O2.
+
+In the RG language:
+O1/O2 characterise the \emph{speed of approach} to the fixed point,
+not the fixed point itself.
+They are a statement about the \emph{flow}, not the \emph{limit}.
+
+This is why the DAG correctly identifies O1/O2 as off the minimal path:
+they refine the programme, but do not drive it.
+\end{observation}
+
+%%=================================================================
+\section{A Concise Summary}
+\label{sec:summary}
+%%=================================================================
+
+\begin{observation}[The three-level structure]
+Paper XXII has a clean three-level architecture:
+\[
+  \underbrace{\text{Level 1: Fixed point}}
+    _{\delta_{\mathrm{Airy}} = 1 - \norm{\KAi}}
+  \quad\longleftarrow\quad
+  \underbrace{\text{Level 2: Perturbation}}
+    _{\varepsilon_c = \norm{\Aarith - I}_{\mathrm{op}}}
+  \quad\longleftarrow\quad
+  \underbrace{\text{Level 3: Flow}}
+    _{\norm{K_c - \KAi}_{S_1} = O(c^{-1/3})}
+\]
+\begin{itemize}
+  \item \textbf{Level 1} (TW theory): establishes the fixed point.
+    Used in: Theorem P13 (minimal proof).
+  \item \textbf{Level 2} (Montgomery--Vaughan): bounds the perturbation.
+    Used in: Theorem P13 (minimal proof).
+  \item \textbf{Level 3} (IIKS/RHP/Deift--Zhou): characterises the flow.
+    Used in: P10 (rate refinement, conditional on O1/O2).
+\end{itemize}
+The integrable systems machinery lives entirely at Level~3.
+The gap lives at Level~1.
+The separation is exact.
+\end{observation}
+
+\bigskip
+
+\noindent
+\textit{Note on the role of this document.}
+This remark is not a philosophical digression.
+It has a concrete function: it clarifies which parts of Paper~XXII
+are logically load-bearing for the main theorem,
+and which are load-bearing only for rate improvements or future work.
+This distinction matters for the final write-up:
+Level~1 and Level~2 must be fully proved;
+Level~3 can be stated conditionally without blocking submission.
+
+\end{document}
