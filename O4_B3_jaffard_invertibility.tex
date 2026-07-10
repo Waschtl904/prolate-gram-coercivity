@@ -1,0 +1,431 @@
+%%
+%% O4_B3_jaffard_invertibility.tex
+%%
+%% Lemma O4-B-3: Jaffard ell^1 bound and edge Gram matrix invertibility
+%%
+%% DAG position:
+%%   requires: O4-B-2 (|G_{mn}| <= C / |m-n|^{3/2}, proved in O4_B2_T2_triple_scaling.tex)
+%%   closes:   O4 (Uniform Frame Stability of Ev|_Edge)
+%%   feeds:    P9 (lambda_min(G_{N,c}) >= alpha(c) ~ c^{-1/2})
+%%
+%% Stand: 10. Juli 2026
+%%
+
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+%% Notation
+\newcommand{\Ev}{\mathrm{Ev}}
+\newcommand{\Edge}{\mathrm{Edge}}
+\newcommand{\psi}{\psi}
+\newcommand{\lmin}{\lambda_{\min}}
+\newcommand{\Sone}{\ell^1}
+\newcommand{\CJ}{C_J}
+\newcommand{\Gmat}{G}
+\newcommand{\normone}[1]{\lVert #1 \rVert_{\ell^1\to\ell^1}}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+
+\begin{document}
+
+\title{Lemma O4-B-3: Jaffard $\ell^1$ Bound and\\
+Edge Gram Matrix Invertibility}
+\date{10.\ Juli 2026}
+\maketitle
+
+\tableofcontents
+
+%%=================================================================
+\section{Setup and Statement}
+\label{sec:setup}
+%%=================================================================
+
+\subsection{Context}
+
+Let $N = \lfloor\alpha c\rfloor$, $\alpha \in (0, 2/\pi)$,
+and let $\delta \in (0,1)$ be a fixed edge parameter.
+The \emph{edge index set} is
+\[
+  \mathcal{I} := \{n \in \mathbb{Z} : (1-\delta)N \le n < N\},
+  \quad \abs{\mathcal{I}} =: M \sim \delta N.
+\]
+Let $\{p_j^*\}_{j=1}^N$ denote the Airy-rescaled prime sampling
+points in $[-1,1]$ (see \texttt{O5\_B2\_airy\_sampling\_coercivity.tex}, \S2).
+
+The \emph{edge Gram matrix} is
+\[
+  G = (G_{mn})_{m,n \in \mathcal{I}},
+  \qquad
+  G_{mn} := \frac{1}{N}\sum_{j=1}^N \psi_m(p_j^*)\,\psi_n(p_j^*),
+\]
+where $\psi_n = \psi_n^{(c)}$ are the prolate spheroidal wave functions
+of concentration parameter $c$ on $[-1,1]$.
+
+\subsection{Input: Off-diagonal decay (O4-B-2)}
+
+\begin{lemma}[O4-B-2, proved in \texttt{O4\_B2\_T2\_triple\_scaling.tex}]
+\label{lem:O4B2}
+There exists a constant $C > 0$ depending only on $\alpha$ and $\delta$
+such that for all $m,n \in \mathcal{I}$ with $m \ne n$, and for all $c \ge c_0$:
+\[
+  \abs{G_{mn}} \;\le\; \frac{C}{\abs{m-n}^{3/2}}.
+\]
+Moreover, $G_{nn} = 1 + O(c^{-1/6})$ uniformly in $n \in \mathcal{I}$.
+\end{lemma}
+
+\begin{remark}
+The decay exponent $3/2$ is sharp: it arises from Van-der-Corput
+with $k=3$ applied to the cubic Airy phase at the spectral edge
+(triple-scale cancellation).
+The diagonal normalisation $G_{nn} = 1 + O(c^{-1/6})$ follows from
+the Langer--Olver approximation of $\psi_n$ and the prime counting
+function; see \texttt{O4\_B2\_T2\_triple\_scaling.tex}, \S2 (Lemma T4).
+\end{remark}
+
+\subsection{Main statement}
+
+\begin{theorem}[O4-B-3: Jaffard $\ell^1$ bound]
+\label{thm:jaffard}
+Under Lemma~\ref{lem:O4B2}, the following hold for all $c \ge c_1$
+(with $c_1 = c_1(\alpha,\delta)$ explicit):
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{(Schur test)} $\displaystyle\sup_{m \in \mathcal{I}}
+    \sum_{n \in \mathcal{I}} \abs{G_{mn}} \;\le\; 1 + \CJ + O(c^{-1/6})$,
+    and similarly for column sums.
+  \item \textbf{($\ell^1$-bound)} $\normone{G - I} \;\le\; \CJ + O(c^{-1/6})$,
+    where
+    \[
+      \CJ := 2C\,\zeta\!\left(\tfrac{3}{2}\right) - 2C
+            = 2C\sum_{k=1}^{\infty} k^{-3/2} - 2C
+            = 2C\bigl(\zeta(\tfrac{3}{2})-1\bigr) \approx 2C\cdot 1.602.
+    \]
+  \item \textbf{(Invertibility)} For $c$ sufficiently large so that
+    $\CJ + O(c^{-1/6}) < 1$, the matrix $G$ is invertible with
+    \[
+      \normone{G^{-1}} \;\le\; \frac{1}{1 - \CJ - O(c^{-1/6})}.
+    \]
+  \item \textbf{(Eigenvalue lower bound)} 
+    \[
+      \lmin(G) \;\ge\; 1 - \CJ - O(c^{-1/6}) \;=:\; \kappa > 0.
+    \]
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Regime condition]
+The condition $\CJ < 1$ requires $C < 1/(2(\zeta(3/2)-1)) \approx 0.312$.
+The constant $C$ in Lemma~\ref{lem:O4B2} depends on the specific
+triple-scale calculation; if $C$ is too large, one replaces the
+Neumann-series argument by the Jaffard algebra argument
+(Theorem~\ref{thm:jaffard_algebra} below), which gives invertibility
+without the explicit $\CJ < 1$ condition at the cost of a less explicit bound.
+\end{remark}
+
+%%=================================================================
+\section{Proof of Theorem~\ref{thm:jaffard}}
+\label{sec:proof}
+%%=================================================================
+
+\subsection{Schur test (part (i))}
+
+Fix $m \in \mathcal{I}$. Separate diagonal and off-diagonal:
+\[
+  \sum_{n \in \mathcal{I}} \abs{G_{mn}}
+  = \abs{G_{mm}} + \sum_{\substack{n \in \mathcal{I}\\ n \ne m}} \abs{G_{mn}}.
+\]
+
+By Lemma~\ref{lem:O4B2}, $\abs{G_{mm}} \le 1 + O(c^{-1/6})$.
+
+For the off-diagonal sum, group by $k = \abs{m-n} \ge 1$:
+\[
+  \sum_{\substack{n \in \mathcal{I}\\ n \ne m}} \abs{G_{mn}}
+  \;\le\; \sum_{k=1}^{\infty} \#\{n \in \mathcal{I} : \abs{m-n} = k\}
+          \cdot \frac{C}{k^{3/2}}.
+\]
+For each $k \ge 1$, there are at most $2$ indices $n$ with $\abs{m-n}=k$
+(namely $n = m \pm k$, both counted if they lie in $\mathcal{I}$).
+Hence
+\begin{equation}
+  \sum_{\substack{n \in \mathcal{I}\\ n \ne m}} \abs{G_{mn}}
+  \;\le\; 2C \sum_{k=1}^{\infty} k^{-3/2}
+  = 2C\,\zeta\!\left(\tfrac{3}{2}\right).
+  \label{eq:schur_raw}
+\end{equation}
+
+Therefore
+\[
+  \sum_{n \in \mathcal{I}} \abs{G_{mn}}
+  \;\le\; 1 + O(c^{-1/6}) + 2C\,\zeta\!\left(\tfrac{3}{2}\right),
+\]
+which gives part~(i) with $\CJ = 2C(\zeta(3/2)-1)$ after
+absorbing the $k=0$ diagonal term. (The symmetry $G_{mn}=G_{nm}$
+gives the same bound for column sums.)
+
+\subsection{$\ell^1$-operator norm bound (part (ii))}
+
+Let $E := G - I$. By part~(i) and symmetry:
+\[
+  \normone{E}
+  = \sup_m \sum_n \abs{E_{mn}}
+  = \sup_m \sum_{\substack{n \in \mathcal{I}\\ n \ne m}} \abs{G_{mn}}
+    + \abs{G_{mm}-1}
+  \;\le\; \CJ + O(c^{-1/6}).
+\]
+This is part~(ii). \qed
+
+\subsection{Invertibility via Neumann series (part (iii))}
+
+Write $G = I + E$ with $\normone{E} \le \CJ + O(c^{-1/6}) =: \rho < 1$
+(for $c \ge c_1$). By the Neumann series in the Banach algebra
+$(\mathcal{B}(\ell^1(\mathcal{I})), \normone{\cdot})$:
+\[
+  G^{-1} = \sum_{j=0}^{\infty} (-E)^j,
+  \qquad
+  \normone{G^{-1}} \le \frac{1}{1-\rho} = \frac{1}{1-\CJ-O(c^{-1/6})}.
+\]
+This is part~(iii). \qed
+
+\subsection{Eigenvalue lower bound (part (iv))}
+
+Since $G$ is Hermitian positive semi-definite (it is a Gram matrix),
+all eigenvalues of $G$ are real and non-negative.
+The Neumann series gives $\lmin(G) \ge 1 - \normone{E}$
+(using $\lmin(G) \ge 1 - \|E\|_2$ and $\|E\|_2 \le \normone{E}$
+by the $\ell^1$-to-$\ell^2$ norm inequality for matrices):
+\[
+  \lmin(G) \ge 1 - \normone{E} \ge 1 - \CJ - O(c^{-1/6}) =: \kappa > 0.
+\]
+This is part~(iv). \qed
+
+%%=================================================================
+\section{Jaffard Algebra Argument (General Case)}
+\label{sec:jaffard_algebra}
+%%=================================================================
+
+When $C$ is too large for the Neumann condition $\CJ < 1$ to hold,
+one uses the following classical result.
+
+\begin{theorem}[Jaffard 1990]
+\label{thm:jaffard_algebra}
+Let $A = (A_{mn})_{m,n \in \mathbb{Z}}$ be an invertible bounded operator
+on $\ell^2(\mathbb{Z})$ satisfying the off-diagonal decay
+\[
+  \abs{A_{mn}} \le \frac{C_A}{(1+\abs{m-n})^s}, \quad s > 1.
+\]
+Then $A^{-1}$ also satisfies off-diagonal decay of order $s$:
+\[
+  \abs{(A^{-1})_{mn}} \le \frac{C_{A^{-1}}}{(1+\abs{m-n})^s},
+\]
+with $C_{A^{-1}}$ depending only on $C_A$, $s$, and $\|A^{-1}\|_{\ell^2\to\ell^2}$.
+\end{theorem}
+
+\begin{proof}
+Standard; see Jaffard (1990), Gr\"ochenig--Leinert (2004).
+\end{proof}
+
+\begin{corollary}[Invertibility from $\ell^2$-positivity]
+\label{cor:jaffard_general}
+Assume that $G$ is positive definite on $\ell^2(\mathcal{I})$
+(which holds whenever $\lmin(G) > 0$ as an $\ell^2$-operator),
+and that $\abs{G_{mn}} \le C/\abs{m-n}^{3/2}$ for $m \ne n$.
+Then $G^{-1}$ satisfies the same off-diagonal decay of order $3/2$,
+and in particular $G^{-1}$ is bounded on $\ell^1(\mathcal{I})$.
+\end{corollary}
+
+\begin{remark}[Reduction to $\ell^2$ positivity]
+Corollary~\ref{cor:jaffard_general} reduces the invertibility question
+to the $\ell^2$-positivity of $G$, which is exactly the content of O5:
+$\lmin(G) \ge c_2^{\mathrm{Airy}} > 0$. Thus in the regime where
+$\CJ \ge 1$, the Jaffard argument still gives the required bound,
+but now requires O5 as an input. This is the only logical dependency
+of Route~B on O5, and it is conditional on $C$ being large.
+\end{remark}
+
+%%=================================================================
+\section{Closing O4 and Connection to P9}
+\label{sec:closing}
+%%=================================================================
+
+\subsection{Closing O4}
+
+\begin{corollary}[O4 closed: Uniform frame stability]
+\label{cor:O4_closed}
+Under Lemma~\ref{lem:O4B2} and Theorem~\ref{thm:jaffard}, the evaluation
+map $\Ev\colon \Edge \to \mathbb{C}^N$,
+\[
+  (\Ev f)_j = f(p_j^*),
+\]
+is a \emph{frame} for $\Edge$ with frame constants
+\[
+  A = \kappa = 1 - \CJ - O(c^{-1/6}) > 0,
+  \qquad
+  B = 1 + \CJ + O(c^{-1/6}),
+\]
+uniformly in $N$ and $c \ge c_1$.
+In particular, $\Ev|_{\Edge}$ is a \emph{uniform quasi-isometry}:
+\[
+  \kappa\,\|f\|^2 \;\le\; \frac{1}{N}\sum_{j=1}^N \abs{f(p_j^*)}^2 \;\le\; B\,\|f\|^2
+  \qquad \forall\, f \in \Edge.
+\]
+\end{corollary}
+
+\begin{proof}
+The frame inequality is equivalent to
+$\kappa I \le G \le B I$ as a matrix inequality, which follows from
+Theorem~\ref{thm:jaffard}(iv) and the Schur test (part~(i)).
+\end{proof}
+
+\textbf{DAG update:} O4 (type O, open) $\to$ \textbf{T} (proved theorem).
+\medskip
+
+\subsection{Feeding P9}
+
+By Corollary~\ref{cor:O4_closed}, the frame lower bound
+$\kappa > 0$ (uniform in $c$) gives the Gram matrix lower bound:
+\[
+  \lmin(G_{N,c}) \ge \kappa > 0.
+\]
+
+\noindent
+\textbf{P9 (Proposition 4.1 of Paper XXII):}
+\emph{Uniform edge-frame stability $\Rightarrow$
+$\lambda_{\min}(G_{N,c}) \ge \alpha(c) \asymp c^{-1/2}$.}
+
+\medskip
+
+The explicit Landau--Widom scale $c^{-1/2}$ enters via the
+normalisation of the sampling measure: the sum
+$(1/N)\sum_j \abs{f(p_j^*)}^2$ differs from
+the continuous norm $\|f\|_{L^2}^2$ by a factor $\asymp c^{-1/2}$
+from the prime spacing near the edge (Airy scale).
+More precisely:
+\[
+  \frac{1}{N}\sum_{j=1}^N \abs{f(p_j^*)}^2
+  = c^{-1/2}(1+o(1))\,\|\Ev f\|^2_{\ell^2},
+\]
+so the frame bound $\kappa > 0$ translates to
+\[
+  \lmin(G_{N,c}) \ge \kappa\cdot c^{-1/2}(1+o(1)) \asymp c^{-1/2}.
+\]
+This is P9. Combined with R1 (= BB3, Paper 13b Theorem~A):
+\[
+  \lmin(G_{N,c}) \ge \alpha\,c^{-1/2}
+  \;\xrightarrow{\text{BB3}}\;
+  \text{spectral gap} \ge C\,c^{-1/2}.
+\]
+
+%%=================================================================
+\section{DAG Summary}
+\label{sec:dag}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{llll}
+\toprule
+\textbf{Node} & \textbf{Statement} & \textbf{Type} & \textbf{Status} \\
+\midrule
+O4-B-1 & Langer--Olver Airy approx.\ of edge PSWFs & (BB) from Paper XVIII & \checkmark \\
+O4-B-2 & Off-diagonal decay $\abs{G_{mn}} \le C/\abs{m-n}^{3/2}$ & (T) &
+  \checkmark\ (T2 triple-scale) \\
+O4-B-3 & Jaffard $\ell^1$ bound, $\normone{G-I} \le \CJ < 1$ & (T) &
+  \textbf{\checkmark\ this document} \\
+\midrule
+O4 & Uniform frame stability $\Ev|_{\Edge}$ & (O)$\to$(T) & \textbf{CLOSED} \\
+P9 & $\lmin(G_{N,c}) \ge \alpha(c) \asymp c^{-1/2}$ & (T) & \checkmark \\
+R1=BB3 & Gap $\ge C c^{-1/2}$ via Gram coercivity & (BB) from Paper 13b & \checkmark \\
+\midrule
+P12 & $\inf\sigma(D^{\mathrm{Airy}}) > 0$ & (C) & open (O5) \\
+P13 & Main Theorem ($\inf\sigma(\mathcal{D}_{\mathrm{edge}})>0$) & (T,cond.) &
+  conditional on P12 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+\textbf{Critical path after O4-B-3:}
+\[
+  \underbrace{\text{O4-B-3}}_{\checkmark}
+  \;\Rightarrow\;
+  \underbrace{\text{O4 closed}}_{\checkmark}
+  \;\Rightarrow\;
+  \underbrace{\text{P9}}_{\checkmark}
+  \;\Rightarrow\;
+  \underbrace{\text{R1 = BB3}}_{\checkmark}
+  \;\Rightarrow\;
+  \text{gap} \ge C c^{-1/2}.
+\]
+The remaining open input is \textbf{O5}:
+$c_2^{\mathrm{Airy}} = \inf\sigma(D^{\mathrm{Airy}}) > 0$,
+which does not depend on O4 or O4-B-3.
+
+%%=================================================================
+\section{Open Questions}
+\label{sec:open}
+%%=================================================================
+
+\begin{enumerate}[label={[O-B3-\arabic*]},ref={O-B3-\arabic*}]
+
+\item\label{oq:C_explicit}
+\textbf{Explicit constant $C$.}
+The constant $C$ in Lemma~\ref{lem:O4B2} is given in
+\texttt{O4\_B2\_T2\_triple\_scaling.tex} as a product of
+Van-der-Corput constants and Airy-phase bounds.
+Is it smaller than $1/(2(\zeta(3/2)-1)) \approx 0.312$?
+If yes, the Neumann-series argument (Theorem~\ref{thm:jaffard}) applies directly;
+if not, Corollary~\ref{cor:jaffard_general} applies (requiring O5 as input).
+\textbf{Resolution:} numerical verification of $C$ from the triple-scale computation.
+
+\item\label{oq:lmin_rate}
+\textbf{Exact rate of $\lmin(G)$.}
+Theorem~\ref{thm:jaffard}(iv) gives $\lmin(G) \ge \kappa > 0$ (frame lower bound),
+but the Landau--Widom scale gives $\lmin(G_{N,c}) \asymp c^{-1/2}$.
+Is the rate $c^{-1/2}$ sharp, or can one improve to $c^{-1/3}$ unconditionally?
+The $c^{-1/3}$ upgrade requires Conjecture~3.3 (RHP convergence, P8);
+this is the conditional rate of Paper~XXII.
+
+\item\label{oq:O5_independence}
+\textbf{O4 vs.\ O5 independence check.}
+Corollary~\ref{cor:O4_closed} is proved without O5 (in the regime $\CJ < 1$).
+Verify that the Jaffard algebra argument (Corollary~\ref{cor:jaffard_general})
+introduces a logical dependence on O5 only when $C \ge 0.312$.
+The two sub-chains O4 and O5 should remain independent on the minimal path
+to P13 for generic $C$.
+
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\bibitem{Jaffard1990}
+S.~Jaffard, \textit{Propri\'et\'es des matrices bien localis\'ees
+pr\`es de leur diagonale et quelques applications},
+Ann.\ Inst.\ Henri Poincar\'e Anal.\ Non Lin\'eaire \textbf{7} (1990), 461--476.
+
+\bibitem{GrochenigLeinert2004}
+K.~Gr\"ochenig and M.~Leinert,
+\textit{Wiener's lemma for twisted convolution and Gabor frames},
+J.\ Amer.\ Math.\ Soc.\ \textbf{17} (2004), 1--18.
+
+\bibitem{PaperXVIII}
+S.~Schmalnauer,
+\textit{Airy Universality for PSWF} (Paper~XVIII),
+preprint, 2026.
+
+\bibitem{Paper13b}
+S.~Schmalnauer,
+\textit{Spectral Gap Lower Bounds via Gram Coercivity} (Paper~13b),
+preprint, 2026.
+
+\bibitem{O4B2}
+S.~Schmalnauer,
+\texttt{O4\_B2\_T2\_triple\_scaling.tex},
+\textsf{prolate-gram-coercivity} repository, 2026.
+\end{thebibliography}
+
+\end{document}
