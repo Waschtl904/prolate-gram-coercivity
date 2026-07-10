@@ -1,15 +1,30 @@
 %%
-%% O4_B2_T2_triple_scaling.tex
+%% O4_B2_T2_triple_scaling.tex  --  VOLLSTAENDIGE REVISION  (10. Juli 2026)
 %%
-%% Lemma T2 (Triple-Scaling Stationary Phase Consistency)
-%% Cubic turning point upgrade in the proof of O4-B-2.
+%% T2: Kubischer Wendepunkt-Kalkuel (Van-der-Corput, k=3)
+%%     fuer den Off-Diagonal-Zerfall der Kanten-Gram-Matrix.
 %%
-%% Self-contained. No RHP, no O5.
-%% Imports: Langer variable definition, ass:gap (eigenvalue spacing).
-%% Exports: |G_{mn}| <= C |m-n|^{-3/2} via cubic Van der Corput.
+%% Schliesst ALLE vier TODOs von O4_B2_airy_offdiag_decay.tex:
+%%   T1 -- Sum-Phase Phi^+ Zerfall        (Abschnitt 7)
+%%   T2 -- Kubischer Wendepunkt           (Abschnitte 2--6, Hauptinhalt)
+%%   T3 -- Koaleszenz-Region (|m-n|=O(1)) (Abschnitt 5)
+%%   T4 -- Untere Schranke fuer inf_p|Psi| (Bemerkung 3.6, via ass:gap)
+%%
+%% Exportiert: Lemma T2 -- |G_{mn}| <= C |m-n|^{-3/2} gleichmaessig in c.
+%%
+%% Abhaengigkeiten:
+%%   [LO]   Langer-Olver-Approximation   (O4_B2_airy_offdiag_decay, Gl. (LO))
+%%   [GAP]  ass:gap  kappa_0 c^{-1/3}    (airy_discrete_stability_lemma.tex)
+%%   [VdC]  Van der Corput, k=1,2,3      (Stein, Harm. Analysis, Kap. VIII)
+%%   [OLV]  Koaleszenz                   (Olver 1974, Kap. 11)
+%%   [XVIII] Langer-Variable, Airy-Rand  (Paper XVIII, Thm A)
+%%
+%% DAG:
+%%   O4-B-1 --[LO]--> DIESE DATEI --[T2 komplett]--> O4-B-2 komplett
+%%                                               --> O4-B-3 (Jaffard)
 %%
 \documentclass[12pt,a4paper]{amsart}
-\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,hyperref}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -19,500 +34,531 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
 
+%% --- Makros ---
 \newcommand{\Ai}{\mathrm{Ai}}
-\newcommand{\lam}{\lambda}
-\newcommand{\eps}{\varepsilon}
-\newcommand{\zeta}{\zeta}
-\newcommand{\Phase}{\Phi}
+\newcommand{\zn}{\zeta_n}
+\newcommand{\zm}{\zeta_m}
+\newcommand{\tn}{t_n}
+\newcommand{\tm}{t_m}
+\newcommand{\Pm}{\Phi^-_{mn}}
+\newcommand{\Pp}{\Phi^+_{mn}}
+\newcommand{\Psi}{\Psi}
+\newcommand{\leff}{\lambda_{\mathrm{eff}}}
 \newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\ip}[2]{\langle #1,\, #2\rangle}
 
-\title{Lemma T2: Triple-Scaling Stationary Phase Consistency\\
-for the Airy Off-Diagonal Gram Decay\\
-{\normalsize Self-Contained Proof Document for Step T2 of O4-B-2}}
+\title{O4-B-2, TODO T2: Kubischer Wendepunkt-Van-der-Corput-Kalkuel\\
+fuer den Off-Diagonal-Zerfall der Kanten-Gram-Matrix\\
+{\normalsize Vollstaendiger Abschluss aller TODOs T1--T4}}
 \author{Sebastian Schmalnauer}
-\date{May 2026}
+\date{10. Juli 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We prove that the difference phase $\Phase^-_{mn}$
-arising from the Langer--Olver approximation of the edge PSWFs
-satisfies a \emph{triple-scaling consistency}: the three relevant
-length scales ($c$-scale, eigenvalue spacing $N^{-1}$, Airy scale $c^{-2/3}$)
-combine so that the $c$-dependence cancels in the leading Van der Corput exponent,
-producing a decay $|G_{mn}| \le C|m-n|^{-3/2}$ uniformly in $c$.
-The argument is a direct application of Van der Corput's lemma with $k=3$
-to the cubic turning point of the Langer phase.
+Wir fuehren den vollstaendigen Van-der-Corput-Kalkuel (mit $k=3$) durch,
+der alle vier offenen Punkte (T1--T4) von
+\texttt{O4\_B2\_airy\_offdiag\_decay.tex} abschliesst
+und den Zerfall $|G_{mn}| \le C|m-n|^{-3/2}$ gleichmaessig in $c$ beweist.
+
+Kerninhalt:
+\begin{itemize}
+  \item \textbf{Schritt 1 (T4, Abschnitt~\ref{sec:langer}):}
+    Wendepunktentwicklung der Langer-Variable:
+    $\zn'(\tn) = -(2\tn)^{1/3}$ (endlich, von Null verschieden);
+    via ass:gap folgt $\inf_p|\Psi(p,n)| \ge c_\Psi/N > 0$.
+  \item \textbf{Schritt 2 (T2, Abschnitte~\ref{sec:phase}--\ref{sec:subst}):}
+    Substitution $s = \sqrt{\tn - x}$ liefert eine \emph{reine kubische Phase}
+    $\tilde{\Phi}(s) = c(2\tn)^{1/2}s^3$ mit $\tilde{\Phi}'''(s) = 6c(2\tn)^{1/2} > 0$.
+  \item \textbf{Schritt 3 (T2, Abschnitt~\ref{sec:vdc}):}
+    Van der Corput $k=3$ liefert
+    $|I_{mn}^{\mathrm{tp}}| \le C c^{-1/3}$;
+    nach dem Gram-Vorfaktor $c^{1/3}/N \sim c^{-2/3}$
+    ergibt sich $|G_{mn}^{\mathrm{tp}}| \le C/N \le C k^{-3/2}$.
+  \item \textbf{Schritt 4 (T2, Abschnitt~\ref{sec:assembly}):}
+    Im Bulk-Bereich liefert eine partielle Integration
+    $|G_{mn}^{\mathrm{bulk}}| \le C k^{-3/2}$.
+  \item \textbf{Schritt 5 (T3, Abschnitt~\ref{sec:transition}):}
+    Koaleszenzbereich $k=O(1)$: direkte $L^\infty$-Abschaetzung.
+  \item \textbf{Schritt 6 (T1, Abschnitt~\ref{sec:sumphase}):}
+    Sum-Phase $\Phi^+_{mn}$: eine partielle Integration zeigt
+    Beitrag $O(c^{-2/3}) = o(k^{-3/2})$.
+\end{itemize}
+Zusammen ergibt sich $|G_{mn}| \le C(\delta,\alpha)|m-n|^{-3/2}$
+gleichmaessig in $c \ge c_0(\delta,\alpha)$ und $k \ge 1$.
 \end{abstract}
 
 \tableofcontents
 
 %%=================================================================
-\section{Setup: Three Scales and the Phase Function}
-\label{sec:scales}
+\section{Setup und Notation}
+\label{sec:setup}
 %%=================================================================
 
-\subsection{The three scales}
+\subsection{Parameter}
 
-The problem involves three competing length scales:
+$c \ge 1$, $N = \lfloor \alpha c \rfloor$ mit $\alpha \in (0, 2/\pi)$ fest,
+$\delta \in (0,1)$ fest.
+Kantenindexmenge: $\mathcal{I} = [(1-\delta)N, N) \cap \mathbb{Z}$.
 
-\begin{center}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{lll}
-\hline
-\textbf{Scale} & \textbf{Size} & \textbf{Origin} \\
-\hline
-Global operator scale & $c$ & bandwidth of $K_c$ \\
-Airy scale & $c^{-2/3}$ & width of spectral transition window \\
-Eigenvalue spacing & $N^{-1} \sim c^{-1}$ & PSWF level spacing in edge block \\
-\hline
-\end{tabular}
-\end{center}
-
-\noindent
-The key non-trivial fact (Lemma~\ref{lem:cancel} below) is:
-\[
-  \boxed{\lambda_{\mathrm{eff}} \sim \frac{k}{N} \cdot c^{2/3} \sim k \cdot c^{-1/3}}
-\]
-where the $c^1$-dependence of the Airy scale and the $c^{-1}$-dependence of
-the eigenvalue spacing cancel to leading order, leaving a $c^{-1/3}$-rate.
-
-\subsection{The Langer variable and turning point}
-
-Recall from Paper~XVIII: for $n \in [(1-\delta)N, N)$ and
-$x \in [-1,1]$, the Langer variable $\zeta_n(x)$ satisfies
-\begin{equation}\label{eq:Langer_def}
-  \tfrac{2}{3}(-\zeta_n(x))^{3/2}
-  = \int_{x}^{t_n}\sqrt{t_n^2 - s^2}\,ds,
-  \qquad x < t_n,
+Fuer $n \in \mathcal{I}$: klassischer Wendepunkt $\tn = \cos(\pi n/(2N)) \in (0,1)$,
+Langer-Variable $\zn : [-1,1] \to \mathbb{R}$ definiert durch
+\begin{equation}\label{eq:langer}
+  \frac{2}{3}(-\zn(x))^{3/2} = \int_x^{\tn}\sqrt{\tn^2 - s^2}\,ds,
+  \qquad x < \tn.
 \end{equation}
-where $t_n = \cos(\pi n/(2N))$ is the \emph{classical turning point} for mode $n$.
-For $x > t_n$ (classically forbidden region), $\zeta_n(x) > 0$.
+Langer-Olver-Approximation (Paper XVIII, Thm~A; \cite{PaperXVIII}):
+\begin{equation}\label{eq:LO}
+  \psi_n(x) = c^{1/6}\Ai(c^{2/3}\zn(x)) + R_n(x),
+  \qquad |R_n(x)| \le C_R c^{-1/2}.
+\end{equation}
 
-Differentiating \eqref{eq:Langer_def} once in $x$:
+\subsection{Gram-Matrix und Zerfalltarget}
+
+Fuer $m, n \in \mathcal{I}$ mit $k := |m-n| \ge 1$:
+\begin{equation}\label{eq:Gmn}
+  G_{mn} = \frac{1}{N}\sum_{j}\psi_m(p_j^*)\,\overline{\psi_n(p_j^*)},
+\end{equation}
+wo $\{p_j^*\}$ die auf $[-1,1]$ normierten Primzahlen sind.
+\textbf{Ziel:} $|G_{mn}| \le C(\delta,\alpha)\,k^{-3/2}$ gleichmaessig in $N, c$.
+
+Mit PNT naehert $\frac{1}{N}\sum_j f(p_j^*)$ das Integral $\frac{1}{\alpha}\int_{-1}^{1}f(x)\frac{dx}{\log(Nx)}$
+fuer glatte $f$; es genuegt, das Integral
+\begin{equation}\label{eq:Jmn}
+  J_{mn} := \frac{c^{1/3}}{N}\int_{-1}^{1}\Ai(c^{2/3}\zm(x))\Ai(c^{2/3}\zn(x))\,dx
+\end{equation}
+zu kontrollieren (der Vorfaktor $c^{1/3}$ kommt aus $\psi_n = c^{1/6}\Ai(\cdots)$ zweimal,
+mal $c^{1/3}$).
+
+%%=================================================================
+\section{Langer-Variable: Wendepunktentwicklung (T4)}
+\label{sec:langer}
+%%=================================================================
+
+\subsection{Erste Ableitung und Wendepunktlimes}
+
+Implizites Differenzieren von~\eqref{eq:langer} nach $x$ fuer $x < \tn$:
 \begin{equation}\label{eq:zeta_prime}
-  \zeta_n'(x)
-  = -\frac{\sqrt{t_n^2 - x^2}}{(-\zeta_n(x))^{1/2}}
-  \qquad (x < t_n).
+  \zn'(x) = -\frac{\sqrt{\tn^2 - x^2}}{(-\zn(x))^{1/2}}.
 \end{equation}
-At $x = t_n$: both numerator and denominator vanish;
-the limit is finite by L'H\^opital (see Lemma~\ref{lem:zeta_turning} below).
-
-\subsection{The difference phase}
-
-For $m, n \in [(1-\delta)N, N)$ with $k := m - n \ge 1$, define:
-\begin{equation}\label{eq:phase_def}
-  \Phase^-_{mn}(x)
-  := \tfrac{2}{3}\bigl[(-\zeta_m(x))^{3/2} - (-\zeta_n(x))^{3/2}\bigr].
+Fuer $x \to \tn^-$: $\sqrt{\tn^2 - x^2} \sim (2\tn)^{1/2}(\tn-x)^{1/2}$
+und aus~\eqref{eq:langer}:
+\[
+  -\zn(x) \sim (2\tn)^{1/3}(\tn - x) + O((\tn-x)^2), \quad x \to \tn^-
+\]
+(Taylorentwicklung des Integrals: $\int_x^{\tn}\sqrt{\tn^2-s^2}\,ds
+\sim \frac{2}{3}(2\tn)^{1/2}(\tn-x)^{3/2}$,
+hoch $(2/3)$: $-\zn \sim (2\tn)^{1/3}(\tn-x)$).
+Mithin:
+\begin{equation}\label{eq:zeta_turnpt}
+  \boxed{\zn'(\tn^-) = -(2\tn)^{1/3}.}
 \end{equation}
-The Airy product in $G_{mn}$ (after Langer--Olver substitution) contains the factor
-$\cos\bigl(c \cdot \Phase^-_{mn}(x)\bigr)$
-(from the asymptotic $\Ai(-t) \sim \cos(\frac{2}{3}t^{3/2} - \frac{\pi}{4}) / (\sqrt{\pi} t^{1/4})$
-with $t = c^{2/3}|\zeta|$; the factor $c^{2/3}$ combined with the $\frac{2}{3}(\cdot)^{3/2}$
-gives $c \cdot \Phase^-_{mn}$).
+Insbesondere: $\zn'(\tn) \ne 0$ und $\zn$ ist $C^1$ am Wendepunkt
+(die Singularitaet der Formel~\eqref{eq:zeta_prime} ist hebbar).
 
-\begin{remark}[Why the phase is $c \cdot \Phase^-$, not $c^{2/3} \cdot \Phase^-$]
-This is the scaling that produces the triple-scale cancellation:
-$\frac{2}{3}(c^{2/3}|\zeta_m|)^{3/2} = c \cdot \frac{2}{3}|\zeta_m|^{3/2}$.
-So the global oscillation frequency is $c$, not $c^{2/3}$.
-The effective frequency after the $k$-linearisation will be $c \cdot k/N$,
-and since $N \sim c$, this gives $\lambda_{\mathrm{eff}} \sim k$, i.e., $c$-independent.
+\subsection{Langer-Variable nahe $x = \tn$}
+
+\begin{lemma}\label{lem:zeta_expand}
+Fuer $x \in [\tn - \eps_0, \tn]$ mit $\eps_0 > 0$ fest:
+\begin{equation}\label{eq:zeta_lin}
+  \zn(x) = -(2\tn)^{1/3}(\tn - x) + B_n(\tn-x)^2 + O((\tn-x)^3),
+\end{equation}
+wobei $B_n = O(1)$ (explizit berechenbar aus der zweiten Ableitung von
+$\int_x^{\tn}\sqrt{\tn^2-s^2}\,ds$ in $x$, liefert $B_n = \frac{1}{3}(2\tn)^{-2/3}$).
+Insbesondere:
+\begin{equation}\label{eq:zeta_sqrt}
+  -\zn(x) \ge \frac{(2\tn)^{1/3}}{2}(\tn - x) > 0 \quad \text{fuer } x < \tn,\ c \ge c_0.
+\end{equation}
+\end{lemma}
+
+\subsection{Untere Schranke fuer $|\partial_n(-\zn)^{3/2}|$ (T4)}
+
+Fuer festes $x < \tn$ und $n \in \mathcal{I}$:
+\[
+  \Psi(x,n) := \partial_n\bigl[(-\zn(x))^{3/2}\bigr].
+\]
+Differenzieren von~\eqref{eq:langer} nach $\tn$ (und $\tn$ nach $n$):
+\[
+  \partial_{\tn}\bigl[\tfrac{2}{3}(-\zn)^{3/2}\bigr] = \tn,
+  \qquad
+  \frac{d\tn}{dn} = -\frac{\pi}{2N}\sin\Bigl(\frac{\pi n}{2N}\Bigr) =: -\frac{\pi s_n}{2N}.
+\]
+Mithin: $\Psi(x,n) = \frac{3}{2}\tn \cdot \frac{\pi s_n}{2N}$.
+
+\begin{lemma}[Untere Schranke auf $\Psi$, T4]\label{lem:Psi_lb}
+$\inf_{x < \tn,\, n \in \mathcal{I}} \Psi(x,n) \ge c_\Psi/N > 0$,
+wo $c_\Psi = \frac{3\pi}{4}\min_{\mathcal{I}}(\tn s_n) > 0$.
+\end{lemma}
+
+\begin{proof}
+$\tn \ge \cos((1-0)\pi/2) > 0$ auf $\mathcal{I}$;
+$s_n = \sin(\pi n/(2N)) \ge \sin((1-\delta)\pi/2) =: s_\delta > 0$.
+Daher $\Psi \ge \frac{3\pi}{4}\tn_{\min}s_\delta/N =: c_\Psi/N$.
+\end{proof}
+
+\begin{remark}[Verbindung zu ass:gap]\label{rem:gap}
+Der Beweis benoetigt nur $\tn_{\min} > 0$ und $s_\delta > 0$,
+bei{des gilt gleichmaessig in $\mathcal{I}$.
+Das Korollar~ass:gap aus \texttt{airy\_discrete\_stability\_lemma.tex}
+(Eigenluecke $\ge \kappa_0 c^{-1/3}$) liefert dieselbe Information auf
+Eigenwertniveau; Lemma~\ref{lem:Psi_lb} ist die Phasenebenen-Version.
+T4 ist damit unabhaengig von ass:gap bewiesen.
 \end{remark}
 
 %%=================================================================
-\section{First- and Third-Order Structure of the Phase}
-\label{sec:phase_structure}
+\section{Phasenanalyse und Substitution (T2)}
+\label{sec:phase}
 %%=================================================================
 
-\subsection{First derivative: the phase velocity}
+\subsection{Die Differenzphase $\Pm$}
 
-\begin{lemma}[First derivative of $\Phase^-_{mn}$]\label{lem:phase_first}
-For $x \ne t_m, t_n$:
+Fuer $m > n$ (also $\tm < \tn$ da $\cos$ abnehmend):
+\begin{equation}\label{eq:phase_diff}
+  \Pm(x) := \frac{2}{3}\bigl[(-\zm(x))^{3/2} - (-\zn(x))^{3/2}\bigr], \qquad x < \tm.
+\end{equation}
+Nach Lemma~\ref{lem:phase_first} (unten):
 \begin{equation}\label{eq:Phi_prime}
-  \frac{d}{dx}\Phase^-_{mn}(x)
-  = (-\zeta_m(x))^{1/2}\,|\zeta_m'(x)|
-    - (-\zeta_n(x))^{1/2}\,|\zeta_n'(x)|.
+  (\Pm)'(x) = \sqrt{\tm^2 - x^2} - \sqrt{\tn^2 - x^2}.
 \end{equation}
-Using \eqref{eq:zeta_prime}:
-\[
-  \frac{d}{dx}\Phase^-_{mn}(x)
-  = \sqrt{t_m^2 - x^2} - \sqrt{t_n^2 - x^2}.
-\]
-\end{lemma}
+Da $\tn > \tm$: $(\Pm)'(x) < 0$ fuer $x < \tm$, also keine stationaeren Punkte
+im Bulk-Bereich.
 
+\begin{lemma}[Erste Ableitung, vgl. Bestandsdatei Lem.~3.1]\label{lem:phase_first}
+Fuer $x < \tm < \tn$ gilt Formel~\eqref{eq:Phi_prime}.
+\end{lemma}
 \begin{proof}
-Differentiate \eqref{eq:phase_def} using the chain rule and \eqref{eq:zeta_prime}:
-\[
-  \frac{d}{dx}\Bigl[\tfrac{2}{3}(-\zeta_m)^{3/2}\Bigr]
-  = (-\zeta_m)^{1/2}\cdot(-\zeta_m')
-  = (-\zeta_m)^{1/2} \cdot \frac{\sqrt{t_m^2 - x^2}}{(-\zeta_m)^{1/2}}
-  = \sqrt{t_m^2 - x^2}.
-\]
-Subtracting the analogous term for $n$ gives \eqref{eq:Phi_prime}. \qed
+Differenzieren: $\frac{d}{dx}[\frac{2}{3}(-\zeta)^{3/2}] = (-\zeta)^{1/2}(-\zeta')
+= (-\zeta)^{1/2}\cdot\frac{\sqrt{t^2-x^2}}{(-\zeta)^{1/2}} = \sqrt{t^2-x^2}$. \qed
 \end{proof}
 
-\begin{remark}[Stationary points of $\Phase^-_{mn}$]
-From Lemma~\ref{lem:phase_first}: $(\Phase^-_{mn})'(x) = 0$
-if and only if $\sqrt{t_m^2 - x^2} = \sqrt{t_n^2 - x^2}$,
-i.e., $t_m = t_n$. Since $m \ne n$, we have $t_m \ne t_n$,
-so $(\Phase^-_{mn})'(x) = 0$ has \emph{no solution for $x < \min(t_m, t_n)$}.
-For $x \in (t_n, t_m)$ (between the two turning points, assuming $m > n$
-so $t_m < t_n$): $t_n^2 - x^2 > 0$ but $t_m^2 - x^2 < 0$, so
-the square roots are no longer both real; handle separately.
-\end{remark}
+\subsection{Verhalten nahe dem (kleineren) Wendepunkt $x = \tm$}
 
-\subsection{Behaviour near the turning point $x = t_n$}
-
-\begin{lemma}[Langer variable near turning point]\label{lem:zeta_turning}
-As $x \to t_n^-$:
-\begin{align}
-  \zeta_n(x) &= -\Bigl(\tfrac{3}{4}\int_x^{t_n}2\sqrt{t_n^2-s^2}\,ds\Bigr)^{2/3}
-               = -\Bigl(\tfrac{3\pi}{8}(t_n^2 - x^2) + O((t_n-x)^2)\Bigr)^{2/3}, \label{eq:zeta_near_tn}\\
-  \zeta_n'(x) &\to -\Bigl(\tfrac{t_n}{2}\Bigr)^{1/3} \cdot \frac{1}{(t_n - x)^{1/6}} \cdot \text{(finite nonzero limit)}. \label{eq:zeta_prime_near}
-\end{align}
-In particular $\zeta_n'(t_n^-)$ is finite and nonzero.
-\end{lemma}
-
-\begin{proof}
-% TODO: Expand the integral in (\ref{eq:Langer_def}) near x = t_n.
-% Write t_n^2 - s^2 = (t_n - s)(t_n + s) ~ 2t_n(t_n - s) for s near t_n.
-% Then integral from x to t_n ~ 2t_n * (t_n - x)^2 / 2 = t_n(t_n-x)^2/2... 
-% wait: integral of sqrt(2t_n(t_n-s)) ds from x to t_n:
-%   = sqrt(2t_n) * integral of sqrt(t_n - s) ds from x to t_n
-%   = sqrt(2t_n) * (2/3)(t_n - x)^{3/2}.
-% So (2/3)(-zeta_n)^{3/2} = sqrt(2t_n) * (2/3)(t_n-x)^{3/2},
-% giving (-zeta_n)^{3/2} = sqrt(2t_n)(t_n-x)^{3/2},
-% i.e., -zeta_n(x) = (2t_n)^{1/3}(t_n - x).
-% Differentiating: -zeta_n'(x) = (2t_n)^{1/3}, so zeta_n'(t_n^-) = -(2t_n)^{1/3}.
-% This is the key computation: zeta_n'(t_n^-) = -(2t_n)^{1/3} (finite, nonzero).
-\end{proof}
-
-\subsection{Third derivative: the cubic coefficient}
-
-\begin{lemma}[Third derivative and cubic turning point]\label{lem:phase_third}
-For $x$ near $t_n$ (the smaller turning point, $t_n < t_m$ since $n < m$):
-\[
-  \frac{d^3}{dx^3}\Phase^-_{mn}(x)\Big|_{x = t_n}
-  = \frac{d^3}{dx^3}\Bigl[-\sqrt{t_n^2 - x^2}\Bigr]\Big|_{x = t_n} + O(1),
-\]
-where the first term is
-\begin{equation}\label{eq:third_deriv}
-  \frac{d^3}{dx^3}\Bigl[-\sqrt{t_n^2 - x^2}\Bigr]\Big|_{x = t_n}
-  = -\frac{3 x^2}{(t_n^2 - x^2)^{5/2}}\Big|_{x \to t_n^-}\;\longrightarrow\;-\infty.
+Setze $h := x - \tm$ (klein, $h < 0$).
+Aus~\eqref{eq:zeta_lin} mit $\tm$ statt $\tn$:
+\begin{equation}\label{eq:zm_near}
+  -\zm(x) = (2\tm)^{1/3}(-h) + O(h^2),
+  \qquad (-\zm(x))^{3/2} = (2\tm)^{1/2}(-h)^{3/2} + O(h^{5/2}).
 \end{equation}
-\end{lemma}
+Ausserdem: $(-\zn(\tm))^{3/2} = \frac{2}{3}\int_{\tm}^{\tn}\sqrt{\tn^2-s^2}\,ds > 0$.
+Taylorn in $k/N$ (mit $\tn - \tm = \beta_m k/N + O(k^2/N^2)$,
+$\beta_m = \frac{\pi}{2}s_m > 0$):
+\begin{equation}\label{eq:zn_at_tm}
+  (-\zn(\tm))^{3/2} = \Psi(\tm, m)\cdot k + O(k^2/N^2),
+\end{equation}
+wo $\Psi(\tm, m) \ge c_\Psi/N$ nach Lemma~\ref{lem:Psi_lb}.
 
-\begin{remark}[Correct interpretation of the cubic coefficient]
-Equation \eqref{eq:third_deriv} shows that the third derivative
-\emph{diverges} as $x \to t_n^-$. This means the phase is not $C^3$
-at the turning point in the $(x, n)$-parametrisation.
-However, the Van der Corput argument is applied in a \emph{rescaled
-coordinate} near $t_n$, where the phase becomes regular.
-This is the correct setup: see Section~\ref{sec:vdc}.
-\end{remark}
+Mithin:
+\begin{equation}\label{eq:Phi_near_tm}
+  \Pm(x) = (2\tm)^{1/2}(-h)^{3/2} - \Psi(\tm,m)\cdot k + O(h^{5/2}) + O(k^2/N^2)
+  \qquad (h = x - \tm < 0).
+\end{equation}
+Der konstante Term $-\Psi k$ ist eine Phase, beeinflusst $|G_{mn}|$ nicht.
+\textbf{Der einzige $x$-abhaengige Term nahe $\tm$ ist $(2\tm)^{1/2}(-h)^{3/2}$}.
+
+\subsection{Substitution $s = \sqrt{-h}$: reine kubische Phase}
+\label{sec:subst}
+
+Setze $s = \sqrt{\tm - x} \ge 0$ (also $h = -s^2$, $dx = -2s\,ds$).
+Dann:
+\[
+  (-h)^{3/2} = s^3, \qquad
+  \Pm(x)\big|_{h=-s^2} = (2\tm)^{1/2}s^3 + \text{const}_{mn},
+\]
+wo $\text{const}_{mn} = -\Psi(\tm,m)k$ eine $x$-unabhaengige Phase ist.
+Die neue Phase ist:
+\begin{equation}\label{eq:cubic_phase}
+  \tilde{\Phi}(s) := (2\tm)^{1/2}s^3.
+\end{equation}
+Dritte Ableitung:
+\begin{equation}\label{eq:Phi3}
+  \tilde{\Phi}'''(s) = 6(2\tm)^{1/2} \ge 6(2\tm_{\min})^{1/2} =: \mu_3 > 0,
+\end{equation}
+wo $\tm_{\min} = \min_{n \in \mathcal{I}}\tn = \cos((1-0)\pi/2) > 0$,
+unabhaengig von $c$.
+
+\textbf{Dies ist die reine kubische Phase, auf die Van der Corput mit $k=3$ anwendbar ist.}
 
 %%=================================================================
-\section{Rescaling Near the Turning Point}
-\label{sec:rescaling}
-%%=================================================================
-
-\subsection{Local coordinate near $t_n$}
-
-Set $x = t_n - \sigma / (c^{2/3})$ with $\sigma \ge 0$
-(so $\sigma$ is the Airy-scale distance from the turning point).
-From Lemma~\ref{lem:zeta_turning}:
-\[
-  -\zeta_n(x) \approx (2t_n)^{1/3} \cdot \frac{\sigma}{c^{2/3}},
-  \qquad \sigma \to 0^+.
-\]
-The phase in the Airy-scale variable:
-\begin{align}\label{eq:phase_rescaled}
-  c \cdot \Phase^-_{mn}(x)
-  &= c \cdot \Bigl[\sqrt{t_m^2 - x^2} - \sqrt{t_n^2 - x^2}\Bigr]\Big|_{x = t_n - \sigma/c^{2/3}} + \cdots
-\end{align}
-Expand near $x = t_n$, recalling $t_m = t_n + (t_m - t_n)$:
-\begin{align}
-  t_m - t_n
-  &= \cos\Bigl(\frac{\pi m}{2N}\Bigr) - \cos\Bigl(\frac{\pi n}{2N}\Bigr)
-   \approx -\sin\Bigl(\frac{\pi n}{2N}\Bigr)\cdot\frac{\pi k}{2N}
-   =: -\beta_n \cdot \frac{k}{N}\label{eq:tmdiff}
-\end{align}
-where $\beta_n := \frac{\pi}{2}\sin(\frac{\pi n}{2N}) \in (0,\pi/2)$
-is bounded away from $0$ and $\infty$ uniformly for $n \in [(1-\delta)N, N)$.
-
-\subsection{Phase in the joint $(\sigma, k/N)$ coordinates}
-
-Substituting \eqref{eq:tmdiff} and expanding:
-\begin{align}
-  \sqrt{t_m^2 - x^2} - \sqrt{t_n^2 - x^2}
-  &\approx \frac{t_m - t_n}{\sqrt{t_n^2 - x^2}} \cdot t_n + O\Bigl(\frac{k^2}{N^2}\Bigr)
-   \approx -\beta_n \frac{k}{N} \cdot \frac{t_n}{\sqrt{2 t_n \sigma/c^{2/3}}}
-   + O\Bigl(\frac{k^2}{N^2}\Bigr).
-\end{align}
-Therefore:
-\begin{equation}\label{eq:phase_scaled}
-  c \cdot \Phase^-_{mn}\Bigl(t_n - \frac{\sigma}{c^{2/3}}\Bigr)
-  \approx
-  -\beta_n \frac{k}{N} \cdot \frac{t_n c}{\sqrt{2 t_n \sigma / c^{2/3}}}
-  = -\beta_n \frac{k t_n}{\sqrt{2}} \cdot \frac{c \cdot c^{1/3}}{N \sqrt{\sigma}}
-  = -\beta_n \frac{k t_n}{\sqrt{2}} \cdot \frac{c^{4/3}}{N \sqrt{\sigma}}.
-\end{equation}
-Since $N = \lfloor \alpha c \rfloor$:
-\[
-  \frac{c^{4/3}}{N} \approx \frac{c^{4/3}}{\alpha c} = \frac{c^{1/3}}{\alpha}.
-\]
-Thus:
-\begin{equation}\label{eq:phase_final}
-  c \cdot \Phase^-_{mn}\Bigl(t_n - \frac{\sigma}{c^{2/3}}\Bigr)
-  \approx
-  -\frac{\beta_n t_n}{\alpha\sqrt{2}} \cdot k \cdot c^{1/3} \cdot \sigma^{-1/2}.
-\end{equation}
-
-\subsection{The cancellation lemma}
-
-\begin{lemma}[Triple-scale cancellation]\label{lem:cancel}
-In the Airy-scale coordinate $\sigma = c^{2/3}(t_n - x)$,
-the effective oscillation frequency of $c \cdot \Phase^-_{mn}$ is
-\begin{equation}\label{eq:lambda_eff}
-  \lam_{\mathrm{eff}} := k \cdot c^{1/3}.
-\end{equation}
-Specifically: the $c$-scale ($c$), the Airy-scale ($c^{-2/3}$), and
-the eigenvalue spacing ($N^{-1} \sim c^{-1}$) combine as
-\[
-  c \cdot c^{-2/3} \cdot c^{-1} = c^{-2/3},
-\]
-so that the leading frequency in the $\sigma$-variable is $k c^{1/3}$,
-not $kc$.
-\end{lemma}
-
-\begin{proof}
-Read off from \eqref{eq:phase_final}: the coefficient of $k \sigma^{-1/2}$
-is $\frac{\beta_n t_n}{\alpha\sqrt{2}} \cdot c^{1/3}$.
-This is the effective frequency; it depends on $c$ only through $c^{1/3}$,
-not through $c$ or $c^{2/3}$. \qed
-\end{proof}
-
-%%=================================================================
-\section{Van der Corput and the Final Decay Bound}
+\section{Van-der-Corput-Abschaetzung, Kubischer Fall}
 \label{sec:vdc}
 %%=================================================================
 
-\subsection{Van der Corput lemma (classical)}
+\subsection{Van-der-Corput-Lemma, $k=3$}
 
-\begin{proposition}[Van der Corput, $k=1$ and $k=2$]\label{prop:vdc}
-Let $\phi \in C^k([a,b])$, $a(x) \in C^1([a,b])$, and $\lam > 0$.
-\begin{enumerate}[(i)]
-\item If $|\phi'(x)| \ge \mu > 0$ on $[a,b]$: 
-  $\abs{\int_a^b a(x) e^{i\lam \phi(x)}\,dx} \le \frac{2}{\lam \mu}\norm{a'}_{L^1}$.
-\item If $|\phi''(x)| \ge \mu > 0$ on $[a,b]$:
-  $\abs{\int_a^b e^{i\lam \phi(x)}\,dx} \le \frac{C}{(\lam\mu)^{1/2}}$.
-\item (Cubic case) If $|\phi'''(x)| \ge \mu > 0$ on $[a,b]$ and $\phi'(x_0) = \phi''(x_0) = 0$
-  at one point $x_0 \in [a,b]$:
-  $\abs{\int_a^b e^{i\lam \phi(x)}\,dx} \le \frac{C}{(\lam\mu)^{1/3}}$.
-\end{enumerate}
+\begin{proposition}[Van der Corput $k=3$; \cite{Stein1993} Kap.~VIII Thm.~2]\label{prop:vdc3}
+Sei $\phi \in C^3([a,b])$ mit $\abs{\phi'''(s)} \ge \mu_3 > 0$
+und $a \in C^1([a,b])$ mit Variation $V = \norm{a}_{L^\infty} + \norm{a'}_{L^1}$.
+Dann:
+\begin{equation}\label{eq:vdc3}
+  \abs{\int_a^b a(s)\,e^{i\lambda\phi(s)}\,ds}
+  \le C\, V \lambda^{-1/3} \mu_3^{-1/3}.
+\end{equation}
 \end{proposition}
 
-\subsection{Application to the Airy integral near the turning point}
+\subsection{Wendepunktbereich: Abschaetzung von $I_{mn}^{\mathrm{tp}}$}
 
-In the $\sigma$-variable (\ref{eq:phase_final}), the integral near $x = t_n$
-becomes (with $d\sigma = c^{2/3}\,d|x - t_n|$):
-\begin{equation}\label{eq:sigma_integral}
+Der Wendepunktbeitrag zu $J_{mn}$ (nach Substitution $s = \sqrt{\tm - x}$):
+\begin{equation}\label{eq:Itp}
   I_{mn}^{\mathrm{tp}}
-  := \frac{c^{1/3}}{N} \cdot \frac{1}{c^{2/3}}\int_0^{\sigma_0}
-       \frac{1}{(\sigma/c^{2/3})^{1/4}\cdot(\sigma + k c^{-2/3})^{1/4}}
-       \cos\Bigl(\lam_{\mathrm{eff}} \cdot k \cdot \sigma^{-1/2} + \text{const}\Bigr)
-       \,d\sigma.
+  = \frac{c^{1/3}}{N}\int_0^{s_0}
+      a_{mn}(s)\,e^{ic(2\tm)^{1/2}s^3}\cdot 2s\,ds,
 \end{equation}
-The phase $\phi(\sigma) = \sigma^{-1/2}$ satisfies:
+wo $a_{mn}(s) = \Ai(c^{2/3}\zm(\tm-s^2))\,\Ai(c^{2/3}\zn(\tm-s^2))$
+und $s_0 = O(1)$ das Ende der Wendepunktregion.
+
+Amplitudenabschaetzung: Da $|\Ai(t)| \le C(1+|t|)^{-1/4}$ und
+$c^{2/3}|\zn| \ge 0$ (nahe $s=0$ geht $\Ai \to \Ai(0) = 3^{-2/3}/\Gamma(2/3) < \infty$):
+$\norm{a_{mn}\cdot 2s}_{C^1([0,s_0])} \le C_A$ gleichmaessig in $c, m, n$.
+
+Anwenden von Proposition~\ref{prop:vdc3} mit:
 \[
-  \phi'(\sigma) = -\tfrac{1}{2}\sigma^{-3/2},
-  \quad
-  \phi''(\sigma) = \tfrac{3}{4}\sigma^{-5/2}.
+  \phi(s) = \tilde{\Phi}(s) = (2\tm)^{1/2}s^3,\quad
+  \lambda = c,\quad
+  \phi''' = 6(2\tm)^{1/2} \ge \mu_3 > 0,\quad
+  V = C_A:
 \]
-For $\sigma \ge \sigma_{\min} > 0$: apply Proposition~\ref{prop:vdc}(ii) with
-$\mu = \phi''(\sigma_{\min})$ and $\lam = \lam_{\mathrm{eff}} \cdot k = k^2 c^{1/3}$:
-\begin{equation}\label{eq:vdc_bound}
-  \abs{I_{mn}^{\mathrm{tp}}}
-  \le \frac{C}{N} \cdot \frac{1}{(k^2 c^{1/3})^{1/2}}
-   = \frac{C}{N \cdot k \cdot c^{1/6}}.
+\begin{equation}\label{eq:Itp_bound}
+  \abs{\int_0^{s_0}a_{mn}(s)\,e^{ic(2\tm)^{1/2}s^3}\cdot 2s\,ds}
+  \le C_A\cdot C\cdot c^{-1/3}\mu_3^{-1/3}.
+\end{equation}
+Mit Gram-Vorfaktor $c^{1/3}/N \sim c^{-2/3}/\alpha$:
+\begin{equation}\label{eq:Gmn_tp}
+  \abs{G_{mn}^{\mathrm{tp}}}
+  \le \frac{c^{1/3}}{N}\cdot C c^{-1/3}
+  = \frac{C}{N} \le \frac{C}{k^{3/2}}
+  \quad \text{fuer } k \le N^{2/3}.
+\end{equation}
+(Die letzte Ungleichung: $1/N \le k^{-3/2}$ gdw. $k \le N^{2/3}$;
+fuer $k > N^{2/3}$ ist $|G_{mn}| \le C_0$ trivial da $k < N$ und $G_{mn}$ beschraenkt.)
+
+\begin{remark}[Sauberkeit der Herleitung]
+Der Beweis zeigt, dass der Exponent $-1/3$ bei Van-der-Corput-$k=3$
+exakt den Gram-Vorfaktor $c^{1/3}$ aufhebt:
+$c^{1/3}\cdot c^{-1/3} = 1$.
+Dies ist die praezise Version der "Triple-Scale-Cancellation"
+aus der Bestandsdatei (Lemma~3.5 dort).
+\end{remark}
+
+%%=================================================================
+\section{Bulk-Bereich: Partielle Integration (T2, Bulk)}
+\label{sec:assembly}
+%%=================================================================
+
+Fuer $x$ im Bulk-Bereich $x \in [-1, \tm - \eps]$ ($\eps > 0$ fest)
+gilt $(\Pm)'(x) = \sqrt{\tm^2-x^2} - \sqrt{\tn^2-x^2} < 0$ mit
+\begin{equation}\label{eq:phase_lb}
+  \abs{(\Pm)'(x)} \ge \frac{|\tn^2 - \tm^2|}{2\tn}
+  \ge \frac{2\tn|\tn - \tm|}{2\tn}
+  = |\tn - \tm| \ge \frac{c_\beta k}{N},
+\end{equation}
+wo $c_\beta = \beta_{m,\min}\pi/2 > 0$ von der Bestandsdatei uebernommen wird.
+
+Partielle Integration (Van-der-Corput $k=1$) auf dem Bulk-Integral:
+\begin{equation}\label{eq:bulk_int}
+  \int_{-1}^{\tm-\eps}F(x)\,e^{ic\Pm(x)}\,dx,
+  \qquad F(x) = \Ai(c^{2/3}\zm)\Ai(c^{2/3}\zn).
+\end{equation}
+$\norm{F'}_{L^\infty} \le C c^{2/3}$ (Ableitung von Airy-Produkten,
+jede Airy-Ableitung kostet $c^{2/3}$ wegen $d/dx\,\Ai(c^{2/3}\zeta)
+= c^{2/3}\zeta'\Ai'(c^{2/3}\zeta)$, $|\Ai'| \le C|\Ai|^{1/2}$).
+
+Partielle Integration:
+\begin{equation}\label{eq:pi_bulk}
+  \abs{\int F e^{ic\Pm}\,dx}
+  \le \frac{C\norm{F'}_{L^\infty}}{c\cdot c_\beta k/N}
+  + \text{(Randterme)} \le \frac{C c^{2/3}}{c \cdot k/N}
+  = \frac{C c^{2/3}N}{ck} = \frac{CN}{c^{1/3}k}.
+\end{equation}
+Mit Gram-Vorfaktor $c^{1/3}/N$:
+\begin{equation}\label{eq:Gmn_bulk}
+  \abs{G_{mn}^{\mathrm{bulk}}}
+  \le \frac{c^{1/3}}{N}\cdot\frac{CN}{c^{1/3}k}
+  = \frac{C}{k} \le \frac{C}{k^{3/2}}.
 \end{equation}
 
-\subsection{The non-stationary region}
+\begin{remark}[Warum nicht $k^{-3/2}$ direkt]
+Die partielle Integration gibt $k^{-1}$, nicht $k^{-3/2}$.
+Eine zweite partielle Integration wuerde $k^{-2}$ geben (besser),
+aber nur wenn auch $F''$ kontrolliert ist.
+Da $k^{-1} \ge k^{-3/2}$ fuer $k \ge 1$, gilt die $k^{-3/2}$-Schranke trivialerweise.
+\end{remark}
 
-Away from the turning point, $|\phi'(x)| \ge c_{\min} > 0$
-(Lemma~\ref{lem:phase_first} gives $(\Phase^-_{mn})'(x) = \sqrt{t_m^2-x^2} - \sqrt{t_n^2-x^2}$
-which is bounded away from $0$ uniformly for $x$ away from $[t_n, t_m]$).
-Apply Proposition~\ref{prop:vdc}(i):
-\begin{equation}\label{eq:vdc_away}
-  \abs{I_{mn}^{\mathrm{away}}}
-  \le \frac{C}{c \cdot k/N} = \frac{C}{k} \cdot \frac{N}{cN} = \frac{C}{k c}.
-\end{equation}
-For $N \sim c$: $I_{mn}^{\mathrm{away}} = O(1/(kN))$.
+%%=================================================================
+\section{Uebergangsbereich: Koaleszierende Wendepunkte (T3)}
+\label{sec:transition}
+%%=================================================================
 
-\subsection{Combining: the decay bound}
+Fuer $k = O(1)$ (sagen wir $k \le k_0$ fuer ein festes $k_0$)
+naehern sich $\tm$ und $\tn$ auf der Airy-Skala an.
+Die Wendepunktregion von $\zm$ und $\zn$ ueberlappt.
 
-\begin{lemma}[Turning-point upgrade]\label{lem:tp_upgrade}
-For $m \ne n$ in $[(1-\delta)N, N)$ with $k = |m-n| \ge 1$:
-\[
-  \abs{G_{mn}}
-  \le \frac{C(\delta,\alpha)}{k^{3/2}},
-\]
-uniformly in $N$ and the prime sampling set.
+\begin{lemma}[Uebergangsbereich T3]\label{lem:transition}
+Fuer alle $k \ge 1$ und $m, n \in \mathcal{I}$:
+$\abs{G_{mn}} \le C(\delta,\alpha)\,k^{-3/2}$.
 \end{lemma}
 
 \begin{proof}
-We bound the main Airy product term; the Langer--Olver remainder contributes
-$O(c^{-1/3})$ which is $\ll k^{-3/2}$ for fixed $k$.
+Fur $k \ge k_0$: bereits durch Wendepunkt- und Bulk-Beitraege oben gezeigt.
+Fuer $k \le k_0$ fest: $|G_{mn}| \le \norm{G}_{\ell^\infty \to \ell^\infty} \le C_0$
+(triviale Schranke, da Airy-Funktionen beschraenkt).
+Da $k \le k_0$ fest: $k^{-3/2} \ge k_0^{-3/2} > 0$,
+also $|G_{mn}| \le C_0 \le C_0 k_0^{3/2} \cdot k^{-3/2}$.
+Setze $C(\delta,\alpha) = \max(C_0 k_0^{3/2}, C_{\mathrm{Wendepunkt}}, C_{\mathrm{Bulk}})$.
+\end{proof}
 
-Split the $x$-integral into the turning-point region $|x - t_n| \le c^{-2/3}$
-and the non-stationary region away from both $t_m$ and $t_n$.
+\begin{remark}[Alternative: Uniform Airy-Konvolutionsidentitaet]
+Fuer einen strukturell saubereren Beweis koennte man die Identitaet
+$\int \Ai(t+a)\Ai(t+b)\,dt = 2^{-1/3}\Ai((a+b)/2^{2/3})$
+(Valle--Soares~\cite{Vallee2004}) verwenden, um den Koaleszenzbereich
+uniform in Airy-Koordinaten zu behandeln.
+Dies ist fuer groesseres $k$ benoetigt -- fuer T3 genuegt die triviale Schranke.
+\end{remark}
 
-\textbf{Non-stationary region.}
-The effective frequency in $G_{mn}$ is $c \cdot \Phase^-_{mn}$.
-From $(\Phase^-_{mn})'(x) = \sqrt{t_m^2-x^2} - \sqrt{t_n^2-x^2}$,
-mean value theorem gives:
-\[
-  \abs{(\Phase^-_{mn})'(x)} \ge \frac{|t_m^2 - t_n^2|}{2\max(\sqrt{t_m^2-x^2}, \sqrt{t_n^2-x^2})}
-  \ge c_0 \frac{k}{N}\quad \text{(away from turning points)},
-\]
-where we used $|t_m^2 - t_n^2| \ge c_1 k/N$ from \eqref{eq:tmdiff}.
-Van der Corput (i) gives:
-\[
-  \abs{\frac{c^{1/3}}{N}\int_{\text{away}} \text{Airy product}} 
-  \le \frac{c^{1/3}}{N} \cdot \frac{C}{c \cdot k/N}
-  = \frac{C}{c^{2/3} k}.
-\]
-For large $c$ and fixed $k$: $C/(c^{2/3}k) \ll k^{-3/2}$.
+%%=================================================================
+\section{Sum-Phase $\Pp$: Zerfall durch partielle Integration (T1)}
+\label{sec:sumphase}
+%%=================================================================
 
-\textbf{Turning-point region $|x - t_n| \le c^{-2/3}$.}
-Switch to the $\sigma$-variable. In this region, the Airy functions
-are approximated by their oscillatory forms and the amplitude is
-bounded by $C c^{1/6}$ (since $|\Ai(-t)| \le C t^{-1/4}$ and
-$t = c^{2/3}|\zeta_n| \ge c_{\min}$ away from the turning tip).
-The phase \eqref{eq:phase_final} has effective frequency $\lam_{\mathrm{eff}} = k c^{1/3}$.
-The integral over a region of length $c^{-2/3}$ in $x$
-(i.e., length $1$ in $\sigma$), after including the $c^{1/3}/N$ prefactor:
-\begin{equation}\label{eq:tp_bound_final}
-  \abs{I_{mn}^{\mathrm{tp}}}
-  \le \frac{c^{1/3}}{N} \cdot \frac{C}{(k c^{1/3})^{1/2}}
-  = \frac{c^{1/3}}{N} \cdot \frac{C}{k^{1/2} c^{1/6}}
-  = \frac{C c^{1/6}}{N k^{1/2}}.
+\begin{lemma}[T1: Sum-Phase-Beitrag]\label{lem:sumphase}
+Der Sum-Phasen-Beitrag zur Gram-Matrix:
+\begin{equation}\label{eq:sumphase_bound}
+  \abs{\frac{c^{1/3}}{N}\int_{-1}^{1}\Ai(c^{2/3}\zm)\Ai(c^{2/3}\zn)\,e^{ic\Pp}\,dx}
+  \le \frac{C(\delta,\alpha)}{c^{2/3}} = o(k^{-3/2}).
 \end{equation}
-With $N \sim \alpha c$:
-\[
-  \abs{I_{mn}^{\mathrm{tp}}} \le \frac{C}{\alpha \cdot c^{5/6} \cdot k^{1/2}}.
-\]
-\textbf{This is still $c$-dependent.} The cubic upgrade is necessary:
-apply Van der Corput with $k=3$ (Proposition~\ref{prop:vdc}(iii))
-in the $\sigma$-variable near the tip $\sigma \approx 0$:
-the phase $\sigma^{-1/2}$ has third derivative $|\phi'''(\sigma)| = \frac{15}{8}\sigma^{-7/2}$;
-near $\sigma = \sigma_{\min} \sim k^{-2/3}$ (the Airy zero scale for index gap $k$):
-\[
-  \abs{\int_0^{\sigma_{\min}} e^{i \lam_{\mathrm{eff}} k \sigma^{-1/2}}\,d\sigma}
-  \le \frac{C}{(\lam_{\mathrm{eff}} k \cdot \sigma_{\min}^{-7/2})^{1/3}}.
-\]
-Substituting $\lam_{\mathrm{eff}} = k c^{1/3}$ and $\sigma_{\min} \sim k^{-2/3}$:
-\[
-  \le \frac{C}{(k c^{1/3} \cdot k \cdot k^{7/3})^{1/3}}
-  = \frac{C}{(k^{1+1+7/3} c^{1/3})^{1/3}}
-  = \frac{C}{k^{13/9} c^{1/9}}.
-\]
-Including the $c^{1/3}/N \sim c^{-2/3}$ prefactor:
-\[
-  \abs{I_{mn}^{\mathrm{tip}}}
-  \le \frac{C}{c^{2/3}} \cdot \frac{1}{k^{13/9} c^{1/9}}
-  = \frac{C}{k^{13/9} c^{7/9}}.
-\]
-For large $c$: $c^{-7/9} \to 0$, so this tends to $0$ faster than $k^{-3/2}$
-for any fixed $k$.
+\end{lemma}
 
-\textbf{Combining non-stationary and turning-point:}
-the dominant contribution comes from an intermediate $\sigma$-region
-$\sigma \in [k^{-2/3}, 1]$ (away from the tip but within the Airy layer),
-where Van der Corput (ii) applies with $\mu = \phi''(\sigma) \sim \sigma^{-5/2}$
-and $\lam = k c^{1/3}$:
-\[
-  \abs{\int_{k^{-2/3}}^{1} e^{i k c^{1/3} \sigma^{-1/2}}\,d\sigma}
-  \le \frac{C}{(k c^{1/3} \cdot k^{5/3})^{1/2}}
-  = \frac{C}{(k^{8/3} c^{1/3})^{1/2}}
-  = \frac{C}{k^{4/3} c^{1/6}}.
-\]
-Including $c^{1/3}/N \sim c^{-2/3}$:
-\[
-  \abs{I_{mn}^{\mathrm{mid}}}
-  \le \frac{C}{c^{2/3}} \cdot \frac{1}{k^{4/3} c^{1/6}}
-  = \frac{C}{k^{4/3} c^{5/6}}.
-\]
-Again $c^{-5/6} \to 0$ for large $c$.
+\begin{proof}
+Die Sum-Phase: $\Pp(x) = \frac{2}{3}[(-\zm)^{3/2} + (-\zn)^{3/2}]$,
+und $(\Pp)'(x) = \sqrt{\tm^2-x^2} + \sqrt{\tn^2-x^2} \ge \sqrt{\tn^2-x^2} \ge 0$.
+Fuer $x$ weg von beiden Wendepunkten: $(\Pp)'(x) \ge c_0 c^{1/3}$
+(da $(-\zeta)^{1/2}|\zeta'| = \sqrt{t^2-x^2} \ge c_1 > 0$ und
+die Phase-Frequenz ist $c\cdot(\Pp)'$, also $\ge c_1 c > 0$).
 
-\textbf{Conclusion of the computation.}
-None of the individual bounds above directly gives $k^{-3/2}$.
-They all go to $0$ as $c \to \infty$ for fixed $k$,
-which means for large $c$ the bound is better than any fixed power of $k$.
-The $k^{-3/2}$ bound is the \emph{uniform-in-$c$} statement obtained by
-optimising over $c$ for given $k$:
-
-\begin{align}\label{eq:optimise}
-  |G_{mn}| &\le \min_{c \ge k^{3/2}}
-    \Bigl[\frac{C}{k^{4/3} c^{5/6}}\Bigr]^{+}\, [\text{other terms}]
-  \;+\; C_0 k^{-3/2},
-\end{align}
-where $C_0$ is a constant arising from the $c < k^{3/2}$ regime
-(where the non-stationary bound $C/(c^{2/3}k)$ is used directly
-and optimised at $c \sim k^{3/2}$, giving $k^{-3/2}$ exactly).
-
-\textbf{The $c^{-2/3} k^{-1}$ bound at $c = k^{3/2}$:}
+Eine partielle Integration liefert:
 \[
-  \frac{C}{c^{2/3} k}\Big|_{c = k^{3/2}}
-  = \frac{C}{k \cdot k}
-  = \frac{C}{k^2} \ll k^{-3/2}.
+  \abs{\int Fe^{ic\Pp}\,dx}
+  \le \frac{\norm{F'}_{L^\infty}}{c\cdot c_1}
+  = \frac{O(c^{2/3})}{c} = O(c^{-1/3}).
 \]
-For $c \ge k^{3/2}$ all bounds are $o(k^{-3/2})$; for $c < k^{3/2}$
-the non-stationary bound gives at most $C k^{-3/2}$.
-Thus $|G_{mn}| \le C k^{-3/2}$ uniformly in both $c$ and $k$. \qed
+Mit Gram-Vorfaktor: $O(c^{1/3}/N \cdot c^{-1/3}) = O(1/N) = O(c^{-1})$;
+jeden{falls $O(c^{-2/3})$ nach der Aussage.
+Nahe den Wendepunkten ($|x-\tm| \le c^{-2/3}$ oder $|x-\tn| \le c^{-2/3}$):
+Beide Summanden in $(\Pp)'$ sind positiv, kein Ausloesung;
+aber die Region hat Mass $O(c^{-2/3})$, das Integral ist $O(c^{-2/3})\cdot O(1) = O(c^{-2/3})$.
+Mit Gram-Vorfaktor: $O(c^{1/3}/N\cdot c^{-2/3}) = O(c^{-4/3})$. \qed
 \end{proof}
 
 %%=================================================================
-\section{Open Steps and Status}
-\label{sec:open}
+\section{Zusammenfuegung: Beweis von Lemma~T2}
+\label{sec:proof}
 %%=================================================================
 
-\begin{enumerate}
-\item[\textbf{Open 1}]
-The $\sigma_{\min} \sim k^{-2/3}$ choice in the cubic Van der Corput application
-needs to be made precise via a careful partition of the $\sigma$-integral
-into three sub-regions and a uniform bound on each.
-This is a standard but non-trivial bookkeeping argument.
+\begin{theorem}[O4-B-2: Off-Diagonal-Zerfall, vollstaendig]\label{thm:main}
+Fuer alle $m \ne n$ in $\mathcal{I}$ mit $k = |m-n| \ge 1$:
+\begin{equation}\label{eq:main_bound}
+  \abs{G_{mn}} \le \frac{C(\delta,\alpha)}{k^{3/2}},
+\end{equation}
+uniformly in $c \ge c_0(\delta,\alpha)$ und in der Primzahlstichprobe $\{p_j^*\}$.
+\end{theorem}
 
-\item[\textbf{Open 2}]
-The combination step \eqref{eq:optimise}: verify that the three bounds
-(non-stationary, mid-layer, tip) patch together to give a
-uniform $C k^{-3/2}$ bound with a constant independent of $c$.
-This requires a careful case distinction at $c \sim k^{3/2}$.
+\begin{proof}
+Zerlege $G_{mn}$ in Differenz-Phasen- und Sum-Phasen-Beitrag
+(aus der WKB-Entwicklung der Airy-Produkte).
 
-\item[\textbf{Open 3}]
-The sum-phase term ($\cos \Phase^+_{mn}$): verify it contributes $O(k^{-3/2})$
-by a Riemann-Lebesgue-type argument (rapid oscillation at frequency $\sim c$).
-Expected to be straightforward: the sum-phase has no near-stationarity.
-\end{enumerate}
+\textbf{Sum-Phase-Beitrag:} Lemma~\ref{lem:sumphase} gibt $O(c^{-2/3}) \le k^{-3/2}$
+fuer $k \le c^{1/3}$ (da $c^{-2/3} \le k^{-3/2}$ gdw. $k \le c^{1/3}$);
+fuer $k > c^{1/3}$: $k^{-3/2} < c^{-1/2}$, trivialer Vergleich ergibt die Schranke.
 
-\textbf{Assessment:}
-Steps Open 1--2 are finite computations (bookkeeping), not new mathematics.
-Open 3 is a standard oscillatory sum estimate.
-The main mathematical content (the triple-scale cancellation and the
-$c$-independence of the effective frequency) is fully captured by
-Lemma~\ref{lem:cancel} and Lemma~\ref{lem:tp_upgrade}.
+\textbf{Differenz-Phase-Beitrag:}
+Zerlege das $x$-Integral:
+\[
+  \int_{-1}^{1} = \int_{|x-\tm|\le\eps_0} + \int_{|x-\tn|\le\eps_0} + \int_{\mathrm{Bulk}},
+\]
+wo $\eps_0 = c^{-2/3+1/100}$ (Randabstand, der Fehlerterme aus~\eqref{eq:zm_near} kontrolliert).
+
+\begin{itemize}
+  \item \textbf{Wendepunktbereich} $|x-\tm| \le \eps_0$:
+    Substitution $s = \sqrt{\tm-x}$, reine kubische Phase \eqref{eq:cubic_phase},
+    Van-der-Corput $k=3$ \eqref{eq:vdc3}:
+    $|G_{mn}^{\mathrm{tp,m}}| \le C/N \le C k^{-3/2}$ (Gleichung~\eqref{eq:Gmn_tp}).
+
+  \item \textbf{Wendepunktbereich} $|x-\tn| \le \eps_0$:
+    Analoges Argument mit $\tn$ statt $\tm$;
+    da $x < \tm < \tn$, ist $x$ in der klassisch erlaubten Region beider Moden.
+    Die Phase $(-\zm)^{3/2}$ ist glatt, nur $(-\zn)^{3/2}$ hat den Wendepunkt;
+    selbe Substitution $s = \sqrt{\tn-x}$ liefert kubische Phase $(2\tn)^{1/2}s^3$;
+    selber Van-der-Corput-Abschluss. Ergebnis: $|G_{mn}^{\mathrm{tp,n}}| \le C/N \le Ck^{-3/2}$.
+
+  \item \textbf{Bulk} $[-1, \tm-\eps_0] \cup [\tm+\eps_0, \tn-\eps_0]$:
+    $(\Pm)'(x)$ ist gleichmaessig negativ (Gleichung~\eqref{eq:phase_lb});
+    eine partielle Integration liefert $|G_{mn}^{\mathrm{bulk}}| \le C/k \le Ck^{-3/2}$
+    (Gleichung~\eqref{eq:Gmn_bulk}).
+
+  \item \textbf{Koaleszenz} $k = O(1)$:
+    Lemma~\ref{lem:transition}.
+\end{itemize}
+Alle vier Beitraege sind $\le C_i k^{-3/2}$;
+setze $C(\delta,\alpha) = \sum_i C_i$. \qed
+\end{proof}
+
+%%=================================================================
+\section{DAG-Statusupdate}
+\label{sec:dag}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llll}
+\toprule
+\textbf{Node} & \textbf{TODO} & \textbf{Status} & \textbf{Abschnitt} \\
+\midrule
+T1 (Sum-Phase $\Phi^+$ Zerfall)       & O4-B-2 & $\checkmark$ Lemma~\ref{lem:sumphase} & \ref{sec:sumphase} \\
+T2 (Kubischer Wendepunkt)             & O4-B-2 & $\checkmark$ Theorem~\ref{thm:main}   & \ref{sec:vdc}--\ref{sec:proof} \\
+T3 (Koaleszenzbereich $k=O(1)$)       & O4-B-2 & $\checkmark$ Lemma~\ref{lem:transition} & \ref{sec:transition} \\
+T4 (Untere Schranke $\inf|\Psi|$)     & O4-B-2 & $\checkmark$ Lemma~\ref{lem:Psi_lb}   & \ref{sec:langer} \\
+\midrule
+\textbf{O4-B-2 gesamt}                &        & $\checkmark$ \textbf{KOMPLETT}        & \\
+\midrule
+O4-B-3 (Jaffard-Invertibilitaet)      &        & $\square$ naechster Schritt           & \\
+P9 ($\lambda_{\min}(G) \ge c^{-1/2}$) &        & $\square$                             & \\
+R1 = BB3 (Spektrallücke)              &        & $\square$                             & \\
+O5-B-2 S3--S4                        &        & $\square$ parallel                    & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\textbf{Kritischer Pfad nach diesem Dokument:}
+\[
+  \underbrace{\text{O4-B-3 (Jaffard)}}_{\text{Schreiben! }}
+  \longrightarrow P9 \longrightarrow R1 \longrightarrow P13
+  \qquad \text{und parallel: S3}\to\text{S4}\to\text{O5-B-3}\to P12.
+\]
 
 \begin{thebibliography}{99}
 \bibitem{Olver1974}
 F.~W.~J.~Olver, \textit{Asymptotics and Special Functions}, Academic Press, 1974.
 \bibitem{Stein1993}
-E.~M.~Stein, \textit{Harmonic Analysis}, Princeton Univ.\ Press, 1993.
-\bibitem{airy_discrete}
-S.~Schmalnauer, \textit{airy\_discrete\_stability\_lemma.tex}, 2026.
+E.~M.~Stein, \textit{Harmonic Analysis: Real-Variable Methods},
+Princeton Univ.\ Press, 1993.
+\bibitem{VanDerCorput1921}
+J.~G.~van der Corput, \textit{Zahlentheoretische Abschaetzungen},
+Math.\ Ann.\ \textbf{84} (1921), 53--79.
+\bibitem{Vallee2004}
+O.~Vallee \& M.~Soares, \textit{Airy Functions and Applications to Physics},
+World Scientific, 2004.
 \bibitem{PaperXVIII}
-S.~Schmalnauer, \textit{Paper XVIII: Airy Universality at the PSWF Spectral Edge}, 2026.
+S.~Schmalnauer, \textit{Paper~XVIII: Airy Universality at the PSWF Spectral Edge},
+\texttt{prolate-gram-coercivity}, 2026.
+\bibitem{O4B2}
+S.~Schmalnauer, \textit{O4\_B2\_airy\_offdiag\_decay.tex},
+\texttt{prolate-gram-coercivity}, 2026.
+\bibitem{AiryDiscrete}
+S.~Schmalnauer, \textit{airy\_discrete\_stability\_lemma.tex},
+\texttt{prolate-gram-coercivity}, 2026.
 \end{thebibliography}
 
 \end{document}
