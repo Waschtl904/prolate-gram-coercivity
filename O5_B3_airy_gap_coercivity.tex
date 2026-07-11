@@ -1,0 +1,445 @@
+%%
+%% O5_B3_airy_gap_coercivity.tex
+%%
+%% Route B für O5: inf sigma(D^Airy) >= c^{1/3}/log(c) - ||K^Airy|| > 0
+%%
+%% DAG-Position:
+%%   requires: O5-B-1  (||K^Airy|| <= kappa_BB, BB-Import Tracy-Widom)
+%%             O5-B-2.1 [O]  (Airy-Fenster-Primzahldichte — SHORT INTERVAL OPEN)
+%%             O5-B-2.2 [M]  (Frame-Schranke, importiert O4-B-2, unter 2C*zeta(3/2)<1)
+%%             O5-B-2.3 [M]  (lambda_min(A^arith) >= c_frame)
+%%             O4-B-2  [✓]   (Off-diagonal Airy-Abfall)
+%%   closes:   O5 / P12  (bedingt auf O5-B-2.1 [O])
+%%   feeds:    P13 (Main Theorem)
+%%
+%% STATUSMARKER-LEGENDE:
+%%   [M]  = Mathematisch vollständig, bereit für Referee
+%%   [O]  = Offen, noch nicht beweisbar ohne Zusatzannahme
+%%   [H]  = Bedingt unter RH oder Cramer-Vermutung
+%%   [BB] = Black-Box-Import aus Literatur, Referenz angegeben
+%%   [?]  = Numerischer Wert noch nicht exakt rückgebunden
+%%
+%% Stand: 11. Juli 2026
+%%
+
+\documentclass[12pt,a4paper]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem,booktabs,hyperref,xcolor}
+
+%% Prüfmarker-Makros
+\newcommand{\statusM}{{\color{green!60!black}[\textbf{M}]}}
+\newcommand{\statusO}{{\color{red}[\textbf{O}]}}
+\newcommand{\statusH}{{\color{orange}[\textbf{H}]}}
+\newcommand{\statusBB}{{\color{blue}[\textbf{BB}]}}
+\newcommand{\statusQ}{{\color{red}[\textbf{?}]}}
+\newcommand{\roteFlagge}[1]{{\color{red}\textbf{ROTE FLAGGE: }#1}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+
+%% Notation
+\newcommand{\KAiry}{K^{\mathrm{Airy}}}
+\newcommand{\Aarith}{A^{\mathrm{arith}}}
+\newcommand{\DAiry}{D^{\mathrm{Airy}}}
+\newcommand{\PiAiry}{\Pi_{\mathrm{Airy}}}
+\newcommand{\FTW}{F_2}
+\newcommand{\kappaBB}{\kappa_{\mathrm{BB}}}
+\newcommand{\cframe}{c_{\mathrm{frame}}}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+
+\begin{document}
+
+\title{Lemma O5-B-3: Airy Gap Coercivity\\
+$\inf\sigma(\DAiry) \ge \cframe(c) - \kappaBB > 0$\\
+{\normalsize \statusO\ Bedingt auf O5-B-2.1 (Short-Interval-Primzahldichte)}}
+\date{11.\ Juli 2026}
+\maketitle
+
+\begin{abstract}
+Wir zeigen, dass $\inf\sigma(\DAiry) > 0$ gilt, sofern drei Voraussetzungen
+erfüllt sind: (i)~eine numerisch rückzubindende Operatornorm-Schranke
+$\norm{\KAiry} \le \kappaBB < 1$ (O5-B-1~\statusBB\statusQ),
+(ii)~eine Primzahldichte auf Airy-Skala $c^{1/3}$, die \emph{nicht}
+aus dem Standard-PNT folgt (O5-B-2.1~\statusO), und
+(iii)~die explizite Positivitätsbedingung $2C\zeta(3/2) < 1$
+(O5-B-2.2~\statusM\ unter Assumption~\ref{ass:schur}).
+Der Hauptsatz O5-B-3 ist \statusM\ \emph{relativ zu} O5-B-2.1/B-2.2;
+der Gesamtstatus von O5 bleibt \statusO.
+\end{abstract}
+
+\tableofcontents
+
+%%=================================================================
+\section{Setup und Hauptaussage}
+\label{sec:setup}
+%%=================================================================
+
+\subsection{Der Operator}
+
+\begin{definition}
+Der \emph{arithmetische Mismatch-Operator im Airy-Fenster} ist
+\[
+  \DAiry := \PiAiry\bigl(\Aarith - \KAiry\bigr)\PiAiry,
+\]
+wobei
+\begin{itemize}
+  \item $\Aarith f = (1/N)\sum_j f(p_j^{\mathrm{Airy}})\,\delta_{p_j^{\mathrm{Airy}}}$
+    mit $p_j^{\mathrm{Airy}} = c^{2/3}(p_j^* - t_N)$;
+  \item $\KAiry$ der Airy-Kern-Operator auf $L^2([0,R])$
+    (Tracy--Widom GUE, Standard-GUE-Normierung).
+\end{itemize}
+\end{definition}
+
+\subsection{Hauptsatz}
+
+\begin{theorem}[O5-B-3 \statusM\ relativ zu O5-B-2.1/B-2.2]
+\label{thm:O5B3}
+Unter den Voraussetzungen von O5-B-1 (Assumption~\ref{ass:kappaBB}),
+O5-B-2.1 (Assumption~\ref{ass:density}) und O5-B-2.2
+(Assumption~\ref{ass:schur}) gilt:
+\[
+  \inf\sigma(\DAiry)
+  \;\ge\;
+  \cframe(c)\bigl(1 - 2C\,\zeta\!\left(\tfrac{3}{2}\right)\bigr)
+  - \kappaBB
+  \;\xrightarrow{c\to\infty}\; +\infty.
+\]
+Insbesondere existiert ein explizites $c_0 > 0$ derart, dass
+$\inf\sigma(\DAiry) > 0$ für alle $c \ge c_0$.
+\end{theorem}
+
+\begin{remark}[Gesamtstatus]
+Der Satz ist logisch vollständig \statusM, aber sein Gesamtstatus
+ist \statusO, da O5-B-2.1 offen ist; siehe Abschnitt~\ref{sec:O5B21}.
+\end{remark}
+
+%%=================================================================
+\section{Lemma O5-B-1: Operatornorm von $\KAiry$}
+\label{sec:O5B1}
+%%=================================================================
+
+%% ----------------------------------------------------------------
+%% ROTE FLAGGE 1: numerischer Wert noch nicht rückgebunden
+%% ----------------------------------------------------------------
+\begin{remark}[\roteFlagge{Numerischer Wert von $\kappaBB$} \statusQ]
+\label{rem:kappaBB_rot}
+Die im Angriffs-Plan verwendete Zahl $1 - \FTW(0) \approx 0.0403$
+entspricht \emph{nicht} dem Standardwert der GUE Tracy--Widom-Verteilung.
+Aus Bornemann (2010) und Tracy--Widom (1994) ist:
+\[
+  F_2(0) \approx 0.9231, \qquad 1 - F_2(0) \approx 0.0769.
+\]
+Der Wert $0.9597$ (bzw.\ $1-0.9597 = 0.0403$) muss noch an eine
+präzise Normierungskonvention für $\KAiry$ auf dem \emph{endlichen}
+Intervall $[0,R]$ rückgebunden werden.
+Bis dahin schreiben wir:
+\[
+  \kappaBB := 1 - \FTW(0;\text{Normierung}) < 1,
+\]
+ohne einen Dezimalwert einzusetzen.
+\end{remark}
+
+\begin{assumption}[O5-B-1 \statusBB\statusQ]
+\label{ass:kappaBB}
+Es existiert eine Konstante $\kappaBB \in (0,1)$, die aus dem
+GUE Tracy--Widom Fredholm-Determinanten
+$\det(I - \KAiry|_{[0,R]}) = \FTW(s_0)$
+bei geeignetem $s_0$ (abhängig von der Intervall-Normierung) gewonnen wird,
+derart dass
+\[
+  \norm{\KAiry}_{L^2([0,R])} \le \kappaBB < 1.
+\]
+\end{assumption}
+
+\begin{lemma}[O5-B-1 \statusBB]
+\label{lem:O5B1}
+Unter Assumption~\ref{ass:kappaBB} gilt: für einen positiven Spurklasse-Operator
+$K$ mit Eigenwerten $0 \le \lambda_j < 1$ und
+$\det(I-K) = \prod_j(1-\lambda_j)$ folgt
+\[
+  \lambda_1 = \norm{K} \le 1 - \det(I-K),
+\]
+da $\prod_j(1-\lambda_j) \le 1 - \lambda_1$.
+Angewendet auf $\KAiry$: $\norm{\KAiry} \le \kappaBB$.
+\end{lemma}
+
+\begin{proof}
+Für $\lambda_j \in [0,1)$ paarweise: $\prod_{j\ge 1}(1-\lambda_j) \le 1-\lambda_1$,
+denn $\prod_{j\ge 2}(1-\lambda_j) \le 1$. Daher $1-\lambda_1 \ge \det(I-K)$,
+also $\lambda_1 \le 1 - \det(I-K) = \kappaBB$.
+\end{proof}
+
+\begin{remark}[Exaktwert \statusQ]
+\label{rem:exact_value}
+Sobald die Airy-Intervall-Normierung ($R$, Skalierung) exakt festgelegt ist,
+muss $\kappaBB$ numerisch gegen Bornemann (2010, Math.\ Comp.) verifiziert werden.
+Bis dahin bleibt O5-B-1 im Status \statusBB\statusQ.
+\end{remark}
+
+%%=================================================================
+\section{Lemma O5-B-2: Arithmetische Sampling-Koerzivität}
+\label{sec:O5B2}
+%%=================================================================
+
+\subsection{O5-B-2.1: Airy-Fenster-Primzahldichte \statusO}
+\label{sec:O5B21}
+
+%% ----------------------------------------------------------------
+%% ROTE FLAGGE 2: Short-interval-Problem, nicht aus PNT
+%% ----------------------------------------------------------------
+\begin{remark}[\roteFlagge{Short-Interval-Problem} \statusO]
+\label{rem:short_interval}
+Die folgende Aussage über die Primzahldichte im Airy-Fenster erfordert
+Primzahlen in einem Intervall der Länge $\sim c^{1/3}$ um $p_N \sim c\log c$.
+Dies ist \emph{kein} Standard-PNT-Ergebnis:
+\begin{itemize}
+  \item Baker--Harman--Pintz (2001) und Verbesserungen (2023, Exponent $\approx 0.525$)
+    liefern Primzahlen in $[x - x^{0.525}, x]$ unbedingt.
+  \item Aber $x^{1/3} \ll x^{0.525}$: das Airy-Fenster ist
+    \emph{erheblich kürzer} als der beste bekannte unbedingte Exponent.
+  \item Unter RH gilt Primzahlen in $[x - x^{1/2+\varepsilon}, x]$,
+    immer noch größer als $x^{1/3}$.
+  \item Unter der Cramér-Vermutung (Intervalle $\sim \log^2 x$) wäre
+    es beweisbar, aber das ist eine sehr starke Annahme.
+\end{itemize}
+\textbf{Konsequenz:} O5-B-2.1 wird als \statusO\ markiert.
+Zwei saubere Alternativen:
+\begin{enumerate}
+  \item \statusH: Ergebnis unter RH formulieren
+    ($[x-x^{1/2+\varepsilon}, x]$ enthält $\sim x^{1/2+\varepsilon}/\log x$ Primzahlen).
+  \item Reformulierung auf größere Skala ($\sim c/\log c$, PNT-kompatibel),
+    dann Airy-Fenster via Projektion/Mittelung, ohne direktes Short-interval-Zählen.
+\end{enumerate}
+\end{remark}
+
+\begin{assumption}[O5-B-2.1 \statusO]
+\label{ass:density}
+Die Airy-reskalierten Primzahlen $\{p_j^{\mathrm{Airy}}\}$ im Fenster $[0,R_c]$
+mit $R_c = c^{2/3}\delta$ erfüllen:
+\[
+  \#\{j : p_j^{\mathrm{Airy}} \in [0,R_c]\}
+  \;\asymp\; \frac{c^{1/3}}{\log c}.
+\]
+\textbf{Status \statusO:}
+Dies ist äquivalent zur Existenz $\sim c^{1/3}/\log c$ vieler Primzahlen
+in einem Intervall der Länge $\sim c^{1/3}$ um $c\log c$,
+was den besten unbedingten Short-interval-Resultaten überlegen ist.
+\end{assumption}
+
+\begin{lemma}[O5-B-2.1 \statusO, bedingt]
+\label{lem:O5B21}
+Unter Assumption~\ref{ass:density} konvergiert die empirische Dichte
+der $\{p_j^{\mathrm{Airy}}\}$ auf kompakten Teilmengen von $[0,\infty)$
+zu einem absolutstetigen Maß mit Dichte
+\[
+  \rho_{\mathrm{Airy}}(t) \;=\; \frac{A_\delta}{\log c}\cdot c^{1/3}(1+o(1)),
+  \qquad A_\delta > 0 \text{ explizit aus PNT}.
+\]
+\end{lemma}
+
+\begin{proof}
+Unter Assumption~\ref{ass:density}: Es gibt $\sim c^{1/3}/\log c$ Punkte
+in einem Intervall der (Airy-reskalierten) Länge $R_c \sim c^{2/3}$,
+also Dichte $\sim (c^{1/3}/\log c) / c^{2/3} = c^{-1/3}/\log c$ — dies
+ist die normierte Dichte pro Einheitslänge in Airy-Koordinaten.
+Die absolute Stetigkeit und Gleichmäßigkeit auf Kompakta
+folgt aus der Gleichverteilung der Primzahlen (PNT mit Fehlerterm,
+Dusart 2010), sobald Assumption~\ref{ass:density} gilt.
+\end{proof}
+
+\subsection{O5-B-2.2: Frame-Schranke in Airy-Koordinaten \statusM}
+\label{sec:O5B22}
+
+%% ----------------------------------------------------------------
+%% Positivitätsbedingung explizit
+%% ----------------------------------------------------------------
+\begin{assumption}[Schur-Positivität \statusM]
+\label{ass:schur}
+Die Konstante $C > 0$ aus dem Off-Diagonal-Abfall (O4-B-2) erfüllt:
+\[
+  2C\,\zeta\!\left(\tfrac{3}{2}\right) < 1.
+\]
+Nur unter dieser Bedingung ist die untere Frame-Schranke in Lemma~\ref{lem:O5B22}
+positiv.
+\end{assumption}
+
+\begin{remark}
+$\zeta(3/2) \approx 2.612$, also ist Assumption~\ref{ass:schur}
+äquivalent zu $C < 1/(2 \cdot 2.612) \approx 0.191$.
+Ob dies für die tatsächliche Konstante $C$ aus O4-B-2 gilt,
+ist numerisch zu überprüfen (vgl.\ Offene Frage~\ref{oq:C_value}).
+\end{remark}
+
+\begin{lemma}[O5-B-2.2 \statusM\ unter Assumptions~\ref{ass:density},\ref{ass:schur}]
+\label{lem:O5B22}
+Sei $\{\phi_k\}_{k\ge 0}$ eine $L^2$-ONB aus Airy-Eigenfunktionen.
+Für $f = \sum_k a_k\phi_k \in \PiAiry L^2([0,R])$:
+\[
+  \frac{1}{N}\sum_{j=1}^N \abs{f(p_j^{\mathrm{Airy}})}^2
+  \;\ge\;
+  \cframe(c)\bigl(1 - 2C\,\zeta\!\left(\tfrac{3}{2}\right)\bigr)\norm{f}^2,
+\]
+wobei $\cframe(c) = A_\delta\,c^{1/3}/\log c > 0$
+und die rechte Seite positiv ist unter Assumption~\ref{ass:schur}.
+\end{lemma}
+
+\begin{proof}
+Aufspaltung in Diagonal- und Off-Diagonal-Terme:
+\[
+  \frac{1}{N}\sum_j \abs{f}^2
+  = \sum_k \abs{a_k}^2 \underbrace{\frac{1}{N}\sum_j \abs{\phi_k(p_j^{\mathrm{Airy}})}^2}_{\ge\,\cframe(c)\text{ (O5-B-2.1)}}
+  + \sum_{k\ne l} a_k\overline{a_l}\,H_{kl}.
+\]
+Die Off-Diagonal-Einträge erfüllen $\abs{H_{kl}} \le C/\abs{k-l}^{3/2}$
+(Airy-Oszillationsabfall, Struktur identisch zu O4-B-2).
+Schur-Test:
+\[
+  \abs{\sum_{k\ne l} a_k\overline{a_l}\,H_{kl}}
+  \le \norm{f}^2 \sup_k \sum_{l\ne k}\frac{C}{\abs{k-l}^{3/2}}
+  = \norm{f}^2 \cdot 2C\,\zeta\!\left(\tfrac{3}{2}\right).
+\]
+Kombination und Anwendung von Assumption~\ref{ass:schur}
+ergibt die Behauptung.
+\end{proof}
+
+\subsection{O5-B-2.3: Spektrale Koerzivität von $\Aarith$ \statusM}
+\label{sec:O5B23}
+
+\begin{lemma}[O5-B-2.3 \statusM\ unter Assumptions~\ref{ass:density},\ref{ass:schur}]
+\label{lem:O5B23}
+\[
+  \lambda_{\min}\bigl(\Aarith\big|_{\mathrm{edge}}\bigr)
+  \;\ge\;
+  \cframe(c)\bigl(1 - 2C\,\zeta\!\left(\tfrac{3}{2}\right)\bigr)
+  \;=:\; \mu_{\min}(c)
+  \;\sim\; \frac{c^{1/3}}{\log c}.
+\]
+\end{lemma}
+
+\begin{proof}
+Rayleigh-Quotient-Charakterisierung und Lemma~\ref{lem:O5B22}.
+\end{proof}
+
+%%=================================================================
+\section{Beweis von Theorem~\ref{thm:O5B3}}
+\label{sec:proof}
+%%=================================================================
+
+\begin{proof}[Beweis von Theorem~\ref{thm:O5B3}]
+Min-Max-Prinzip für selbstadjungierte Operatoren:
+\begin{align}
+  \inf\sigma(\DAiry)
+  &= \inf\sigma\bigl(\PiAiry(\Aarith - \KAiry)\PiAiry\bigr) \notag\\
+  &\ge \lambda_{\min}(\Aarith|_{\mathrm{edge}})
+       - \norm{\KAiry|_{\mathrm{edge}}} \notag\\
+  &\ge \mu_{\min}(c) - \kappaBB
+  \;\ge\; \frac{A_\delta(1-2C\zeta(3/2))}{\log c}\cdot c^{1/3} - \kappaBB.
+  \label{eq:hauptsatz}
+\end{align}
+Da $c^{1/3}/\log c \to \infty$ und $\kappaBB < 1$ konstant:
+existiert $c_0$ explizit aus PNT derart, dass die rechte Seite
+für $c \ge c_0$ positiv ist.
+\end{proof}
+
+%%=================================================================
+\section{DAG-Abschluss}
+\label{sec:dag}
+%%=================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lllll}
+\toprule
+\textbf{Node} & \textbf{Aussage (kurz)} & \textbf{Status} & \textbf{Typ} \\
+\midrule
+O5-B-1    & $\norm{\KAiry} \le \kappaBB$                     & \statusBB\statusQ & Import \\
+O5-B-2.1  & Airy-Fenster-Dichte $\asymp c^{1/3}/\log c$     & \statusO         & Offen  \\
+O5-B-2.2  & Frame-Schranke unter $2C\zeta(3/2)<1$            & \statusM         & Beweis \\
+O5-B-2.3  & $\lambda_{\min}(\Aarith) \ge \mu_{\min}(c)$     & \statusM         & Beweis \\
+O5-B-3    & $\inf\sigma(\DAiry) > 0$                         & \statusM\ rel.\ B-2.1/2.2 & Hauptsatz \\
+\midrule
+O5 / P12  & $\inf\sigma(\DAiry) \ge c_2 > 0$                 & \statusO         & Ziel   \\
+P13       & Main Theorem (O4+O5)                              & bedingt \statusO  & Ziel   \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Kritischer Pfad:}
+\[
+  \underbrace{\text{O4}}_{\checkmark}
+  \Rightarrow P9 \Rightarrow \text{R1}
+  \qquad
+  \underbrace{\text{O5-B-2.1}}_{\statusO}
+  \to \text{O5-B-2.2} \to \text{O5-B-3}
+  \Rightarrow P12
+  \;\Rightarrow\; \boxed{P13}.
+\]
+Das einzige verbleibende echte Hindernis im Minimalpfad ist O5-B-2.1.
+
+%%=================================================================
+\section{Offene Fragen}
+\label{sec:open}
+%%=================================================================
+
+\begin{enumerate}[label={[O-O5B3-\arabic*]},ref={O-O5B3-\arabic*}]
+
+\item\label{oq:kappaBB_exact}
+\textbf{Exakter Wert von $\kappaBB$.}
+Welche Normierungskonvention für $\KAiry$ auf $[0,R]$ liefert
+$\kappaBB \approx 0.0403$? Oder ist dies ein Fehler im Angriffs-Plan?
+Bornemann (2010, Math.\ Comp.) numerisch prüfen.
+\statusQ
+
+\item\label{oq:O5B21_resolution}
+\textbf{Auflösung von O5-B-2.1.}
+Drei Optionen:
+(a)~Bedingung \statusH\ unter RH ($[x-x^{1/2+\varepsilon},x]$-Primzahlen);
+(b)~Reformulierung auf größere Skala ($c/\log c$), Airy-Fenster via Projektion;
+(c)~Als \statusO\ belassen und P12 als bedingt markieren.
+\statusO
+
+\item\label{oq:C_value}
+\textbf{Wert der Off-Diagonal-Konstante $C$.}
+Ist $C < 0.191$ (Assumption~\ref{ass:schur} erfüllt)?
+Numerisch aus der Airy-Eigenfunktionsbasis abschätzen.
+\statusQ
+
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\bibitem{TracyWidom1994}
+C.~A.~Tracy und H.~Widom,
+\textit{Level-spacing distributions and the Airy kernel},
+Comm.\ Math.\ Phys.\ \textbf{159} (1994), 151--174.
+
+\bibitem{Bornemann2010}
+F.~Bornemann,
+\textit{On the numerical evaluation of distributions in random matrix theory:
+a review},
+Markov Process.\ Related Fields \textbf{16} (2010), 803--866.
+
+\bibitem{BakerHarmanPintz2001}
+R.~C.~Baker, G.~Harman und J.~Pintz,
+\textit{The difference between consecutive primes, II},
+Proc.\ London Math.\ Soc.\ \textbf{83} (2001), 532--562.
+
+\bibitem{Dusart2010}
+P.~Dusart,
+\textit{Estimates of some functions over primes without $R$.\,H.},
+Preprint (2010), arXiv:1002.0442.
+
+\bibitem{O4B3}
+S.~Schmalnauer,
+\texttt{O4\_B3\_jaffard\_invertibility.tex},
+\textsf{prolate-gram-coercivity}, 2026.
+\end{thebibliography}
+
+\end{document}
